@@ -2,7 +2,7 @@
 (* Key states under one self: the devices that can sign for an identity, who holds each,
    and the policy under which one device may evict another or add a new one.
 
-   The invariant (CC 3.3.6.3): with three or more keypairs under a self, a stolen
+   The invariant (CC 3.3.6.4): with three or more keypairs under a self, a stolen
    device cannot on its own kick the other devices off, yet two lost devices are recoverable
    from the one that remains. Possession and authentication are kept apart: a device is HELD
    by the owner, by a thief, or by nobody (lost); a holder can ACT on it only if they can
@@ -23,7 +23,7 @@
    owner proposes only against what it lost or had stolen; and an approval kept from a device
    evicted meanwhile made a thief's second eviction a majority of a smaller roster.
    Mode: "unilateral" (any authenticated member acts at once), "quorum" (quorum path only),
-   "reverse" (lone path only), "combined" (both; the CC 3.3.6.3 shape).
+   "reverse" (lone path only), "combined" (both; the CC 3.3.6.4 shape).
    Adding a device goes through the same policy, or a thief would mint a majority.
    OwnerPresent: TRUE means the owner's devices act every tick (and so object to what they
    dislike); FALSE is the owner away for a whole window, the stated residual.
@@ -130,7 +130,7 @@ Inv_ThiefCannotEvictHonest == ~wrong
 (* The thief never assembles a majority of the roster while the owner still holds a device. *)
 Inv_ThiefNeverMajority == OwnerHeld # {} => ~Majority(ThiefHeld, Cardinality(member))
 (* The self survives: the owner never holds no key at all. Fails only where it must: one key, stolen
-   (CC 3.3.6.3: at one key a theft is the loss of the self; the other properties are vacuous there). *)
+   (CC 3.3.6.4: at one key a theft is the loss of the self; the other properties are vacuous there). *)
 Inv_SelfSurvives == OwnerHeld # {}
 
 (* Second clause: from any device the owner still holds, every lost device and every stolen

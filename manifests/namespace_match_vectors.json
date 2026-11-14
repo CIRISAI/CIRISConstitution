@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "cc_version": "1.0-rc18",
-    "registry_sha256": "3ba2096fd5f60c22131cb6743c0acb5cbb892fc739e6cedc15c4e68011f763a6",
+    "cc_version": "1.0-rc19",
+    "registry_sha256": "7a1bd198d592befe880d6a76afbb3a1da3399beab6a843022baaa390fb8351b1",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -38,13 +38,7 @@
     },
     {
       "dimension": "accord:lifecycle:active:v1",
-      "family": "accord:lifecycle:active",
-      "refusal": null,
-      "why": "closed reserved leaf resolves to its own row"
-    },
-    {
-      "dimension": "accord:lifecycle:confirmed:v1",
-      "family": "accord:lifecycle:confirmed",
+      "family": "accord:lifecycle:{kind}",
       "refusal": null,
       "why": "closed reserved leaf resolves to its own row"
     },
@@ -236,75 +230,57 @@
     },
     {
       "dimension": "accord:lifecycle:active:v1",
-      "family": "accord:lifecycle:active",
+      "family": "accord:lifecycle:{kind}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
       "dimension": "accord:lifecycle:active:V1",
-      "family": "accord:lifecycle:active",
+      "family": "accord:lifecycle:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
       "dimension": "accord:lifecycle:active:v1:v2",
-      "family": "accord:lifecycle:active",
+      "family": "accord:lifecycle:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
       "dimension": "accord:lifecycle:active:v1beta",
-      "family": "accord:lifecycle:active",
+      "family": "accord:lifecycle:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
     },
     {
       "dimension": "Accord:lifecycle:active:v1",
-      "family": "accord:lifecycle:active",
+      "family": "accord:lifecycle:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "accord:lifecycle:active",
-      "family": "accord:lifecycle:active",
+      "family": "accord:lifecycle:{kind}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "accord:lifecycle:ACTIVE:v1",
+      "family": "accord:lifecycle:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
       "dimension": "accord:lifecycle:confirmed:v1",
-      "family": "accord:lifecycle:confirmed",
+      "family": "accord:lifecycle:{kind}",
       "refusal": null,
-      "why": "instantiated sample resolves to its row"
+      "why": "a listed value of a closed enumeration resolves to its row"
     },
     {
-      "dimension": "accord:lifecycle:confirmed:V1",
-      "family": "accord:lifecycle:confirmed",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "accord:lifecycle:confirmed:v1:v2",
-      "family": "accord:lifecycle:confirmed",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "accord:lifecycle:confirmed:v1beta",
-      "family": "accord:lifecycle:confirmed",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Accord:lifecycle:confirmed:v1",
-      "family": "accord:lifecycle:confirmed",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "accord:lifecycle:confirmed",
-      "family": "accord:lifecycle:confirmed",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
+      "dimension": "accord:lifecycle:not_a_listed_value:v1",
+      "family": "accord:lifecycle:{kind}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "activity_tier:sample:v1",
@@ -391,6 +367,36 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "age_assurance:government:minor:v1",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "age_assurance:provider:adult:v1",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "age_assurance:provider:under_13:v1",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "age_assurance:provider:13_15:v1",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "age_assurance:provider:16_17:v1",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
       "dimension": "age_assurance:not_a_listed_value:minor:v1",
       "family": "age_assurance:{level}:{band}:{version}",
       "refusal": "namespace_vocab_value_unregistered",
@@ -437,6 +443,30 @@
       "family": "age_self_declared:band:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "age_self_declared:band:adult:v1",
+      "family": "age_self_declared:band:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "age_self_declared:band:under_13:v1",
+      "family": "age_self_declared:band:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "age_self_declared:band:13_15:v1",
+      "family": "age_self_declared:band:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "age_self_declared:band:16_17:v1",
+      "family": "age_self_declared:band:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
     },
     {
       "dimension": "age_self_declared:band:not_a_listed_value:v1",
@@ -563,6 +593,12 @@
       "family": "archive_release:{basis}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "archive_release:lawful_order:v1",
+      "family": "archive_release:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
     },
     {
       "dimension": "archive_release:not_a_listed_value:v1",
@@ -1087,114 +1123,6 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "capacity:core_identity:v1",
-      "family": "capacity:core_identity",
-      "refusal": null,
-      "why": "instantiated sample resolves to its row"
-    },
-    {
-      "dimension": "capacity:core_identity:V1",
-      "family": "capacity:core_identity",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:core_identity:v1:v2",
-      "family": "capacity:core_identity",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:core_identity:v1beta",
-      "family": "capacity:core_identity",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Capacity:core_identity:v1",
-      "family": "capacity:core_identity",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:core_identity",
-      "family": "capacity:core_identity",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
-    },
-    {
-      "dimension": "capacity:incompleteness_awareness:v1",
-      "family": "capacity:incompleteness_awareness",
-      "refusal": null,
-      "why": "instantiated sample resolves to its row"
-    },
-    {
-      "dimension": "capacity:incompleteness_awareness:V1",
-      "family": "capacity:incompleteness_awareness",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:incompleteness_awareness:v1:v2",
-      "family": "capacity:incompleteness_awareness",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:incompleteness_awareness:v1beta",
-      "family": "capacity:incompleteness_awareness",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Capacity:incompleteness_awareness:v1",
-      "family": "capacity:incompleteness_awareness",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:incompleteness_awareness",
-      "family": "capacity:incompleteness_awareness",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
-    },
-    {
-      "dimension": "capacity:integrity:v1",
-      "family": "capacity:integrity",
-      "refusal": null,
-      "why": "instantiated sample resolves to its row"
-    },
-    {
-      "dimension": "capacity:integrity:V1",
-      "family": "capacity:integrity",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:integrity:v1:v2",
-      "family": "capacity:integrity",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:integrity:v1beta",
-      "family": "capacity:integrity",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Capacity:integrity:v1",
-      "family": "capacity:integrity",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:integrity",
-      "family": "capacity:integrity",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
-    },
-    {
       "dimension": "capacity:relay_delivery:v1",
       "family": "capacity:relay_delivery",
       "refusal": null,
@@ -1231,76 +1159,76 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "capacity:resilience:v1",
-      "family": "capacity:resilience",
+      "dimension": "capacity:core_identity:v1",
+      "family": "capacity:{factor}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "capacity:resilience:V1",
-      "family": "capacity:resilience",
+      "dimension": "capacity:core_identity:V1",
+      "family": "capacity:{factor}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "capacity:resilience:v1:v2",
-      "family": "capacity:resilience",
+      "dimension": "capacity:core_identity:v1:v2",
+      "family": "capacity:{factor}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "capacity:resilience:v1beta",
-      "family": "capacity:resilience",
+      "dimension": "capacity:core_identity:v1beta",
+      "family": "capacity:{factor}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
     },
     {
-      "dimension": "Capacity:resilience:v1",
-      "family": "capacity:resilience",
+      "dimension": "Capacity:core_identity:v1",
+      "family": "capacity:{factor}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
-      "dimension": "capacity:resilience",
-      "family": "capacity:resilience",
+      "dimension": "capacity:core_identity",
+      "family": "capacity:{factor}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "capacity:CORE_IDENTITY:v1",
+      "family": "capacity:{factor}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "capacity:integrity:v1",
+      "family": "capacity:{factor}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "capacity:resilience:v1",
+      "family": "capacity:{factor}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "capacity:incompleteness_awareness:v1",
+      "family": "capacity:{factor}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
     },
     {
       "dimension": "capacity:sustained_coherence:v1",
-      "family": "capacity:sustained_coherence",
+      "family": "capacity:{factor}",
       "refusal": null,
-      "why": "instantiated sample resolves to its row"
+      "why": "a listed value of a closed enumeration resolves to its row"
     },
     {
-      "dimension": "capacity:sustained_coherence:V1",
-      "family": "capacity:sustained_coherence",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:sustained_coherence:v1:v2",
-      "family": "capacity:sustained_coherence",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:sustained_coherence:v1beta",
-      "family": "capacity:sustained_coherence",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Capacity:sustained_coherence:v1",
-      "family": "capacity:sustained_coherence",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "capacity:sustained_coherence",
-      "family": "capacity:sustained_coherence",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
+      "dimension": "capacity:not_a_listed_value:v1",
+      "family": "capacity:{factor}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "capacity_assurance:reversible_excluded:sample:v1",
@@ -1427,6 +1355,24 @@
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "capacity_assurance:panel:sample:capacitated:v1",
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "capacity_assurance:government:sample:capacitated:v1",
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "capacity_assurance:provider:sample:incapacitated:v1",
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
     },
     {
       "dimension": "capacity_assurance:not_a_listed_value:sample:capacitated:v1",
@@ -2413,6 +2359,18 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "consent:state:revoked:v1",
+      "family": "consent:state:{stance}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "consent:state:expired:v1",
+      "family": "consent:state:{stance}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
       "dimension": "consent:state:not_a_listed_value:v1",
       "family": "consent:state:{stance}",
       "refusal": "namespace_vocab_value_unregistered",
@@ -2689,52 +2647,16 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "cosign:signature:v1",
+      "family": "cosign:{state}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
       "dimension": "cosign:not_a_listed_value:v1",
       "family": "cosign:{state}",
       "refusal": "namespace_vocab_value_unregistered",
       "why": "a value outside a closed enumeration is unregistered"
-    },
-    {
-      "dimension": "credits:sample:sample:substrate_building:v1",
-      "family": "credits:{domain}:{language}:substrate_building",
-      "refusal": null,
-      "why": "instantiated sample resolves to its row"
-    },
-    {
-      "dimension": "credits:sample:sample:substrate_building:V1",
-      "family": "credits:{domain}:{language}:substrate_building",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "credits:sample:sample:substrate_building:v1:v2",
-      "family": "credits:{domain}:{language}:substrate_building",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "credits:sample:sample:substrate_building:v1beta",
-      "family": "credits:{domain}:{language}:substrate_building",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Credits:sample:sample:substrate_building:v1",
-      "family": "credits:{domain}:{language}:substrate_building",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "credits:sample:sample:substrate_building",
-      "family": "credits:{domain}:{language}:substrate_building",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
-    },
-    {
-      "dimension": "credits:SAMPLE:sample:substrate_building:v1",
-      "family": "credits:{domain}:{language}:substrate_building",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
       "dimension": "credits:sample:sample:id1:v1",
@@ -3025,42 +2947,6 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "detection:conscience_override_rate:v1",
-      "family": "detection:conscience_override_rate",
-      "refusal": null,
-      "why": "instantiated sample resolves to its row"
-    },
-    {
-      "dimension": "detection:conscience_override_rate:V1",
-      "family": "detection:conscience_override_rate",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "detection:conscience_override_rate:v1:v2",
-      "family": "detection:conscience_override_rate",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "detection:conscience_override_rate:v1beta",
-      "family": "detection:conscience_override_rate",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Detection:conscience_override_rate:v1",
-      "family": "detection:conscience_override_rate",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "detection:conscience_override_rate",
-      "family": "detection:conscience_override_rate",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
-    },
-    {
       "dimension": "detection:correlated_action:sample:sub:v1",
       "family": "detection:correlated_action:{axis}",
       "refusal": null,
@@ -3095,42 +2981,6 @@
       "family": "detection:correlated_action:{axis}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
-    },
-    {
-      "dimension": "detection:cross_agent_divergence:v1",
-      "family": "detection:cross_agent_divergence",
-      "refusal": null,
-      "why": "instantiated sample resolves to its row"
-    },
-    {
-      "dimension": "detection:cross_agent_divergence:V1",
-      "family": "detection:cross_agent_divergence",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "detection:cross_agent_divergence:v1:v2",
-      "family": "detection:cross_agent_divergence",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "detection:cross_agent_divergence:v1beta",
-      "family": "detection:cross_agent_divergence",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Detection:cross_agent_divergence:v1",
-      "family": "detection:cross_agent_divergence",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "detection:cross_agent_divergence",
-      "family": "detection:cross_agent_divergence",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
       "dimension": "detection:distributive:access:compute:v1",
@@ -3247,40 +3097,64 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "detection:temporal_drift:v1",
-      "family": "detection:temporal_drift",
+      "dimension": "detection:cross_agent_divergence:v1",
+      "family": "detection:{detector}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "detection:temporal_drift:V1",
-      "family": "detection:temporal_drift",
+      "dimension": "detection:cross_agent_divergence:V1",
+      "family": "detection:{detector}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "detection:temporal_drift:v1:v2",
-      "family": "detection:temporal_drift",
+      "dimension": "detection:cross_agent_divergence:v1:v2",
+      "family": "detection:{detector}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "detection:temporal_drift:v1beta",
-      "family": "detection:temporal_drift",
+      "dimension": "detection:cross_agent_divergence:v1beta",
+      "family": "detection:{detector}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
     },
     {
-      "dimension": "Detection:temporal_drift:v1",
-      "family": "detection:temporal_drift",
+      "dimension": "Detection:cross_agent_divergence:v1",
+      "family": "detection:{detector}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
-      "dimension": "detection:temporal_drift",
-      "family": "detection:temporal_drift",
+      "dimension": "detection:cross_agent_divergence",
+      "family": "detection:{detector}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "detection:CROSS_AGENT_DIVERGENCE:v1",
+      "family": "detection:{detector}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "detection:temporal_drift:v1",
+      "family": "detection:{detector}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "detection:conscience_override_rate:v1",
+      "family": "detection:{detector}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "detection:not_a_listed_value:v1",
+      "family": "detection:{detector}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "device:label:v1",
@@ -3703,6 +3577,12 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "evidence:safety_battery:interpret:id1:ab12:v1",
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
       "dimension": "evidence:not_a_listed_value:capture:id1:ab12:v1",
       "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "refusal": "namespace_vocab_value_unregistered",
@@ -4103,6 +3983,78 @@
       "family": "hardware_custody:{platform}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "hardware_custody:android_strongbox:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:ios_secure_enclave:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:mac_os_secure_enclave:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:tpm_discrete:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:tpm_firmware:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:intel_sgx:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:software_only:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:aws_cloud_hsm:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:azure_hsm:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:gcp_cloud_hsm:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:yubi_hsm:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:external_secure_element:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
     },
     {
       "dimension": "hardware_custody:not_a_listed_value:v1",
@@ -4615,6 +4567,18 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "key_grant:epoch:v1",
+      "family": "key_grant:{axis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "key_grant:stream:v1",
+      "family": "key_grant:{axis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
       "dimension": "key_grant:not_a_listed_value:v1",
       "family": "key_grant:{axis}",
       "refusal": "namespace_vocab_value_unregistered",
@@ -4843,6 +4807,18 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "lineage_witness:acceptance:v1",
+      "family": "lineage_witness:{stage}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "lineage_witness:decline:v1",
+      "family": "lineage_witness:{stage}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
       "dimension": "lineage_witness:not_a_listed_value:v1",
       "family": "lineage_witness:{stage}",
       "refusal": "namespace_vocab_value_unregistered",
@@ -4967,6 +4943,36 @@
       "family": "membership:{stage}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "membership:acceptance:v1",
+      "family": "membership:{stage}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "membership:decline:v1",
+      "family": "membership:{stage}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "membership:widening:v1",
+      "family": "membership:{stage}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "membership:removal:v1",
+      "family": "membership:{stage}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "membership:resignation:v1",
+      "family": "membership:{stage}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
     },
     {
       "dimension": "membership:not_a_listed_value:v1",
@@ -5723,6 +5729,132 @@
       "family": "prohibited:{category}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "prohibited:financial:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:legal:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:spiritual_direction:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:home_security:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:identity_verification:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:content_moderation:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:research:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:infrastructure_control:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:weapons_harmful:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:manipulation_coercion:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:surveillance_mass:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:deception_fraud:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:cyber_offensive:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:election_interference:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:biometric_inference:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:autonomous_deception:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:hazardous_materials:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:discrimination:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:crisis_escalation:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:pattern_detection:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "prohibited:protective_routing:v1",
+      "family": "prohibited:{category}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
     },
     {
       "dimension": "prohibited:not_a_listed_value:v1",
@@ -6697,6 +6829,66 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "takedown_notice:dsa_article16:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "takedown_notice:tvec_terrorist:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "takedown_notice:ncmec_csam:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "takedown_notice:gifct_cip:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "takedown_notice:community_standards:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "takedown_notice:perceptual_hash_csam:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "takedown_notice:osa_illegal_content:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "takedown_notice:avmsd_age_inappropriate:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "takedown_notice:court_order:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "takedown_notice:steward_purge:v1",
+      "family": "takedown_notice:{basis}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
       "dimension": "takedown_notice:not_a_listed_value:v1",
       "family": "takedown_notice:{basis}",
       "refusal": "namespace_vocab_value_unregistered",
@@ -7249,6 +7441,24 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "wa_adjudication:seizure:v1",
+      "family": "wa_adjudication:{state}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "wa_adjudication:successor:v1",
+      "family": "wa_adjudication:{state}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "wa_adjudication:petition:v1",
+      "family": "wa_adjudication:{state}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
       "dimension": "wa_adjudication:not_a_listed_value:v1",
       "family": "wa_adjudication:{state}",
       "refusal": "namespace_vocab_value_unregistered",
@@ -7376,14 +7586,14 @@
     },
     {
       "dimension": "detection:zz_unminted_leaf:v1",
-      "family": null,
-      "refusal": "namespace_family_unregistered",
+      "family": "detection:{detector}",
+      "refusal": "namespace_vocab_value_unregistered",
       "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
     },
     {
       "dimension": "capacity:zz_unminted_leaf:v1",
-      "family": null,
-      "refusal": "namespace_family_unregistered",
+      "family": "capacity:{factor}",
+      "refusal": "namespace_vocab_value_unregistered",
       "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
     },
     {
@@ -7532,13 +7742,13 @@
     },
     {
       "dimension": "Detection:zz_unminted_leaf:v1",
-      "family": null,
+      "family": "detection:{detector}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
     },
     {
       "dimension": "Capacity:zz_unminted_leaf:v1",
-      "family": null,
+      "family": "capacity:{factor}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
     },

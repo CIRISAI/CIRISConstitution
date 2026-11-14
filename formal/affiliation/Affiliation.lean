@@ -5,7 +5,7 @@
   and an affiliation never becomes a place where one voice rules its members.
 
   The split: an affiliation bundles two things the text can hold apart. The DATA REGIME (CC
-  4.4.3.2.8: classification, retention, legal hold, erasure policy, designated officials, …) attaches
+  4.4.3.12: classification, retention, legal hold, erasure policy, designated officials, …) attaches
   to the record and its subjects, at any size. The FLOORS (CC 4.5.13: no single vote admits, no
   single vote removes, a named moderator, removal on a harm report by more than one voice) bind
   power over MEMBERS, and the second voice can come from outside the deciding seat: the designated
@@ -30,7 +30,7 @@ structure Body where
   members : List Key
   official : Key
   overseers : List Key
-  dataLimbsDeclared : Bool     -- the 4.4.3.2.8 limbs resolve to a value (classification, retention, …)
+  dataLimbsDeclared : Bool     -- the 4.4.3.12 limbs resolve to a value (classification, retention, …)
   deriving Repr
 
 inductive ActKind | appoint | remove | quarantine | slash | takedown
@@ -59,15 +59,22 @@ def validCountersign (b : Body) (k : Key) : Bool :=
 def bodySigned (b : Body) (a : Act) : Bool :=
   !a.signers.isEmpty && a.signers.all (fun k => b.seats.contains k)
 
+/-- the distinct voices on an act, the member it concerns not counted -/
+def voices (a : Act) : List Key := (a.signers.eraseDups).filter (· != a.target)
+
+/-- the floor of two voices for a body of two or more seats (CC 4.5.13) -/
+def twoVoices (a : Act) : Bool := 2 ≤ (voices a).length
+
 /-- the floors, as the text now states them for an affiliation:
     * appointment lands on the body's signature AND the appointee's acceptance (two consents);
     * an act against a member lands on the body's signature AND, where the body has one voice, a
       valid countersign from outside the deciding seat; a body of two or more voices decides under
-      its own protocol as any community does (its protocol already carries the second voice). -/
+      its own protocol as any community does, and never on fewer than two voices, the member
+      concerned not counted (CC 4.5.13, the floor of two voices). -/
 def admitted (b : Body) (a : Act) : Bool :=
   match a.kind with
   | .appoint => bodySigned b a && a.accepted
-  | _ => bodySigned b a && (if oneVoice b then (match a.countersign with | some k => validCountersign b k | none => false) else true)
+  | _ => bodySigned b a && (if oneVoice b then (match a.countersign with | some k => validCountersign b k | none => false) else twoVoices a)
 
 /-- the data regime: the limbs bind when declared, whatever the size -/
 def dataRegimeBinds (b : Body) : Bool := b.dataLimbsDeclared
@@ -125,10 +132,17 @@ theorem a4_no_power_act_on_one_voice (b : Body) (a : Act) (h1 : oneVoice b = tru
   cases hkk : a.kind <;> simp [hkk] at hk ⊢ <;> simp [h1, hc]
 
 /-- A5 (promise 6): a body of two or more voices decides under its own protocol, as a community
-    does — the countersign rule is the one-voice rule only -/
+    does, on two voices at least, the member concerned not counted — the countersign rule is the
+    one-voice rule only -/
 theorem a5_two_voices_decide_as_a_community (b : Body) (a : Act) (hk : a.kind = .remove)
-    (h2 : oneVoice b = false) (hs : bodySigned b a = true) : admitted b a = true := by
-  unfold admitted; rw [hk]; simp [h2, hs]
+    (h2 : oneVoice b = false) (hs : bodySigned b a = true) (hv : twoVoices a = true) :
+    admitted b a = true := by
+  unfold admitted; rw [hk]; simp [h2, hs, hv]
+
+/-- A5' (promise 6): and one voice of such a body removes nobody, however many seats it has -/
+theorem a5_one_seat_of_many_removes_nobody (b : Body) (a : Act) (hk : a.kind = .remove)
+    (h2 : oneVoice b = false) (hv : twoVoices a = false) : admitted b a = false := by
+  unfold admitted; rw [hk]; simp [h2, hv]
 
 /-! ## The map of commitments
 
@@ -178,5 +192,11 @@ theorem solo_fires_with_the_overseer : admitted solo fireWithOverseer = true := 
 def partnership : Body := ⟨[1, 3], [2], 1, [], true⟩
 def partnersFire : Act := ⟨.remove, 2, [1, 3], none, false⟩
 theorem partners_decide_as_a_community : admitted partnership partnersFire = true := by decide
+/-- one partner alone removes nobody: one voice never decides who is in a room -/
+def onePartnerFires : Act := ⟨.remove, 2, [1], none, false⟩
+theorem one_partner_cannot_fire_alone : admitted partnership onePartnerFires = false := by decide
+/-- nor does a partner removing the other count the partner removed as a voice -/
+def partnerRemovesPartner : Act := ⟨.remove, 3, [1, 3], none, false⟩
+theorem the_partner_removed_is_not_a_voice : admitted partnership partnerRemovesPartner = false := by decide
 
 end Affiliation

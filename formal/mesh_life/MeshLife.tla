@@ -112,10 +112,12 @@ Found(p) == Live /\ ~m.winding /\ Announced(p) /\ m.community = "none"
                     !.charter = IF RoomKind = "affiliation" THEN "declared" ELSE "none"]
 CharterSuperseded == On("event") /\ Live /\ m.charter = "declared" /\ Members # {}
   /\ m' = [m EXCEPT !.charter = "superseded"]
-Propose(p, q) == Live /\ ~m.winding /\ m.community = "founded" /\ m.member[p] = "member"
+\* CC 4.5.4 (v): with no duty holder left the room locks, read-only until the members' count seats one
+Locked == m.community = "founded" /\ m.moderator = "-"
+Propose(p, q) == Live /\ ~m.winding /\ m.community = "founded" /\ ~Locked /\ m.member[p] = "member"
   /\ m.member[q] \in {"none", "left"} /\ (Announced(q) \/ (q \in Minors /\ m.guardian[q] # "none"))
   /\ m' = [m EXCEPT !.member[q] = "proposed"]
-Accept(q) == Live /\ m.member[q] = "proposed" /\ Members # {} /\ m' = [m EXCEPT !.member[q] = "member"]
+Accept(q) == Live /\ m.member[q] = "proposed" /\ Members # {} /\ ~Locked /\ m' = [m EXCEPT !.member[q] = "member"]
 Decline(q) == Live /\ m.member[q] = "proposed" /\ m' = [m EXCEPT !.member[q] = "none"]
 Leave(q, how) == m' = [m EXCEPT !.member[q] = "left", !.moderator = IF m.moderator = q THEN "-" ELSE m.moderator, !.writer[q] = FALSE,
                                !.yes = [r \in Rows |-> m.yes[r] \ {q}], !.no = [r \in Rows |-> m.no[r] \ {q}],
@@ -130,11 +132,18 @@ GrantWrite(p) == WriteRight = "named" /\ Live /\ ~m.winding /\ m.member[p] = "me
 RevokeWrite(p) == WriteRight = "named" /\ Live /\ m.writer[p] /\ ModeratorActs /\ p # m.moderator
   /\ m' = [m EXCEPT !.writer[p] = FALSE]
 MayWrite(p) == m.member[p] = "member" /\ (WriteRight = "all" \/ m.writer[p])
-NameModerator(p) == Live /\ m.community = "founded" /\ m.moderator = "-" /\ m.member[p] = "member"
+\* the members' count seats one (the election of CC 4.5.13, its 24 h ranked vote abstracted). CC 4.5.13: "The floor
+\* in a small room is the smaller of two voices and the roster's size, so a room of one elects itself by its own ballot
+\* and no room is locked beyond its members' reach." So any member may be seated, by a count the members can always meet.
+NameModerator(p) == Live /\ Locked /\ m.member[p] = "member"
   /\ m' = [m EXCEPT !.moderator = p]
 \* moderation delegated to an agent: the bonded agent, held by its steward, takes the moderate duty
-NameAgentModerator == On("moderation") /\ Live /\ m.community = "founded" /\ m.moderator = "-" /\ m.agent = "bonded"
+NameAgentModerator == On("moderation") /\ Live /\ Locked /\ m.agent = "bonded"
   /\ m' = [m EXCEPT !.moderator = "agent"]
+\* the members' recall of any duty holder (CC 4.5.13, policy row moderator_recall): more than two thirds of the standing
+\* roster, never fewer than two voices, abstracted to "two members or more"; with no duty holder left the room locks
+Recall == On("moderation") /\ Live /\ m.community = "founded" /\ m.moderator # "-" /\ Cardinality(Members) >= 2
+  /\ m' = [m EXCEPT !.moderator = "-"]
 Dissolve == Live /\ m.community = "founded" /\ Members = {} /\ \A p \in Persons : m.member[p] # "proposed"
   /\ m' = [m EXCEPT !.community = "dissolved", !.moderator = "-", !.charter = "none", !.event = "none",
                     !.writer = [q \in Persons |-> FALSE],
@@ -151,7 +160,7 @@ EventOpens == On("event") /\ Live /\ ~m.winding /\ m.community = "founded" /\ Me
 EventCloses(how) == On("event") /\ Live /\ m.event = "open" /\ m' = [m EXCEPT !.event = how]
 
 (* ---------- Step 6. Members write ---------- *)
-Write(r, p, form) == Live /\ ~m.winding /\ m.community = "founded" /\ MayWrite(p) /\ m.row[r] = "absent"
+Write(r, p, form) == Live /\ ~m.winding /\ m.community = "founded" /\ ~Locked /\ MayWrite(p) /\ m.row[r] = "absent"
   /\ (On("content") \/ form = "inline")
   /\ m' = [m EXCEPT !.row[r] = "admitted", !.author[r] = p, !.blob[r] = form]
 MarkDurable(r) == On("content") /\ Live /\ m.row[r] = "admitted" /\ m.durable[r] = "unmarked"
@@ -280,7 +289,7 @@ Next ==
       \/ WaSeats(p) \/ WaSuccessor(p) \/ LedgerOpens(p) \/ LedgerForks(p) \/ LedgerCloses(p) \/ ContactBlock(p)
   \/ \E d \in Devices : DeviceClaims(d) \/ DeviceReleases(d)
   \/ \E p, q \in Persons : ContactRequest(p, q) \/ Propose(p, q) \/ GuardianBinds(p, q) \/ Mute(p, q)
-  \/ ContactAccept \/ ContactIgnore \/ ContactUnignore \/ ContactUnblock \/ ContactEnds \/ Unmute \/ NameAgentModerator
+  \/ ContactAccept \/ ContactIgnore \/ ContactUnignore \/ ContactUnblock \/ ContactEnds \/ Unmute \/ NameAgentModerator \/ Recall
   \/ CharterSuperseded \/ EventOpens
   \/ \E how \in {"completed", "cancelled"} : EventCloses(how)
   \/ Dissolve
@@ -333,6 +342,15 @@ Inv_AnnouncedIsPqcComplete == On("identity") => \A p \in Persons : Announced(p) 
 Inv_GuardianIsAnnouncedAdult == \A p \in Persons : m.guardian[p] # "none" => (m.guardian[p] \in Adults /\ Announced(m.guardian[p]))
 Inv_IncapacitatedHoldsNoSeat == \A p \in Persons : m.capacity[p] = "incapacitated" => (m.steward # p /\ m.waPerson # p /\ Wards(p) = {})
 Inv_ModeratorIsMember == m.moderator \in Persons => m.member[m.moderator] = "member"
+\* CC 4.5.4 (v): nobody is invited into a locked room, and a duty holder is seated in one only by the members' count
+Act_LockedAdmitsNobody == [][Locked => \A q \in Persons : (m'.member[q] = "proposed" => m.member[q] = "proposed")]_m
+Act_LockLiftsByTheCount == [][(Locked /\ m'.moderator # "-" /\ m'.community = "founded") =>
+                                 (m'.moderator = "agent" \/ m.member[m'.moderator] = "member")]_m
+\* a locked room is read-only: no row is admitted while it has no duty holder
+Act_LockedReadOnly == [][Locked => \A r \in Rows : ~(m.row[r] = "absent" /\ m'.row[r] = "admitted")]_m
+\* the members' recall leaves the room locked, and needs two members (CC 4.5.13 moderator_recall: the floor is two voices)
+Act_RecallNeedsTwo == [][(m.moderator # "-" /\ m'.moderator = "-" /\ m'.community = "founded" /\ m.moderator \notin {q \in Persons : m'.member[q] = "left"}
+                          /\ ~(m.moderator = "agent" /\ m'.agent # m.agent)) => Cardinality(Members) >= 2]_m
 Inv_AgentModeratorIsBonded == m.moderator = "agent" => m.agent = "bonded"
 \* the halt reaches the delegated moderator: no flag is decided and no row withheld by the agent while a halt stands
 Act_HaltStopsAgentModeration == [][(m.moderator = "agent" /\ m.halt # "clear") =>

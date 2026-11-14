@@ -1,0 +1,27 @@
+# What a row confers, and which party a segment of a family's name holds, where formal/derivation/family_shapes.tsv does not say it.
+# Read by tools/build_family_model.py. Every quote stands verbatim in the cited section.
+# confers, when shape=SHAPES: the default, the value every family of those shapes takes. A consent family's cell is its parameters in family_shapes.tsv.
+# confers, when a family: `nothing` where a sentence says its rows seat no one, or `NAME=VALUE`, a seat parameter family_shapes.tsv does not state (it refuses a copy).
+# binds_segment: one placeholder of one family whose registry class is value or hex, and the key slot it holds: signer | subject | group | none.
+#   class=CLASS: a segment of that registry class names no key, so it binds none; a trailing `*` is no placeholder of its own.
+# derived: a family whose row every holder recomputes from other rows, and the rows it must equal. A family with no row here is open.
+column	when	value	cc_ref	quote
+confers	shape=claim|content	nothing	CC 3.4.5.1	Anyone may claim anything; absent trust or consent, a claim reaches no one but its author.
+confers	cosign:{state}	nothing	CC 3.1.3	Nothing folds from them and no seat moves on them
+confers	objection:{state}	nothing	CC 4.5.13	It never admits anyone to a family or community and confers no consent on anyone's behalf
+confers	consent:decay:{stage}	nothing	CC 3.3.1	it confers no right to be believed, and a peer weighs it as testimony
+confers	self:delegates_to	nothing	CC 3.1.3	only on an owner's own `delegates_to` row; confers nothing
+confers	self:delegates_to:agent_occurrence	nothing	CC 3.1.3	only on an owner's own `delegates_to` row; confers nothing
+confers	consent:partnership_grant	consent=accept_row (consent:partnership_accept)	CC 4.4.3.19	the user emits `consent:partnership_grant` and the agent occurrence emits `consent:partnership_accept` under one `bilateral_pair_id`
+confers	consent:partnership_accept	consent=this row (the acceptance of a consent:partnership_grant)	CC 4.4.3.19	the user emits `consent:partnership_grant` and the agent occurrence emits `consent:partnership_accept` under one `bilateral_pair_id`
+confers	ownership:{relation}:{target_kind}:{version}	consent=same_row (the owned key cosigns)	CC 3.2	So an owner-binding counts toward ownership only when the node's own key cosigned it
+confers	group:roster	consent=same_row (each holder signs the record)	CC 3.1.3.2	A founding record seats a listed member iff that member **signed** the record
+binds_segment	licensure:{authority_id} {authority_id}	signer	CC 2.4.1.3	mean exactly that X's key *is* `A`, or holds a `license`-scoped delegation whose chain resolves to `A`
+binds_segment	consent:deletion_sla:{days} {days}	none	CC 3.3.1	Numeric value carries the window.
+binds_segment	class=literal	none	CC 3.1.7	a stem this Part fixes
+binds_segment	class=vocab	none	CC 3.1.7	an open or closed vocabulary this Part defines
+binds_segment	class=external	none	CC 3.1.7	a token whose spelling an outside standard fixes
+binds_segment	class=wildcard	none	CC 3.1.7	It matches one *or more* remaining segments, never exactly one.
+derived	census:composite:{class}	census:partial:{class} (composite = partial_a + partial_b)	CC 6.1.9	`composite = partial_a + partial_b` in the field.
+derived	census:expected_active	census:member:partial (the count of owners whose recent bit is set)	CC 6.1.9	recomputed by every member from the two partials
+derived	ballot:tally:{poll_id}	census:member:partial (the two tally members' fold of the poll cells)	CC 6.1.9	the result is `ballot:tally:{poll_id}:v1`, recomputed by every member

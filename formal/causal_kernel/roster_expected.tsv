@@ -1,0 +1,91 @@
+instance	property	verdict
+MADE-UP: a room where one signature removes (no floor)	Inv_CoercedCannotRemoveHonest on an instance built to violate it (must be refused)	refused as required
+a key (its registration, its owner, its revokers)	a former owner, whose binding was withdrawn in the revocation's past, revokes nothing	holds
+a key (its registration, its owner, its revokers)	a revocation signed by any other key revokes nothing	holds
+a key (its registration, its owner, its revokers)	a revoked key cannot un-revoke itself (a revocation is never withdrawn)	holds
+a key (its registration, its owner, its revokers)	the key's own revocation ends its registration from the revocation forward, by causal past	holds
+a key (its registration, its owner, its revokers)	the owner's revocation ends the key's registration from the revocation forward, by causal past	holds
+a key (its registration, its owner, its revokers)	two live owner-bindings naming different owners: no owner, and neither alone revokes (derived from CC 3.2 owner_of)	holds
+accord (holders)	lame duck (a holder named for removal fires until the decision) AND a removed holder no longer fires	does NOT hold
+accord (holders)	lame duck AND a removed holder no longer fires, with the latch on receipt (a reader-relative parameter that reads arrival order)	holds with latch_on_receipt (per node; NOT a function of the rows)
+accord (holders)	recovery_keys_help_heal (a single-signer version, no quorum)	holds with the recovery parameter (a second root: the committed key)
+accord (holders)	recovery_keys_never_help_seizure	holds
+accord (holders)	roster_fork M0 (tips wait): majority over 01234, adversary 34; 7 properties	holds
+accord (holders)	standing_frozen_after_decimation, standing_survivors_keep_fire	bound reproduced
+accord (holders)	standing_seize_iff / standing_censorship_irrelevant (removal and puppet need floor(N/2)+1)	holds
+accord (holders)	the halt fuse (window.py halt cases): one holder fires, lapses unless a strict majority confirms	holds
+community (public, members are persons)	Inv_CoercedCannotRemoveHonest, with the floor of two voices under every protocol	holds with floor=2 (the table's min_count)
+community (public, members are persons)	Inv_DeclineTerminal, Inv_LeavingNotUndone (leaving = withdrawing the acceptance)	holds
+community (public, members are persons)	Inv_JoinerConsented	holds
+community (public, members are persons)	Inv_LeavingNotUndone, leaving read as a withdrawal of the seat	does NOT hold
+community (public, members are persons)	Inv_LeavingNotUndone, leaving read as a withdrawal of the seat, with the stated parameter	holds with spent (CC 3.1.3.2 admission (5): 'P has not already seated K')
+community (public, members are persons)	Inv_NoSelfAdmission	holds
+community (public, members are persons)	Inv_ResignationEnabled	holds
+community (public, members are persons)	a key's leaving binds by the version's past: a version with it there does not count that key; one without it still does	holds
+community (public, members are persons)	a lone duty holder confers alone with the new holder's acceptance; one of two confers nothing alone	holds
+community (public, members are persons)	a removal from the roster ends the removed member's duty seats (a non-member holds no duty)	holds
+community (public, members are persons)	any seat the duty holders place over the room follows their count, a duty the record declares or any other scope	holds
+community (public, members are persons)	community_invite reverse path: one member's proposal and the joiner's yes land at the close unless a third objects	holds
+community (public, members are persons)	conferral by a strict majority of the holders; withdrawal by a strict majority of the others, the holder concerned not counted	holds
+community (public, members are persons)	holders are equals: the key that conferred a duty seat does not end it alone	holds
+community (public, members are persons)	roster_fork M0 (tips wait): majority over 0123, adversary 3; 7 properties	holds
+community (public, members are persons)	roster_fork M0 (tips wait): majority over 0123, adversary 4; 7 properties	holds
+community (public, members are persons)	roster_fork M0 (tips wait): quorum3 over 01234, adversary 34; 7 properties	holds
+community (public, members are persons)	roster_fork M0 (tips wait): two_thirds over 0123, adversary 3; 7 properties	holds
+community (public, members are persons)	tips wait (KERNEL 7): two versions of one head give the members common to both; a version naming both makes one head	holds
+community (public, members are persons)	when no duty holder is left the members' count seats one (and one member does not)	holds
+community (public, members are persons)	where there are two holders, no duty seat is withdrawn on fewer than two voices	holds
+community, with the stated parameter spent on (does it break anything else?)	Inv_CoercedCannotRemoveHonest, with the floor of two voices under every protocol	holds with floor=2 (the table's min_count)
+community, with the stated parameter spent on (does it break anything else?)	Inv_DeclineTerminal, Inv_LeavingNotUndone (leaving = withdrawing the acceptance)	holds
+community, with the stated parameter spent on (does it break anything else?)	Inv_JoinerConsented	holds
+community, with the stated parameter spent on (does it break anything else?)	Inv_LeavingNotUndone, leaving read as a withdrawal of the seat	does NOT hold
+community, with the stated parameter spent on (does it break anything else?)	Inv_LeavingNotUndone, leaving read as a withdrawal of the seat, with the stated parameter	holds with spent (CC 3.1.3.2 admission (5): 'P has not already seated K')
+community, with the stated parameter spent on (does it break anything else?)	Inv_NoSelfAdmission	holds
+community, with the stated parameter spent on (does it break anything else?)	Inv_ResignationEnabled	holds
+community, with the stated parameter spent on (does it break anything else?)	community_invite reverse path: one member's proposal and the joiner's yes land at the close unless a third objects	holds
+community, with the stated parameter spent on (does it break anything else?)	tips wait (KERNEL 7): two versions of one head give the members common to both; a version naming both makes one head	holds
+community, with the stated parameter spent on (does it break anything else?)	when no duty holder is left the members' count seats one (and one member does not)	holds
+infrastructure community (operators' keys)	T6: a witnessed lineage holds void the rival head that is not witnessed	holds with witnessed (a reader's parameter: which tip its witnesses named)
+infrastructure community (operators' keys)	T7 recovery: the conferring body's one widening	holds with body (a second conferrer, active only while stalled)
+infrastructure community (operators' keys)	T7: a roster at M active founders is stalled and admits nothing by the count	holds with margin=1 (live while need+1 founders)
+infrastructure community (operators' keys)	a node is seated without consent and is never counted	holds with counted=founder, consent=one for nodes
+infrastructure community (operators' keys)	no single founder admits alone (quorum:2/3)	holds
+infrastructure community (operators' keys)	roster_fork M0 (tips wait): quorum2 over 012, adversary 2; 7 properties	holds
+private room (members are voices)	Inv_CoercedCannotRemoveHonest, with the floor of two voices under every protocol	holds with floor=2 (the table's min_count)
+private room (members are voices)	Inv_DeclineTerminal, Inv_LeavingNotUndone (leaving = withdrawing the acceptance)	holds
+private room (members are voices)	Inv_JoinerConsented	holds
+private room (members are voices)	Inv_LeavingNotUndone, leaving read as a withdrawal of the seat	does NOT hold
+private room (members are voices)	Inv_LeavingNotUndone, leaving read as a withdrawal of the seat, with the stated parameter	holds with spent (CC 3.1.3.2 admission (5): 'P has not already seated K')
+private room (members are voices)	Inv_NoSelfAdmission	holds
+private room (members are voices)	Inv_ResignationEnabled	holds
+private room (members are voices)	community_invite reverse path: one member's proposal and the joiner's yes land at the close unless a third objects	holds
+private room (members are voices)	tips wait (KERNEL 7): two versions of one head give the members common to both; a version naming both makes one head	holds
+private room (members are voices)	when no duty holder is left the members' count seats one (and one member does not)	holds
+self roster (a person's keys)	Inv_ThiefCannotEvictHonest (owner present)	holds
+self roster (a person's keys)	Inv_ThiefCannotEvictHonest (owner present)	holds
+self roster (a person's keys)	Inv_ThiefCannotEvictHonest (owner present)	holds
+self roster (a person's keys)	Inv_ThiefNeverMajority: a thief's own key is not added against the owner's two keys	holds
+self roster (a person's keys)	Prop_LostRecoverable (two lost of three)	holds
+self roster (a person's keys)	WITNESS PAIR: a person's and an agent's self roster, same parameters; CC 3.3.6.4 'The door is a person's ... an agent's occurrence is single-signer, and neither runs these paths'	holds with persons_only (identity_type of the roster's root)
+self roster (a person's keys)	a vote from an evicted key is void (removal by causal past)	holds
+self roster (a person's keys)	combined1_add: at one key the addition lands at once	holds
+self roster (a person's keys)	combined1_stolen: one key stolen loses the self	bound reproduced
+self roster (a person's keys)	combined2_stolen: two keys, one stolen, is a stalemate	bound reproduced
+self roster (a person's keys)	combined3_mixed: one stolen and one lost of three is a tie	bound reproduced
+self roster (a person's keys)	residual: an owner absent for a whole window looks lost	bound reproduced
+self roster (a person's keys)	roster_fork M0 (tips wait): majority over 012, adversary 2; 7 properties	holds
+self roster (a person's keys)	the quorum path evicts an active thief	holds
+voice (a voice's room keys)	Inv_ThiefCannotEvictHonest (owner present)	holds
+voice (a voice's room keys)	Inv_ThiefCannotEvictHonest (owner present)	holds
+voice (a voice's room keys)	Inv_ThiefCannotEvictHonest (owner present)	holds
+voice (a voice's room keys)	Inv_ThiefNeverMajority: a thief's own key is not added against the owner's two keys	holds
+voice (a voice's room keys)	Prop_LostRecoverable (two lost of three)	holds
+voice (a voice's room keys)	a vote from an evicted key is void (removal by causal past)	holds
+voice (a voice's room keys)	combined1_add: at one key the addition lands at once	holds
+voice (a voice's room keys)	combined1_stolen: one key stolen loses the self	bound reproduced
+voice (a voice's room keys)	combined2_stolen: two keys, one stolen, is a stalemate	bound reproduced
+voice (a voice's room keys)	combined3_mixed: one stolen and one lost of three is a tie	bound reproduced
+voice (a voice's room keys)	one person, one voice: a tally over voices is the count of persons	holds
+voice (a voice's room keys)	removal by causal past through a voice: a removed voice's room keys, a later one included, speak for nobody	holds
+voice (a voice's room keys)	residual: an owner absent for a whole window looks lost	bound reproduced
+voice (a voice's room keys)	the quorum path evicts an active thief	holds

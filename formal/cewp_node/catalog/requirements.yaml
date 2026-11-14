@@ -43,7 +43,7 @@ CSD-096:
   tests:
     one_handler:
       at: [session.unified, note.synced]
-# Changes to your devices — the self roster's held changes (CC 3.3.6.3,
+# Changes to your devices — the self roster's held changes (CC 3.3.6.4,
 # CIRISServer#794; the client's self-key roster card, CIRISClient#218).
 CSD-095:
   topology: T10

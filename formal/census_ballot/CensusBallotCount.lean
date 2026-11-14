@@ -1,6 +1,6 @@
 /-
   CensusBallotCount.lean — the counting facts under the census and the secret ballot
-  (CC 4.5.13, 5.4.6, 6.1.2.1.2), for any N. The TLA+ model
+  (CC 4.5.13, 5.4.6, 6.1.2.3), for any N. The TLA+ model
   (CensusBallot.tla) checks the machine on small instances; this file proves the arithmetic
   it rests on in general.
 

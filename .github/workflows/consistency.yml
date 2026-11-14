@@ -54,7 +54,7 @@ jobs:
           python3 tools/cc_namespace_match.py --self-test
           python3 tools/cc_namespace_match.py --write-vectors
           git diff --exit-code manifests/
-      - name: Signed object (CC 2.6.1.7) is regenerated from its table and its vectors recompute
+      - name: Signed object (CC 2.6.1.8) is regenerated from its table and its vectors recompute
         run: |
           python3 tools/build_cc_signed_object.py
           python3 tools/build_cc_signed_object.py --self-test
@@ -63,7 +63,7 @@ jobs:
         run: |
           python3 tools/build_governance_policy.py
           python3 tools/build_governance_policy.py --self-test
-          git diff --exit-code manifests/governance_policy.json manifests/governance_policy_vectors.json formal/two_path/generated/
+          git diff --exit-code manifests/governance_policy.json manifests/governance_policy_vectors.json formal/two_path/generated/ constitution/part_4_composition_governance.md
       - name: CSD/4 chain manifest (models → state table → atoms → claims → evidence → catalogue) is regenerated (no drift)
         run: |
           pip install -q pyyaml
@@ -85,11 +85,33 @@ jobs:
       - name: The family model manifest is current against the CC table and the vendored census
         run: python3 tools/build_family_model.py --check
       - name: The transitions table is derived from the family model (CC 4.5.13; no drift)
-        run: python3 tools/build_transitions.py --check
+        run: python3 tools/guard_grammar.py && python3 tools/change_grammar.py && python3 tools/fold_grammar.py && python3 tools/build_transitions.py --check && python3 tools/build_reactions.py --check && python3 tools/family_card.py --check && python3 tools/check_signer_gate.py
       - name: The mesh story runs end to end over the derived tables and every step keeps the rule (CC 4.5.13)
         run: python3 -I tools/mesh_story.py --check
       - name: The fold is a function of the held set — the story's rows fold to the same states and queues in every arrival order and island split (CC 4.5.13)
         run: python3 -I tools/check_fold_order.py
+      - name: Every statement a landed rule's home section carried is still carried by its entry, and no entry sentence runs past forty words
+        run: python3 tools/check_rule_entries.py
+      - name: Every sentence that says a landed rule again cites its home; the uncited count only falls
+        run: python3 tools/check_restatements.py
+      - name: Counts, citations, terms, keyword force, sentence length and history words in the Parts; each count only falls
+        run: python3 tools/check_text_lints.py
+      - name: Every wire form the compliance mappings cite resolves as recorded, and every dimension keeps a registered family (CC 3.1)
+        run: python3 tools/check_compliance_wire_forms.py
+      - name: The screen standard agrees with the view, the choice item, the transitions and the kernel it is built on (CSD/5; CC 4.5.13)
+        run: python3 tools/check_ui_primitives.py
+      - name: Every place shipped behaviour differs from the text is a test expectation the kernel computes
+        run: python3 tools/build_divergences.py --check && python3 tools/check_divergences.py
+      - name: The screen standard's closure over the typed tables does not fall
+        run: python3 tools/ui_closure.py --check
+      - name: Nothing a node concludes can run on without end — no cycle of caused rows, a bounded chain, every wait with a deadline
+        run: python3 tools/check_termination.py
+      - name: What a kernel needs that this document states does not fall; the rest is listed as residual
+        run: python3 tools/kernel_closure.py --check
+      - name: Kernel requirements against supply
+        run: python3 tools/kernel_requirements.py --check
+      - name: What each row family is needed for
+        run: python3 tools/family_need.py --check
       - name: Every family's transitions against every role token — tokens declared and used, gaps declared, every exit has an entry (CC 4.5.13)
         run: python3 tools/check_transition_roles.py
       - name: Signed-object CDDL parses and admits every admit vector (generated and draft-wrapped forms)
@@ -100,6 +122,8 @@ jobs:
         run: |
           pip install -q pyyaml
           python3 tools/check_formal_counts.py
+      - name: Implementers' section maps are current
+        run: python3 tools/recut_sections.py --evidence-rows --check
       - name: Volume map (toc.tsv volume column) is regenerated from constitution/volumes.tsv
         run: |
           python3 build_pdf.py --write-toc-volumes

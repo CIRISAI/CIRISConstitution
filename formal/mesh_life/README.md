@@ -27,27 +27,27 @@ Planes touch each other only through the spine, so every invariant mentions the 
 
 | configuration | planes | result |
 |---|---|---|
-| `MeshLife_spine.cfg` | none (the bare spine) | closes: 46,858 distinct states, 2 s |
-| `MeshLife.cfg` | halt, consent, contact | closes: 13,001,125 distinct states, 15 min on 16 workers |
-| `MeshLife_contact.cfg` | contact (request, accept, ignore, block, mute) | closes: 274,578 states, 12 s |
-| `MeshLife_channel.cfg` | the bare spine with a room that names its writers (`WriteRight = "named"`) | closes: 81,130 states, 3 s |
-| `MeshLife_identity.cfg` | identity (p2 a minor) | closes: 1,296,397 states, 21 s |
-| `MeshLife_content.cfg` | content | closes: 347,638 states, 9 s |
-| `MeshLife_moderation.cfg` (one row) | moderation: any member raises an action, members respond, a moderator or the delegated agent rules at any time, else the majority of respondents decides at the window | closes: 999,146 states, 21 s |
-| `MeshLife_moderation_halt.cfg` (one row) | moderation with the halt: the halt stops the agent moderator's ruling and leaves the members their vote | closes: 11,989,741 states, 5 min 40 s |
-| `MeshLife_wa.cfg` | the Wise Authority seat | closes: 275,530 states, 9 s |
-| `MeshLife_deferral.cfg` | the deferral | closes: 250,903 states, 7 s |
-| `MeshLife_goal.cfg` | the goal tree | closes: 253,274 states, 7 s |
-| `MeshLife_evidence.cfg` | evidence, with the goal chain | closes: 2,792,648 states, 77 s |
-| `MeshLife_event.cfg` | the event and the charter (the room an affiliation) | closes: 356,482 states, 10 s |
-| `MeshLife_ledger.cfg` | the ledger | closes: 666,574 states, 18 s |
-| `MeshLife_live.cfg` (one row, no symmetry) | halt, consent, contact; `Live_WindsDownToEnd` | holds: 15,428,353 states, 55 min 39 s on 16 workers (run here; CI runs the next row) |
-| `MeshLife_live_contact.cfg` (one row, no symmetry) | contact; `Live_WindsDownToEnd` | holds: 163,863 states, 20 s |
+| `MeshLife_spine.cfg` | none (the bare spine) | closes: 38,230 distinct states, 5 s |
+| `MeshLife.cfg` | halt, consent, contact | closes: 9,802,021 distinct states, 11 min 35 s on 12 workers |
+| `MeshLife_contact.cfg` | contact (request, accept, ignore, block, mute) | closes: 207,810 states, 30 s |
+| `MeshLife_channel.cfg` | the bare spine with a room that names its writers (`WriteRight = "named"`) | closes: 62,422 states, 8 s |
+| `MeshLife_identity.cfg` | identity (p2 a minor) | closes: 1,094,797 states, 1 min 32 s |
+| `MeshLife_content.cfg` | content | closes: 277,738 states, 30 s |
+| `MeshLife_moderation.cfg` (one row) | moderation: any member raises an action, members respond, a moderator or the delegated agent rules at any time, else the majority of respondents decides at the window | closes: 923,210 states, 1 min 18 s |
+| `MeshLife_moderation_halt.cfg` (one row) | moderation with the halt: the halt stops the agent moderator's ruling and leaves the members their vote | closes: 11,078,509 states, 12 min 23 s |
+| `MeshLife_wa.cfg` | the Wise Authority seat | closes: 218,518 states, 14 s |
+| `MeshLife_deferral.cfg` | the deferral | closes: 201,925 states, 12 s |
+| `MeshLife_goal.cfg` | the goal tree | closes: 204,382 states, 25 s |
+| `MeshLife_evidence.cfg` | evidence, with the goal chain | closes: 2,249,084 states, 4 min 37 s |
+| `MeshLife_event.cfg` | the event and the charter (the room an affiliation) | closes: 287,458 states, 36 s |
+| `MeshLife_ledger.cfg` | the ledger | closes: 529,246 states, 1 min 5 s |
+| `MeshLife_live.cfg` (one row, no symmetry) | halt, consent, contact; `Live_WindsDownToEnd` | holds: 11,778,817 states, 34 min 55 s on 12 workers (run here; CI runs the next row) |
+| `MeshLife_live_contact.cfg` (one row, no symmetry) | contact; `Live_WindsDownToEnd` | holds: 125,847 states, 23 s |
 | `MeshLife_lone_halt.cfg` | one holder may confirm a halt | fails `Inv_HaltIsMajority` |
 | `MeshLife_gone_with_device.cfg` | a person may be gone while a device of theirs is claimed | fails `Inv_DeviceHasOwner` |
 | `MeshLife_gone_stewarding.cfg` | a person may be gone while stewarding an agent | fails `Inv_AgentHasSteward` |
 
-Every closing configuration checks every invariant and the two progress facts (`Act_WindNeverRaisesRank`, `Act_WindStepLowersRank`) and the mute property (`Act_MuteChangesNoRow`), with no deadlock; all 32 workers unless stated.
+Every closing configuration checks every invariant and the two progress facts (`Act_WindNeverRaisesRank`, `Act_WindStepLowersRank`) and the mute property (`Act_MuteChangesNoRow`), with no deadlock; six workers unless stated.
 
 **The spine's invariants, in plain words.** Nothing exists before the ceremony. A claimed device has a living owner. A member, and a proposed member, is an announced person (or a minor whose guardian is bound). A row lives only in a founded room and names its author. A bonded or frozen agent has an announced steward. A confirmed halt was confirmed by a majority. A live contact is between announced people. An ended mesh is empty. **The planes add theirs:** an ignored request looks to the asker exactly like a pending one; a block is one party's own act; a mute is between members and changes nothing but itself; a minor is never announced; an announced key has both halves; a guardian is an announced adult; an incapacitated person holds no seat; the moderator is a member, or the bonded agent; an action lands by a moderator's ruling or by the majority of the respondents and never otherwise; the majority lands only the action that was asked or keeps the row visible; the halt stops the agent moderator's ruling and not the members' vote; a hard removal withdraws the row; a durable mark rides an admitted row; a seated Wise Authority is announced; an amendment follows an approval; a goal lives in a founded room; evidence names a declared goal and is counted only by a measure; the measure chain is whole; an event belongs to a founded room; a charter only on an affiliation.
 

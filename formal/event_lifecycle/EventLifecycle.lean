@@ -9,7 +9,8 @@ how the one makes the other, and proves it closes.
 object's family, its lifecycle state, and the person's standing toward it: the roles the held rows
 give them (author, subject, member, moderator, founder, steward, holder, witness). The family's
 lifecycle is a list of transitions, each a verb with the state it leaves, the state it reaches,
-the roles that may sign it and the governance policy it runs under. The queue is exactly the
+the roles that may sign it, the governance policy it runs under, whether it widens and whether it
+has a way back. The queue is exactly the
 transitions enabled for this viewer in this state, one item each, and an item's writes are the
 row that transition signs. The admission door is the same predicate: a row is admitted when its
 signer held a role the transition names in the state the object was in. So the queue can never
@@ -18,7 +19,8 @@ offer what the door would refuse, and the door never admits what the queue would
 In holon terms: a view is a unit (an admitted object), its rows and atoms are its bonds, and the
 queue is the set of rewrites this holder may perform; answering an item performs the rewrite and
 the next view shows it. In the CEWPOS algebra: P7 shows the state, P9 is an enabled rewrite, P8 is
-an enabled rewrite that widens, P4 is the row the rewrite wrote, P3 and P11 are the bonds.
+an enabled rewrite that widens or has no way back, P4 is the row the rewrite wrote, P3 and P11 are
+the bonds.
 -/
 
 inductive Role
@@ -44,7 +46,8 @@ structure Transition where
   to : String
   roles : List Role          -- any one of these may sign it
   policy : Policy
-  widens : Bool              -- widening or irreversible: confirmed before it is signed (P8)
+  widens : Bool              -- the row reaches someone the state before it did not
+  undo : Bool                -- the lifecycle offers a way back from the state it reaches
   deriving DecidableEq, Repr
 
 structure Family where
@@ -78,7 +81,7 @@ structure Item where
   writes : Transition
   deriving DecidableEq, Repr
 
-def toItem (t : Transition) : Item := ⟨t.verb, t.policy, t.widens, t⟩
+def toItem (t : Transition) : Item := ⟨t.verb, t.policy, t.widens || !t.undo, t⟩
 
 /-- The queue a node serves this person for this view. -/
 def queue (v : View) (s : Standing) : List Item := (enabled v s).map toItem
@@ -133,12 +136,28 @@ theorem answered_item_leaves_queue (v : View) (s : Standing) (i : Item)
   simp only [admits, answer, Bool.and_eq_true, beq_iff_eq] at hs
   exact hmove hs.1
 
-/-- Widening items are confirmed before they are signed (P8), narrowing ones are not. -/
-theorem widening_is_confirmed (v : View) (s : Standing) (i : Item) (h : i ∈ queue v s) :
-    i.confirm = i.writes.widens := by
+/-- The confirm test is one lookup (P8): an item is confirmed before it is signed exactly when its
+    row widens or has no way back. -/
+theorem confirm_is_lookup (v : View) (s : Standing) (i : Item) (h : i ∈ queue v s) :
+    i.confirm = (i.writes.widens || !i.writes.undo) := by
   unfold queue at h
   obtain ⟨t, _, rfl⟩ := List.mem_map.mp h
   rfl
+
+/-- Widening items are confirmed before they are signed. -/
+theorem widening_is_confirmed (v : View) (s : Standing) (i : Item) (h : i ∈ queue v s)
+    (hw : i.writes.widens = true) : i.confirm = true := by
+  rw [confirm_is_lookup v s i h, hw]; rfl
+
+/-- An item with no way back is confirmed before it is signed, narrowing or not. -/
+theorem no_way_back_is_confirmed (v : View) (s : Standing) (i : Item) (h : i ∈ queue v s)
+    (hu : i.writes.undo = false) : i.confirm = true := by
+  rw [confirm_is_lookup v s i h, hu]; simp
+
+/-- An exit takes one step: an item that does not widen and has a way back is never confirmed. -/
+theorem exit_is_one_step (v : View) (s : Standing) (i : Item) (h : i ∈ queue v s)
+    (hw : i.writes.widens = false) (hu : i.writes.undo = true) : i.confirm = false := by
+  rw [confirm_is_lookup v s i h, hw, hu]; rfl
 
 /-! ## Preview is execution: the queue, the preview and the door are one function -/
 
@@ -166,12 +185,12 @@ theorem refused_previews_nothing (v : View) (s : Standing) (t : Transition)
 def postFamily : Family := {
   name := "scores (a room post)",
   transitions := [
-    ⟨.attest,   "none",      "live",      [.member], .selfAct, true,  ⟩,   -- a member posts (widens: leaves the person)
-    ⟨.withdraw, "live",      "withdrawn", [.author], .selfAct, false ⟩,   -- the author withdraws (narrows: one step)
-    ⟨.recant,   "live",      "recanted",  [.author], .selfAct, false ⟩,
-    ⟨.vote,     "live",      "live",      [.member], .twoPath, false ⟩,   -- a member raises or answers a flag
-    ⟨.withdraw, "live",      "withheld",  [.moderator, .steward], .mirror, false ⟩,  -- a moderator withholds
-    ⟨.cosign,   "withheld",  "removed",   [.member], .twoPath, true  ⟩    -- the room decides under the floor
+    ⟨.attest,   "none",      "live",      [.member], .selfAct, true,  true  ⟩,   -- a member posts (widens: leaves the person)
+    ⟨.withdraw, "live",      "withdrawn", [.author], .selfAct, false, true  ⟩,   -- the author withdraws (narrows: one step)
+    ⟨.recant,   "live",      "recanted",  [.author], .selfAct, false, true  ⟩,
+    ⟨.vote,     "live",      "live",      [.member], .twoPath, false, true  ⟩,   -- a member raises or answers a flag
+    ⟨.withdraw, "live",      "withheld",  [.moderator, .steward], .mirror, false, true ⟩,  -- a moderator withholds
+    ⟨.cosign,   "withheld",  "removed",   [.member], .twoPath, false, false ⟩   -- the room decides under the floor (no way back)
   ] }
 
 def live : View := ⟨postFamily, "live"⟩
@@ -191,5 +210,13 @@ theorem stranger_queue : queue live ⟨[]⟩ = [] := by decide
 
 /-- After the author withdraws, the post is withdrawn and the author's queue is empty. -/
 theorem after_withdraw :
-    queue (answer live (toItem ⟨.withdraw, "live", "withdrawn", [.author], .selfAct, false⟩)) ⟨[.author, .member]⟩ = [] := by
+    queue (answer live (toItem ⟨.withdraw, "live", "withdrawn", [.author], .selfAct, false, true⟩)) ⟨[.author, .member]⟩ = [] := by
   decide
+
+/-- The author's three exits take one step each; the room's removal, which narrows and has no way
+    back, is confirmed. -/
+theorem author_exits_one_step :
+    (queue live ⟨[.author, .member]⟩).map Item.confirm = [false, false, false] := by decide
+
+theorem removal_is_confirmed :
+    (queue ⟨postFamily, "withheld"⟩ ⟨[.member]⟩).map Item.confirm = [true] := by decide

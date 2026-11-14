@@ -1,6 +1,6 @@
 # CIRIS Federation Wire Vocabulary
 
-**Constitution:** CC (CIRIS Accord) 1.0-rc18 — wire vocabulary as a hash-pinned constitutional artifact
+**Constitution:** CC (CIRIS Accord) 1.0-rc19 — wire vocabulary as a hash-pinned constitutional artifact
 **Artifact steward:** CIRISConstitution (`manifests/WIRE_VOCABULARY.md`, CC 2.6.4)
 **Vocabulary version:** v1.0.3 (ratified baseline; v1.0.1 adds the §3.3 migration-semantics clarification — schema+canonicalization move to the range steward, not just the wire discriminator; v1.0.2 retires `GoalDeclaration` and `GoalRetirement`, which CC 3.1.9.7 makes a `goal:{scale}` scores row and its own `supersedes`/`withdraws`/`recants`, so no separate transport message exists — a correction of this manifest to the text, not a change of the wire: the two kinds have had no emitter since persist v60 and edge dropped them at that adopt; v1.0.3 retires `FountainHoldingClaim`, which nothing emits in production: edge's hosts never install the swarm runtime that alone constructs it, the server's shipped wheel is codec-free and its only use is an in-process benchmark that never reaches the wire, so this too is a correction of the manifest to the wire as it is, not a change of it)
 **Vocabulary hash:** `sha256(` canonical bytes of this document `)` — computed at build time, pinned by every ratifying repo (§4)
@@ -96,7 +96,7 @@ Signatures are hybrid throughout: Ed25519 (mandatory) + ML-DSA-65 (`signature_pq
 
 **Retired (v1.0.2).** `GoalDeclaration` and `GoalRetirement` are no longer wire kinds. CC 3.1.9.7: the declarer's signed `scores` row on `goal:{scale}` **is** the Goal, carrying its fields and its `MetaGoalAlignment` (the M-1 invariant is an admission gate on the family); amendment is the declarer's `supersedes`, retirement `withdraws`, "this goal was never mine" `recants`; the row replicates as any row through `ContributionSubmit`, so no separate transport message exists. A decoder that meets either discriminator MUST reject it as an unknown kind.
 
-**Retired (v1.0.3).** `FountainHoldingClaim` is no longer a wire kind. Holding on the chunk plane is a sealed-chunk custody fact ([CC 5.3.3.2.4], [CC 6.1.5.1]) carried as rows and acknowledgements, not a fire-and-forget claim; no production host installs the runtime that constructed the kind and no shipped build emits it. A decoder that meets the discriminator MUST reject it as an unknown kind; a receiver that previously folded it drops it by name.
+**Retired (v1.0.3).** `FountainHoldingClaim` is no longer a wire kind. Holding on the chunk plane is a sealed-chunk custody fact ([CC 5.3.3.6], [CC 6.1.5.1]) carried as rows and acknowledgements, not a fire-and-forget claim; no production host installs the runtime that constructed the kind and no shipped build emits it. A decoder that meets the discriminator MUST reject it as an unknown kind; a receiver that previously folded it drops it by name.
 
 ### 2.7 Consent / trust-graph retraction
 

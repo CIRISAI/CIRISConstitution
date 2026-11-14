@@ -106,7 +106,7 @@
     "person.multi_device": {
       "plane": "self",
       "state_predicate": "self.roster_size∈{two,three_or_more}",
-      "cc_ref": "3.3.6.3",
+      "cc_ref": "3.3.6.4",
       "in_state_table": true,
       "meaning": "a person owns two or more claimed devices"
     },
@@ -127,14 +127,14 @@
     "device.join_requested": {
       "plane": "self",
       "state_predicate": "device.join=requested",
-      "cc_ref": "3.3.6.3",
+      "cc_ref": "3.3.6.4",
       "in_state_table": true,
       "meaning": "a new device asked to join an existing ID; the other device has not answered"
     },
     "device.join_approved": {
       "plane": "self",
       "state_predicate": "device.join=approved",
-      "cc_ref": "3.3.6.3",
+      "cc_ref": "3.3.6.4",
       "in_state_table": true,
       "meaning": "the other device approved; the new device verified it offline and HOLDS it, unapplied"
     },
@@ -212,14 +212,14 @@
     "file.large": {
       "plane": "content",
       "state_predicate": "blob.delivery=chunked",
-      "cc_ref": "2.6.1.3 5.3.3",
+      "cc_ref": "2.6.1.4 5.3.3",
       "in_state_table": true,
       "meaning": "the file is streamed (chunked), not inline"
     },
     "file.custody_received": {
       "plane": "content",
       "state_predicate": "blob.custody=custody_received",
-      "cc_ref": "3.1.3.3 5.3.3.6",
+      "cc_ref": "3.1.3.3 5.3.3.11",
       "in_state_table": true,
       "meaning": "the author's custody names every other device with a delivery receipt"
     },
@@ -233,7 +233,7 @@
     "roster.visible": {
       "plane": "self",
       "state_predicate": "contact lists announced devices: key.membership=member ∧ node.announce=announced",
-      "cc_ref": "3.3.6.3 5.4.6",
+      "cc_ref": "3.3.6.4 5.4.6",
       "in_state_table": true,
       "meaning": "a contact lists the person's announced devices"
     },
@@ -324,14 +324,14 @@
     "authority.licensing": {
       "plane": "authority",
       "state_predicate": "licence.state=held under an affiliated authority",
-      "cc_ref": "2.4.1.2.1 4.4.3.2.8",
+      "cc_ref": "2.4.1.3 4.4.3.12",
       "in_state_table": true,
       "meaning": "a licensing authority is affiliated"
     },
     "delegation.chain": {
       "plane": "authority",
       "state_predicate": "∃ chain: delegation.link=live, length ≥ 2",
-      "cc_ref": "4.4.3.4.3",
+      "cc_ref": "4.4.3.19",
       "in_state_table": true,
       "meaning": "a delegation chain of length >= 2 stands"
     },
@@ -462,7 +462,7 @@
     "key.holder.owner": {
       "plane": "self",
       "state_predicate": "key.holder=owner",
-      "cc_ref": "3.3.6.3",
+      "cc_ref": "3.3.6.4",
       "in_state_table": true,
       "meaning": "roster key: holder = owner — entered by — (signer: —)",
       "added_in": 2
@@ -470,7 +470,7 @@
     "key.holder.thief": {
       "plane": "self",
       "state_predicate": "key.holder=thief",
-      "cc_ref": "3.3.6.3 1.13.3",
+      "cc_ref": "3.3.6.4 1.13.3",
       "in_state_table": true,
       "meaning": "roster key: holder = thief — entered by device stolen with authentication (signer: adversary)",
       "added_in": 2
@@ -478,7 +478,7 @@
     "key.holder.lost": {
       "plane": "self",
       "state_predicate": "key.holder=lost",
-      "cc_ref": "3.3.6.3",
+      "cc_ref": "3.3.6.4",
       "in_state_table": true,
       "meaning": "roster key: holder = lost — entered by device lost (signer: —)",
       "added_in": 2
@@ -486,7 +486,7 @@
     "key.membership.proposed_evict": {
       "plane": "self",
       "state_predicate": "key.membership=proposed_evict",
-      "cc_ref": "3.3.6.3",
+      "cc_ref": "3.3.6.4",
       "in_state_table": true,
       "meaning": "roster key: membership = proposed_evict — entered by eviction proposal (signer: roster key)",
       "added_in": 2
@@ -494,7 +494,7 @@
     "key.membership.evicted": {
       "plane": "self",
       "state_predicate": "key.membership=evicted",
-      "cc_ref": "3.3.6 3.3.6.3",
+      "cc_ref": "3.3.6 3.3.6.4",
       "in_state_table": true,
       "meaning": "roster key: membership = evicted — entered by withdraws against the occurrence row lands (signer: roster majority / silence)",
       "added_in": 2
@@ -502,7 +502,7 @@
     "self.roster_size.one": {
       "plane": "self",
       "state_predicate": "self.roster_size=one",
-      "cc_ref": "3.3.6.3",
+      "cc_ref": "3.3.6.4",
       "in_state_table": true,
       "meaning": "roster: roster_size = one — entered by genesis only; add is unilateral (signer: owner)",
       "added_in": 2
@@ -510,7 +510,7 @@
     "self.roster_size.three_more": {
       "plane": "self",
       "state_predicate": "self.roster_size=three_or_more",
-      "cc_ref": "3.3.6.3",
+      "cc_ref": "3.3.6.4",
       "in_state_table": true,
       "meaning": "roster: roster_size = three_or_more — entered by two paths (signer: —)",
       "added_in": 2
@@ -686,7 +686,7 @@
     "row.standing.admitted": {
       "plane": "content",
       "state_predicate": "row.standing=admitted",
-      "cc_ref": "2.1 2.6.1.7",
+      "cc_ref": "2.1 2.6.1.8",
       "in_state_table": true,
       "meaning": "row: standing = admitted — entered by admission gates pass (signer: producer)",
       "added_in": 2
@@ -726,7 +726,7 @@
     "delegation.link.withdrawn": {
       "plane": "authority",
       "state_predicate": "delegation.link=withdrawn",
-      "cc_ref": "4.4.3.4.3",
+      "cc_ref": "4.4.3.19",
       "in_state_table": true,
       "meaning": "delegation link: link = withdrawn — entered by withdraws by the principal; cascade (signer: principal)",
       "added_in": 2
@@ -734,7 +734,7 @@
     "delegation.link.expired": {
       "plane": "authority",
       "state_predicate": "delegation.link=expired",
-      "cc_ref": "4.4.3.2.8",
+      "cc_ref": "4.4.3.12",
       "in_state_table": true,
       "meaning": "delegation link: link = expired — entered by delegation_valid_until passed (a withdrawal) (signer: principal)",
       "added_in": 2
@@ -838,7 +838,7 @@
     "key.membership.proposed_add": {
       "plane": "self",
       "state_predicate": "key.membership=proposed_add",
-      "cc_ref": "3.3.6.3",
+      "cc_ref": "3.3.6.4",
       "in_state_table": true,
       "meaning": "roster key: membership = proposed_add — entered by an addition proposal from a roster of two or more keys (signer: a live roster key); ends when the addition lands by the quorum path or after W_self (the key is on the roster, device.join_approved on the new device) or when the proposal is withdrawn or refused; distinct from device.join_requested, which holds before the owner's approval",
       "added_in": 3
@@ -926,7 +926,7 @@
     "affiliation.charter.declared": {
       "plane": "governance",
       "state_predicate": "affiliation.charter=declared",
-      "cc_ref": "4.4.3.2.8",
+      "cc_ref": "4.4.3.12",
       "in_state_table": true,
       "meaning": "the affiliation's record declares its charter at creation: role_term, the licence classes it issues, its succession; visible to members on joining",
       "added_in": 6
@@ -934,7 +934,7 @@
     "affiliation.charter.superseded": {
       "plane": "governance",
       "state_predicate": "affiliation.charter=superseded",
-      "cc_ref": "4.4.3.2.8",
+      "cc_ref": "4.4.3.12",
       "in_state_table": true,
       "meaning": "the body amended its charter by supersedes under its consensus_protocol; the charter is read at read, so a dropped class stops matching",
       "added_in": 6
@@ -942,7 +942,7 @@
     "licence.issued": {
       "plane": "authority",
       "state_predicate": "licence.state=held",
-      "cc_ref": "2.4.1.2.1 4.4.3.2.8",
+      "cc_ref": "2.4.1.3 4.4.3.12",
       "in_state_table": true,
       "meaning": "an authority signed a licensure:{authority_id} row in a class its charter declares; the subject holds standing to practise",
       "added_in": 6
@@ -950,7 +950,7 @@
     "licence.status.suspended": {
       "plane": "authority",
       "state_predicate": "licence.state=suspended",
-      "cc_ref": "2.4.1.2.1",
+      "cc_ref": "2.4.1.3",
       "in_state_table": true,
       "meaning": "the authority suspended the licence (a bounded revocation:* by the issuing authority); it does not chain and nobody else can lift it",
       "added_in": 6
@@ -958,7 +958,7 @@
     "licence.status.revoked": {
       "plane": "authority",
       "state_predicate": "licence.state=revoked",
-      "cc_ref": "2.4.1.2.1 4.4.3.2.8",
+      "cc_ref": "2.4.1.3 4.4.3.12",
       "in_state_table": true,
       "meaning": "the authority revoked the licence by revocation:*; the standing it conferred is gone for every later use",
       "added_in": 6
@@ -966,7 +966,7 @@
     "licence.honoured": {
       "plane": "authority",
       "state_predicate": "licence.reader=honoured",
-      "cc_ref": "4.4.3.8 2.4.1.2.1",
+      "cc_ref": "4.4.3.34 2.4.1.3",
       "in_state_table": true,
       "meaning": "a reader honoured a licensure row: its own trust walk reached the issuing authority for the row's class and that authority's charter declares the class",
       "added_in": 6
@@ -974,7 +974,7 @@
     "licence.not_trusted": {
       "plane": "authority",
       "state_predicate": "licence.reader=not_trusted",
-      "cc_ref": "4.4.3.8 4.4.3.2.8",
+      "cc_ref": "4.4.3.34 4.4.3.12",
       "in_state_table": true,
       "meaning": "a reader admitted a licensure row and honoured it by no reader: no trust-set entry reaches the issuer for the class, or the class is outside the issuer's charter (licence_class_not_trusted)",
       "added_in": 6
@@ -982,7 +982,7 @@
     "recognition.outbound": {
       "plane": "node",
       "state_predicate": "recognition.state=outbound",
-      "cc_ref": "4.4.3.8 4.4.3.2.8",
+      "cc_ref": "4.4.3.34 4.4.3.12",
       "in_state_table": true,
       "meaning": "this reader's own trust-set entry recognises another authority as a licensor (for every class its charter declares, or the listed classes, to a depth)",
       "added_in": 6
@@ -990,7 +990,7 @@
     "recognition.inbound": {
       "plane": "node",
       "state_predicate": "recognition.state=inbound",
-      "cc_ref": "4.4.3.8 4.4.3.2.8",
+      "cc_ref": "4.4.3.34 4.4.3.12",
       "in_state_table": true,
       "meaning": "another reader's trust-set entry recognises this authority as a licensor; a licence this authority issues reaches that reader",
       "added_in": 6
@@ -998,7 +998,7 @@
     "delegation.scope.license": {
       "plane": "authority",
       "state_predicate": "delegation.scope=license",
-      "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+      "cc_ref": "4.4.3.20 2.4.1.3",
       "in_state_table": true,
       "meaning": "a live delegates_to carries the license scope: the delegate issues licensure rows on behalf of a delegator that itself holds licence authority; the right to issue, never the authority",
       "added_in": 6
@@ -1006,7 +1006,7 @@
     "delegation.scope.grant": {
       "plane": "authority",
       "state_predicate": "delegation.scope=grant",
-      "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+      "cc_ref": "4.4.3.20 2.4.1.3",
       "in_state_table": true,
       "meaning": "a live delegates_to carries the grant scope: the delegate issues key_grant or consent:scope:* grants over assets the delegator owns, stewards or holds a grant-scoped delegation over",
       "added_in": 6
@@ -1014,7 +1014,7 @@
     "delegation.refused": {
       "plane": "authority",
       "state_predicate": "delegation.link=refused",
-      "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+      "cc_ref": "4.4.3.20 2.4.1.3",
       "in_state_table": true,
       "meaning": "a delegates_to or a scoped issuance was refused at admission: the delegator does not itself hold the underlying authority (licence authority for the authority_id, or the asset)",
       "added_in": 6
@@ -1022,7 +1022,7 @@
     "grant.axis.content": {
       "plane": "authority",
       "state_predicate": "grant.axis=content",
-      "cc_ref": "5.1 2.4.1.2.1",
+      "cc_ref": "5.1 2.4.1.3",
       "in_state_table": true,
       "meaning": "a key_grant on the content axis: one wrap per (content_sha256, recipient_key_id) in the substrate's grant store, opening exactly one item",
       "added_in": 6
@@ -1030,7 +1030,7 @@
     "grant.onward_refused": {
       "plane": "authority",
       "state_predicate": "grant.state=onward_refused",
-      "cc_ref": "2.4.1.2.1 4.4.3.4.3.1",
+      "cc_ref": "2.4.1.3 4.4.3.20",
       "in_state_table": true,
       "meaning": "a substrate refused a key_grant at admission whose issuer neither owns nor stewards the asset nor holds a grant-scoped delegation over it; possession of the DEK is not issuance authority",
       "added_in": 6
@@ -1038,7 +1038,7 @@
     "grant.ended_by_rotation": {
       "plane": "authority",
       "state_predicate": "grant.state=rotated",
-      "cc_ref": "5.1 2.4.1.2.1",
+      "cc_ref": "5.1 2.4.1.3",
       "in_state_table": true,
       "meaning": "a rotation superseded the grant: a new row under a new axis identity with rotation_chain as supersession lineage; the old wrap is not removed and conveys no later epoch",
       "added_in": 6
@@ -1046,7 +1046,7 @@
     "key.successor_committed": {
       "plane": "self",
       "state_predicate": "key.succession=committed",
-      "cc_ref": "3.2 3.3.6.3",
+      "cc_ref": "3.2 3.3.6.4",
       "in_state_table": true,
       "meaning": "the holder published a pre-rotation commitment: SHA-256 over the committed successor keys' public key material, so a later rotation verifies against it",
       "added_in": 6
@@ -1054,7 +1054,7 @@
     "key.rotated": {
       "plane": "self",
       "state_predicate": "key.succession=rotated",
-      "cc_ref": "3.3.6.3 5.1",
+      "cc_ref": "3.3.6.4 5.1",
       "in_state_table": true,
       "meaning": "the holder rotated to a committed successor key: the new key joins the roster and signs; the old key's later rows are not admitted",
       "added_in": 6
@@ -1062,7 +1062,7 @@
     "key.escrowed": {
       "plane": "self",
       "state_predicate": "key.escrow=escrowed",
-      "cc_ref": "4.4.3.2.8 3.3.6.3",
+      "cc_ref": "4.4.3.12 3.3.6.4",
       "in_state_table": true,
       "meaning": "a per-epoch archive key is held by an archive_custody custodian decoupled from the live roster, so permanent or retained records survive member turnover",
       "added_in": 6
@@ -1070,7 +1070,7 @@
     "trust.entry.licensor": {
       "plane": "node",
       "state_predicate": "trust.entry=licensor",
-      "cc_ref": "4.4.3.8",
+      "cc_ref": "4.4.3.34",
       "in_state_table": true,
       "meaning": "the reader's trust-set entry names the authority as a licensor: every class its charter declares (trust_classes absent) at the entry's trust_depth",
       "added_in": 6
@@ -1078,7 +1078,7 @@
     "trust.entry.root_removed": {
       "plane": "node",
       "state_predicate": "trust.entry=root_removed",
-      "cc_ref": "4.4.3.8",
+      "cc_ref": "4.4.3.34",
       "in_state_table": true,
       "meaning": "the reader removed the shipped root's entry like any other; what reached only through it no longer reaches",
       "added_in": 6
@@ -1126,7 +1126,7 @@
     "goal.recanted": {
       "plane": "goal",
       "state_predicate": "goal.state=recanted",
-      "cc_ref": "3.1.9.7 2.4.1.3",
+      "cc_ref": "3.1.9.7 2.4.1.4",
       "in_state_table": true,
       "meaning": "the declarer recanted the Goal: this goal was never mine, an epistemic-error admission distinct from retirement",
       "added_in": 6

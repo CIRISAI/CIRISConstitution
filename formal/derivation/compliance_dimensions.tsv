@@ -1,0 +1,28 @@
+id	prefix	tier	MH	EU	IEEE	ASEAN	families	sections
+D01	non_maleficence:*	STRONG-4	28	29	33	27	non_maleficence:{aspect}	3.1.5.2
+D02	integrity:*	STRONG-4	10	36	42	44	integrity:{aspect}	3.1.5.2
+D03	justice:*	STRONG-4	19	22	30	9	justice:{aspect}	3.1.5.2
+D04	prohibited:*	STRONG-4	50	17	28	9	prohibited:{category}	3.1.5.4
+D05	detection:*	STRONG-4	54	15	41	16	detection:correlated_action:{axis} detection:distributive:access:{resource_type} detection:hash_chain_integrity detection:intra_agent_consistency detection:{detector}	3.1.8.2 3.1.8.4 3.1.8.5
+D06	goal:*	STRONG-4	34	6	13	7	goal:{scale}	3.1.9.7
+D07	locality:decision:{scale}	STRONG-4	17	5	13	7	locality:decision:{scale}	3.1.9.5
+D08	autonomy:*	STRONG-4	7	15	21	8	autonomy:{aspect}	3.1.5.2
+D09	fidelity:*	STRONG-4	8	15	16	26	fidelity:explainability_sla:{tier} fidelity:{aspect}	3.1.5.2
+D10	beneficence:*	STRONG-4	11	15	16	3	beneficence:{aspect}	3.1.5.2
+D11	multilateral_participation:{forum}:{kind}	STRONG-4	13	3	10	11	multilateral_participation:{forum}:{kind}	3.1.1
+D12	conscience:*	STRONG-4	9	3	9	3	conscience:coherence conscience:entropy conscience:epistemic_humility conscience:optimization_veto	3.1.5.3
+D13	testimonial_witness:{kind}	STRONG-4	11	2	2	1	testimonial_witness:{kind}	3.1.9.3
+D14	witness_diversity:*	STRONG-4	3	3	16	2	witness_diversity:{contribution_id}	3.1.9.3
+D15	moderation:*	STRONG-4	2	2	1	1	moderation:{allegation_type}	3.1.9.2
+D16	method:*	STRONG-4	2	12	136	36	method:{approach_id}:{substrate_rung}	3.1.9.7
+D17	transparency_log:*	STRONG-3	2	5	23	10	transparency_log:consistency transparency_log:cosigned:{tree_size} transparency_log:inclusion	3.1.2
+D18	attestation:l{3,5}:*	STRONG-3	2	4	5	0	attestation:agent_integrity attestation:hardware_rooted attestation:license_validity attestation:registry_consensus attestation:self_verify	3.1.2
+D19	partner_role:*	STRONG-3	0	1	19	1	partner_role:{role}	3.1.1
+D20	approach:*	STRONG-3	5	3	23	1	approach:{goal_id}	3.1.9.7
+D21	progress_measure:*	STRONG-3	1	1	8	0	progress_measure:{method_id}	3.1.9.7
+D22	expertise:*	STRONG-3	1	1	10	0	expertise:{domain}:{language}	3.1.9.6
+D23	accountability:*	STRONG-3	0	6	3	19	audit_chain:hash_continuity	3.1.3
+D24	reconsideration:*	STRONG-3	3	2	1	0	reconsideration:{grounds}	3.1.9.2
+D25	credits:*	STRONG-3	4	1	4	0	credits:{domain}:{language}:{subject}	3.1.9.6
+D26	key_boundary:*	STRONG-3	0	2	7	2	key_boundary:{scope}	3.1.4
+D27	provenance:*	STRONG-3	0	1	1	1	provenance:build_manifest:{target} provenance:build_manifest:{target}:locale:{lang_code} provenance:skill_import:{source} provenance:slsa:{level}	3.1.2

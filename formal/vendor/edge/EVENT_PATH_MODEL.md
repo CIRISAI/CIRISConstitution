@@ -57,7 +57,7 @@ FIFO, which leviculum#56 ended.
 | M8, a corrected row is different bytes | `withdraws_admission`: `Inv_OneDoor` (WA.door). A withdrawal is a new row, so a new hash, so never suppressed | reused, not re-derived |
 | M8, who may be offered a row | `mesh_net` I1, I2, I3 (`Inv_Consent`, `Inv_Invisible`); CC 5.4.6. Offers stay inside `may_receive`. The rewind in §1.4 changes when, never to whom | assumed |
 | M8 retry schedule, re-sweep, restart | nothing. CC and `formal/` carry no retry schedule | **new ground** |
-| M1 rates, queues, workers | CC 5.3.3.5 requires decapsulation behind per-sender, per-link and node-wide rates and outside any node-wide lock, and gives no numbers | **new ground**; the order is the text's, the numbers are edge's |
+| M1 rates, queues, workers | CC 5.3.3.10 requires decapsulation behind per-sender, per-link and node-wide rates and outside any node-wide lock, and gives no numbers | **new ground**; the order is the text's, the numbers are edge's |
 | M1, the road a stranger needs | `transport_tiers`: `every_road_runs_on_strangers`, `stranger_only_consent_free`, `routed_nine_canonicals` | reused. The carriage is proved; §2.4 is whether it is delivered |
 | M1, a canonical's share of first contact | `transport_tiers`: `routedAsksPerSecond` = 30 at nine, so 3.3/s each; `askBytes` is not pinned | reused, §2.6 |
 | M1, who can never have standing | `anonymous`: `anon_route_never_held`. An anonymous node is a stranger at every receiver order, for good | reused |
@@ -81,7 +81,7 @@ or M2. `askBytes` is an assumption of `Tiers.lean`.
 - **F2, the election in a mixed fleet.** CC: "one result on every node" (4.5.13) is about nodes holding
   the same rows. A version fork gives different rosters, so different electorates and possibly
   different seats, converging as the fleet converges. A residual of the mixed fleet, not a model failure.
-- **F3, a refusal's record: required by the text, absent in persist.** CC 4.4.3.2.3 requires
+- **F3, a refusal's record: required by the text, absent in persist.** CC 4.4.3.6 requires
   `hard_case:community_consensus_protocol_violation:{C}` on an unmet protocol. Persist at v61.0.3 emits
   none: the string is only an error's Display text, and `roster_consensus_insufficient` is a rule of
   `RosterAuthorityUnauthorized`, on both doors, surfacing as an `Err`, logged at debug. CC has filed
@@ -224,7 +224,7 @@ exactly the moment its verdict changes. It need not be told.
 30  52k rows      180                              50%  50-50%                      14.0                  100%              0                    15.0                      210
 ```
 
-`records` is F3's two arms: none today, about one per refuser as CC 4.4.3.2.3 requires, against what
+`records` is F3's two arms: none today, about one per refuser as CC 4.4.3.6 requires, against what
 a record per refusal would have cost. The fork is the share of the fleet old at mint. The propagation kick spreads a new row among old
 nodes in seconds, so T does not move it. **Decided by whether the mint happens before the upgrade,
 not by any constant.**

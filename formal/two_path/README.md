@@ -6,7 +6,7 @@ cancel within a window, the window set by the sensitivity of the change, and an 
 that removes the instant landing so the reverse path always has its chance — scaled as a roster-
 scoped configuration; and the policy space must have limits, so no roster can configure itself into
 an extreme, from the most open community allowed (a takedown very hard) to the most restricted (a
-takedown very easy). The self roster (CC 3.3.6.3) and the halt (4.2.1.1) are the two instances the
+takedown very easy). The self roster (CC 3.3.6.4) and the halt (4.2.1.1) are the two instances the
 text already has; an implementation's roster door resolves the same decision function.
 
 **Prior art, so the shape is not claimed as new (the refined shape, with the floor).** The closest
@@ -93,7 +93,7 @@ key is the same person's; it is checked against its own corridor without the flo
 
 | Config | Instance | Verdict |
 |---|---|---|
-| `TwoPath_3_selfroster` | 3 voters, strict majority both ways, 1 coerced — CC 3.3.6.3 | closes, 47 states |
+| `TwoPath_3_selfroster` | 3 voters, strict majority both ways, 1 coerced — CC 3.3.6.4 | closes, 47 states |
 | `TwoPath_6_enact23_cancel13_1coerced` | enact 2/3, cancel 1/3, 1 of 6 coerced (below cancel) | closes, 431 |
 | `TwoPath_6_enact23_cancel13_2coerced` | 2 of 6 coerced = exactly 1/3: can cancel, cannot enact | closes, 702 (the bound, shown) |
 | `TwoPath_6_irreversible` | the same policy with no instant landing | closes, 431 |

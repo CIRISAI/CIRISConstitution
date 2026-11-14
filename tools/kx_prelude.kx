@@ -1,0 +1,80 @@
+# The named answers of formal/KERNEL.md section 5, each written once in the language of tools/kx.py, and the
+# decision function of the governance policy (tools/build_governance_policy.py decide() and rule_votes()).
+#   state     state_in / state / live        first-case over recant, withdraw, replace by the row's own signer
+#   stands    holders_in / stands_in / stands  the seat: an offer by a conferrer and the key's acceptance, both live;
+#             the conferrer is the object's own key or a key holding a 'confer' seat (a bounded walk)
+#   tally     roster / voters / tally / tally2 / votes / rule_votes
+#   window    window      missing    missing      may    may      audience    audience      owed    owed
+
+def retracts(q, r, v) = and(eq(q.verb, v), member(r.id, q.names), eq(q.signer, r.signer))
+
+def state_in(S, r) = first(
+    some(sel(S, \q: retracts(q, r, 'recant'))) -> 'recanted',
+    some(sel(S, \q: retracts(q, r, 'withdraw'))) -> 'withdrawn',
+    some(sel(S, \q: retracts(q, r, 'replace'))) -> 'superseded',
+    else -> 'admitted')
+
+def state(r) = state_in(held, r)
+
+def live_in(S, r) = eq(state_in(S, r), 'admitted')
+
+def live(r) = live_in(held, r)
+
+def offers(S, role, obj) = sel(S, \o: and(isfam(o, 'seat:offer'), eq(o.val.role, role), eq(o.object, obj), live_in(S, o)))
+
+def accepted(S, o) = some(sel(S, \a: and(isfam(a, 'seat:accept'), eq(a.signer, o.attested), member(o.id, a.names), live_in(S, a))))
+
+def conferrers(S, obj) = walk(\C: union(C, setof(sel(offers(S, 'confer', obj), \o: and(member(o.signer, C), accepted(S, o))), \o: o.attested)), single(obj), 4)
+
+def holders_in(S, role, obj) = let C = conferrers(S, obj) in setof(sel(offers(S, role, obj), \o: and(member(o.signer, C), accepted(S, o))), \o: o.attested)
+
+def holder_units_in(S, role, obj, unit) = let C = conferrers(S, obj) in
+  setof(sel(offers(S, role, obj), \o: and(member(o.signer, C), accepted(S, o))), \o: first(eq(unit, 'key') -> o.attested, else -> cell(unit, o.attested, o.attested)))
+
+def stands_in(S, k, role, obj) = member(k, holders_in(S, role, obj))
+
+def stands(k, role, obj) = stands_in(held, k, role, obj)
+
+def roster(p, role) = holders_in(past(p), role, p.object)
+
+def voters(p, R, kind) = setof(sel(held, \v: and(isfam(v, kind), member(p.id, v.names), live(v), member(v.signer, R))), \v: v.signer)
+
+def votes(n, d, base, strict) = first(
+    ge(n, d) -> base,
+    strict -> add(div(mul(n, base), d), 1),
+    else -> cdiv(mul(n, base), d))
+
+# tv: 1 where the target's own yes is held and the row's target_voice cell is yes, else 0: a voice toward the floor of
+# two and the floor count, never part of the enact fraction (CC 4.5.13: one voice never decides who is in a room)
+def tally2(en, ed, cn, cd, fn, fd, mc, win, irrev, rev, base, a, o, el, tv) =
+  let ev = votes(en, ed, base, true) in
+  let enacted = and(ge(a, ev), ge(add(a, tv), mc)) in
+  first(and(enacted, not(irrev)) -> 'lands',
+        lt(el, win) -> 'pending',
+        and(gt(cd, 0), ge(o, imax(mc, votes(cn, cd, base, false)))) -> 'cancelled',
+        enacted -> 'lands',
+        and(rev, gt(fd, 0), ge(add(a, tv), imax(mc, votes(fn, fd, base, false)))) -> 'lands',
+        else -> 'cancelled')
+
+def tally(p, role, en, ed, cn, cd, fn, fd, mc, win, irrev, rev, el) =
+  let R = roster(p, role) in
+  tally2(en, ed, cn, cd, fn, fd, mc, win, irrev, rev, size(R), size(voters(p, R, 'vote:approve')), size(voters(p, R, 'vote:object')), el, 0)
+
+def window(open, dur, answered) = first(answered -> 'answered', ge(now, add(open, dur)) -> 'closed', else -> 'open')
+
+def missing(r) = diff(r.names, heldnames(r))
+
+def may(k, role, obj, guard) = first(not(stands(k, role, obj)) -> wait('seat:offer'), ne(guard, 'ok') -> guard, else -> 'ok')
+
+def audience(r) = union(single(r.signer), single(r.attested), setof(sel(held, \q: member(r.id, q.names)), \q: q.signer))
+
+def owed(trigger, effects) = first(trigger -> effects, else -> tuple())
+
+def rule_votes(kind, num, den, count, base, strict) = first(
+    eq(kind, 'fraction') -> votes(num, den, base, strict),
+    eq(kind, 'one_of_n') -> 1,
+    eq(kind, 'strict_majority') -> add(div(base, 2), 1),
+    eq(kind, 'strict_majority_of_others') -> add(div(sub(base, 1), 2), 1),
+    member(kind, {'role_at', 'voices'}) -> count,
+    eq(kind, 'voted_majority') -> first(ge(count, add(div(base, 2), 1)) -> count, else -> add(div(base, 2), 1)),
+    else -> none)

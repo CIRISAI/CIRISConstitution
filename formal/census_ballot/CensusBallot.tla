@@ -1,6 +1,6 @@
 ---------------------------- MODULE CensusBallot ----------------------------
 (* The census, the secret ballot and the base law (CC 4.5.13 the policy's base, 5.4.6 the
-   cohort's invisibility, 6.1.2.1.2 n_eff; the edge/persist design that implements them).
+   cohort's invisibility, 6.1.2.3 n_eff; the edge/persist design that implements them).
 
    Each period every owner-bound rooted node of a community emits ONE census report. A report
    is a vector of community cells, each cell a ONE-HOT over its buckets: the expected-active
@@ -306,7 +306,7 @@ Inv_OneReturnPerOwner == Inv_OnePerOwner
 \* Inv_KFloor: no published cell has source_count < K
 Inv_KFloor == (AllIn /\ Publishes) => SourceCount >= K
 
-\* Inv_DominanceGate: no published composite has one owner with more than half the mass (CC 6.1.2.1.2)
+\* Inv_DominanceGate: no published composite has one owner with more than half the mass (CC 6.1.2.3)
 Inv_DominanceGate == (AllIn /\ Publishes) => \A o \in Accepted : 2 * Cnt(o) <= SourceCount
 
 \* Inv_OccurrenceInvisible: every reporting member sends the same number of entries to each tally

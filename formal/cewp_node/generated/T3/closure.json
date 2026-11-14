@@ -33,9 +33,9 @@
  ],
  "notes": [
   "root HA: witnessed mode off; trust_root model not applicable until extended (residual E)",
-  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
-  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
-  "person eve: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design",
+  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design",
+  "person eve: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design",
   "mesh_net: 3 persons × 5 nodes is above the rc7 instance (3×3); expect a long TLC run or reduce with symmetry"
  ],
  "promised_atoms": {
@@ -49,14 +49,14 @@
   "device.join_requested": {
    "plane": "self",
    "state_predicate": "device.join=requested",
-   "cc_ref": "3.3.6.3",
+   "cc_ref": "3.3.6.4",
    "in_state_table": true,
    "plane_models": "self_roster"
   },
   "device.join_approved": {
    "plane": "self",
    "state_predicate": "device.join=approved",
-   "cc_ref": "3.3.6.3",
+   "cc_ref": "3.3.6.4",
    "in_state_table": true,
    "plane_models": "self_roster"
   },
@@ -70,7 +70,7 @@
   "person.multi_device": {
    "plane": "self",
    "state_predicate": "self.roster_size∈{two,three_or_more}",
-   "cc_ref": "3.3.6.3",
+   "cc_ref": "3.3.6.4",
    "in_state_table": true,
    "plane_models": "self_roster"
   },
@@ -91,7 +91,7 @@
   "roster.visible": {
    "plane": "self",
    "state_predicate": "contact lists announced devices: key.membership=member ∧ node.announce=announced",
-   "cc_ref": "3.3.6.3 5.4.6",
+   "cc_ref": "3.3.6.4 5.4.6",
    "in_state_table": true,
    "plane_models": "self_roster"
   },

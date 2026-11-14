@@ -1,5 +1,5 @@
 # T11 — two lost devices: recovery by the lone path over the window (CC
-# 3.3.6.3; catalogue v2). alice's roster holds three keys; A2 and A3 are lost
+# 3.3.6.4; catalogue v2). alice's roster holds three keys; A2 and A3 are lost
 # for good (their processes stop). From A1 alone she evicts each by the lone
 # path — the proposal applies after W_self (86400 s) unless a live key objects —
 # leaving the genesis key only. No lone-path route exists and the server has no
@@ -34,7 +34,7 @@ topology:
     - {rel: peered, between: [A2, C]}
     - {rel: peered, between: [A1, A2]}
     - {rel: join_request, person: alice, device: A3, label: "Phone"}
-    - {rel: join_approve, person: alice, device: A3, held: true}   # from two roster keys: a proposal (CC 3.3.6.3)
+    - {rel: join_approve, person: alice, device: A3, held: true}   # from two roster keys: a proposal (CC 3.3.6.4)
     - {rel: join_assent, person: alice, device: A3, by: A2}
     - {rel: join_complete, person: alice, device: A3}
     # The joined device's peerings are owner acts on it (as T3; CIRISServer#793).

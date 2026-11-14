@@ -19,11 +19,14 @@ The one decision function, which every consumer implements and replays against t
     enact_votes  = enact_num  * base // enact_den + 1              (strictly more than the fraction)
     cancel_votes = max(min_count, ceil(cancel_num * base / cancel_den))   (at least the fraction, never one voice)
     floor_votes  = max(min_count, ceil(floor_num  * base / floor_den))    (min_count = 2 for a community, 1 for a self)
-    if approvals >= enact_votes and not irreversible:  lands  (forward, now)
+    voices       = approvals + (1 if target_voice else 0)      (target_voice: the target's own yes is held, and the
+                                                                row's target_voice cell is yes; it is never a member)
+    enacted      = approvals >= enact_votes and voices >= min_count   (one voice never decides who is in a room)
+    if enacted and not irreversible:                   lands  (forward, now)
     if elapsed < window:                               pending
     if objections >= cancel_votes:                     cancelled (cancel reached)
-    if approvals >= enact_votes:                       lands  (forward; it waited its window)
-    if reverse_path and approvals >= floor_votes:      lands  (reverse: floored, unopposed, window closed)
+    if enacted:                                        lands  (forward; it waited its window)
+    if reverse_path and voices >= floor_votes:         lands  (reverse: floored, unopposed, window closed)
     else:                                              cancelled (below the floor, or no reverse path)
 
 The floor is a reverse-path predicate only: it never lands anything before the window closes (the
@@ -48,10 +51,25 @@ TSV = os.path.join(ROOT, "constitution", "governance_policy.tsv")
 OUT = os.path.join(ROOT, "manifests", "governance_policy.json")
 VEC = os.path.join(ROOT, "manifests", "governance_policy_vectors.json")
 GEN = os.path.join(ROOT, "formal", "two_path", "generated")
+TEXT = os.path.join(ROOT, "formal", "derivation", "policy_text.tsv")
+PROTO = os.path.join(ROOT, "constitution", "consensus_protocols.tsv")
+ADMIT = os.path.join(ROOT, "constitution", "protocol_admissibility.tsv")
+ROLES = json.load(open(os.path.join(ROOT, "manifests", "transitions.json")))["_meta"]["role_tokens"]
+# Who a door counts, typed. `deciding` and `outside` are the two seats of CC 4.4.3.12, which no role token names.
+COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("counted_at", ("signed", "named", "act", "founding")),
+                       ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no")),
+                       ("target_voice", ("yes", "no"))])
+COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no", "target_voice": "no"}
+SET_ROLES = set(ROLES) | {"deciding", "outside", "joiner"}
+SET_EXCL = ("target", "proposer", "node")
+UNSTATED_MAX = 8   # cells the text leaves unstated; the number only falls
 
-BASE_LAW = OrderedDict([("kind", "standing_then_expected_active"), ("k", 12), ("tail", 30), ("min", 3),
+BASE_LAW = OrderedDict([("kind", "standing_then_census"), ("k", 12), ("tail", 30), ("min", 3),
                         ("status", "provisional: k and the tail are a stand-in for the measured participation law"),
-                        ("rule", "base(N) = N if N <= k else max(min, k + (N - k) // tail); rows with base=standing use N")])
+                        ("rule", "base(N) = N if N <= k, else the census:expected_active count of the community (CC 4.5.13, CC 6.1.9), "
+                                 "falling at most a tenth per period and never below min; rows with base=standing use N"),
+                        ("stand_in", "max(min, k + (N - k) // tail): the vectors' value for the census count above k, "
+                                     "a test stand-in and not the law")])
 WINDOW_CLASSES = OrderedDict([("content_24h", 86400), ("standing_72h", 259200), ("irreversible_7d", 604800),
                               ("ruled_24h", 86400), ("ruled_48h", 172800), ("fuse_24h", 86400), ("none", 0)])
 
@@ -72,17 +90,24 @@ def rule_of(s):
     """Every cell as a typed rule, so no implementer parses prose (CEWP#16, 2026-11-08). One of:
     fraction{num,den}; one_of_n (any one member of the standing set); strict_majority (more than half of the
     standing set); strict_majority_of_others (more than half of the set less the actor); role_at{roles,count}
-    (a named role, count holders); voices{count}; ranked_irv{choices}; none (this path does not exist)."""
+    (a named role, count holders); voices{count}; voted_majority{count} (more than half of the members who voted,
+    never fewer than count voices: its base is the number who voted, not the roster); ranked_irv{choices};
+    none (this path does not exist)."""
     s = s.strip()
     if s in ("—", "-", ""):
         return OrderedDict([("kind", "none")])
+    if s == "protocol":   # the rule comes from the group's declared kind, in the protocol sheet
+        return OrderedDict([("kind", "protocol")])
     if s in ("1/N", "1/N fires"):
         return OrderedDict([("kind", "one_of_n")])
     if "/" in s and all(p.strip().isdigit() for p in s.split("/")):
         a, b = s.split("/"); return OrderedDict([("kind", "fraction"), ("num", int(a)), ("den", int(b))])
+    m = re.match(r"^more than 1/2 of those who voted, at least (\d+) voices$", s)
+    if m:   # CC 4.5.13: "the vote carries by a strict majority of those who voted, and the floor is two voices"
+        return OrderedDict([("kind", "voted_majority"), ("count", int(m.group(1)))])
     if s.startswith("more than 1/2 of the others"):
         return OrderedDict([("kind", "strict_majority_of_others")])
-    if s == "1/2 confirms":
+    if s in ("1/2 confirms", "more than 1/2"):
         return OrderedDict([("kind", "strict_majority")])
     m = re.match(r"^role:([a-z_|]+) at (\d+)$", s)
     if m:
@@ -96,7 +121,8 @@ def rule_of(s):
 
 
 def rule_votes(rule, base, strict):
-    """The count a typed rule needs at a given base; None where the rule is not a count (ranked_irv, none)."""
+    """The count a typed rule needs at a given base; None where the rule is not a count (ranked_irv, none).
+    For voted_majority the base is the number of members who voted, never the roster."""
     k = rule["kind"]
     if k == "fraction":
         return votes((rule["num"], rule["den"]), base, strict)
@@ -108,6 +134,8 @@ def rule_votes(rule, base, strict):
         return (base - 1) // 2 + 1
     if k in ("role_at", "voices"):
         return rule["count"]
+    if k == "voted_majority":
+        return max(rule["count"], base // 2 + 1)
     return None
 
 
@@ -117,6 +145,8 @@ def ceil_div(a, b):
 
 def votes(fr, base, strict):
     n, d = fr
+    if n >= d:                                # the whole set: every member, never more than there are
+        return base
     return n * base // d + 1 if strict else ceil_div(n * base, d)
 
 
@@ -160,19 +190,31 @@ def lean_examples_agree():
 MIN_COUNT = {"community": 2, "self": 1}
 
 
-def decide(row, base, approvals, objections, elapsed):
+def target_voice_cell(row):
+    """The row's target_voice cell (formal/derivation/policy_text.tsv): whether the target's own yes is a voice."""
+    if "_target_voice" in row: return row["_target_voice"]
+    return row.get("counted", row.get("_counted", {})).get("target_voice", {}).get("value") == "yes"
+
+
+PLANT = set()   # --self-test switches a misreading on to show the vectors catch it
+
+
+def decide(row, base, approvals, objections, elapsed, target_voice=False):
+    """target_voice: the target's own yes is held. It is a voice only where the row's target_voice cell says so."""
     e, c, f = row["_enact"], row["_cancel"], row["_floor"]
     mc = MIN_COUNT.get(row["corridor"], 2)
     ev = votes(e, base, True)
-    if approvals >= ev and not row["irreversible"]:
+    voices = approvals + (1 if target_voice and target_voice_cell(row) else 0)
+    enacted = approvals >= ev and (voices >= mc or "lone_enact" in PLANT)     # CC 4.5.13: the floor of two voices
+    if enacted and not row["irreversible"]:
         return "lands", "forward", "enact reached"
     if elapsed < row["window_secs"]:
         return "pending", "none", "window open"
     if c and objections >= max(mc, votes(c, base, False)):
         return "cancelled", "none", "cancel reached at the window"
-    if approvals >= ev:
+    if enacted:
         return "lands", "forward", "enact reached; the irreversible waited its window"
-    if row["reverse_path"] and f and approvals >= max(mc, votes(f, base, False)):
+    if row["reverse_path"] and f and voices >= max(mc, votes(f, base, False)):
         return "lands", "reverse", "floored and unopposed when the window closed"
     if not row["reverse_path"]:
         return "cancelled", "none", "window closed below enact; this door has no reverse path"
@@ -181,7 +223,10 @@ def decide(row, base, approvals, objections, elapsed):
 
 def load():
     rows = list(csv.DictReader(open(TSV, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE))
+    tv = {t["row"] for t in csv.DictReader((l for l in open(TEXT, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE)
+          if t["column"] == "target_voice" and t["value"] == "yes"}
     for r in rows:
+        r["_target_voice"] = r["family"] in tv
         r["window_secs"] = int(r["window_secs"])
         r["irreversible"] = r["irreversible"] == "yes"
         r["reverse_path"] = r["reverse_path"] == "yes"
@@ -190,6 +235,135 @@ def load():
         if r["window_class"] not in WINDOW_CLASSES or WINDOW_CLASSES[r["window_class"]] != r["window_secs"]:
             sys.exit(f"governance_policy: {r['family']} window {r['window_secs']} does not match class {r['window_class']}")
     return rows
+
+
+def counted_ok(col, v):
+    if col == "count_set" and v == "protocol":   # the set the group's declared kind names
+        return True
+    if col == "count_set":
+        m = re.fullmatch(r"([a-z_:]+(?:\+[a-z_:]+)*)(?:-([a-z]+))?", v)
+        return bool(m) and all(x in SET_ROLES for x in m.group(1).split("+")) and (m.group(2) is None or m.group(2) in SET_EXCL)
+    if col == "voices":
+        return all(x in COUNTED[col] for x in v.split("|"))
+    return v in COUNTED[col]
+
+
+def load_counted(rows):
+    """Give each row its `counted` cells from formal/derivation/policy_text.tsv, each value typed and its quote verbatim
+    in the cited section. A cell with no row is `unstated` (or its stated default) and is counted."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from build_family_model import section_span
+    by = {r["family"]: r for r in rows}
+    for r in rows:
+        r["_counted"] = OrderedDict((c, OrderedDict([("value", COUNTED_DEFAULT.get(c, "unstated"))])) for c in COUNTED)
+    seen = set()
+    for t in csv.DictReader((l for l in open(TEXT, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE):
+        key = (t["row"], t["column"])
+        where = f"policy_text.tsv: {t['row']} {t['column']}"
+        if t["row"] not in by or t["column"] not in COUNTED:
+            sys.exit(f"{where}: no such row or column")
+        if key in seen:
+            sys.exit(f"{where}: stated twice")
+        seen.add(key)
+        if not counted_ok(t["column"], t["value"]):
+            sys.exit(f"{where}: {t['value']!r} is not a value of the column")
+        span = section_span(t["cc_ref"])
+        if span is None or t["quote"] not in span:
+            sys.exit(f"{where}: the quoted words do not stand in {t['cc_ref']}")
+        by[t["row"]]["_counted"][t["column"]] = OrderedDict([("value", t["value"]), ("cc_ref", t["cc_ref"])])
+    unstated = [f"{r['family']}.{c}" for r in rows for c, v in r["_counted"].items() if v["value"] == "unstated"]
+    if len(unstated) > UNSTATED_MAX:
+        sys.exit(f"governance_policy: {len(unstated)} counted cells are unstated, more than {UNSTATED_MAX}: " + ", ".join(unstated))
+    # The set that is counted cannot be chosen by the counted: a door that removes from its own count set counts
+    # the set as signed or as at the act, or leaves the target out, or lands only on the target's silence.
+    for r in rows:
+        c = {k: v["value"] for k, v in r["_counted"].items()}
+        if c["changes_set"] == "removes" and not (c["counted_at"] in ("signed", "act", "named") or c["count_set"].endswith("-target") or c["target_silent"] == "yes"):
+            sys.exit(f"governance_policy: {r['family']} removes from the set it counts and nothing fixes that set before the act")
+        if c["voice"] == "key" and r["corridor"] != "self":
+            sys.exit(f"governance_policy: {r['family']} counts keys and is not a self roster (CC 4.5.13, one vote per person)")
+    return unstated
+
+
+def proto_votes(rule, size, m=2):
+    """The voices a protocol's rule needs over a set of `size`; None where the table alone cannot evaluate it."""
+    if rule.startswith("role_at:"):
+        return int(rule.split(":")[2])
+    if rule == "all":
+        return size
+    if rule == "all_and_majority":            # every member but the target, and that number a strict majority of the roster
+        return size - 1 if 2 * (size - 1) > size else None
+    if rule == "strict_majority":
+        return size // 2 + 1
+    if rule.startswith("voices:"):
+        return m
+    if rule == "joiner":
+        return 1
+    return None
+
+
+def load_protocols():
+    """The protocol kinds as typed rows, each quote verbatim in its section, with the count each needs by roster size
+    and the sizes at which one voice alone meets it (the exceptions to the floor of two voices, named as data)."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from build_family_model import section_span
+    rule_re = re.compile(r"role_at:[a-z]+:\d+|all|all_and_majority|strict_majority|voices:\{m\}|weight:\{rubric\}|predicate:\{[a-z_]+\}|joiner|unstated")
+    out = []
+    for t in csv.DictReader((l for l in open(PROTO, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE):
+        where = f"consensus_protocols.tsv: {t['kind']}"
+        for c in ("count_set", "removal_set"):
+            if t[c] != "unstated" and not counted_ok("count_set", t[c]):
+                sys.exit(f"{where}: {c} {t[c]!r} is not a count set")
+        for c in ("rule", "removal_rule"):
+            if not rule_re.fullmatch(t[c]):
+                sys.exit(f"{where}: {c} {t[c]!r} is not a typed rule")
+        span = section_span(t["cc_ref"])
+        if span is None or t["quote"] not in span:
+            sys.exit(f"{where}: the quoted words do not stand in {t['cc_ref']}")
+        d = OrderedDict((k, t[k]) for k in ("kind", "count_set", "rule", "removal_set", "removal_rule", "cc_ref"))
+        d["votes"] = OrderedDict((str(n), proto_votes(t["rule"], n)) for n in (1, 2, 3, 5, 9))
+        d["removal_votes"] = OrderedDict((str(n), proto_votes(t["removal_rule"], n)) for n in (2, 3, 5, 9))
+        d["evaluable"] = proto_votes(t["rule"], 3) is not None
+        d["one_voice_admits"] = any(proto_votes(t["rule"], n) == 1 for n in (2, 3, 5, 9))
+        out.append(d)
+    return out
+
+
+def load_admissibility(protocols):
+    """Which group kind may declare which protocol kind. Checked: every kind is a row of the protocol sheet, no pair is
+    both allowed and refused, a condition hangs on a pair that is allowed or required, and a kind under which one
+    voice admits is allowed only where a row says so (those rows are listed as `one_voice_doors`)."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from build_family_model import section_span
+    kinds = {p["kind"]: p for p in protocols}
+    cond_re = re.compile(r"entrenched=true|count_set=[a-z]+|m_min=\d+|founding_margin=\d+")
+    out, verdict = [], {}
+    for t in csv.DictReader((l for l in open(ADMIT, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE):
+        where = f"protocol_admissibility.tsv: {t['group']} {t['kind']}"
+        if t["kind"] not in kinds or not re.fullmatch(r"family|publication|accord|community(/[a-z_]+)?", t["group"]):
+            sys.exit(f"{where}: no such kind or group")
+        if t["verdict"] not in ("allowed", "required", "refused", "condition"):
+            sys.exit(f"{where}: verdict {t['verdict']!r}")
+        if (t["verdict"] == "condition") != bool(cond_re.fullmatch(t["condition"])) or (t["verdict"] == "refused") != (t["refusal"] != "—"):
+            sys.exit(f"{where}: a condition row carries a typed condition and only a refused row carries a refusal token")
+        span = section_span(t["cc_ref"])
+        if span is None or t["quote"] not in span:
+            sys.exit(f"{where}: the quoted words do not stand in {t['cc_ref']}")
+        pair = (t["group"], t["kind"])
+        if t["verdict"] != "condition":
+            if pair in verdict:
+                sys.exit(f"{where}: two verdicts")
+            verdict[pair] = t["verdict"]
+        out.append(OrderedDict((k, t[k]) for k in ("group", "kind", "verdict", "condition", "refusal", "cc_ref")))
+    for r in out:
+        if r["verdict"] == "condition" and verdict.get((r["group"], r["kind"])) not in ("allowed", "required"):
+            sys.exit(f"protocol_admissibility.tsv: {r['group']} {r['kind']}: a condition on a pair that is not allowed")
+    # a general refusal for `community` is not overridden silently by a subkind
+    for (g, k), v in verdict.items():
+        if "/" in g and v in ("allowed", "required") and verdict.get((g.split("/")[0], k)) == "refused":
+            sys.exit(f"protocol_admissibility.tsv: {g} allows {k}, which {g.split('/')[0]} refuses")
+    doors = [f"{g} {k}" for (g, k), v in sorted(verdict.items()) if v in ("allowed", "required") and kinds[k]["one_voice_admits"]]
+    return out, doors
 
 
 def machine_rows(rows):
@@ -241,6 +415,25 @@ def vectors(rows):
                                                 ("thresholds", {"enact": ev, "cancel": cv, "floor": fv}),
                                                 ("approvals", a), ("objections", o), ("elapsed_secs", t),
                                                 ("verdict", v), ("path", path), ("why", why)]))
+    # the small rooms, appended so every earlier vector keeps its place: rosters of one and two, every count, and on a
+    # row whose target_voice cell is yes, with and without the target's own yes (CC 4.5.13, the floor of two voices)
+    for r in machine_rows(rows):
+        e, c, f = r["_enact"], r["_cancel"], r["_floor"]
+        for N in (1, 2):
+            base = N if r["base"] == "standing" else expected_active(N)
+            ev = votes(e, base, True)
+            cv = max(2, votes(c, base, False)) if c else None
+            fv = max(2, votes(f, base, False)) if f else None
+            for tv in ((False, True) if target_voice_cell(r) else (False,)):
+                for a in range(base + 1):
+                    for o in range(base - a + 1):
+                        for t in sorted({0, r["window_secs"] - 1, r["window_secs"]}):
+                            v, path, why = decide(r, base, a, o, t, tv)
+                            out.append(OrderedDict([("family", r["family"]), ("roster", N), ("base", base),
+                                                    ("thresholds", {"enact": ev, "cancel": cv, "floor": fv}),
+                                                    ("approvals", a), ("objections", o), ("elapsed_secs", t)]
+                                                   + ([("target_voice", tv)] if target_voice_cell(r) else [])
+                                                   + [("verdict", v), ("path", path), ("why", why)]))
     return out
 
 
@@ -290,10 +483,47 @@ PROPERTIES Prop_IrreversibleWaits Prop_HonestChangeResolves Prop_FloorNeverLands
     return names
 
 
+PART4 = os.path.join(ROOT, "constitution", "part_4_composition_governance.md")
+PART_LEAD = "The rows are these, generated into this section from the table:"
+
+
+def part_table(rows):
+    """The rows as the table CC 4.5.13 prints: the Part's own statement of each row, written from the data."""
+    voice = {"person": "one voice a person", "key": "one voice a key", "unstated": "voice not stated"}
+    at = {"signed": "the set as signed", "named": "the set the proposal names", "act": "the set at the act",
+          "founding": "the set the record lists", "unstated": "instant not stated"}
+    esc = lambda x: x.replace("|", "\\|")
+    out = ["| Row | Who is counted | Enact | Cancel | Floor | Window | At the window |", "|---|---|---|---|---|---|---|"]
+    for r in rows:
+        c = {k: v["value"] for k, v in r["_counted"].items()}
+        who = f"`{esc(c['count_set'])}`, {voice[c['voice']]}, {at[c['counted_at']]}"
+        if c["target_silent"] == "yes": who += ", the target silent"
+        win = "none" if not r["window_secs"] else f"{r['window_secs']:,}".replace(",", " ") + " s"
+        out.append(f"| `{r['family']}` | {who} | {esc(r['enact'])} | {esc(r['cancel'])} | {esc(r['floor'])} | {win} | {r['at_window']} |")
+    return out
+
+
+def write_part_table(rows, check=False):
+    lines = open(PART4, encoding="utf-8").read().split("\n")
+    lead = [i for i, l in enumerate(lines) if PART_LEAD in l]
+    if len(lead) != 1 or lines[lead[0] + 1] != "" or not lines[lead[0] + 2].startswith("| Row |"):
+        sys.exit("governance_policy: CC 4.5.13 has no table after its lead sentence")
+    a = lead[0] + 2
+    b = a
+    while b < len(lines) and lines[b].startswith("|"): b += 1
+    new = lines[:a] + part_table(rows) + lines[b:]
+    if new != lines:
+        if check: sys.exit("governance_policy: the table in CC 4.5.13 is stale (run tools/build_governance_policy.py)")
+        open(PART4, "w", encoding="utf-8").write("\n".join(new))
+
+
 def build():
     lean_examples_agree()
     rows = load()
     check_corridor(rows)
+    unstated = load_counted(rows)
+    protocols = load_protocols()
+    admit, one_voice_doors = load_admissibility(protocols)
     fams = []
     for r in rows:
         d = OrderedDict()
@@ -304,12 +534,31 @@ def build():
             d[k] = {"num": v[0], "den": v[1]} if isinstance(v, tuple) and len(v) == 2 else (None if v is None else (v[0] if isinstance(v, tuple) else v))
         for k in ("enact", "cancel", "floor"):
             d[k + "_rule"] = r["_rules"][k]   # the typed form of the cell beside its prose (additive; CEWP#16)
+        d["counted"] = r["_counted"]   # who the door counts, typed, each with the section that states it
         d["cancel_over"] = r["cancel_over"]; d["at_window"] = r["at_window"]   # persist v59 questions (b) and (c)
         d["window_secs"] = r["window_secs"]; d["window_class"] = r["window_class"]
         d["irreversible"] = r["irreversible"]; d["reverse_path"] = r["reverse_path"]
         d["corridor"] = r["corridor"]; d["model"] = r["model"].split(); d["status"] = r["status"]; d["note"] = r["note"]
         fams.append(d)
     body = OrderedDict([("families", fams), ("base_law", BASE_LAW), ("min_count", MIN_COUNT), ("window_classes", WINDOW_CLASSES),
+                        ("counted_columns", OrderedDict([
+                            ("count_set", "the role tokens whose keys the fold seats, joined by + (one voice each), less -target, -proposer or -node"),
+                            ("voice", "person: signatures fold to one voice per fedID; key: each key is a voice (a self roster only)"),
+                            ("counted_at", "signed: the set at the row's signed instant; named: the set of the roster the proposal names; act: the set at the first-held instant of the act the count answers; founding: the set the record lists"),
+                            ("voices", "where the voices are found: scrubs (cosignatures of the one row), objection (objection:{state} rows), ballot (ballot rows)"),
+                            ("target_silent", "yes: the reverse path lands only if no row signed by the target was first held inside the window"),
+                            ("changes_set", "whether the act adds to or removes from the set it counts"),
+                            ("target_voice", "yes: the target's own row naming the act is one of the voices counted, though the target is not in the count set"),
+                            ("unstated", "the text does not state the cell"), ("unstated_cells", unstated)])),
+                        ("protocols", OrderedDict([
+                            ("source", "constitution/consensus_protocols.tsv"),
+                            ("reading", "a kind is a count set and a typed rule; votes gives the voices the rule needs by set size, at m = 2 for a quorum kind, null where the table alone cannot evaluate it"),
+                            ("kinds", protocols),
+                            ("one_voice_admits", [p["kind"] for p in protocols if p["one_voice_admits"]]),
+                            ("not_evaluable", [p["kind"] for p in protocols if not p["evaluable"]]),
+                            ("admissibility_source", "constitution/protocol_admissibility.tsv"),
+                            ("admissibility", admit),
+                            ("one_voice_doors", one_voice_doors)])),
                         ("decider", [l.strip() for l in __doc__.split("The one decision function")[1].split("The floor is")[0].strip().splitlines() if l.strip()][1:]),
                         ("verdicts", ["lands", "pending", "cancelled"]), ("paths", ["forward", "reverse", "none"]),
                         ("floor_is_reverse_only", "the floor is consulted only when the window has closed; before that only enact lands (Prop_FloorNeverLandsEarly)"), ("votes_family", "objection:{state} — proposal (counts as the proposer's approval), assent (+1), raised (−1); CC 3.1.9.2")])
@@ -322,11 +571,15 @@ def build():
     vec = vectors(rows)
     rv = rule_vectors(rows)
     json.dump(OrderedDict([("_meta", {"policy_sha256": pin, "count": len(vec), "rule_vector_count": len(rv),
-                                       "rule_kinds": ["fraction", "one_of_n", "strict_majority", "strict_majority_of_others", "role_at", "voices", "ranked_irv", "none"]}),
+                                       "target_voice": "on a row whose target_voice cell is yes, a vector's target_voice says whether the target's own yes is held: "
+                                                       "one voice toward the floor of two and toward the floor count, never a member and never part of the enact fraction; "
+                                                       "a vector without the field reads false",
+                                       "rule_kinds": ["fraction", "one_of_n", "strict_majority", "strict_majority_of_others", "role_at", "voices", "voted_majority", "ranked_irv", "protocol", "none"]}),
                            ("vectors", vec), ("rule_vectors", rv)]),
               open(VEC, "w", encoding="utf-8"), indent=1, ensure_ascii=False); open(VEC, "a").write("\n")
     names = gen_cfgs(rows)
-    print(f"governance_policy: {len(rows)} rows ({len(machine_rows(rows))} machine rows), pin {pin[:8]}, {len(vec)} vectors, {len(names)} TLC instances")
+    write_part_table(rows)
+    print(f"governance_policy: {len(rows)} rows ({len(machine_rows(rows))} machine rows), pin {pin[:8]}, {len(vec)} vectors, {len(names)} TLC instances; counted cells unstated {len(unstated)}; {len(protocols)} protocol kinds, one voice admits under {sum(p['one_voice_admits'] for p in protocols)}")
 
 
 def self_test():
@@ -334,15 +587,28 @@ def self_test():
     rows = {r["family"]: r for r in load()}
     vec = json.load(open(VEC))["vectors"]
     bad = 0
-    for v in vec:
-        got = decide(rows[v["family"]], v["base"], v["approvals"], v["objections"], v["elapsed_secs"])
-        if (got[0], got[1]) != (v["verdict"], v["path"]):
-            bad += 1
+    replay = lambda: sum(1 for v in vec if decide(rows[v["family"]], v["base"], v["approvals"], v["objections"], v["elapsed_secs"],
+                                                  v.get("target_voice", False))[:2] != (v["verdict"], v["path"]))
+    bad = replay()
+    # a room of one (CC 4.5.13): the founder alone never admits; the founder and the invitee's yes do
+    ci = rows["community_invite"]
+    room = {(tv, t): decide(ci, 1, 1, 0, t, tv)[0] for tv in (False, True) for t in (0, ci["window_secs"])}
+    room_ok = room == {(False, 0): "pending", (False, ci["window_secs"]): "cancelled", (True, 0): "lands", (True, ci["window_secs"]): "lands"}
+    small = sum(1 for v in vec if v["base"] < 3)
+    PLANT.add("lone_enact"); planted = replay(); PLANT.clear()        # the misreading: the enact met on one of one
     # the floor never lands before the window, in every vector
     early = [v for v in vec if v["verdict"] == "lands" and v["path"] == "reverse" and v["elapsed_secs"] < rows[v["family"]]["window_secs"]]
-    lone = [v for v in vec if v["verdict"] == "lands" and v["approvals"] <= 1 and v["base"] > 2]
-    print(f"self-test: {len(vec)} vectors replayed, {bad} mismatches; reverse landings before the window: {len(early)}; landings on one voice at base > 2: {len(lone)}")
-    sys.exit(1 if bad or early or lone else 0)
+    lone = [v for v in vec if v["verdict"] == "lands" and v["approvals"] + (1 if v.get("target_voice") else 0) <= 1]
+    # voted_majority counts over those who voted: two of three voters carry, two of four do not, one voice never does
+    vm = rule_of("more than 1/2 of those who voted, at least 2 voices")
+    vm_ok = [rule_votes(vm, n, False) for n in (1, 2, 3, 4, 5, 9)] == [2, 2, 2, 3, 3, 5]
+    rv = json.load(open(VEC))["rule_vectors"]
+    rv_bad = sum(1 for v in rv if rule_votes(v["rule"], v["base"], v["cell"] == "enact") != v["votes"])
+    print(f"self-test: {len(vec)} vectors replayed, {bad} mismatches; reverse landings before the window: {len(early)}; landings on one voice: {len(lone)}; "
+          f"{len(rv)} rule vectors replayed, {rv_bad} mismatches; voted_majority counts {'as stated' if vm_ok else 'WRONG'}; "
+          f"{small} vectors below a base of 3; a room of one {'as stated' if room_ok else 'WRONG'}; "
+          f"plant (the enact met on one of one): {planted} vectors disagree, {'caught' if planted else 'NOT CAUGHT'}")
+    sys.exit(1 if bad or early or lone or rv_bad or not vm_ok or not room_ok or not planted else 0)
 
 
 if __name__ == "__main__":
@@ -352,7 +618,8 @@ if __name__ == "__main__":
         import argparse
         ap = argparse.ArgumentParser(); ap.add_argument("family"); ap.add_argument("--base", type=int, required=True)
         ap.add_argument("--approvals", type=int, default=0); ap.add_argument("--objections", type=int, default=0); ap.add_argument("--elapsed", type=int, default=0)
+        ap.add_argument("--target-voice", action="store_true")
         a = ap.parse_args(sys.argv[2:]); r = {x["family"]: x for x in load()}[a.family]
-        print(*decide(r, a.base, a.approvals, a.objections, a.elapsed))
+        print(*decide(r, a.base, a.approvals, a.objections, a.elapsed, a.target_voice))
     else:
         build()

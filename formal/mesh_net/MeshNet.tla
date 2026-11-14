@@ -115,18 +115,24 @@ Withdraw(b) ==
   /\ withdrawn' = withdrawn \cup {b}
   /\ UNCHANGED <<scope, author, held, claimed, allow, members, mods, federating, restricted>>
 
-\* The named moderator lapses. In the SAME step the community auto-promotes a member or
-\* fails secure (CC 4.5.4): there is no moderator-less window.
+\* The named moderator lapses (CC 4.5.4). While another holder remains nothing else moves. When
+\* the last holder lapses the room LOCKS in the same step: it stops federating at moderated
+\* capability and nothing is written to it until its members seat a moderator (CC 4.5.13, the
+\* election; the count and the ballot are formal/moderator_election). No node promotes anyone.
 ModLapse(c, p) ==
   /\ c \in Moderated /\ p \in mods[c]
   /\ LET rest == mods[c] \ {p}
-         candidates == members[c] \ {p}
      IN IF rest # {} THEN mods' = [mods EXCEPT ![c] = rest] /\ UNCHANGED federating
-        ELSE IF candidates # {}
-             THEN /\ mods' = [mods EXCEPT ![c] = {CHOOSE q \in candidates : TRUE}]
-                  /\ UNCHANGED federating
-             ELSE /\ mods' = [mods EXCEPT ![c] = {}]
-                  /\ federating' = [federating EXCEPT ![c] = FALSE]
+        ELSE /\ mods' = [mods EXCEPT ![c] = {}]
+             /\ federating' = [federating EXCEPT ![c] = FALSE]
+  /\ UNCHANGED <<scope, author, held, claimed, allow, withdrawn, members, restricted>>
+
+\* A locked room elects: its members' votes seat one of its members, who accepts. The lock ends
+\* only this way. A room with no member left stays locked.
+Elect(c, q) ==
+  /\ c \in Moderated /\ mods[c] = {} /\ ~federating[c] /\ q \in members[c]
+  /\ mods' = [mods EXCEPT ![c] = {q}]
+  /\ federating' = [federating EXCEPT ![c] = TRUE]
   /\ UNCHANGED <<scope, author, held, claimed, allow, withdrawn, members, restricted>>
 
 \* Open admission to a public room (CC 4.5.4): the joiner's own acceptance seats them.
@@ -153,6 +159,7 @@ Next ==
   \/ \E n \in Nodes, b \in Blobs : Replicate(n, b)
   \/ \E b \in Blobs : Claim(b) \/ Withdraw(b)
   \/ \E c \in Cohorts, p \in Persons : ModLapse(c, p)
+  \/ \E c \in Cohorts, p \in Persons : Elect(c, p)
   \/ \E p \in Persons : JoinPub(p)
   \/ Restrict
   \/ \E n \in Nodes, c \in Cohorts : SetAllow(n, c)

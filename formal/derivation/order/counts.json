@@ -1,0 +1,116 @@
+{
+ "families": 184,
+ "verdicts": {
+  "SET_IF_RULE": 57,
+  "NOT": 16,
+  "SET": 111
+ },
+ "set_clean": 88,
+ "set_but_reads_not": 23,
+ "rule_by_kind": {
+  "G3": 42,
+  "count": 8,
+  "G2": 7
+ },
+ "not_by_dependence": {
+  "first_held_clock": 5,
+  "arrival_order": 10,
+  "first_seen_stated": 1
+ },
+ "needs_G1": 164,
+ "needs_G3_any": 57,
+ "needs_G2_any": 16,
+ "guard_statements": 43,
+ "guarded_transitions": 26,
+ "guard_edges_negative": 21,
+ "guard_cells_with_negative_row_or_role": 13,
+ "graph": {
+  "nodes": 837,
+  "edges": 2090,
+  "kinds": {
+   "role": 86,
+   "fold": 118,
+   "guard": 125,
+   "roles": 650,
+   "door_from": 312,
+   "lifecycle": 555,
+   "count": 121,
+   "cascade": 26,
+   "change": 4,
+   "reaction": 39,
+   "emit": 49,
+   "fold_once": 5
+  },
+  "signs": {
+   "+": 1665,
+   "-": 406,
+   "+-": 18,
+   "0": 1
+  },
+  "sources": {
+   "inferred": 279,
+   "read": 1811
+  }
+ },
+ "components": {
+  "A_door": {
+   "nodes": 837,
+   "edges": 2090,
+   "cyclic_components": 135,
+   "with_negation": 135,
+   "largest": 212
+  },
+  "B_fold": {
+   "nodes": 837,
+   "edges": 1778,
+   "cyclic_components": 5,
+   "with_negation": 5,
+   "largest": 212
+  },
+  "C_read_only": {
+   "nodes": 837,
+   "edges": 1499,
+   "cyclic_components": 9,
+   "with_negation": 8,
+   "largest": 4
+  }
+ },
+ "negative_edges_on_a_cycle_by_class": {
+  "G-row": 16,
+  "X-emit": 1,
+  "G-role": 4,
+  "K1": 4,
+  "L": 83,
+  "C-casc": 21,
+  "X-react": 5,
+  "O1": 1,
+  "S1": 1,
+  "T-vote": 6,
+  "R1": 2
+ },
+ "judged_at": {
+  "receipt": 174,
+  "None": 3,
+  "signed_instant_with_W": 6,
+  "peer_admission fold reads the receipt clock": 1
+ },
+ "witnesses": {
+  "W1": "yes",
+  "W2": "yes",
+  "W3": "yes",
+  "W4": "yes",
+  "W5": "yes",
+  "W6": "yes",
+  "W7": "yes",
+  "W8": "yes",
+  "W9": "yes",
+  "W10": "yes",
+  "W11": "yes",
+  "G1": "yes",
+  "G2": "yes",
+  "G3": "yes",
+  "C1": "no (both nodes hold e before x); it depends on the first-held instants",
+  "C2": "no (same order); it depends on the first-held instants",
+  "T1": "yes (by the sentence; not run: no cell to run)"
+ }
+}

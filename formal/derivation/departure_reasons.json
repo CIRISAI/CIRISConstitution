@@ -1,0 +1,990 @@
+{
+ "reading": "Unless a reason below applies, a family's rows are placed by their signer at any scope, may name anyone, are signed by one key, are judged when they arrive, may be withdrawn by their signer or by a party they name, travel to their audience, are read from the common table, may be removed on the trust root's cosigned notice, and are bound by no policy row. A family leaves that row only for a reason listed here. Each reason says when it applies and why, rests on words that stand in the Constitution, and names the cells it moves. The build refuses a departure with no reason and a reason whose cell has returned to the default; a cell with no reason yet is listed open with the question that would give it one.",
+ "reasons": [
+  {
+   "id": "unbuilt",
+   "title": "The family is not built",
+   "when": "The store holds no rows of the family: the census read no cell for it, or the family is held shut.",
+   "why": "Its cells are unread, not different. When the family is built each cell sits on the default or takes a reason of its own.",
+   "basis": "census",
+   "premise": "unbuilt"
+  },
+  {
+   "id": "key",
+   "title": "The family is a key",
+   "when": "The family's rows are a key, a device standing under an identity, or the revocation of either.",
+   "why": "Every other row is checked against these. They are minted on the key plane and travel as far as any row they verify, they are read from their own tables, and a purge of an author's rows leaves the key held, so what it signed can still be checked.",
+   "basis": "text",
+   "cc_ref": "CC 2.4",
+   "quote": "a row is admitted only once its signer's key-claim row is held",
+   "moves": {
+    "placement": [
+     "key:record",
+     "key:revocation",
+     "identity:occurrence",
+     "identity:occurrence_revocation"
+    ],
+    "replication": [
+     "key:record",
+     "key:revocation",
+     "identity:occurrence",
+     "identity:occurrence_revocation"
+    ],
+    "projection": [
+     "key:record",
+     "key:revocation",
+     "identity:occurrence"
+    ],
+    "erasure_route": [
+     "key:record",
+     "identity:occurrence"
+    ]
+   }
+  },
+  {
+   "id": "quorum",
+   "title": "The act is a body's, not one signer's",
+   "when": "The row changes what a body is or binds its members, so the family names the protocol its cosigners must meet.",
+   "why": "One signer cannot carry a quorum's act, and neither one signer nor one subject may undo one: a cosigned row is withdrawn only by a withdrawal cosigned under the same protocol.",
+   "basis": "text",
+   "cc_ref": "CC 2.4",
+   "quote": "A single-signer row cannot carry a quorum's act",
+   "moves": {
+    "cosign_rule": [
+     "collection:{kind}",
+     "group:roster",
+     "identity:occurrence",
+     "identity:occurrence_revocation",
+     "membership:{stage}",
+     "objection:{state}",
+     "takedown_notice:{basis}",
+     "transport:canonical_rebind",
+     "trust:{job}:{version}",
+     "wa_adjudication:{state}"
+    ],
+    "lifecycle": [
+     "group:roster",
+     "membership:{stage}"
+    ]
+   },
+   "value": {
+    "lifecycle.withdraws_by": "{cosigned}"
+   }
+  },
+  {
+   "id": "adverse",
+   "title": "The party named must not be able to remove it",
+   "when": "The row is another party's measurement, licence, revocation, takedown notice or accountability record about its subject.",
+   "why": "A subject that could withdraw adverse evidence about itself would launder its own record. Its signer may withdraw it; the subject's path is reconsideration, on which it holds standing.",
+   "basis": "text",
+   "cc_ref": "CC 2.4.1.1",
+   "quote": "A party that could retire the adverse rows about itself and keep the rest would launder its reputation",
+   "moves": {
+    "lifecycle": [
+     "capacity:",
+     "detection:",
+     "licensure:",
+     "revocation:",
+     "moderation:",
+     "hard_case:",
+     "slashing:",
+     "takedown_notice:"
+    ]
+   },
+   "value": {
+    "lifecycle.withdraws_by": "{attester}"
+   }
+  },
+  {
+   "id": "accountability",
+   "title": "The record is nobody's to purge",
+   "when": "The row is on the accountability trail: a revocation, a moderation act or a moderator's track record, a slashing verdict, a hard case.",
+   "why": "The trust root moderates and does not edit history. An adverse record about a root would otherwise be removable only by that root, which is its subject.",
+   "basis": "text",
+   "cc_ref": "CC 2.4.1.1",
+   "quote": "Trust-root moderation is not trust-root history-editing",
+   "moves": {
+    "erasure_route": [
+     "revocation:",
+     "key:revocation",
+     "moderation:",
+     "moderation_track_record:",
+     "slashing:",
+     "hard_case:"
+    ],
+    "lifecycle": [
+     "revocation:",
+     "moderation:",
+     "moderation_track_record:",
+     "slashing:",
+     "hard_case:"
+    ]
+   },
+   "value": {
+    "lifecycle.retraction_class": "duty_record"
+   }
+  },
+  {
+   "id": "adverse_track_record",
+   "title": "A moderator's track record is not the moderator's to remove",
+   "when": "The row is a participant's moderation record in a community, signed by another party.",
+   "why": "The record is a verdict about the party it names. If that party could withdraw the rows that count against it, the record would hold only what its subject let stand. Its signer may withdraw it; the subject contests it by reconsideration.",
+   "basis": "text",
+   "cc_ref": "CC 2.4.1.1",
+   "quote": "the anti-Goodhart dual admits no subject-side removal of an adverse row",
+   "enforced": false,
+   "build_note": "The pinned build admits the subject's withdrawal: its list of barred families matches by prefix, and this family's name does not begin with a listed one.",
+   "moves": {
+    "lifecycle": [
+     "moderation_track_record:"
+    ]
+   },
+   "value": {
+    "lifecycle.withdraws_by": "{attester}"
+   }
+  },
+  {
+   "id": "revocation_stands",
+   "title": "A revocation is never taken back",
+   "when": "The row revokes a key or a device's standing under an identity.",
+   "why": "Revocation does not roll back. Its bound on what the revoked key signed may be lowered and never raised, so no later row restores the key.",
+   "basis": "text",
+   "cc_ref": "CC 2.4.1.1",
+   "quote": "revocation is non-rollbackable",
+   "moves": {
+    "lifecycle": [
+     "key:revocation",
+     "identity:occurrence_revocation"
+    ]
+   },
+   "value": {
+    "lifecycle.withdraws_by": "{}"
+   }
+  },
+  {
+   "id": "standing_at_signing",
+   "title": "The row is an act of standing, judged at the moment it was signed",
+   "when": "The row is an owner's, a roster's or a consenting party's act, whose authority is the signer's standing when it signed.",
+   "why": "The act stays good after its signer leaves, and a key that has lost standing cannot sign an act back into the time when it held it: past the freshness window such a row is refused.",
+   "basis": "text",
+   "cc_ref": "CC 3.3.6.4",
+   "quote": "so an evicted key can backdate an owner act into its old live window by at most W, and no further",
+   "moves": {
+    "freshness": [
+     "consent:community_trust",
+     "consent:replication:{version}",
+     "consent:state:{stance}",
+     "key_grant:{axis}",
+     "ownership:",
+     "trust:{job}:{version}"
+    ]
+   }
+  },
+  {
+   "id": "verdict_not_yours",
+   "title": "A verdict about a party is never that party's own",
+   "when": "The row is one party's measurement or assurance of another.",
+   "why": "The signer must not be the party measured, so a score never returns to its subject as the subject's own word.",
+   "basis": "text",
+   "cc_ref": "CC 3.4.5",
+   "quote": "a verdict about you must not be yours",
+   "moves": {
+    "subject_rule": [
+     "capacity:",
+     "age_assurance:",
+     "capacity_assurance:"
+    ]
+   }
+  },
+  {
+   "id": "typed_view",
+   "title": "The family is read through a table of its own",
+   "when": "A fold reads the family's rows through a typed table beside the common one, and the table rebuilds byte for byte from the rows.",
+   "why": "The table is derived state: it is rebuilt from the rows and is never an authority over them.",
+   "basis": "build",
+   "premise": "typed_view"
+  },
+  {
+   "id": "derived_no_rebuild",
+   "title": "The family's table follows from its rows and the build cannot rebuild it",
+   "when": "A fold reads the family's rows through a table of its own, the table's contents follow from the rows, and the pinned build has no function that rebuilds it from them.",
+   "why": "The table is derived state and no authority over the rows. With no rebuild the store cannot prove the table against the rows, so a fault in it shows only by its effects.",
+   "basis": "build",
+   "moves": {
+    "projection": [
+     "consent:replication:{version}",
+     "key_grant:{axis}"
+    ]
+   }
+  },
+  {
+   "id": "legacy_revocation_local",
+   "title": "A revocation made before the roster door is kept where it was made",
+   "when": "The row carries a framed revocation of an occurrence that was signed outside the roster's two paths.",
+   "why": "The old revocation still retires the occurrence's route on the node that holds it, and removes no device from a person's roster. For a person's own occurrence it becomes a row only when a majority of the roster cosigns, so one key cannot spread it. The table therefore holds entries with no row behind them and cannot be rebuilt from rows.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.3",
+   "quote": "is kept as a local projection that still revokes but has no attestation row",
+   "moves": {
+    "projection": [
+     "identity:occurrence_revocation"
+    ]
+   }
+  },
+  {
+   "id": "accord_named",
+   "title": "An accord's row names the accord it belongs to",
+   "when": "The row is an accord's act: its standing, a halt, a notice or a drill.",
+   "why": "A halt or a roster act counts only toward the accord it names. A row that names no accord, or one the reader does not hold, is refused when the rows are read.",
+   "basis": "text",
+   "cc_ref": "CC 2.6.1.8",
+   "quote": "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold",
+   "moves": {
+    "subject_rule": [
+     "accord:"
+    ]
+   }
+  },
+  {
+   "id": "census_addressed",
+   "title": "A census share goes to one counter and no further",
+   "when": "The row is one member's sealed share of a count, sent to one of the two parties that add the shares up.",
+   "why": "One share alone tells its holder nothing. A share that travelled further could be joined with its twin and the member's answer read, so only the sender's node and the recipient's node hold it.",
+   "basis": "text",
+   "cc_ref": "CC 6.1.9",
+   "quote": "a row whose signed `for_key_id` names one recipient is held by the author's node and the recipient's node and by no other",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "census:share:{class}",
+     "census:member:share"
+    ],
+    "subject_rule": [
+     "census:share:{class}",
+     "census:member:share"
+    ]
+   }
+  },
+  {
+   "id": "census_published",
+   "title": "A federation count is published to everyone",
+   "when": "The row is a counter's partial sum for a federation class, or the total made from the two partial sums.",
+   "why": "Any reader must be able to add the two partial sums and check the total. The rows carry sums and never one member's answer.",
+   "basis": "text",
+   "cc_ref": "CC 6.1.9",
+   "quote": "The partial is `census:partial:{class}:v1` and the composite `census:composite:{class}:v1`, both federation-scope rows",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "census:partial:{class}",
+     "census:composite:{class}"
+    ]
+   }
+  },
+  {
+   "id": "community_count",
+   "title": "A community's own count stays in the community",
+   "when": "The row is a partial sum of one community's members, or the count of its active members made from the two partial sums.",
+   "why": "The count is the members' figure: every member recomputes it and refuses a row that differs. It is placed in the room, where the members are.",
+   "basis": "text",
+   "cc_ref": "CC 6.1.9",
+   "quote": "The two publish `census:member:partial:v1` into the room, and `census:expected_active:v1` is the count of owners whose recent bit is set, recomputed by every member from the two partials",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "census:member:partial",
+     "census:expected_active"
+    ]
+   }
+  },
+  {
+   "id": "poll_result",
+   "title": "A secret poll's result belongs to the community that held it",
+   "when": "The row is the tally of a community's secret poll.",
+   "why": "Every member recomputes the tally, so it is placed where every member holds it. Outside the room even the fact that a poll took place stays unseen.",
+   "basis": "text",
+   "cc_ref": "CC 6.1.9",
+   "quote": "the result is `ballot:tally:{poll_id}:v1`, recomputed by every member",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "ballot:tally:{poll_id}"
+    ]
+   }
+  },
+  {
+   "id": "device_name",
+   "title": "A device's name is its owner's private note",
+   "when": "The row is the name a person gives one of their own devices.",
+   "why": "The name is display text. It confers nothing and no gate reads it, so no other party needs it and it stays among the owner's own devices.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.1",
+   "quote": "it never leaves the owner's self cohort",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "device:label"
+    ]
+   }
+  },
+  {
+   "id": "observation_names_observed",
+   "title": "An observation names the party observed, where that party has a key",
+   "when": "The row reports what its signer saw from its own vantage.",
+   "why": "A network path holds no key, so a report on reaching one names no subject and the signer's key marks the vantage. A report on a party that holds keys must name that party, and is never that party's own.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.4",
+   "quote": "Unlike reachability, the observed party has keys, so `subject_key_ids` is **REQUIRED and non-empty**",
+   "enforced": false,
+   "moves": {
+    "subject_rule": [
+     "observation:reachability",
+     "observation:access_assumption"
+    ]
+   }
+  },
+  {
+   "id": "listing_public",
+   "title": "A public community's listing is published to everyone",
+   "when": "The row is the notice by which a public community is found.",
+   "why": "A listing only members could read would find no new member. It is placed in the commons and travels as every commons row does.",
+   "basis": "text",
+   "cc_ref": "CC 3.2",
+   "quote": "replicated like any Commons row",
+   "moves": {
+    "placement": [
+     "community:listing"
+    ],
+    "replication": [
+     "community:listing"
+    ]
+   }
+  },
+  {
+   "id": "listing_one_row",
+   "title": "A community has one listing, and it is the community's own",
+   "when": "The row lists a community.",
+   "why": "Two live listings for one community could disagree about its name, its rules or its moderator. A listing names exactly one community whose record the reader holds, and a newer listing replaces the older.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.1",
+   "quote": "signed by a current `moderate`-holder of the community it names; one live row per community",
+   "moves": {
+    "subject_rule": [
+     "community:listing"
+    ],
+    "lifecycle": [
+     "community:listing"
+    ]
+   }
+  },
+  {
+   "id": "own_record",
+   "title": "A party's own record is never another party's to write",
+   "when": "The row is a party's own record: its reasoning, its claim on a session, its consent to share its traces, or the ownership of a node.",
+   "why": "The row must be about its signer, or about a node its signer owns. A trace written by another party is a claim and not a trace, and a third party naming a node's owner is a seizure.",
+   "basis": "text",
+   "cc_ref": "CC 3.4.5",
+   "quote": "a record of your own reasoning, consent, ownership or configuration must not be anyone else's",
+   "moves": {
+    "subject_rule": [
+     "trace:{form}:{version}",
+     "ownership:{relation}:{target_kind}:{version}",
+     "session:{kind}",
+     "consent:community_trust"
+    ]
+   }
+  },
+  {
+   "id": "key_by_possession",
+   "title": "A key is claimed by proof of holding it",
+   "when": "The row is a key's claim of itself.",
+   "why": "No earlier row can vouch for a key no reader has seen. The row is signed by the key it names, and it is admitted on proof that its signer holds that key.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.3",
+   "quote": "`attesting_key_id` = `attested_key_id` = the key",
+   "moves": {
+    "subject_rule": [
+     "key:record"
+    ]
+   }
+  },
+  {
+   "id": "custody_scope",
+   "title": "A custody report sits at the scope of the content it is about",
+   "when": "The row reports whether a device holds a piece of content.",
+   "why": "A report placed wider than its content would tell outsiders what a group holds. The signer does not choose the scope, and a report at any other scope is refused.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.3.3",
+   "quote": "where that content's scope is not the report's, the report concludes nothing",
+   "moves": {
+    "placement": [
+     "custody:{kind}"
+    ]
+   }
+  },
+  {
+   "id": "duty_scope",
+   "title": "A duty sits no wider than the permission it attaches to",
+   "when": "The row is an obligation attached to a permission.",
+   "why": "A duty names the permission it attaches to, so a duty placed wider would tell readers outside the permission's audience that the permission exists. The signer does not choose a wider scope.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.1",
+   "quote": "A duty MUST NOT be placed wider than the permission it attaches to",
+   "moves": {
+    "placement": [
+     "duty:{kind}"
+    ]
+   }
+  },
+  {
+   "id": "custody_own_report",
+   "title": "Only the device that holds the content reports holding it",
+   "when": "The row reports custody of one piece of content.",
+   "why": "Where the bytes are is a fact only the holding device can state. The signer is the device the report is about, and the report names exactly one piece of content.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.3.3",
+   "quote": "nobody reports custody for another device",
+   "moves": {
+    "subject_rule": [
+     "custody:{kind}"
+    ]
+   }
+  },
+  {
+   "id": "custody_own_withdrawal",
+   "title": "Only the device ends its own custody report",
+   "when": "A custody report is withdrawn.",
+   "why": "A report says where bytes are and not that they may stay, so removing content never needs a holder's report withdrawn. Content is removed by a takedown, and each device ends its own report.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.3.3",
+   "quote": "A device ends its own report by re-acknowledging `none` or by `withdraws`; nobody withdraws another device's report",
+   "moves": {
+    "lifecycle": [
+     "custody:{kind}"
+    ]
+   },
+   "value": {
+    "lifecycle.withdraws_by": "{attester}"
+   }
+  },
+  {
+   "id": "earliest_claim",
+   "title": "The earliest claim on a session holds it",
+   "when": "Two devices of one identity claim the same session.",
+   "why": "No device can lock a session across a mesh, so two claims are expected. Every reader must pick the same holder with no further message: the earliest claim stands, and a tie goes to the lowest key.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.3.1",
+   "quote": "MUST settle on **earliest `claimed_at`, ties broken on the lowest occurrence `key_id`**",
+   "moves": {
+    "lifecycle": [
+     "session:{kind}"
+    ]
+   }
+  },
+  {
+   "id": "key_wrap",
+   "title": "A key wrap sits with the content and names its one recipient",
+   "when": "The row carries a content key wrapped for one device.",
+   "why": "The key must reach the device it is for and deliver nothing else. The row is placed at the content's scope and names that one device, and it reaches the device's node because it names it.",
+   "basis": "text",
+   "cc_ref": "CC 3.3.2",
+   "quote": "the row is placed at the content's scope and reaches the recipient's node because the row *refers to* it",
+   "moves": {
+    "placement": [
+     "key_grant:{axis}"
+    ],
+    "subject_rule": [
+     "key_grant:{axis}"
+    ]
+   }
+  },
+  {
+   "id": "shared_stays_shared",
+   "title": "A key once shared stays shared",
+   "when": "The row is a content key wrapped for a device.",
+   "why": "A withdrawal cannot make a device forget a key it holds, so a withdrawal of a wrap is refused. Access ends by changing the key for what is written afterwards.",
+   "basis": "text",
+   "cc_ref": "CC 3.3.2",
+   "quote": "a `withdraws` or `recants` naming a `key_grant` row is refused; once shared, always shared at the wire layer, and forward secrecy is by rotation",
+   "moves": {
+    "lifecycle": [
+     "key_grant:{axis}"
+    ]
+   },
+   "value": {
+    "lifecycle.withdraws_by": "{}"
+   }
+  },
+  {
+   "id": "two_consents",
+   "title": "Joining takes two consents: the group's and the joiner's",
+   "when": "The row is a step in joining a group: an invitation, an answer to one, or a change to the roster.",
+   "why": "No group enrols a party that has not agreed, and no party joins a group that has not invited it. Each row is placed at the group; an invitation names exactly one invitee and lapses within thirty days, and the answer is the invitee's alone.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.3.2",
+   "quote": "A **proposal** is an invitation to one key K, targeted at the group",
+   "moves": {
+    "placement": [
+     "membership:{stage}"
+    ],
+    "subject_rule": [
+     "membership:{stage}"
+    ]
+   }
+  },
+  {
+   "id": "room_door_policy",
+   "title": "A room's door runs a row of the policy table",
+   "when": "The row proposes to add or remove a member of a room, or is a moderation act in one.",
+   "why": "One voice must neither admit nor exclude, and an absent moderator must not stall a room. The table gives each door its numbers, so every node reaches the same answer from the same rows.",
+   "basis": "text",
+   "cc_ref": "CC 4.5.13",
+   "quote": "Every door that opens a window runs one decision shape",
+   "enforced": false,
+   "cell": "build",
+   "build_note": "The pinned build admits these acts under the room's own protocol and does not read the table's rows for them. The register carries the rule as staged.",
+   "moves": {
+    "governance": [
+     "membership:{stage}",
+     "moderation:{allegation_type}"
+    ]
+   }
+  },
+  {
+   "id": "roster_in_group",
+   "title": "A roster is never listed outside its group, a public room's excepted",
+   "when": "The row is a version of a family's or a community's roster.",
+   "why": "The members of a group are the members' to know. The roster is placed at the group, so no reader outside it can list the members. A public room's roster is public, since a post is proved only with the rows that seat its author.",
+   "basis": "text",
+   "cc_ref": "CC 3.2",
+   "quote": "every other roster is never enumerable outside its cohort",
+   "moves": {
+    "placement": [
+     "group:roster"
+    ]
+   }
+  },
+  {
+   "id": "group_plane",
+   "title": "A group's roster and membership acts go to the group and no further",
+   "when": "The row is a version of a group's roster, or an act that proposes, answers or lands a change to it.",
+   "why": "Who is in a group is the members' to know. The rows go to the members' nodes, to a live invitee and to the member an act names. The trust root is the one exception: every node that roots in it must read its roster, so that roster is public.",
+   "basis": "text",
+   "cc_ref": "CC 3.2",
+   "quote": "nothing is pushed to a node whose owner has not joined",
+   "enforced": false,
+   "cell": "build",
+   "build_note": "The pinned build sends these rows to every node when the group is public. For the trust root that is the text's rule. For a room anyone may join it is not, and the register carries that rule as staged.",
+   "moves": {
+    "replication": [
+     "group:roster",
+     "membership:{stage}"
+    ]
+   }
+  },
+  {
+   "id": "own_devices_policy",
+   "title": "A person's own devices are added and removed under a stated policy",
+   "when": "The row adds a device to a person's identity, proposes to remove one, or answers such a proposal.",
+   "why": "One device able to evict the others at once is a prize a thief wins in two steps. The change waits a window, and the person's other devices decide whether it stands.",
+   "basis": "text",
+   "cc_ref": "CC 3.3.6.4",
+   "quote": "The policy is two rows of the governance table",
+   "moves": {
+    "governance": [
+     "identity:occurrence",
+     "objection:{state}"
+    ]
+   }
+  },
+  {
+   "id": "renewal_replaces",
+   "title": "A renewed self-report replaces the one before it",
+   "when": "A node renews the report of its own configuration to keep it current.",
+   "why": "A renewal that left the older row standing would split the node's weight across two rows, and renewing would weaken the claim. One live row per subject keeps a renewed claim as strong as a fresh one.",
+   "basis": "text",
+   "cc_ref": "CC 3.4.5.1",
+   "quote": "A self-report that renews to stay current MUST carry `supersedes`",
+   "moves": {
+    "lifecycle": [
+     "config:{scope}"
+    ]
+   }
+  },
+  {
+   "id": "verdict_never_local",
+   "title": "A verdict about another party is never kept local",
+   "when": "The row is a capacity score: one party's measurement of another.",
+   "why": "A row held unsigned on its signer's own node must be the signer's statement about itself. A measurement is never its subject's own, so it cannot be such a row and is always written for the federation.",
+   "basis": "text",
+   "cc_ref": "CC 5.3.2.5",
+   "quote": "`witness_relation` MUST be `self` for any local-tier write",
+   "moves": {
+    "replication": [
+     "capacity:composite",
+     "capacity:relay_delivery",
+     "capacity:{factor}"
+    ]
+   }
+  },
+  {
+   "id": "minor_not_announced",
+   "title": "A minor's node is never announced to the federation",
+   "when": "The owner of the node is a minor.",
+   "why": "A binding at federation scope makes its owner findable and contactable by adults with no connection to them. No steward, guardian or consent lifts that floor, so the promotion is refused.",
+   "basis": "text",
+   "cc_ref": "CC 5.4.6",
+   "quote": "a node whose owner a row on record places in a minor band MUST NOT carry a federation-scope owner-binding",
+   "moves": {
+    "subject_rule": [
+     "ownership:{relation}:{target_kind}:{version}"
+    ]
+   }
+  },
+  {
+   "id": "identity_change_applied",
+   "title": "An agent records a change to its own identity",
+   "when": "The row records an authorised change to an agent's identity record, as applied.",
+   "why": "The row is the agent's own record that the change took effect, signed by the running agent about its identity. It is admitted only with the approval it cites, so a change applied with no approval shows as a gap in the record.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.5",
+   "quote": "Attester = the agent's occurrence key, subject = the agent's identity key",
+   "moves": {
+    "subject_rule": [
+     "identity_amendment"
+    ]
+   }
+  },
+  {
+   "id": "one_ledger",
+   "title": "One ledger per holder, unit and standard",
+   "when": "The row is a ledger's head, a checkpoint or a promotion.",
+   "why": "Two ledgers over one holder and one unit would be two sets of books. The ledger's name is derived from the holder, the unit and the standard, so a second ledger for the same three is refused.",
+   "basis": "text",
+   "cc_ref": "CC 3.3.10.1",
+   "quote": "One ledger per `(steward-bound identity, unit, standard_version)`; `ledger_id` derives deterministically from the triple.",
+   "moves": {
+    "subject_rule": [
+     "ledger:checkpoint:{unit}:{version}",
+     "ledger:head:{unit}:{version}",
+     "ledger:promotion:{version}"
+    ]
+   }
+  },
+  {
+   "id": "signer_erases_adverse",
+   "title": "An adverse finding is erased by the party that made it",
+   "when": "The subject of a detection asks for the row to be erased.",
+   "why": "The subject cannot withdraw an adverse row, or it would launder its own record. The signer withdraws its own row on the request or refuses with a reason, and the subject's path stays reconsideration.",
+   "basis": "text",
+   "cc_ref": "CC 4.5.3",
+   "quote": "the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row",
+   "moves": {
+    "erasure_route": [
+     "detection:correlated_action:{axis}",
+     "detection:distributive:access:{resource_type}",
+     "detection:hash_chain_integrity",
+     "detection:intra_agent_consistency",
+     "detection:{detector}"
+    ]
+   }
+  },
+  {
+   "id": "trace_signer_erases",
+   "title": "A trace is erased by its own signer",
+   "when": "The row is an agent's own reasoning trace.",
+   "why": "A trace explains the act it is anchored to. Only its signer, or the custodian after retirement, erases it; the owner's node may stop holding the bytes, which is no erasure, and a deletion never reaches a row another party signed.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.5",
+   "quote": "An agent's trace is erased only by its signer's `withdraws`",
+   "enforced": false,
+   "cell": "build",
+   "build_note": "The pinned build hard-deletes an agent's traces on the host's request with no check, and with the key included it deletes rows other parties signed about that key.",
+   "moves": {
+    "erasure_route": [
+     "trace:{form}:{version}"
+    ]
+   }
+  },
+  {
+   "id": "outside_name",
+   "title": "A claim to an outside name carries that name in its family",
+   "when": "A key claims to be the party behind a hash that stands for an account outside the federation.",
+   "why": "The hash holds no key, so the row cannot name it as a keyed party. The hash rides in the family's name, and the row stays its signer's own claim for readers to weigh.",
+   "basis": "text",
+   "cc_ref": "CC 3.3.14",
+   "quote": "naming the canonical hash `H` as the bound subject",
+   "moves": {
+    "subject_rule": [
+     "identity:canonical_binding:{canonical_hash}"
+    ]
+   }
+  },
+  {
+   "id": "notice_shape",
+   "title": "A takedown notice names the content and the legal basis it rests on",
+   "when": "The row asks holders to remove content.",
+   "why": "A holder must know exactly which content to remove and on what basis, and the party affected must be able to contest it. The row carries the whole notice, so both are fixed by the notice's shape.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.1",
+   "quote": "the `scores` row whose envelope is the `takedown_notice` payload",
+   "moves": {
+    "subject_rule": [
+     "takedown_notice:{basis}"
+    ]
+   }
+  },
+  {
+   "id": "read_note",
+   "title": "The cell is the default, with a note on how it is read",
+   "when": "The census recorded, beside the default value, how the store applies it to this family.",
+   "why": "The rule is the default: the row is judged when it arrives, replaced by its own signer, and a withdrawal ends the withdrawn row and no other. The note is kept so the reading is not lost.",
+   "basis": "build",
+   "moves": {
+    "freshness": [
+     "revocation:{entity_type}:{reason}"
+    ],
+    "lifecycle": [
+     "goal:{scale}",
+     "content_class:{class}",
+     "mesh_config:{key}"
+    ]
+   }
+  },
+  {
+   "id": "build_manifest_public",
+   "title": "A build manifest is public",
+   "when": "The row states which build a released target was made from.",
+   "why": "Anyone checking a release must be able to read the manifest, whoever they are, so the row is signed at federation scope and goes to every node.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.2.1",
+   "quote": "Its `cohort_scope` is `federation`.",
+   "moves": {
+    "placement": [
+     "provenance:build_manifest:{target}"
+    ]
+   }
+  },
+  {
+   "id": "testimony_private",
+   "title": "A testimony stays with its witness",
+   "when": "The row is a person's own account of what they saw.",
+   "why": "A testimony is kept at the witness's own scope, is never added up and never grounds a penalty alone, so it travels no further than the witness's own nodes.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.3",
+   "quote": "the four load-bearing wire-level disciplines (`witness_relation: self`, `cohort_scope: self`, never aggregated, never sole evidence for `slashing:*`)",
+   "moves": {
+    "placement": [
+     "testimonial_witness:{kind}"
+    ]
+   }
+  },
+  {
+   "id": "need_open_call",
+   "title": "A need is an open call",
+   "when": "The row asks the whole mesh for help of a named kind.",
+   "why": "A call that only the caller's own circle could read would reach nobody able to answer it, so the row is signed at federation scope.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.3",
+   "quote": "Federation-scope open-call surface",
+   "moves": {
+    "placement": [
+     "need:{domain}:{kind}"
+    ]
+   }
+  },
+  {
+   "id": "watchlist_per_group",
+   "title": "A watchlist belongs to one group",
+   "when": "The row turns on a matching list for the content of one group.",
+   "why": "A list that applied everywhere would let one authority screen every room. Each group's own moderating authority enables its list, and the row goes to that group and no further.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.4",
+   "quote": "**Per-group, NEVER global**",
+   "moves": {
+    "placement": [
+     "watchlist:{id}"
+    ]
+   }
+  },
+  {
+   "id": "registry_consensus_public",
+   "title": "A registry-consensus attestation is world-readable",
+   "when": "The row reports that independent registry sources agree about a key.",
+   "why": "A reader anywhere must be able to check a key against it before trusting the key, so the row is signed at federation scope in plain text.",
+   "basis": "text",
+   "cc_ref": "CC 4.4.3.4",
+   "quote": "are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)",
+   "moves": {
+    "placement": [
+     "attestation:registry_consensus"
+    ]
+   }
+  },
+  {
+   "id": "rendezvous_public",
+   "title": "A rendezvous route is published to everyone",
+   "when": "The row is a receiver's route for delivery through the Anonymous Tier, signed under a key made for one period.",
+   "why": "A sender must find the route before it holds any standing with the receiver, so the row is placed in the commons. The key is fresh each period and names no identity.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.4",
+   "quote": "**Reach:** everyone, as on the bootstrap planes",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "rendezvous:route"
+    ]
+   }
+  },
+  {
+   "id": "evidence_public",
+   "title": "An evidence row is public",
+   "when": "The row names one evidence blob of a registered suite.",
+   "why": "The blob is a Commons blob and any reader must be able to check a claim against it, so the row is emitted at federation scope.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.5.5",
+   "quote": "Emitted at `federation` scope by a key holding `infra:attest`",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "evidence:{suite}:{kind}:{cell}:{prefix}"
+    ]
+   }
+  },
+  {
+   "id": "deferral_in_cell",
+   "title": "A deferral stays within the deferring party's cell",
+   "when": "The row is one ask routed to a Wise Authority.",
+   "why": "The ask concerns one party and is answered by the seats over that party. It is placed at a scope that reaches them and is never sent to the whole federation.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.3",
+   "quote": "the audience is the cell (for an agent, the steward's cohort and the WA it routes to), never a federation broadcast",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "deferral:request"
+    ]
+   }
+  },
+  {
+   "id": "trace_store_columns",
+   "title": "The store tables the family with columns no row carries",
+   "when": "The store keeps the family's rows in tables of its own, with working state and columns it adds on receipt that no signed row carries.",
+   "why": "The extra columns are storage and no authority over the rows. No answer reads them and they confer nothing, so a node that holds the rows alone concludes the same.",
+   "basis": "build",
+   "moves": {
+    "projection": [
+     "trace:{form}:{version}"
+    ]
+   }
+  },
+  {
+   "id": "binding_cosigned_by_affiliation",
+   "title": "A binding that names an affiliation stands only with the affiliation's consent",
+   "when": "An owner-binding names an organisation's affiliation as the body its agent acts for.",
+   "why": "The affiliation answers alongside the steward, so the binding binds it and is cosigned under the affiliation's protocol. The cell records that cosignature as a condition on where the row sits.",
+   "basis": "text",
+   "cc_ref": "CC 3.2",
+   "quote": "It is cosigned under that affiliation's protocol",
+   "moves": {
+    "placement": [
+     "ownership:{relation}:{target_kind}:{version}"
+    ]
+   }
+  },
+  {
+   "id": "consent_addressed",
+   "title": "A consent row names the node it is for",
+   "when": "The row is a consent state that carries the recipient field.",
+   "why": "The recipient field names the addressed recipient. Such a row is held by its author's node and that key's node and by no other.",
+   "basis": "text",
+   "cc_ref": "CC 2.6.1.8",
+   "quote": "Also carried on consent:state rows.",
+   "moves": {
+    "subject_rule": [
+     "consent:state:{stance}"
+    ]
+   }
+  },
+  {
+   "id": "replication_grant_names_peer",
+   "title": "A replication grant names its peer as its subject",
+   "when": "The row is a node's standing grant to replicate a class of its own rows to a named peer.",
+   "why": "The grant is the granting node's own consent, and the peer it names is its subject. The text gives the grant no recipient field.",
+   "basis": "text",
+   "cc_ref": "CC 3.3.7",
+   "quote": "the recipient peer is named in `subject_key_ids[] = [P]`",
+   "enforced": false,
+   "cell": "build",
+   "build_note": "The pinned build also reads a recipient field naming the node the grant is for. That reading is the build's and no rule of the text.",
+   "moves": {
+    "subject_rule": [
+     "consent:replication:{version}"
+    ]
+   }
+  },
+  {
+   "id": "replication_grant_public",
+   "title": "A replication grant is a public record at federation scope",
+   "when": "The row is a node's standing grant to replicate a class of its own rows to a named peer.",
+   "why": "The grant authorises flow across nodes, so it is never local-tier and is placed at federation scope. A grant that an unannounced node signs or is named in is held by the two nodes alone.",
+   "basis": "text",
+   "cc_ref": "CC 3.3.7",
+   "quote": "It carries `cohort_scope: federation` (the grant itself is a public governance record).",
+   "enforced": false,
+   "cell": "build",
+   "build_note": "The pinned build admits a self-scoped grant at the local tier and sends every grant only to the parties it names.",
+   "moves": {
+    "replication": [
+     "consent:replication:{version}"
+    ]
+   }
+  },
+  {
+   "id": "wrap_reaches_recipient",
+   "title": "A key wrap reaches its one recipient by naming it",
+   "when": "The row carries a content key wrapped for one device.",
+   "why": "A wrap goes to the device it names by the audience rule every row follows. A wrap whose key is not yet held waits for it, as every row waits for what it names.",
+   "basis": "text",
+   "cc_ref": "CC 3.3.2",
+   "quote": "the row is placed at the content's scope and reaches the recipient's node because the row *refers to* it",
+   "enforced": false,
+   "cell": "build",
+   "build_note": "The pinned build sends a wrap at the federation tier alone and refuses one whose key it does not yet hold. The text gives neither.",
+   "moves": {
+    "replication": [
+     "key_grant:{axis}"
+    ]
+   }
+  },
+  {
+   "id": "withhold_outranks_release",
+   "title": "A withhold outranks a release whatever their instants",
+   "when": "Two quarantine markers name one subject, one withholding and one releasing.",
+   "why": "Markers are ordered by kind and never by instant. The withhold holds until a release names the withhold it lifts, and between one holder's own markers the default order applies.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.2",
+   "quote": "a withhold outranks a release whatever their instants",
+   "moves": {
+    "lifecycle": [
+     "quarantine:{state}"
+    ]
+   }
+  },
+  {
+   "id": "trust_edge_is_a_delegation",
+   "title": "A trust edge is a delegation",
+   "when": "The row is a trust-root conferral, acceptance or charter edge.",
+   "why": "The edge rides a delegation row, so the rules on every delegation bind it: a stated term and no cycle. An acceptance edge confers nothing on the root and is outside the cycle check.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.1",
+   "quote": "carried as `dimension` values on `delegates_to` rows",
+   "moves": {
+    "subject_rule": [
+     "trust:{job}:{version}"
+    ]
+   }
+  }
+ ],
+ "open": []
+}

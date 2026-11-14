@@ -1,0 +1,2325 @@
+{
+ "_meta": {
+  "source": "formal/derivation/reaction_text.tsv",
+  "cc_section": "4.5.13",
+  "reading": "an entry is an expiry rule, a named clock, a landing or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
+  "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
+  "entries": 123,
+  "kinds": {
+   "expiry": 22,
+   "clock": 17,
+   "land": 17,
+   "while": 9,
+   "react": 58
+  },
+  "emits": 25,
+  "new_event_words": {
+   "purged": 7,
+   "matched": 1,
+   "sealed": 4
+  },
+  "landing": {
+   "rule": "a land entry names who concludes a clock or an expiry of its family: a seat and the row it signs, or `local` where each node reads the close on its own clock and nothing is signed",
+   "late": "`closed`: an answer the concluder first holds after its close changes nothing; `counts`: it is still counted; absent: no sentence states it",
+   "by_concluder": {
+    "author": 3,
+    "holder": 1,
+    "identity:substrate_persist": 1,
+    "local": 10,
+    "member": 1,
+    "winner": 1
+   },
+   "by_late": {
+    "closed": 4,
+    "counts": 5,
+    "unstated": 8
+   },
+   "clocks_with_no_landing": [
+    "cosign:{state} [pending] age",
+    "group:roster cover"
+   ]
+  },
+  "while_open": {
+   "rule": "a while entry says what the opening row is while its window is open: `in_force` binds each node from its own first holding, `pending` binds nobody until the window lands or its fallback carries; absent: no sentence states it",
+   "by_open": {
+    "in_force": 5,
+    "pending": 4
+   }
+  },
+  "one_emitter": {
+   "rule": "a row a clock or a fold causes is emitted by the door the causing row first entered (CC 4.5.13)",
+   "not_yet_by_origin_door": [
+    "agent_files:{kind}:{platform_or_target}: emit hard_case:subject_authority_missing by identity:substrate_persist",
+    "consent:decay:{stage}: emit consent:decay:complete by author",
+    "consent:decay:{stage}: emit consent:decay:patterns_anonymized by author",
+    "consent:deletion_sla:{days}: emit hard_case:deletion_window_breach by identity:substrate_persist",
+    "consent:state:{stance}: emit consent:state:expired by identity:substrate_persist",
+    "consent:{kind}: emit hard_case:subject_authority_missing by identity:substrate_persist",
+    "key_grant:{axis}: emit hard_case:recipient_excluded by identity:substrate_persist"
+   ]
+  }
+ },
+ "reactions": [
+  {
+   "family": "bond_posted:{currency}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "revocation:{entity_type}:{reason}"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "forfeited",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.1.1"
+   ]
+  },
+  {
+   "family": "session:{kind}",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "max": "session_claim_max_secs",
+   "from": "claimed_at",
+   "by": "origin_door",
+   "cc_ref": [
+    "CC 3.1.3.1"
+   ]
+  },
+  {
+   "family": "session:{kind}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "superseded",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.1.3.1"
+   ]
+  },
+  {
+   "family": "rendezvous:route",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 3.1.4"
+   ]
+  },
+  {
+   "family": "rendezvous:route",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "purgeable",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.1.4"
+   ]
+  },
+  {
+   "family": "consent:state:{stance}",
+   "leaves": [
+    "granted"
+   ],
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 3.3.1",
+    "CC 4.4.3.30"
+   ]
+  },
+  {
+   "family": "consent:state:{stance}",
+   "leaves": [
+    "granted"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "superseded",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "consent:state:expired",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.3.1",
+    "CC 4.4.3.30"
+   ]
+  },
+  {
+   "family": "consent:stream:{kind}",
+   "leaves": [
+    "temporary"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "default": "consent_temporary_ttl_secs",
+   "cc_ref": [
+    "CC 3.3.1"
+   ]
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "self"
+    },
+    {
+     "event": "superseded",
+     "of": "self"
+    },
+    {
+     "event": "purged",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "cancel_watch",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.3.1"
+   ]
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "family",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "membership:widening"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:content",
+     "by": "owner",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.3.4",
+    "CC 4.4.3.16"
+   ]
+  },
+  {
+   "family": "consent:replication:{version}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "self"
+    },
+    {
+     "event": "recanted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "cease_replication",
+     "force": "must"
+    },
+    {
+     "effect": "do",
+     "act": "deregister_peer",
+     "force": "should"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.3.7"
+   ]
+  },
+  {
+   "family": "encyclopedia:*",
+   "kind": "expiry",
+   "mode": "none",
+   "cc_ref": [
+    "CC 3.3.13"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:family_membership_change",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "hard_case:community_membership_change",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.4.4"
+   ]
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "expiry",
+   "mode": "none",
+   "cc_ref": [
+    "CC 4.2.1",
+    "CC 4.2.1.3",
+    "CC 4.2.1.1"
+   ]
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.2.1",
+    "CC 4.2.1.3",
+    "CC 4.2.1.1"
+   ]
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "unless": [
+    {
+     "event": "admitted",
+     "of": "accord:lifecycle:confirmed"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.2.1",
+    "CC 4.2.1.3",
+    "CC 4.2.1.1"
+   ]
+  },
+  {
+   "family": "key:record",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "key:revocation"
+    },
+    {
+     "event": "withdrawn",
+     "of": "trust:accepts"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.2.1"
+   ]
+  },
+  {
+   "family": "config:{scope}",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 4.2.1.4"
+   ]
+  },
+  {
+   "family": "mesh_config:{key}",
+   "leaves": [
+    "emergency"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "max": "mesh_config_emergency_ttl_secs",
+   "cc_ref": [
+    "CC 4.2.1.4",
+    "CC 4.2.1",
+    "CC 3.1.9.2"
+   ]
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "community",
+   "kind": "react",
+   "on": [
+    {
+     "event": "sealed",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:epoch",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.4",
+    "CC 4.4.3.9",
+    "CC 4.4.3.16"
+   ]
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "self",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "identity:occurrence"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:content",
+     "by": "owner",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.16"
+   ]
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "affiliations",
+   "kind": "react",
+   "on": [
+    {
+     "event": "sealed",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:epoch",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.16"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "scope": "affiliations",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "no_live_deciding_seat"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.12"
+   ]
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "group:roster"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.12"
+   ]
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "leaves": [
+    "accepts"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "group:roster"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.12"
+   ]
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "leaves": [
+    "moderate"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "live_duty_holder"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "locked",
+     "of": "group:roster",
+     "force": "must"
+    },
+    {
+     "effect": "open",
+     "policy": "moderator_election",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.12"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "dissolves_at",
+   "cc_ref": [
+    "CC 4.4.3.12"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.12"
+   ]
+  },
+  {
+   "family": "consent:partnership_grant",
+   "kind": "expiry",
+   "mode": "forbidden",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 4.4.3.20"
+   ]
+  },
+  {
+   "family": "consent:partnership_accept",
+   "kind": "expiry",
+   "mode": "forbidden",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 4.4.3.20"
+   ]
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "clock",
+   "name": "sla",
+   "dur": "self.days",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "target",
+     "by": "subject"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.2.2",
+    "CC 3.3.1",
+    "CC 4.4.3.27",
+    "CC 4.4.3.24"
+   ]
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "sla"
+    }
+   ],
+   "unless": [
+    {
+     "event": "withdrawn",
+     "of": "target",
+     "by": "producer"
+    },
+    {
+     "event": "superseded",
+     "of": "target",
+     "by": "producer"
+    },
+    {
+     "event": "purged",
+     "of": "target"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:deletion_window_breach",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.2.2",
+    "CC 3.3.1",
+    "CC 4.4.3.27",
+    "CC 4.4.3.24"
+   ]
+  },
+  {
+   "family": "watchlist:{id}",
+   "leaves": [
+    "csam"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:watchlist_enabled",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.7"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "leaves": [
+    "ephemeral"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 5.3.3.2"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "leaves": [
+    "ephemeral"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "no_member"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 5.3.3.2"
+   ]
+  },
+  {
+   "family": "deferral:request",
+   "kind": "land",
+   "name": "expiry",
+   "concluder": "local",
+   "cc_ref": [
+    "CC 4.3"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "clock",
+   "name": "window",
+   "dur": "self_roster_add.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": [
+    "CC 3.3.6.4"
+   ]
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "accord:invoke:constitutional:{halt_id}"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": [
+    "CC 3.4.1",
+    "CC 4.2.1.1",
+    "CC 4.2.6",
+    "CC 4.2.1.3"
+   ]
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.4.1",
+    "CC 4.2.1.1",
+    "CC 4.2.6",
+    "CC 4.2.1.3"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "clock",
+   "name": "W",
+   "dur": "admission_freshness_window_secs",
+   "max": "accord_roster_window_max_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.2.6",
+    "CC 4.4.3.18"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "W"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "policy_met"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.2.6",
+    "CC 4.4.3.18"
+   ]
+  },
+  {
+   "family": "content_class:{class}",
+   "leaves": [
+    "reported"
+   ],
+   "kind": "clock",
+   "name": "window",
+   "dur": "moderation_action.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "content_class:{class}",
+   "leaves": [
+    "reported"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "window"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "keep_decided"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": "target",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "clock",
+   "name": "hold",
+   "dur": "group.hold_window_secs",
+   "default": "default_standing.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": [
+    "CC 3.1.3",
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "hold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "drop_held",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.1.3",
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "clock",
+   "name": "age",
+   "dur": "group.hold_window_secs",
+   "default": "default_standing.window_secs",
+   "from": "asserted_at",
+   "by": "receipt",
+   "cc_ref": [
+    "CC 3.1.3",
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "age"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.1.3",
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "expires_at",
+   "max": "membership_proposal_max_secs",
+   "from": "asserted_at",
+   "by": "signed",
+   "cc_ref": [
+    "CC 4.4.3.6",
+    "CC 3.1.3.2"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.6",
+    "CC 3.1.3.2"
+   ]
+  },
+  {
+   "family": "consent:{kind}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "subject_absent"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:subject_authority_missing",
+     "by": "identity:substrate_persist",
+     "force": "may"
+    }
+   ],
+   "cc_ref": [
+    "CC 2.3.1"
+   ]
+  },
+  {
+   "family": "agent_files:{kind}:{platform_or_target}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "subject_absent"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:subject_authority_missing",
+     "by": "identity:substrate_persist",
+     "force": "may"
+    }
+   ],
+   "cc_ref": [
+    "CC 2.3.1"
+   ]
+  },
+  {
+   "family": "watchlist:{id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:watchlist_enabled",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.1.9.4"
+   ]
+  },
+  {
+   "family": "watchlist:{id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "matched",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:watchlist_match",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.1.9.4"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "refused",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:community_consensus_protocol_violation",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.6"
+   ]
+  },
+  {
+   "family": "key_grant:{axis}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "no_wrap_target"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:recipient_excluded",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.16"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "scope": "family",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:family_membership_change",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "key_grant:content",
+     "by": "owner",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.17"
+   ]
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "consent:partnership_grant"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "consent:decay:identity_severed",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.26"
+   ]
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "clock",
+   "name": "anonymise",
+   "dur": "decay_protocol.patterns_anonymized_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "consent:partnership_grant"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.26"
+   ]
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "anonymise"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "consent:decay:patterns_anonymized",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.26"
+   ]
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "clock",
+   "name": "complete",
+   "dur": "decay_protocol.complete_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "consent:partnership_grant"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.26"
+   ]
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "complete"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "consent:decay:complete",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.26"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "NcmecCsam",
+    "PerceptualHashCsam",
+    "TvecTerrorist",
+    "GifctCip",
+    "CourtOrder"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    },
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "hard_case:fast_path_takedown",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 6.1.2.4"
+   ]
+  },
+  {
+   "family": "custody:{kind}",
+   "leaves": [
+    "ack"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "expires_at",
+   "eq": "custody_report_ttl_secs",
+   "from": "asserted_at",
+   "cc_ref": [
+    "CC 3.1.3.3",
+    "CC 5.3.2.1"
+   ]
+  },
+  {
+   "family": "custody:{kind}",
+   "leaves": [
+    "ack"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "unknown",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.1.3.3",
+    "CC 5.3.2.1"
+   ]
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "scope": "affiliations",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "delegation_valid_until",
+   "default": "delegation_term_max_secs",
+   "max": "charter.role_term",
+   "from": "delegation_valid_from",
+   "cc_ref": [
+    "CC 4.4.3.12"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "Dmca512"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "Dmca512"
+   ],
+   "kind": "clock",
+   "name": "withhold",
+   "dur": "withhold_window_dmca512",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "Dmca512"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "withhold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "NcmecCsam",
+    "PerceptualHashCsam",
+    "TvecTerrorist",
+    "GifctCip",
+    "CourtOrder"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    },
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "ballot:moderator",
+   "kind": "clock",
+   "name": "window",
+   "dur": "moderator_election.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "retirement:{state}",
+   "leaves": [
+    "decided"
+   ],
+   "kind": "clock",
+   "name": "objection",
+   "dur": "default_standing.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": [
+    "CC 7.5.5"
+   ]
+  },
+  {
+   "family": "accord:lifecycle",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "max": "accord_heartbeat_max_secs",
+   "cc_ref": [
+    "CC 3.4.1"
+   ]
+  },
+  {
+   "family": "accord:lifecycle",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "stale",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.4.1"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "clock",
+   "name": "cover",
+   "dur": "charter.witness_cadence_secs",
+   "from": "effective_at",
+   "by": "receipt",
+   "cc_ref": [
+    "CC 3.2"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "cover"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "head_covers_row"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lagging",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.2"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "founder_quorum_unreachable"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:community_liveness_stalled",
+     "by": "origin_door",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.2"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "founder_quorum_restored"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:community_liveness_restored",
+     "by": "origin_door",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.2"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:identity_occurrence_added",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.3.6"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "DsaArticle16"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "DsaArticle16"
+   ],
+   "kind": "clock",
+   "name": "withhold",
+   "dur": "withhold_window_dsa16",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "DsaArticle16"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "withhold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "OsaIllegalContent"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "OsaIllegalContent"
+   ],
+   "kind": "clock",
+   "name": "withhold",
+   "dur": "withhold_window_osa",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "OsaIllegalContent"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "withhold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "CommunityStandards"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "CommunityStandards"
+   ],
+   "kind": "clock",
+   "name": "withhold",
+   "dur": "withhold_window_community_standards",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "CommunityStandards"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "withhold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "delegation_valid_until",
+   "max": "delegation_term_max_secs",
+   "from": "delegation_valid_from",
+   "cc_ref": [
+    "CC 2.4.1"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "widening"
+   ],
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "widening"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 3.3.6.2"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.3.6.2"
+   ]
+  },
+  {
+   "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+   "leaves": [
+    "reversible_pending"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 3.4.12"
+   ]
+  },
+  {
+   "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+   "leaves": [
+    "reversible_pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "admitted",
+     "of": "capacity_assurance:reversible_excluded"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.4.12"
+   ]
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "community",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "membership:{stage}"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:epoch",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.16"
+   ]
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "land",
+   "name": "fuse",
+   "concluder": "local",
+   "late": "closed",
+   "cc_ref": [
+    "CC 4.2.1.1",
+    "CC 4.2.1.3"
+   ]
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "land",
+   "name": "fuse",
+   "concluder": "local",
+   "late": "closed",
+   "cc_ref": [
+    "CC 4.2.1.1",
+    "CC 4.2.1.3"
+   ]
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "land",
+   "name": "sla",
+   "concluder": "identity:substrate_persist",
+   "landing": "hard_case:deletion_window_breach",
+   "cc_ref": [
+    "CC 3.3.1"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "land",
+   "name": "window",
+   "concluder": "local",
+   "cc_ref": [
+    "CC 3.3.6.4"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "land",
+   "name": "W",
+   "concluder": "holder",
+   "landing": "group:roster",
+   "late": "closed",
+   "cc_ref": [
+    "CC 4.2.6"
+   ]
+  },
+  {
+   "family": "content_class:{class}",
+   "leaves": [
+    "reported"
+   ],
+   "kind": "land",
+   "name": "window",
+   "concluder": "local",
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "land",
+   "name": "hold",
+   "concluder": "local",
+   "cc_ref": [
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "Dmca512"
+   ],
+   "kind": "land",
+   "name": "withhold",
+   "concluder": "local",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "DsaArticle16"
+   ],
+   "kind": "land",
+   "name": "withhold",
+   "concluder": "local",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "OsaIllegalContent"
+   ],
+   "kind": "land",
+   "name": "withhold",
+   "concluder": "local",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "CommunityStandards"
+   ],
+   "kind": "land",
+   "name": "withhold",
+   "concluder": "local",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "ballot:moderator",
+   "kind": "land",
+   "name": "window",
+   "concluder": "winner",
+   "landing": "ballot:moderator_acceptance",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "land",
+   "name": "anonymise",
+   "concluder": "author",
+   "landing": "consent:decay:patterns_anonymized",
+   "cc_ref": [
+    "CC 4.4.3.26"
+   ]
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "land",
+   "name": "complete",
+   "concluder": "author",
+   "landing": "consent:decay:complete",
+   "cc_ref": [
+    "CC 4.4.3.26"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "land",
+   "name": "expiry",
+   "concluder": "member",
+   "landing": "membership:widening",
+   "late": "closed",
+   "cc_ref": [
+    "CC 3.1.3.2"
+   ]
+  },
+  {
+   "family": "retirement:{state}",
+   "leaves": [
+    "decided"
+   ],
+   "kind": "land",
+   "name": "objection",
+   "concluder": "author",
+   "landing": "retirement:{state}",
+   "cc_ref": [
+    "CC 7.5.5"
+   ]
+  },
+  {
+   "family": "deferral:request",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 4.3"
+   ]
+  },
+  {
+   "family": "key:record",
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "max": "key_record_max_secs",
+   "from": "asserted_at",
+   "cc_ref": [
+    "CC 2.4.1.1"
+   ]
+  },
+  {
+   "family": "key:record",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "superseded",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 2.4.1.1"
+   ]
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "while",
+   "name": "fuse",
+   "open": "in_force",
+   "cc_ref": [
+    "CC 4.2.1.1"
+   ]
+  },
+  {
+   "family": "content_class:{class}",
+   "leaves": [
+    "reported"
+   ],
+   "kind": "while",
+   "name": "window",
+   "open": "pending",
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "Dmca512"
+   ],
+   "kind": "while",
+   "name": "withhold",
+   "open": "in_force",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "DsaArticle16"
+   ],
+   "kind": "while",
+   "name": "withhold",
+   "open": "in_force",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "OsaIllegalContent"
+   ],
+   "kind": "while",
+   "name": "withhold",
+   "open": "in_force",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "CommunityStandards"
+   ],
+   "kind": "while",
+   "name": "withhold",
+   "open": "in_force",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "while",
+   "name": "expiry",
+   "open": "pending",
+   "cc_ref": [
+    "CC 3.1.3.2"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "while",
+   "name": "window",
+   "open": "pending",
+   "cc_ref": [
+    "CC 3.3.6.4"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "while",
+   "name": "W",
+   "open": "pending",
+   "cc_ref": [
+    "CC 4.2.6"
+   ]
+  }
+ ]
+}

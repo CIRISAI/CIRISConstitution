@@ -1,0 +1,8 @@
+# How a reader combines a family's rows where the family states no fold of its own, by the family's polarity class (CC 4.4.2).
+# Applied by tools/build_family_model.py under `_meta.fold.reader_defaults`. In the grammar of tools/fold_grammar.py; the quote must stand verbatim.
+polarity	fold	cc_ref	quote
+signed	combine=mean(score*confidence); by=reader	CC 4.4.2	**Mean** of `score × confidence` across attesters
+boolean-via-score	combine=min(score); by=reader	CC 4.4.2	**Min** (any negative trumps positive — fail-secure for hard constraints like `prohibited:*`)
+positive-only	combine=max(score); by=reader	CC 4.4.2	**Max** across attesters (any positive is conclusive)
+-1.0-only	combine=min(score); by=reader	CC 4.4.2	**Min** across attesters (any negative is conclusive)
+enumerated	key=dimension,attested_key_id,attesting_key_id; pick=max(signed_at); by=reader	CC 4.4.2	Each authorised attester's own **most-recent** value by `signed_at` stands ([CC 3.4](part_3_the_namespace.md#3.4)). The reader combines attesters by its own trust ([CC 4.4.3.34](#4.4.3.34)). No attester's value replaces another's by its date.

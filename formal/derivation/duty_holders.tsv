@@ -1,0 +1,9 @@
+# Who may sign an enforced action: the duty-holder set of CC 4.5.5 as role tokens, per family.
+# Read by tools/check_signer_gate.py: the entry transition of the family admits exactly these roles.
+# The quote must stand verbatim in the cited section.
+family	duty_holders	cc_ref	quote
+takedown_notice:{basis}	subject | takedown | owner	CC 4.5.5	the content's **authoritative** subject set
+moderation:{allegation_type}	moderate	CC 4.5.5	`is_named_moderator(·, C, moderate)` for the relevant community
+reconsideration:{grounds}	subject | review	CC 4.5.5	the **subject of the target attestation**
+slashing:{outcome}	slash	CC 4.5.5	`slashing:{outcome}` verdicts and the `quarantine:{state}` marker plane
+quarantine:{state}	slash	CC 4.5.5	`slashing:{outcome}` verdicts and the `quarantine:{state}` marker plane

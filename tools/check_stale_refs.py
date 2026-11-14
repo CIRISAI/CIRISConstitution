@@ -57,7 +57,7 @@ CLASSES = {
         (r"not yet (?:built|shipped|published|installed|wired)|is an rc\d+ item|will print here", None),
     ],
     "labels": [
-        (r"\bAV-\d+\b|\bF-AV-[A-Z]+|\bOQ-\d\b|NodeCore P\d+\b|\bPiece \d+\b|§Q\b|\bR1/Q1\b|\bV0\d\d\b|\bD0\d\b|\bCONFIRM-\d\b|\bF-3 detector|\bCEM\b|\bHE-300\b", r"8\.8\.10|HE-300 benchmark"),
+        (r"\bAV-\d+\b|\bF-AV-[A-Z]+|\bOQ-\d\b|NodeCore P\d+\b|\bPiece \d+\b|§Q\b|\bR1/Q1\b|\bV0\d\d\b|\bD0\d\b|\bCONFIRM-\d\b|\bF-3 detector|\bCEM\b|\bHE-300\b", r"8\.8\.8|HE-300 benchmark"),
         (r"\(normative: [A-Z]\d|\bV\d lock\b|\bE\d–E\d lock|\bCatch-up bound \(P\d\)|\bCloses G\d\b|\bcloses R\d\b|\b\d+ stories\b|\(1 reviewer\)|\bS4 default\b", None),
         (r"Accord Addendum 1|\bAddendum 1\b|ACCORD_UPDATE|ACCORD §|Accord §[IVX]|Section VI Ch\d|ACCORD §VII", None),
         (r"\(part_\d [a-z]|_ID env var|LensCore knob|\[configurable; default", None),

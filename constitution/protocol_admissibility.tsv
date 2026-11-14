@@ -1,0 +1,19 @@
+# Which kind of `consensus_protocol` a group of a given kind may declare. Read at a founding record and at a change of protocol.
+# verdict: allowed | required (no other kind is conformant) | refused (with the refusal token) | condition (a test on the record, in `condition`).
+# Built into manifests/governance_policy.json by tools/build_governance_policy.py; each quote must stand verbatim in the cited section.
+# A pair with no row is not stated by the text; the build does not read it as refused.
+group	kind	verdict	condition	refusal	cc_ref	quote
+family	founder_only	allowed	—	—	CC 4.5.13	`founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing.
+publication	founder_only	allowed	—	—	CC 4.5.13	`founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing.
+community	founder_only	refused	—	federation_community_consensus_protocol_violation	CC 4.5.13	A community above the family that names it is refused `federation_community_consensus_protocol_violation`
+community/public	open:self_admit	allowed	—	—	CC 3.2	A community record declares open admission by its protocol
+community/infrastructure	quorum:{m}/{n}	required	—	—	CC 3.2	`consensus_protocol` MUST be a `quorum:M/N` kind
+community/infrastructure	unanimous	refused	—	federation_community_consensus_protocol_violation	CC 3.2	`founder_only` / `unanimous` / bare `majority` are NON-conformant for `infrastructure`
+community/infrastructure	majority	refused	—	federation_community_consensus_protocol_violation	CC 3.2	`founder_only` / `unanimous` / bare `majority` are NON-conformant for `infrastructure`
+community/infrastructure	quorum:{m}/{n}	condition	entrenched=true	—	CC 3.2	`consensus_protocol_entrenched` MUST be `true`
+community/infrastructure	quorum:{m}/{n}	condition	count_set=founder	—	CC 3.2	evaluated over the **founder** subset
+community/infrastructure	quorum:{m}/{n}	condition	m_min=2	—	CC 3.2	`M ≥ 2`
+community/infrastructure	quorum:{m}/{n}	condition	founding_margin=1	—	CC 3.2	founded at **N ≥ M + 1** active human founders
+accord	majority	required	—	—	CC 3.3.4	The canonical entrenched form: the accord-holder family
+accord	majority	condition	entrenched=true	—	CC 3.3.4	with `consensus_protocol_entrenched: true`
+accord	majority	condition	count_set=holder	—	CC 4.2.3	Each majority is counted over the standing roster.

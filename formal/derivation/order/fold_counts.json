@@ -1,0 +1,95 @@
+{
+ "negative_edges_on_a_cycle": 144,
+ "by_fold_class": {
+  "B": 108,
+  "A": 26,
+  "C": 6,
+  "D": 3,
+  "outside": 1
+ },
+ "by_cycle_class_and_fold_class": {
+  "C-casc:B": 21,
+  "G-role:A": 4,
+  "G-row:A": 16,
+  "K1:C": 4,
+  "L:B": 83,
+  "O1:A": 1,
+  "R1:B": 2,
+  "S1:D": 1,
+  "T-vote:B": 2,
+  "T-vote:C": 2,
+  "T-vote:D": 2,
+  "X-emit:outside": 1,
+  "X-react:A": 5
+ },
+ "witnesses_by_fold_class": {
+  "A": 11,
+  "B": 2,
+  "-": 1,
+  "C": 1,
+  "D": 2
+ },
+ "families_by_fold_class": {
+  "C": 48,
+  "D": 5,
+  "B": 110,
+  "-": 7,
+  "A": 14
+ },
+ "not_a_function_families_by_fold_class": {
+  "D": 5,
+  "A": 10,
+  "B": 1
+ },
+ "families_by_movable": {
+  "only with a causal link field": 48,
+  "the confirmation yes; the fuse no": 2,
+  "already a fold (CC 3.5.1)": 107,
+  "yes": 10,
+  "stays at the door: this is the reference check": 7,
+  "nothing to move": 4,
+  "yes; continuing past a fork needs prev_head_digest to take more than one head": 1,
+  "partly: the votes and the counted set, yes with one link field; the window, no": 2,
+  "yes, with the cautious conclusion; the exact before/after needs a link field": 2,
+  "partly: the keep and the count yes with a link to the report; the fallback window no": 1
+ },
+ "link_kind_today_184": {
+  "only a retraction names anything (its target)": 120,
+  "names an object by an id in the family name": 13,
+  "names a row it answers or stands on (a ref member, or fm.reference pre:*)": 42,
+  "names a head it extends (prev_head_digest / attached_head_digest)": 2,
+  "names nothing": 7
+ },
+ "unranked_27": {
+  "n": 27,
+  "by_fold_class": {
+   "A": 20,
+   "D": 3,
+   "C": 2,
+   "B": 2
+  },
+  "needs_head_link": {
+   "no": 18,
+   "yes": 5,
+   "has one": 4
+  }
+ },
+ "families_needs_head_link": {
+  "yes": 54,
+  "no": 127,
+  "has one": 2,
+  "has one (prev_head_digest)": 1
+ },
+ "not16": {
+  "('D', 'no')": 2,
+  "('A', 'no')": 7,
+  "('B', 'has one (prev_head_digest)')": 1,
+  "('D', 'yes')": 3,
+  "('A', 'yes')": 3
+ },
+ "rule57": {
+  "('C', 'yes')": 48,
+  "('B', 'has one')": 2,
+  "('-', 'no')": 7
+ }
+}

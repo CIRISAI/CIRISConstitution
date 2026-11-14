@@ -1,0 +1,33 @@
+# A cell of the family model that the Constitution text states and the census leaves open (source gap or generic).
+# Applied by tools/build_family_model.py over such a cell only: the cell takes this value, written in the column's own vocabulary,
+# with source cc-table, its cc_ref, and the census reading kept as `code`. The quote must stand verbatim in the cited section.
+# A cell the census closes is never overridden here: where text and build differ, that is a departure with a reason.
+family	column	value	cc_ref	quote
+accord:invoke:constitutional:{halt_id}	cosign_rule	none	CC 4.2.1.1	A `constitutional` halt is one holder's signature
+accord:invoke:drill:{drill_id}	cosign_rule	none	CC 4.2.1.1	| `drill` | **one** holder |
+accord:invoke:notify:{notify_id}	cosign_rule	none	CC 4.2.1.1	| `notify` | **one** holder |
+device:label	placement	self_collective	CC 3.1.1	at `cohort_scope: self`, the name in the envelope's `label`
+settlement:*	placement	self_collective | targeted_family | targeted_room | commons	CC 3.1.3	`cohort_scope` is the producer's choice
+census:composite:{class}	placement	commons	CC 3.1.3	Federation scope.
+goal:{scale}	placement	self_collective | targeted_family | targeted_room | commons	CC 3.1.9.7	`cohort_scope` is the declarer's choice
+census:partial:{class}	placement	commons	CC 6.1.9	the composite `census:composite:{class}:v1`, both federation-scope rows
+census:member:share	placement	addressed	CC 6.1.9	sent, as `census:member:share:v1`, to two **members** of that community drawn from its roster
+census:expected_active	placement	targeted_room	CC 6.1.9	A community's expected-active count is a member-only composite.
+cosign:{state}	cosign_rule	none	CC 3.1.3	It is admitted only if the primary's signature verifies and the primary resolves to an active member of the group at the roster head the event names.
+ballot:moderator	governance	policy_row: moderator_election	CC 4.5.4	the community **locks and elects** ([CC 4.5.13](#4.5.13), the moderator election): read-only until a 24 h ranked-choice vote over its own roster seats one.
+ballot:moderator	cosign_rule	none	CC 4.5.13	**The voters' ballots are the appointment's signatures**: the seated moderator is appointed by the body under its protocol, with no node signing anything.
+provenance:build_manifest:{target}	placement	commons	CC 3.1.2.1	Its `cohort_scope` is `federation`.
+testimonial_witness:{kind}	placement	self_collective	CC 3.1.9.3	the four load-bearing wire-level disciplines (`witness_relation: self`, `cohort_scope: self`, never aggregated, never sole evidence for `slashing:*`)
+need:{domain}:{kind}	placement	commons	CC 3.1.9.3	Federation-scope open-call surface
+watchlist:{id}	placement	targeted_room	CC 3.1.9.4	**Per-group, NEVER global**
+attestation:registry_consensus	placement	commons	CC 4.4.3.4	are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)
+lineage_witness:{stage}	cosign_rule	none	CC 3.4.10	Its cosignature is the `ciris.lineage_head_cosign.v1` object
+ballot:moderator	placement	targeted_room	CC 3.1.3	Wire `ballot:moderator:v1`. Community scope.
+ballot:moderator_acceptance	placement	targeted_room	CC 3.1.3	Wire `ballot:moderator_acceptance:v1`. Community scope.
+ballot:tally:{poll_id}	placement	targeted_room	CC 3.1.3	governance acts stay identified rows. Community scope.
+census:member:partial	placement	targeted_room	CC 3.1.3	`ballot_partial_period_closed` after the period's tally. Community scope.
+census:share:{class}	placement	addressed	CC 3.1.3	the returning node's key; reach is the named seat only
+cosign:{state}	placement	targeted_family | targeted_room	CC 3.1.3	the members who were active at the roster head the event names and are members still when served, and no one else, in a group of any kind
+deferral:request	placement	self_collective | targeted_family | targeted_room	CC 3.1.9.3	the audience is the cell (for an agent, the steward's cohort and the WA it routes to), never a federation broadcast
+evidence:{suite}:{kind}:{cell}:{prefix}	placement	commons	CC 3.1.5.5	Emitted at `federation` scope by a key holding `infra:attest`
+rendezvous:route	placement	commons	CC 3.1.4	A federation-scope row whose attester and subject are one **rendezvous key**

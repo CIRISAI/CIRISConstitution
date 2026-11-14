@@ -44,7 +44,7 @@ rows is the one that yields.
 
 **What it does not model.** The controller refusing in bad faith (the contest path is 4.5.5, not this
 module); a steward purge of a row whose producer is gone (CC 4.5.3, the cosigned takedown); rule 4;
-the deletion window and its breach hard case (CC 4.4.3.5.2).
+the deletion window and its breach hard case (CC 4.4.3.27).
 
 Run: `java -cp tla2tools.jar tlc2.TLC -workers auto -metadir /tmp/tlc -deadlock -config WithdrawsAdmission_<cfg>.cfg WithdrawsAdmission.tla` (TLA+ tools 1.7.4; each finishes in seconds).
 

@@ -1,0 +1,329 @@
+# The members of a family's body that the text states, where the family model's body cell is open.
+# Applied by tools/build_family_model.py: the members join those read from the signed-object table. `in_cddl` says whether the name
+# stands in manifests/signed_object.cddl or signed_object_v2.cddl; a member with `no` is named by the text alone and is no wire claim
+# until the store confirms it. type and presence read `unstated` where the sentence does not give them. The quote must stand verbatim.
+family	member	type	presence	in_cddl	cc_ref	quote
+accord:*	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
+accord:*	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:human_dignity	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
+accord:human_dignity	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:invoke:constitutional:{halt_id}	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
+accord:invoke:constitutional:{halt_id}	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:invoke:drill:{drill_id}	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
+accord:invoke:drill:{drill_id}	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:invoke:notify:{notify_id}	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
+accord:invoke:notify:{notify_id}	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:lifecycle	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
+accord:lifecycle	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:lifecycle:{kind}	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
+accord:lifecycle:{kind}	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:lifecycle:{kind}	confirms_halt_id	unstated	unstated	no	CC 4.2.1.3	The confirmation is written `invocation_kind=lifecycle:confirmed`, with `confirms_halt_id=` in place of `resumes_halt_id=`.
+accord:lifecycle:{kind}	invocation_id	unstated	unstated	no	CC 4.2.1.3	`resumes_halt_id` is mandatory and binds the resumption to the one halt it ends.
+accord:lifecycle:{kind}	invocation_kind	unstated	unstated	no	CC 4.2.1.3	The confirmation is written `invocation_kind=lifecycle:confirmed`, with `confirms_halt_id=` in place of `resumes_halt_id=`.
+accord:lifecycle:{kind}	resumes_halt_id	unstated	unstated	no	CC 4.2.1.3	The confirmation is written `invocation_kind=lifecycle:confirmed`, with `confirms_halt_id=` in place of `resumes_halt_id=`.
+archive_release:{basis}	purpose	unstated	unstated	no	CC 3.1.5	Carries `retirement_id`, scope (`whole` \| subject-scoped for a DSAR), requester key, purpose.
+archive_release:{basis}	retirement_id	unstated	unstated	no	CC 3.1.5	Carries `retirement_id`, scope (`whole` \| subject-scoped for a DSAR), requester key, purpose.
+archive_release:{basis}	scope	"whole" / subject-scoped	unstated	yes	CC 3.1.5	Carries `retirement_id`, scope (`whole` \| subject-scoped for a DSAR), requester key, purpose.
+audio:*	duration	unstated	unstated	no	CC 3.3.13	Source struct carries codec, duration, sample rate, optional `transcript`, AI-generation disclosure, license info.
+audio:*	transcript	unstated	optional	no	CC 3.3.13	Source struct carries codec, duration, sample rate, optional `transcript`, AI-generation disclosure, license info.
+ballot:moderator	ranks	unstated	unstated	no	CC 4.5.13	Each person ranks **up to three**.
+capacity:composite	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.8	The grants a witness relied on.
+capacity:composite	feature_dim	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
+capacity:composite	feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	min_feature_dim	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:composite	min_feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	n_eff_floor	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:composite	n_eff_floor	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	n_eff_h	number	optional	yes	CC 2.1	Carried for audit, not gated.
+capacity:composite	n_eff_h	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	n_eff_pr	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	sample_size	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
+capacity:composite	sample_size	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	sample_size_gate	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:composite	sample_size_gate	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	target_n_eff	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:composite	target_n_eff	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	window	uint	optional	yes	CC 2.1	The scoring or observation window, in rows.
+capacity:composite	window	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	advertiser_key_id	key-id	unstated	no	CC 3.1.4	keyed to the relay's own `SignedRelayCapacity` claim `(advertiser_key_id, stream_id, epoch)`: the envelope `score` is the fulfilment ratio, never a verdict. Subject = the relay (`attested_key_id`),
+capacity:relay_delivery	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.8	The grants a witness relied on.
+capacity:relay_delivery	epoch	uint	unstated	no	CC 3.1.4	keyed to the relay's own `SignedRelayCapacity` claim `(advertiser_key_id, stream_id, epoch)`: the envelope `score` is the fulfilment ratio, never a verdict. Subject = the relay (`attested_key_id`),
+capacity:relay_delivery	feature_dim	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
+capacity:relay_delivery	feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	min_feature_dim	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:relay_delivery	min_feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	n_eff_floor	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:relay_delivery	n_eff_floor	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	n_eff_h	number	optional	yes	CC 2.1	Carried for audit, not gated.
+capacity:relay_delivery	n_eff_h	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	n_eff_pr	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	sample_size	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
+capacity:relay_delivery	sample_size	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	sample_size_gate	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:relay_delivery	sample_size_gate	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	stream_id	tstr	unstated	no	CC 3.1.4	keyed to the relay's own `SignedRelayCapacity` claim `(advertiser_key_id, stream_id, epoch)`: the envelope `score` is the fulfilment ratio, never a verdict. Subject = the relay (`attested_key_id`),
+capacity:relay_delivery	target_n_eff	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:relay_delivery	target_n_eff	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	window	uint	optional	yes	CC 2.1	The scoring or observation window, in rows.
+capacity:relay_delivery	window	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.8	The grants a witness relied on.
+capacity:{factor}	feature_dim	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
+capacity:{factor}	feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	min_feature_dim	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:{factor}	min_feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	n_eff_floor	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:{factor}	n_eff_floor	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	n_eff_h	number	optional	yes	CC 2.1	Carried for audit, not gated.
+capacity:{factor}	n_eff_h	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	n_eff_pr	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	sample_size	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
+capacity:{factor}	sample_size	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	sample_size_gate	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:{factor}	sample_size_gate	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	target_n_eff	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
+capacity:{factor}	target_n_eff	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	window	uint	optional	yes	CC 2.1	The scoring or observation window, in rows.
+capacity:{factor}	window	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+census:partial:{class}	aggregation_algorithm_id	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
+census:partial:{class}	mass_total	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
+census:partial:{class}	member_commitment_hex	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
+census:partial:{class}	period	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
+census:partial:{class}	share_count	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
+census:partial:{class}	share_index	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
+community:listing	cohort_subkind	tstr	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md#3.2) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
+community:listing	cohort_subkind	unstated	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md#3.1.1)). It carries the name, description, `cohort_subkind`, the admission policy, the
+community:listing	community_key_id	key-id	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md#3.2) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
+community:listing	community_key_id	key-id	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md#3.1.1)). It carries the name, description, `cohort_subkind`, the admission policy, the
+community:listing	description	tstr	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md#3.2) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
+community:listing	description	unstated	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md#3.1.1)). It carries the name, description, `cohort_subkind`, the admission policy, the
+community:listing	name	tstr	unstated	yes	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md#3.2) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
+community:listing	name	unstated	unstated	yes	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md#3.1.1)). It carries the name, description, `cohort_subkind`, the admission policy, the
+consent:partnership_accept	asserted_at	unstated	unstated	yes	CC 4.4.3.20	That core is eight members present in every `:v1` half
+consent:partnership_accept	attestation_type	unstated	unstated	yes	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_accept	attesting_key_id	unstated	unstated	yes	CC 4.4.3.20	That core is eight members present in every `:v1` half
+consent:partnership_accept	bilateral_pair_id	unstated	unstated	no	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_accept	dimension	unstated	unstated	yes	CC 4.4.3.20	That core is eight members present in every `:v1` half
+consent:partnership_accept	stance	unstated	unstated	no	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_accept	subject_key_id	unstated	unstated	no	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_accept	subject_kind	unstated	unstated	no	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_grant	asserted_at	unstated	unstated	yes	CC 4.4.3.20	That core is eight members present in every `:v1` half
+consent:partnership_grant	attestation_type	unstated	unstated	yes	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_grant	attesting_key_id	unstated	unstated	yes	CC 4.4.3.20	That core is eight members present in every `:v1` half
+consent:partnership_grant	bilateral_pair_id	unstated	unstated	no	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_grant	dimension	unstated	unstated	yes	CC 4.4.3.20	That core is eight members present in every `:v1` half
+consent:partnership_grant	stance	unstated	unstated	no	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_grant	subject_key_id	unstated	unstated	no	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_grant	subject_kind	unstated	unstated	no	CC 4.4.3.20	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:state:{stance}	asserted_at	unstated	unstated	yes	CC 3.3.5	stance: ConsentStance // closed-set enum per below
+consent:state:{stance}	bilateral_pair_id	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
+consent:state:{stance}	consent_supersedes	uuid	optional	yes	CC 2.1	The prior consent-state row this one supersedes: a renewal, or the substrate's `consent:state:expired` naming the grant that lapsed ([CC 3.3.1](part_3_the_namespace.md#3.3.1)).
+consent:state:{stance}	consent_supersedes	uuid	optional	yes	CC 2.6.1.8	The prior consent statement this one replaces. Separate from references_attestation_id by the CC 4.5.1.1 op split.
+consent:state:{stance}	decay_protocol	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
+consent:state:{stance}	deletion_sla_days	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
+consent:state:{stance}	deletion_window	tstr	optional	yes	CC 2.6.1.8	Deadline by which a consented payload must be deleted.
+consent:state:{stance}	scope	[* tstr]	unstated	yes	CC 3.3.5	stance: ConsentStance // closed-set enum per below
+consent:state:{stance}	stance	unstated	unstated	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
+consent:state:{stance}	subject_key_id	unstated	unstated	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
+consent:state:{stance}	target_key_id	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
+consent:state:{stance}	valid_until	unstated	optional	yes	CC 3.3.5	stance: ConsentStance // closed-set enum per below
+deferral:request	domain	unstated	unstated	yes	CC 4.3	A deferral names its domain or none.
+delivery_receipt:{stream_id}	K	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_receipt:{stream_id}	chunk_root	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_receipt:{stream_id}	epoch	unstated	unstated	no	CC 3.4.6	Subscriber's signed acknowledgement that they received chunk K under the named stream + epoch.
+delivery_receipt:{stream_id}	epoch	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_receipt:{stream_id}	stream_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_receipt:{stream_id}	subscriber_key_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+detection:correlated_action:{axis}	epistemic_mode	"derivative"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+detection:correlated_action:{axis}	witness_relation	"derived"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+detection:distributive:access:{resource_type}	epistemic_mode	"derivative"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+detection:distributive:access:{resource_type}	witness_relation	"derived"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+detection:hash_chain_integrity	epistemic_mode	"derivative"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+detection:hash_chain_integrity	witness_relation	"derived"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+detection:intra_agent_consistency	epistemic_mode	"derivative"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+detection:intra_agent_consistency	witness_relation	"derived"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+detection:{detector}	epistemic_mode	"derivative"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+detection:{detector}	witness_relation	"derived"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
+device:label	label	tstr	required	yes	CC 3.1.1	A `scores` row signed by the owner about an identity occurrence the owner holds, at `cohort_scope: self`, the name in the envelope's `label`; a rename
+fidelity:explainability_sla:{tier}	achieved_tier	unstated	unstated	no	CC 3.1.5.2	Envelope: `{committed_tier, achieved_tier, fallback_reason?}`.
+fidelity:explainability_sla:{tier}	committed_tier	unstated	unstated	no	CC 3.1.5.2	Envelope: `{committed_tier, achieved_tier, fallback_reason?}`.
+fidelity:explainability_sla:{tier}	fallback_reason	unstated	optional	no	CC 3.1.5.2	Envelope: `{committed_tier, achieved_tier, fallback_reason?}`.
+group:roster	baa	unstated	unstated	no	CC 4.4.3.12	with `marking_binds_to_record` so a class's classification + export marking + retention obligation **travel across the cohort boundary**
+group:roster	breach_notification	unstated	unstated	no	CC 4.4.3.12	SLA and notifier identity
+group:roster	chain_of_custody	unstated	unstated	no	CC 4.4.3.12	Rides `supersedes` + holding claims. Default: none.
+group:roster	charter_digest	hex64	unstated	no	CC 2.4	- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` as envelope members
+group:roster	charter_digest	hex64	unstated	no	CC 3.1.3	envelope carrying the fold (seats, roles, `effective_at`s, bounds), `prev_head_digest` and `charter_digest`.
+group:roster	classification_scheme	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
+group:roster	cohort_subkind	tstr	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
+group:roster	cohort_subkind	unstated	unstated	no	CC 4.4.3.4	Two `cohort_subkind` values **opt OUT of the mandatory DEK cascade and are Commons-tier (plaintext, holding claims at federation scope, no DEK)**
+group:roster	cohort_subkind_payload	unstated	optional	no	CC 3.2	community_name: string // human-readable; non-unique
+group:roster	community_key_id	key-id	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
+group:roster	community_name	tstr	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
+group:roster	compartment	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
+group:roster	compartments	unstated	unstated	no	CC 4.4.3.12	named need-to-know sub-cohorts *within* the affiliation, membership ⊆ roster
+group:roster	consensus_protocol	unstated	required	no	CC 3.3.4	consensus_protocol: ConsensusProtocol // REQUIRED — see below
+group:roster	consensus_protocol	unstated	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
+group:roster	consensus_protocol	unstated	unstated	no	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
+group:roster	consensus_protocol_entrenched	bool	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
+group:roster	consensus_protocol_entrenched	bool	unstated	no	CC 3.3.4	consensus_protocol: ConsensusProtocol // REQUIRED — see below
+group:roster	consensus_protocol_entrenched	unstated	unstated	no	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
+group:roster	crypto_tier	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
+group:roster	declared_cohort	unstated	unstated	no	CC 4.4.3.12	The community record declares its cohort kind in one member, `declared_cohort` (`community` or `affiliations`).
+group:roster	designated_officials	unstated	unstated	no	CC 4.4.3.12	named accountable-human roots gating specific operations
+group:roster	disclosure_bar	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
+group:roster	erasure_exempt	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
+group:roster	external_controller	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
+group:roster	family_key_id	unstated	unstated	no	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
+group:roster	family_name	unstated	unstated	no	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
+group:roster	founded_at	unstated	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
+group:roster	geographic_constraint	unstated	unstated	no	CC 4.5.9.4	communities MAY scope themselves at any resolution by their own choice
+group:roster	hierarchy	unstated	unstated	no	CC 4.4.3.12	`hierarchy` supports **multi-parent DAG** roles
+group:roster	jurisdiction	unstated	unstated	no	CC 4.4.3.12	`regulatory_profile` and `jurisdiction[]` are **open lists**
+group:roster	key_id	unstated	unstated	yes	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
+group:roster	lawful_access	unstated	unstated	no	CC 4.4.3.12	Each authority declares a **type**, a `statutory_basis`, a **per-authority `transparency_mode`**, and optional **carve-out compartments** lawful access cannot reach
+group:roster	legal_weight	unstated	unstated	no	CC 4.4.3.12	as `licence_classes`, a list of the class names the authority issues under, each with its `legal_weight` stated true or false
+group:roster	licence_classes	unstated	unstated	no	CC 4.4.3.12	as `licence_classes`, a list of the class names the authority issues under, each with its `legal_weight` stated true or false
+group:roster	marking_binds_to_record	unstated	unstated	no	CC 4.4.3.12	with `marking_binds_to_record` so a class's classification + export marking + retention obligation **travel across the cohort boundary**
+group:roster	members	[* { key_id, joined_at, ? role }]	unstated	yes	CC 3.2	community_name: string // human-readable; non-unique
+group:roster	members	unstated	unstated	yes	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
+group:roster	membership_basis	unstated	unstated	no	CC 4.4.3.12	carried by an explicit `membership_basis` field
+group:roster	prev_head_digest	hex64	unstated	no	CC 2.4	- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` as envelope members
+group:roster	prev_head_digest	hex64	unstated	no	CC 3.1.3	envelope carrying the fold (seats, roles, `effective_at`s, bounds), `prev_head_digest` and `charter_digest`.
+group:roster	prev_head_digest	unstated	unstated	no	CC 4.4.3.6	admitted under the group's quorum and chained by `prev_head_digest`
+group:roster	prev_head_digest	unstated	unstated	no	CC 4.4.3.17	admitted under the group's quorum and chained by `prev_head_digest`
+group:roster	processor_chain	unstated	unstated	no	CC 4.4.3.12	with `marking_binds_to_record` so a class's classification + export marking + retention obligation **travel across the cohort boundary**
+group:roster	regulatory_profile	unstated	unstated	no	CC 4.4.3.12	`regulatory_profile` and `jurisdiction[]` are **open lists**
+group:roster	retention	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
+group:roster	role	unstated	unstated	yes	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
+group:roster	statutory_basis	unstated	unstated	no	CC 4.4.3.12	Each authority declares a **type**, a `statutory_basis`, a **per-authority `transparency_mode`**, and optional **carve-out compartments** lawful access cannot reach
+group:roster	transparency_mode	unstated	unstated	no	CC 4.4.3.12	Each authority declares a **type**, a `statutory_basis`, a **per-authority `transparency_mode`**, and optional **carve-out compartments** lawful access cannot reach
+group:roster	transparency_obligations	unstated	unstated	no	CC 4.4.3.12	transparency here is a *duty to publish*, not an *access concession*. Default: none.
+hardware_custody:{platform}	hardware_class	tstr	optional	no	CC 3.1.2	is a JSON property, never a value of `{platform}`).
+identity:canonical_binding:{canonical_hash}	witness_relation	"self"	unstated	yes	CC 3.3.14	**Self-asserted** (`witness_relation: self`): K declares "I am the federation identity behind H." Hybrid-signed; admitted federation-tier (it grants authority — not local-tier-eligible, [CC 5.3.2.2](part_5_transport_substrate.md#5.3.2.2) discipline).
+identity:occurrence	app_name	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	aspects	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	asserted_at	unstated	unstated	yes	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+identity:occurrence	build_manifest_hash	unstated	unstated	no	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+identity:occurrence	build_manifest_ref	unstated	unstated	no	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+identity:occurrence	destination_hash	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	device_class	unstated	unstated	no	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+identity:occurrence	device_class	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	encryption_pubkeys	unstated	unstated	no	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+identity:occurrence	encryption_pubkeys	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	hardware_attestation	unstated	optional	no	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+identity:occurrence	identity_key_id	unstated	unstated	no	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+identity:occurrence	identity_key_id	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	occurrence_key_id	unstated	unstated	no	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+identity:occurrence	occurrence_key_id	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	reticulum_ed25519_pubkey	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	reticulum_x25519_pubkey	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	signed_at	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	subject_kind	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	transport_destination	unstated	unstated	no	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+identity:occurrence	transport_destination	unstated	unstated	no	CC 4.4.3.19	Each occurrence binds a `transport_destination`
+identity:occurrence	transport_destination	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
+identity:occurrence	valid_until	unstated	unstated	yes	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
+image:*	alt_text	unstated	required	no	CC 3.3.13	Source struct carries dimensions, format, AI-generation disclosure (EU AI Act Art. 50), mandatory `alt_text` accessibility metadata, license info.
+image:*	format	unstated	unstated	no	CC 3.3.13	Source struct carries dimensions, format, AI-generation disclosure (EU AI Act Art. 50), mandatory `alt_text` accessibility metadata, license info.
+key:record	attestation_evidence	unstated	unstated	yes	CC 4.2.2	The field is carried as a JSON property inside the `attestation_evidence` of a signed key record
+key:record	hardware_class	unstated	unstated	no	CC 4.2.2	The field is carried as a JSON property inside the `attestation_evidence` of a signed key record
+key_grant:{axis}	at_rest_sha256	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
+key_grant:{axis}	attested_key_id	unstated	unstated	yes	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	axis	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
+key_grant:{axis}	axis	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	community_key_id	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
+key_grant:{axis}	content_sha256	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	epoch	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
+key_grant:{axis}	minter_key_id	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
+key_grant:{axis}	owner_key_id	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
+key_grant:{axis}	recipient_key_id	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	scope	unstated	unstated	yes	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	stream_id	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
+key_grant:{axis}	wrap_algorithm	"v2"	unstated	no	CC 3.1.3	`attested_key_id` is the recipient occurrence; the envelope carries the key's identity on that axis and the wrap (`wrap_algorithm` v2, `wrapped_dek`).
+key_grant:{axis}	wrap_algorithm	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
+key_grant:{axis}	wrap_algorithm	unstated	unstated	no	CC 4.4.3.4	`wrap_algorithm: v2` (hybrid PQC) MANDATORY
+key_grant:{axis}	wrap_algorithm	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	wrapped_dek	tstr	unstated	no	CC 3.1.3	`attested_key_id` is the recipient occurrence; the envelope carries the key's identity on that axis and the wrap (`wrap_algorithm` v2, `wrapped_dek`).
+key_grant:{axis}	wrapped_dek	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
+key_grant:{axis}	wrapped_dek	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+lawful_order:release	reference	unstated	unstated	yes	CC 3.1.5	The steward's record, under their own name, of a lawful order to **release** sealed material: issuing authority, reference, scope, order digest.
+lawful_order:release	scope	unstated	unstated	yes	CC 3.1.5	The steward's record, under their own name, of a lawful order to **release** sealed material: issuing authority, reference, scope, order digest.
+ledger:head:{unit}:{version}	sequence	uint	unstated	yes	CC 3.1.3	Catalogue row (CC 3.1.7 R1); an in-grammar ledger's **head** — sequence, unit and the declared anchoring cadence ([CC 3.3.10.1](part_3_the_namespace.md#3.3.10.1) clauses 1–4).
+ledger:head:{unit}:{version}	unit	unstated	unstated	no	CC 3.1.3	Catalogue row (CC 3.1.7 R1); an in-grammar ledger's **head** — sequence, unit and the declared anchoring cadence ([CC 3.3.10.1](part_3_the_namespace.md#3.3.10.1) clauses 1–4).
+membership:{stage}	expires_at	rfc3339-ms presence=required leaf=membership:proposal	unstated	yes	CC 3.1.3.2	`subject_key_ids = [K]` (exactly one) and a required `expires_at`. On a `public` community whose record declares `consensus_protocol: open:self_admit` (`admission: open` is the shorthand,
+model_3d:*	description	unstated	required	no	CC 3.3.13	Source struct carries vertex/triangle counts, bounding-box, mandatory `description` accessibility metadata, license info. `format` is the IANA `model/*` type where one is registered; FBX and splat
+moderation:{allegation_type}	duty	unstated	unstated	no	CC 4.5.13	The record is a `moderation:*` row naming the duty, the purpose, the report or removal that followed, and the exposure.
+moderation:{allegation_type}	exposure	unstated	unstated	no	CC 4.5.13	The record is a `moderation:*` row naming the duty, the purpose, the report or removal that followed, and the exposure.
+moderation:{allegation_type}	outcome	unstated	unstated	no	CC 4.5.13	The record is a `moderation:*` row naming the duty, the purpose, the report or removal that followed, and the exposure.
+moderation:{allegation_type}	purpose	unstated	unstated	no	CC 4.5.13	The record is a `moderation:*` row naming the duty, the purpose, the report or removal that followed, and the exposure.
+moderation:{allegation_type}	subject_sha256_ed25519_raw	unstated	unstated	yes	CC 4.5.13	The record is a `moderation:*` row naming the duty, the purpose, the report or removal that followed, and the exposure.
+objection:{state}	cohort	"self"	unstated	yes	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
+objection:{state}	cohort	unstated	unstated	yes	CC 3.1.9.2	Each carries `cohort`, `cohort_key_id` (the standing set it votes in; `self` and the fedID for the roster door) and `objects_to_attestation_id` (the proposal it answers, or
+objection:{state}	cohort_key_id	key-id	unstated	no	CC 3.1.9.2	Each carries `cohort`, `cohort_key_id` (the standing set it votes in; `self` and the fedID for the roster door) and `objects_to_attestation_id` (the proposal it answers, or
+objection:{state}	cohort_key_id	key-id	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
+objection:{state}	grounds	unstated	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
+objection:{state}	objects_to_attestation_id	uuid	unstated	no	CC 3.1.9.2	Each carries `cohort`, `cohort_key_id` (the standing set it votes in; `self` and the fedID for the roster door) and `objects_to_attestation_id` (the proposal it answers, or
+objection:{state}	objects_to_attestation_id	uuid	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
+observation:access_assumption	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.8	The grants a witness relied on.
+observation:access_assumption	consent_basis	[* consent-basis]	optional	yes	CC 3.1.9.4	Unlike reachability, the observed party has keys, so `subject_key_ids` is **REQUIRED and non-empty**: the observed agent's key or keys.
+observation:access_assumption	evidence_refs	[+ tstr]	required	yes	CC 3.1.9.4	Unlike reachability, the observed party has keys, so `subject_key_ids` is **REQUIRED and non-empty**: the observed agent's key or keys.
+observation:access_assumption	window	uint	optional	yes	CC 2.1	The scoring or observation window, in rows.
+observation:reachability	witness_relation	"self"	unstated	yes	CC 3.4.10	says so with `witness_relation: self`, and holds no witness role by doing it.
+preserve_response	statement	tstr	optional	yes	CC 3.1.5	The operator's answer to a `preserve_request:v1`: `accepted` (+1.0) \| `declined` (−1.0), an optional statement, and the request's id.
+progress_measure:{method_id}	computation	unstated	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
+progress_measure:{method_id}	goodhart_resistance	unstated	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
+progress_measure:{method_id}	tracks	[* any]	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
+progress_measure:{method_id}	validity_window	unstated	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
+provenance:build_manifest:{target}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	A build manifest is published as **one** claim: a `scores` Contribution on `provenance:build_manifest:{target}`, signed by the pipeline that built it, citing the manifest's bytes from
+provenance:build_manifest:{target}:locale:{lang_code}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	A build manifest is published as **one** claim: a `scores` Contribution on `provenance:build_manifest:{target}`, signed by the pipeline that built it, citing the manifest's bytes from
+provenance:skill_import:{source}	capability_declaration	unstated	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.
+provenance:skill_import:{source}	import_timestamp	unstated	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.
+provenance:skill_import:{source}	signer_identity	unstated	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.
+provenance:skill_import:{source}	skill_manifest_sha256	hex64	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.
+retirement:{state}	decided_by	unstated	unstated	no	CC 3.1.5	Carries `retirement_id`, reason, kind (`planned` \| `emergency`), `decided_by`, manifest digest, seal mode, `preserve_until`.
+retirement:{state}	kind	"planned" / "emergency"	unstated	yes	CC 3.1.5	Carries `retirement_id`, reason, kind (`planned` \| `emergency`), `decided_by`, manifest digest, seal mode, `preserve_until`.
+retirement:{state}	preserve_until	unstated	unstated	no	CC 3.1.5	Carries `retirement_id`, reason, kind (`planned` \| `emergency`), `decided_by`, manifest digest, seal mode, `preserve_until`.
+retirement:{state}	reason	unstated	unstated	yes	CC 3.1.5	Carries `retirement_id`, reason, kind (`planned` \| `emergency`), `decided_by`, manifest digest, seal mode, `preserve_until`.
+retirement:{state}	retirement_id	unstated	unstated	no	CC 3.1.5	Carries `retirement_id`, reason, kind (`planned` \| `emergency`), `decided_by`, manifest digest, seal mode, `preserve_until`.
+self:delegates_to:agent_occurrence	attested_key_id	unstated	unstated	yes	CC 4.4.3.20	the act-on-behalf grant
+self:delegates_to:agent_occurrence	delegation_purpose	unstated	unstated	yes	CC 4.4.3.19	The row carries `scope` drawn from the canonical act-on-behalf kinds below, `delegation_purpose: "act_as_user"` and a bounded `delegation_valid_until`.
+self:delegates_to:agent_occurrence	delegation_purpose	unstated	unstated	yes	CC 4.4.3.20	the act-on-behalf grant
+self:delegates_to:agent_occurrence	delegation_valid_from	unstated	unstated	yes	CC 4.4.3.20	the act-on-behalf grant
+self:delegates_to:agent_occurrence	delegation_valid_until	unstated	unstated	yes	CC 4.4.3.19	The row carries `scope` drawn from the canonical act-on-behalf kinds below, `delegation_purpose: "act_as_user"` and a bounded `delegation_valid_until`.
+self:delegates_to:agent_occurrence	delegation_valid_until	unstated	unstated	yes	CC 4.4.3.20	the act-on-behalf grant
+self:delegates_to:agent_occurrence	scope	unstated	unstated	yes	CC 4.4.3.19	The row carries `scope` drawn from the canonical act-on-behalf kinds below, `delegation_purpose: "act_as_user"` and a bounded `delegation_valid_until`.
+self:delegates_to:agent_occurrence	scope	unstated	unstated	yes	CC 4.4.3.20	the act-on-behalf grant
+self:delegates_to:agent_occurrence	signed_at	unstated	unstated	no	CC 4.4.3.20	the act-on-behalf grant
+session:{kind}	community_id	key-id	required	yes	CC 3.1.3.1	`session_id` and `claimed_at` are this family's, REQUIRED on every `session:*` row, with `claimed_at` in the [CC 2.6.2](part_2_the_grammar.md#2.6.2) canonical form.
+settlement:*	amount_commitment	unstated	optional	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
+settlement:*	rail	tstr (open)	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
+settlement:*	settled_action_ref	unstated	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
+settlement:*	settled_at	unstated	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
+settlement:*	settlement_ref	unstated	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
+takedown_notice:{basis}	asserted_at	unstated	unstated	yes	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	claim_text	unstated	unstated	no	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	claimant_key_id	key-id	unstated	no	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	content_holder_key_ids	[* key-id]	unstated	no	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	content_sha256	hex64	unstated	no	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	counter_notice_channel	unstated	unstated	no	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	evidence_refs	unstated	unstated	yes	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	expires_at	unstated	unstated	yes	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	good_faith_statement	unstated	unstated	no	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	jurisdiction	unstated	unstated	no	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	legal_basis	unstated	unstated	no	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	legal_basis	unstated	unstated	no	CC 4.5.3	whose `legal_basis` falls in the **immediate-removal** category
+takedown_notice:{basis}	perceptual_hash	unstated	optional	no	CC 3.3.2	**The field shape is locked here.**
+takedown_notice:{basis}	subject_kind	"takedown_notice"	unstated	no	CC 3.1.1	**A takedown notice as a row** (shape and bases at [CC 3.3.2](#3.3.2)): the `scores` row whose envelope is the `takedown_notice` payload, `subject_kind: takedown_notice`, so that
+trace:{form}:{version}	run_kind	"production" / "prod-personal" / "prod-managed" / "qa" / "battery" / "mock"	required	no	CC 3.1.5	**Every trace names its run, and its shape is pinned (normative).** A signed `trace:*` envelope carries **`run_kind`** in the signed bytes, closed vocabulary `production
+trust:{job}:{version}	pre_rotation_commitment	hex64 presence=optional leaf=trust:charter	unstated	yes	CC 2.6.1.8	Pre-rotation commitment on a charter.
+trust:{job}:{version}	recovery_commitments	unstated	unstated	yes	CC 4.2.6	That member is an object `{holder_key_id: commitment}`, one entry per holder.
+video:*	captions	unstated	required	no	CC 3.3.13	Source struct carries codec, duration, resolution, mandatory `captions` reference, AI-generation disclosure, license info.
+video:*	derived_from	unstated	unstated	no	CC 5.1	The recording is the after-the-fact `video` blob with `derived_from: stream_id`
+video:*	duration	unstated	unstated	no	CC 3.3.13	Source struct carries codec, duration, resolution, mandatory `captions` reference, AI-generation disclosure, license info.
+video:*	resolution	unstated	unstated	no	CC 3.3.13	Source struct carries codec, duration, resolution, mandatory `captions` reference, AI-generation disclosure, license info.
+video:*	stream_id	unstated	unstated	no	CC 5.1	The recording is the after-the-fact `video` blob with `derived_from: stream_id`
+detection:{detector}	list_source	text	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.
+detection:{detector}	list_version_digest	hex64	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.
+detection:{detector}	content_sha256	hex64	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.
+detection:{detector}	match_algorithm	text	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.
+detection:{detector}	match_distance	uint	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.
+key:record	valid_until	rfc3339-ms	optional	yes	CC 2.4.1.1	MUST state `valid_until`, unless it is a room key of a private room

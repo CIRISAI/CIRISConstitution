@@ -1,0 +1,265 @@
+# What check_shapes.py gives for every family of formal/derivation/family_shapes.tsv, each door it runs, each plant and the ordered removal.
+subject	what	verdict
+accord:*	claim	sourced | runs
+accord:human_dignity	claim	sourced | runs
+accord:invoke:constitutional:{halt_id}	door	sourced | runs; accord_halt@node+late_closed breaks one holder cannot lift a confirmed halt alone
+accord:invoke:drill:{drill_id}	content	sourced | runs
+accord:invoke:notify:{notify_id}	content	sourced | runs
+accord:lifecycle	claim	sourced | runs
+accord:lifecycle:{kind}	door	sourced | runs; accord_halt@node+late_closed breaks one holder cannot lift a confirmed halt alone
+activity_tier:{period}	claim	sourced | runs
+age_assurance:{level}:{band}:{version}	claim	sourced | runs
+age_self_declared:band:{band}:{version}	claim	sourced | runs
+agent_files:{kind}:{platform_or_target}	claim	sourced | runs
+approach:{goal_id}	content	sourced | runs
+archive_release:{basis}	door	sourced | runs
+attestation:agent_integrity	claim	sourced | runs
+attestation:hardware_rooted	claim	sourced | runs
+attestation:license_validity	claim	sourced | runs
+attestation:registry_consensus	claim	sourced | runs
+attestation:self_verify	claim	sourced | runs
+audio:*	content	sourced | runs
+audit_chain:hash_continuity	claim	sourced | runs
+autonomy:{aspect}	claim	sourced | runs
+ballot:moderator	door	sourced | runs
+ballot:moderator_acceptance	consent+door binds=body+holder	sourced | runs
+ballot:tally:{poll_id}	door	sourced | runs
+benchmark:he300:{category}:{version}	claim	sourced | runs
+beneficence:{aspect}	claim	sourced | runs
+blog:*	content	sourced | runs
+bond_posted:{currency}	claim	sourced | runs
+build:registered:{target}	claim	sourced | runs
+capacity:composite	claim	sourced | runs
+capacity:relay_delivery	claim	sourced | runs
+capacity:{factor}	claim	sourced | runs
+capacity_assurance:reversible_excluded:{domain}:{version}	claim	sourced | runs
+capacity_assurance:reversible_pending:{domain}:{version}	claim	sourced | runs
+capacity_assurance:{level}:{domain}:{band}:{version}	claim	sourced | runs
+census:composite:{class}	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
+census:expected_active	claim	sourced | runs
+census:member:partial	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
+census:member:share	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
+census:partial:{class}	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
+census:share:{class}	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
+cert_validity:{authority}	claim	sourced | runs
+chat:*	content	sourced | runs
+coherence_standing:{cohort}	claim	sourced | runs
+collection:{kind}	content	sourced | runs
+commitment_fulfillment:{prior_contribution_id}	claim	sourced | runs
+community:listing	content	sourced | runs
+config:{scope}	claim	sourced | runs
+conscience:coherence	claim	sourced | runs
+conscience:entropy	claim	sourced | runs
+conscience:epistemic_humility	claim	sourced | runs
+conscience:optimization_veto	claim	sourced | runs
+consent:community_trust	consent binds=signer	sourced | runs
+consent:decay:{stage}	door	sourced | runs
+consent:deletion_complete	claim	sourced | runs
+consent:deletion_sla:{days}	door	sourced | runs
+consent:partnership_accept	consent binds=signer+holder	sourced | runs
+consent:partnership_grant	consent binds=signer+holder	sourced | runs
+consent:replication:{version}	consent binds=signer	sourced | runs
+consent:scope:{kind}	consent binds=signer	sourced | runs
+consent:state:{stance}	consent binds=signer	sourced | runs
+consent:stream:{kind}	consent binds=signer	sourced | runs
+consent:{kind}	none fits	no shape, stated | no shape: a prefix: its leaves are families of their own and nobody reads it
+content_class:{class}	door	sourced | runs
+content_rating:{scheme}:{rating}	claim	sourced | runs
+corpus_health:n_eff_measurable	claim	sourced | runs
+cosign:{state}	door	sourced | runs
+credits:{domain}:{language}:{subject}	claim	sourced | runs
+custody:{kind}	claim	sourced | runs
+cw_class:{class}	claim	sourced | runs
+deferral:request	door	sourced | runs
+deferral:response:{outcome}	door	sourced | runs
+delivery:{class}	claim	sourced | runs
+delivery_receipt:{stream_id}	claim	sourced | runs
+detection:correlated_action:{axis}	claim	sourced | runs
+detection:distributive:access:{resource_type}	claim	sourced | runs
+detection:hash_chain_integrity	claim	sourced | runs
+detection:intra_agent_consistency	claim	sourced | runs
+detection:{detector}	claim	sourced | runs
+device:label	content	sourced | runs
+dma:csdma:*	claim	sourced | runs
+dma:dsdma:{domain}:*	claim	sourced | runs
+dma:idma:*	claim	sourced | runs
+dma:pdma:*	claim	sourced | runs
+duty:{kind}	consent binds=signer+holder	no shape, stated | no shape: a term on an offer: an obligation on a referenced permission, which moves no seat
+encyclopedia:*	content	sourced | runs
+event:attendance	claim	sourced | runs
+event:lifecycle:{state}	content	sourced | runs
+event:rsvp_count	claim	sourced | runs
+evidence:{suite}:{kind}:{cell}:{prefix}	claim	sourced | runs
+expertise:{domain}:{language}	claim	sourced | runs
+federation_directory:replication_lag	claim	sourced | runs
+fidelity:explainability_sla:{tier}	claim	sourced | runs
+fidelity:{aspect}	claim	sourced | runs
+file:{version}	content	sourced | runs
+film:*	content	sourced | runs
+goal:{scale}	content	sourced | runs
+group:roster	consent+door binds=body+holder	sourced | runs
+hard_case:{kind}	claim	sourced | runs
+hardware_custody:{platform}	claim	sourced | runs
+health:liveness:{version}	claim	sourced | runs
+identity:canonical_binding:{canonical_hash}	claim	sourced | runs
+identity:occurrence	consent+door binds=body+holder	sourced | runs
+identity:occurrence_revocation	consent+door binds=body+holder	sourced | runs
+identity_amendment	content	sourced | runs
+identity_continuity:relational_anchor	claim	sourced | runs
+image:*	content	sourced | runs
+integrity:{aspect}	claim	sourced | runs
+judge_model:verdict:{model_id}	claim	sourced | runs
+justice:{aspect}	claim	sourced | runs
+key:record	consent binds=signer	sourced | runs
+key:revocation	consent+door binds=signer	sourced | runs
+key_boundary:{scope}	claim	sourced | runs
+key_grant:{axis}	content	sourced | runs
+lawful_order:release	claim	sourced | runs
+ledger:checkpoint:{unit}:{version}	claim	sourced | runs
+ledger:head:{unit}:{version}	claim	sourced | runs
+ledger:promotion:{version}	claim	sourced | runs
+licensure:{authority_id}	claim	sourced | runs
+lineage_witness:{stage}	consent binds=signer+holder	sourced | runs
+locality:decision:{scale}	claim	sourced | runs
+manifold_conformity:{cohort}	claim	sourced | runs
+membership:{stage}	consent+door binds=body+holder	sourced | runs
+mesh_config:{key}	claim	sourced | runs
+method:{approach_id}:{substrate_rung}	content	sourced | runs
+model_3d:*	content	sourced | runs
+moderation:{allegation_type}	door	sourced | runs
+moderation_track_record:{community_key_id}	claim	sourced | runs
+multilateral_participation:{forum}:{kind}	claim	sourced | runs
+need:{domain}:{kind}	content	sourced | runs
+news:*	content	sourced | runs
+non_maleficence:{aspect}	claim	sourced | runs
+objection:{state}	door	sourced | runs
+observation:access_assumption	claim	sourced | runs
+observation:reachability	claim	sourced | runs
+ownership:{relation}:{target_kind}:{version}	consent binds=signer+holder	sourced | runs
+partner_role:{role}	consent binds=signer+holder	cannot run | cannot run: the signer cell is any_registered: no conferrer is stated, so as a consent it cannot run; as the cells stand it is a claim
+peer_reachability:{network}	claim	sourced | runs
+preserve_request	consent binds=signer+holder	sourced | runs
+preserve_response	consent binds=signer+holder	sourced | runs
+progress_measure:{method_id}	claim	sourced | runs
+prohibited:{category}	claim	sourced | runs
+provenance:build_manifest:{target}	claim	sourced | runs
+provenance:build_manifest:{target}:locale:{lang_code}	claim	sourced | runs
+provenance:skill_import:{source}	claim	sourced | runs
+provenance:slsa:{level}	claim	sourced | runs
+quarantine:{state}	door	sourced | runs
+ratchet:flag:coordinated_voting_cluster	claim	sourced | runs
+ratchet:flag:counter_rii:{layer}	claim	sourced | runs
+ratchet:flag:density_anomaly	claim	sourced | runs
+ratchet:flag:expertise_attestation_anomaly	claim	sourced | runs
+ratchet:flag:harassment_pattern	claim	sourced | runs
+ratchet:flag:out_of_distribution_voting	claim	sourced | runs
+reconsideration:{grounds}	door	sourced | runs
+regime:{artifact}:{version}	claim	sourced | runs
+rendezvous:route	claim	sourced | runs
+retirement:{state}	consent+door binds=signer+holder	sourced | runs
+revocation:{entity_type}:{reason}	consent binds=signer	cannot run | cannot run: the signer cell is empty; for a licence the thing ended is a claim
+rollback_detected:{revision_field}	claim	sourced | runs
+seed_holder_voting_alignment:{cell}	claim	sourced | runs
+self:delegates_to	none fits	no shape, stated | no shape: a label: it confers nothing and no rule reads it
+self:delegates_to:agent_occurrence	none fits	no shape, stated | no shape: a label: it confers nothing and no rule reads it
+session:{kind}	claim	sourced | runs
+settlement:*	claim	sourced | runs
+slashing:{outcome}	door	sourced | runs
+system:*	claim	sourced | runs
+takedown_notice:{basis}	door	sourced | runs
+testimonial_witness:{kind}	claim	sourced | runs
+topical_relation:{kind}	claim	sourced | runs
+trace:{form}:{version}	content	sourced | runs
+trace_summary:{kind}	content	sourced | runs
+transparency_log:consistency	claim	sourced | runs
+transparency_log:cosigned:{tree_size}	claim	sourced | runs
+transparency_log:inclusion	claim	sourced | runs
+transport:canonical_rebind	door	sourced | runs
+transport:{kind}	claim	sourced | runs
+trust:{job}:{version}	consent binds=signer|signer+holder|body+holder	sourced | runs
+truth_grounding:{subject}	claim	sourced | runs
+video:*	content	sourced | runs
+vote:{contribution_id}	claim	sourced | runs
+wa_adjudication:{state}	door	sourced | runs
+watchlist:{id}	claim	sourced | runs
+weighted_aggregate:{contribution_id}	claim	sourced | runs
+witness_diversity:{contribution_id}	claim	sourced | runs
+door accord_halt@node+late_closed	72 worlds, 2 properties hold	breaks: one holder cannot lift a confirmed halt alone
+door accord_halt@node+late_closed	plant: its mutation (check_door.MUTATION)	caught
+door accord_majority	36 worlds, 1 properties hold	holds
+door accord_majority	plant: its mutation (check_door.MUTATION)	caught
+door accord_roster_change	72 worlds, 1 properties hold	holds
+door accord_roster_change	plant: its mutation (check_door.MUTATION)	caught
+door affiliation_member_action	12 worlds, 2 properties hold	holds
+door affiliation_member_action	plant: its mutation (check_door.MUTATION)	caught
+door archive_release	4 worlds, 2 properties hold	holds
+door archive_release	plant: its mutation (check_door.MUTATION)	caught
+door community_invite	600 worlds, 4 properties hold	holds
+door community_invite	plant: its mutation (check_door.MUTATION)	caught
+door community_remove[majority]	72 worlds, 4 properties hold	holds
+door community_remove[majority]	plant: its mutation (check_door.MUTATION)	caught
+door cosigned_act	72 worlds, 3 properties hold	holds
+door cosigned_act	plant: its mutation (check_door.MUTATION)	caught
+door custodian_replace	12 worlds, 2 properties hold	holds
+door custodian_replace	plant: its mutation (check_door.MUTATION)	caught
+door decay_stage	2 worlds, 1 properties hold	holds
+door decay_stage	plant: its mutation (check_door.MUTATION)	caught
+door deferral	30 worlds, 4 properties hold	holds
+door deferral	plant: its mutation (check_door.MUTATION)	caught
+door deletion_sla	12 worlds, 1 properties hold	holds
+door deletion_sla	plant: its mutation (check_door.MUTATION)	caught
+door harm_report	216 worlds, 1 properties hold	holds
+door harm_report	plant: its mutation (check_door.MUTATION)	caught
+door invitation	216 worlds, 2 properties hold	holds
+door invitation	plant: its mutation (check_door.MUTATION)	caught
+door moderation_action	588 worlds, 4 properties hold	holds
+door moderation_action	plant: its mutation (check_door.MUTATION)	caught
+door moderation_overturn	324 worlds, 2 properties hold	holds
+door moderation_overturn	plant: its mutation (check_door.MUTATION)	caught
+door moderator_election	577 worlds, 3 properties hold	holds
+door moderator_election	plant: its mutation (check_door.MUTATION)	caught
+door poll	556 worlds, 3 properties hold	holds
+door poll	plant: its mutation (check_door.MUTATION)	caught
+door poll[stated]	556 worlds, 1 properties hold	holds
+door poll[stated]	plant: its mutation (check_door.MUTATION)	caught
+door retirement_objection	60 worlds, 3 properties hold	holds
+door retirement_objection	plant: its mutation (check_door.MUTATION)	caught
+door self_roster_add	200 worlds, 2 properties hold	holds
+door self_roster_add	plant: its mutation (check_door.MUTATION)	caught
+door self_roster_evict	600 worlds, 3 properties hold	holds
+door self_roster_evict	plant: its mutation (check_door.MUTATION)	caught
+door takedown_withhold	577 worlds, 2 properties hold	holds
+door takedown_withhold	plant: its mutation (check_door.MUTATION)	caught
+door wa_adjudication	72 worlds, 4 properties hold	holds
+door wa_adjudication	plant: its mutation (check_door.MUTATION)	caught
+claim.py	plant: mutation claim: an untrusted source moves nothing (everyone)	caught
+claim.py	plant: mutation claim: only the source retracts (any_signer)	caught
+claim.py	plant: mutation claim: polarity refused (no_polarity)	caught
+claim.py	plant: mutation claim: the source seat is read (ignore_scope)	caught
+claim.py	plant: mutation claim: one answer in every order (last_held)	caught
+claim.py	plant: mutation content: the audience is read (ignore_audience)	caught
+claim.py	plant: mutation content: only the author retracts (any_signer)	caught
+plant:beacon_lottery	plant: a door with no doors.tsv row	not fitting
+plant:first_wins	plant: a seat conferred by whichever offer arrived first	not fitting
+plant:third_end	plant: a seat a third key ends	not fitting
+mechanism claim	keeps the characteristic property of claim	yes
+mechanism consent	keeps the characteristic property of claim	yes
+mechanism content	keeps the characteristic property of claim	no
+mechanism door	keeps the characteristic property of claim	no
+mechanism claim	keeps the characteristic property of consent	no
+mechanism consent	keeps the characteristic property of consent	yes
+mechanism content	keeps the characteristic property of consent	no
+mechanism door	keeps the characteristic property of consent	no
+mechanism claim	keeps the characteristic property of content	no
+mechanism consent	keeps the characteristic property of content	yes
+mechanism content	keeps the characteristic property of content	yes
+mechanism door	keeps the characteristic property of content	no
+mechanism claim	keeps the characteristic property of door	no
+mechanism consent	keeps the characteristic property of door	no
+mechanism content	keeps the characteristic property of door	no
+mechanism door	keeps the characteristic property of door	yes
+removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 26, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 154, e.g. accord:*)
+removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 154, e.g. accord:*) ; door kept (loses 26, e.g. accord:invoke:constitutional:{halt_id})
+removal	order door > consent > content > claim	surviving consent,door | door kept (loses 26, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 20, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
+counts	families per shape	claim 110, consent 16, consent+door 7, content 24, door 24, none fits 3
+counts	status	cannot run 2, no shape, stated 9, sourced 173

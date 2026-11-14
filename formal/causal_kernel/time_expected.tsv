@@ -1,0 +1,12 @@
+reading	covered_by	verdict
+own end: A live iff now is before A's stated end	own end	covered by own end
+window: the concluder's landing spans its window	window	covered by window
+cut: B counts iff the ending row A names it	cut	covered by cut
+invitation as a door: the widening lands inside its concluder's own window	window	covered by window
+name registration: held by what the registrations name, concurrent ones contested	section 6	covered by section 6
+cosignature attach, restated: the cosignature states its own end	own end	covered by own end
+freshness W as written: A counts iff first held within W of its signed instant	cut	needs an instant beyond the two notions as written; the kernel's replacement: cut
+invitation as written: B counts iff B's signed instant is not after A's stated end	window	needs an instant beyond the two notions as written; the kernel's replacement: window
+cosignature attach as written: the newest cosignature no older than the attach window when first held	not covered	not covered: needs an instant beyond the two notions
+session order as written: the earliest claimed instant of two occurrences holds the session	not covered	not covered: needs an instant beyond the two notions
+plant: B counts iff B was signed after A	not covered	not covered: needs an instant beyond the two notions

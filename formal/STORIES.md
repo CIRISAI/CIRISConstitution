@@ -171,14 +171,14 @@ The things people do on a social network, each mapped to the story and the rule 
 | follow a public page or channel | a public community: founded by anyone, open admission, discoverable by its listing row, plaintext at the Commons tier | step 5; CC 3.1.3.2 (public rooms) |
 | post, reply, react, thread | rows in a room; a reply is a row that names the row it answers; a reaction is a score on a row | step 6; CC 3.1.9, 2.1 |
 | turn replies off, run a channel, an event channel, a moderated chat | a room whose record names who may publish; the others read; the moderator grants and withdraws the right; a reply elsewhere never enters it | step 5; CC 3.1.3.2 |
-| share media, go live | blobs inline or chunked; streams and calls under the A/V seal | step 6; CC 2.6.1.3, 5.3.3 |
+| share media, go live | blobs inline or chunked; streams and calls under the A/V seal | step 6; CC 2.6.1.4, 5.3.3 |
 | repost to a wider audience | not possible by reference: a row cannot be carried beyond its cohort; the author posts again at the wider scope | CC 5.2 (scope follows the cohort) |
 | edit, delete | supersede, withdraw, purge; a withdrawn row never comes back | step 6; CC 2.4.1.1 |
 | post something that disappears | a row with an expiry, purged after it | step 6; CC 3.3.5 |
 | mute someone | the reader's private filter; never hides a row about you from you | step 5; CC 4.4 |
 | report someone, appeal | two separate acts: a private report to the duty holder, which opens no window and shields the reporter, or a moderation action raised in the room, which starts the 48-hour clock; the moderator, who may be an agent held by a steward, rules at any time, else the majority of respondents at the window; reconsideration by the person named | steps 5, 6; CC 4.5.4, 4.5.5, 4.5.13; `standing`, `mesh_life` |
 | warn others about someone | said as speech, retractable by the person named; filed with the moderator, a duty-holder's record | CC 4.5.5; `standing` |
-| rate a business, review a place | a score about an affiliation, which never retracts it and contests by reconsideration | CC 4.4.3.2.8; `affiliation` |
+| rate a business, review a place | a score about an affiliation, which never retracts it and contests by reconsideration | CC 4.4.3.12; `affiliation` |
 | see who said what about you | the read over every row that names you | CC 3.4.5 |
 | choose what your feed shows | the reader's own composition and filters, stackable and swappable, never a ranking of persons by what they are | CC 4.4; `trust_set` |
 | verify who someone is | the key fingerprint in the id, the contact code across a table, the licence a reader honours only through its own trust | CC 2.6.8; `trust_set` |

@@ -1,0 +1,77 @@
+# Transition cells the Constitution text states where the family model gives the generator nothing to derive them from.
+# Applied by tools/build_transitions.py: the cell takes this value with source cc-table and the reference as cc_ref.
+# A cell the census closes (source code-v61) is never overridden; a row here for one is refused.
+# cell: roles (role tokens, comma separated; empty closes the stage to everyone) | policy (kind, or kind:policy_row) | widens (true | false | by_scope, where the signer's scope decides) | undo (false, or via:policy with via withdraw, recant, or attest for a withdrawal said again).
+# stage: empty for the whole transition; a stage name where the text gives the stage its own answer (roles and policy only).
+# A policy row with a stage leaves the transition's own policy as it is and adds the stage's beside it.
+# undo: the way back the text states for a row whose family lists no withdraw; it fills only a gap cell, and its quote must stand in the section it cites.
+# quote: words of the cited section, verbatim; required on an undo row, checked wherever given.
+family	verb	cell	stage	value	cc_ref	quote
+ballot:moderator	attest	policy		ranked:moderator_election	CC 4.5.13
+ballot:moderator	attest	widens		true	CC 3.1.3
+ballot:moderator	withdraw	policy		selfAct	CC 4.5.13
+ballot:moderator	withdraw	roles		author	CC 4.5.13
+ballot:moderator_acceptance	attest	roles		winner	CC 3.1.3
+ballot:moderator_acceptance	attest	widens		true	CC 3.1.3
+ballot:tally:{poll_id}	attest	roles		tally	CC 3.1.3
+census:expected_active	attest	roles		tally	CC 3.1.3
+census:member:partial	attest	roles		tally	CC 3.1.3
+cosign:{state}	attest	widens		true	CC 3.1.3
+cosign:{state}	withdraw	policy		selfAct	CC 3.1.3
+cosign:{state}	withdraw	roles	pending	author	CC 3.1.3
+cosign:{state}	withdraw	roles	signature		CC 3.1.3
+key:revocation	attest	roles	self	self	CC 2.4.1.1	The key revokes itself.
+key:revocation	attest	roles	owner	owner	CC 2.4.1.1	Its owner revokes it under the owner-binding
+key:revocation	attest	roles	self_roster	member	CC 2.4.1.1	the eviction door of a self roster
+key:revocation	attest	roles	room_roster	member	CC 2.4.1.1	for a room key the room's removal
+key:revocation	attest	policy	self_roster	two_path:self_roster_evict	CC 2.4.1.1	the eviction door of a self roster
+key:revocation	attest	policy	room_roster	cosigned:community_remove	CC 2.4.1.1	for a room key the room's removal
+identity:occurrence_revocation	attest	roles	node_or_agent	owner,self	CC 2.4.1.1	The key revokes itself. Its owner revokes it under the owner-binding
+identity:occurrence_revocation	attest	roles	user_self	member	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's current live roster**
+identity:occurrence_revocation	attest	policy	user_self	two_path:self_roster_evict	CC 3.3.6.4	The policy is two rows of the governance table
+archive_release:{basis}	attest	widens		by_scope	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+community:listing	attest	roles		moderate	CC 3.1.1	signed by a current `moderate`-holder of the community it names
+lawful_order:release	attest	widens		by_scope	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+membership:{stage}	attest	roles	proposal	member	CC 3.1.3.2	a proposal is an inviter's
+membership:{stage}	attest	roles	acceptance	self	CC 3.1.3.2	an acceptance or decline is the invitee's only
+membership:{stage}	attest	roles	decline	self	CC 3.1.3.2	an acceptance or decline is the invitee's only
+membership:{stage}	attest	roles	widening	member	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	attest	roles	removal	member	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	attest	roles	resignation	self	CC 3.1.3.2	a resignation is signed by the leaving member
+preserve_request	attest	widens		true	CC 3.1.5
+preserve_request	withdraw	policy		selfAct	CC 2.4.1.1
+preserve_request	withdraw	roles		author	CC 2.4.1.1
+preserve_response	attest	widens		true	CC 3.1.5
+retirement:{state}	attest	policy	custodian_replace	cosigned:custodian_replace	CC 7.5.5
+retirement:{state}	attest	widens		by_scope	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+retirement:{state}	withdraw	roles		author	CC 7.5.5
+retirement:{state}	withdraw	policy		selfAct	CC 7.5.5
+accord:invoke:constitutional:{halt_id}	attest	undo		false	CC 4.2.1.3	`accord:lifecycle:active` is the **only** sanctioned resumption after a `constitutional` halt
+accord:invoke:drill:{drill_id}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+accord:invoke:notify:{notify_id}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+accord:lifecycle	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+accord:lifecycle:{kind}	attest	undo		withdraw:cosigned	CC 2.4.1.1	a quorum's act is undone only by a quorum
+activity_tier:{period}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+consent:decay:{stage}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+consent:deletion_complete	attest	undo		withdraw:selfAct	CC 3.3.1	the watcher is cancelled only by a `withdraws`, `supersedes` or hard deletion of the row
+consent:scope:{kind}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+deferral:response:{outcome}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+delivery_receipt:{stream_id}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+duty:{kind}	withdraw	undo		attest:selfAct	CC 2.4.1.1	Saying the same thing again to the audience is a new row
+event:lifecycle:{state}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+federation_directory:replication_lag	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+identity_amendment	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+ledger:head:{unit}:{version}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+ledger:promotion:{version}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+locality:decision:{scale}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+observation:reachability	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+regime:{artifact}:{version}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+rendezvous:route	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+rollback_detected:{revision_field}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+seed_holder_voting_alignment:{cell}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+self:delegates_to	authorize	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+self:delegates_to:agent_occurrence	authorize	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+transport:canonical_rebind	attest	undo		withdraw:cosigned	CC 2.4.1.1	a quorum's act is undone only by a quorum
+transport:canonical_rebind	supersede	roles		holder	CC 3.1.3	**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself
+transport:canonical_rebind	supersede	policy		cosigned:accord_majority	CC 3.1.3	**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself
+weighted_aggregate:{contribution_id}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none

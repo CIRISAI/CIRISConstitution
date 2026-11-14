@@ -1,0 +1,50 @@
+{
+ "reading": "The row a family is unless it states its own value: one value per column, the commonest in the family model. tools/build_family_model.py refuses a default that is not the commonest value of its column, marks on each family the columns in which it departs, and writes the departures alone to manifests/family_departures.tsv. The values are the model's cells as they stand, the census readings among them; a default becomes text only when its cell is sourced from the text.",
+ "columns": {
+  "placement": [
+   "self_collective",
+   "targeted_family",
+   "targeted_room",
+   "commons"
+  ],
+  "subject_rule": {
+   "kind": "any",
+   "cardinality": "any",
+   "must_be_registered": "attested yes, subjects no",
+   "for_key_id": "none",
+   "in_audience": "no",
+   "attested_party": "Targeted only"
+  },
+  "cosign_rule": "none",
+  "freshness": {
+   "judged_at": "receipt",
+   "W": null
+  },
+  "lifecycle": {
+   "withdraws_by": "{attester, subject}",
+   "retraction_class": "peer",
+   "supersedes": "same_attester",
+   "expires": "expires_at honoured",
+   "rotation_on_removal": "no"
+  },
+  "replication": {
+   "tier": [
+    "local",
+    "federation"
+   ],
+   "audience": {
+    "self_collective": "owner's nodes",
+    "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
+    "commons": "everyone"
+   },
+   "non_recipient": null,
+   "held": "settle_on_key"
+  },
+  "projection": {
+   "table": "federation_attestations",
+   "rebuild": "n/a"
+  },
+  "erasure_route": "purge (steward purge on a cosigned notice); legal_hold: none in code",
+  "governance": "none"
+ }
+}

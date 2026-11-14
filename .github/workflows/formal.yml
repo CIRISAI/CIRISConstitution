@@ -101,6 +101,37 @@ jobs:
           grep -q 'Invariant Inv_NoWindow is violated' w.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h4" -deadlock -config AccordHalt_proposal_stuck.cfg AccordHalt.tla | tee s.log
           grep -q 'Invariant NotStuck is violated' s.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/h5" -deadlock -config AccordHaltReach_active.cfg AccordHaltReach.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h6" -deadlock -config AccordHaltReach_signed_missed.cfg AccordHaltReach.tla | tee m.log
+          grep -q 'Invariant Inv_EdgeAtReceiptIsBound is violated' m.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h7" -deadlock -config AccordHaltReach_signed_bound.cfg AccordHaltReach.tla | tee b.log
+          grep -q 'Invariant Inv_LatchedHeldEdge is violated' b.log || exit 1
+      - name: The members' lift of a moderator's act closes; a count over later joiners is shown to fail
+        working-directory: formal/moderation_lift
+        run: |
+          set +e
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/l1" -deadlock -config ModerationLift_at_act.cfg ModerationLift.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l2" -deadlock -config ModerationLift_live_brigade.cfg ModerationLift.tla | tee g.log
+          grep -q 'Invariant Inv_SeatedMajority is violated' g.log || exit 1
+      - name: The kernel in a world whose schedule is the adversary's; every screen state is reached, and the same rows are shown to differ in standing
+        working-directory: formal/kernel_world
+        run: |
+          set +e
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k1" -deadlock -config KernelWorld.cfg KernelWorld.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k2" -deadlock -config KernelWorld_hold.cfg KernelWorld.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k3" -deadlock -config KernelWorld_reach.cfg KernelWorld.tla | tee r.log
+          grep -q 'Invariant NotAllSeen is violated' r.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k4" -deadlock -config KernelWorld_standing.cfg KernelWorld.tla | tee s.log
+          grep -q 'Invariant Inv_SameRowsSameStanding is violated' s.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k5" -deadlock -config KernelWorldSigned.cfg KernelWorldSigned.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k6" -deadlock -config KernelWorldSigned_late_rest.cfg KernelWorldSigned.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k7" -deadlock -config KernelWorldSigned_late.cfg KernelWorldSigned.tla | tee t.log
+          grep -q 'Invariant Inv_SameRowsSameStanding is violated' t.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k8" -deadlock -config KernelWorldScreen.cfg KernelWorldScreen.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k9" -deadlock -config KernelWorldScreen_receipt.cfg KernelWorldScreen.tla | tee u.log
+          grep -q 'Invariant Law_OfferedIsAdmitted is violated' u.log || exit 1
+          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k10" -deadlock -config KernelWorldScreen_reach.cfg KernelWorldScreen.tla | tee v.log
+          grep -q 'Invariant NotAllSeen is violated' v.log || exit 1
 
   authority:
     name: Enumeration — licensure, grant, delegation to closure (formal/authority_tree)
@@ -256,6 +287,8 @@ jobs:
           lean ../trust_set/TrustSet.lean
           lean ../affiliation/Affiliation.lean
           lean ../standing/Standing.lean
+          bash ../causal_order/build.sh
+          lean ../age_assurance/AgeBand.lean
           lean ../contact/Contact.lean
           lean -M 6000 -T 200000 ../transport_tiers/Tiers.lean
           lean -M 6000 -T 200000 ../anonymous/Anonymous.lean
@@ -263,9 +296,31 @@ jobs:
           lean -M 6000 -T 200000 ../event_lifecycle/EventLifecycle.lean
           lean -M 6000 -T 200000 ../alm/Alm.lean
           python3 ../alm/alm_model.py --check
+          python3 ../takedown/takedown_model.py --check
+          python3 ../deletion/deletion_model.py --check
+          python3 ../owner_binding/owner_binding_model.py --check
+          python3 ../key_plane/key_plane_model.py --check
+          python3 ../guardianship/guardianship_model.py --check
+          python3 ../ranked_choice/ranked_choice_model.py --check
+          python3 ../set_item/set_item_model.py --check
+          python3 -I ../kernel_lib/kernel_lib_check.py --check
+          python3 -I ../causal_kernel/check.py
+          python3 -I ../causal_kernel/check_cut.py
+          python3 -I ../causal_kernel/check_lock.py
+          python3 -I ../causal_kernel/check_attacks.py
+          python3 -I ../causal_kernel/check_roomkey.py
+          python3 -I ../causal_kernel/check_rosters.py
+          python3 -I ../causal_kernel/check_door.py
+          python3 -I ../causal_kernel/check_time.py
+          python3 -I ../causal_kernel/check_shapes.py
+          python3 -I ../causal_kernel/check_key_end.py
+          python3 -I ../causal_kernel/check_purge.py
+          python3 -I ../screen/check_screen.py
+          python3 -B ../../tools/kx_check.py --check
+          python3 -I ../roster_fork/fork_check.py --check
           python3 -I ../transport_tiers/frame_ab.py --check
           lean -M 6000 -T 200000 ../family_model/FamilyModel.lean
-          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean ../trust_set/TrustSet.lean ../affiliation/Affiliation.lean ../standing/Standing.lean ../contact/Contact.lean ../transport_tiers/Tiers.lean ../anonymous/Anonymous.lean ../moderator_election/Election.lean ../event_lifecycle/EventLifecycle.lean ../family_model/FamilyModel.lean ../alm/Alm.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean ../trust_set/TrustSet.lean ../affiliation/Affiliation.lean ../standing/Standing.lean ../causal_order/Order.lean ../causal_order/Causal.lean ../causal_order/Seat.lean ../causal_order/Window.lean ../causal_order/Recount.lean ../causal_order/Harden.lean ../causal_order/Harden2.lean ../causal_order/Harden3.lean ../causal_order/SeatG.lean ../causal_order/Terms.lean ../causal_order/Reader.lean ../causal_order/Merge.lean ../causal_order/Consent.lean ../contact/Contact.lean ../transport_tiers/Tiers.lean ../anonymous/Anonymous.lean ../moderator_election/Election.lean ../event_lifecycle/EventLifecycle.lean ../family_model/FamilyModel.lean ../alm/Alm.lean
 
   retirement:
     name: TLC — the Retirement Standard as a machine (formal/retirement)
@@ -345,7 +400,7 @@ jobs:
   membership:
     name: TLC — the membership ceremony (formal/membership)
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -357,12 +412,11 @@ jobs:
         working-directory: formal/membership
         run: |
           set +e
-          for c in founder_only unanimous majority quorum2of3; do
+          for c in founder_only unanimous majority quorum2of3 unanimous_two; do
             java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/mb-$c" -deadlock -config Membership_$c.cfg Membership.tla || exit 1
           done
           t() { java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/mb-$1" -deadlock -config Membership_$1.cfg Membership.tla | tee $1.log; grep -q "$2" $1.log || exit 1; }
           t founder_only_coerced 'Inv_CoercedCannotRemoveHonest is violated'
-          t unanimous_two 'Inv_CoercedCannotRemoveHonest is violated'
           t any_member_removes 'Inv_QuorumGovernsRoster is violated'
           t no_binding 'Inv_AcceptanceBindsOneProposal is violated'
           t unspent 'Inv_LeavingNotUndone is violated'

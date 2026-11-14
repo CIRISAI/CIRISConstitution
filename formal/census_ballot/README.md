@@ -1,6 +1,6 @@
 # `formal/census_ballot` — the census, the secret ballot and the base law, model-checked and counted
 
-**What this is.** CC 4.5.13 (the policy's base), 5.4.6 (the cohort's invisibility) and 6.1.2.1.2
+**What this is.** CC 4.5.13 (the policy's base), 5.4.6 (the cohort's invisibility) and 6.1.2.3
 (`n_eff`), with the edge/persist design that implements them: each period every
 owner-bound rooted node of a community emits exactly one **census report**; a report is a vector of
 community cells, each a **one-hot over its buckets** (the expected-active cell `ea: yes/no` — was the owner
@@ -45,11 +45,11 @@ Each defence is a switch (`PadWhenClosed`, `Dedupe`, `Validate`, `JointAccept`, 
 |---|---|---|
 | `Inv_SharePrivacy` (= `Inv_BallotSecrecy`) | a colluding tally member's view — every share it received and its partial sums — is identical under every one-hot value of every other owner's accepted report (for each owner and alternative vector a share assignment producing the same view is exhibited); guard: the two tally members do not both collude | 5.4.6 |
 | `Inv_Correctness` (= `Inv_TallyExact`) | `partial_0 + partial_1 ≡ Σ accepted values (mod M)`, and equal to the sum when it is below `M` | 6.1.2.1 |
-| `Inv_Validity` | every accepted report is one-hot (entries in {0,1}, each cell sums to 1) | 6.1.2.1.2 |
+| `Inv_Validity` | every accepted report is one-hot (entries in {0,1}, each cell sums to 1) | 6.1.2.3 |
 | `Inv_Agreement` | the two tally members accept the same report set: equal token sets, equal `source_count` | 6.1.2.1 |
-| `Inv_OnePerOwner` (= `Inv_OneReturnPerOwner`) | one report counted per owner per period; `source_count = |accepted|`; `n_eff = source_count` | 6.1.2.1.2 |
+| `Inv_OnePerOwner` (= `Inv_OneReturnPerOwner`) | one report counted per owner per period; `source_count = |accepted|`; `n_eff = source_count` | 6.1.2.3 |
 | `Inv_KFloor` | no published cell has `source_count < K` | 5.4.6 |
-| `Inv_DominanceGate` | no published composite has one owner with more than half the mass (so at least two sources) | 6.1.2.1.2 |
+| `Inv_DominanceGate` | no published composite has one owner with more than half the mass (so at least two sources) | 6.1.2.3 |
 | `Inv_OccurrenceInvisible` | every reporting member sends the same number of entries to each tally member whether or not a ballot is open, and the set of wire profiles a member can produce is identical with and without an open ballot | 5.4.6 |
 | `Inv_BaseRatchet` | `base_t · 10 ≥ base_{t−1} · 9`; `base_t ≥` the ratchet trajectory from the first census; `base_t · 2 ≥ last stable composite`; `base_t ≥` owners active this period; `base_t ≥` the last composite; under the partition freeze `base_t = base_{t−1}` and `base_t ≥` the pre-fall composite | 4.5.13 |
 | `Inv_TallyThreshold` | a poll passes only at `approvals · 3 > 2 · base_t` (or the approval floor at the window against `base_t`), `base_t` the census base or the standing roster at or below the small-community size | 4.5.13 |

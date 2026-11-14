@@ -1,0 +1,43 @@
+section	name	verdict
+property	P1 every answer is the same in every arrival order	holds	caught
+property	P2 a key whose holder signs nothing more ends at most the ceiling after the last record it signed	holds	caught
+property	P3a compacting the lapsed rows changes no answer at that instant or later (a record not yet begun is kept)	holds	caught
+property	P3b compacting keeps a dead key's row that a live row names	holds	caught
+property	P3c a lapsed row counts in no derived answer, so dropping it moves none	holds	caught
+property	P4 a row's conclusion never reads now: signed while live, concluded for good	holds	caught
+property	P5a two concurrent rotations of one key name no successor (both or neither)	holds	caught
+property	P5b a rotation without the old key's signature is not kept	holds	caught
+property	P6 with the same rows, a key ended at an instant is live at no later instant; the end is the greatest stated end	holds	caught
+property	P7 a key's life is moved only by rows the key signed (no other voice revives it)	holds	caught
+in_time	T1 self-contained: the renewal is a further record of the key naming its own earlier one, bounded alone	a function of the rows and now	counts a back-dated renewal	never refuses one signed in time
+in_time	T2 live when first held: the renewal counts only if this node held it before the record's end	NOT a function of the rows and now	never counts a back-dated renewal	refuses one signed in time
+in_time	T3 witnessed: the renewal counts only if a row by another voice names it	a function of the rows and now	counts a back-dated renewal	refuses one signed in time
+in_time	T3' witnessed by a voice the reader trusts	a function of the rows and now	counts a back-dated renewal	refuses one signed in time
+in_time	T4 named by the key's own next row	a function of the rows and now	counts a back-dated renewal	refuses one signed in time
+in_time	T5 the reader's own end: a renewal its acknowledgement of the end does not name is void for that reader	a function of the rows, the reader's own rows and now; two readers differ	never counts a back-dated renewal	refuses one signed in time
+wording	rule: an end is required by the record's own identity type	the door reads the row alone
+wording	as worded: required unless an owner-binding at federation scope is held	two seats with the same record differ: the door reads another row
+class	node key	required
+class	agent key	required
+class	room key of a private room (an agent's)	optional
+class	person's key (user)	forbidden
+class	accord holder's key	forbidden
+class	pseudonym (CC 5.4.6)	optional
+attack	K1 a thief with a still-live stolen key rotates it to a key of its own	CONCEDED	facts hold
+attack	K2 two concurrent rotations of one key	CONCEDED	facts hold
+attack	K3 a holder back-dates a renewal of an ended key	CONCEDED	facts hold
+attack	K4 a peer withholds a renewal so a node sees the key end	CONCEDED	facts hold
+attack	K5 an abuser mints throwaway keys at the greatest end	CONCEDED	facts hold
+attack	K6 a harness sets a one-unit end	HOLDS	facts hold
+attack	K7 a renewal read as activity to track an anonymous holder	CONCEDED	facts hold
+attack	K8 another voice revives an ended key	HOLDS	facts hold
+attack	K9 a stranger rotates a key it does not hold	HOLDS	facts hold
+attack	K10 a row signed after its key's held end	HOLDS	facts hold
+numbers	no end (today), after one year	770150 rows, growing 2110 a day for ever
+numbers	no end (today), after five years	3850750 rows, growing 2110 a day for ever
+numbers	default end, 365 days	steady state m*e*r = 770150 rows (83950.0 keys)
+numbers	an end of 30 days	steady state m*e*r = 63300 rows (6900.0 keys)
+numbers	a harness end of 1 day	steady state m*e*r = 2110 rows (230.0 keys)
+numbers	a harness end of 1 minute	steady state m*e*r = 1 rows (0.2 keys)
+numbers	per dead key after compaction	nothing, unless a live row names its rows (then those rows and the record they name); no refusal digest is kept
+numbers	rows a key (shape only)	r = 2 + 1650/230 = 9.2

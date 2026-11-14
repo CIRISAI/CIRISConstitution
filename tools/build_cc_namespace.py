@@ -81,7 +81,7 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 # unclaimed leaf beneath it still refuses, because the rule would otherwise be
 # bypassed by an unminted leaf; the family's `reserved` flag is untouched.
 GATED_STEMS = [
-    ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
+    ("age_self_declared:", "signed for the subject by its own or an admitted occurrence, not open-sender; no {level} token", "CC 3.4.11"),
     ("self:", "a cohort scope, never a dimension stem: closed to the two legacy labels", "CC 3.1.3"),
     ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
     ("community:", "closed: community:listing is the only leaf", "CC 3.1.1"),
@@ -188,9 +188,9 @@ def _reserved_rules():
         # component-wide persist rule so the manifest carries the rule the row states.
         (lambda p, c: p.startswith("session:"),
          "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
-        # CC 3.1.1 / 3.2 public-room listing: the founder's (or a moderate-holder's) own row.
+        # CC 3.1.1 / 3.2 public-room listing: a moderate-holder's row for the community.
         (lambda p, c: p.startswith("community:listing"),
-         "founder- or moderate-holder-signed for the community it names; one live row per community; federation scope", "CC 3.2"),
+         "moderate-holder-signed for the community it names; one live row per community; federation scope", "CC 3.2"),
         # CC 3.1.1 takedown notice as a row: duty-holder-signed, or cosigned by the trust root for steward_purge.
         (lambda p, c: p.startswith("takedown_notice:"),
          "duty-holder-signed under CC 4.5.5 for the legal bases; cosigned under the trust root's consensus_protocol for steward_purge, attester any seat, family derived from the verified signers", "CC 3.1.1"),
@@ -225,12 +225,12 @@ def _reserved_rules():
          "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids empty)", "CC 3.1.9.4"),
         # CC 3.1.9.4 / 4.3: a WA's answer to one deferral is signed by the WA's own key.
         (lambda p, c: p.startswith("deferral:response"),
-         "a Wise Authority's key that held a seat in the live set at asserted_at; subject = the agent; references the deferral:request", "CC 3.1.9.4"),
+         "a key seated over the deferring party's deferrals in the live set at asserted_at (CC 4.3): the conferrer, the person seated, or an agent handed the answering; subject = the deferring party; references the deferral:request", "CC 3.1.9.4"),
         (lambda p, c: p.startswith("deferral:request"),
-         "the deferring agent's occurrence key; audience = the agent's cell", "CC 3.1.9.4"),
+         "the deferring party's own key (an agent's occurrence key, or a person's key); audience = the party's cell", "CC 3.1.9.4"),
         # CC 3.1.5 / promise 5: an identity amendment is the agent's own row about its identity key, admitted only against an approved deferral response.
         (lambda p, c: p.startswith("identity_amendment"),
-         "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by a seated WA (identity_amendment_unauthorized otherwise)", "CC 3.1.5"),
+         "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by the conferrer of the agent's seat or the person holding its unscoped seat (identity_amendment_unauthorized otherwise)", "CC 3.1.5"),
         # CC 6.1.9 / 3.1.3: the mesh census and the secret poll — node-, seat- and member-emitted, never a substrate self-report.
         (lambda p, c: p.startswith("census:share:"),
          "the returning node's key (rooted owner binding); addressed: for_key_id = one of the period's two serve seats; reach is that seat only", "CC 6.1.9"),
@@ -252,7 +252,7 @@ def _reserved_rules():
         # CC 3.1.3.2: the membership ceremony — per-leaf emitter, not a substrate self-report.
         # CC 3.1.3 cosignature collection: member-signed, never a substrate self-report.
         (lambda p, c: p.startswith("cosign:"),
-         "per-leaf: pending = the event's primary signer, an active member of the group at the event's signed instant; signature = the member whose signature it carries; served to the group's active members only; only the proposer withdraws a pending row; a signature row is never withdrawn", "CC 3.1.3"),
+         "per-leaf: pending = the event's primary signer, an active member of the group at the roster head the event names; signature = the member whose signature it carries; served to the group's active members only; only the proposer withdraws a pending row; a signature row is never withdrawn", "CC 3.1.3"),
         (lambda p, c: p.startswith("membership:"),
          "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member", "CC 3.1.3.2"),
         # CC 3.4.6: a SUBSCRIBER's signed acknowledgement, membership-gated — the row says
@@ -262,7 +262,10 @@ def _reserved_rules():
         # CC 3.3.10.1: an in-grammar
         # ledger is owner-serialized content, not a substrate self-report — the table cell says so.
         (lambda p, c: p.startswith("ledger:"),
-         "the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline", "CC 3.3.10.1"),
+         "the ledger's single owner (the steward-bound identity of its ledger_id triple); a delegation confers no write on a ledger", "CC 3.3.10.1"),
+        # CC 3.4.2 / 3.4.4: the hard-case kinds are open and the emitter is reserved to the substrate.
+        (lambda p, c: p.startswith("hard_case:"),
+         "substrate-emitted (identity_type substrate_persist); the kinds are open, the emitter is reserved; a non-substrate emission is a category error", "CC 3.4.4"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),
@@ -277,14 +280,14 @@ RESERVED_RULES = _reserved_rules()
 #   literal  — stem this Part fixes; lowercase by construction (gate below)
 #   vocab    — CC-defined open/closed vocabulary; MUST match VOCAB_PATTERN; refuse, never fold
 #   external — spelling fixed by an outside standard; verbatim canonical form (USD, PG-13, en-US)
-#   value    — caller-supplied identity; verbatim, case-preserved (CC 2.6.7 {id} discipline)
+#   value    — caller-supplied identity; verbatim, case-preserved (CC 2.3.2.1 {id} discipline)
 #   hex      — CC 2.6.3 digest; lowercase
 VOCAB_PATTERN = r"^[a-z0-9][a-z0-9_.-]*$"
 LITERAL_PATTERN = r"^[a-z0-9][a-z0-9_]*$"
 PLACEHOLDER_CLASS = {
     "vocab": {
         "allegation_type", "artifact", "aspect", "axis", "band", "basis", "category", "class",
-        "domain", "entity_type", "form", "grounds", "job", "key", "kind", "language",
+        "detector", "domain", "entity_type", "factor", "form", "grounds", "job", "key", "kind", "language",
         "layer", "level", "network", "outcome", "period", "platform", "platform_or_target",
         "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",
         "scope", "stage", "stance", "state", "substrate_rung", "suite", "target_kind", "tier", "version",
@@ -885,6 +888,19 @@ def main():
         "deferral:request:v1",                 # -> deferral:request
         "deferral:response:{outcome}:v1",      # -> deferral:response:{outcome}
         "observation:access_assumption:v1",    # -> observation:access_assumption
+        # Families that differed only in their final segment, folded into one row whose final
+        # segment is a closed vocabulary. Every wire string resolves as it did.
+        "accord:lifecycle:active",             # -> accord:lifecycle:{kind}
+        "accord:lifecycle:confirmed",          # -> accord:lifecycle:{kind}
+        "capacity:core_identity",              # -> capacity:{factor}
+        "capacity:incompleteness_awareness",   # -> capacity:{factor}
+        "capacity:integrity",                  # -> capacity:{factor}
+        "capacity:resilience",                 # -> capacity:{factor}
+        "capacity:sustained_coherence",        # -> capacity:{factor}
+        "detection:conscience_override_rate",  # -> detection:{detector}
+        "detection:cross_agent_divergence",    # -> detection:{detector}
+        "detection:temporal_drift",            # -> detection:{detector}
+        "credits:{domain}:{language}:substrate_building",   # -> credits:{domain}:{language}:{subject}; a {subject} value
     }
     if os.path.exists(OUT):
         try:
@@ -940,8 +956,8 @@ def main():
         print("reconciliation: leaf-granularity catalog = %d distinct prefixes." % n_families)
         print("  - dedup: agent_files joint claim counted once (CC 3.1.1 + CC 3.1.9.1).")
         print("  - the normative '83' predates later-added detector/observability families;")
-        print("    merging the 2 explicit sub-leaves (provenance:build_manifest:*:locale,")
-        print("    credits:*:substrate_building) would net -2 but does not reach 83.")
+        print("    merging the explicit sub-leaf (provenance:build_manifest:*:locale) would net -1")
+        print("    but does not reach 83.")
         print("  - honest count + discrepancy recorded in _meta.discrepancy.")
     print("wrote %s" % os.path.relpath(OUT, os.path.join(HERE, "..")))
 

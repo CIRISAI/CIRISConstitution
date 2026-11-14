@@ -15,7 +15,13 @@ Steps:
   4. with --idnits, POST the .xml to the IETF author-tools idnits API and save the report.
 
 Run:  python3 tools/build_ietf_draft.py [--rev 00] [--idnits]
-      python3 tools/build_ietf_draft.py --check   (step 1 only, on both CDDL files; CI)
+      python3 tools/build_ietf_draft.py --check   (CI; writes nothing)
+--check parses both CDDL files and validates the admit vectors against each, then compares what the
+build would write with the committed files: ietf/signed_object.cddl always, and the .xml and .txt of
+the draft when kramdown-rfc and xml2rfc are installed (a line says so when they are not). A
+difference exits 1: run the build and commit ietf/. The draft's date is the day of the build
+(the source leaves `date:` empty), so the draft compares equal only on the day it was built.
+Each run also alters the generated CDDL's persist pin and requires the comparison to catch it.
 Tools: kramdown-rfc and cddl (gem install --user-install kramdown-rfc cddl), xml2rfc (pip).
 """
 import glob, json, os, re, shutil, subprocess, sys, tempfile, textwrap, urllib.request
@@ -29,12 +35,16 @@ VECTORS = os.path.join(ROOT, "manifests", "signed_object_vectors.json")
 WIDTH = 69  # artwork is indented three columns in the text rendering
 
 
-def tool(name):
+def find_tool(name):
     for d in [os.path.expanduser(p) for p in glob.glob(os.path.expanduser("~/.local/share/gem/ruby/*/bin"))] + os.environ.get("PATH", "").split(os.pathsep):
         p = os.path.join(d, name)
         if os.access(p, os.X_OK):
             return p
-    sys.exit(f"build_ietf_draft: {name} not found")
+    return None
+
+
+def tool(name):
+    return find_tool(name) or sys.exit(f"build_ietf_draft: {name} not found")
 
 
 def wrap_cddl(text):
@@ -102,36 +112,98 @@ def check_cddl(path):
     return sum(1 for v in vecs if v["kind"] == "admit")
 
 
-def main(argv):
-    rev = argv[argv.index("--rev") + 1] if "--rev" in argv else "00"
-    wrapped = wrap_cddl(open(CDDL_IN, encoding="utf-8").read().replace("\u2014", "-"))
-    open(CDDL_OUT, "w", encoding="utf-8").write(wrapped)
-    n = check_cddl(CDDL_OUT)
-    print(f"CDDL wrapped to {WIDTH} columns; parses; {n} admit vectors validate")
-    if "--check" in argv:
-        n = check_cddl(CDDL_IN)
-        print(f"manifests/signed_object.cddl parses; {n} admit vectors validate")
-        return
+def wrapped_cddl(text=None):
+    text = open(CDDL_IN, encoding="utf-8").read() if text is None else text
+    return wrap_cddl(text.replace("\u2014", "-"))
 
+
+def build_draft(rev, out, cddl):
+    """kramdown-rfc and xml2rfc over the source, in directory `out`, which holds `cddl` as signed_object.cddl."""
     name = f"draft-moore-scitt-ciris-ceg-{rev}"
     src = open(SRC, encoding="utf-8").read()
     src = src.replace("docname: draft-moore-scitt-ciris-ceg-latest", f"docname: {name}")
     src = src.replace("{::include ../manifests/signed_object.cddl}", "{::include signed_object.cddl}")
-    md = os.path.join(IETF, name + ".md")
+    if os.path.abspath(out) != IETF:
+        open(os.path.join(out, "signed_object.cddl"), "w", encoding="utf-8").write(cddl)
+    md = os.path.join(out, name + ".md")
     open(md, "w", encoding="utf-8").write(src)
-    xml = os.path.join(IETF, name + ".xml")
+    xml = os.path.join(out, name + ".xml")
     try:
         with open(xml, "w") as f:
-            r = subprocess.run([tool("kramdown-rfc"), os.path.basename(md)], cwd=IETF, stdout=f, stderr=subprocess.PIPE, text=True)
+            r = subprocess.run([tool("kramdown-rfc"), os.path.basename(md)], cwd=out, stdout=f, stderr=subprocess.PIPE, text=True)
         if r.returncode:
             sys.exit(r.stderr)
         for fmt in ("--text", "--html"):
-            r = subprocess.run([tool("xml2rfc"), "--v3", fmt, os.path.basename(xml)], cwd=IETF, capture_output=True, text=True)
+            r = subprocess.run([tool("xml2rfc"), "--v3", fmt, os.path.basename(xml)], cwd=out, capture_output=True, text=True)
             warn = [l for l in (r.stdout + r.stderr).splitlines() if "Warning" in l or "Error" in l]
             if r.returncode or warn:
                 sys.exit("\n".join(warn) or r.stderr)
     finally:
         os.remove(md)
+    return name
+
+
+def differs(generated, path):
+    """The first line at which `generated` and the committed file at `path` part, or None when they are equal."""
+    committed = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
+    if generated == committed:
+        return None
+    a, b = generated.splitlines(), committed.splitlines()
+    for i, (x, y) in enumerate(zip(a, b)):
+        if x != y:
+            return f"line {i + 1}: built {x.strip()[:70]!r}, committed {y.strip()[:70]!r}"
+    return f"built {len(a)} lines, committed {len(b)}"
+
+
+def check(rev):
+    stale = []
+    wrapped = wrapped_cddl()
+    with tempfile.TemporaryDirectory() as d:
+        tmp = os.path.join(d, "signed_object.cddl")
+        open(tmp, "w", encoding="utf-8").write(wrapped)
+        n = check_cddl(tmp)
+        print(f"CDDL wrapped to {WIDTH} columns; parses; {n} admit vectors validate")
+    n = check_cddl(CDDL_IN)
+    print(f"manifests/signed_object.cddl parses; {n} admit vectors validate")
+    # the deliberate break: the same source with its persist pin altered must not compare equal
+    src = open(CDDL_IN, encoding="utf-8").read()
+    pin = re.search(r"Typed from CIRISPersist ([0-9a-f]+)", src)
+    if not pin:
+        sys.exit("build_ietf_draft: no persist pin in manifests/signed_object.cddl for the deliberate break")
+    broken = wrapped_cddl(src.replace(pin.group(0), "Typed from CIRISPersist " + "0" * len(pin.group(1))))
+    if differs(broken, CDDL_OUT) is None:
+        sys.exit("build_ietf_draft: the deliberate break (an altered persist pin) was not caught")
+    print("deliberate break caught: an altered persist pin makes ietf/signed_object.cddl stale")
+    w = differs(wrapped, CDDL_OUT)
+    if w:
+        stale.append(f"ietf/signed_object.cddl is stale ({w})")
+    if find_tool("kramdown-rfc") and find_tool("xml2rfc"):
+        with tempfile.TemporaryDirectory() as d:
+            name = build_draft(rev, d, wrapped)
+            for ext in (".xml", ".txt"):
+                w = differs(open(os.path.join(d, name + ext), encoding="utf-8").read(), os.path.join(IETF, name + ext))
+                if w:
+                    stale.append(f"ietf/{name}{ext} is stale ({w})")
+        print(f"draft built and compared: ietf/{name}.xml, .txt")
+    else:
+        print("kramdown-rfc or xml2rfc not installed: the draft's .xml and .txt are not compared here")
+    for s in stale:
+        print("STALE", s)
+    if stale:
+        print("run python3 tools/build_ietf_draft.py and commit ietf/")
+        sys.exit(1)
+
+
+def main(argv):
+    rev = argv[argv.index("--rev") + 1] if "--rev" in argv else "00"
+    if "--check" in argv:
+        check(rev)
+        return
+    wrapped = wrapped_cddl()
+    open(CDDL_OUT, "w", encoding="utf-8").write(wrapped)
+    n = check_cddl(CDDL_OUT)
+    print(f"CDDL wrapped to {WIDTH} columns; parses; {n} admit vectors validate")
+    name = build_draft(rev, IETF, wrapped)
     print(f"built ietf/{name}.xml, .txt, .html with no xml2rfc warnings")
 
     if "--idnits" in argv:

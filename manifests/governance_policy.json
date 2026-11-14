@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "40920bcb494ab7e0984a650ba5251075210bc74403a6bc48bac83500e5fa9c41",
+  "policy_sha256": "9b68ee39a48f2067c026f050bd37152a9933d344943fdf6df81a629153a4192c",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -39,6 +39,33 @@
     "kind": "fraction",
     "num": 1,
     "den": 3
+   },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 2.7.4"
+    },
+    "voices": {
+     "value": "objection",
+     "cc_ref": "CC 4.5.13"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
    },
    "cancel_over": "base",
    "at_window": "cancelled",
@@ -86,6 +113,33 @@
     "num": 1,
     "den": 3
    },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 2.7.4"
+    },
+    "voices": {
+     "value": "objection",
+     "cc_ref": "CC 4.5.13"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
    "cancel_over": "base",
    "at_window": "cancelled",
    "window_secs": 259200,
@@ -131,6 +185,33 @@
     "kind": "fraction",
     "num": 1,
     "den": 3
+   },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 2.7.4"
+    },
+    "voices": {
+     "value": "objection",
+     "cc_ref": "CC 4.5.13"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
    },
    "cancel_over": "base",
    "at_window": "cancelled",
@@ -178,6 +259,35 @@
     "num": 1,
     "den": 3
    },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 2.7.4"
+    },
+    "voices": {
+     "value": "objection",
+     "cc_ref": "CC 4.5.13"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "adds",
+     "cc_ref": "CC 4.5.13"
+    },
+    "target_voice": {
+     "value": "yes",
+     "cc_ref": "CC 4.5.13"
+    }
+   },
    "cancel_over": "base",
    "at_window": "cancelled",
    "window_secs": 259200,
@@ -190,30 +300,53 @@
     "formal/two_path"
    ],
    "status": "normative",
-   "note": "the invitee's own acceptance is still required (3.1.3.2) and is the second of the floor's two voices: a room of one grows by the founder's proposal and the newcomer's yes; no single vote admits by silence"
+   "note": "the invitee's own acceptance is still required (3.1.3.2) and is the second of the floor's two voices: a room of one grows by its one member's proposal and the newcomer's yes; no single vote admits by silence"
   },
   {
    "family": "community_remove",
    "cc_ref": "3.1.3.2 4.5.12.5",
-   "kind": "two_path",
+   "kind": "cosigned",
    "standing_set": "the community's roster",
    "base": "active",
-   "enact": {
-    "num": 2,
-    "den": 3
-   },
+   "enact": "protocol",
    "cancel": null,
    "floor": null,
    "enact_rule": {
-    "kind": "fraction",
-    "num": 2,
-    "den": 3
+    "kind": "protocol"
    },
    "cancel_rule": {
     "kind": "none"
    },
    "floor_rule": {
     "kind": "none"
+   },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 3.1.3"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 3.3.4"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "removes",
+     "cc_ref": "CC 3.3.4"
+    },
+    "target_voice": {
+     "value": "no"
+    }
    },
    "cancel_over": "—",
    "at_window": "cancelled",
@@ -226,11 +359,11 @@
     "formal/membership"
    ],
    "status": "normative",
-   "note": "forward only, cosigned; an unanimous removal is every other member and a strict majority"
+   "note": "forward only, cosigned under the room's protocol; the member being removed is not counted"
   },
   {
    "family": "self_roster_add",
-   "cc_ref": "3.3.6.3",
+   "cc_ref": "3.3.6.4",
    "kind": "two_path",
    "standing_set": "the live roster keys of one fedID",
    "base": "standing",
@@ -250,6 +383,34 @@
    },
    "floor_rule": {
     "kind": "one_of_n"
+   },
+   "counted": {
+    "count_set": {
+     "value": "self",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "voice": {
+     "value": "key",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "voices": {
+     "value": "objection",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "adds",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "target_voice": {
+     "value": "no"
+    }
    },
    "cancel_over": "others",
    "at_window": "stay_open",
@@ -266,7 +427,7 @@
   },
   {
    "family": "self_roster_evict",
-   "cc_ref": "3.3.6.3",
+   "cc_ref": "3.3.6.4",
    "kind": "two_path",
    "standing_set": "the live roster keys of one fedID",
    "base": "standing",
@@ -286,6 +447,35 @@
    },
    "floor_rule": {
     "kind": "one_of_n"
+   },
+   "counted": {
+    "count_set": {
+     "value": "self",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "voice": {
+     "value": "key",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "voices": {
+     "value": "objection",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "target_silent": {
+     "value": "yes",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "changes_set": {
+     "value": "removes",
+     "cc_ref": "CC 3.3.6.4"
+    },
+    "target_voice": {
+     "value": "no"
+    }
    },
    "cancel_over": "others",
    "at_window": "stay_open",
@@ -306,17 +496,13 @@
    "kind": "mirror",
    "standing_set": "the live community",
    "base": "active",
-   "enact": "role:moderator|steward at 1",
+   "enact": "role:moderate at 1",
    "cancel": null,
-   "floor": {
-    "num": 1,
-    "den": 2
-   },
+   "floor": "more than 1/2 of those who voted, at least 2 voices",
    "enact_rule": {
     "kind": "role_at",
     "roles": [
-     "moderator",
-     "steward"
+     "moderate"
     ],
     "count": 1
    },
@@ -324,9 +510,34 @@
     "kind": "none"
    },
    "floor_rule": {
-    "kind": "fraction",
-    "num": 1,
-    "den": 2
+    "kind": "voted_majority",
+    "count": 2
+   },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voices": {
+     "value": "unstated"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
    },
    "cancel_over": "—",
    "at_window": "tallied",
@@ -339,7 +550,130 @@
     "4.5.13"
    ],
    "status": "normative",
-   "note": "a moderator or steward acts alone in the window; on their absence a live majority at the window"
+   "note": "a holder of `moderate` acts alone in the window; on the moderators' absence a strict majority of the members who voted, never fewer than two voices"
+  },
+  {
+   "family": "moderation_overturn",
+   "cc_ref": "4.5.13",
+   "kind": "mirror",
+   "standing_set": "the community's roster as it stood at the instant of the moderator's act",
+   "base": "standing",
+   "enact": "more than 1/2",
+   "cancel": null,
+   "floor": "2 voices",
+   "enact_rule": {
+    "kind": "strict_majority"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "act",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voices": {
+     "value": "objection",
+     "cc_ref": "CC 4.5.13"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "base",
+   "at_window": "lapsed",
+   "window_secs": 172800,
+   "window_class": "ruled_48h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "community",
+   "model": [
+    "4.5.13"
+   ],
+   "status": "normative",
+   "note": "the members' check: a strict majority of those seated before the act lift a duty holder's single-signature act within the window; below that the act stands; a restored item returns consent-gated"
+  },
+  {
+   "family": "moderator_recall",
+   "cc_ref": "4.5.13 4.5.4",
+   "kind": "cosigned",
+   "standing_set": "the community's roster",
+   "base": "standing",
+   "enact": {
+    "num": 2,
+    "den": 3
+   },
+   "cancel": null,
+   "floor": "2 voices",
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 3.1.3"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 4.5.13"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "community",
+   "model": [
+    "4.5.13"
+   ],
+   "status": "normative",
+   "note": "the members recall any duty holder, however seated: more than two thirds of the standing roster cosign one row in the standing window; where that leaves no duty holder the room locks and elects"
   },
   {
    "family": "accord_halt",
@@ -358,6 +692,32 @@
    },
    "floor_rule": {
     "kind": "none"
+   },
+   "counted": {
+    "count_set": {
+     "value": "holder",
+     "cc_ref": "CC 4.2.1.1"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.2.3"
+    },
+    "counted_at": {
+     "value": "unstated"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 4.2.1.1"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
    },
    "cancel_over": "base",
    "at_window": "lapsed",
@@ -395,6 +755,31 @@
    "floor_rule": {
     "kind": "none"
    },
+   "counted": {
+    "count_set": {
+     "value": "operator+wa",
+     "cc_ref": "CC 7.5.5"
+    },
+    "voice": {
+     "value": "unstated"
+    },
+    "counted_at": {
+     "value": "unstated"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 7.5.5"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
    "cancel_over": "—",
    "at_window": "—",
    "window_secs": 0,
@@ -410,7 +795,7 @@
   },
   {
    "family": "affiliation_member_action",
-   "cc_ref": "4.4.3.2.8 4.5.13",
+   "cc_ref": "4.4.3.12 4.5.13",
    "kind": "cosigned",
    "standing_set": "the deciding seat + one key outside it (the designated official, or a review-holder of the overseeing body)",
    "base": "standing",
@@ -430,6 +815,31 @@
    },
    "floor_rule": {
     "kind": "none"
+   },
+   "counted": {
+    "count_set": {
+     "value": "deciding+outside",
+     "cc_ref": "CC 4.4.3.12"
+    },
+    "voice": {
+     "value": "unstated"
+    },
+    "counted_at": {
+     "value": "unstated"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 4.4.3.12"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
    },
    "cancel_over": "—",
    "at_window": "—",
@@ -464,8 +874,35 @@
     "kind": "voices",
     "count": 2
    },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voices": {
+     "value": "ballot",
+     "cc_ref": "CC 4.5.13"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
    "cancel_over": "base",
-   "at_window": "reopens",
+   "at_window": "stay_open",
    "window_secs": 86400,
    "window_class": "content_24h",
    "irreversible": false,
@@ -475,16 +912,248 @@
     "formal/moderator_election"
    ],
    "status": "default",
-   "note": "a locked room elects its moderator: ballot = the roster in worthiness order, one ballot per person, winner accepts or the next in runoff order; a steward may appoint directly at any time"
+   "note": "a locked room elects its moderator: ballot = the roster, its shown order deciding nothing, one ballot per person, a tie seats nobody and the count runs again, winner accepts or the next in runoff order"
+  },
+  {
+   "family": "cosigned_act",
+   "cc_ref": "2.4 3.3.4",
+   "kind": "cosigned",
+   "standing_set": "the group's roster, counted as its declared protocol states",
+   "base": "standing",
+   "enact": "protocol",
+   "cancel": null,
+   "floor": null,
+   "enact_rule": {
+    "kind": "protocol"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
+   "counted": {
+    "count_set": {
+     "value": "protocol",
+     "cc_ref": "CC 3.3.4"
+    },
+    "voice": {
+     "value": "unstated"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 3.1.3"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 3.3.4"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "cosign",
+   "model": [
+    "formal/membership"
+   ],
+   "status": "normative",
+   "note": "a cosigned row of a group lands when the signatures held meet the rule of the group's declared protocol; a shortfall is held for the hold window, which a group may set longer and never shorter, and then dropped"
+  },
+  {
+   "family": "accord_majority",
+   "cc_ref": "4.2.1.3 4.2.6",
+   "kind": "cosigned",
+   "standing_set": "the accord holders",
+   "base": "standing",
+   "enact": "more than 1/2",
+   "cancel": null,
+   "floor": null,
+   "enact_rule": {
+    "kind": "strict_majority"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
+   "counted": {
+    "count_set": {
+     "value": "holder",
+     "cc_ref": "CC 4.2.1.3"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.2.3"
+    },
+    "counted_at": {
+     "value": "unstated"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 4.2.1.3"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "—",
+   "window_secs": 0,
+   "window_class": "none",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "cosign",
+   "model": [
+    "formal/accord_halt"
+   ],
+   "status": "normative",
+   "note": "a strict majority of the standing accord roster cosign one row: the confirmation and the resumption of a halt, and the standing acts; a roster change runs its own participation window (CC 4.2.6)"
+  },
+  {
+   "family": "poll",
+   "cc_ref": "4.5.13 6.1.9",
+   "kind": "tally",
+   "standing_set": "the roster the poll's opening row names",
+   "base": "standing",
+   "enact": null,
+   "cancel": null,
+   "floor": "more than 1/2 of those who voted, at least 2 voices",
+   "enact_rule": {
+    "kind": "none"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "voted_majority",
+    "count": 2
+   },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voices": {
+     "value": "ballot",
+     "cc_ref": "CC 6.1.9"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "tallied",
+   "window_secs": 0,
+   "window_class": "none",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "community",
+   "model": [
+    "4.5.13"
+   ],
+   "status": "default",
+   "note": "a poll states its own rule in the row that opens it; where it states none, a strict majority of those who voted, never fewer than two voices, one ballot a person; the poll's own close ends it, so the row carries no window"
+  },
+  {
+   "family": "wa_adjudication",
+   "cc_ref": "4.3 3.1.9.4",
+   "kind": "cosigned",
+   "standing_set": "the designated body's full seated roster, counted as its declared protocol states",
+   "base": "standing",
+   "enact": "protocol",
+   "cancel": null,
+   "floor": null,
+   "enact_rule": {
+    "kind": "protocol"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
+   "counted": {
+    "count_set": {
+     "value": "wa",
+     "cc_ref": "CC 4.3"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.3"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 4.3"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 4.3"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "cosign",
+   "model": [
+    "4.3"
+   ],
+   "status": "normative",
+   "note": "a finding of the designated Wise Authority body is one row cosigned under the body's own declared protocol, as any cosigned act of a group; the denominator is the full seated roster, never the live subset"
   }
  ],
  "base_law": {
-  "kind": "standing_then_expected_active",
+  "kind": "standing_then_census",
   "k": 12,
   "tail": 30,
   "min": 3,
   "status": "provisional: k and the tail are a stand-in for the measured participation law",
-  "rule": "base(N) = N if N <= k else max(min, k + (N - k) // tail); rows with base=standing use N"
+  "rule": "base(N) = N if N <= k, else the census:expected_active count of the community (CC 4.5.13, CC 6.1.9), falling at most a tenth per period and never below min; rows with base=standing use N",
+  "stand_in": "max(min, k + (N - k) // tail): the vectors' value for the census count above k, a test stand-in and not the law"
  },
  "min_count": {
   "community": 2,
@@ -499,15 +1168,309 @@
   "fuse_24h": 86400,
   "none": 0
  },
+ "counted_columns": {
+  "count_set": "the role tokens whose keys the fold seats, joined by + (one voice each), less -target, -proposer or -node",
+  "voice": "person: signatures fold to one voice per fedID; key: each key is a voice (a self roster only)",
+  "counted_at": "signed: the set at the row's signed instant; named: the set of the roster the proposal names; act: the set at the first-held instant of the act the count answers; founding: the set the record lists",
+  "voices": "where the voices are found: scrubs (cosignatures of the one row), objection (objection:{state} rows), ballot (ballot rows)",
+  "target_silent": "yes: the reverse path lands only if no row signed by the target was first held inside the window",
+  "changes_set": "whether the act adds to or removes from the set it counts",
+  "target_voice": "yes: the target's own row naming the act is one of the voices counted, though the target is not in the count set",
+  "unstated": "the text does not state the cell",
+  "unstated_cells": [
+   "moderation_action.voices",
+   "accord_halt.counted_at",
+   "custodian_replace.voice",
+   "custodian_replace.counted_at",
+   "affiliation_member_action.voice",
+   "affiliation_member_action.counted_at",
+   "cosigned_act.voice",
+   "accord_majority.counted_at"
+  ]
+ },
+ "protocols": {
+  "source": "constitution/consensus_protocols.tsv",
+  "reading": "a kind is a count set and a typed rule; votes gives the voices the rule needs by set size, at m = 2 for a quorum kind, null where the table alone cannot evaluate it",
+  "kinds": [
+   {
+    "kind": "founder_only",
+    "count_set": "founder",
+    "rule": "role_at:founder:1",
+    "removal_set": "unstated",
+    "removal_rule": "unstated",
+    "cc_ref": "CC 3.3.4",
+    "votes": {
+     "1": 1,
+     "2": 1,
+     "3": 1,
+     "5": 1,
+     "9": 1
+    },
+    "removal_votes": {
+     "2": null,
+     "3": null,
+     "5": null,
+     "9": null
+    },
+    "evaluable": true,
+    "one_voice_admits": true
+   },
+   {
+    "kind": "unanimous",
+    "count_set": "member",
+    "rule": "all",
+    "removal_set": "member-target",
+    "removal_rule": "all_and_majority",
+    "cc_ref": "CC 3.3.4",
+    "votes": {
+     "1": 1,
+     "2": 2,
+     "3": 3,
+     "5": 5,
+     "9": 9
+    },
+    "removal_votes": {
+     "2": null,
+     "3": 2,
+     "5": 4,
+     "9": 8
+    },
+    "evaluable": true,
+    "one_voice_admits": false
+   },
+   {
+    "kind": "majority",
+    "count_set": "member",
+    "rule": "strict_majority",
+    "removal_set": "member",
+    "removal_rule": "strict_majority",
+    "cc_ref": "CC 3.3.4",
+    "votes": {
+     "1": 1,
+     "2": 2,
+     "3": 2,
+     "5": 3,
+     "9": 5
+    },
+    "removal_votes": {
+     "2": 2,
+     "3": 2,
+     "5": 3,
+     "9": 5
+    },
+    "evaluable": true,
+    "one_voice_admits": false
+   },
+   {
+    "kind": "quorum:{m}/{n}",
+    "count_set": "member",
+    "rule": "voices:{m}",
+    "removal_set": "member",
+    "removal_rule": "voices:{m}",
+    "cc_ref": "CC 3.3.4",
+    "votes": {
+     "1": 2,
+     "2": 2,
+     "3": 2,
+     "5": 2,
+     "9": 2
+    },
+    "removal_votes": {
+     "2": 2,
+     "3": 2,
+     "5": 2,
+     "9": 2
+    },
+    "evaluable": true,
+    "one_voice_admits": false
+   },
+   {
+    "kind": "weighted:{rubric}",
+    "count_set": "member",
+    "rule": "weight:{rubric}",
+    "removal_set": "member",
+    "removal_rule": "weight:{rubric}",
+    "cc_ref": "CC 3.3.4",
+    "votes": {
+     "1": null,
+     "2": null,
+     "3": null,
+     "5": null,
+     "9": null
+    },
+    "removal_votes": {
+     "2": null,
+     "3": null,
+     "5": null,
+     "9": null
+    },
+    "evaluable": false,
+    "one_voice_admits": false
+   },
+   {
+    "kind": "open:self_admit",
+    "count_set": "joiner",
+    "rule": "joiner",
+    "removal_set": "unstated",
+    "removal_rule": "unstated",
+    "cc_ref": "CC 4.5.13",
+    "votes": {
+     "1": 1,
+     "2": 1,
+     "3": 1,
+     "5": 1,
+     "9": 1
+    },
+    "removal_votes": {
+     "2": null,
+     "3": null,
+     "5": null,
+     "9": null
+    },
+    "evaluable": true,
+    "one_voice_admits": true
+   }
+  ],
+  "one_voice_admits": [
+   "founder_only",
+   "open:self_admit"
+  ],
+  "not_evaluable": [
+   "weighted:{rubric}"
+  ],
+  "admissibility_source": "constitution/protocol_admissibility.tsv",
+  "admissibility": [
+   {
+    "group": "family",
+    "kind": "founder_only",
+    "verdict": "allowed",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 4.5.13"
+   },
+   {
+    "group": "publication",
+    "kind": "founder_only",
+    "verdict": "allowed",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 4.5.13"
+   },
+   {
+    "group": "community",
+    "kind": "founder_only",
+    "verdict": "refused",
+    "condition": "—",
+    "refusal": "federation_community_consensus_protocol_violation",
+    "cc_ref": "CC 4.5.13"
+   },
+   {
+    "group": "community/public",
+    "kind": "open:self_admit",
+    "verdict": "allowed",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "required",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "unanimous",
+    "verdict": "refused",
+    "condition": "—",
+    "refusal": "federation_community_consensus_protocol_violation",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "majority",
+    "verdict": "refused",
+    "condition": "—",
+    "refusal": "federation_community_consensus_protocol_violation",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "condition",
+    "condition": "entrenched=true",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "condition",
+    "condition": "count_set=founder",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "condition",
+    "condition": "m_min=2",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "condition",
+    "condition": "founding_margin=1",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "accord",
+    "kind": "majority",
+    "verdict": "required",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 3.3.4"
+   },
+   {
+    "group": "accord",
+    "kind": "majority",
+    "verdict": "condition",
+    "condition": "entrenched=true",
+    "refusal": "—",
+    "cc_ref": "CC 3.3.4"
+   },
+   {
+    "group": "accord",
+    "kind": "majority",
+    "verdict": "condition",
+    "condition": "count_set=holder",
+    "refusal": "—",
+    "cc_ref": "CC 4.2.3"
+   }
+  ],
+  "one_voice_doors": [
+   "community/public open:self_admit",
+   "family founder_only",
+   "publication founder_only"
+  ]
+ },
  "decider": [
   "enact_votes  = enact_num  * base // enact_den + 1              (strictly more than the fraction)",
   "cancel_votes = max(min_count, ceil(cancel_num * base / cancel_den))   (at least the fraction, never one voice)",
   "floor_votes  = max(min_count, ceil(floor_num  * base / floor_den))    (min_count = 2 for a community, 1 for a self)",
-  "if approvals >= enact_votes and not irreversible:  lands  (forward, now)",
+  "voices       = approvals + (1 if target_voice else 0)      (target_voice: the target's own yes is held, and the",
+  "row's target_voice cell is yes; it is never a member)",
+  "enacted      = approvals >= enact_votes and voices >= min_count   (one voice never decides who is in a room)",
+  "if enacted and not irreversible:                   lands  (forward, now)",
   "if elapsed < window:                               pending",
   "if objections >= cancel_votes:                     cancelled (cancel reached)",
-  "if approvals >= enact_votes:                       lands  (forward; it waited its window)",
-  "if reverse_path and approvals >= floor_votes:      lands  (reverse: floored, unopposed, window closed)",
+  "if enacted:                                        lands  (forward; it waited its window)",
+  "if reverse_path and voices >= floor_votes:         lands  (reverse: floored, unopposed, window closed)",
   "else:                                              cancelled (below the floor, or no reverse path)"
  ],
  "verdicts": [

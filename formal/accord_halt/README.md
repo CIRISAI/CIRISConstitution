@@ -28,6 +28,21 @@ stolen sealed row need not run its course). The fuse counts from receipt, as the
 does, never from the signer-chosen `asserted_at`. An unbounded lapse counter is not modelled: it made the chain infinite and carried
 no information.
 
+**Whom a halt reaches, and when that is judged (`AccordHaltReach.tla`, CC 4.2.1).** A halt row
+may be sealed long before it is published, and nodes take and cut their edge to the root at any
+time. A halt is active at a node from the instant the node's store admits the row; the node
+latches iff it holds a live edge at that instant, and the store records the instant with the
+latch. Two nodes, one sealed row, one publication.
+
+| Config | Result |
+|---|---|
+| `AccordHaltReach_active.cfg` | every property holds (308 states): a node latches only if it held an edge when the halt became active there (`Inv_LatchedHeldEdge`); a node holding an edge when the row reaches it is bound, whenever the row was signed (`Inv_EdgeAtReceiptIsBound`); a node that cut before the row reached it is free (`Inv_CutBeforeIsFree`); cutting after the latch releases nothing (`Prop_CutReleasesNothing`); the recorded instant does not move (`Prop_InstantFixed`) |
+| `AccordHaltReach_signed_missed.cfg` | the contrast, reach judged at the signing instant: `Inv_EdgeAtReceiptIsBound` violated. A node that took its edge after the row was sealed is missed |
+| `AccordHaltReach_signed_bound.cfg` | the same contrast: `Inv_LatchedHeldEdge` violated. A node that cut its edge before the row was published is bound all the same |
+
+The instant is each node's own, as the fuse's is: no clock is shared. A node that is offline
+when the row is published is bound when the row reaches it, if it holds an edge then.
+
 **What it does not cover.** An adversary that jams every channel to every node *before* any holder
 intends to halt (the row path is not immune to that; nothing is), and an AI that acts faster
 than a row propagates (answered only by agents checking the latch before every effectful act).

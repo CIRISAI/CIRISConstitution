@@ -1,0 +1,4 @@
+part	section	line	text	finding
+p1	1.13.6	305	An agent that must consider and reject — the disposition [CC 1.9](part_1_foundation.md#1.9) Wisdom-Based Deferral positively *requires* — would otherwise accumulate a permanent archive of every rejected path.	requirement "must" with no keyword in a normative paragraph
+p1	1.13.6	311	It does not preserve an interrupted attempt for post-hoc reconstruction: where a path is abandoned mid-deliberation the deliberation is gone, and no adapter is required to have kept it.	requirement "is required to" with no keyword in a normative paragraph
+p5	5.3.3.3	454	For realtime **A/V at scale**, a fetching node asks a serving peer for one layer, and the peer sends that layer, **without** either side decrypting the chunks — so the codec's layer-numbering semantics must be a **clear (non-AEAD) discriminator**; no relay reads it.	requirement "must" with no keyword in a normative paragraph

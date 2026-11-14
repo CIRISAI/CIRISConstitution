@@ -4,9 +4,9 @@
 Vendored into CIRISConstitution/formal from CIRISRegistry
 `formal/authority_tree/authority_tree.py` at 1553d68 (FSD-005 §5), because the Registry folds
 into CIRISServer and the Constitution carries its own witnesses. One invariant is added here,
-I10 (the term, CC 4.4.3.2.8), with its dye test. Everything else is the Registry's text.
+I10 (the term, CC 4.4.3.12), with its dye test. Everything else is the Registry's text.
 
-CC 2.4.1.2.1 says a key comes to hold something in exactly three ways, and
+CC 2.4.1.3 says a key comes to hold something in exactly three ways, and
 that only one of them composes:
 
     licensure   an authority confers standing       does not chain
@@ -27,11 +27,11 @@ makes normative:
   I4  licence closure  holding a licence under authority A never, in any state,
                        lets the holder issue `licensure:A` (a licence does not chain)
   I5  grant closure    holding a grant over asset R never lets the holder issue a
-                       grant over R (receipt is not issuance; CC 2.4.1.2.1)
+                       grant over R (receipt is not issuance; CC 2.4.1.3)
   I6  enforced admission
                        every admitted licence resolves to its authority, and every
                        admitted grant to its asset's owner, through live delegation
-                       links only (CC 4.4.3.4.3 enforced-admission rule)
+                       links only (CC 4.4.3.19 enforced-admission rule)
   I7  sub-delegation   a key issues an onward delegation only under a link that
                        carries `sub_delegation`, and the onward link carries
                        `sub_delegation` only if its parent does
@@ -41,7 +41,7 @@ makes normative:
                        reached by different histories yields the same verdicts)
   I10 term             every live scope-bearing link carries a term of at most
                        MAX_TERM; a perpetual link (term 0) or one past the ceiling
-                       is refused at the door (CC 4.4.3.2.8: 365 days is
+                       is refused at the door (CC 4.4.3.12: 365 days is
                        constitutional, the term a charter parameter). Expiry is a
                        withdrawal, so its cascade is I3. Dye: `--no-term-rule`
                        admits a perpetual link and I10 MUST then fire.
@@ -91,13 +91,13 @@ from dataclasses import dataclass
 from typing import FrozenSet, Iterable, Optional, Tuple
 
 DEPTH_CAP = 5  # CC 4.1.1
-MAX_TERM = 2   # the 365-day ceiling (CC 4.4.3.2.8), in model ticks; the term is a charter parameter
+MAX_TERM = 2   # the 365-day ceiling (CC 4.4.3.12), in model ticks; the term is a charter parameter
 TERM_RULE = "--no-term-rule" not in sys.argv   # the door's term check; off only for the dye test
 # Terms offered at the door: 0 is perpetual (refused under the rule), 3 is past the ceiling (refused).
 TERMS_OFFERED = (0, 1, 2, 3)
 
 # The three scopes this model needs. `license` and `grant` are the two emission
-# scopes CC 4.4.3.4.3 added; `sub_delegation` is the one that lets a chain grow.
+# scopes CC 4.4.3.19 added; `sub_delegation` is the one that lets a chain grow.
 LICENSE, GRANT, SUB = "license", "grant", "sub_delegation"
 SCOPES = (LICENSE, GRANT, SUB)
 # Every non-empty scope set a delegation may carry.
@@ -137,10 +137,10 @@ class State:
 # `paths(state, root, key)` is the one walk. It returns every chain of live links
 # from `root` to `key`, each as (depth, effective_scope), where the effective
 # scope is the intersection along the chain. It is the model's version of
-# persist's delegation resolver (CC 4.4.3.4.3.1): a licence or a grant is never
+# persist's delegation resolver (CC 4.4.3.20): a licence or a grant is never
 # an edge in it, which is how I4 and I5 are true by construction and then
 # CHECKED anyway, because a resolver that walked them would be the mistake
-# CC 2.4.1.2.1 names.
+# CC 2.4.1.3 names.
 
 
 def chains(state: State, root: str, key: str) -> Iterable[Tuple[Tuple[Link, ...], FrozenSet[str]]]:
@@ -161,7 +161,7 @@ def chains(state: State, root: str, key: str) -> Iterable[Tuple[Tuple[Link, ...]
             if link.dst == key:
                 yield (chain + (link,), eff)
             # A chain continues past a key only under a link that carries
-            # sub_delegation (CC 4.4.3.4.3). Deeper links without it are dead.
+            # sub_delegation (CC 4.4.3.19). Deeper links without it are dead.
             if SUB in eff:
                 stack.append((link.dst, chain + (link,), eff, seen | {link.dst}))
 
@@ -183,7 +183,7 @@ def holds(state: State, root: str, key: str, scope: str) -> bool:
 #
 # Every action is "admit or refuse": it returns the new state, or None when
 # admission refuses it. Refusal is a result, not an error, because CC
-# 4.4.3.4.3's enforced-admission rule is a door and the door's refusals are the
+# 4.4.3.19's enforced-admission rule is a door and the door's refusals are the
 # properties under test.
 
 
@@ -191,7 +191,7 @@ def delegate(state: State, root: str, src: str, dst: str, scope: FrozenSet[str],
     if src == dst:
         return None
     # I10 at the door: a scope-bearing link carries a term within the ceiling; a
-    # perpetual link or one past the ceiling is refused (CC 4.4.3.2.8).
+    # perpetual link or one past the ceiling is refused (CC 4.4.3.12).
     if TERM_RULE and (term < 1 or term > MAX_TERM):
         return None
     if Link(src, dst, scope, term) in state.links:
@@ -217,7 +217,7 @@ def withdraw(state: State, link: Link) -> State:
 
 
 def issue_licence(state: State, authority: str, issuer: str, subject: str) -> Optional[State]:
-    # CC 4.4.3.4.3 enforced admission: the issuer IS the authority, or holds a
+    # CC 4.4.3.19 enforced admission: the issuer IS the authority, or holds a
     # `license`-scoped delegation whose chain resolves to it.
     if not (issuer == authority or holds(state, authority, issuer, LICENSE)):
         return None
@@ -227,7 +227,7 @@ def issue_licence(state: State, authority: str, issuer: str, subject: str) -> Op
 
 
 def issue_grant(state: State, owner: str, asset: str, issuer: str, recipient: str) -> Optional[State]:
-    # CC 2.4.1.2.1: the owner, or a `grant`-scoped delegate of the owner. A
+    # CC 2.4.1.3: the owner, or a `grant`-scoped delegate of the owner. A
     # recipient re-granting on possession is refused.
     if not (issuer == owner or holds(state, owner, issuer, GRANT)):
         return None

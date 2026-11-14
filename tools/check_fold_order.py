@@ -11,7 +11,9 @@ orders and random island splits:
   2. at every prefix, a node's fold equals the fold of the same rows sorted, so two nodes that hold
      the same rows agree whatever order they got them in;
   3. islands fold on their own, and the fold of the merged holdings equals the fold of the whole;
-  4. every actor's queue over the final fold is the same on every node.
+  4. every actor's queue over the final fold is the same on every node;
+  5. an object the story wrote no row for is at none in the story, as it is in every fold: a
+     refusal moves nothing.
 
 A fold that depended on arrival order, a transition reachable from two states, or a table in
 which two rows of one object compete at one instant would fail here. Exit 1 on any difference.
@@ -89,6 +91,10 @@ def main():
 
     whole = fold(rows)
     errs = []
+    for oid in sorted(set(story) - set(whole)):
+        fam, st = story.pop(oid)   # no row was written for it: every fold leaves it at none
+        if st != "none":
+            errs.append(f"the story moves {oid} to {st} with no row")
     if whole != story:
         errs.append(f"the fold of the whole set differs from the story: {sorted(set(whole.items()) ^ set(story.items()))}")
     canonical_queues = queues(whole, standings)
@@ -122,7 +128,7 @@ def main():
     if errs:
         print("fold order: FAIL"); [print("  " + e) for e in errs[:20]]
         return 1
-    print(f"fold order: {len(rows)} rows, {len(whole)} objects, {len(standings)} standings; "
+    print(f"fold order: {len(rows)} rows, {len(whole)} objects, {len(TRACE['steps']) - len(rows)} refusals that move nothing, {len(standings)} standings; "
           f"{n} arrival orders and {n} island splits fold to the story's states and queues")
     return 0
 

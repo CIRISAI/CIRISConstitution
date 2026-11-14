@@ -23,7 +23,7 @@ rows of CC 3.1.3.2 are actions:
 A held change lands when the protocol is met. Otherwise it expires after its hold window, which is
 the window the group sets on its own signed record, never under the standing class (CC 3.3.4). Protocols are `founder_only` (any active
 founder), `unanimous`, `majority` (more than half the roster, the target counted) and `quorum:M/N`
-(M absolute, CC 4.4.3.4.2.1). An adversary holds one key from the start and signs anything that key
+(M absolute, CC 4.4.3.18). An adversary holds one key from the start and signs anything that key
 may sign. Honest keys sign a removal only of that key, so any removal of an honest member is the
 adversary's alone. Time is per object: each proposal and each held change carries its own age, and
 one tick ages all of them together. There is no clock variable.
@@ -50,7 +50,7 @@ first line.
 | `majority` | every rule on; any key coerced | every property holds | **closes**, 3,514,458 states |
 | `quorum2of3` | every rule on, M = 2; any key coerced | every property holds | **closes**, 3,495,550 states |
 | `founder_only_coerced` | every rule on; the founder coerced | one founder removes alone: the stated bound | `Inv_CoercedCannotRemoveHonest` violated in 3 steps |
-| `unanimous_two` | unanimous removal read as "every other member" | at two members either removes the other | `Inv_CoercedCannotRemoveHonest` violated in 4 steps |
+| `unanimous_two` | unanimous removal read as "every other member", in a community | the floor of two voices refuses a one-voice removal (CC 4.5.13) | **closes**, 3,514,458 states |
 | `any_member_removes` | a removal lands on its primary alone | the coerced key evicts an honest member | `Inv_QuorumGovernsRoster` violated in 3 steps, the same step `Inv_CoercedCannotRemoveHonest` fails |
 | `no_binding` | the widening reads any acceptance K ever signed | a seat from a mismatched acceptance | `Inv_AcceptanceBindsOneProposal` violated in 6 steps |
 | `unspent` | admission (1)–(4) read literally | a resigned member is re-seated on the old acceptance | `Inv_LeavingNotUndone` violated in 10 steps |
@@ -147,7 +147,7 @@ ticks keep coming and a due object expires. No signer is ever required to act.
 
 - `weighted:{rubric}` and `custom:` protocols, and protocol amendment or entrenchment (CC 3.3.4).
 - The `infrastructure` subkind: admission over the founder subset, node seats with no acceptance, and
-  the T7 recovery widening (CC 3.2). The geographic `location_proof` gate (CC 4.4.3.2.3).
+  the T7 recovery widening (CC 3.2). The geographic `location_proof` gate (CC 4.4.3.6).
 - `admission: open` on a `public` community, where the standing proposal resolves its subject at
   acceptance (CC 3.2).
 - Role changes for an active member, promotion to founder, and supersedes that change metadata or
