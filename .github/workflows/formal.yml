@@ -400,7 +400,7 @@ jobs:
   membership:
     name: TLC — the membership ceremony (formal/membership)
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4

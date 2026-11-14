@@ -23,7 +23,7 @@ There is no trust set among the inputs. Who a node trusts is a fold over the row
 Config is not an input. A value that binds others is a row signed by whoever decided it. A value that binds
 only the node is a row under the node's own key. **measured**: 174 decision sites on the kernel's side read
 config today. **measured** (`formal/derivation/constants_missing.tsv`): a scan of the Parts for a number with a unit
-stated as a parameter found ten not in `constitution/constants.tsv`, and they are rows there, 55 in all. **open**: nine
+stated as a parameter found ten not in `constitution/constants.tsv`, and they are rows there, 54 in all. **open**: nine
 values it did not add are listed with the reason for each.
 
 ## 2. The only order is what rows name

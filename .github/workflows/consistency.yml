@@ -122,6 +122,8 @@ jobs:
         run: |
           pip install -q pyyaml
           python3 tools/check_formal_counts.py
+      - name: Implementers' section maps are current
+        run: python3 tools/recut_sections.py --evidence-rows --check
       - name: Volume map (toc.tsv volume column) is regenerated from constitution/volumes.tsv
         run: |
           python3 build_pdf.py --write-toc-volumes

@@ -23,6 +23,7 @@ cp "$S/gate.out" "$S/check_claims.out"
 run python3 tools/check_links.py
 run python3 tools/check_stale_refs.py
 run python3 tools/check_formal_counts.py
+run python3 tools/recut_sections.py --evidence-rows --check
 run python3 tools/check_formal_tables.py
 run python3 tools/check_lifecycle_coverage.py
 run python3 tools/check_family_kinds.py --check

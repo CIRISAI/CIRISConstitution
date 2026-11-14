@@ -252,6 +252,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 - The acts a screen offers do not include receiving a row, and some ways back the text states have no act a screen can offer.
 - Some states the text gives a lifecycle are checked by no executable model, among them a relay's opt-out, a frozen trust root, a moderator's recovery and candidacy windows, and a licence's suspension.
 - Some rules the text states have no form in the rule tables, among them the reversal or lift that spares a takedown's withheld bytes, a stalled roster's recovery widening, a self-declared lower age band, and an occurrence's build check.
+- The role vocabulary has no token for the signer of the row a row names, so the tables do not say who signs a `duty:{kind}` row: the signer of the permission the duty names ([CC 2.7.5](part_2_the_grammar.md#2.7.5)).
 
 ### 8.3.5 `first-adopter` — First-adopter exposures (no prior validation; explicit bets)
 

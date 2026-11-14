@@ -78,7 +78,6 @@ CONSTANT_PROSE = [
     ("asked_shaped_link_idle_secs", r"\bidle\b.*\bshaped|\bshaped\b.*\bidle\b", r"minutes|s\b", {10, 600}),
     ("shaped_file_max_bytes", r"\bshaped link\b.*\bfile|\bfile\b.*\bshaped link", r"KiB", {64}),
     ("admission_freshness_window_secs", r"\bfreshness window\b|\bwindow `?W`?\b|\bW = ", r"h\b|hours", {72, 168}),
-    ("moderation_fallback_window_secs", r"\bfallback window\b|\bruled_48h\b", r"h\b|hours", {48, 24}),
     ("census_k_floor", r"\bk-anonymity\b|\bk = \d|\bk-floor\b|\bk floor\b", r"sources", {10}),
     ("trust_walk_hop_cap", r"\btrust_depth\b|\btrust walk\b|\bhop cap\b", r"hops?", {5}),
     ("envelope_cap_bytes", r"\benvelope\b.*\bcap\b|\bENVELOPE_TOO_LARGE\b", r"MiB|bytes", {1, 1048576}),

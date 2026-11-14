@@ -1,8 +1,0 @@
-part	section	heading	waits_on
-p2	2.6.1.7	#### 2.6.1.7 `signed-object` — The signed object — member set, placement and typ	edge 45.1 layouts and known-answer tests; wire-exact
-p2	2.6.1.8	#### 2.6.1.8 `signed-object-cose` — The signed object of the v62 edition: CBOR a	edge 45.1 layouts and known-answer tests; wire-exact
-p5	5.3.3.2.1	##### 5.3.3.2.1 `namespace-realtime` — `codec_id` namespace — realtime A/V chunk	edge 45.1 layouts and known-answer tests; wire-exact
-p5	5.3.3.2.2	##### 5.3.3.2.2 `realtime` — Realtime non-A/V data streams (normative scope boun	edge 45.1 layouts and known-answer tests; wire-exact
-p5	5.3.3.2.3	##### 5.3.3.2.3 `registry-wire` — `SealedAvChunk` wire layout (normative)	edge 45.1 layouts and known-answer tests; wire-exact
-p5	5.3.3.2.5	##### 5.3.3.2.5 `stream-double` — Double-seal + deterministic nonce derivation (	edge 45.1 layouts and known-answer tests; wire-exact
-p5	5.3.3.5	#### 5.3.3.5 `transport-edge` — Transport — Edge layer (normative)	edge 45.1 layouts and known-answer tests; wire-exact
