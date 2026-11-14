@@ -12,13 +12,17 @@ Row form (JSON): every row has `id`, `kind`, `signer`, `names` (the ids it names
                `under`, `cosigners`, `head`, `policy`, `cuts`, `on`)
     fam        a row of the family the parameter governs, or of another family the case needs; fields the gate reads:
                `subject`, `subjects`, `group`, `root`, `content`, `blob`, `for_key`, `binding`, `provenance`,
-               `build_manifest_hash`, `head`, `leaf`, `ref`, `at` (a signed instant, read only by a shipped fold)
-    landing, reversal, claim, trust
-               a window's landing, a row voiding a notice, a source's statement, a reader's trust edge
+               `build_manifest_hash`, `head`, `leaf`, `ref`, `delegate`, `proposal`, `expires_at` (a row's own stated
+               end), `at` (a signed instant, read only by a shipped fold or a shipped `_at` token; any row may carry
+               one, and a row without one is read as signed before every row that has one)
+    landing, reversal, claim, trust, receipt
+               a window's landing, a row voiding a notice, a source's statement, a reader's trust edge, a key's
+               statement that it holds the rows it names, at its own instant `at`
 A `withdraw` or `recant` naming a `fam` row of the governed family is judged by the parameter's lifecycle.
 
 Parameter (JSON): {"family": F, "gate": DNF, "withdraws_by": DNF, "verbs": [...], "refuse": [...] (a refusal by the row
-alone: withdraw_without_ref, missing_subject_digest),
+alone: withdraw_without_ref, missing_subject_digest, names_no_grant; a shipped refusal that reads other rows:
+gate_fails, the row refused at admission where its gate fails over the rows it names),
 "policy": {name: [kind, num, den]}, "audience": token, "fold": name, "owed": name, "window_secs": n}.
 A DNF is a list of conjunctions of tokens; a row passes when every token of one conjunction holds. The tokens:
     any                     every signer
@@ -37,6 +41,15 @@ A DNF is a list of conjunctions of tokens; a row passes when every token of one 
     subjects_in:F           every subject the row names is a member at the head it names of the group its field F names
     count:P@F               the voices on the row, over the members at the head it names, meet policy P
                             (`protocol`: the policy the group's founding row declares)
+    count_at:P@F            (shipped) the same count over the members as of the row's signed instant: the seats of
+                            the rows in its past signed before `at`, a removal signed later not read
+    seat_at:S@F             (shipped) seat:S@F read over the rows in its past signed before the row's `at`
+    acyclic                 the row's `delegate` edge closes no cycle with the edges of its family in its past (an
+                            edge to the signer itself is no cycle)
+    held_before_end:F       the row names a receipt by its own signer, of an acceptance of the proposal its field F
+                            names, at an instant no later than that proposal's `expires_at`: one clock, the signer's own
+    signed_before_end:F     (shipped) the row's own `at`, and that of every acceptance it names, is no later than the
+                            `expires_at` of the proposal its field F names
     attester, subject, ref  (lifecycle) the withdrawer signed the target; is its subject; the withdraw carries a ref
 Verdicts:
     state      admitted | concludes nothing | withdrawn | recanted | refused | waits
@@ -102,6 +115,12 @@ def _met(policy, yes, n, table):
     return False
 
 
+def _as_of(r, P):
+    """The rows of P signed before r's signed instant (a shipped reading: it compares signers' instants)."""
+    t = r.get("at")
+    return list(P) if t is None else [q for q in P if q.get("at", float("-inf")) < t]
+
+
 def token(t, r, P, past, table, target=None):
     by = {q["id"]: q for q in P}
     k = r["signer"]
@@ -137,6 +156,41 @@ def token(t, r, P, past, table, target=None):
         if pol == "protocol": pol = g.get("protocol", "unknown")
         mem = SEAT.members_at(P, past, g["id"], r.get("head", ()))
         return _met(pol, len(SEAT.voices(r, P) & mem), len(mem), table)
+    if t.startswith("count_at:"):
+        pol, field = t[9:].rsplit("@", 1)
+        g = by.get(r.get(field))
+        if g is None: return False
+        if pol == "protocol": pol = g.get("protocol", "unknown")
+        mem = _seats(_as_of(r, P)).holders("member", g["id"])
+        return _met(pol, len(SEAT.voices(r, P) & mem), len(mem), table)
+    if t.startswith("seat_at:"):
+        scope, field = t[8:].rsplit("@", 1)
+        return _seats(_as_of(r, P)).stands(k, scope, r.get(field))
+    if t == "acyclic":
+        d = r.get("delegate")
+        if d is None or d == k: return True
+        edges = {}
+        for q in P:
+            if q.get("kind") == "fam" and q.get("family") == r.get("family") and q.get("delegate") and q["delegate"] != q["signer"]:
+                edges.setdefault(q["signer"], set()).add(q["delegate"])
+        seen, todo = set(), [d]
+        while todo:
+            x = todo.pop()
+            if x == k: return False
+            if x in seen: continue
+            seen.add(x); todo.extend(edges.get(x, ()))
+        return True
+    if t.startswith("held_before_end:"):
+        p = by.get(r.get(t[16:]))
+        if p is None or p.get("expires_at") is None: return False
+        acc = {q["id"] for q in P if q.get("leaf") == "acceptance" and p["id"] in q["names"]}
+        return any(q["kind"] == "receipt" and q["signer"] == k and q["id"] in r["names"] and set(q["names"]) & acc
+                   and q["at"] <= p["expires_at"] for q in P)
+    if t.startswith("signed_before_end:"):
+        p = by.get(r.get(t[18:]))
+        if p is None or p.get("expires_at") is None or r.get("at") is None: return False
+        acc = [q for q in P if q.get("leaf") == "acceptance" and p["id"] in q["names"] and q["id"] in r["names"]]
+        return bool(acc) and r["at"] <= p["expires_at"] and all(q.get("at", float("inf")) <= p["expires_at"] for q in acc)
     if t == "attester": return target is not None and k == target["signer"]
     if t == "subject": return target is not None and (k == target.get("subject") or k in target.get("subjects", ()))
     if t == "ref": return bool(r.get("ref"))
@@ -185,6 +239,7 @@ def make_wf(param, rows):
     """The kept layer reads the row alone. A shipped refusal that reads another row is the divergence itself, so
     the shipped parameter may name one; the text's never does."""
     by = {r["id"]: r for r in rows}
+    table = dict(TABLE0, **{k: tuple(v) for k, v in (param.get("policy") or {}).items()})
     refuse = set(param.get("refuse") or ())
     verbs = param.get("verbs")
 
@@ -195,6 +250,12 @@ def make_wf(param, rows):
         if "withdraw_without_ref" in refuse and r["kind"] == "withdraw" and gov and not r.get("ref"): return False
         if "missing_subject_digest" in refuse and r["kind"] == "fam" and r.get("family") == param.get("family") \
                 and not r.get("subject_digest"): return False
+        if "gate_fails" in refuse and r["kind"] == "fam" and r.get("family") == param.get("family") and "gate" in param:
+            anc = CK.ancestors(by, r["id"])
+            P = [by[i] for i in anc if i in by]
+            g = param["gate"]
+            if isinstance(g, dict): g = g.get(r.get("leaf"), g.get("*", [["any"]]))
+            if not dnf(g, r, P, lambda x, y: x in CK.ancestors(by, y), table): return False
         if "names_no_grant" in refuse and r["kind"] == "fam" and r.get("family") == param.get("family") \
                 and not r.get("grant"): return False
         if verbs is not None and r["kind"] == "recant" and gov and "recant" not in verbs: return False

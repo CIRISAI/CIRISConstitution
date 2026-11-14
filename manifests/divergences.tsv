@@ -63,9 +63,6 @@ persist/moderation:{allegation_type}/body.subject_digest	persist	door	runnable	m
 persist/(targeted rows)/refusal token	persist	door	stated	(targeted rows)	refusal token	CC 2.1	-	-	C104
 persist/key:record/scrub_key_id	persist	signer	stated	key:record	scrub_key_id	CC 3.1.3	-	-	C359
 persist/(any, under legal_hold)/erasure_route	persist	lifecycle	stated	(any, under legal_hold)	erasure_route	CC 4.4.3.5.4	-	-	C453
-persist/membership:{stage}/roster event signers	persist	count	stated	membership:{stage}	roster event signers	CC 3.3.4	-	-	CLM-roster-event-fresh
-persist/membership:{stage}/invitation expiry	persist	window	stated	membership:{stage}	invitation expiry	CC 3.1.3.2	-	-	CLM-membership-consent
-persist/observation:access_assumption/cited grant	persist	door	stated	observation:access_assumption	cited grant	CC 3.1.9.4	-	-	CLM-capacity-consent-gate
 agent/(agent conduct)/CC 7.4 stop	agent	door	stated	(agent conduct)	CC 7.4 stop	CC 7.4	-	-	C562
 persist/moderation:{allegation_type}/replication.audience	persist	audience	stated	moderation:{allegation_type}	replication.audience	CC 4.5.5	-	-	C384
 tooling/membership:{stage}/guard[leaf=widening on a stalled roster]	tooling	door	stated	membership:{stage}	guard[leaf=widening on a stalled roster]	CC 3.2	-	-	C492
@@ -77,3 +74,16 @@ persist/(occurrence revocation, cosign:signature)/attestation_id form	persist	do
 persist/ledger:head:{unit}:{version}/reserved_rule	persist	wording-only	wording-only	ledger:head:{unit}:{version}	reserved_rule	CC 3.1.3	-	-	C363
 persist/ledger:checkpoint:{unit}:{version}/reserved_rule	persist	wording-only	wording-only	ledger:checkpoint:{unit}:{version}	reserved_rule	CC 3.1.3	-	-	C363
 persist/ledger:promotion:{version}/reserved_rule	persist	wording-only	wording-only	ledger:promotion:{version}	reserved_rule	CC 3.1.3	-	-	C363
+persist/group:roster/cosign_rule count	persist	count	runnable	group:roster	cosign_rule count	CC 2.4	concludes nothing	admitted	CLM-cosigned-rows
+persist/membership:{stage}/roster event signers	persist	count	runnable	membership:{stage}	roster event signers	CC 3.3.4	concludes nothing	admitted	CLM-cosigned-rows CLM-roster-event-fresh
+persist/group:roster/lifecycle.withdraws_by[rule 0]	persist	lifecycle	runnable	group:roster	lifecycle.withdraws_by[rule 0]	CC 2.4.1.1	admitted	withdrawn	CLM-cosigned-rows
+persist/licensure:{authority_id}/authority at issuance	persist	door	runnable	licensure:{authority_id}	authority at issuance	CC 2.4.1.2.1	concludes nothing	admitted	CLM-licence-judged-at-issuance
+persist/self:delegates_to/acts under a withdrawn delegates_to	persist	door	runnable	self:delegates_to	acts under a withdrawn delegates_to	CC 4.5.5	concludes nothing	admitted	CLM-licence-judged-at-issuance
+persist/membership:{stage}/invitation expiry	persist	window	runnable	membership:{stage}	invitation expiry	CC 3.1.3.2	admitted	concludes nothing	CLM-membership-consent
+persist/self:delegates_to/admission refusal	persist	door	runnable	self:delegates_to	admission refusal	CC 4.1.1	concludes nothing	refused	CLM-self-edge-not-cycle
+persist/licensure:{authority_id}/admission refusal	persist	door	runnable	licensure:{authority_id}	admission refusal	CC 4.4.3.4.3	concludes nothing	refused	CLM-issuance-scope
+persist/key_grant:{axis}/admission refusal	persist	door	runnable	key_grant:{axis}	admission refusal	CC 4.4.3.4.3	concludes nothing	refused	CLM-issuance-scope
+persist/takedown_notice:{basis}/admission refusal	persist	door	runnable	takedown_notice:{basis}	admission refusal	CC 4.5.3	concludes nothing	refused	CLM-takedown-notice-row
+persist/age_assurance:{level}:{band}:{version}/admission refusal	persist	door	runnable	age_assurance:{level}:{band}:{version}	admission refusal	CC 3.4.11	concludes nothing	refused	C423
+persist/capacity_assurance:{level}:{domain}:{band}:{version}/admission refusal	persist	door	runnable	capacity_assurance:{level}:{domain}:{band}:{version}	admission refusal	CC 3.4.12	concludes nothing	refused	CLM-nsproc-attestation-type-capacity-assurance
+persist/(tombstoned record)/purge_tombstoned	persist	wording-only	wording-only	(tombstoned record)	purge_tombstoned	CC 4.5.3	-	-	CLM-purge-whole-or-not

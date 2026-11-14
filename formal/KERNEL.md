@@ -606,18 +606,17 @@ that the ending row has not seen from counting.
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
-| What each implementer's shipped behaviour does that the text does not: 60 cases the kernel runs, each a test to edit, 14 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
+| What each implementer's shipped behaviour does that the text does not: 72 cases the kernel runs, each a test to edit, 11 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
 | Each section that requires an effect that cannot be undone without receipts says so (CC 4.5.3 needs one clause) | text | Part 4 |
 | `settled` written in `tools/kx_prelude.kx` | table data | `tools/kx_prelude.kx` |
 | Whether a checkpoint is a registered family or a local row never served | wire | agreed with the store |
 
 **The divergence list is a list of tests.** **run** (`tools/check_divergences.py`): each difference between shipped
 behaviour and the text is a case of rows and one named answer, run under the text's cell and under the shipped
-cell. The two verdicts differ for each of 60, and the kernel's verdict is the same in every arrival order. The
-verdict under the text's cell is what an implementer's test asserts after the change. Fourteen cannot be run,
-each with its reason, and that count may only fall: five are matters of the wire, three compare a signed instant the
-kernel does not read, and the others are storage, an audience narrower than a
-row, a stalled roster, a value no build ships, a clock and an agent's own recognition. Three differ in wording only and in no behaviour. An implementer that holds a verdict wrong returns
+cell. The two verdicts differ for each of 72, and the kernel's verdict is the same in every arrival order. The
+verdict under the text's cell is what an implementer's test asserts after the change. Eleven cannot be run,
+each with its reason, and that count may only fall: five are matters of the wire, and the others are storage, an audience narrower than a
+row, a stalled roster, a value no build ships, a clock and an agent's own recognition. Four differ in wording only and in no behaviour. An implementer that holds a verdict wrong returns
 the entry with its own case (`formal/derivation/divergence_returns.tsv`). It is then disputed, with a conflict
 recorded against this repository, until the text or the model is corrected or the entry stands. An empty list
 is what agreement means.

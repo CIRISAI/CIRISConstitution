@@ -21,7 +21,10 @@ tools/build_divergences.py).
 Plants, run every time, each must be caught: an entry whose shipped parameter is the text's (equal verdicts); a
 standing conflict row with an implementer carrier and no entry; a quote that is not in its section; a recorded
 expect_kernel the kernel does not give; a disputed entry with no conflict row; a return that theirs stands
-whose entry still asserts the old verdict; one whose `changed` names nothing; a shipped source whose hash moved.
+whose entry still asserts the old verdict; one whose `changed` names nothing; a shipped source whose hash moved; and
+for each token that reads a signed instant, a cycle or a proposal's end (count_at, seat_at, acyclic, held_before_end
+with signed_before_end, the gate_fails refusal), the entry that uses it with the one row that tells the two sides
+apart moved so that they agree, which must read as equal verdicts.
 
 Run: python3 tools/check_divergences.py
 """
@@ -39,7 +42,16 @@ import build_divergences as B     # noqa: E402
 from build_family_model import section_span  # noqa: E402
 sys.dont_write_bytecode = _dwb
 
-MAX_STATED = 14     # shrink-only: an entry leaves `stated` when the kernel model can run it
+MAX_STATED = 11     # shrink-only: an entry leaves `stated` when the kernel model can run it
+
+
+# token -> (entry, row, change): the change makes the shipped reading agree with the text's, so the verdicts must be equal
+ATOM_PLANTS = {
+    "count_at: the removal signed before the act": ("persist/membership:{stage}/roster event signers", "u", {"at": 1}),
+    "seat_at: the withdrawal signed before the issuance": ("persist/licensure:{authority_id}/authority at issuance", "w", {"at": 1}),
+    "acyclic and gate_fails: no closing edge": ("persist/self:delegates_to/admission refusal", "e1", {"delegate": "C"}),
+    "held_before_end / signed_before_end: the widening signed at the end": ("persist/membership:{stage}/invitation expiry", "w", {"at": 10}),
+}
 
 
 def coverage(doc, standing):
@@ -145,6 +157,13 @@ def main():
     p = copy.deepcopy(doc); x = next(r for r in p["entries"] if r["shipped"].get("file_sha256"))
     x["shipped"]["file_sha256"] = "0" * 64
     caught.append(("a shipped source whose hash moved", bool(B.moved_sources(p, doc))))
+    for name, (eid, rid, change) in ATOM_PLANTS.items():
+        p = copy.deepcopy(doc); x = next((r for r in p["entries"] if r["id"] == eid and "case" in r), None)
+        if x is not None:
+            row = next(q for q in x["case"]["rows"] if q["id"] == rid)
+            if change is None: x["case"]["rows"].remove(row)
+            else: row.update(change)
+        caught.append((name, x is not None and any(e.startswith(eid + ":") and "are equal" in e for e in differ(p))))
     for name, ok in caught:
         if not ok: errs.append("plant not caught: " + name)
 

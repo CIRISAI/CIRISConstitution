@@ -422,18 +422,6 @@ def cases():
         "or under a `legal_hold` ([CC 4.4.3.2.8](#4.4.3.2.8)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason",
         "legal_hold: none in code", "storage",
         "the withdraws is admitted in both; what differs is the erasure descent, a storage act the kernel does not model"))
-    E.append(stated("persist", "membership:{stage}", "roster event signers", "count", ["CLM-roster-event-fresh"], "CC 3.3.4",
-        "A widening or removal names the roster head it extends, and its signers are counted over the members at that head.",
-        "a signer is judged at the event's signed instant, trusted only inside the freshness window of first receipt", "a signed instant",
-        "the store compares a signed instant with an arrival clock; the kernel reads the head the event names and each node's own acknowledged head, and has no instant to compare"))
-    E.append(stated("persist", "membership:{stage}", "invitation expiry", "window", ["CLM-membership-consent"], "CC 3.1.3.2",
-        "P's `expires_at` is P's own stated end, and a late acceptance is closed.",
-        "the acceptance's and the widening's signed instants are compared with expires_at", "a signed instant",
-        "the door runs the window with the widening as its landing; what the store compares is two rows' signed instants, which the kernel does not read"))
-    E.append(stated("persist", "observation:access_assumption", "cited grant", "door", ["CLM-capacity-consent-gate"], "CC 3.1.9.4",
-        "live in the row's causal past",
-        "whether a cited grant is checked at all, and at which instant, is not known", "a signed instant",
-        "the text reads the grant in the row's causal past; a check at the row's signed instant would read a clock the kernel does not"))
     E.append(stated("agent", "(agent conduct)", "CC 7.4 stop", "door", ["C562"], "CC 7.4",
         "An agent that finds itself one step from a lethal act — holding a target, a trigger, a release, or the computation another system would fire on — stops.",
         "nothing detects that situation; none of the ten verbs is a stop", "outside the kernel",
@@ -472,4 +460,102 @@ def cases():
             "or a delegate under its declared serialization discipline",
             "the census reserved_rule words admit a delegate; its signer cell admits self only ('CC delegate arm: GAP'), so no row tells them apart",
             census=(f, "reserved_rule")))
+    # ---- the head a row names, not a signed instant: a removal in the row's past signed at a later instant ------------
+    def removed_later(act, leaf=None):
+        """A group of three; C is removed by a count whose row is signed at 5; then an act by A and C names that
+        removal as its head and is signed at 3. Over the head it names C is no member; as of its instant C still is."""
+        kw = {"leaf": leaf} if leaf else {}
+        return group() + [SEAT.unseat("u", "A", "C", "member", "g", "group", names=("g",), head=("g",), policy="strict",
+                                      cosigners=("B",), at=5)] + [act(kw)]
+    for f, leaf, srcs, cc, q, cen, sw, where in [
+        ("group:roster", None, ["CLM-cosigned-rows"], "CC 2.4",
+         "judged on the *receiver's own* fold over the members at the roster head the row names",
+         ("group:roster", SIGNER[0]), "roster_member(at)", "cosign_rule count"),
+        ("membership:{stage}", "widening", ["CLM-roster-event-fresh", "CLM-cosigned-rows"], "CC 3.3.4",
+         "A widening or removal names the roster head it extends, and its signers are counted over the members at that head.",
+         ("membership:{stage}", SIGNER[0]), "widening/removal: roster_member(at) cosigned", "roster event signers"),
+    ]:
+        rows = removed_later(lambda kw: fam("h", "A", f, ("u",), group="g", head=("u",), cosigners=("C",), at=3, **kw), leaf)
+        E.append(signer_entry("persist", f, srcs, cc, q, [["count:protocol@group"]], [["count_at:protocol@group"]], sw,
+                              rows, "h", census=cen, kind="count", where=where, leaf=leaf))
+        E[-1]["note"] = "the removal is in the act's causal past and carries the later signed instant"
+    E.append(lifecycle_entry("persist", "group:roster", ["CLM-cosigned-rows"], "CC 2.4.1.1",
+        "counted over the members at the roster head the withdrawal names",
+        [["count:protocol@group"]], [["count_at:protocol@group"]],
+        "a cosigned withdraws admitted when its cosigners satisfy the protocol on the receiver's fold at the signed instant",
+        group() + [fam("h0", "A", "group:roster", ("g",), group="g", head=("g",), cosigners=("B", "C")),
+                   SEAT.unseat("u", "A", "C", "member", "g", "group", names=("g",), head=("g",), policy="strict", cosigners=("B",), at=5),
+                   wd("x", "A", "h0", ("u",), group="g", head=("u",), cosigners=("C",), at=3)], "h0", census=None,
+        where="lifecycle.withdraws_by[rule 0]",
+        shipped_source="constitution/claims.tsv CLM-cosigned-rows (impl check_cosigned_withdraws, verify_roster_cosignatures)"))
+    # ---- authority over the act's causal past, not at its signed instant ---------------------------------------------
+    for f, scope, srcs, cc, q, where in [
+        ("licensure:{authority_id}", "license", ["CLM-licence-judged-at-issuance"], "CC 2.4.1.2.1",
+         "It is judged over the issuance's own causal past under the cosigned-row rule, never at receipt",
+         "authority at issuance"),
+        ("self:delegates_to", "moderate", ["CLM-licence-judged-at-issuance"], "CC 4.5.5",
+         "for every act that has the withdrawal in its own past or is concurrent with it",
+         "acts under a withdrawn delegates_to"),
+    ]:
+        rows = [SEAT.offer("dl", "Au", "D", scope, "Au", "self"), SEAT.accept("da", "D", "dl"), wd("w", "Au", "dl", at=9),
+                fam("i", "D", f, ("da", "w"), authority="Au", delegate="E", at=5)]
+        E.append(signer_entry("persist", f, srcs, cc, q, [["seat:%s@authority" % scope]], [["seat_at:%s@authority" % scope]],
+            "authority judged at the row's signed asserted_at (licence_roots_at)", rows, "i", census=None, kind="door",
+            where=where))
+        E[-1]["shipped_source"] = "constitution/claims.tsv CLM-licence-judged-at-issuance (impl licence_roots_at)"
+        E[-1]["note"] = "the withdrawal of the delegation is in the act's causal past and carries the later signed instant"
+    # ---- the late acceptance: the concluding member's own clock against the proposal's own end -----------------------
+    E.append(signer_entry("persist", "membership:{stage}", ["CLM-membership-consent"], "CC 3.1.3.2",
+        "P's `expires_at` is P's own stated end, and a late acceptance is closed.",
+        [["held_before_end:proposal"]], [["signed_before_end:proposal"]],
+        "the acceptance's and the widening's signed instants compared with expires_at (check_growth_accepted)",
+        [fam("pr", "A", "membership:{stage}", (), leaf="proposal", subjects=("K",), expires_at=10),
+         fam("ac", "K", "membership:{stage}", ("pr",), leaf="acceptance", at=4),
+         R("rc", "receipt", "A", ("ac",), at=9),
+         fam("w", "A", "membership:{stage}", ("pr", "ac", "rc"), leaf="widening", proposal="pr", at=11)], "w",
+        census=None, kind="window", where="invitation expiry", leaf="widening"))
+    E[-1]["shipped_source"] = ("constitution/claims.tsv CLM-membership-consent (impl check_growth_accepted; the summary "
+                               "before 4aa21dd: an undeclined, unexpired acceptance on signed instants)")
+    E[-1]["note"] = "the member held the acceptance before the end on its own clock and signed the widening after it"
+    # ---- a check that reads another row: the shipped door refuses, the text concludes nothing ------------------------
+    refusals = [
+        ("self:delegates_to", ["CLM-self-edge-not-cycle"], "CC 4.1.1",
+         "the cycle-closing emission concludes nothing, and a walk visits a cycle once", [["acyclic"]],
+         [fam("e1", "A", "self:delegates_to", (), delegate="B"), fam("e2", "B", "self:delegates_to", ("e1",), delegate="A")],
+         "e2", None, "the cycle-closing delegates_to refused at admission (check_delegation_cycle_admission)",
+         "constitution/claims.tsv CLM-self-edge-not-cycle (impl check_delegation_cycle_admission; the summary before 6e90792: still refused)"),
+        ("licensure:{authority_id}", ["CLM-issuance-scope"], "CC 4.4.3.4.3",
+         "**concludes nothing**, and is not merely unweighted", [["seat:license@root"]],
+         [SEAT.offer("rt", "Rt", "Rt", "root", "@", "self"), fam("i", "D", "licensure:{authority_id}", ("rt",), root="Rt")],
+         "i", None, "an issuance whose delegator lacks the authority refused at admission (check_licensure_delegator_is_authority)",
+         "constitution/claims.tsv CLM-issuance-scope (impl check_licensure_delegator_is_authority)"),
+        ("key_grant:{axis}", ["CLM-issuance-scope"], "CC 4.4.3.4.3",
+         "**concludes nothing**, and is not merely unweighted", [["owner_of_subject"], ["seat:grant@subject"]],
+         [fam("i", "D", "key_grant:{axis}", (), subject="S")],
+         "i", None, "a grant whose delegator lacks the authority refused at admission (admit_replicated_key_grant)",
+         "constitution/claims.tsv CLM-issuance-scope (impl admit_replicated_key_grant)"),
+        ("takedown_notice:{basis}", ["CLM-takedown-notice-row"], "CC 4.5.3",
+         "An immediate-removal basis asserted by a key that holds no `takedown` duty over the content concludes nothing",
+         [["seat:takedown@group"]], community() + [U, fam("n", "U", "takedown_notice:{basis}", ("g", "ku"), group="g")],
+         "n", ("takedown_notice:{basis}", "door"), "takedown_tombstone::check_takedown_notice_row_admission", None),
+        ("age_assurance:{level}:{band}:{version}", ["C423"], "CC 3.4.11",
+         "a row by any other signer concludes nothing at admission", [["seat:assure:age@root", "not_subject"]],
+         [keyrec("ks", "S"), SEAT.offer("rt", "Rt", "Rt", "root", "@", "self"),
+          fam("h", "S", "age_assurance:{level}:{band}:{version}", ("ks", "rt"), root="Rt", subject="S")],
+         "h", ("age_assurance:{level}:{band}:{version}", "door"), "check_reserved_prefix_admission self arm", None),
+        ("capacity_assurance:{level}:{domain}:{band}:{version}", ["CLM-nsproc-attestation-type-capacity-assurance"], "CC 3.4.12",
+         "A row by any other signer concludes nothing at admission", [["seat:assure:capacity@root", "not_subject"]],
+         [keyrec("ks", "S"), SEAT.offer("rt", "Rt", "Rt", "root", "@", "self"),
+          fam("h", "S", "capacity_assurance:{level}:{domain}:{band}:{version}", ("ks", "rt"), root="Rt", subject="S")],
+         "h", ("capacity_assurance:{level}:{domain}:{band}:{version}", "door"), "self arms in check_reserved_prefix_admission", None),
+    ]
+    for f, srcs, cc, q, gate, rows, tgt, cen, sw, src in refusals:
+        E.append(signer_entry("persist", f, srcs, cc, q, gate, gate, sw, rows, tgt, census=cen, kind="door",
+                              where="admission refusal"))
+        E[-1]["shipped_param"]["refuse"] = ["gate_fails"]
+        if src: E[-1]["shipped_source"] = src
+    E.append(wording("persist", "(tombstoned record)", "purge_tombstoned", ["CLM-purge-whole-or-not"], "CC 4.5.3",
+        "A node does not hold a tombstoned record again and never serves it", "a tombstoned record is refused at every admission door and never served",
+        "not holding the bytes again and refusing them at the door have one outward effect; the reason reported is purge_tombstoned in both",
+        shipped_source="constitution/claims.tsv CLM-purge-whole-or-not (impl refuse_if_tombstoned_attestation; the summary before 6e90792)"))
     return E

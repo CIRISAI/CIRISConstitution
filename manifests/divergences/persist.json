@@ -3,7 +3,7 @@
   "contract": "each entry is one test: build `case`, ask `ask`, assert `expect_kernel`",
   "implementer": "persist",
   "source": "manifests/divergences.json",
-  "row_form": "every row has `id`, `kind`, `signer`, `names` (the ids it names) and `family`. Kinds:\n    keyrec     a key's own record (`identity_type`, and `node` for a component of a node); admitted by possession\n    offer, accept, withdraw, unseat, cosign\n               the seat rows of formal/causal_kernel/seat.py, with its fields (`to`, `scope`, `obj`, `conf`,\n               `under`, `cosigners`, `head`, `policy`, `cuts`, `on`)\n    fam        a row of the family the parameter governs, or of another family the case needs; fields the gate reads:\n               `subject`, `subjects`, `group`, `root`, `content`, `blob`, `for_key`, `binding`, `provenance`,\n               `build_manifest_hash`, `head`, `leaf`, `ref`, `at` (a signed instant, read only by a shipped fold)\n    landing, reversal, claim, trust\n               a window's landing, a row voiding a notice, a source's statement, a reader's trust edge\nA `withdraw` or `recant` naming a `fam` row of the governed family is judged by the parameter's lifecycle.",
+  "row_form": "every row has `id`, `kind`, `signer`, `names` (the ids it names) and `family`. Kinds:\n    keyrec     a key's own record (`identity_type`, and `node` for a component of a node); admitted by possession\n    offer, accept, withdraw, unseat, cosign\n               the seat rows of formal/causal_kernel/seat.py, with its fields (`to`, `scope`, `obj`, `conf`,\n               `under`, `cosigners`, `head`, `policy`, `cuts`, `on`)\n    fam        a row of the family the parameter governs, or of another family the case needs; fields the gate reads:\n               `subject`, `subjects`, `group`, `root`, `content`, `blob`, `for_key`, `binding`, `provenance`,\n               `build_manifest_hash`, `head`, `leaf`, `ref`, `delegate`, `proposal`, `expires_at` (a row's own stated\n               end), `at` (a signed instant, read only by a shipped fold or a shipped `_at` token; any row may carry\n               one, and a row without one is read as signed before every row that has one)\n    landing, reversal, claim, trust, receipt\n               a window's landing, a row voiding a notice, a source's statement, a reader's trust edge, a key's\n               statement that it holds the rows it names, at its own instant `at`\nA `withdraw` or `recant` naming a `fam` row of the governed family is judged by the parameter's lifecycle.",
   "verdicts": {
    "state": "admitted | concludes nothing | withdrawn | recanted | refused | waits",
    "stands": "stands | does not stand",
@@ -11,7 +11,7 @@
    "fold": "the value the fold gives",
    "owed": "the effects owed, or nothing"
   },
-  "count": 57
+  "count": 69
  },
  "returns": "To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.",
  "vectors": [
@@ -3992,6 +3992,940 @@
      ]
     ]
    }
+  },
+  {
+   "id": "persist/group:roster/cosign_rule count",
+   "family": "group:roster",
+   "where": "cosign_rule count",
+   "kind": "count",
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "u"
+      ],
+      "family": "group:roster",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "group:roster",
+    "gate": [
+     [
+      "count:protocol@group"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/membership:{stage}/roster event signers",
+   "family": "membership:{stage}",
+   "where": "roster event signers",
+   "kind": "count",
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "u"
+      ],
+      "family": "membership:{stage}",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3,
+      "leaf": "widening"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "membership:{stage}",
+    "gate": {
+     "widening": [
+      [
+       "count:protocol@group"
+      ]
+     ],
+     "*": [
+      [
+       "any"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "persist/group:roster/lifecycle.withdraws_by[rule 0]",
+   "family": "group:roster",
+   "where": "lifecycle.withdraws_by[rule 0]",
+   "kind": "lifecycle",
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h0",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "group:roster",
+      "group": "g",
+      "head": [
+       "g"
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ]
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "A",
+      "names": [
+       "u",
+       "h0"
+      ],
+      "family": "withdraws",
+      "target": "h0",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h0"
+    }
+   },
+   "expect_kernel": "admitted",
+   "expect_shipped": "withdrawn",
+   "kernel_parameter": {
+    "family": "group:roster",
+    "withdraws_by": [
+     [
+      "count:protocol@group"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/licensure:{authority_id}/authority at issuance",
+   "family": "licensure:{authority_id}",
+   "where": "authority at issuance",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "dl",
+      "kind": "offer",
+      "signer": "Au",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "license",
+      "obj": "Au",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "D",
+        "license",
+        "Au"
+       ]
+      ]
+     },
+     {
+      "id": "da",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "dl"
+      ],
+      "family": "accept",
+      "of": "dl",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "w",
+      "kind": "withdraw",
+      "signer": "Au",
+      "names": [
+       "dl"
+      ],
+      "family": "withdraws",
+      "target": "dl",
+      "at": 9
+     },
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "da",
+       "w"
+      ],
+      "family": "licensure:{authority_id}",
+      "authority": "Au",
+      "delegate": "E",
+      "at": 5
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "licensure:{authority_id}",
+    "gate": [
+     [
+      "seat:license@authority"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/self:delegates_to/acts under a withdrawn delegates_to",
+   "family": "self:delegates_to",
+   "where": "acts under a withdrawn delegates_to",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "dl",
+      "kind": "offer",
+      "signer": "Au",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "moderate",
+      "obj": "Au",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "D",
+        "moderate",
+        "Au"
+       ]
+      ]
+     },
+     {
+      "id": "da",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "dl"
+      ],
+      "family": "accept",
+      "of": "dl",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "w",
+      "kind": "withdraw",
+      "signer": "Au",
+      "names": [
+       "dl"
+      ],
+      "family": "withdraws",
+      "target": "dl",
+      "at": 9
+     },
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "da",
+       "w"
+      ],
+      "family": "self:delegates_to",
+      "authority": "Au",
+      "delegate": "E",
+      "at": 5
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "self:delegates_to",
+    "gate": [
+     [
+      "seat:moderate@authority"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/membership:{stage}/invitation expiry",
+   "family": "membership:{stage}",
+   "where": "invitation expiry",
+   "kind": "window",
+   "case": {
+    "rows": [
+     {
+      "id": "pr",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "membership:{stage}",
+      "leaf": "proposal",
+      "subjects": [
+       "K"
+      ],
+      "expires_at": 10
+     },
+     {
+      "id": "ac",
+      "kind": "fam",
+      "signer": "K",
+      "names": [
+       "pr"
+      ],
+      "family": "membership:{stage}",
+      "leaf": "acceptance",
+      "at": 4
+     },
+     {
+      "id": "rc",
+      "kind": "receipt",
+      "signer": "A",
+      "names": [
+       "ac"
+      ],
+      "family": "receipt",
+      "at": 9
+     },
+     {
+      "id": "w",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "pr",
+       "ac",
+       "rc"
+      ],
+      "family": "membership:{stage}",
+      "leaf": "widening",
+      "proposal": "pr",
+      "at": 11
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "w"
+    }
+   },
+   "expect_kernel": "admitted",
+   "expect_shipped": "concludes nothing",
+   "kernel_parameter": {
+    "family": "membership:{stage}",
+    "gate": {
+     "widening": [
+      [
+       "held_before_end:proposal"
+      ]
+     ],
+     "*": [
+      [
+       "any"
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "persist/self:delegates_to/admission refusal",
+   "family": "self:delegates_to",
+   "where": "admission refusal",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "e1",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "self:delegates_to",
+      "delegate": "B"
+     },
+     {
+      "id": "e2",
+      "kind": "fam",
+      "signer": "B",
+      "names": [
+       "e1"
+      ],
+      "family": "self:delegates_to",
+      "delegate": "A"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "e2"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "refused",
+   "kernel_parameter": {
+    "family": "self:delegates_to",
+    "gate": [
+     [
+      "acyclic"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/licensure:{authority_id}/admission refusal",
+   "family": "licensure:{authority_id}",
+   "where": "admission refusal",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "rt"
+      ],
+      "family": "licensure:{authority_id}",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "refused",
+   "kernel_parameter": {
+    "family": "licensure:{authority_id}",
+    "gate": [
+     [
+      "seat:license@root"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/key_grant:{axis}/admission refusal",
+   "family": "key_grant:{axis}",
+   "where": "admission refusal",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [],
+      "family": "key_grant:{axis}",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "refused",
+   "kernel_parameter": {
+    "family": "key_grant:{axis}",
+    "gate": [
+     [
+      "owner_of_subject"
+     ],
+     [
+      "seat:grant@subject"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/takedown_notice:{basis}/admission refusal",
+   "family": "takedown_notice:{basis}",
+   "where": "admission refusal",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A"
+      ],
+      "scope": "duty",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "duty",
+        "g"
+       ]
+      ]
+     },
+     {
+      "id": "ku",
+      "kind": "keyrec",
+      "signer": "U",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "n",
+      "kind": "fam",
+      "signer": "U",
+      "names": [
+       "g",
+       "ku"
+      ],
+      "family": "takedown_notice:{basis}",
+      "group": "g"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "n"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "refused",
+   "kernel_parameter": {
+    "family": "takedown_notice:{basis}",
+    "gate": [
+     [
+      "seat:takedown@group"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/age_assurance:{level}:{band}:{version}/admission refusal",
+   "family": "age_assurance:{level}:{band}:{version}",
+   "where": "admission refusal",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "ks",
+      "kind": "keyrec",
+      "signer": "S",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "S",
+      "names": [
+       "ks",
+       "rt"
+      ],
+      "family": "age_assurance:{level}:{band}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "refused",
+   "kernel_parameter": {
+    "family": "age_assurance:{level}:{band}:{version}",
+    "gate": [
+     [
+      "seat:assure:age@root",
+      "not_subject"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/capacity_assurance:{level}:{domain}:{band}:{version}/admission refusal",
+   "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+   "where": "admission refusal",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "ks",
+      "kind": "keyrec",
+      "signer": "S",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "S",
+      "names": [
+       "ks",
+       "rt"
+      ],
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "refused",
+   "kernel_parameter": {
+    "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+    "gate": [
+     [
+      "seat:assure:capacity@root",
+      "not_subject"
+     ]
+    ]
+   }
   }
  ],
  "not_runnable": [
@@ -4015,27 +4949,6 @@
    "reason": "the withdraws is admitted in both; what differs is the erasure descent, a storage act the kernel does not model",
    "cc_ref": "CC 4.4.3.5.4",
    "quote": "or under a `legal_hold` ([CC 4.4.3.2.8](#4.4.3.2.8)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason"
-  },
-  {
-   "id": "persist/membership:{stage}/roster event signers",
-   "status": "stated",
-   "reason": "the store compares a signed instant with an arrival clock; the kernel reads the head the event names and each node's own acknowledged head, and has no instant to compare",
-   "cc_ref": "CC 3.3.4",
-   "quote": "A widening or removal names the roster head it extends, and its signers are counted over the members at that head."
-  },
-  {
-   "id": "persist/membership:{stage}/invitation expiry",
-   "status": "stated",
-   "reason": "the door runs the window with the widening as its landing; what the store compares is two rows' signed instants, which the kernel does not read",
-   "cc_ref": "CC 3.1.3.2",
-   "quote": "P's `expires_at` is P's own stated end, and a late acceptance is closed."
-  },
-  {
-   "id": "persist/observation:access_assumption/cited grant",
-   "status": "stated",
-   "reason": "the text reads the grant in the row's causal past; a check at the row's signed instant would read a clock the kernel does not",
-   "cc_ref": "CC 3.1.9.4",
-   "quote": "live in the row's causal past"
   },
   {
    "id": "persist/moderation:{allegation_type}/replication.audience",
@@ -4092,6 +5005,13 @@
    "reason": "the census reserved_rule words admit a delegate; its signer cell admits self only ('CC delegate arm: GAP'), so no row tells them apart",
    "cc_ref": "CC 3.1.3",
    "quote": "**Yes:** the ledger's single owner (the steward-bound identity of its `ledger_id` triple); no delegate writes"
+  },
+  {
+   "id": "persist/(tombstoned record)/purge_tombstoned",
+   "status": "wording-only",
+   "reason": "not holding the bytes again and refusing them at the door have one outward effect; the reason reported is purge_tombstoned in both",
+   "cc_ref": "CC 4.5.3",
+   "quote": "A node does not hold a tombstoned record again and never serves it"
   }
  ]
 }

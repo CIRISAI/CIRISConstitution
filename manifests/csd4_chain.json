@@ -6,7 +6,7 @@
    "invariants_sha256": "2ccd977d0c6d1f2941831d8c0c4879a4c7ac78241915e9070ebe6285d53567a2",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "f0ce66c650e8c10a0e872db56d079ff26728882e6c83a14a62a1f815dff30bee",
+   "claims_sha256": "61d06093261e5d6fdf389774cfc93a018fb57e931262bf90249eb8b072a7d07c",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "5a9764d2c2f7f74a4cf68632871499c3e364e09e104103a4d87a5a8a67dee7b2"
+  "chain_sha256": "044dba9ab07a70d69eff2412b0f0752cb5ded293895743a6091a7173972bd89e"
  },
  "chain": [
   {
@@ -21883,7 +21883,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -22113,7 +22113,7 @@
     {
      "claim_id": "CLM-licence-judged-at-issuance",
      "cc_ref": "2.4.1.2.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -22336,7 +22336,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -39555,7 +39555,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -39912,7 +39912,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -40309,7 +40309,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -47350,7 +47350,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -47580,7 +47580,7 @@
     {
      "claim_id": "CLM-licence-judged-at-issuance",
      "cc_ref": "2.4.1.2.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -47801,7 +47801,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -48031,7 +48031,7 @@
     {
      "claim_id": "CLM-licence-judged-at-issuance",
      "cc_ref": "2.4.1.2.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -48252,7 +48252,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -48482,7 +48482,7 @@
     {
      "claim_id": "CLM-licence-judged-at-issuance",
      "cc_ref": "2.4.1.2.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -48884,7 +48884,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -48988,7 +48988,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -49223,7 +49223,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -49651,7 +49651,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {
@@ -49881,7 +49881,7 @@
     {
      "claim_id": "CLM-licence-judged-at-issuance",
      "cc_ref": "2.4.1.2.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -50102,7 +50102,7 @@
     {
      "claim_id": "CLM-issuance-scope",
      "cc_ref": "4.4.3.4.3",
-     "status": "established",
+     "status": "staged",
      "join": "by_invariant",
      "evidence": [
       {

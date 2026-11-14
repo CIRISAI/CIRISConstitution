@@ -2,7 +2,7 @@
  "_meta": {
   "contract": "each entry is one test: build `case`, ask `ask`, assert `expect_kernel`",
   "generator": "tools/build_divergences.py (cases: tools/divergence_cases.py; oracle: tools/divergence_oracle.py over formal/causal_kernel)",
-  "row_form": "every row has `id`, `kind`, `signer`, `names` (the ids it names) and `family`. Kinds:\n    keyrec     a key's own record (`identity_type`, and `node` for a component of a node); admitted by possession\n    offer, accept, withdraw, unseat, cosign\n               the seat rows of formal/causal_kernel/seat.py, with its fields (`to`, `scope`, `obj`, `conf`,\n               `under`, `cosigners`, `head`, `policy`, `cuts`, `on`)\n    fam        a row of the family the parameter governs, or of another family the case needs; fields the gate reads:\n               `subject`, `subjects`, `group`, `root`, `content`, `blob`, `for_key`, `binding`, `provenance`,\n               `build_manifest_hash`, `head`, `leaf`, `ref`, `at` (a signed instant, read only by a shipped fold)\n    landing, reversal, claim, trust\n               a window's landing, a row voiding a notice, a source's statement, a reader's trust edge\nA `withdraw` or `recant` naming a `fam` row of the governed family is judged by the parameter's lifecycle.",
+  "row_form": "every row has `id`, `kind`, `signer`, `names` (the ids it names) and `family`. Kinds:\n    keyrec     a key's own record (`identity_type`, and `node` for a component of a node); admitted by possession\n    offer, accept, withdraw, unseat, cosign\n               the seat rows of formal/causal_kernel/seat.py, with its fields (`to`, `scope`, `obj`, `conf`,\n               `under`, `cosigners`, `head`, `policy`, `cuts`, `on`)\n    fam        a row of the family the parameter governs, or of another family the case needs; fields the gate reads:\n               `subject`, `subjects`, `group`, `root`, `content`, `blob`, `for_key`, `binding`, `provenance`,\n               `build_manifest_hash`, `head`, `leaf`, `ref`, `delegate`, `proposal`, `expires_at` (a row's own stated\n               end), `at` (a signed instant, read only by a shipped fold or a shipped `_at` token; any row may carry\n               one, and a row without one is read as signed before every row that has one)\n    landing, reversal, claim, trust, receipt\n               a window's landing, a row voiding a notice, a source's statement, a reader's trust edge, a key's\n               statement that it holds the rows it names, at its own instant `at`\nA `withdraw` or `recant` naming a `fam` row of the governed family is judged by the parameter's lifecycle.",
   "verdicts": {
    "state": "admitted | concludes nothing | withdrawn | recanted | refused | waits",
    "stands": "stands | does not stand",
@@ -11,30 +11,30 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 77,
+  "total": 87,
   "by_status": {
-   "runnable": 60,
-   "stated": 14,
-   "wording-only": 3
+   "runnable": 72,
+   "stated": 11,
+   "wording-only": 4
   },
   "by_implementer": {
    "agent": 1,
    "edge": 1,
-   "persist": 71,
+   "persist": 81,
    "tooling": 4
   },
   "by_kind": {
    "audience": 4,
    "cosign": 6,
-   "count": 2,
-   "door": 11,
+   "count": 3,
+   "door": 18,
    "fold": 9,
    "freshness": 1,
-   "lifecycle": 9,
+   "lifecycle": 10,
    "signer": 29,
    "subject": 1,
    "window": 2,
-   "wording-only": 3
+   "wording-only": 4
   },
   "order_dependent_shipped": 1,
   "conflict_rows_with_implementer_carrier": 55,
@@ -6675,84 +6675,6 @@
    "gap": "storage"
   },
   {
-   "id": "persist/membership:{stage}/roster event signers",
-   "implementer": "persist",
-   "family": "membership:{stage}",
-   "where": "roster event signers",
-   "kind": "count",
-   "status": "stated",
-   "sources": [
-    "CLM-roster-event-fresh"
-   ],
-   "claims": [
-    "CLM-roster-event-fresh"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 3.3.4",
-    "quote": "A widening or removal names the roster head it extends, and its signers are counted over the members at that head."
-   },
-   "shipped": {
-    "value": "a signer is judged at the event's signed instant, trusted only inside the freshness window of first receipt",
-    "source": null,
-    "census_cell": null
-   },
-   "reason": "the store compares a signed instant with an arrival clock; the kernel reads the head the event names and each node's own acknowledged head, and has no instant to compare",
-   "gap": "a signed instant"
-  },
-  {
-   "id": "persist/membership:{stage}/invitation expiry",
-   "implementer": "persist",
-   "family": "membership:{stage}",
-   "where": "invitation expiry",
-   "kind": "window",
-   "status": "stated",
-   "sources": [
-    "CLM-membership-consent"
-   ],
-   "claims": [
-    "CLM-membership-consent"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 3.1.3.2",
-    "quote": "P's `expires_at` is P's own stated end, and a late acceptance is closed."
-   },
-   "shipped": {
-    "value": "the acceptance's and the widening's signed instants are compared with expires_at",
-    "source": null,
-    "census_cell": null
-   },
-   "reason": "the door runs the window with the widening as its landing; what the store compares is two rows' signed instants, which the kernel does not read",
-   "gap": "a signed instant"
-  },
-  {
-   "id": "persist/observation:access_assumption/cited grant",
-   "implementer": "persist",
-   "family": "observation:access_assumption",
-   "where": "cited grant",
-   "kind": "door",
-   "status": "stated",
-   "sources": [
-    "CLM-capacity-consent-gate"
-   ],
-   "claims": [
-    "CLM-capacity-consent-gate"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 3.1.9.4",
-    "quote": "live in the row's causal past"
-   },
-   "shipped": {
-    "value": "whether a cited grant is checked at all, and at which instant, is not known",
-    "source": null,
-    "census_cell": null
-   },
-   "reason": "the text reads the grant in the row's causal past; a check at the row's signed instant would read a clock the kernel does not",
-   "gap": "a signed instant"
-  },
-  {
    "id": "agent/(agent conduct)/CC 7.4 stop",
    "implementer": "agent",
    "family": "(agent conduct)",
@@ -7012,6 +6934,1539 @@
     "census_cell": "CC 3.3.10.1: the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline"
    },
    "reason": "the census reserved_rule words admit a delegate; its signer cell admits self only ('CC delegate arm: GAP'), so no row tells them apart"
+  },
+  {
+   "id": "persist/group:roster/cosign_rule count",
+   "implementer": "persist",
+   "family": "group:roster",
+   "where": "cosign_rule count",
+   "kind": "count",
+   "status": "runnable",
+   "sources": [
+    "CLM-cosigned-rows"
+   ],
+   "claims": [
+    "CLM-cosigned-rows"
+   ],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 2.4",
+    "quote": "judged on the *receiver's own* fold over the members at the roster head the row names",
+    "param": {
+     "family": "group:roster",
+     "gate": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "roster_member(at)",
+    "source": "formal/derivation/census_v61.tsv group:roster 3_signer_rule",
+    "census_cell": "roster_member(at) x none x {} (minted from the signed record)",
+    "param": {
+     "family": "group:roster",
+     "gate": [
+      [
+       "count_at:protocol@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "u"
+      ],
+      "family": "group:roster",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the removal is in the act's causal past and carries the later signed instant"
+  },
+  {
+   "id": "persist/membership:{stage}/roster event signers",
+   "implementer": "persist",
+   "family": "membership:{stage}",
+   "where": "roster event signers",
+   "kind": "count",
+   "status": "runnable",
+   "sources": [
+    "CLM-cosigned-rows",
+    "CLM-roster-event-fresh"
+   ],
+   "claims": [
+    "CLM-cosigned-rows",
+    "CLM-roster-event-fresh"
+   ],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 3.3.4",
+    "quote": "A widening or removal names the roster head it extends, and its signers are counted over the members at that head.",
+    "param": {
+     "family": "membership:{stage}",
+     "gate": {
+      "widening": [
+       [
+        "count:protocol@group"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "widening/removal: roster_member(at) cosigned",
+    "source": "formal/derivation/census_v61.tsv membership:{stage} 3_signer_rule",
+    "census_cell": "proposal: roster_member(at) (founder_only: founder; s2: refused above family); acceptance/decline: self (acts for the invitee); widening/removal: roster_member(at) cosigned; resignation: self",
+    "param": {
+     "family": "membership:{stage}",
+     "gate": {
+      "widening": [
+       [
+        "count_at:protocol@group"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "u"
+      ],
+      "family": "membership:{stage}",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3,
+      "leaf": "widening"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the removal is in the act's causal past and carries the later signed instant"
+  },
+  {
+   "id": "persist/group:roster/lifecycle.withdraws_by[rule 0]",
+   "implementer": "persist",
+   "family": "group:roster",
+   "where": "lifecycle.withdraws_by[rule 0]",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "CLM-cosigned-rows"
+   ],
+   "claims": [
+    "CLM-cosigned-rows"
+   ],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "counted over the members at the roster head the withdrawal names",
+    "param": {
+     "family": "group:roster",
+     "withdraws_by": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "a cosigned withdraws admitted when its cosigners satisfy the protocol on the receiver's fold at the signed instant",
+    "source": "constitution/claims.tsv CLM-cosigned-rows (impl check_cosigned_withdraws, verify_roster_cosignatures)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "da8f147b8764cb65cf4552f717500dfc6d03da617e15a9bae14b1b8ee0d61f81",
+    "file_rows": [
+     "CLM-cosigned-rows"
+    ],
+    "param": {
+     "family": "group:roster",
+     "withdraws_by": [
+      [
+       "count_at:protocol@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h0",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "group:roster",
+      "group": "g",
+      "head": [
+       "g"
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ]
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "A",
+      "names": [
+       "u",
+       "h0"
+      ],
+      "family": "withdraws",
+      "target": "h0",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h0"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/licensure:{authority_id}/authority at issuance",
+   "implementer": "persist",
+   "family": "licensure:{authority_id}",
+   "where": "authority at issuance",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-licence-judged-at-issuance"
+   ],
+   "claims": [
+    "CLM-licence-judged-at-issuance"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:license@authority"
+     ]
+    ],
+    "cc_ref": "CC 2.4.1.2.1",
+    "quote": "It is judged over the issuance's own causal past under the cosigned-row rule, never at receipt",
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "seat:license@authority"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "authority judged at the row's signed asserted_at (licence_roots_at)",
+    "source": "constitution/claims.tsv CLM-licence-judged-at-issuance (impl licence_roots_at)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "6cc81fdb1b3266498a6c8cb102530d5d60ea0730c3ccd01a05936cef3dd755b7",
+    "file_rows": [
+     "CLM-licence-judged-at-issuance"
+    ],
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "seat_at:license@authority"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "dl",
+      "kind": "offer",
+      "signer": "Au",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "license",
+      "obj": "Au",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "D",
+        "license",
+        "Au"
+       ]
+      ]
+     },
+     {
+      "id": "da",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "dl"
+      ],
+      "family": "accept",
+      "of": "dl",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "w",
+      "kind": "withdraw",
+      "signer": "Au",
+      "names": [
+       "dl"
+      ],
+      "family": "withdraws",
+      "target": "dl",
+      "at": 9
+     },
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "da",
+       "w"
+      ],
+      "family": "licensure:{authority_id}",
+      "authority": "Au",
+      "delegate": "E",
+      "at": 5
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the withdrawal of the delegation is in the act's causal past and carries the later signed instant"
+  },
+  {
+   "id": "persist/self:delegates_to/acts under a withdrawn delegates_to",
+   "implementer": "persist",
+   "family": "self:delegates_to",
+   "where": "acts under a withdrawn delegates_to",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-licence-judged-at-issuance"
+   ],
+   "claims": [
+    "CLM-licence-judged-at-issuance"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:moderate@authority"
+     ]
+    ],
+    "cc_ref": "CC 4.5.5",
+    "quote": "for every act that has the withdrawal in its own past or is concurrent with it",
+    "param": {
+     "family": "self:delegates_to",
+     "gate": [
+      [
+       "seat:moderate@authority"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "authority judged at the row's signed asserted_at (licence_roots_at)",
+    "source": "constitution/claims.tsv CLM-licence-judged-at-issuance (impl licence_roots_at)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "6cc81fdb1b3266498a6c8cb102530d5d60ea0730c3ccd01a05936cef3dd755b7",
+    "file_rows": [
+     "CLM-licence-judged-at-issuance"
+    ],
+    "param": {
+     "family": "self:delegates_to",
+     "gate": [
+      [
+       "seat_at:moderate@authority"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "dl",
+      "kind": "offer",
+      "signer": "Au",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "moderate",
+      "obj": "Au",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "D",
+        "moderate",
+        "Au"
+       ]
+      ]
+     },
+     {
+      "id": "da",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "dl"
+      ],
+      "family": "accept",
+      "of": "dl",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "w",
+      "kind": "withdraw",
+      "signer": "Au",
+      "names": [
+       "dl"
+      ],
+      "family": "withdraws",
+      "target": "dl",
+      "at": 9
+     },
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "da",
+       "w"
+      ],
+      "family": "self:delegates_to",
+      "authority": "Au",
+      "delegate": "E",
+      "at": 5
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the withdrawal of the delegation is in the act's causal past and carries the later signed instant"
+  },
+  {
+   "id": "persist/membership:{stage}/invitation expiry",
+   "implementer": "persist",
+   "family": "membership:{stage}",
+   "where": "invitation expiry",
+   "kind": "window",
+   "status": "runnable",
+   "sources": [
+    "CLM-membership-consent"
+   ],
+   "claims": [
+    "CLM-membership-consent"
+   ],
+   "text": {
+    "value": [
+     [
+      "held_before_end:proposal"
+     ]
+    ],
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "P's `expires_at` is P's own stated end, and a late acceptance is closed.",
+    "param": {
+     "family": "membership:{stage}",
+     "gate": {
+      "widening": [
+       [
+        "held_before_end:proposal"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "the acceptance's and the widening's signed instants compared with expires_at (check_growth_accepted)",
+    "source": "constitution/claims.tsv CLM-membership-consent (impl check_growth_accepted; the summary before 4aa21dd: an undeclined, unexpired acceptance on signed instants)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "27e5348f7c3a4c101f371ab9f7d0324c48834e2b00eb83b22aa90189eba65ddf",
+    "file_rows": [
+     "CLM-membership-consent"
+    ],
+    "param": {
+     "family": "membership:{stage}",
+     "gate": {
+      "widening": [
+       [
+        "signed_before_end:proposal"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "pr",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "membership:{stage}",
+      "leaf": "proposal",
+      "subjects": [
+       "K"
+      ],
+      "expires_at": 10
+     },
+     {
+      "id": "ac",
+      "kind": "fam",
+      "signer": "K",
+      "names": [
+       "pr"
+      ],
+      "family": "membership:{stage}",
+      "leaf": "acceptance",
+      "at": 4
+     },
+     {
+      "id": "rc",
+      "kind": "receipt",
+      "signer": "A",
+      "names": [
+       "ac"
+      ],
+      "family": "receipt",
+      "at": 9
+     },
+     {
+      "id": "w",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "pr",
+       "ac",
+       "rc"
+      ],
+      "family": "membership:{stage}",
+      "leaf": "widening",
+      "proposal": "pr",
+      "at": 11
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "w"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the member held the acceptance before the end on its own clock and signed the widening after it"
+  },
+  {
+   "id": "persist/self:delegates_to/admission refusal",
+   "implementer": "persist",
+   "family": "self:delegates_to",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-self-edge-not-cycle"
+   ],
+   "claims": [
+    "CLM-self-edge-not-cycle"
+   ],
+   "text": {
+    "value": [
+     [
+      "acyclic"
+     ]
+    ],
+    "cc_ref": "CC 4.1.1",
+    "quote": "the cycle-closing emission concludes nothing, and a walk visits a cycle once",
+    "param": {
+     "family": "self:delegates_to",
+     "gate": [
+      [
+       "acyclic"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "the cycle-closing delegates_to refused at admission (check_delegation_cycle_admission)",
+    "source": "constitution/claims.tsv CLM-self-edge-not-cycle (impl check_delegation_cycle_admission; the summary before 6e90792: still refused)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "410382902fde28a5e40f730e0b6c32811f541726b61b4d7ce1f3795542b439e2",
+    "file_rows": [
+     "CLM-self-edge-not-cycle"
+    ],
+    "param": {
+     "family": "self:delegates_to",
+     "gate": [
+      [
+       "acyclic"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "e1",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "self:delegates_to",
+      "delegate": "B"
+     },
+     {
+      "id": "e2",
+      "kind": "fam",
+      "signer": "B",
+      "names": [
+       "e1"
+      ],
+      "family": "self:delegates_to",
+      "delegate": "A"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "e2"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/licensure:{authority_id}/admission refusal",
+   "implementer": "persist",
+   "family": "licensure:{authority_id}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-issuance-scope"
+   ],
+   "claims": [
+    "CLM-issuance-scope"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:license@root"
+     ]
+    ],
+    "cc_ref": "CC 4.4.3.4.3",
+    "quote": "**concludes nothing**, and is not merely unweighted",
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "seat:license@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "an issuance whose delegator lacks the authority refused at admission (check_licensure_delegator_is_authority)",
+    "source": "constitution/claims.tsv CLM-issuance-scope (impl check_licensure_delegator_is_authority)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "977d9b9083d22e5f78f098fddea51e605120cad538e82b543969bd68d251d7dd",
+    "file_rows": [
+     "CLM-issuance-scope"
+    ],
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "seat:license@root"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "rt"
+      ],
+      "family": "licensure:{authority_id}",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/key_grant:{axis}/admission refusal",
+   "implementer": "persist",
+   "family": "key_grant:{axis}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-issuance-scope"
+   ],
+   "claims": [
+    "CLM-issuance-scope"
+   ],
+   "text": {
+    "value": [
+     [
+      "owner_of_subject"
+     ],
+     [
+      "seat:grant@subject"
+     ]
+    ],
+    "cc_ref": "CC 4.4.3.4.3",
+    "quote": "**concludes nothing**, and is not merely unweighted",
+    "param": {
+     "family": "key_grant:{axis}",
+     "gate": [
+      [
+       "owner_of_subject"
+      ],
+      [
+       "seat:grant@subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "a grant whose delegator lacks the authority refused at admission (admit_replicated_key_grant)",
+    "source": "constitution/claims.tsv CLM-issuance-scope (impl admit_replicated_key_grant)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "977d9b9083d22e5f78f098fddea51e605120cad538e82b543969bd68d251d7dd",
+    "file_rows": [
+     "CLM-issuance-scope"
+    ],
+    "param": {
+     "family": "key_grant:{axis}",
+     "gate": [
+      [
+       "owner_of_subject"
+      ],
+      [
+       "seat:grant@subject"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [],
+      "family": "key_grant:{axis}",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 1,
+    "of": 1,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/takedown_notice:{basis}/admission refusal",
+   "implementer": "persist",
+   "family": "takedown_notice:{basis}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-takedown-notice-row"
+   ],
+   "claims": [
+    "CLM-takedown-notice-row"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:takedown@group"
+     ]
+    ],
+    "cc_ref": "CC 4.5.3",
+    "quote": "An immediate-removal basis asserted by a key that holds no `takedown` duty over the content concludes nothing",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "gate": [
+      [
+       "seat:takedown@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "takedown_tombstone::check_takedown_notice_row_admission",
+    "source": "formal/derivation/census_v61.tsv takedown_notice:{basis} door",
+    "census_cell": "generic put_attestation; takedown_tombstone::check_takedown_notice_row_admission; steward_purge leaf held shut",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "gate": [
+      [
+       "seat:takedown@group"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A"
+      ],
+      "scope": "duty",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "duty",
+        "g"
+       ]
+      ]
+     },
+     {
+      "id": "ku",
+      "kind": "keyrec",
+      "signer": "U",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "n",
+      "kind": "fam",
+      "signer": "U",
+      "names": [
+       "g",
+       "ku"
+      ],
+      "family": "takedown_notice:{basis}",
+      "group": "g"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "n"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/age_assurance:{level}:{band}:{version}/admission refusal",
+   "implementer": "persist",
+   "family": "age_assurance:{level}:{band}:{version}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "C423"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:assure:age@root",
+      "not_subject"
+     ]
+    ],
+    "cc_ref": "CC 3.4.11",
+    "quote": "a row by any other signer concludes nothing at admission",
+    "param": {
+     "family": "age_assurance:{level}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:age@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "check_reserved_prefix_admission self arm",
+    "source": "formal/derivation/census_v61.tsv age_assurance:{level}:{band}:{version} door",
+    "census_cell": "generic put_attestation; prefix-table row age_assurance: + check_reserved_prefix_admission self arm",
+    "param": {
+     "family": "age_assurance:{level}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:age@root",
+       "not_subject"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ks",
+      "kind": "keyrec",
+      "signer": "S",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "S",
+      "names": [
+       "ks",
+       "rt"
+      ],
+      "family": "age_assurance:{level}:{band}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/capacity_assurance:{level}:{domain}:{band}:{version}/admission refusal",
+   "implementer": "persist",
+   "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-nsproc-attestation-type-capacity-assurance"
+   ],
+   "claims": [
+    "CLM-nsproc-attestation-type-capacity-assurance"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:assure:capacity@root",
+      "not_subject"
+     ]
+    ],
+    "cc_ref": "CC 3.4.12",
+    "quote": "A row by any other signer concludes nothing at admission",
+    "param": {
+     "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:capacity@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "self arms in check_reserved_prefix_admission",
+    "source": "formal/derivation/census_v61.tsv capacity_assurance:{level}:{domain}:{band}:{version} door",
+    "census_cell": "generic put_attestation; prefix-table row capacity_assurance: + self arms in check_reserved_prefix_admission; companion grammar in check_namespace_family_registered",
+    "param": {
+     "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:capacity@root",
+       "not_subject"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ks",
+      "kind": "keyrec",
+      "signer": "S",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "S",
+      "names": [
+       "ks",
+       "rt"
+      ],
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/(tombstoned record)/purge_tombstoned",
+   "implementer": "persist",
+   "family": "(tombstoned record)",
+   "where": "purge_tombstoned",
+   "kind": "wording-only",
+   "status": "wording-only",
+   "sources": [
+    "CLM-purge-whole-or-not"
+   ],
+   "claims": [
+    "CLM-purge-whole-or-not"
+   ],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 4.5.3",
+    "quote": "A node does not hold a tombstoned record again and never serves it"
+   },
+   "shipped": {
+    "value": "a tombstoned record is refused at every admission door and never served",
+    "source": "constitution/claims.tsv CLM-purge-whole-or-not (impl refuse_if_tombstoned_attestation; the summary before 6e90792)",
+    "census_cell": null
+   },
+   "reason": "not holding the bytes again and refusing them at the door have one outward effect; the reason reported is purge_tombstoned in both"
   }
  ]
 }
