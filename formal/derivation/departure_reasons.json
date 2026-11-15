@@ -237,7 +237,7 @@
    "when": "The row is an accord's act: its standing, a halt, a notice or a drill.",
    "why": "A halt or a roster act counts only toward the accord it names. A row that names no accord, or one the reader does not hold, is refused when the rows are read.",
    "basis": "text",
-   "cc_ref": "CC 2.6.1.8",
+   "cc_ref": "CC 8.11.9",
    "quote": "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold",
    "moves": {
     "subject_rule": [
@@ -898,7 +898,7 @@
    "when": "The row is a consent state that carries the recipient field.",
    "why": "The recipient field names the addressed recipient. Such a row is held by its author's node and that key's node and by no other.",
    "basis": "text",
-   "cc_ref": "CC 2.6.1.8",
+   "cc_ref": "CC 8.11.9",
    "quote": "Also carried on consent:state rows.",
    "moves": {
     "subject_rule": [

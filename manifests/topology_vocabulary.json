@@ -212,7 +212,7 @@
     "file.large": {
       "plane": "content",
       "state_predicate": "blob.delivery=chunked",
-      "cc_ref": "2.6.1.4 5.3.3",
+      "cc_ref": "8.11.5 5.3.3",
       "in_state_table": true,
       "meaning": "the file is streamed (chunked), not inline"
     },
@@ -686,7 +686,7 @@
     "row.standing.admitted": {
       "plane": "content",
       "state_predicate": "row.standing=admitted",
-      "cc_ref": "2.1 2.6.1.8",
+      "cc_ref": "2.1 8.11.9",
       "in_state_table": true,
       "meaning": "row: standing = admitted — entered by admission gates pass (signer: producer)",
       "added_in": 2

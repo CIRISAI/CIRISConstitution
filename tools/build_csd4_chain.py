@@ -76,6 +76,9 @@ def refusal_tokens():
     members = set()
     for r in rows(P("constitution", "signed_object.tsv")):
         members.add(r["member"])
+    for r in rows(P("constitution", "signed_object_v2.tsv")):      # the CC 2.6.1 table: CBOR and logical names
+        for cell in (r["member"], r["logical_name"]):
+            members.update(n.strip().strip('"') for n in cell.split(","))
     idx = defaultdict(lambda: OrderedDict())
     for f in sorted(glob.glob(P("constitution", "part_*.md"))):
         sec = "—"

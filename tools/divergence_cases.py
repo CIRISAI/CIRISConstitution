@@ -405,7 +405,7 @@ def cases():
     e["note"] = ("the text says refused; the check reads the roster at the row's head, another row, so the kernel concludes "
                  "nothing rather than refusing (KERNEL.md section 3)")
     E.append(e)
-    e = signer_entry("persist", "moderation:{allegation_type}", ["C439", "C481"], "CC 2.6.1.8", "OPTIONAL on moderation:*",
+    e = signer_entry("persist", "moderation:{allegation_type}", ["C439", "C481"], "CC 8.11.9", "OPTIONAL on moderation:*",
         [["any"]], [["any"]], "moderation subject digest required", [fam("m", "A", "moderation:{allegation_type}", ())], "m",
         census=("moderation:{allegation_type}", "7_body"), kind="door", where="body.subject_digest")
     e["shipped_param"]["refuse"] = ["missing_subject_digest"]

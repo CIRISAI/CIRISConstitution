@@ -63,18 +63,21 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 2.4.2	scores	The workhorse: `scores`	§3.1	0.00092	277	0.11	II	ceg	wire
 2.5	reasoning	The reasoning grammar — the eight axes	§2	0.00382	65	0.46	II	ceg	wire
 2.6	foreword	Canonical form and the signed object	§0	0.00134	173	0.16	II	ceg	wire
-2.6.1	envelope-canonicalization	Envelope canonicalization — JCS + the omit-vs-materialize rule	§0.9	0.00796	21	0.95	II	ceg	wire
-2.6.1.1	round-trip	The round-trip rule — defaults are interpretation-time, not encoding-time (normative)	§0.9.2	0.00284	87	0.34	II	ceg	wire
-2.6.1.2	canonicalization-array	Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)	§0.9.2.1	0.00176	136	0.21	II	ceg	wire
-2.6.1.3	per-field	Per-field encoding table (informational)	§0.9.3	0.00124	182	0.15	II	ceg	wire
-2.6.1.4	canonical	Canonical encoding format (normative)	§0.9.1	0.00110	202	0.13	II	ceg	wire
-2.6.1.5	worked	Worked attack the rule closes	§0.9.5	0.00102	216	0.12	II	ceg	wire
-2.6.1.6	verification	Verification flow (informational)	§0.9.4	0.00092	235	0.11	II	ceg	wire
-2.6.1.7	section	Scope of the canonicalization rule	§0.9.6	0.00092	236	0.11	II	ceg	wire
-2.6.1.8	signed-object	The signed object — member set, placement and types (normative)	(spine-reconciled)	0.00050	444	0.4	II	ceg	wire
-2.6.1.9	signed-object-cose	The signed object of the v62 edition: CBOR and COSE (planned)	—	0.00050	444	0.3	II	ceg	wire
-2.6.2	canonicalization	Date-time canonicalization	§0.5	0.00530	39	0.64	II	ceg	wire
-2.6.3	canonicalization-hexadecimal	Hexadecimal canonicalization	§0.6	0.00443	51	0.53	II	ceg	wire
+2.6.1	signed-object-cose	The signed object: deterministic CBOR and COSE	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.1	statement	The statement (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.2	deterministic-encoding	Deterministic encoding and the omit rule (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.3	row-id	The row id and what a row names (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.4	signed-object-members	Members, placement and types (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.5	numbers	Numbers (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.6	size	Size (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.7	composite	The composite signature and keys (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.8	verification-three	Verification has three answers (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.9	cosigned	Counted rows and the second consent (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.10	erasable	Erasability and the redaction constraints (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.11	other-objects	Receipts and the other signed objects (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.12	earlier-form	The earlier form and the cutover (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.2	instants	Instants (normative)	—	0.00050	444	0.3	II	ceg	wire
+2.6.3	text-forms	Text forms a person reads (normative)	—	0.00050	444	0.3	II	ceg	wire
 2.6.4	policy-versioning	Versioning policy	§0.3	0.00214	111	0.26	II	ceg	wire
 2.6.5	references	Normative References	§0.4	0.00209	114	0.25	II	ceg	wire
 2.6.6	canonicalization-cell	H3 cell canonicalization	§0.8	0.00186	128	0.22	II	ceg	wire
@@ -422,6 +425,20 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.8.8	annex-j	Annex J: Benchmarking & Automated Validation	Accord Annex J	0.00050	428	0.1	APP	accord	register
 8.9	stubs	Open stub registry	(spine-reconciled)	0.00050	429	0.1	APP	ceg	register
 8.10	family-cards	The family cards (generated from the data)	(spine-reconciled)	0.00050	430	20.0	APP	ceg	dictionary
+8.11	earlier-signed-object	The earlier signed object (JSON and JCS)	—	0.00050	444	0.1	APP	ceg	wire
+8.11.1	envelope-canonicalization	Envelope canonicalization — JCS + the omit-vs-materialize rule	§0.9	0.00796	21	0.95	APP	ceg	wire
+8.11.2	round-trip	The round-trip rule — defaults are interpretation-time, not encoding-time (normative)	§0.9.2	0.00284	87	0.34	APP	ceg	wire
+8.11.3	canonicalization-array	Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)	§0.9.2.1	0.00176	136	0.21	APP	ceg	wire
+8.11.4	per-field	Per-field encoding table (informational)	§0.9.3	0.00124	182	0.15	APP	ceg	wire
+8.11.5	canonical	Canonical encoding format (normative)	§0.9.1	0.00110	202	0.13	APP	ceg	wire
+8.11.6	worked	Worked attack the rule closes	§0.9.5	0.00102	216	0.12	APP	ceg	wire
+8.11.7	verification	Verification flow (informational)	§0.9.4	0.00092	235	0.11	APP	ceg	wire
+8.11.8	section	Scope of the canonicalization rule	§0.9.6	0.00092	236	0.11	APP	ceg	wire
+8.11.9	signed-object	The signed object — member set, placement and types (normative)	(spine-reconciled)	0.00050	444	0.4	APP	ceg	wire
+8.11.10	canonicalization	Date-time canonicalization	§0.5	0.00530	39	0.64	APP	ceg	wire
+8.11.11	canonicalization-hexadecimal	Hexadecimal canonicalization	§0.6	0.00443	51	0.53	APP	ceg	wire
+8.11.12	bound-hybrid	The bound-hybrid signature	—	0.00050	444	0.1	APP	ceg	wire
+8.11.13	key-revocation-envelope	The key revocation of the earlier form	—	0.00050	449	0.1	APP	ceg	wire
 8.12	parable	The parable — Genesis of Ethical Agency (informative)	—	0.00050	448	0.1	APP	accord	charter
 8.12.1	i-quiet	I. The Quiet Threshold	Accord 0.i-the-quiet-threshold	0.00092	303	0.11	APP	accord	charter
 8.12.2	ii-first	II. The First Leaning	Accord 0.ii-the-first-leaning	0.00092	304	0.11	APP	accord	charter

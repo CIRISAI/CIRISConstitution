@@ -24,8 +24,8 @@ p2	377	392	informative	1562	eight reasoning axes are not wire fields; three cell
 p2	396	407	informative	2800	foreword: what CEG is, readerships, substrate layering; no rule beyond pointers
 p2	409	413	rationale	1200	why the omit-vs-materialize rule exists; the hazard
 p2	419	436	example	1500	scores_minimal vector copied verbatim plus explicit-default walkthrough
-p2	463	506	duplicate_table	6500	per-field catalog; every cell restates 2.1 or the 2.6.1.8 signed-object table
-p2	536	544	example	1100	worked attack; the one MUST at 544 restates 2.6.1.1
+p2	463	506	duplicate_table	6500	per-field catalog; every cell restates 2.1 or the 8.11.9 signed-object table
+p2	536	544	example	1100	worked attack; the one MUST at 544 restates 8.11.2
 p2	546	556	restated_block	900	verification flow pseudocode; restates JCS, hybrid verify, relay preservation
 p2	558	566	restated_block	800	scope pointer; what the rule does not do
 p2	798	825	informative	4500	normative references table; keep as annex; hybrid-sig definition at 823 and RFC 9162 MUST at 809 are the only rules

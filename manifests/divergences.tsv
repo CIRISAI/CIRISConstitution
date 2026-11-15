@@ -59,7 +59,7 @@ tooling/age_assurance:{level}:{band}:{version}/fold	tooling	fold	runnable	age_as
 persist/ownership:{relation}:{target_kind}:{version}/fold:stewards_of	persist	fold	runnable	ownership:{relation}:{target_kind}:{version}	fold:stewards_of	CC 3.4.7.3	O	O,X	C208
 persist/takedown_notice:{basis}/signer_rule[leaf=steward_purge]	persist	cosign	runnable	takedown_notice:{basis}	signer_rule[leaf=steward_purge]	CC 2.4.1.1	admitted	concludes nothing	C307
 persist/(default row)/subject_rule.in_audience	persist	subject	runnable	(default row)	subject_rule.in_audience	CC 2.1	concludes nothing	admitted	C331
-persist/moderation:{allegation_type}/body.subject_digest	persist	door	runnable	moderation:{allegation_type}	body.subject_digest	CC 2.6.1.8	admitted	refused	C439 C481
+persist/moderation:{allegation_type}/body.subject_digest	persist	door	runnable	moderation:{allegation_type}	body.subject_digest	CC 8.11.9	admitted	refused	C439 C481
 persist/(targeted rows)/refusal token	persist	door	stated	(targeted rows)	refusal token	CC 2.1	-	-	C104
 persist/key:record/scrub_key_id	persist	signer	stated	key:record	scrub_key_id	CC 3.1.3	-	-	C359
 persist/(any, under legal_hold)/erasure_route	persist	lifecycle	stated	(any, under legal_hold)	erasure_route	CC 4.4.3.29	-	-	C453

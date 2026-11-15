@@ -4,19 +4,19 @@
 # until the store confirms it. type and presence read `unstated` where the sentence does not give them. The quote must stand verbatim.
 family	member	type	presence	in_cddl	cc_ref	quote
 accord:*	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
-accord:*	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:*	accord_root	key-id	required	yes	CC 8.11.9	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
 accord:human_dignity	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
-accord:human_dignity	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:human_dignity	accord_root	key-id	required	yes	CC 8.11.9	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
 accord:invoke:constitutional:{halt_id}	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
-accord:invoke:constitutional:{halt_id}	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:invoke:constitutional:{halt_id}	accord_root	key-id	required	yes	CC 8.11.9	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
 accord:invoke:drill:{drill_id}	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
-accord:invoke:drill:{drill_id}	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:invoke:drill:{drill_id}	accord_root	key-id	required	yes	CC 8.11.9	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
 accord:invoke:notify:{notify_id}	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
-accord:invoke:notify:{notify_id}	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:invoke:notify:{notify_id}	accord_root	key-id	required	yes	CC 8.11.9	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
 accord:lifecycle	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
-accord:lifecycle	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:lifecycle	accord_root	key-id	required	yes	CC 8.11.9	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
 accord:lifecycle:{kind}	accord_root	key-id	required	yes	CC 2.1	`accord:*` rows, REQUIRED
-accord:lifecycle:{kind}	accord_root	key-id	required	yes	CC 2.6.1.8	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
+accord:lifecycle:{kind}	accord_root	key-id	required	yes	CC 8.11.9	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold.
 accord:lifecycle:{kind}	confirms_halt_id	unstated	unstated	no	CC 4.2.1.3	The confirmation is written `invocation_kind=lifecycle:confirmed`, with `confirms_halt_id=` in place of `resumes_halt_id=`.
 accord:lifecycle:{kind}	invocation_id	unstated	unstated	no	CC 4.2.1.3	`resumes_halt_id` is mandatory and binds the resumption to the one halt it ends.
 accord:lifecycle:{kind}	invocation_kind	unstated	unstated	no	CC 4.2.1.3	The confirmation is written `invocation_kind=lifecycle:confirmed`, with `confirms_halt_id=` in place of `resumes_halt_id=`.
@@ -27,63 +27,63 @@ archive_release:{basis}	scope	"whole" / subject-scoped	unstated	yes	CC 3.1.5	Car
 audio:*	duration	unstated	unstated	no	CC 3.3.13	Source struct carries codec, duration, sample rate, optional `transcript`, AI-generation disclosure, license info.
 audio:*	transcript	unstated	optional	no	CC 3.3.13	Source struct carries codec, duration, sample rate, optional `transcript`, AI-generation disclosure, license info.
 ballot:moderator	ranks	unstated	unstated	no	CC 4.5.13	Each person ranks **up to three**.
-capacity:composite	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.8	The grants a witness relied on.
+capacity:composite	consent_basis	[* consent-basis]	optional	yes	CC 8.11.9	The grants a witness relied on.
 capacity:composite	feature_dim	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
-capacity:composite	feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	feature_dim	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:composite	min_feature_dim	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:composite	min_feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	min_feature_dim	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:composite	n_eff_floor	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:composite	n_eff_floor	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	n_eff_floor	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:composite	n_eff_h	number	optional	yes	CC 2.1	Carried for audit, not gated.
-capacity:composite	n_eff_h	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
-capacity:composite	n_eff_pr	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	n_eff_h	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
+capacity:composite	n_eff_pr	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:composite	sample_size	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
-capacity:composite	sample_size	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	sample_size	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:composite	sample_size_gate	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:composite	sample_size_gate	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	sample_size_gate	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:composite	target_n_eff	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:composite	target_n_eff	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	target_n_eff	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:composite	window	uint	optional	yes	CC 2.1	The scoring or observation window, in rows.
-capacity:composite	window	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:composite	window	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:relay_delivery	advertiser_key_id	key-id	unstated	no	CC 3.1.4	keyed to the relay's own `SignedRelayCapacity` claim `(advertiser_key_id, stream_id, epoch)`: the envelope `score` is the fulfilment ratio, never a verdict. Subject = the relay (`attested_key_id`),
-capacity:relay_delivery	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.8	The grants a witness relied on.
+capacity:relay_delivery	consent_basis	[* consent-basis]	optional	yes	CC 8.11.9	The grants a witness relied on.
 capacity:relay_delivery	epoch	uint	unstated	no	CC 3.1.4	keyed to the relay's own `SignedRelayCapacity` claim `(advertiser_key_id, stream_id, epoch)`: the envelope `score` is the fulfilment ratio, never a verdict. Subject = the relay (`attested_key_id`),
 capacity:relay_delivery	feature_dim	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
-capacity:relay_delivery	feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	feature_dim	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:relay_delivery	min_feature_dim	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:relay_delivery	min_feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	min_feature_dim	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:relay_delivery	n_eff_floor	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:relay_delivery	n_eff_floor	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	n_eff_floor	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:relay_delivery	n_eff_h	number	optional	yes	CC 2.1	Carried for audit, not gated.
-capacity:relay_delivery	n_eff_h	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
-capacity:relay_delivery	n_eff_pr	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	n_eff_h	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	n_eff_pr	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:relay_delivery	sample_size	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
-capacity:relay_delivery	sample_size	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	sample_size	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:relay_delivery	sample_size_gate	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:relay_delivery	sample_size_gate	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	sample_size_gate	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:relay_delivery	stream_id	tstr	unstated	no	CC 3.1.4	keyed to the relay's own `SignedRelayCapacity` claim `(advertiser_key_id, stream_id, epoch)`: the envelope `score` is the fulfilment ratio, never a verdict. Subject = the relay (`attested_key_id`),
 capacity:relay_delivery	target_n_eff	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:relay_delivery	target_n_eff	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:relay_delivery	target_n_eff	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:relay_delivery	window	uint	optional	yes	CC 2.1	The scoring or observation window, in rows.
-capacity:relay_delivery	window	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
-capacity:{factor}	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.8	The grants a witness relied on.
+capacity:relay_delivery	window	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
+capacity:{factor}	consent_basis	[* consent-basis]	optional	yes	CC 8.11.9	The grants a witness relied on.
 capacity:{factor}	feature_dim	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
-capacity:{factor}	feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	feature_dim	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:{factor}	min_feature_dim	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:{factor}	min_feature_dim	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	min_feature_dim	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:{factor}	n_eff_floor	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:{factor}	n_eff_floor	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	n_eff_floor	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:{factor}	n_eff_h	number	optional	yes	CC 2.1	Carried for audit, not gated.
-capacity:{factor}	n_eff_h	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
-capacity:{factor}	n_eff_pr	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	n_eff_h	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
+capacity:{factor}	n_eff_pr	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:{factor}	sample_size	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
-capacity:{factor}	sample_size	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	sample_size	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:{factor}	sample_size_gate	uint	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:{factor}	sample_size_gate	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	sample_size_gate	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:{factor}	target_n_eff	number	optional	yes	CC 2.1	`sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor`
-capacity:{factor}	target_n_eff	number	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	target_n_eff	number	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 capacity:{factor}	window	uint	optional	yes	CC 2.1	The scoring or observation window, in rows.
-capacity:{factor}	window	uint	optional	yes	CC 2.6.1.8	Participation-ratio effective sample size; gated.
+capacity:{factor}	window	uint	optional	yes	CC 8.11.9	Participation-ratio effective sample size; gated.
 census:partial:{class}	aggregation_algorithm_id	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
 census:partial:{class}	mass_total	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
 census:partial:{class}	member_commitment_hex	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
@@ -117,10 +117,10 @@ consent:partnership_grant	subject_kind	unstated	unstated	no	CC 4.4.3.20	`consent
 consent:state:{stance}	asserted_at	unstated	unstated	yes	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	bilateral_pair_id	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	consent_supersedes	uuid	optional	yes	CC 2.1	The prior consent-state row this one supersedes: a renewal, or the substrate's `consent:state:expired` naming the grant that lapsed ([CC 3.3.1](part_3_the_namespace.md#3.3.1)).
-consent:state:{stance}	consent_supersedes	uuid	optional	yes	CC 2.6.1.8	The prior consent statement this one replaces. Separate from references_attestation_id by the CC 4.5.1.1 op split.
+consent:state:{stance}	consent_supersedes	uuid	optional	yes	CC 8.11.9	The prior consent statement this one replaces. Separate from references_attestation_id by the CC 4.5.1.1 op split.
 consent:state:{stance}	decay_protocol	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	deletion_sla_days	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
-consent:state:{stance}	deletion_window	tstr	optional	yes	CC 2.6.1.8	Deadline by which a consented payload must be deleted.
+consent:state:{stance}	deletion_window	tstr	optional	yes	CC 8.11.9	Deadline by which a consented payload must be deleted.
 consent:state:{stance}	scope	[* tstr]	unstated	yes	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	stance	unstated	unstated	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	subject_key_id	unstated	unstated	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
@@ -263,7 +263,7 @@ objection:{state}	cohort_key_id	key-id	unstated	no	CC 3.3.6.4	*The votes and the
 objection:{state}	grounds	unstated	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
 objection:{state}	objects_to_attestation_id	uuid	unstated	no	CC 3.1.9.2	Each carries `cohort`, `cohort_key_id` (the standing set it votes in; `self` and the fedID for the roster door) and `objects_to_attestation_id` (the proposal it answers, or
 objection:{state}	objects_to_attestation_id	uuid	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
-observation:access_assumption	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.8	The grants a witness relied on.
+observation:access_assumption	consent_basis	[* consent-basis]	optional	yes	CC 8.11.9	The grants a witness relied on.
 observation:access_assumption	consent_basis	[* consent-basis]	optional	yes	CC 3.1.9.4	Unlike reachability, the observed party has keys, so `subject_key_ids` is **REQUIRED and non-empty**: the observed agent's key or keys.
 observation:access_assumption	evidence_refs	[+ tstr]	required	yes	CC 3.1.9.4	Unlike reachability, the observed party has keys, so `subject_key_ids` is **REQUIRED and non-empty**: the observed agent's key or keys.
 observation:access_assumption	window	uint	optional	yes	CC 2.1	The scoring or observation window, in rows.
@@ -293,7 +293,7 @@ self:delegates_to:agent_occurrence	delegation_valid_until	unstated	unstated	yes	
 self:delegates_to:agent_occurrence	scope	unstated	unstated	yes	CC 4.4.3.19	The row carries `scope` drawn from the canonical act-on-behalf kinds below, `delegation_purpose: "act_as_user"` and a bounded `delegation_valid_until`.
 self:delegates_to:agent_occurrence	scope	unstated	unstated	yes	CC 4.4.3.20	the act-on-behalf grant
 self:delegates_to:agent_occurrence	signed_at	unstated	unstated	no	CC 4.4.3.20	the act-on-behalf grant
-session:{kind}	community_id	key-id	required	yes	CC 3.1.3.1	`session_id` and `claimed_at` are this family's, REQUIRED on every `session:*` row, with `claimed_at` in the [CC 2.6.2](part_2_the_grammar.md#2.6.2) canonical form.
+session:{kind}	community_id	key-id	required	yes	CC 3.1.3.1	`session_id` and `claimed_at` are this family's, REQUIRED on every `session:*` row, with `claimed_at` in the [CC 8.11.10](part_8_appendices.md#8.11.10) canonical form.
 settlement:*	amount_commitment	unstated	optional	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
 settlement:*	rail	tstr (open)	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
 settlement:*	settled_action_ref	unstated	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
@@ -314,7 +314,7 @@ takedown_notice:{basis}	legal_basis	unstated	unstated	no	CC 4.5.3	whose `legal_b
 takedown_notice:{basis}	perceptual_hash	unstated	optional	no	CC 3.3.2	**The field shape is locked here.**
 takedown_notice:{basis}	subject_kind	"takedown_notice"	unstated	no	CC 3.1.1	**A takedown notice as a row** (shape and bases at [CC 3.3.2](#3.3.2)): the `scores` row whose envelope is the `takedown_notice` payload, `subject_kind: takedown_notice`, so that
 trace:{form}:{version}	run_kind	"production" / "prod-personal" / "prod-managed" / "qa" / "battery" / "mock"	required	no	CC 3.1.5	**Every trace names its run, and its shape is pinned (normative).** A signed `trace:*` envelope carries **`run_kind`** in the signed bytes, closed vocabulary `production
-trust:{job}:{version}	pre_rotation_commitment	hex64 presence=optional leaf=trust:charter	unstated	yes	CC 2.6.1.8	Pre-rotation commitment on a charter.
+trust:{job}:{version}	pre_rotation_commitment	hex64 presence=optional leaf=trust:charter	unstated	yes	CC 8.11.9	Pre-rotation commitment on a charter.
 trust:{job}:{version}	recovery_commitments	unstated	unstated	yes	CC 4.2.6	That member is an object `{holder_key_id: commitment}`, one entry per holder.
 video:*	captions	unstated	required	no	CC 3.3.13	Source struct carries codec, duration, resolution, mandatory `captions` reference, AI-generation disclosure, license info.
 video:*	derived_from	unstated	unstated	no	CC 5.1	The recording is the after-the-fact `video` blob with `derived_from: stream_id`

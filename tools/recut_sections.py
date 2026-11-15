@@ -98,6 +98,7 @@ GENERATORS = [
     "python3 tools/build_cc_namespace.py",
     "python3 tools/cc_namespace_match.py --write-vectors",
     "python3 tools/build_cc_signed_object.py",
+    "python3 tools/build_cc_signed_object_v2.py",
     "python3 tools/build_governance_policy.py",
     "python3 tools/build_csd4_chain.py",
     "python3 tools/topology_to_cfg.py --all",
@@ -380,13 +381,23 @@ def generated_lines(path, lines):
         return skip
     if not path.startswith("constitution/part_"):
         return skip
+    inside = False
+    for i, l in enumerate(lines):                               # a marked block: the markers and what they hold
+        if re.match(r"^<!-- BEGIN GENERATED: [\w-]+ -->$", l.strip()):
+            inside = True
+        if inside:
+            skip.add(i)
+        if re.match(r"^<!-- END GENERATED: [\w-]+ -->$", l.strip()):
+            inside = False
+    marks = set(skip)
     for i, l in enumerate(lines):
         m = HEAD.match(l)
-        if m and m.group(3) == "signed-object":                 # CC 2.6.1.7: heading kept, body generated
-            j = i + 1
+        if m and m.group(3) in ("signed-object", "signed-object-members"):   # a signed-object table with no markers:
+            j = i + 1                                                          # the body to the next heading
             while j < len(lines) and not re.match(r"^#{2,6}\s+\d", lines[j]):
-                skip.add(j)
                 j += 1
+            if not marks.intersection(range(i + 1, j)):
+                skip.update(range(i + 1, j))
         if m and m.group(3) == "family-cards":                  # CC 8.10: the whole section to the end
             skip.update(range(i + 1, len(lines)))
         if "The rows are these, generated into this section from the table:" in l:   # CC 4.5.13 table

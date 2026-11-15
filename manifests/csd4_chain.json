@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "b6af2d7b7c3731af4f75524c8624a0e9fd9329966ac4ce9214eb6b1769c30094",
+   "state_table_sha256": "7ae4a6e2be0562e20d292da802478b3a04dcc62b477ddc33477f7625ae50abe4",
    "invariants_sha256": "e0261d6e7c50af300bca07bc26591efa27bed4bc09fe680cc3e81dd37d41c518",
-   "vocabulary_sha256": "a976e0619c4d9b1705ba721924bc42391796ffec10b6e84127a46c41fc045556",
+   "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "d3a7016cac4da7cf42d16bea25cd90c55e18a26ab83412228b7f6d393d419839",
+   "claims_sha256": "c6d8acb5929c252c7f914e4219b5dc93071a08d392595436b9fc71a763db7056",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -32,14 +32,14 @@
    "invariants": 221,
    "claims": 603,
    "entries": 20,
-   "refusal_tokens": 98
+   "refusal_tokens": 99
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "adc1c067a8ead271975e353923efdd2f595c53cf75dfac47ae31f7f413c8eb4b"
+  "chain_sha256": "91f24cab41c7284e7c1ac6820249bb20623656fa36fb0f3afee8418173e39ba1"
  },
  "chain": [
   {
@@ -14757,14 +14757,14 @@
   "file.large": {
    "plane": "content",
    "state_predicate": "blob.delivery=chunked",
-   "cc_ref": "2.6.1.4 5.3.3",
+   "cc_ref": "8.11.5 5.3.3",
    "added_in": 1,
    "states": [
     {
      "variable": "blob.delivery",
      "state": "chunked",
      "plane": "content",
-     "cc_ref": "2.6.1.4 5.3.3 5.3.3.11",
+     "cc_ref": "8.11.5 5.3.3 5.3.3.11",
      "enters_by": "above the cap: chunk plane, chunk-DAG, per-device delivery receipts",
      "signer": "producer",
      "model_ref": "mesh_life.MeshLife.tla:Write",
@@ -14775,7 +14775,7 @@
    "claims": [
     {
      "claim_id": "CLM-canonical",
-     "cc_ref": "2.6.1.4",
+     "cc_ref": "8.11.5",
      "status": "established",
      "join": "by_section",
      "evidence": [
@@ -14791,7 +14791,7 @@
     },
     {
      "claim_id": "CLM-envelope-size",
-     "cc_ref": "2.6.1.4",
+     "cc_ref": "8.11.5",
      "status": "established",
      "join": "by_section",
      "evidence": [
@@ -37447,14 +37447,14 @@
   "row.standing.admitted": {
    "plane": "content",
    "state_predicate": "row.standing=admitted",
-   "cc_ref": "2.1 2.6.1.8",
+   "cc_ref": "2.1 8.11.9",
    "added_in": 2,
    "states": [
     {
      "variable": "row.standing",
      "state": "admitted",
      "plane": "content",
-     "cc_ref": "2.1 2.6.1.8",
+     "cc_ref": "2.1 8.11.9",
      "enters_by": "admission gates pass",
      "signer": "producer",
      "model_ref": "withdraws_admission.WithdrawsAdmission.tla:admitted",
@@ -53108,6 +53108,10 @@
   "access_control_model": {
    "4.4.3.12": "bold"
   },
+  "accord_holder": {
+   "2.4.1.1": "after_refusal",
+   "2.6.1.7": "after_refusal"
+  },
   "accountable_root": {
    "4.5.5": "bold"
   },
@@ -53211,10 +53215,11 @@
    "4.4.3.12": "bold"
   },
   "envelope_member_missing": {
-   "2.6.1.8": "after_refusal"
+   "8.11.9": "after_refusal"
   },
   "envelope_member_null": {
-   "2.6.1.2": "after_refusal"
+   "2.6.1.2": "after_refusal",
+   "8.11.3": "after_refusal"
   },
   "erasure_policy": {
    "4.4.3.12": "bold",
@@ -53230,24 +53235,26 @@
   },
   "federation_malformed_row": {
    "2.6.1.2": "after_refusal",
-   "2.6.1.8": "after_refusal",
    "3.1.9.7": "after_refusal",
    "5.3.6.1": "after_refusal",
-   "6.1.1": "after_refusal"
+   "6.1.1": "after_refusal",
+   "8.11.3": "after_refusal",
+   "8.11.9": "after_refusal"
   },
   "federation_rendezvous_key_not_an_identity": {
    "3.1.4": "after_refusal"
   },
   "federation_set_semantics_unsorted": {
-   "2.6.1.2": "bold",
-   "2.6.1.8": "after_refusal"
+   "2.6.1.2": "after_refusal",
+   "8.11.3": "bold",
+   "8.11.9": "after_refusal"
   },
   "federation_trace_dimension_invalid": {
    "3.4.5": "after_refusal"
   },
   "federation_withdraws_not_admitted": {
    "2.4.1.1": "after_refusal",
-   "2.6.1.8": "after_refusal"
+   "8.11.9": "after_refusal"
   },
   "fold_source_count_exceeded": {
    "6.1.2.3": "after_refusal"
@@ -53271,7 +53278,8 @@
    "2.4.1.1": "after_refusal"
   },
   "key_record_out_of_window": {
-   "2.4.1.1": "after_refusal"
+   "2.4.1.1": "after_refusal",
+   "2.6.1.7": "after_refusal"
   },
   "lawful_access": {
    "4.4.3.12": "bold"
@@ -53360,10 +53368,10 @@
    "6.1.3": "bold"
   },
   "revoked_after": {
-   "2.4.1.1": "after_refusal"
+   "8.11.13": "after_refusal"
   },
   "revoked_key_sha256_ed25519_raw": {
-   "2.4.1.1": "bold"
+   "8.11.13": "bold"
   },
   "run_kind": {
    "3.1.5": "bold"
@@ -53407,7 +53415,7 @@
    "3.2": "after_refusal"
   },
   "typed_diverges_from_envelope": {
-   "2.6.1.8": "after_refusal"
+   "8.11.9": "after_refusal"
   },
   "under_13": {
    "3.1.2": "after_refusal",

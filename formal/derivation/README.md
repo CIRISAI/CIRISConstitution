@@ -53,8 +53,8 @@ pointing elsewhere is a row of its own, so the table counts repeats.
 The cut-candidates table gives `file`, `line_start`, `line_end`, `kind` (`rationale`,
 `restated_block`, `informative`, `example`, `duplicate_table`, `history`), `bytes` and a note.
 
-Headline numbers: 4,353 statements (Part 3 1,525, Part 4 955, Part 2 696, Part 5 644, Part 6 226,
-Part 1 154, Part 7 153); by scope family 1,864, kernel 1,344, mechanism 727, foundation 217,
+Headline numbers: 4,353 statements (Part 3 1,525, Part 4 955, Part 5 644, Part 2 499, Part 6 226,
+Part 8 197, Part 1 154, Part 7 153); by scope family 1,864, kernel 1,344, mechanism 727, foundation 217,
 stewardship 201; by role states 3,355, restates 688, applies 244, exception 66. 206 cut-candidate
 blocks, about 260 KB.
 
@@ -93,7 +93,7 @@ lost capacity (CC 3.4.12, 35 statements) reuses the same row and lands as its ow
 `row_shape` at CC 2.1 (43 statements): the members a signed row carries, in three tables: those
 every row carries, those any row may carry with the reading when one is absent, and those one
 family requires. Each member's type, placement and presence rule stay in the generated table of
-CC 2.6.1.8, so the entry says what a member means and the table says how it is written. The
+CC 8.11.9, so the entry says what a member means and the table says how it is written. The
 sentences that had sat inside table cells (whom a targeted row may name, what a subject key may
 do, the oversight-mode shift, cosignatures beside the row) are short titled paragraphs under the
 tables, and the rules they belong to cite them there.

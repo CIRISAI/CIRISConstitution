@@ -555,7 +555,8 @@ limits that folder's README lists.
 
 **A reader's own line.** A reader that has acknowledged a head does not let a line from below that head
 displace it: for that reader such a line is void, however many rows it has. A sibling of the acknowledged head
-waits as a tip, and a version naming both is accepted. This is each reader's own, and it ranks no line for
+names an older head outside its past, so for that reader it is void too; a reader with no acknowledgement
+holds the two as tips (`Reader.sibling_by_acknowledgement`). A version naming both is accepted. This is each reader's own, and it ranks no line for
 anyone else.
 
 **No line wins by being longer.** A rule was tried under which a counted row left behind every counted act

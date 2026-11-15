@@ -1,0 +1,111 @@
+object	rule	member	logical_name	placement	type	required_when	cc_ref	note
+statement	COSE_Sign1	protected	-	statement	bstr .cbor statement-protected	always	2.6.1.1 2.6.1.2	The protected header as bytes, in deterministic encoding and with exactly its five members; the signature covers them.
+statement	COSE_Sign1	unprotected	-	statement	unprotected-header	always	2.6.1.1	Never signed; a rule never reads it.
+statement	COSE_Sign1	payload	-	statement	bstr .cbor attestation-envelope	always	2.6.1.1 2.6.1.2	The payload as bytes, in deterministic encoding; a payload that is not the deterministic re-encoding of the value it decodes to is refused. Never nil.
+statement	COSE_Sign1	signature	scrub_signature_classical, scrub_signature_pqc	statement	composite-signature	always	2.6.1.7	The composite ML-DSA-65 with Ed25519 signature, 3373 bytes; neither half verifies alone.
+unprotected	unprotected-header	17	sd_claims	header:unprotected	[+ bstr .cbor sd-disclosure]	when disclosures are presented beside the statement	2.6.1.10	sd_claims of SD-CWT: disclosures as presented to one who may see them; they travel and are held as bytes, never in the row.
+protected	statement-protected	1	-	header:protected	composite-alg	always	2.6.1.7	alg: -70100, the composite; a private-use identifier until one is assigned.
+protected	statement-protected	3	-	header:protected	row-cty	always	2.6.1.1	cty: application/vnd.ciris.row+cbor, with no parameters; any other is refused.
+protected	statement-protected	-70001	attestation_type	header:protected	row-type	always	2.6.1.1	The row's type, one of the five; refused on any object that is not a row. The row id reads it.
+protected	statement-protected	-70002	-	header:protected	family-id	always	2.6.1.1	The row's family id, never a leaf; the payload's dimension MUST resolve to it. The row id reads it.
+protected	statement-protected	4	attesting_key_id	header:protected	kid	always	2.6.1.7	kid: the 32-byte thumbprint of the signer's composite key, fixed for the key's life.
+protected	statement-protected	15	-	header:protected	cwt-claims	always	2.6.1.1	The CWT claims.
+protected	statement-protected	16	-	header:protected	"ceg-row/2"	always	2.6.1.1 2.6.1.11	typ: ceg-row/2 for every row.
+cwt	cwt-claims	1	attesting_key_id	header:cwt	identity-ref	always	2.6.1.1 2.6.1.7	iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the room key's own.
+cwt	cwt-claims	2	attested_key_id	header:cwt	tstr	always	2.6.1.1 2.6.1.3	sub: what the row is about; a key subject is an identity reference; the row id reads it.
+cwt	cwt-claims	6	-	header:cwt	uint	always	2.6.2	iat: floor(asserted_at / 1000); a disagreement is refused.
+cwt	cwt-claims	5	-	header:cwt	uint	iff the payload carries valid_from	2.6.2	nbf: floor(valid_from / 1000); a disagreement is refused.
+cwt	cwt-claims	4	-	header:cwt	uint	iff the payload carries valid_until	2.6.2	exp: floor(valid_until / 1000); a disagreement is refused.
+cwt	cwt-claims	-70003	-	header:cwt	2	always	2.6.1.1	edition: the constant 2.
+payload	attestation-envelope	"author"	attesting_key_id	payload	identity-ref	iff the family is authored	2.6.1.3 2.6.1.9	The iss of the author, read by the row id from the payload. A counted family carries none, and its row id takes null.
+payload	attestation-envelope	"refs"	references_attestation_id	payload	refs	iff the row names a row	2.6.1.3	Every row this row names, and the only member that names a row; never empty.
+payload	attestation-envelope	"dimension"	dimension	payload	tstr	where the family scores a dimension	2.6.1.1	The full scored dimension, leaf and version; it resolves to the family id of label -70002, and is refused otherwise.
+payload	attestation-envelope	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	where the row cites a blob	2.6.1.6 2.6.1.2	The blobs the row cites, by content hash: a sequence, bytes never hex.
+payload	attestation-envelope	"carried"	-	payload	hash-digest	on an acknowledgement of a scope the ceremony carries over	2.6.1.12	The RFC 9162 root over the earlier-form names the scope carries.
+payload	attestation-envelope	"seat_commitment"	-	payload	hash-digest	on the seat row of a room key of a private room	2.6.1.11	The commitment to the seat's person, which the binding opens.
+payload	attestation-envelope	"score"	score	payload	fixed6-score	where the family carries a score	2.6.1.5	fixed6 in [-10^6, 10^6]; an indeterminate result has none.
+payload	attestation-envelope	"confidence"	confidence	payload	fixed6-unit	where the family carries a confidence	2.6.1.5	fixed6 in [0, 10^6].
+payload	attestation-envelope	"weight"	weight	payload	fixed6-weight	where the family carries a weight	2.6.1.5	fixed6 in [0, 10^6] unless the family states a wider range.
+payload	attestation-envelope	"passed"	passed	payload	count32	on a safety-battery interpret row	2.6.1.5	At most total; with total, the input the score is derived from in integers and checked by exact equality.
+payload	attestation-envelope	"total"	total	payload	1..4294967295	on a safety-battery interpret row	2.6.1.5	At least 1; present iff passed is.
+payload	attestation-envelope	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+payload	attestation-envelope	"valid_from"	valid_from	payload	ms-time	where the row states a start	2.6.2	POSIX milliseconds.
+payload	attestation-envelope	"valid_until"	valid_until	payload	ms-time	where the row states its own end	2.6.2	POSIX milliseconds; the row's own end, read from the statement alone.
+payload	attestation-envelope	"expires_at"	expires_at	payload	ms-time	where the family states it	2.6.2	POSIX milliseconds.
+payload	attestation-envelope	"reason"	reason	payload	uint	where the family carries a reason	2.6.1.10	A code from a closed registry; 0 is unspecified.
+payload	attestation-envelope	"salt"	salt	payload	bstr .size 16	where the content is low-entropy	2.6.1.3	Sixteen random bytes bound by every signer, so neither the row id nor a statement id confirms a guess.
+payload	attestation-envelope	redacted_claim_keys	-	payload	[+ bstr .size 32]	where a member of the payload was minted blind	2.6.1.10	SD-CWT simple(59): the digests of the payload's blinded members, in mint order: a sequence.
+payload	attestation-envelope	"body"	-	payload	body	where the family carries a body	2.6.1.10	The family's body.
+payload	body	"note"	context	payload:body	tstr .size (0..2048)	where the row carries a note	2.6.1.10	At most 2,048 bytes; blinded first where the family's erasure route is a subject request or a purge.
+payload	body	redacted_claim_keys	-	payload:body	[+ bstr .size 32]	where a member of the body was minted blind	2.6.1.10	SD-CWT simple(59): the digests of the body's blinded members, body.note among them; a sequence.
+refs	refs-members	"head"	-	payload:refs	row-ref	on a counted row, and on a roster version	2.6.1.9	The roster head the row is counted over, inside what every voice signs.
+refs	refs-members	"further_heads"	-	payload:refs	row-ref-set	where a row names further tips	2.6.1.9 2.6.1.2	Further tips beside head: a set.
+refs	refs-members	"prev"	-	payload:refs	row-ref	where a signer's own series names its predecessor	2.6.1.11	The predecessor in a signer's own series.
+refs	refs-members	"answers"	-	payload:refs	row-ref	where the row answers a row	2.6.1.3	The proposal voted on or accepted, the window opened, the row replied to.
+refs	refs-members	"target"	-	payload:refs	row-ref	on a supersession, withdrawal, recantation, cut or removal	2.6.1.3	The row superseded, withdrawn, recanted, cut or removed.
+refs	refs-members	"trusted_through"	-	payload:refs	row-ref-set	on a key revocation that names rows held good	2.6.1.11 2.6.1.2	The last rows of the revoked key held good: a set.
+refs	refs-members	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names any other row	2.6.1.3 2.6.1.2	Any other named row, under a role of the closed registry: ack or cites; each list a set.
+row_id	row-id-input	type	attestation_type	derived	row-type	always	2.6.1.3	The type of label -70001, one of the five, as a text string.
+row_id	row-id-input	family	-	derived	family-id	always	2.6.1.3	The family id of label -70002, as a text string.
+row_id	row-id-input	sub	-	derived	tstr	always	2.6.1.3	The CWT sub.
+row_id	row-id-input	author	attesting_key_id	derived	identity-ref / null	always	2.6.1.3	The payload's author for an authored family; null for a counted one.
+row_id	row-id-input	payload	-	derived	bstr .cbor attestation-envelope	always	2.6.1.3	The payload bytes as signed, entered as a byte string, never as the decoded map.
+row_id	hash-digest	alg	-	derived	-16	always	2.6.1.3	-16, SHA-256: one name per row.
+row_id	hash-digest	digest	-	derived	bstr .size 32	always	2.6.1.3	Thirty-two bytes.
+row_id	row-ref	edition	-	derived	1 / 2	always	2.6.1.3 2.6.1.12	2 for a signed object of this form, 1 for one of the earlier form.
+row_id	row-ref	id	attestation_id	derived	hash-digest	always	2.6.1.3 2.6.1.12	The row id or object id; for the earlier form, the SHA-256 of the message of its Ed25519 half, by a per-family rule.
+statement_id	statement-id-input	protected	-	derived	bstr	always	2.6.1.3	The protected header bytes as signed.
+statement_id	statement-id-input	payload	-	derived	bstr	always	2.6.1.3	The payload bytes as signed; the statement id names one voice, the row id names the row.
+key	ceg-key	1	-	object	7	always	2.6.1.7	kty 7, AKP.
+key	ceg-key	3	-	object	composite-alg	always	2.6.1.7	alg: -70100, the composite.
+key	ceg-key	-1	pubkey_ed25519_base64, pubkey_ml_dsa_65_base64	object	bstr .size 1984	always	2.6.1.7	pub: the ML-DSA-65 public key then the Ed25519 public key, one byte string.
+key_record	key-record-members	"key"	-	payload	ceg-key	always	2.6.1.7	The composite key.
+key_record	key-record-members	"identity_type"	identity_type	payload	[+ tstr]	always	2.6.1.7 2.4.1.1	A set of roles; user or accord_holder never with node or agent.
+key_record	key-record-members	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+key_record	key-record-members	"valid_until"	valid_until	payload	ms-time	as the key's end rule states	2.6.1.7	Absent where the set contains user or accord_holder; required where it contains node or agent, unless a room key of a private room; a set mixing the two groups is refused. At most key_record_max_secs after asserted_at.
+object	ceg-object-statement	protected	-	statement	bstr .cbor object-protected	always	2.6.1.11	The protected header of a signed object that is not a row, in deterministic encoding.
+object	ceg-object-statement	unprotected	-	statement	unprotected-header	always	2.6.1.11	Never signed; a rule never reads it.
+object	ceg-object-statement	payload	-	statement	bstr	always	2.6.1.11	The deterministic encoding of the rule its typ names.
+object	ceg-object-statement	signature	-	statement	composite-signature	always	2.6.1.7	The composite signature.
+object	object-protected	1	-	header:protected	composite-alg	always	2.6.1.7	alg: -70100.
+object	object-protected	4	-	header:protected	kid	always	2.6.1.7	kid: the signer's key thumbprint.
+object	object-protected	15	-	header:protected	object-claims	always	2.6.1.11	The CWT claims.
+object	object-protected	16	-	header:protected	object-typ	always	2.6.1.11	typ: one of the closed list.
+object	object-claims	1	-	header:cwt	identity-ref	always	2.6.1.11	iss.
+object	object-claims	6	-	header:cwt	uint	where the object states an instant	2.6.1.11	iat; a revocation snapshot carries none.
+object	object-claims	-70003	-	header:cwt	2	always	2.6.1.11	edition: the constant 2.
+object	object-id-input	typ	-	derived	object-typ	always	2.6.1.11	The object's typ.
+object	object-id-input	author	-	derived	identity-ref / null	always	2.6.1.11	The payload's author, or null where it has none.
+object	object-id-input	payload	-	derived	bstr	always	2.6.1.11	The payload bytes as signed.
+snapshot	revocation-snapshot	"author"	-	object	identity-ref	always	2.6.1.11	The signer, so the object id, prev and seq are one signer's.
+snapshot	revocation-snapshot	"refs"	-	object	refs	always	2.6.1.11	prev, absent on the first; the acknowledgement of the head of the revocation scope under also ack.
+snapshot	revocation-snapshot	"seq"	-	object	uint	always	2.6.1.11	Strictly greater than prev's; it orders one signer's own snapshots only. One seq with two contents is contested, and neither counts.
+snapshot	revocation-snapshot	"revoked"	-	object	[* revoked-entry]	always	2.6.1.11 2.6.1.2	A set, with no winner across signers.
+snapshot	revoked-entry	key	-	object	kid	always	2.6.1.11	The revoked key's thumbprint, the same bytes as its kid.
+snapshot	revoked-entry	revocation	-	object	row-ref	always	2.6.1.11	The revocation row.
+snapshot	revoked-entry	trusted_through	-	object	[* row-ref]	always	2.6.1.11 2.6.1.2	The last rows of the revoked key held good: a set.
+genesis	ceg-genesis-bundle	"refs"	-	object	refs	on every genesis bundle that has a predecessor	2.6.1.11	prev, and under also ack the acknowledgement of each scope carried over.
+genesis	ceg-genesis-bundle	"version"	-	object	uint	always	2.6.1.11	A sequence from 1: prev's version plus one where prev is of this form, a consistency check only.
+cutover	cutover-proof	ceremony	-	object	row-ref	always	2.6.1.12	The name of the ceremony row.
+cutover	cutover-proof	links	-	object	[+ link]	always	2.6.1.12	A sequence, the ceremony's statement first, each later link named by the one before.
+cutover	inclusion	tree_size	-	object	uint	always	2.6.1.12	The size of the carried set.
+cutover	inclusion	leaf_index	-	object	uint	always	2.6.1.12	A position in the sorted carried set, never a log position or an instant.
+cutover	inclusion	path	-	object	[* bstr .size 32]	always	2.6.1.12	The RFC 9162 inclusion path.
+room	seat-commitment-input	room	-	derived	tstr	always	2.6.1.11	The room's id as its rows carry it.
+room	seat-commitment-input	room_key	-	derived	kid	always	2.6.1.11	The room key's thumbprint.
+room	seat-commitment-input	person	-	derived	identity-ref	always	2.6.1.11	The person's identity reference.
+room	seat-commitment-input	nonce	-	derived	bstr .size 32	always	2.6.1.11	Thirty-two fresh random bytes.
+disclosure	salted-claim	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes.
+disclosure	salted-claim	value	-	object	ceg-value	always	2.6.1.10	The blinded member's or element's value.
+disclosure	salted-claim	key	-	object	tstr	always	2.6.1.10	The blinded member's name; the digest is SHA-256 over the disclosure's bytes as sd_claims carries them.
+disclosure	salted-element	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes.
+disclosure	salted-element	value	-	object	ceg-value	always	2.6.1.10	The blinded member's or element's value.
+logical	-	the row id	attestation_id	none	-	-	2.6.1.3	Computed by every holder from the statement; the same for every voice of a counted row.
+logical	-	kid, iss and author	attesting_key_id	none	-	-	2.6.1.7	kid names the signing key; iss the signer's stable identity; author the author of an authored row.
+logical	-	label -70001	attestation_type	none	-	-	2.6.1.1	One of the five.
+logical	-	sub	attested_key_id	none	-	-	2.6.1.1	-
+logical	-	a member of refs	references_attestation_id	none	-	-	2.6.1.3	Under the label the family's role gives it.
+logical	-	a further statement over the same payload	additional_scrubs	none	-	-	2.6.1.9	Each voice is its own statement, found by the row id.
+logical	-	none	original_content_hash	none	-	-	2.6.1.12	An earlier-form row is named by the SHA-256 of the message of its Ed25519 half.
+logical	-	none	row	none	-	-	2.6.1.1	The protected header carries type, family and kid; the CWT claims carry iss and sub.
+logical	-	body.note	context	none	-	-	2.6.1.10	Bounded; no free text outside it.

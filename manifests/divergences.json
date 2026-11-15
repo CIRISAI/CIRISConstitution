@@ -6546,7 +6546,7 @@
       "any"
      ]
     ],
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "quote": "OPTIONAL on moderation:*",
     "param": {
      "family": "moderation:{allegation_type}",

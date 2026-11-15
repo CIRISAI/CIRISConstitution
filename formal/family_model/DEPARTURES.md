@@ -169,7 +169,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A halt or a roster act counts only toward the accord it names. A row that names no accord, or one the reader does not hold, is refused when the rows are read.
 
-**Text.** CC 2.6.1.8: "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold"
+**Text.** CC 8.11.9: "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold"
 
 | column | families |
 |---|---|
@@ -715,7 +715,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** The recipient field names the addressed recipient. Such a row is held by its author's node and that key's node and by no other.
 
-**Text.** CC 2.6.1.8: "Also carried on consent:state rows."
+**Text.** CC 8.11.9: "Also carried on consent:state rows."
 
 | column | families |
 |---|---|

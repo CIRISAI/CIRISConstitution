@@ -1,6 +1,6 @@
 # The Wire
 
-**What this is.** The specification an implementer builds a second, independent producer and consumer from: the envelope and its members (2.1), the closed set of five row types (2.4), the signed object and its byte vectors (2.6.1.8), canonicalisation and its determinism rules (2.6), identifiers and time (2.6.2 to 2.6.8), and the transport, custody, key and privacy rules of Part 5 with the adversary model of 1.13.3.
+**What this is.** The specification an implementer builds a second, independent producer and consumer from: the envelope and its members (2.1), the closed set of five row types (2.4), the signed object and its byte vectors (8.11.9), canonicalisation and its determinism rules (2.6), identifiers and time (8.11.10 to 2.6.8), and the transport, custody, key and privacy rules of Part 5 with the adversary model of 1.13.3.
 
 **Whom it binds.** Any CEG-Conforming Producer, Consumer or Substrate. Conformance is judged against this volume, *The Dictionary* (the reservations and admission rules of 3.4 and 3.5) and *The Reader's Policies* (the composition policies of 4.4).
 
