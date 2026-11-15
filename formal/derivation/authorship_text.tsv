@@ -1,0 +1,53 @@
+# Who signs a family's row, as the text states it: whether the row is authored or counted, and which roles besides the author sign it.
+# Applied by tools/build_family_model.py as the `authorship` and `second_signers` cells (CC 2.6.1.3, CC 2.6.1.9).
+# column authorship: value authored | counted | gap. Counted: the row is several statements over one payload, admitted by a count over a roster, and its author is null.
+#   Authored: one party authors the row. A family with no row here is authored; a family whose count cell names a policy row is listed here either way.
+#   selector: `*` or tests joined by " & " on the keys of count_text.tsv (leaf, verb, identity, group, seats), arms in order, the first that holds deciding.
+#   gap: the text gives both readings and no selector key names the case; the quote states it, and the family is listed in the gap count.
+# column second_signers: value role=member. A role whose statement over the same payload the row accepts besides the author's; member is the payload member
+#   that names the party, `sub` where the party is the attested key, or `gap` where the text names no member. A family with no row here: only the author signs.
+# The quote must stand verbatim in the cited section.
+family	column	selector	value	cc_ref	quote
+group:roster	authorship	*	counted	CC 3.1.3	as a cosigned `scores` row
+transport:canonical_rebind	authorship	*	counted	CC 3.1.3	admitted at the accord charter's threshold
+accord:lifecycle:{kind}	authorship	*	counted	CC 3.4.1	a strict majority of the standing roster, one cosigned row naming the halt
+accord:lifecycle:{kind}	authorship	*	counted	CC 4.2.1.3	It is a cosigned row by a strict majority of the standing roster
+accord:*	authorship	leaf=lifecycle:{kind}	counted	CC 3.4.1	a strict majority of the standing roster, one cosigned row naming the halt
+accord:*	authorship	*	authored	CC 3.4.1	One accord holder's signed row
+accord:invoke:constitutional:{halt_id}	authorship	*	authored	CC 3.4.1	pre-signable, fired on receipt, no vote
+membership:{stage}	authorship	leaf=widening|removal	counted	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	authorship	*	authored	CC 3.1.3.2	The first three are single-signer (below)
+membership:{stage}	authorship	*	authored	CC 3.1.3.2	a resignation is signed by the leaving member
+identity:occurrence_revocation	authorship	identity=user	counted	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's current live roster**
+identity:occurrence_revocation	authorship	*	authored	CC 3.1.3	for an occurrence of a `node` or `agent` identity, which is single-signer in any case
+identity:occurrence	authorship	*	authored	CC 3.3.6.4	An addition or an eviction is a proposal signed by a live roster key; one open proposal per proposer.
+retirement:{state}	authorship	leaf=custodian_minted	counted	CC 7.5.5	one cosigned `retirement:custodian_minted:v1` row
+retirement:{state}	authorship	*	authored	CC 3.1.5	Self-emitted up to `retired` (attester = the agent key)
+takedown_notice:{basis}	authorship	leaf=steward_purge	counted	CC 2.4.1.1	authorised by a cosigned `takedown_notice` under the trust root's `consensus_protocol` with basis `steward_purge`
+takedown_notice:{basis}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	is admitted only when countersigned by a key outside the deciding seat
+takedown_notice:{basis}	authorship	*	authored	CC 4.4.3.19	A moderation action above is admitted **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
+quarantine:{state}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	is admitted only when countersigned by a key outside the deciding seat
+quarantine:{state}	authorship	*	authored	CC 4.4.3.19	A moderation action above is admitted **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
+slashing:{outcome}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	is admitted only when countersigned by a key outside the deciding seat
+slashing:{outcome}	authorship	*	authored	CC 4.4.3.19	A moderation action above is admitted **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
+wa_adjudication:{state}	authorship	leaf=abandonment|seizure|successor	counted	CC 4.3	A finding of the designated body is one row cosigned under that body's declared protocol
+wa_adjudication:{state}	authorship	*	authored	CC 3.1.9.4	`petition` is the petitioner's own row
+ballot:moderator	authorship	*	authored	CC 4.5.13	There is **one ballot per person** however many keys they hold
+ballot:moderator_acceptance	authorship	*	authored	CC 4.5.13	**The winner accepts by their own row**
+content_class:{class}	authorship	*	authored	CC 3.3.12	a member of a room signs it against a row at the room's scope
+collection:{kind}	authorship	*	gap	CC 3.1.3.4	an amendment (rename, move) is its author's, or the cohort's under its `consensus_protocol` where the cohort's rules say so
+trust:{job}:{version}	authorship	*	gap	CC 3.4.5	whose scrub set is the family's own roster reaching its `consensus_protocol`
+licensure:{authority_id}	authorship	*	gap	CC 2.4	for `licensure:{community_key_id}` ([CC 2.4.1.3](#2.4.1.3)) — the authority community named in the dimension
+self:delegates_to	second_signers	*	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
+self:delegates_to	second_signers	*	delegate_owner=gap	CC 4.4.3.19	For a node's or an agent's key, its owner consents too.
+self:delegates_to:agent_occurrence	second_signers	*	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
+self:delegates_to:agent_occurrence	second_signers	*	delegate_owner=gap	CC 4.4.3.19	For a node's or an agent's key, its owner consents too.
+trust:{job}:{version}	second_signers	leaf=confers	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
+trust:{job}:{version}	second_signers	leaf=confers	delegate_owner=gap	CC 4.4.3.19	For a node's or an agent's key, its owner consents too.
+ownership:{relation}:{target_kind}:{version}	second_signers	*	bound_node=sub	CC 3.2	So an owner-binding counts toward ownership only when the node's own key cosigned it
+ownership:{relation}:{target_kind}:{version}	second_signers	*	bound_node=sub	CC 3.4.5	`attesting_key_id` MUST be the live owner of `attested_key_id`
+key:record	second_signers	*	predecessor_key=gap	CC 3.1.3	rotation is the next key's record cosigned by the old key
+key:record	second_signers	*	anchor=gap	CC 3.1.3	An anchor scrub, a root conferral or an accord co-scrub (`infra:attest`, conferred roles) is a cosignature
+retirement:{state}	second_signers	leaf=retired|custodian_minted	custodian=gap	CC 7.5.5	holds custody only with its own consent: its signature on that row, or a row of its own that names it
+group:roster	second_signers	*	listed_member=gap	CC 3.1.3.2	A founding record seats a listed member iff that member **signed** the record
+ledger:checkpoint:{unit}:{version}	second_signers	*	witness=gap	CC 3.3.10.1	A co-witnessed balance snapshot at sequence N supersedes the detail below it

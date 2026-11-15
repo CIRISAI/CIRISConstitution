@@ -1645,6 +1645,8 @@ A family with no card states none of these beyond the default row. Cards: 118 of
 
 Count: `none`
 
+Authorship: `leaf=lifecycle:{kind} => counted ; authored` (CC 3.4.1)
+
 Fold:
 - `weight=rate(hardware_class); by=reader` (CC 4.2.2)
 - `reads=own&cites(hardware_custody:{platform}); weight=rate(hardware_class); by=reader` (CC 4.2.2.1)
@@ -1671,6 +1673,8 @@ Body: `accord_root`
 | attest | holder | mirror `accord_halt` | true (by_scope) | true (always) | none |
 
 Count: `accord_halt@accord` (CC 4.2.1.1)
+
+Authorship: `authored` (CC 3.4.1)
 
 In time:
 - expiry none (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
@@ -1723,6 +1727,8 @@ Body: `accord_root`
 | attest | holder | mirror `accord_halt`, `accord_majority` | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord` (CC 4.2.1.1, CC 4.2.1.3)
+
+Authorship: `counted` (CC 3.4.1, CC 4.2.1.3)
 
 Guard:
 - attest: `when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else exclude` (CC 4.2.1.3)
@@ -1874,6 +1880,8 @@ Body: `duration` (text only), `transcript` (text only)
 
 Count: `moderator_election@subject_group` (CC 4.5.13)
 
+Authorship: `authored` (CC 4.5.13)
+
 Guard:
 - attest: `each(val:ranks) member(key,object) else exclude` (CC 3.1.3)
 
@@ -1897,6 +1905,8 @@ Body: `ranks` (text only)
 | attest | winner | ranked `moderator_election` | true | true (always) | none |
 
 Count: `moderator_election@subject_group!result` (CC 4.5.13)
+
+Authorship: `authored` (CC 4.5.13)
 
 Guard:
 - attest: `set(ref:*) ballot:moderator@named[object=object] else void & winner(signer,object) else exclude & after(moderator_election) else exclude` (CC 3.1.3)
@@ -2136,6 +2146,8 @@ Fold:
 
 Count: `None`
 
+Authorship: open (CC 3.1.3.4)
+
 Change:
 - supersede: `replace: cascade=file:{version}/under:stand` (CC 3.1.3.4)
 
@@ -2338,6 +2350,8 @@ In time:
 | withdraw | author, subject | selfAct | false | false | attest |
 
 Count: `leaf=reported => moderation_action@subject_group` (CC 4.5.13)
+
+Authorship: `authored` (CC 3.3.12)
 
 In time:
 - [reported] clock `window` = `moderation_action.window_secs` (CC 4.5.13)
@@ -2568,6 +2582,10 @@ Body: `achieved_tier` (text only), `committed_tier` (text only), `fallback_reaso
 
 Count: `None`
 
+Authorship: `counted` (CC 3.1.3)
+
+Second signers: `listed_member` by `gap` (CC 3.1.3.2)
+
 Guard:
 - attest: `each(subject) when(type(key,node)) not founder(key,object) else exclude+community_consensus_protocol_violation` (CC 3.2)
 - attest: `each(subject) when(verb=attest) signs(key) else refuse(membership_founding_member_unsigned)+community_consensus_protocol_violation` (CC 3.1.3.2)
@@ -2657,6 +2675,8 @@ Body: `witness_relation`
 
 Count: `identity=user => self_roster_add@self ; none` (CC 3.3.6.4)
 
+Authorship: `authored` (CC 3.3.6.4)
+
 Change:
 - supersede: `replace: by=same_attester, reach=own_prior` (CC 4.4.3.23)
 - supersede: `replace[seat:serve]: after=transport:canonical_rebind, exclude=serve_transit_pair_rotation_before_rebind` (CC 3.1.3)
@@ -2682,6 +2702,8 @@ In time:
 | attest | member, owner, self (node_or_agent: owner, self; user_self: member) | selfAct | true (always) | true (always) | none |
 
 Count: `identity=node|agent => none ; identity=user => self_roster_evict@self` (CC 3.1.3)
+
+Authorship: `identity=user => counted ; authored` (CC 3.1.3)
 
 Change:
 - attest: `attest[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.22)
@@ -2719,6 +2741,8 @@ Body: `alt_text` (text only), `format` (text only)
 | supersede | author | selfAct | false | false | supersede |
 
 Count: `none`
+
+Second signers: `predecessor_key` by `gap` (CC 3.1.3); `anchor` by `gap` (CC 3.1.3)
 
 Guard:
 - attest: `when(verb=attest|replace,has=valid_until) not type(signer,user) else refuse(key_record_out_of_window)` (CC 2.4.1.1)
@@ -2796,6 +2820,8 @@ Body: `reference`, `scope`
 
 Count: `none`
 
+Second signers: `witness` by `gap` (CC 3.3.10.1)
+
 Change:
 - attest: `attest: reach=below_seq` (CC 3.1.3)
 
@@ -2822,6 +2848,8 @@ Body: `sequence`, `unit` (text only)
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
+
+Authorship: open (CC 2.4)
 
 Fold:
 - `reads=own&signer:authority` (CC 2.4.1.3)
@@ -2878,6 +2906,8 @@ Fold:
 | supersede | member | cosigned | false | false | supersede |
 
 Count: `leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group` (CC 3.1.3.2, CC 4.4.3.12)
+
+Authorship: `leaf=widening|removal => counted ; authored` (CC 3.1.3.2)
 
 Guard:
 - attest: `each(subject) when(leaf=widening) (one membership:acceptance@named[signer=key,object=object] as A & no membership:widening@named[ref:*=A.id] else void+community_consensus_protocol_violation)` (CC 3.1.3.2)
@@ -3035,6 +3065,8 @@ Body: `witness_relation`
 
 Count: `none`
 
+Second signers: `bound_node` by `sub` (CC 3.2, CC 3.4.5)
+
 Guard:
 - withdraw: `when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@named[id=ref:wa_adjudication_ref] else void & when(verb=withdraw,not has=wa_adjudication_ref) one ownership:{relation}:{target_kind}:{version}@named[id=ref:target,signer=signer] else void` (CC 3.4.5, CC 3.2)
 
@@ -3132,6 +3164,8 @@ Fold:
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.12)
+
+Authorship: `group=affiliations & seats=one => counted ; authored` (CC 4.4.3.12, CC 4.4.3.19)
 
 Fold:
 - `key=attested_key_id; pick=rank(withhold>release)` (CC 3.1.9.2)
@@ -3240,6 +3274,10 @@ In time:
 
 Count: `leaf=custodian_minted => custodian_replace ; none` (CC 7.5.5)
 
+Authorship: `leaf=custodian_minted => counted ; authored` (CC 7.5.5, CC 3.1.5)
+
+Second signers: `custodian` by `gap` when `leaf=retired|custodian_minted` (CC 7.5.5)
+
 Guard:
 - withdraw: `when(verb=withdraw,leaf=decided) no retirement:frozen@admitted[object=object] else exclude` (CC 7.5.5)
 
@@ -3275,6 +3313,8 @@ Fold:
 
 Count: `none`
 
+Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `gap` (CC 4.4.3.19)
+
 Fold:
 - `by=none` (CC 3.1.3)
 
@@ -3285,6 +3325,8 @@ Fold:
 | authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
+
+Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `gap` (CC 4.4.3.19)
 
 Fold:
 - `by=none` (CC 3.1.3)
@@ -3339,6 +3381,8 @@ Fold:
 
 Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.12)
 
+Authorship: `group=affiliations & seats=one => counted ; authored` (CC 4.4.3.12, CC 4.4.3.19)
+
 Guard:
 - attest: `one moderation:{allegation_type}@named[id=ref:evidence_refs] else void` (CC 3.4.11)
 - attest: `one other(ratchet:flag:*)@named[id=ref:evidence_refs] else void` (CC 3.1.6)
@@ -3355,6 +3399,8 @@ Guard:
 | withdraw | author | selfAct | false | false | attest |
 
 Count: `leaf=steward_purge => cosigned_act@trust_root ; group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 2.4.1.1, CC 4.4.3.12, CC 4.5.3)
+
+Authorship: `leaf=steward_purge => counted ; group=affiliations & seats=one => counted ; authored` (CC 2.4.1.1, CC 4.4.3.12, CC 4.4.3.19)
 
 Guard:
 - attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else exclude` (CC 4.5.5)
@@ -3406,6 +3452,8 @@ Fold:
 
 Count: `accord_majority@accord` (CC 3.1.3)
 
+Authorship: `counted` (CC 3.1.3)
+
 Change:
 - attest: `attest: by=cosigned, reach=other_attester, void=transport_rebind_without_holder_quorum` (CC 3.1.3)
 - attest: `attest: by=cosigned, reach=other_attester` (CC 3.1.3)
@@ -3432,6 +3480,10 @@ Guard:
 | authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `None`
+
+Authorship: open (CC 3.4.5)
+
+Second signers: `delegate` by `sub` when `leaf=confers` (CC 2.6.1.9); `delegate_owner` by `gap` when `leaf=confers` (CC 4.4.3.19)
 
 Guard:
 - authorize: `when(leaf=charter) each(val:witnesses) (not founder(key,object) else exclude & not member(key,object) else exclude)` (CC 2.1)
@@ -3488,6 +3540,8 @@ Fold:
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `None`
+
+Authorship: `leaf=abandonment|seizure|successor => counted ; authored` (CC 4.3, CC 3.1.9.4)
 
 Fold:
 - `over=seated@named/person` (CC 3.1.9.4)

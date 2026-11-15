@@ -59,6 +59,8 @@ COLUMNS = OrderedDict([
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
     ("count", "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)"),
+    ("authorship", "authored | counted | arms `selector => authored|counted` joined by ` ; `, on the count column's selector keys, the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)"),
+    ("second_signers", "[{role, member, when?, cc_ref}]: each role besides the author whose statement over the same payload the row accepts; member is the payload member that names the party, `sub` where the party is the attested key, or `gap` where the text names none; [] means only the author signs (formal/derivation/authorship_text.tsv)"),
     ("derived", "projection_id | none (the row must equal the named projection's rebuild; formal/derivation/confers_text.tsv)"),
     ("read_by", "the named answers that read the family's rows (state, stands, tally, may, audience, missing, owed, window), from the KX of its rule cells (tools/kx_translate.py over tools/kx_prelude.kx); `by` names each cell. A family with no cell of its own takes the default reading (state, stands) of the default fold and change: rule default, stated once and checked for none of the families it covers"),
     ("confers", "nothing | a permission (binds the signer: one row) | a seat (binds the placer and the holder: two consents) | an ending, with scope, conferrer, consent and ends (formal/derivation/family_shapes.tsv, confers_text.tsv)"),
@@ -534,6 +536,118 @@ def conferral_columns(fams, reg):
     return conf, segs, der, errs
 
 
+AUTHORSHIP_TEXT = os.path.join(ROOT, "formal/derivation/authorship_text.tsv")
+AUTHORSHIP_VALUES = ("authored", "counted", "gap")
+AUTHORSHIP_GAP_MAX = 3   # families whose authorship the text gives both ways with no selector to tell them; the number only falls
+SECOND_SIGNERS_GAP_MAX = 8   # roles whose payload member the text does not name; the number only falls
+SELECTOR_VALUE = r"[a-z_:{}]+(?:\|[a-z_:{}]+)*"
+
+
+def authorship_cells(stmts, rows, members, span=None):
+    """The `authorship` and `second_signers` cells (CC 2.6.1.3, CC 2.6.1.9) from formal/derivation/authorship_text.tsv.
+
+    authorship: arms `selector => authored|counted` in the style of the count column, the first that holds deciding; a family
+    with no row is authored. A family whose count cell names a policy row, or is open, is listed either way, and a counted arm
+    needs a count that is not none. second_signers: each role besides the author whose statement over the same payload the
+    row accepts, with the payload member that names the party (`sub` for the attested key, `gap` where the text names none).
+    Returns ({family: cell}, {family: cell}, errors)."""
+    span = span or section_span
+    errs, by = [], OrderedDict()
+    fams = {r["family"]: r for r in rows}
+    for i, s in enumerate(stmts):
+        where = f"authorship_text.tsv row {i + 1}: {s.get('family')} {s.get('column')}"
+        if s.get("family") not in fams: errs.append(f"{where}: no such family"); continue
+        if s.get("column") not in ("authorship", "second_signers"): errs.append(f"{where}: the column is authorship or second_signers"); continue
+        sel = s.get("selector") or ""
+        if sel != "*":
+            for t in sel.split(" & "):
+                mt = re.fullmatch(r"([a-z]+)=(%s)" % SELECTOR_VALUE, t)
+                if not mt or mt.group(1) not in COUNT_KEYS: errs.append(f"{where}: {t!r} is not a test on one of {', '.join(COUNT_KEYS)}")
+        sp = span(s.get("cc_ref"))
+        if sp is None or not s.get("quote") or s["quote"] not in sp: errs.append(f"{where}: the quoted words do not stand in {s.get('cc_ref')}"); continue
+        if s["column"] == "authorship" and s.get("value") not in AUTHORSHIP_VALUES:
+            errs.append(f"{where}: {s.get('value')!r} is not one of {', '.join(AUTHORSHIP_VALUES)}"); continue
+        if s["column"] == "second_signers":
+            m = re.fullmatch(r"([a-z_]+)=([a-z_]+)", s.get("value") or "")
+            if not m: errs.append(f"{where}: {s.get('value')!r} is not role=member"); continue
+            if m.group(2) not in ("sub", "gap") and m.group(2) not in members:
+                errs.append(f"{where}: {m.group(2)} is not sub, gap or a member the text names"); continue
+        by.setdefault(s["family"], OrderedDict()).setdefault(s["column"], []).append(s)
+    auth, second = OrderedDict(), OrderedDict()
+    def has_count(r):
+        cnt = r.get("count", {})
+        return cnt.get("source") == "gap" or (cnt.get("value") not in (None, "none"))
+    def leaf_families(fam, sel):   # a stem (`x:*`) names its leaf families by leaf; their own count cells hold the count
+        if not fam.endswith(":*"): return None
+        m = re.search(r"(?:^| & )leaf=(%s)" % SELECTOR_VALUE, sel)
+        return [fam[:-1] + v for v in m.group(1).split("|")] if m else None
+    for fam, r in fams.items():
+        cnt = r.get("count", {})
+        counts = has_count(r)
+        a = by.get(fam, {}).get("authorship", [])
+        if not a:
+            if counts: errs.append(f"authorship: {fam} has the count {cnt.get('value')!r} and no authorship row; state authored or counted with its sentence")
+            auth[fam] = OrderedDict([("value", "authored"), ("source", "generic"), ("note", "no counted arm: one party authors the row (CC 2.6.1.3)")])
+        elif any(x["value"] == "gap" for x in a):
+            if len(a) != sum(1 for x in a if x["value"] == "gap" and x["selector"] == "*"):
+                errs.append(f"authorship: {fam} is gap with other arms; a gap is the family's one arm, selector *")
+            auth[fam] = OrderedDict([("value", None), ("source", "gap"), ("cc_ref", list(dict.fromkeys(x["cc_ref"] for x in a))),
+                                     ("note", "the text gives both readings and no selector key names the case: " + " / ".join(x["quote"] for x in a))])
+        else:
+            arms_ = []
+            for x in a:
+                cur = next((y for y in arms_ if y["when"] == x["selector"]), None)
+                if cur is None: arms_.append(OrderedDict([("when", x["selector"]), ("value", x["value"]), ("cc_ref", [x["cc_ref"]])]))
+                elif cur["value"] != x["value"]: errs.append(f"authorship: {fam} gives the selector {x['selector']} two values")
+                elif x["cc_ref"] not in cur["cc_ref"]: cur["cc_ref"].append(x["cc_ref"])
+            if any(y["when"] == "*" for y in arms_[:-1]): errs.append(f"authorship: {fam}: an arm for every row is the last arm")
+            for y in arms_:
+                if y["value"] != "counted": continue
+                lf = leaf_families(fam, y["when"])
+                if lf is not None:
+                    bad = [x for x in lf if x not in fams or not has_count(fams[x])]
+                    if bad: errs.append(f"authorship: {fam}: the leaf families {', '.join(bad)} are not families with a count")
+                elif not counts: errs.append(f"authorship: {fam} is counted in an arm and its count is none; a counted row has a count")
+            if arms_[-1]["when"] != "*": arms_.append(OrderedDict([("when", "*"), ("value", "authored"), ("cc_ref", ["CC 2.6.1.3"]), ("rule", "default")]))
+            val = arms_[0]["value"] if len(arms_) == 1 else " ; ".join((y["when"] + " => " if y["when"] != "*" else "") + y["value"] for y in arms_)
+            auth[fam] = OrderedDict([("value", val), ("source", "cc-table"), ("arms", arms_),
+                                     ("cc_ref", list(dict.fromkeys(c for y in arms_ for c in y["cc_ref"] if y.get("rule") != "default")))])
+        ss = by.get(fam, {}).get("second_signers", [])
+        if not ss:
+            second[fam] = OrderedDict([("value", []), ("source", "generic"), ("note", "no role is named: the author's statement alone, or on a counted row the voices of its count")]); continue
+        ents = []
+        for x in ss:
+            role, member = x["value"].split("=")
+            cur = next((e for e in ents if (e["role"], e["member"], e.get("when", "*")) == (role, member, x["selector"])), None)
+            if cur is None:
+                e = OrderedDict([("role", role), ("member", member)])
+                if x["selector"] != "*": e["when"] = x["selector"]
+                e["cc_ref"] = [x["cc_ref"]]; ents.append(e)
+            elif x["cc_ref"] not in cur["cc_ref"]: cur["cc_ref"].append(x["cc_ref"])
+        gaps = sum(1 for e in ents if e["member"] == "gap")
+        second[fam] = OrderedDict([("value", ents), ("source", "cc-table" if not gaps else ("gap" if gaps == len(ents) else "mixed"))])
+        if gaps: second[fam]["note"] = "a member reading gap: the text names the role and not the payload member that names its party"
+    return auth, second, errs
+
+
+def authorship_self_test():
+    """The breaks the authorship check must catch, run every time: a misquote, an unknown selector key, a counted arm on a
+    family whose count is none, a family with a count and no row, a gap beside another arm, and a member the text never names."""
+    rows = [OrderedDict([("family", "a"), ("count", {"value": "none", "source": "generic"})]),
+            OrderedDict([("family", "b"), ("count", {"value": "x@self", "source": "cc-table"})])]
+    span = lambda ref: "the words stand here" if ref == "CC 1" else None
+    ok = dict(family="b", column="authorship", selector="*", value="counted", cc_ref="CC 1", quote="words stand")
+    breaks = [("misquote", [dict(ok, quote="not here")]), ("selector key", [dict(ok, selector="kind=x")]),
+              ("counted with no count", [dict(ok, family="a")]), ("count with no row", []),
+              ("gap beside an arm", [dict(ok, value="gap"), dict(ok, selector="leaf=y", value="counted")]),
+              ("unnamed member", [ok, dict(ok, column="second_signers", value="delegate=nobody")])]
+    _, _, clean = authorship_cells([ok], rows, set(), span)
+    missed = [] if not clean else ["a clean table: " + "; ".join(clean)]
+    for name, st in breaks:
+        if not authorship_cells(st, rows, set(), span)[2]: missed.append(name)
+    return missed
+
+
 # The named answers of formal/KERNEL.md 5, as tools/kx_prelude.kx writes them: each answer and the prelude functions that are it.
 ANSWERS = OrderedDict([("state", ("state", "state_in", "live", "live_in")),
                        ("stands", ("stands", "stands_in", "holders_in", "holder_units_in", "conferrers", "offers", "accepted")),
@@ -878,6 +992,23 @@ def main():
     count_open = [r["family"] for r in rows if r["count"]["source"] == "gap"]
     if len(count_open) > COUNT_OPEN_MAX:
         print(f"count: {len(count_open)} families have a cosign cell and no typed count, more than {COUNT_OPEN_MAX}: " + ", ".join(count_open)); return 1
+    # Who signs a row: authored or counted, and the roles beside the author (CC 2.6.1.3, CC 2.6.1.9).
+    missed = authorship_self_test()
+    if missed:
+        print("authorship: the check let through its deliberate breaks: " + ", ".join(missed)); return 1
+    auth, second, aerrs = authorship_cells(tsv_rows(AUTHORSHIP_TEXT), rows, fold_voc["tokens"])
+    if aerrs:
+        [print(e) for e in aerrs]; return 1
+    for r in rows:
+        fam, items = r["family"], list(r.items()); k = [x[0] for x in items].index("count") + 1
+        r.clear(); r.update(items[:k] + [("authorship", auth[fam]), ("second_signers", second[fam])] + items[k:])
+    auth_gap = [f for f, c in auth.items() if c["source"] == "gap"]
+    second_gap = [(f, e["role"]) for f, c in second.items() for e in c["value"] if e["member"] == "gap"]
+    if len(auth_gap) > AUTHORSHIP_GAP_MAX:
+        print(f"authorship: {len(auth_gap)} families are open, more than {AUTHORSHIP_GAP_MAX}: " + ", ".join(auth_gap)); return 1
+    if len(second_gap) > SECOND_SIGNERS_GAP_MAX:
+        print(f"second_signers: {len(second_gap)} roles name no payload member, more than {SECOND_SIGNERS_GAP_MAX}: " + ", ".join(f"{f} {x}" for f, x in second_gap)); return 1
+    a_kind = Counter("gap" if c["source"] == "gap" else (c["value"] if c["value"] in ("authored", "counted") else "mixed") for c in auth.values())
     # The default row: the value a family takes in each of these columns unless it states its own.
     # Pinned as data, and held to be the commonest value of its column, so a change of default is a
     # deliberate edit and never a drift. Each row lists the columns in which it departs.
@@ -932,6 +1063,11 @@ def main():
         ("conferral", OrderedDict([(col, OrderedDict(sorted(Counter(r[col].get("rule") or r[col]["source"] for r in rows).items()))) for col in ("confers", "binds_segment", "derived", "read_by")] +
                                   [("read_by_default", der_meta),
                                    ("reading", "rule default: the one stated default (confers: a claim or content confers nothing; read_by: the default fold and change, checked for none of the families it covers); shape: the family's consent parameters in formal/derivation/family_shapes.tsv; stated: a sentence for this family; class: every placeholder names no key by its registry class; cells: the family's own rule cells; gap: listed with what is missing")])),
+        ("authorship", OrderedDict([("source", "formal/derivation/authorship_text.tsv"),
+                                    ("families", OrderedDict((k, a_kind.get(k, 0)) for k in ("authored", "counted", "mixed", "gap"))),
+                                    ("second_signers", OrderedDict([("families_with_roles", sum(1 for c in second.values() if c["value"])), ("families_author_only", sum(1 for c in second.values() if not c["value"])),
+                                                                    ("roles", sum(len(c["value"]) for c in second.values())), ("roles_without_member", len(second_gap))])),
+                                    ("reading", "authorship gives each family's rows as authored (one party authors; the payload carries author) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)")])),
         ("default_row", OrderedDict([("columns", default), ("families_on_it", by_count.get(0, 0)),
                                      ("families_by_departures", OrderedDict((str(k), by_count[k]) for k in sorted(by_count))),
                                      ("reading", "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone")])),
@@ -957,6 +1093,7 @@ def main():
         open(REASONS_MD, "w", encoding="utf-8").write(md_out)
     print(f"departure reasons: {len(spec['reasons'])} reasons move {len(claims)} cells; {len(opens)} open")
     print(f"placement: {placed_by_default} families take the default, the scope each row carries; {len(placing['scopes'])} audience rows, {len(placing['reach'])} on reach, {len(placing['moves'])} on what moves, {len(placing['copy'])} on copying")
+    print(f"authorship: " + ", ".join(f"{k} {v}" for k, v in meta["authorship"]["families"].items()) + f"; second_signers: {meta['authorship']['second_signers']['families_with_roles']} families name roles, {len(second_gap)} roles with no member")
     print(f"default row: {by_count.get(0, 0)} of {len(rows)} families are on it in all {len(default)} columns, {by_count.get(1, 0)} depart in one; {len(departures)} departures in all")
     print("conferral: " + "; ".join(f"{col} " + ", ".join(f"{k} {v}" for k, v in meta["conferral"][col].items()) for col in ("confers", "binds_segment", "derived", "read_by")))
     print(f"family_model: {len(rows)} families; coverage per column (cc-table/code-v61/generic/prose/mixed/gap): " +

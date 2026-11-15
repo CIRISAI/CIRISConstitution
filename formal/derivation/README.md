@@ -153,6 +153,12 @@ closes is never overridden here: where text and build differ, that is a departur
 reason in `departure_reasons.json`. `signer_rule_text.tsv` does the same for the signer column,
 with its own grammar.
 
+`authorship_text.tsv` states who signs a family's row: the `authorship` cell, authored or counted, in arms on the
+count column's selector keys, and the `second_signers` cell, each role besides the author whose statement over the
+same payload the row accepts, with the payload member that names its party (`sub`, or `gap` where the text names
+none). Every quote stands verbatim in its section. A family with a count and no row fails the build, as does a
+counted arm with no count; the open cells of each column are capped, and the number only falls.
+
 `placement_text.tsv` states where a row goes when its family states no placement of its own.
 Its one `default` row gives the placements a family's rows may take and the sentence that leaves
 the choice to the emitter. A placement cell the census leaves to the signer takes that default

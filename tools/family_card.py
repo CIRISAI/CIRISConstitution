@@ -41,6 +41,11 @@ def card(fam, fm, tr, rx):
         out.append(f"| {t['verb']} | {roles.replace('|', chr(92) + '|')} | {ptxt} | {w} | {c} | {u} |")
     cnt = r["count"]
     out += ["", f"Count: `{cnt['value']}`" + (" (" + ", ".join(sorted({a['cc_ref'] for a in cnt['arms']})) + ")" if cnt.get("arms") else "")]
+    au, ss = r.get("authorship", {}), r.get("second_signers", {})
+    if au and au.get("source") != "generic":   # authored with no row of its own is the default and is not printed
+        out += ["", "Authorship: " + (f"`{au['value']}`" if au.get("value") else "open") + refs(au)]
+    if ss.get("value"):
+        out += ["", "Second signers: " + "; ".join(f"`{e['role']}` by `{e['member']}`" + (f" when `{e['when']}`" if e.get("when") else "") + " (" + ", ".join(e["cc_ref"]) + ")" for e in ss["value"])]
     for label, key, field in (("Guard", "guard", "guard"), ("Change", "change", "item")):
         lines = []
         for t in tr[fam]:
