@@ -4982,7 +4982,7 @@
    "id": "persist/(occurrence revocation, cosign:signature)/attestation_id form",
    "status": "stated",
    "reason": "how a 32-byte digest id folds to the uuid form is a byte form, not a row",
-   "cc_ref": "CC 3.1.3",
+   "cc_ref": "CC 8.11.17",
    "quote": "sha256(domain ‖ JCS(object))"
   },
   {

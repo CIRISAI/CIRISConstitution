@@ -293,7 +293,7 @@ self:delegates_to:agent_occurrence	delegation_valid_until	unstated	unstated	yes	
 self:delegates_to:agent_occurrence	scope	unstated	unstated	yes	CC 4.4.3.19	The row carries `scope` drawn from the canonical act-on-behalf kinds below, `delegation_purpose: "act_as_user"` and a bounded `delegation_valid_until`.
 self:delegates_to:agent_occurrence	scope	unstated	unstated	yes	CC 4.4.3.20	the act-on-behalf grant
 self:delegates_to:agent_occurrence	signed_at	unstated	unstated	no	CC 4.4.3.20	the act-on-behalf grant
-session:{kind}	community_id	key-id	required	yes	CC 3.1.3.1	`session_id` and `claimed_at` are this family's, REQUIRED on every `session:*` row, with `claimed_at` in the [CC 8.11.10](part_8_appendices.md#8.11.10) canonical form.
+session:{kind}	community_id	key-id	required	yes	CC 3.1.3.1	`session_id` and `claimed_at` are this family's, REQUIRED on every `session:*` row, with `claimed_at` an instant of [CC 2.6.2](part_2_the_grammar.md#2.6.2).
 settlement:*	amount_commitment	unstated	optional	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
 settlement:*	rail	tstr (open)	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
 settlement:*	settled_action_ref	unstated	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"

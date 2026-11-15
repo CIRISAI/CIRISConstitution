@@ -6,7 +6,7 @@
    "invariants_sha256": "e0261d6e7c50af300bca07bc26591efa27bed4bc09fe680cc3e81dd37d41c518",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "86a33ad8a9ce9ca61a7c46cb3a4687128f5e0b8b06235336ff2c782f34206a53",
+   "claims_sha256": "b9fa8b9c3fa20706a4780f2b384f8e564870bc388b4cabbb6e768c531b180a5b",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -32,14 +32,14 @@
    "invariants": 221,
    "claims": 603,
    "entries": 20,
-   "refusal_tokens": 99
+   "refusal_tokens": 100
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "4d418f304b338d6bc3b0af8c58cfd6063cc194e7c4639a8e16446a9298dff1f2"
+  "chain_sha256": "1b14ed2f8c4ed4b9274b54c1676ed66a91e48b6d81d5c3989abdee53791a73bd"
  },
  "chain": [
   {
@@ -14449,18 +14449,6 @@
        "symbols": [
         "trust_root_cosigners_over"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-purge-digest-preimage",
-     "cc_ref": "3.3.2",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#803"
       }
      ]
     }
@@ -40499,18 +40487,6 @@
        ]
       }
      ]
-    },
-    {
-     "claim_id": "CLM-purge-digest-preimage",
-     "cc_ref": "3.3.2",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#803"
-      }
-     ]
     }
    ],
    "promised_by": [
@@ -50292,18 +50268,6 @@
        ]
       }
      ]
-    },
-    {
-     "claim_id": "CLM-purge-digest-preimage",
-     "cc_ref": "3.3.2",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#803"
-      }
-     ]
     }
    ],
    "promised_by": []
@@ -53163,6 +53127,9 @@
   },
   "breach_notification": {
    "4.4.3.12": "bold"
+  },
+  "bundle_fingerprint": {
+   "8.11.24": "bold"
   },
   "canonical_binding": {
    "2.3.2.2": "bold"

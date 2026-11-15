@@ -60,7 +60,7 @@ COLUMNS = OrderedDict([
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
     ("count", "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)"),
     ("authorship", "authored | counted | arms `selector => authored|counted` joined by ` ; `, on the count column's selector keys, the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)"),
-    ("second_signers", "[{role, member, when?, cc_ref}]: each role besides the author whose statement over the same payload the row accepts; member is the payload member that names the party, `sub` where the party is the attested key, or `gap` where the text names none; [] means only the author signs (formal/derivation/authorship_text.tsv)"),
+    ("second_signers", "[{role, member, when?, cc_ref}]: each role besides the author whose statement over the same payload the row accepts; member is the payload member that names the party, `sub` where the party is the attested key, `owner_of_sub` where it is the owner the owner-binding of the attested key names, or `gap` where the text names none; [] means only the author signs (formal/derivation/authorship_text.tsv)"),
     ("derived", "projection_id | none (the row must equal the named projection's rebuild; formal/derivation/confers_text.tsv)"),
     ("read_by", "the named answers that read the family's rows (state, stands, tally, may, audience, missing, owed, window), from the KX of its rule cells (tools/kx_translate.py over tools/kx_prelude.kx); `by` names each cell. A family with no cell of its own takes the default reading (state, stands) of the default fold and change: rule default, stated once and checked for none of the families it covers"),
     ("confers", "nothing | a permission (binds the signer: one row) | a seat (binds the placer and the holder: two consents) | an ending, with scope, conferrer, consent and ends (formal/derivation/family_shapes.tsv, confers_text.tsv)"),
@@ -539,7 +539,7 @@ def conferral_columns(fams, reg):
 AUTHORSHIP_TEXT = os.path.join(ROOT, "formal/derivation/authorship_text.tsv")
 AUTHORSHIP_VALUES = ("authored", "counted", "gap")
 AUTHORSHIP_GAP_MAX = 3   # families whose authorship the text gives both ways with no selector to tell them; the number only falls
-SECOND_SIGNERS_GAP_MAX = 8   # roles whose payload member the text does not name; the number only falls
+SECOND_SIGNERS_GAP_MAX = 5   # roles whose payload member the text does not name; the number only falls
 SELECTOR_VALUE = r"[a-z_:{}]+(?:\|[a-z_:{}]+)*"
 
 
@@ -570,8 +570,8 @@ def authorship_cells(stmts, rows, members, span=None):
         if s["column"] == "second_signers":
             m = re.fullmatch(r"([a-z_]+)=([a-z_]+)", s.get("value") or "")
             if not m: errs.append(f"{where}: {s.get('value')!r} is not role=member"); continue
-            if m.group(2) not in ("sub", "gap") and m.group(2) not in members:
-                errs.append(f"{where}: {m.group(2)} is not sub, gap or a member the text names"); continue
+            if m.group(2) not in ("sub", "owner_of_sub", "gap") and m.group(2) not in members:
+                errs.append(f"{where}: {m.group(2)} is not sub, owner_of_sub, gap or a member the text names"); continue
         by.setdefault(s["family"], OrderedDict()).setdefault(s["column"], []).append(s)
     auth, second = OrderedDict(), OrderedDict()
     def has_count(r):

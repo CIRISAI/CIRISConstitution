@@ -1,6 +1,6 @@
 # Part 8 — Appendices
 
-**Decimal range** `8.x` · **77 sections** · **page budget 6pp** · [← master index](../README.md)
+**Decimal range** `8.x` · **88 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Case studies, glossaries, conformance vectors, interop, and the dual-ID table of contents.
 
@@ -3313,7 +3313,7 @@ Fold:
 
 Count: `none`
 
-Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `gap` (CC 4.4.3.19)
+Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` (CC 4.4.3.19)
 
 Fold:
 - `by=none` (CC 3.1.3)
@@ -3326,7 +3326,7 @@ Fold:
 
 Count: `none`
 
-Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `gap` (CC 4.4.3.19)
+Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` (CC 4.4.3.19)
 
 Fold:
 - `by=none` (CC 3.1.3)
@@ -3483,7 +3483,7 @@ Count: `None`
 
 Authorship: open (CC 3.4.5)
 
-Second signers: `delegate` by `sub` when `leaf=confers` (CC 2.6.1.9); `delegate_owner` by `gap` when `leaf=confers` (CC 4.4.3.19)
+Second signers: `delegate` by `sub` when `leaf=confers` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` when `leaf=confers` (CC 4.4.3.19)
 
 Guard:
 - authorize: `when(leaf=charter) each(val:witnesses) (not founder(key,object) else exclude & not member(key,object) else exclude)` (CC 2.1)
@@ -3944,7 +3944,7 @@ Every hex string used in canonical-bytes encoding (e.g., SHA-256 digests in `roo
 
 ### 8.11.12 `bound-hybrid` — The bound-hybrid signature
 
-The signature of the earlier form is the **bound-hybrid signature** (`[hybrid-sig]`, [CC 2.6.5](part_2_the_grammar.md#2.6.5)): Ed25519 ([RFC-8032]) over the canonical bytes, and ML-DSA-65 ([FIPS-204]) over the canonical bytes ‖ `ed25519_sig`. This is the bound-payload form of [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1). Both halves are verified at every federation-tier admission gate and on the store path, never under an operator toggle ([CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8), [CC 6.1.3](part_6_the_coherence_mathematics.md#6.1.3)). The Ed25519 half verifies without the other, so the pair is separable. The composite signature of [CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7) never verifies on one half.
+The signature of the earlier form is the **bound-hybrid signature** (`[hybrid-sig]`, [CC 2.6.5](part_2_the_grammar.md#2.6.5)): Ed25519 ([RFC-8032]) over the canonical bytes, and ML-DSA-65 ([FIPS-204]) over the canonical bytes ‖ `ed25519_sig`. This is the bound-payload form of [CC 8.11.16](#8.11.16). Both halves are verified at every federation-tier admission gate and on the store path, never under an operator toggle ([CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8), [CC 6.1.3](part_6_the_coherence_mathematics.md#6.1.3)). The Ed25519 half verifies without the other, so the pair is separable. The composite signature of [CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7) never verifies on one half.
 
 ### 8.11.13 `key-revocation-envelope` — The key revocation of the earlier form (normative)
 
@@ -3968,6 +3968,161 @@ canonical_bytes = sha256( JCS( {
 ```
 
 Hybrid signature: Ed25519 over `canonical_bytes`; ML-DSA-65 over `canonical_bytes || ed25519_signature_bytes` (bound payload, [CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)). The Ed25519 half is the pure algorithm of RFC 8032; a pre-hashed or context variant is another algorithm and does not verify.
+
+### 8.11.16 `earlier-skill-import` — The skill import manifest and locale leaves of the earlier form (normative)
+
+A skill import manifest and the per-locale leaves of [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) take these forms in the earlier form.
+
+**The skill import manifest.** The canonical bytes of the earlier form:
+
+```
+canonical_bytes = sha256( JCS( {
+  "domain": "ciris.skill_import.v2", // domain separation; pinned literal
+  "source": source_string,
+  "skill_manifest_sha256": sha256_hex_lowercase, // per CC 8.11.11
+  "signer_identity": signer_key_id, // per CC 8.11.11
+  "import_timestamp": rfc3339_canonical, // per CC 8.11.10
+  "capability_declaration": sorted_capability_array, // JSON array of capability strings, sorted
+    // lexicographically by byte representation BEFORE canonicalization — JCS canonicalizes
+    // arrays in place and does not reorder elements, so the sort is part of the signed preimage
+  "valid_until": rfc3339_canonical // OPTIONAL — CC 8.11.2 omit rule: absent if unset
+}))
+```
+
+Hybrid signature: Ed25519 over `canonical_bytes`; ML-DSA-65 over `canonical_bytes || ed25519_signature_bytes` (bound payload). All [CC 8.11.3](#8.11.3) determinism rules apply (hex per CC 8.11.11, timestamps per CC 8.11.10, omit-vs-materialize per CC 8.11.2).
+
+**The per-locale leaves.** The leaf and parent hashes of the earlier form:
+
+```
+leaf_hash[lang_code] = sha256(
+  0x00 || // RFC 6962 leaf-domain prefix (binary, outside the JSON)
+  JCS( {
+    "domain": "ciris.locale_manifest.v2", // domain separation; pinned literal
+    "target": target_string,
+    "locale": lang_code,
+    "files_root": files_merkle_root_hex_lowercase, // per CC 8.11.11
+    "build_id": build_id,
+    "signer_identity": signer_key_id // per CC 8.11.11
+  }))
+
+parent_hash(left, right) = sha256(
+  0x01 || // RFC 6962 parent-domain prefix
+  left || right)
+```
+
+In the earlier form, the version is v2. Producers MUST emit v2.
+
+### 8.11.17 `earlier-occurrence-revocation` — The occurrence revocation carrier of the earlier form (normative)
+
+An `identity:occurrence_revocation` carrier ([CC 3.1.3](part_3_the_namespace.md#3.1.3)) of the earlier form takes the row's signature columns from the framed object's own hybrid signature. Its id = sha256(domain ‖ JCS(object)), under the domain `ciris:identity:occurrence_revocation:v1:`. A receiver re-derives the row and refuses any byte difference.
+
+### 8.11.18 `earlier-quorum-key` — The quorum key of the earlier form (normative)
+
+A `cosign:{state}` row ([CC 3.1.3](part_3_the_namespace.md#3.1.3)) of the earlier form names its event by the event's **quorum key**, sha256(`ciris-persist/cosign-pending/v1` ‖ JCS(the event with no signature in it)). A **signature** row carries the quorum key, the signer's key id and that signer's hybrid signature over the same signing bytes the primary signed. That is exactly one `additional_scrubs` entry ([CC 8.11.9](#8.11.9)). Its id is sha256(`ciris-persist/cosign-signature/v1` ‖ quorum key ‖ signer key id). It is admitted only if both halves verify against the pending event's bytes. A cosigned act of the earlier form ([CC 2.4](part_2_the_grammar.md#2.4), [CC 3.3.4](part_3_the_namespace.md#3.3.4)) is named by its quorum key, the digest of what its signers signed with no signature in it.
+
+### 8.11.19 `earlier-purge-digest` — The purge selection digest of the earlier form (normative)
+
+The selection digest `content_sha256` of a `steward_purge` notice ([CC 3.3.2](part_3_the_namespace.md#3.3.2)) of the earlier form is SHA-256 over the JCS array of sorted, unique `"plane:id"` strings naming every purged record, derived included.
+
+### 8.11.20 `earlier-hop-key` — The onion hop key members of the earlier form (normative)
+
+The onion hop key of [CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2) in the earlier form carries both halves raw, in the standard base64 of [CC 8.11.3](#8.11.3), and JCS sorts its keys:
+
+```
+"onion_hop_pubkeys": {
+  "ml_kem_768_base64": "<base64 of exactly 1184 bytes>",
+  "x25519_base64":     "<base64 of exactly 32 bytes>"
+}
+```
+
+### 8.11.21 `earlier-sealed-descriptor` — The sealed descriptor of the earlier form (normative)
+
+The `sealed_descriptor` of [CC 3.3.13](part_3_the_namespace.md#3.3.13) in the earlier form is an AEAD seal under the room DEK over {name, format, codec?, parent?} as a JCS object, with the blob's `digest` as associated data.
+
+### 8.11.22 `earlier-accord-roster` — The accord roster objects of the earlier form (normative)
+
+The three accord roster objects of [CC 4.2.6](part_4_composition_governance.md#4.2.6) are, in the earlier form, hybrid-signed (Ed25519 + ML-DSA-65) objects over the preimages below.
+
+**Canonical-bytes pins.** The proposal and the participation each sign a distinct, wire-isolated canonical-bytes domain, pinned the same way as the [CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1) `accord:invoke` and [CC 4.2.1.3](part_4_composition_governance.md#4.2.1.3) `accord:lifecycle` preimages; a decision is the bundle above and signs none. The distinct prefixes prevent invoke ↔ lifecycle ↔ proposal ↔ participation cross-replay:
+
+```
+proposal = sha256(
+  "ciris.accord_proposal.v1\n" ||
+  "family_key_id=" || family_key_id || "\n" ||
+  "prior_family_digest=" || prior_family_digest || "\n" ||
+  "action=" || action || "\n" ||            // the membership-change envelope; a fire is never a proposal (CC 4.2.1.1)
+  "nonce=" || base64url(rand_32_bytes) || "\n" ||
+  "window_until=" || rfc3339_canonical)
+participation = sha256(
+  "ciris.accord_participation.v1\n" ||
+  "family_key_id=" || family_key_id || "\n" ||
+  "refers_to=" || proposal_nonce_or_digest || "\n" ||
+  "proof_of_life=true\n" ||
+  "vote=" || ("yes" | "no" | "abstain") || "\n" ||
+  "asserted_at=" || rfc3339_canonical || "\n" ||
+  "nonce=" || base64url(rand_32_bytes))
+```
+
+All hybrid (Ed25519 + ML-DSA-65).
+
+### 8.11.23 `earlier-login-contract` — The Self-at-login JCS contract of the earlier form (normative)
+
+The member sets of [CC 4.4.3.20](part_4_composition_governance.md#4.4.3.20) are signed, in the earlier form, under this JCS contract.
+
+Each of the three Self-at-login Contributions is hybrid-signed over `JCS(envelope)` ([CC 8.11.1](#8.11.1) / RFC 8785), and at login promoted to federation-tier. The [CC 5.3.2.6](part_5_transport_substrate.md#5.3.2.6) promotion canonicalizes the **exact committed member set** — omit-vs-materialize ([CC 8.11.2](#8.11.2)) is load-bearing; the signer MUST NOT re-default. **The [CC 8.11.3](#8.11.3) determinism rules apply**: `scope[]` is **lexicographically sorted** (set-semantics); `aspects[]` retains RNS order (sequence-semantics). Under the same rules, all hash and pubkey **byte** fields (the two reticulum pubkeys, `destination_hash`, every digest) are **lowercase hex per [CC 8.11.11](#8.11.11)**. By contrast, every `*_key_id` (the consent record's `subject_key_id` among them) is an **identifier carried verbatim** — the [CC 2.6.8](part_2_the_grammar.md#2.6.8) `<label>-<fingerprint>` string, or a bare 64-hex id — never re-cased or re-encoded ([CC 8.11.1](#8.11.1)). All timestamps are **[CC 8.11.10](#8.11.10)-canonical**. The member sets the producer commits (and which `JCS` therefore covers) are pinned below. Optional [CC 2.1](part_2_the_grammar.md#2.1) envelope fields not listed ride the CC 8.11.2 omit rule (absent unless the producer sets them).
+
+**Canonical signed member set for the two `:v1` envelopes.** Every implementation MUST canonicalize (and thus hybrid-sign) this member set as the REQUIRED core and sign whatever else the producer set under the omit rule. That core is eight members present in every `:v1` half, and each half is a signed object of [CC 8.11.9](#8.11.9). The members that table places in the `row` mirror sit there, and every member it requires of a `scores` row is present. A verifier canonicalizes what the row carries and never re-defaults, or the JCS bytes — and the signatures — diverge ([CC 8.11.2](#8.11.2)). The set is the [CC 3.3.1](part_3_the_namespace.md#3.3.1) bare-`scores` shape; these eight members are **REQUIRED** (present in the JCS for both `grant` and `accept`):
+
+**Mapping (so every implementation agrees on naming):** `granter`/`accepter` ≡ `attesting_key_id` (the signer of that half); `partner` ≡ `subject_key_id`. **No `valid_until`** — a PARTNERED pair has no expiry ([CC 4.4.3.28](part_4_composition_governance.md#4.4.3.28)); the field is **omitted** (NOT materialized as `null`), per the [CC 8.11.2](#8.11.2) omit rule. **All other [CC 2.1](part_2_the_grammar.md#2.1) envelope fields ride the omit rule** — absent from the JCS unless the producer explicitly sets them; the signer MUST NOT re-default. Additional REQUIRED members of this family are a `:v2` bump, never a silent `:v1` addition; the members [CC 8.11.9](#8.11.9) requires of every row are not additions ([CC 4.4.3.20](part_4_composition_governance.md#4.4.3.20)). `attesting_key_id` and `subject_key_id` are **identifiers carried verbatim** ([CC 8.11.1](#8.11.1) / [CC 2.6.8](part_2_the_grammar.md#2.6.8) `<label>-<fingerprint>`, or a bare 64-hex id) — never re-cased or re-encoded; only hash and pubkey byte fields are lowercase-hex per [CC 8.11.11](#8.11.11).
+
+This section owns these member sets, each carried in the signed object of [CC 8.11.9](#8.11.9) with its `row` mirror; the verifier computes `JCS(...)` + the hybrid Ed25519+ML-DSA-65 signature over each; the promotion signature ([CC 5.3.2.6](part_5_transport_substrate.md#5.3.2.6)) is the identical JCS bytes.
+
+**`encryption_pubkeys` joins member set (c).** When the occurrence carries the [CC 3.3.6.1](part_3_the_namespace.md#3.3.6.1) `encryption_pubkeys` field-set, both halves are **inside the signed JCS bytes** as opaque base64 strings (RFC 4648 STANDARD, padded — the [CC 8.11.3](#8.11.3) rule-2 pin). Optional presence rides the CC 8.11.2 omit rule (absent unless the producer sets it; the signer MUST NOT re-default). They are payload, never verification material — neither half may be fed to a signature-verify path (the CC 3.3.6.1 key-separation rule).
+
+In the earlier form, `asserted_at` and every other instant of these member sets is [CC 8.11.10](#8.11.10)-canonical RFC 3339.
+
+### 8.11.24 `earlier-bundle-fingerprint` — The genesis bundle fingerprint of the earlier form (normative)
+
+A genesis bundle of the earlier form ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)) is pinned by its **`bundle_fingerprint`**: the `sha256:` over the JCS-canonical bundle, published with the release and baked into conformant builds. A route serving such a bundle carries it outside `bundle` as `"bundle_fingerprint": "sha256:<64-char-lowercase over the JCS-canonical bundle>"`, and the served value is never itself the anchor. A row of the forward form names that bundle as [CC 2.6.1.3](part_2_the_grammar.md#2.6.1.3) states, never by its `bundle_fingerprint`.
+
+### 8.11.25 `earlier-identity-type` — The identity_type set in the canonical bytes of the earlier form (normative)
+
+Where `identity_type` ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)) enters a canonical-bytes computation of the earlier form (e.g., cross-attestation of a `federation_keys` row), the set MUST be encoded as its members sorted ascending by Unicode code point, deduplicated, comma-joined with no whitespace (e.g., `agent,lenscore_detector`). A single-role key encodes identically to its scalar form (`agent` ≡ `{agent}` ≡ `"agent"`), preserving signatures over single-role rows. A storage column holding the comma-joined form, decoded to a set on read, is conformant.
+
+### 8.11.26 `earlier-sth-cosign` — The provenance log's tree-head cosignature of the earlier form (normative)
+
+The route `POST /v1/transparency/sth/cosign` of [CC 5.3.1](part_5_transport_substrate.md#5.3.1) carries this cosignature in the earlier form.
+
+A witness posts its cosignature on `(tree_size, root_hash, signed_at)`. The Registry verifies hybrid Ed25519 + ML-DSA-65 against the witness pubkey in the directory, and persists on success.
+
+Request body:
+
+```json
+{
+  "tree_size": <int>,
+  "root_hash_sha256_hex": "<64-char-lowercase>",     // per CC 8.11.11
+  "signed_at": "<rfc3339_canonical>",                // per CC 8.11.10
+  "witness_key_id": "<string>",
+  "ed25519_signature_b64": "<base64>",
+  "mldsa65_signature_b64": "<base64>",
+  "consistency_proof_root_hash_sha256_hex": "<64-char-lowercase>",
+  "consistency_proof_tree_size": <int>,
+  "consistency_proof_path_b64": ["<base64>", ...]
+}
+```
+
+Canonical bytes (witness MUST sign these):
+
+```
+canonical = sha256(
+    "ciris.sth_cosign.v1\n" ||
+    "tree_size=" || decimal_no_leading_zeros || "\n" ||
+    "root_hash_sha256=" || sha256_hex_lowercase || "\n" ||  // per CC 8.11.11
+    "signed_at=" || rfc3339_canonical                       // per CC 8.11.10
+)
+```
+
+Ed25519 over `canonical`; ML-DSA-65 over `canonical || ed25519_sig` (bound payload).
 
 ## 8.12 `parable` — The parable — Genesis of Ethical Agency (informative)
 

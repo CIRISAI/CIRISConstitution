@@ -450,7 +450,12 @@ def cases():
             'For accountable streams, "published" means **witness-cosigned**', "no signed member says a stream is accountable",
             "wire", "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
             shipped_source="CC 8.10 card guard (text_conflicts C433)"))
-    E.append(stated("persist", "(occurrence revocation, cosign:signature)", "attestation_id form", "door", ["C443"], "CC 3.1.3",
+    E.append(stated("edge", "(link handshake)", "transit handshake", "door", ["CLM-transit-kem-handshake-planned"], "CC 5.3.3.10",
+        "both statics are used and both ends are authenticated by the handshake itself",
+        "one X25519 + ML-KEM-768 exchange per link that authenticates only the responder; the initiator's identity is a claim held to the link's signed identification, as in the verification library's transit_kex",
+        "wire", "the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake, and the wire waits on the implementer's submission",
+        shipped_source="CC 5.3.3.10 E1 rules 3, 4 and 12 describe the shipped exchange; the edge and the verification library ship it"))
+    E.append(stated("persist", "(occurrence revocation, cosign:signature)", "attestation_id form", "door", ["C443"], "CC 8.11.17",
         "sha256(domain ‖ JCS(object))", "attestation_id typed uuid in manifests/signed_object.cddl", "wire",
         "how a 32-byte digest id folds to the uuid form is a byte form, not a row", shipped_source="manifests/signed_object.cddl uuid"))
     # ---- wording only: a claim's or a table's words differ and behaviour does not ------------------------------------

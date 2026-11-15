@@ -1,6 +1,6 @@
 {
   "_note": "The dual-ID codebook of the CIRIS Constitution (CC): decimal_id <-> key <-> semantic_id, one to one, and legacy references -> decimal_id. Maintained data: a section added to constitution/toc.tsv is added here under the key cc:<decimal>, and tools/check_claims.py fails when the two disagree.",
-  "n_concepts": 451,
+  "n_concepts": 462,
   "decimal_to_key": {
     "2.6": "0",
     "2.6.9": "0.1",
@@ -452,7 +452,18 @@
     "8.12.8": "A§0.viii-the-covenant-begins",
     "8.11.13": "cc:8.11.13",
     "8.11.14": "cc:8.11.14",
-    "8.11.15": "cc:8.11.15"
+    "8.11.15": "cc:8.11.15",
+    "8.11.16": "cc:8.11.16",
+    "8.11.17": "cc:8.11.17",
+    "8.11.18": "cc:8.11.18",
+    "8.11.19": "cc:8.11.19",
+    "8.11.20": "cc:8.11.20",
+    "8.11.21": "cc:8.11.21",
+    "8.11.22": "cc:8.11.22",
+    "8.11.23": "cc:8.11.23",
+    "8.11.24": "cc:8.11.24",
+    "8.11.25": "cc:8.11.25",
+    "8.11.26": "cc:8.11.26"
   },
   "key_to_decimal": {
     "0": "2.6",
@@ -905,7 +916,18 @@
     "cc:8.12": "8.12",
     "cc:8.11.13": "8.11.13",
     "cc:8.11.14": "8.11.14",
-    "cc:8.11.15": "8.11.15"
+    "cc:8.11.15": "8.11.15",
+    "cc:8.11.16": "8.11.16",
+    "cc:8.11.17": "8.11.17",
+    "cc:8.11.18": "8.11.18",
+    "cc:8.11.19": "8.11.19",
+    "cc:8.11.20": "8.11.20",
+    "cc:8.11.21": "8.11.21",
+    "cc:8.11.22": "8.11.22",
+    "cc:8.11.23": "8.11.23",
+    "cc:8.11.24": "8.11.24",
+    "cc:8.11.25": "8.11.25",
+    "cc:8.11.26": "8.11.26"
   },
   "semantic_to_key": {
     "foreword": "0",
@@ -1358,7 +1380,18 @@
     "parable": "cc:8.12",
     "key-revocation-envelope": "cc:8.11.13",
     "earlier-commitment": "cc:8.11.14",
-    "earlier-text-manifest": "cc:8.11.15"
+    "earlier-text-manifest": "cc:8.11.15",
+    "earlier-skill-import": "cc:8.11.16",
+    "earlier-occurrence-revocation": "cc:8.11.17",
+    "earlier-quorum-key": "cc:8.11.18",
+    "earlier-purge-digest": "cc:8.11.19",
+    "earlier-hop-key": "cc:8.11.20",
+    "earlier-sealed-descriptor": "cc:8.11.21",
+    "earlier-accord-roster": "cc:8.11.22",
+    "earlier-login-contract": "cc:8.11.23",
+    "earlier-bundle-fingerprint": "cc:8.11.24",
+    "earlier-identity-type": "cc:8.11.25",
+    "earlier-sth-cosign": "cc:8.11.26"
   },
   "key_to_semantic": {
     "0": "foreword",
@@ -1811,7 +1844,18 @@
     "cc:8.12": "parable",
     "cc:8.11.13": "key-revocation-envelope",
     "cc:8.11.14": "earlier-commitment",
-    "cc:8.11.15": "earlier-text-manifest"
+    "cc:8.11.15": "earlier-text-manifest",
+    "cc:8.11.16": "earlier-skill-import",
+    "cc:8.11.17": "earlier-occurrence-revocation",
+    "cc:8.11.18": "earlier-quorum-key",
+    "cc:8.11.19": "earlier-purge-digest",
+    "cc:8.11.20": "earlier-hop-key",
+    "cc:8.11.21": "earlier-sealed-descriptor",
+    "cc:8.11.22": "earlier-accord-roster",
+    "cc:8.11.23": "earlier-login-contract",
+    "cc:8.11.24": "earlier-bundle-fingerprint",
+    "cc:8.11.25": "earlier-identity-type",
+    "cc:8.11.26": "earlier-sth-cosign"
   },
   "legacy_to_decimal": {
     "§0": "2.6",

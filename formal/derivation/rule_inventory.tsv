@@ -269,7 +269,7 @@ p2	98	2.2	kernel	conformance	none	*	MUST	restates	2.1	a conforming producer emit
 p2	98	2.2	kernel	signature	none	*	MUST	restates	2.6.1.1	a conforming producer signs a COSE_Sign1 statement with the composite signature	
 p2	98	2.2	kernel	reserved_prefix	none	*	MUST	restates	3.4	a conforming producer respects reserved-prefix rules	
 p2	98	2.2	kernel	row_shape	body	*	MUST	restates	2.1	a conforming producer declares its oversight_mode and witness_relation	
-p2	99	2.2	kernel	signature	none	*	MUST	restates		a conforming consumer verifies hybrid signatures	
+p2	99	2.2	kernel	signature	none	*	MUST	restates		a conforming consumer verifies composite signatures	
 p2	99	2.2	kernel	reserved_prefix	none	*	MUST	restates		a conforming consumer enforces reserved-prefix rules at admission	
 p2	99	2.2	kernel	trust_fold	none	*	MUST	restates	4.4.3.34,4.4.2	a conforming consumer implements at least Policy A with the default aggregation rules	
 p2	99	2.2	kernel	accord	none	*	MUST	restates	4.2.2	a conforming consumer MUST honor rejection of null placeholder or dev hardware class	
@@ -320,7 +320,7 @@ p2	191	2.3.2.1	mechanism	wire	none	*	MUST_NOT	states		an id with an unpaired sur
 p2	197	2.3.2.2	kernel	delegation	none	*	is	restates	2.4.1.1	an enrolled key proxies an un-enrolled subject's revocation by a delegates_to from the canonical hash with scope consent_revocation; the subject never enrolls	
 p2	198	2.3.2.2	kernel	registration	none	*	is	states		canonical_binding: a now-enrolled key asserts it is the entity behind a canonical hash; the claim admits nothing and opens no withdraws under rule 2	
 p2	200	2.3.2.2	kernel	registration	none	*	is	states		canonical_binding is not a fifth admission rule; it is a bare scores row self-asserted by the enrolling key, and withdrawal for that subject stays the rule 3 proxy	
-p2	204	2.3.2.3	kernel	row_shape	body	*	is	states	8.11.9,2.1.1	subject_kind is not a typed envelope member; it rides inside the signed envelope under the * row, preserved on relay	
+p2	204	2.3.2.3	kernel	row_shape	body	*	is	states	8.11.9,2.1.1	subject_kind is not a typed envelope member; it rides inside the signed payload of 2.6.1.4, preserved on relay	
 p2	204	2.3.2.3	kernel	row_shape	none	*	is	states		the substrate neither validates nor indexes subject_kind	
 p2	204	2.3.2.3	kernel	admission_order	body	*	is	states	3.3	subject_kind selects which 3.3 payload schema applies, validated at the family's own gate, as sub_kind does on external_content	
 p2	208	2.3.2.4	family	admission_order	cosign_rule	consent	is	states	3.3.5	the substrate admits each half of a bilateral partnership independently; ingest never enforces ratification	
@@ -344,11 +344,11 @@ p2	265	2.4	stewardship	amendment	none	*	is	states	1.7	the row-type slot is amend
 p2	265	2.4	kernel	conformance	none	*	MUST	states		a component needing a new row type files it here before it ships; a type in code and not here is a code defect	
 p2	265	2.4	kernel	audience	replication	*	is	states		an unregistered-type row a substrate already holds is reported to the operator, neither served nor replicated, and not deleted	
 p2	265	2.4	stewardship	amendment	none	*	is	states		the registry carries the closed row-type list and vectors for it	
-p2	267	2.4	kernel	cosign	cosign_rule	*	MAY	states	2.1,8.11.9	any of the five row types MAY carry additional_scrubs: hybrid signatures over the same canonical bytes, beside the row, each by a key whose role the receiver's fold names	
+p2	267	2.4	kernel	cosign	cosign_rule	*	MAY	states	2.1,8.11.9	any of the five row types MAY carry additional_scrubs: further statements over the same payload, each with its composite signature, by a key whose role the receiver's fold names	
 p2	267	2.4	kernel	cosign	cosign_rule	*	is	states	2.4.1.3	the family declares its consensus_protocol source: the group the row is about, the accord, or for licensure:{community} the authority community named in the dimension	
 p2	267	2.4	kernel	cosign	freshness	*	is	states		a cosigned row is admitted when its cosigners satisfy the protocol, judged on the receiver's own fold over the members at the roster head the row names	
 p2	267	2.4	kernel	cosign	cosign_rule	cosign	is	applies	2.7.3,3.1.3,3.3.4	a row short of its protocol is held, not refused; cosignatures are collected as cosign:pending and cosign:signature rows, served to the group's active members only, for the hold window	
-p2	267	2.4	kernel	cosign	none	*	is	states		a cosigned act is named by its quorum key, the digest of what its signers signed with no signature in it, so every node holds the same act	
+p2	267	2.4	kernel	cosign	none	*	is	states		a cosigned act is named by its row id, the digest of what its signers signed, which covers no signature, so every node that assembles a sufficient set holds the same act	
 p2	267	2.4	kernel	withdraw	lifecycle	*	is	states		retraction of a cosigned row is by the same quorum, a cosigned withdraws; rules 1 to 4 do not reach it, so no single signer or subject retires a group record	
 p2	267	2.4	family	row_shape	body	group,membership	is	restates	3.1.3	roster versions are group:roster:v1 with prev_head_digest and charter_digest; widening, removal and resignation are cosigned beside single-signer proposal, acceptance and decline	
 p2	267	2.4	family	registration	signer_rule	key	is	exception		key:record:v1 is attested by the key itself and admitted by proof of possession against the keys it carries, the one exception to resolve-the-attester	
@@ -469,7 +469,7 @@ p2	341	2.4.1.3	family	signer	signer_rule	key_grant	is	states		possession of the 
 p2	341	2.4.1.3	family	signer	signer_rule	key_grant	MUST	states		a substrate MUST refuse at admission a key_grant whose issuer neither owns nor stewards the asset nor holds a grant-scoped delegation over it	
 p2	345	2.4.1.4	kernel	trust_fold	none	*	MAY	states		consumer policy may apply different trust adjustments to attesters who recant versus those who withdraw	
 p2	349	2.4.2	kernel	row_shape	none	*	is	states		every claim about an entity, by any attester, is a scores attestation on a named dimension; scores is the one workhorse	
-p2	351	2.4.2	kernel	signature	none	*	is	restates	8.11.9	the signed object is attestation_envelope with the row mirror and asserted_at; an optional member is omitted, never null	
+p2	351	2.4.2	kernel	signature	none	*	is	restates	2.6.1.4	the illustration is the logical view: attestation_envelope is the payload; an optional member is omitted, never null	
 p2	385	2.5	kernel	freshness	freshness	*	is	applies		a claim's validity in time is asserted_at plus optional valid_until, composed by the consumer with the substrate's expires_at	table
 p2	387	2.5	kernel	withdraw	lifecycle	*	is	states		reversibility is rollbackable or non-rollbackable, by consumer policy plus the per-prefix rule	table
 p2	389	2.5	kernel	placement	placement	*	is	restates		scope is one of self, family, community, affiliations, species, biosphere, federation	table
@@ -866,7 +866,7 @@ p3	50	3.1.2	family	licensure	projection	attestation	is	states		A consumer resolv
 p3	51	3.1.2	family	signer	signer_rule	attestation	is	states		attestation:license_validity is Registry-signed and Verify-verified (L4).	table
 p3	52	3.1.2	family	row_shape	body	attestation	is	states		attestation:agent_integrity asserts the agent source tree is byte-equal to the registered manifest (L5).	table
 p3	53	3.1.2	family	signer	signer_rule	provenance	is	states		Registry emits provenance:slsa rows on build registration; Verify consumes them as AttestBundle.provenance.slsa_level.	table
-p3	54	3.1.2	family	signature	signer_rule	provenance	is	states		Each BuildManifest is hybrid-signed (Ed25519 + ML-DSA-65) by the pipeline that built it.	table
+p3	54	3.1.2	family	signature	signer_rule	provenance	is	states		Each BuildManifest carries the composite signature of the pipeline that built it.	table
 p3	55	3.1.2	mechanism	wire	body	provenance	is	states	3.1.2.1,6.1.1	A target manifest is the Merkle root over one leaf per locale, padded by repeating the last leaf, with RFC 6962 0x00/0x01 prefixes.	table
 p3	56	3.1.2	family	row_shape	body	provenance	is	states	3.1.2.1	provenance:skill_import source is registry:{id}, direct:{url} or local:{path}; envelope carries skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration.	table
 p3	57	3.1.2	family	transparency_log	body	transparency_log	is	states		transparency_log:inclusion is an RFC 6962 inclusion proof; consistency is a proof between two STHs.	table
@@ -902,15 +902,15 @@ p3	83	3.1.2.1	family	row_shape	body	attestation	is	states		On a build attestatio
 p3	83	3.1.2.1	kernel	row_shape	none	*	is	states		references_attestation_id may cite a row of any attestation type and takes composer meaning only on supersedes, withdraws or recants.	
 p3	83	3.1.2.1	family	supersede	lifecycle	provenance	is	states		A rebuild is a supersedes on the earlier build-manifest Contribution.	
 p3	83	3.1.2.1	family	withdraw	lifecycle	provenance	is	states		A bad build is withdrawn by the pipeline that signed it.	
-p3	87	3.1.2.1	mechanism	wire	body	provenance	is	states	8.11.11,8.11.10,8.11.2	SkillImportManifest canonical bytes are sha256 of JCS over domain ciris.skill_import.v2, source, skill_manifest_sha256, signer_identity, import_timestamp, sorted capability_declaration and optional valid_until.	
-p3	87	3.1.2.1	mechanism	wire	body	provenance	is	states		capability_declaration is sorted lexicographically by byte representation before canonicalisation; the sort is part of the signed preimage.	
-p3	87	3.1.2.1	mechanism	wire	body	provenance	is	restates	8.11.2	valid_until is absent if unset (omit rule).	
-p3	101	3.1.2.1	mechanism	signature	none	provenance	is	states	8.11.3	Hybrid signature: Ed25519 over canonical_bytes; ML-DSA-65 over canonical_bytes concatenated with the Ed25519 signature (bound payload).	
-p3	101	3.1.2.1	mechanism	wire	none	provenance	is	restates	8.11.3,8.11.11,8.11.10	All 8.11.3 determinism rules apply (hex, timestamps, omit-vs-materialize).	
-p3	105	3.1.2.1	mechanism	wire	body	provenance	is	states	8.11.11	Per-locale leaf hash is sha256 of 0x00 then JCS of domain ciris.locale_manifest.v2, target, locale, files_root, build_id, signer_identity; parent is sha256 of 0x01 then left then right.	
+p8	x	8.11.16	mechanism	wire	body	provenance	is	states	8.11.11,8.11.10,8.11.2	SkillImportManifest canonical bytes are sha256 of JCS over domain ciris.skill_import.v2, source, skill_manifest_sha256, signer_identity, import_timestamp, sorted capability_declaration and optional valid_until.	
+p8	x	8.11.16	mechanism	wire	body	provenance	is	states		capability_declaration is sorted lexicographically by byte representation before canonicalisation; the sort is part of the signed preimage.	
+p8	x	8.11.16	mechanism	wire	body	provenance	is	restates	8.11.2	valid_until is absent if unset (omit rule).	
+p8	x	8.11.16	mechanism	signature	none	provenance	is	states	8.11.3	Hybrid signature: Ed25519 over canonical_bytes; ML-DSA-65 over canonical_bytes concatenated with the Ed25519 signature (bound payload).	
+p8	x	8.11.16	mechanism	wire	none	provenance	is	restates	8.11.3,8.11.11,8.11.10	All 8.11.3 determinism rules apply (hex, timestamps, omit-vs-materialize).	
+p8	x	8.11.16	mechanism	wire	body	provenance	is	states	8.11.11	Per-locale leaf hash is sha256 of 0x00 then JCS of domain ciris.locale_manifest.v2, target, locale, files_root, build_id, signer_identity; parent is sha256 of 0x01 then left then right.	
 p3	122	3.1.2.1	mechanism	wire	body	provenance	is	states		Locale ordering is lexicographic by ISO 639-1 / BCP 47 byte representation; polyglot sorts last.	
 p3	122	3.1.2.1	mechanism	wire	body	provenance	is	restates	6.1.1	Padding repeats the last leaf to the next power of two; one leaf per locale, no leaf repeats except by padding.	
-p3	124	3.1.2.1	mechanism	conformance	none	provenance	MUST	states		Producers MUST emit the v2 provenance canonical forms.	
+p8	x	8.11.16	mechanism	conformance	none	provenance	MUST	states		Producers MUST emit the v2 provenance canonical forms.	
 p3	128	3.1.2.1	mechanism	conformance	none		is	states		An agent ships the texts it reasons from beside a manifest naming each file by SHA-256.	
 p3	128	3.1.2.1	mechanism	signature	none		is	states		A steward vouches for the text manifest by signing a statement of it (a fixed-size digest), never the file's own bytes.	
 p8	x	8.11.15	mechanism	wire	body		is	states	8.11.11,5.3.2.11	The earlier-form accord manifest statement canonical bytes are sha256 of JCS over domain ciris.accord_manifest.v1, manifest_sha256, manifest_size and signer_identity.	
@@ -920,8 +920,8 @@ p3	141	3.1.2.1	family	signer	signer_rule		is	states	3.1.9.1,4.2.1	The manifest s
 p3	141	3.1.2.1	family	trust_fold	none		is	states		An agent pins the set of manifest-statement signers it accepts.	
 p3	141	3.1.2.1	mechanism	signature	none		is	states		signer_identity is inside the signed bytes so one holder's signature cannot be presented as another's.	
 p3	143	3.1.2.1	mechanism	conformance	none		is	states	5.3.2.11	An agent rebuilds the statement from the manifest bytes it holds, size before digest, never from a copy carried beside the signature.	
-p3	143	3.1.2.1	mechanism	conformance	none		is	states		An agent verifies both signature halves against the signer's key record before it makes any decision.	
-p3	143	3.1.2.1	mechanism	conformance	none		is	states		A missing signature, a signer outside the pinned set, a key record with no ML-DSA-65 half, or a failed half stops the agent; it does not run on unvouched text.	
+p3	143	3.1.2.1	mechanism	conformance	none		is	states		An agent verifies the composite signature against the signer's key record before it makes any decision.	
+p3	143	3.1.2.1	mechanism	conformance	none		is	states		A missing signature, a signer outside the pinned set, a key record held only in part, or a failed verification stops the agent; it does not run on unvouched text	
 p3	147	3.1.3	family	signer	signer_rule	system,audit_chain,corpus_health,identity_continuity,federation_directory	is	restates	3.4.3	Substrate self-report dimensions are emittable only by the running Persist instance.	
 p3	149	3.1.3	family	reserved_prefix	signer_rule	system	is	states	3.4.3,3.1.4	system:* is one family reserved to the substrate component and registered once; the persist and edge components of a node each emit on it for that node.	
 p3	151	3.1.3	family	row_shape	body	system,audit_chain,corpus_health,identity_continuity,federation_directory	is	states	8.1	Persist canonical leaves are system:*, audit_chain:hash_continuity, corpus_health:n_eff_measurable, identity_continuity:relational_anchor, federation_directory:replication_lag; polarity signed.	
@@ -945,7 +945,7 @@ p3	169	3.1.3	family	supersede	monotone_field	key	is	states	2.4.1.1	key:revocatio
 p3	169	3.1.3	family	withdraw	lifecycle	key	is	states	3.1.1	key:revocation is never withdrawn; a withdraws naming it is refused.	table
 p3	169	3.1.3	family	admission_order	signer_rule	key	is	states		A revoker's authority on key:revocation is judged without the subject's record.	table
 p3	170	3.1.3	family	projection	projection	identity	is	states	3.3.6.4	A framed occurrence revocation signed outside the roster door is kept as a local projection that revokes but has no attestation row and never replicates.	table
-p3	170	3.1.3	mechanism	wire	body	identity	is	states		Persist mints occurrence_revocation from the verified framed object: attester the revoker, signature columns the object's own, id sha256(domain, JCS(object)); a receiver re-derives it and refuses any byte difference.	table
+p3	170	3.1.3	mechanism	wire	body	identity	is	states		Persist mints occurrence_revocation from the verified framed object: attester the revoker, the signature the object's own composite signature, the row named by its row id; a receiver re-derives it and refuses any byte difference	table
 p3	170	3.1.3	family	admission_order	signer_rule	identity	is	states	3.3.6.4	occurrence_revocation admission is structural, never an instant: single-signer for a node or agent occurrence; for a user self only when cosigned by a strict majority of the live roster.	table
 p3	170	3.1.3	family	cosign	cosign_rule	identity	is	states		A user-self occurrence_revocation without the strict-majority roster quorum is refused and the refusal is reported to the owner, who re-proposes through the quorum path.	table
 p3	170	3.1.3	family	roster_fold	none	identity	is	restates	3.3.6.4	A new occurrence revocation goes through the two roster paths; the carrier family confers no authority that did not exist.	table
@@ -961,17 +961,17 @@ p3	172	3.1.3	family	admission_order	signer_rule	cosign	is	states		A pending row 
 p3	172	3.1.3	family	freshness	freshness	cosign	is	states	3.3.4	The event's signed instant decides no one's standing; a primary removed or resigned since is bound by causal past and by each node's own acknowledged head.	table
 p3	172	3.1.3	family	cosign	cosign_rule	cosign	is	states		One pending row is open per proposer per group.	table
 p3	172	3.1.3	family	replication	replication	cosign	is	states		Only the primary's node mints a pending row; every other holder carries its bytes verbatim and a re-wrap is not counted.	table
-p3	172	3.1.3	family	row_shape	body	cosign	is	states	8.11.9	A signature row carries the quorum key, the signer's key id and its hybrid signature over the same bytes (one additional_scrubs entry); id sha256(domain, quorum key, signer key id).	table
+p3	172	3.1.3	family	row_shape	body	cosign	is	states	8.11.9	A signature row is one further statement over the event's payload by its signer, found by the event's row id and the signer's kid	table
 p3	172	3.1.3	family	admission_order	signer_rule	cosign	is	states		A signature row is admitted only if both halves verify against the pending event's bytes and the signer is an active member at the roster head the event names, same bound on a signer that has since left.	table
 p3	172	3.1.3	family	supersede	lifecycle	cosign	is	states		A second signature by the same signer over the same event settles as already held and is no conflict.	table
 p3	172	3.1.3	family	cosign	projection	cosign	is	states		Neither cosign row is the event: nothing folds from them and no seat moves on them.	table
 p3	172	3.1.3	kernel	cosign	cosign_rule	cosign	is	applies	2.7.5	When the signatures a node holds satisfy the group's consensus_protocol the event lands through its own typed door with their union as its cosignatures.	table
-p3	172	3.1.3	kernel	cosign	replication	cosign	is	states	2.4.1.1	The landed act is named by the quorum key; replication offers and settles it by that key, and a row naming it (a cosigned withdraws first) resolves on every node.	table
+p3	172	3.1.3	kernel	cosign	replication	cosign	is	states	2.4.1.1	The landed act is named by the event's row id; replication offers and settles it by that id, and a row naming it (a cosigned withdraws first) resolves on every node that holds it	table
 p3	172	3.1.3	family	audience	replication	cosign	is	states		cosign rows are served only to members active at the roster head the event names and still members when served; a removed member or invitee gets nothing, a member being removed is served.	table
 p3	172	3.1.3	family	withdraw	lifecycle	cosign	is	states		Only the proposer withdraws a pending row; its withdraws ends the row's holding and serving.	table
 p3	172	3.1.3	family	expiry	window	cosign	is	states		A dropped pending row is never held again; no node begins holding one signed more than one hold window before arrival; a proposer still wanting the change signs anew.	table
 p3	172	3.1.3	family	withdraw	lifecycle	cosign	is	states		A signature row is never withdrawn; a member cannot recall a sent signature, and an event assembled from sufficient signatures is judged on them alone.	table
-p3	172	3.1.3	mechanism	wire	none	cosign	is	restates	2.6.1	Under 2.6.1 a signature row is the per-signer statement and the quorum key takes that subsection's form.	table
+p3	172	3.1.3	mechanism	wire	none	cosign	is	restates	2.6.1	A signature row is the per-signer statement of 2.6.1.9 over the event's payload, found by the event's row id; there is no quorum key.	table
 p3	172	3.1.3	family	signer	signer_rule	cosign	is	states		cosign:pending is signed by the event's primary signer, an active member; cosign:signature by the member whose signature it carries.	table
 p3	178	3.1.3	family	row_shape	body	key_grant	is	states	3.3.2	key_grant axis is closed to content, epoch, stream; attested_key_id is the recipient occurrence; the envelope carries the key's identity on that axis and the wrap (wrap_algorithm v2, wrapped_dek).	table
 p3	178	3.1.3	family	supersede	projection	key_grant	is	states		key_grant rows union by identity.	table
@@ -1027,7 +1027,7 @@ p3	221	3.1.3.1	family	standing	none	session	is	states		A session claim elects no
 p3	223	3.1.3.1	family	signer	signer_rule	session	MUST	states		attesting_key_id MUST equal attested_key_id and MUST be the claiming occurrence.	
 p3	223	3.1.3.1	family	signer	signer_rule	session	is	exception	3.4.3	The session self-report rule is the family's own reserved rule; the 3.4.3 substrate-wide self-report rule does not apply to it.	
 p3	223	3.1.3.1	family	signer	projection	session	MUST_NOT	states	3.4.5	A row about an occurrence authored by anyone else MUST NOT be folded as that occurrence's claim.	
-p3	225	3.1.3.1	family	row_shape	body	session	MUST	states	2.1,8.11.10	Every session row REQUIRES community_id, session_id and claimed_at as signed envelope members, claimed_at in canonical form.	
+p3	225	3.1.3.1	family	row_shape	body	session	MUST	states	2.1,8.11.10	Every session row REQUIRES community_id, session_id and claimed_at as signed envelope members, claimed_at an instant of 2.6.2.	
 p3	225	3.1.3.1	family	row_shape	projection	session	MUST_NOT	states		A session row missing any of the three keys MUST NOT be folded; no consumer substitutes asserted_at, context or a payload field.	
 p3	225	3.1.3.1	family	supersede	tie_break	session	MUST	states		Concurrent session claims MUST settle on earliest claimed_at, ties on the lowest occurrence key_id.	
 p3	225	3.1.3.1	family	conformance	none	session	MUST	states		Consumers MUST make session handling idempotent per attestation id.	
@@ -1573,7 +1573,7 @@ p3	922	3.2	kernel	admission_order	evidence_screen	group	MUST	states		A version w
 p3	922	3.2	kernel	transparency_log	freshness	group	is	states		A roster row older than one cadence and uncovered marks the head lagging (lineage_head_lags_roster); witnesses do not cosign a lagging head	
 p3	922	3.2	kernel	freshness	freshness	group	is	states		A roster row takes effect at its effective_at; the fold decides who holds a seat; a removal never waits on a ceremony	
 p3	922	3.2	kernel	transparency_log	window	group	MUST	states		Each directory witness re-cosigns the current head unchanged at least once per witness_cadence_secs	
-p3	922	3.2	stewardship	steward	none		is	states	5.3.4	The genesis head of each shipped lineage is in the GenesisBundle attestations pinned by bundle_fingerprint; a community born outside the bundle has no anchor	
+p3	922	3.2	stewardship	steward	none		is	states	5.3.4	The genesis head of each shipped lineage is in the GenesisBundle attestations pinned by the bundle's object id; a community born outside the bundle has no	
 p3	924	3.2	kernel	transparency_log	evidence_screen	group,trust	is	states	5.3.1	A head is witnessed when it carries at least witness_quorum valid cosignatures from distinct keys in the charter's witnesses directory; the directory is never fetched from the attach route	
 p3	924	3.2	kernel	policy_row	governance	trust	MUST	applies	2.7.5	witness_quorum equals floor(n/2)+1 and at least 2; a charter declaring a smaller quorum is refused at admission	
 p3	924	3.2	kernel	registration	none	transparency_log	is	states	3.4.10	The log-witness duty (delegation-conferred, signing transparency_log:cosigned) is neither required of nor sufficient for a lineage witness; listing in the directory is the only conferral	
@@ -1701,7 +1701,7 @@ p3	1049	3.3.2	family	moderation	none	takedown_notice	is	states		osa_illegal_cont
 p3	1050	3.3.2	family	moderation	none	takedown_notice,age_assurance	is	states		avmsd_age_inappropriate composes with the age_assurance:* gate and is not immediate removal	table
 p3	1051	3.3.2	family	moderation	none	takedown_notice	is	states		court_order takedown is immediate subject to the court's stated timeline	table
 p3	1052	3.3.2	family	cosign	cosign_rule	takedown_notice	is	states	2.4,2.4.1.1	A steward_purge takedown_notice is cosigned under the trust root's consensus_protocol	table
-p3	1052	3.3.2	mechanism	wire	body	takedown_notice	is	states		steward_purge content_sha256 is the selection digest: SHA-256 over the JCS array of sorted unique plane:id strings naming every purged record by plane identifier, never by content; content_holder_key_ids is []	table
+p3	1052	3.3.2	mechanism	wire	body	takedown_notice	is	states		steward_purge content_sha256 is the selection digest: SHA-256 over the set of plane:id strings naming every purged record by plane identifier, never content, derived included; the preimage encoding waits	table
 p3	1052	3.3.2	family	admission_order	body	takedown_notice	MAY	states		An OPTIONAL selection_counts {table: count} member lets the door refuse a steward_purge whose live count drifted (purge_selection_count_mismatch); evidence_refs cites the dry-run ledger	table
 p3	1052	3.3.2	family	erasure	replication	takedown_notice,reconsideration	is	states	4.5.5	A steward_purge notice is admitted and replicated as a Contribution with an attestation_id tombstones cite and reconsideration can target; it travels inside the tombstone bundle, never content	table
 p3	1052	3.3.2	family	signature	none	takedown_notice	is	states		A receiver that has not yet folded a steward_purge notice re-verifies it against its own held root and re-derives the digest	table
@@ -1759,7 +1759,7 @@ p3	1170	3.3.4	family	freshness	freshness	cosign	is	applies	2.7.5	A node that dro
 p3	1170	3.3.4	family	admission_order	none	cosign,membership	is	states		An event failing any check other than signature count is refused as with no hold; one node's expiry refuses nothing; an event arriving with sufficient signatures is admitted	
 p3	1171	3.3.4	family	audience	replication	cosign	is	states		A held pending row and its signatures are served only to members active at the roster head the event names and still members; removed members, the invitee and outsiders see nothing	
 p3	1171	3.3.4	family	withdraw	lifecycle	cosign	MAY	states		The proposer may withdraw a pending row; a member that has signed cannot recall its signature	
-p3	1172	3.3.4	family	cosign	tie_break	cosign	is	states		An act is named by its quorum key covering no signature; cosignatures count by signer; a second sufficient set for an admitted act settles as held; retraction reaches every node	
+p3	1172	3.3.4	family	cosign	tie_break	cosign	is	states		An act is named by its row id covering no signature; cosignatures count by signer; a second sufficient set for an admitted act settles as held; a retraction takes effect on every node that holds it	
 p3	1174	3.3.4	family	key_plane	lifecycle	family,key_grant	is	states		On admission of a family ADD each blob owner's substrate, as sealer, emits retroactive key_grants wrapping that owner's family-scoped content DEKs to the new member; no other member's substrate wraps them	
 p3	1176	3.3.4	family	key_plane	lifecycle	family,key_grant	is	restates	4.4.3.22	On a family REMOVE the removed member retains existing key_grants; the substrate stops wrapping new key_grants to them	
 p3	1178	3.3.4	family	freshness	freshness	membership	is	states	3.2	A roster event's signers are counted over the members at the roster head it names; removal and resignation bind by causal past; a line below a node's acknowledged head is void for it	
@@ -1777,7 +1777,7 @@ p3	1289	3.3.5	family	row_shape	body	consent_record	is	states	2.3.2,8.11.10,3.3.1
 p3	1308	3.3.5	family	consent_fold	body	consent_record	MAY	states		consent_record stance granted: processing may proceed within scope and valid_until	table
 p3	1309	3.3.5	family	erasure	body	consent_record	MUST	states		consent_record stance revoked: the producer must initiate deletion within the SLA window	table
 p3	1310	3.3.5	family	signer	signer_rule	consent_record	is	states		consent_record stance expired is a substrate emission when valid_until passes without renewal	table
-p3	1313	3.3.5	family	row_shape	body	consent_record	MUST	states	8.11.2	A consent_record is admitted only with subject_key_id, closed-set stance and canonical asserted_at present; other members are optional under the omit rule	
+p3	1313	3.3.5	family	row_shape	body	consent_record	MUST	states	8.11.2	A consent_record is admitted only with subject_key_id, closed-set stance and asserted_at (an instant of 2.6.2) present; other members are optional under the omit rule	
 p3	1314	3.3.5	family	signer	signer_rule	consent_record	MUST_NOT	states		A producer or subject MUST NOT assert consent_record stance expired; expired is substrate-emitted only	
 p3	1315	3.3.5	family	placement	replication	consent_record	is	applies	5.3.2.2,5.3.2.5	A stance revoked consent_record is not local-tier-eligible; it goes federation-tier hybrid-signed or rides the 24-hour local-to-federation promotion; a self-consent granted with sole authority MAY be local-tier	
 p3	1316	3.3.5	family	withdraw	signer_rule	consent_record	SHOULD	applies	2.4.1.1,4.4.3.29	A stance revoked consent_record whose subject_key_id is in the target's subject_key_ids[] is admitted under subject-revocation authority; substrate SHOULD record the admitting rule; no cosignature or quorum	
@@ -1807,7 +1807,7 @@ p3	1436	3.3.6	family	agent_identity	none	identity	is	states		An agent whose atte
 p3	1440	3.3.6.1	family	key_plane	lifecycle	identity,key_grant	is	restates	5.2	The at-rest DEK cascade is substrate-wraps-by-default: the substrate generates the per-write DEK and wraps it to each active recipient's x25519 and ML-KEM-768 keys resolved by key_id	
 p3	1440	3.3.6.1	family	registration	none	identity	MUST	states		Recipients must register encryption keys via encryption_pubkeys because the key registration carries only signing keys and ML-KEM cannot be derived from ML-DSA	
 p3	1442	3.3.6.1	family	signer	signer_rule	identity	is	states		An encryption_pubkeys binding is admitted only when attesting_key_id is the identity_key_id or a current occurrence of it (self-certified)	
-p3	1443	3.3.6.1	family	signature	none	identity	is	states		The encryption_pubkeys binding is hybrid-signed (Ed25519 + ML-DSA-65)	
+p3	1443	3.3.6.1	family	signature	none	identity	is	states		The encryption_pubkeys binding carries the composite signature	
 p3	1444	3.3.6.1	family	key_plane	lifecycle	identity	is	states		KEM keys rotate by a new identity_occurrence superseding the prior, without touching the stable signing key_id; encryption keys are not a field on the key record	
 p3	1445	3.3.6.1	family	audience	replication	identity	is	states		identity_occurrence is its own kind in the replication wire; encryption pubkeys replicate in cleartext inside the occurrence envelope; no new replication kind	
 p3	1447	3.3.6.1	family	key_plane	body	identity	MUST_NOT	states	3.3.6.2	Signing, RET-transport and content-KEM are three distinct keypairs; deriving the content-KEM x25519 from either other is a conformance violation; the transport key never wraps content DEKs	
@@ -1837,7 +1837,7 @@ p3	1470	3.3.6.2	family	admission_order	body	identity	is	states		The onion hop ke
 p3	1470	3.3.6.2	mechanism	transport	evidence_screen	identity	is	states	5.4.6	A node with no valid hop key cannot relay onion traffic; an opted-out node carries none; a serve node with none does not conform	
 p3	1472	3.3.6.2	mechanism	transport	body	identity	is	states	5.4.6	A node opting out of relaying carries onion_relay {opt_out: true} in the signed envelope of its binding, absent by default, and withdraws its hop key on the same superseding row	
 p3	1472	3.3.6.2	mechanism	conformance	none	identity	is	states		A serve seat carrying the onion_relay opt-out marker is out of conformance (seat_opted_out)	
-p3	1474	3.3.6.2	mechanism	wire	body	identity	is	states	8.11.3	onion_hop_pubkeys carries both X-Wing halves raw in standard base64 (ml_kem_768_base64 exactly 1184 bytes, x25519_base64 exactly 32 bytes), JCS-sorted	
+p3	1474	3.3.6.2	mechanism	wire	body	identity	is	states	8.11.3	onion_hop_pubkeys carries both X-Wing halves raw as byte strings (the encapsulation key exactly 1184 bytes, the X25519 key exactly 32 bytes); the member names wait	
 p3	1483	3.3.6.2	mechanism	wire	body	identity	is	states		onion_hop_pubkeys lives in the signed envelope only, never in a typed column, so the content hash does not depend on a store's projection	
 p3	1483	3.3.6.2	family	admission_order	body	identity	is	states		A hop-key half of wrong length is refused malformed; a half equal to a transit half, transport key or signer's pinned key is refused onion_hop_x25519_reuse or onion_hop_ml_kem_768_reuse	
 p3	1487	3.3.6.3	mechanism	wire	none	identity	is	states		destination_hash is a two-stage hash, not a single SHA-256 over a flat preimage	
@@ -1965,7 +1965,7 @@ p3	1727	3.3.13	kernel	row_shape	body	*	MUST	restates	5.3.2.11	size in bytes is R
 p3	1728	3.3.13	mechanism	media	body	external_content	is	states		The mandatory captions reference on video and film is the sha256 of a separate text/vtt blob with its own size cap, never inline text	
 p3	1729	3.3.13	family	content_ingestion	body	external_content,content_class	is	states	3.4.14	The AI-generation disclosure value space is the IPTC Digital Source Type vocabulary: trainedAlgorithmicMedia maps to content_class:generated; composite types map to generated_modified; C2PA binary manifest is not adopted	
 p3	1733	3.3.13	mechanism	media	body	external_content	MUST	states	5.3.2.11,3.1.3.4	Common media field set: digest equal to evidence_refs[], size REQUIRED, format, codec, layout hints never trusted for allocation, placeholder the only pre-verification UI element, name display-only, parent only sealed	
-p3	1749	3.3.13	mechanism	media	body	external_content	is	states		sealed_descriptor is an AEAD seal under the room DEK over {name, format, codec?} as JCS with the blob digest as associated data; a relay yields address, size and room only	
+p3	1749	3.3.13	mechanism	media	body	external_content	is	states		sealed_descriptor is an AEAD seal under the room DEK over {name, format, codec?}, its plaintext encoding waiting, with the blob digest as associated data; a relay yields address, size and room, never the description	
 p3	1751	3.3.13	mechanism	media	body	external_content	MUST	states	5.3.2.11	In clear always required: size (u64 > 0 checked before hashing), digest, the room target, content_digest in the encrypted two-hash case, and placeholder	
 p3	1752	3.3.13	mechanism	media	body	external_content	MUST	states		format and codec are required in clear iff sealed_descriptor is absent; with a seal they MUST be absent and a struct carrying both is refused; name never in clear	
 p3	1753	3.3.13	mechanism	media	none	external_content	is	states	5.3.2.12	The sniff check runs where bytes decrypt, by the opening party; a holder that cannot open does not sniff; the substrate never holds a room DEK on the row plane	
@@ -2110,8 +2110,8 @@ p3	1937	3.4.7.1	kernel	registration	none	*	MAY	states	4.5.8	federation_keys.iden
 p3	1939	3.4.7.1	kernel	registration	none	*	MUST_NOT	restates	3.4.7.3	A key holding node MUST NOT also hold agent, and one holding user or accord_holder MUST NOT also hold node or agent; these are the only cohabitation exceptions	
 p3	1943	3.4.7.1	kernel	reserved_prefix	none	*	MUST	states	4.2.3	identity_type is a set of labels a key states about itself and opens no reserved family	
 p3	1945	3.4.7.1	kernel	registration	none	*	MUST	states	3.1	A scalar identity_type X is the singleton set {X}; substrates MUST interpret the column as a set and consumers MUST read a scalar as a one-element set	
-p3	1947	3.4.7.1	mechanism	wire	none	*	MUST	states		Where identity_type enters canonical bytes it MUST be encoded as its members sorted ascending by code point, deduplicated, comma-joined without whitespace; a single role encodes as its scalar form	
-p3	1949	3.4.7.1	mechanism	conformance	none	*	is	states		identity_type storage is the implementer's choice; a TEXT column holding the comma-joined form decoded on read is conformant; new role values need no schema change	
+p8	x	8.11.25	mechanism	wire	none	*	MUST	states		In the earlier form, where identity_type enters canonical bytes it MUST be encoded as its members sorted ascending by code point, deduplicated, comma-joined without whitespace; a single role encodes as its scalar form	
+p3	1949	3.4.7.1	mechanism	conformance	none	*	is	states		identity_type storage is the implementer's choice; a TEXT column holding the comma-joined form decoded on read is conformant, the signed bytes encoding the set; new role values need no schema change	
 p3	1951	3.4.7.1	kernel	reserved_prefix	none	detection,capacity	is	states	3.4.8,3.4.5	A key holds as many duties as it has live delegations and the namespaces do not merge; shadowing and self-emission rules apply unchanged	
 p3	1955	3.4.7.1	kernel	cosign	none	*	is	restates	4.4.3.8,3.2,4.4	A co-located steward role never lets a single node issue a federation-scope attestation; registry consensus is the founder quorum over ciris-canonical; a co-located node gains neither vote nor verdict	
 p3	1956	3.4.7.1	family	moderation	none	detection	is	restates	1.7,3.4.8,1.2	lenscore_detector emissions under detection:* are validated not adjudicated and are never sole evidence for an authority action	
@@ -2373,7 +2373,7 @@ p4	77	4.2.1	family	accord	none	accord	is	states		The accord's powers are exactly
 p4	77	4.2.1	stewardship	amendment	window	accord	is	states	4.2.6	A change widening accord reach takes effect only after a published severance window of 72 h during which any bound node may cut its edge; widening waits, firing does not	
 p4	81	4.2.1.1	mechanism	wire	body	accord	is	states		Every accord:invoke row carries a holder's signature, inside the row, over canonical bytes that include the invocation kind discriminator and a per-invocation nonce, preventing cross-kind replay	
 p4	83	4.2.1.1	mechanism	wire	body	accord	is	states	8.11.10,8.11.11	Accord invoke canonical bytes: sha256 over label ciris.accord_invoke.v2, invocation_kind, invocation_id, nonce, asserted_at, valid_until, payload_sha256 as newline-joined fields	
-p4	93	4.2.1.1	mechanism	signature	none	accord	is	restates	3.1.2.1	Accord invocations carry the hybrid Ed25519 plus ML-DSA-65 bound-payload signature	
+p4	93	4.2.1.1	mechanism	signature	none	accord	is	restates	2.6.1.7	Accord invocations carry the composite signature of 2.6.1.7 over canonical	
 p4	93	4.2.1.1	family	cosign	cosign_rule	accord	is	states		A constitutional halt is one holder's signature; a consumer verifies one holder's signature over the canonical bytes against the pinned roster and halts	
 p4	95	4.2.1.1	family	halt	none	accord	is	states		A halt is one self-contained row signed by any holder with a holder-minted nonce; it fires on receipt at every node holding a live acceptance edge	
 p4	95	4.2.1.1	family	halt	freshness	accord	is	states		A receiving node halts in the same step and latches; the latch is idempotent so a replayed or second row changes nothing; the nonce is single-use within valid_until	
@@ -2486,12 +2486,12 @@ p4	275	4.2.6	family	admission_order	body	accord	MUST_NOT	states		A recovery vers
 p4	275	4.2.6	family	supersede	signer_rule	accord	is	states		Only the holder who lost signing-key material rotates, by a supersedes signed under the recovery key; it is a roster change by that holder about themselves and needs no quorum	
 p4	277	4.2.6	family	accord	none	accord	is	states		A removal that passes has a majority of the whole roster behind it; there is no restore and no contest act	
 p4	277	4.2.6	mechanism	wire	none	accord	MUST_NOT	states		The domain labels ciris.accord_contest.v1 and ciris.accord_restore.v1 are retired and are never reused	
-p4	279	4.2.6	family	row_shape	body	accord	is	states		A halt is the accord:invoke row and nothing else; a roster change rides three hybrid-signed objects accord_proposal, accord_participation and accord_decision, none of which exists on the fire path	
+p4	279	4.2.6	family	row_shape	body	accord	is	states		A halt is the accord:invoke row and nothing else; a roster change rides three composite-signed objects accord_proposal, accord_participation and accord_decision, none on the fire path	
 p4	279	4.2.6	family	cosign	none	accord	is	states		DECIMATION is a quorum-computation rule over the existing CONSTITUTIONAL kind, not a new invocation verb	
 p4	279	4.2.6	family	cosign	evidence_screen	accord	MUST	states		Verifiers fail closed: each participation resolves to a current roster member in the pinned directory over the proposal nonce; a roster change carries at least floor(N/2)+1 distinct yes	
-p4	281	4.2.6	mechanism	wire	body	accord	is	states	4.2.1.1,4.2.1.3	Proposal and participation each sign a distinct wire-isolated canonical-bytes domain; a decision signs none; distinct prefixes prevent invoke, lifecycle, proposal, participation cross-replay	
-p4	283	4.2.6	mechanism	wire	body	accord	is	states		Proposal canonical bytes: ciris.accord_proposal.v1, family_key_id, prior_family_digest, action, nonce, window_until; participation bytes: ciris.accord_participation.v1, family_key_id, refers_to, proof_of_life, vote yes no or abstain, asserted_at, nonce	
-p4	301	4.2.6	family	signature	cosign_rule	accord	is	states		accord_decision has no separate signing domain; its authority is the contained participation signatures plus any roster version it produces; all hybrid Ed25519 plus ML-DSA-65	
+p4	281	4.2.6	mechanism	wire	body	accord	is	states	4.2.1.1,4.2.1.3	Proposal and participation each sign a distinct wire-isolated domain; a decision signs none; distinct domains prevent invoke, lifecycle, proposal and participation cross-replay; the forward form waits	
+p8	x	8.11.22	mechanism	wire	body	accord	is	states		Proposal canonical bytes: ciris.accord_proposal.v1, family_key_id, prior_family_digest, action, nonce, window_until; participation bytes: ciris.accord_participation.v1, family_key_id, refers_to, proof_of_life, vote yes no or abstain, asserted_at, nonce	
+p4	301	4.2.6	family	signature	cosign_rule	accord	is	states		accord_decision has no separate signing domain; its authority is the contained participation signatures plus any roster version it produces; each signature is the composite	
 p4	301	4.2.6	family	registration	replication	accord,federation_keys	MUST_NOT	states	5.3.4	Accord-holder PQC halves are published as signed key records in federation_keys under their own identity_type, never in the GenesisBundle holders roster; absent publication hybrid resolution fails closed	
 p4	305	4.2.6	stewardship	amendment	none	accord	is	restates	4.5.1.2,4.5.1	The live-quorum section is entrenched; before the scale gate the steward's authority over entrenched surfaces applies; after it a change needs the entrenched accord ratification	
 p4	309	4.3	stewardship	agent_identity	none		is	restates	1.16.5	WA appointment, rotation, recusal, appeals and wisdom-assessment criteria are set by the Governance Charter Annex B, external to the system	
@@ -2748,15 +2748,15 @@ p4	909	4.4.3.19	family	delegation	none	delegates_to	is	states		When node and bra
 p4	911	4.4.3.19	family	transport	body	identity_occurrence	is	restates	3.3.6.2	Each occurrence binds a transport_destination; the app is reachable on RET as the user occurrence	
 p4	911	4.4.3.19	mechanism	key_plane	none	identity_occurrence	MUST_NOT	states		The Reticulum destination is a separate dual-key transport identity authorized by the signing key signing the binding; the federation signing seed must not enter the transport layer	
 p4	913	4.4.3.19	family	audience	replication	delegates_to	is	restates		The login delegates_to is promoted to federation tier	worked flow; restates 870
-p4	917	4.4.3.20	family	signature	none	consent,delegates_to,identity_occurrence	is	restates	8.11.1	Each of the three Self-at-login Contributions is hybrid-signed over JCS(envelope)	
-p4	917	4.4.3.20	kernel	wire	none	*	MUST_NOT	restates	5.3.2.6,8.11.2	Promotion canonicalizes the exact committed member set; the signer must not re-default omitted fields	
-p4	917	4.4.3.20	mechanism	wire	body	delegates_to,identity_occurrence	is	restates	8.11.3	scope[] is lexicographically sorted (set); aspects[] keeps RNS order (sequence)	
-p4	917	4.4.3.20	mechanism	wire	body	*	is	restates	8.11.11,2.6.8,8.11.10	Hash and pubkey byte fields are lowercase hex; every *_key_id is carried verbatim, never re-cased; timestamps are 8.11.10-canonical	
-p4	917	4.4.3.20	kernel	wire	body	*	is	restates	2.1,8.11.2	Optional envelope fields not listed ride the omit rule: absent unless the producer sets them	
+p8	x	8.11.23	family	signature	none	consent,delegates_to,identity_occurrence	is	restates	8.11.1	Each of the three Self-at-login Contributions is hybrid-signed over JCS(envelope)	
+p4	917	4.4.3.20	kernel	wire	none	*	MUST_NOT	restates	5.3.2.6,8.11.2	Promotion signs the exact committed member set under the omit rule; the signer must not re-default omitted fields	
+p8	x	8.11.23	mechanism	wire	body	delegates_to,identity_occurrence	is	restates	8.11.3	scope[] is lexicographically sorted (set); aspects[] keeps RNS order (sequence)	
+p8	x	8.11.23	mechanism	wire	body	*	is	restates	8.11.11,2.6.8,8.11.10	Hash and pubkey byte fields are lowercase hex; every *_key_id is carried verbatim, never re-cased; timestamps are 8.11.10-canonical	
+p8	x	8.11.23	kernel	wire	body	*	is	restates	2.1,8.11.2	Optional envelope fields not listed ride the omit rule: absent unless the producer sets them	
 p4	919	4.4.3.20	family	row_shape	body	consent	is	states	3.3.5	A partnership half is a scores row, subject_kind consent_record, stance granted, dimension consent:partnership_grant:v1 or accept:v1, naming the partner and a shared bilateral_pair_id	
 p4	930	4.4.3.20	family	row_shape	body	consent	is	restates	3.1.7	The partnership dimension carries the :v1 version segment as R3 requires; bump to :v2 only if the bilateral shape changes	
-p4	932	4.4.3.20	family	signature	body	consent	MUST	states	3.3.1	Every implementation canonicalizes and signs the eight REQUIRED members of each :v1 half plus whatever else the producer set	
-p4	932	4.4.3.20	kernel	signature	none	*	MUST_NOT	restates	8.11.2	A verifier canonicalizes what the row carries and never re-defaults, or the JCS bytes and signatures diverge	
+p8	x	8.11.23	family	signature	body	consent	MUST	states	3.3.1	Every implementation canonicalizes and signs the eight REQUIRED members of each :v1 half plus whatever else the producer set	
+p4	932	4.4.3.20	kernel	signature	none	*	MUST_NOT	restates	2.6.1.2	A verifier verifies what the row carries and never re-defaults, or the bytes and signatures diverge	
 p4	936	4.4.3.20	family	row_shape	body	consent	MUST	states		attestation_type is the literal scores	table
 p4	937	4.4.3.20	family	signer	signer_rule	consent	is	states		attesting_key_id is the signer of that half: the granter on grant, the accepter on accept	table
 p4	938	4.4.3.20	family	row_shape	body	consent	MUST	states		dimension is the literal consent:partnership_grant:v1 or consent:partnership_accept:v1	table
@@ -2764,19 +2764,19 @@ p4	939	4.4.3.20	family	row_shape	body	consent	MUST	states		subject_kind is the l
 p4	940	4.4.3.20	family	row_shape	body	consent	MUST	states		stance is granted; a revocation carries revoked	table
 p4	941	4.4.3.20	family	subject	subject_rule	consent	MUST	states		subject_key_id is the other party, singular and non-empty: the agent occurrence on grant, the user identity on accept	table
 p4	942	4.4.3.20	family	row_shape	body	consent	MUST	states	4.4.3.28	bilateral_pair_id is the shared join, an identical string on both halves	table
-p4	943	4.4.3.20	family	row_shape	body	consent	MUST	states	8.11.10	asserted_at is a 8.11.10-canonical RFC 3339 timestamp	table
+p4	943	4.4.3.20	family	row_shape	body	consent	MUST	states	8.11.10	asserted_at is an instant of 2.6.2	table
 p4	945	4.4.3.20	family	expiry	lifecycle	consent	is	restates	4.4.3.28,8.11.2	A PARTNERED pair has no expiry; valid_until is omitted, never materialized as null	
-p4	945	4.4.3.20	kernel	wire	body	consent	MUST_NOT	restates	2.1,8.11.2	All other envelope fields ride the omit rule; the signer must not re-default	
+p8	x	8.11.23	kernel	wire	body	consent	MUST_NOT	restates	2.1,8.11.2	All other envelope fields ride the omit rule; the signer must not re-default	
 p4	945	4.4.3.20	family	row_shape	body	consent	is	states		Additional REQUIRED members are a :v2 bump, never a silent :v1 addition	
-p4	945	4.4.3.20	mechanism	wire	body	consent	is	restates	8.11.1,2.6.8,8.11.11	attesting_key_id and subject_key_id are identifiers carried verbatim; only hash and pubkey byte fields are lowercase hex	
+p4	945	4.4.3.20	mechanism	wire	body	consent	is	restates	2.6.1.1,2.6.1.2	attesting_key_id and subject_key_id are identity references, never re-cased; hash and pubkey byte fields are byte strings	
 p4	947	4.4.3.20	family	row_shape	body	delegates_to	is	states	2.4.1	The login delegates_to carries attested_key_id the agent occurrence, canonical scopes, purpose act_as_user, valid_from, valid_until and signed_at	
 p4	959	4.4.3.20	family	row_shape	body	identity_occurrence	is	states	3.3.6,3.3.6.2	The transport binding is a scores row of subject_kind identity_occurrence carrying identity_key_id, occurrence_key_id, device_class and transport_destination	
 p4	959	4.4.3.20	family	signer	signer_rule	identity_occurrence	is	states		The transport binding is signed by identity_key_id or a current occurrence	
 p4	966	4.4.3.20	family	row_shape	body	identity_occurrence	is	states	3.3.7	device_class is the closed set phone, laptop, server, embedded, service, agent; personal is phone or laptop	
 p4	970	4.4.3.20	mechanism	wire	body	identity_occurrence	MUST	restates	3.3.6.3	destination_hash must derive per 3.3.6.3; aspects is ordered	
-p4	977	4.4.3.20	family	signature	none	consent,delegates_to,identity_occurrence	is	restates	5.3.2.6	The verifier computes JCS plus the hybrid signature over each member set; the promotion signature is over the identical JCS bytes	
-p4	979	4.4.3.20	mechanism	wire	body	identity_occurrence	is	restates	3.3.6.1,8.11.3	When present, both encryption_pubkeys halves sit inside the signed JCS as padded standard base64 strings	
-p4	979	4.4.3.20	kernel	wire	body	identity_occurrence	MUST_NOT	restates	8.11.2	encryption_pubkeys presence rides the omit rule; the signer must not re-default	
+p8	x	8.11.23	family	signature	none	consent,delegates_to,identity_occurrence	is	restates	5.3.2.6	The verifier computes JCS plus the hybrid signature over each member set; the promotion signature is over the identical JCS bytes	
+p8	x	8.11.23	mechanism	wire	body	identity_occurrence	is	restates	3.3.6.1,8.11.3	When present, both encryption_pubkeys halves sit inside the signed JCS as padded standard base64 strings	
+p8	x	8.11.23	kernel	wire	body	identity_occurrence	MUST_NOT	restates	8.11.2	encryption_pubkeys presence rides the omit rule; the signer must not re-default	
 p4	979	4.4.3.20	mechanism	key_plane	none	identity_occurrence	MUST_NOT	restates	3.3.6.1	encryption_pubkeys are payload, never verification material; neither half may be fed to a signature-verify path	
 p4	987	4.4.3.21	family	supersede	lifecycle	family	is	restates	3.2	One held group version per group id; a new version waits until the head its prev_head_digest names is held; a later instant not naming it is not preferred (T6)	
 p4	991	4.4.3.21	family	roster_fold	projection	family	is	states		The head is the held record, or the witnessed head where the charter declares a witness_quorum; the witnessed head may be an ancestor	
@@ -3095,7 +3095,7 @@ p4	1605	4.5.8.2	kernel	registration	none	federation_keys	is	restates	1.7,3.4	ide
 p4	1609	4.5.8.3	family	signer	signer_rule	capacity	MUST_NOT	restates	3.4.5	attesting_key_id must differ from attested_key_id for capacity regardless of roles held; a key holding both an agency delegation and infra:detect MUST NOT score its own capacity	
 p4	1610	4.5.8.3	family	reserved_prefix	signer_rule	reasoning_trace	is	states		Reasoning-trace emission needs no reserved duty; it rides the agent role's open-vocabulary surface	
 p4	1611	4.5.8.3	family	reserved_prefix	signer_rule	detection	is	states	3.4.8	A cohabiting key emits agent-intent rows under agent dimensions and detector verdicts under detection; cohabitation grants the right on each surface, never merges them	
-p4	1616	4.5.8.4	mechanism	wire	none	federation_keys	is	states		The identity_type set encodes as sorted-ascending, deduplicated, comma-joined canonical bytes; a single role encodes as its scalar form	
+p4	1616	4.5.8.4	mechanism	wire	none	federation_keys	is	states		The identity_type set encodes as the set encoding of 2.6.1.2; the comma-joined form is the earlier form's	
 p4	1622	4.5.8.4	kernel	registration	none	federation_keys	is	states	3.4	identity_type members are an open vocabulary owned by the reservations and sibling-component extensions, not a closed set	
 p4	1623	4.5.8.4	kernel	registration	none	federation_keys	is	restates	4.5.8.1	No cohabitation is forbidden at the wire layer; the substrate checks the duty a signer holds and cohabitation discipline is operator policy	
 p4	1630	4.5.9	family	consent_fold	none	location_proof,community	is	states	3.2,3.3.3,2.6.6,4.4.3.3	Joining a geographic community is a one-way disclosure enforced at the wire, not by policy	
@@ -3358,18 +3358,18 @@ p5	114	5.2	kernel	audience	replication	custody	is	applies	2.7.5	One audience rul
 p5	115	5.2	kernel	audience	replication		is	applies		A self Contribution promoted via supersedes to community emits holding claims at the new scope on the new Contribution at promotion; the original's bytes stay invisible at federation	
 p5	116	5.2	kernel	subject	subject_rule	key_grant	is	applies	2.3	Self content naming a non-self subject stays in the author's self; the subject gets no key_grant, keeps revocation authority, and gets bytes only by re-emit at a wider scope	
 p5	124	5.3.1	mechanism	transparency_log	none		is	states		Consumers verify witness cosignatures and the witness quorum on a log's tree heads	
-p5	128	5.3.1	mechanism	endpoint	none		is	states		POST /v1/transparency/sth/cosign (public): a witness posts a cosignature on (tree_size, root_hash, signed_at)	
-p5	128	5.3.1	mechanism	transparency_log	none		is	states		The Registry verifies an STH cosignature's hybrid Ed25519 + ML-DSA-65 against the witness pubkey in the witness directory and persists on success	
-p5	132	5.3.1	mechanism	endpoint	none		is	states	8.11.10,8.11.11	STH cosign request body: tree_size, root_hash hex, canonical signed_at, witness_key_id, both signature halves, and the consistency_proof root, tree_size and path	code block
-p5	146	5.3.1	mechanism	wire	formula		MUST	states		A witness MUST sign canonical = sha256 of ciris.sth_cosign.v1 header plus tree_size, root_hash_sha256 and signed_at lines	
-p5	157	5.3.1	mechanism	signature	none		is	states		STH cosignature: Ed25519 over canonical; ML-DSA-65 over canonical || ed25519_sig (bound payload)	
+p8	x	8.11.26	mechanism	endpoint	none		is	states		POST /v1/transparency/sth/cosign (public): a witness posts a cosignature on (tree_size, root_hash, signed_at)	
+p8	x	8.11.26	mechanism	transparency_log	none		is	states		The Registry verifies an STH cosignature's hybrid Ed25519 + ML-DSA-65 against the witness pubkey in the witness directory and persists on success	
+p8	x	8.11.26	mechanism	endpoint	none		is	states	8.11.10,8.11.11	STH cosign request body: tree_size, root_hash hex, canonical signed_at, witness_key_id, both signature halves, and the consistency_proof root, tree_size and path	code block
+p8	x	8.11.26	mechanism	wire	formula		MUST	states		A witness MUST sign canonical = sha256 of ciris.sth_cosign.v1 header plus tree_size, root_hash_sha256 and signed_at lines	
+p8	x	8.11.26	mechanism	signature	none		is	states		STH cosignature: Ed25519 over canonical; ML-DSA-65 over canonical || ed25519_sig (bound payload)	
 p5	161	5.3.1	mechanism	transparency_log	none		is	states	3.2	The witness directory also witnesses trust-root lineage heads: the lineage's signed roster record at a version, named by the SHA-256 of its signed bytes	
 p5	161	5.3.1	mechanism	transparency_log	none		is	states	3.2	The Registry verifies a lineage-head cosignature against the witness's key record in the charter's witness directory for that lineage, never a directory of its own	
 p5	161	5.3.1	mechanism	transparency_log	none		is	states	3.2	The Registry refuses a lineage-head witness that is not independent of the lineage under T6 at the cosignature's signed_at	
 p5	161	5.3.1	mechanism	freshness	window		is	states	2.6.7	The Registry rejects a lineage-head cosignature whose signed_at is more than 5 minutes from its own clock at receipt	
 p5	165	5.3.1	mechanism	endpoint	none		is	states		Lineage-head cosign request body: lineage_key_id, head digest, prior head digest (empty on first), signed_at, witness_key_id, both signature halves	code block
 p5	177	5.3.1	mechanism	wire	formula		MUST	states		A witness MUST sign canonical = sha256 of ciris.lineage_head_cosign.v1 header plus lineage_key_id, head digest, prior head digest and signed_at lines	
-p5	189	5.3.1	mechanism	signature	none		is	states		Lineage-head cosignature: Ed25519 over canonical; ML-DSA-65 over canonical || ed25519_sig; its domain label is distinct so it can never be replayed as an STH cosignature or the reverse	
+p5	189	5.3.1	mechanism	signature	none		is	states		Lineage-head cosignature: one composite signature over canonical; its domain label is distinct so it can never be replayed as an STH cosignature	
 p5	191	5.3.1	mechanism	transparency_log	none		MUST	states		A witness MUST verify before signing that a lineage head descends from or equals the prior head it cosigned; equality MUST be accepted; descent follows the prev_head_digest chain	
 p5	191	5.3.1	mechanism	transparency_log	none		is	states		On a witness's first lineage cosignature the prior head is the lineage's genesis head from the bundle	
 p5	191	5.3.1	mechanism	transparency_log	none		MUST	states	5.3.6.1	The Registry MUST reject a lineage cosignature naming a prior it did not record for that witness, or a head that neither equals nor descends from it (LINEAGE_HEAD_INCONSISTENT)	
@@ -3392,7 +3392,7 @@ p5	207	5.3.2.1	mechanism	transport	none		MUST	states		A consumer MUST attempt at
 p5	207	5.3.2.1	family	withdraw	lifecycle	custody	MUST_NOT	restates	3.1.3.3	On ContentMiss a consumer MUST NOT withdraw the holder's report; only its signer retracts a holding claim	
 p5	207	5.3.2.1	mechanism	trust_fold	none	custody	is	states		On ContentMiss the consumer records the miss and downweights the holder in its own holder resolution; the holder's next acknowledgement reports none	
 p5	209	5.3.2.1	mechanism	transport	none		is	applies	5.3.3.1	For a chunked object the 2-holder cap applies per chunk: no chunk is requested from more than 2 holders in parallel; in-flight depth per holder is the implementer's	
-p5	213	5.3.2.2	kernel	signature	none	*	is	states		Local-tier signature deferral: a producer's self-attestation skips the hybrid signature locally and signs only at federation-tier promotion	
+p5	213	5.3.2.2	kernel	signature	none	*	is	states		Local-tier signature deferral: a producer's self-attestation skips the composite signature locally and signs only at federation-tier promotion	
 p5	213	5.3.2.2	kernel	signature	none	*	is	states		A row is local-tier-eligible iff it is the producer's own act under its own authority; the discriminator is whose act the row is, not whether subject_key_ids is empty	
 p5	213	5.3.2.2	kernel	signature	none	observed,epistemic,consent,identity	MAY	states	2.3.1,2.3.4	A producer's own-act row MAY name a subject in subject_key_ids and remain local-tier-eligible	
 p5	213	5.3.2.2	kernel	withdraw	none	consent	is	states	2.4.1.1	Every listed subject keeps withdrawal authority over the row; a subject's later withdraws or consent:state:revoked is that subject's own signed Contribution, never a durable local row	
@@ -3428,7 +3428,7 @@ p5	257	5.3.2.6	kernel	wire	none	*	MUST	states	8.11.1	Promotion MUST encode the e
 p5	258	5.3.2.6	kernel	wire	none	*	MUST_NOT	states	2.1,8.11.4	Registry owns the envelope member set and the verifier verifies the bytes it received; the verifier's length-prefixed signing_bytes framing is never used for a promoted attestation	
 p5	264	5.3.2.7	kernel	signature	none	*	MAY	states	5.3.2.2	A local-tier row's signature MAY be absent (deferred); it is not federation-visible	table
 p5	264	5.3.2.7	kernel	audience	replication	*	is	applies	2.7.5	A local-tier row is readable only by the producing occurrence; every other caller, even an authorized family or community peer, sees nothing	table
-p5	265	5.3.2.7	kernel	signature	none	*	is	states	2.1,5.2	A federation-tier row carries the hybrid Ed25519 + ML-DSA-65 signature, is federation-visible per cohort_scope and the 5.2 rule, written by direct signed write or promotion	table
+p5	265	5.3.2.7	kernel	signature	none	*	is	states	2.1,5.2	A federation-tier row carries the composite signature, is federation-visible per cohort_scope and the 5.2 rule, written by direct signed write or local-to-federation promotion	table
 p5	267	5.3.2.7	kernel	signature	none	*	MUST	states		The substrate MUST enforce tier = federation implies hybrid signature present; nothing crosses to federation-visible unsigned	
 p5	267	5.3.2.7	kernel	audience	replication	*	MUST_NOT	applies	2.7.5	A local row is labelled local and MUST NOT be served as federation-authoritative	
 p5	267	5.3.2.7	kernel	audience	replication	*	is	applies	2.7.5	The read-gate (local implies caller is the producing occurrence) is an additional filter orthogonal to cohort_scope, composing with the audience rule of 5.2	
@@ -3449,7 +3449,7 @@ p5	294	5.3.2.11	mechanism	content_ingestion	none		MUST	states	3.1.3.3	A conformi
 p5	294	5.3.2.11	mechanism	content_ingestion	none		MUST	states		Bytes that fail the full-SHA check MUST be discarded and the holder reported per consumer policy (a negative score)	
 p5	294	5.3.2.11	family	withdraw	lifecycle	custody	MUST_NOT	applies		A failed fetch is never answered by a withdraws of another device's holding claim	
 p5	296	5.3.2.11	mechanism	row_shape	body	multimedia,live_stream,build,skill	is	states	3.3.13,3.1.2.1	Every descriptor that cites a blob (multimedia Source, chunk descriptor, SkillImportManifest entries, build manifest_size) carries the blob's byte length beside its digest	
-p5	296	5.3.2.11	mechanism	wire	none	*	MUST_NOT	states	2.1,8.11.5	A bare evidence_refs string carries no size; a consumer fetching it enforces the 8.11.5 cap and MUST NOT invent a size field on the envelope	
+p5	296	5.3.2.11	mechanism	wire	none	*	MUST_NOT	states	2.1,8.11.5	A bare evidence_refs string carries no size; a consumer fetching it enforces the 2.6.1.6 cap and MUST NOT invent a size field on the envelope	
 p5	296	5.3.2.11	mechanism	content_ingestion	none		MUST	states		The consumer MUST compare received length to the declared size before computing the digest; a mismatch is a refusal without reading the rest; an overrunning ContentFetch is refused	
 p5	296	5.3.2.11	family	row_shape	body	live_stream	is	exception	3.3.13	A live stream in progress is the one descriptor with no total size; each chunk and the init segment carry their own; the recording is an ordinary blob with one	
 p5	300	5.3.2.12	mechanism	content_ingestion	none		MUST	states		A conforming consumer MUST decide whether and how to render a blob from the verified bytes and its own policy, never from a claim in the descriptor	
@@ -3561,12 +3561,12 @@ p5	448	5.3.3.7	family	other:keep	signer_rule	live_stream	is	applies		A screen sh
 p5	448	5.3.3.7	family	key_plane	none	live_stream	is	restates	4.5.12.1	A later joiner reads a kept stream only from the epochs whose keys they hold, nothing earlier; a publisher who wants a newcomer to see more re-shares by own act	
 p5	448	5.3.3.7	family	key_plane	lifecycle	live_stream	is	restates	5.1	A publisher changes keep mid-stream only at an epoch boundary and the change reaches forward only	
 p5	452	5.3.3.8	mechanism	transparency_log	none	live_stream	is	states		A live stream is its own transparency log; its signed roots commit the producer to a single chunk history	
-p5	454	5.3.3.8	mechanism	transparency_log	none	live_stream	is	states		log_id is the string stream:<stream_id>; chunks are leaves; the stream-root is a SignedTreeHead with that log_id, tree_size = chunk_count, root_hash, timestamp, signature	
+p5	454	5.3.3.8	mechanism	transparency_log	none	live_stream	is	states		log_id is the string stream:<stream_id>; chunks are leaves; the stream-root is a SignedTreeHead with that log_id, tree_size = chunk_count, root_hash, timestamp, one composite signature and a list of witness signatures	
 p5	454	5.3.3.8	mechanism	transparency_log	none	live_stream	MUST	states		A live stream produces signed roots at the cadence whether or not anyone records it	
 p5	455	5.3.3.8	mechanism	signature	none	live_stream	MUST	states		The producer MUST sign the stream STH; signing bytes with no domain label, little-endian: u32 len(log_id) || log_id || u64 tree_size || root_hash[32] || i64 timestamp seconds || u32 nanoseconds	
 p5	455	5.3.3.8	mechanism	wire	formula	live_stream	is	states		root_hash is the RFC 6962 Merkle root over the first tree_size chunk SHA-256 leaves in seq order, leaves under 0x00 and inner nodes under 0x01	
 p5	455	5.3.3.8	mechanism	wire	none	live_stream	is	applies		An inline file is a log of one leaf whose stream_id place holds the blob's bare 64-hex id, never a stream id, and tree_size is 1	
-p5	455	5.3.3.8	mechanism	signature	none	live_stream	is	states	5.3.1,8.11.1	The stream STH signature is hybrid: Ed25519 over the signing bytes then ML-DSA-65 over signing_bytes || ed25519_sig; the 5.3.1 cosign digest is the witness input only	
+p5	455	5.3.3.8	mechanism	signature	none	live_stream	is	states	5.3.1,8.11.1	The stream STH signature is one composite signature over the signing bytes; each witness cosignature is a composite over the same bytes; the sth_cosign preimage is the earlier form's	
 p5	456	5.3.3.8	mechanism	transparency_log	none	live_stream	MAY	states	5.3.1,5.3.1.1	Witness cosign of a stream root is optional: best-effort open media uses the producer-signed root only; accountable streams (paid, registry propagation, emergency) take witness cosign with consistency proof	
 p5	459	5.3.3.8	mechanism	transparency_log	window	live_stream	MUST	states	5.1	The producer publishes a signed root every K chunks or T seconds, always at an epoch boundary and at sealed_at; witness cosign runs per epoch; defaults K=64, T=2s, operator-tunable	
 p5	460	5.3.3.8	mechanism	transparency_log	none	live_stream	is	states	5.3.1.1	A subscriber verifies chunk K's inclusion against the nearest signed STH at or past K via the consistency path; no new commitment structure	
@@ -3614,7 +3614,7 @@ p5	519	5.3.3.11	mechanism	wire	none	delivery_receipt,live_stream	MUST_NOT	states
 p5	521	5.3.3.11	family	wire	body	delivery_receipt	MUST	states		The receipt's signed order is as written (subscriber_key_id before stream_id); each length-prefixed field MUST fit a u32 and a longer field is refused, never clamped	
 p5	521	5.3.3.11	family	wire	body	delivery_receipt	is	states		received_at is the receiving node's local note and no part of the receipt preimage	
 p5	523	5.3.3.11	family	row_shape	body	delivery_receipt	MUST	states		Both epoch and K with chunk_root are required in a receipt; each names a distinct authorization scope	
-p5	527	5.3.3.11	family	signature	evidence_screen	delivery_receipt	MUST	states		A receipt's subscriber signature (hybrid, ML-DSA-65 over bytes || ed25519_sig) must be valid; necessary but not sufficient	
+p5	527	5.3.3.11	family	signature	evidence_screen	delivery_receipt	MUST	states		A receipt's subscriber signature (one composite signature) must be valid; necessary but not sufficient	
 p5	528	5.3.3.11	family	transparency_log	evidence_screen	delivery_receipt	MUST	states	5.3.3.8,5.3.1	A receipt's chunk_root MUST equal a SignedTreeHead.root_hash actually published for log_id stream:<stream_id> at tree_size at least K; a receipt over a root no published head carries concludes nothing; for accountable streams published means witness-cosigned	
 p5	529	5.3.3.11	family	transparency_log	evidence_screen	delivery_receipt	SHOULD	states		For accountable streams an inclusion proof of chunk K into chunk_root is recommended, upgrading the receipt to provable commitment to chunk K	
 p5	531	5.3.3.11	family	conformance	none	delivery_receipt	MUST_NOT	states	1.7	A delivery receipt proves delivery, not consumption; consumers MUST NOT overclaim it as proof the subscriber decrypted the bytes	
@@ -3630,12 +3630,12 @@ p5	551	5.3.4	stewardship	steward	none		is	restates	4.2.2.1	A registry publishing
 p5	551	5.3.4	mechanism	endpoint	none		is	states		GET /v1/trust-root/bundle and /v1/steward-key serve the same GenesisBundle body.	
 p5	574	5.3.4	stewardship	steward	none		is	states		Trust-root authority lives inside the bundle member and nowhere else in the response.	
 p5	574	5.3.4	stewardship	steward	none		is	restates	3.2	The bundle is tamper-evident, not authentic: a self-consistent attacker bundle under the same identifiers verifies identically.	
-p5	574	5.3.4	stewardship	steward	none		MUST	states		A consumer holds an out-of-band anchor (pinned bundle_fingerprint or pinned accord-holder key fingerprints) before accepting a bootstrap bundle.	
+p5	574	5.3.4	stewardship	steward	none		MUST	states		A consumer holds an out-of-band anchor (the pinned object id of the genesis bundle or pinned accord-holder key fingerprints) before accepting a bootstrap bundle.	
 p5	574	5.3.4	stewardship	steward	none		MUST	states		A consumer compares the received bundle against its pinned anchor at attach time.	
 p5	574	5.3.4	stewardship	steward	none		MUST_NOT	states		ciris-canonical and humanity-accord are names, not anchors; a consumer with no anchor promotes nothing in the response to a trust root.	
 p5	574	5.3.4	stewardship	steward	none		is	states		With the anchor held, the consumer re-derives the bundle quorum from its own records (verify_bundle_quorum) before trusting it.	restates 547
 p5	574	5.3.4	stewardship	steward	none		is	restates	3.2	A trust root once verified is valid until revoked (T4).	
-p5	574	5.3.4	stewardship	steward	none		is	states		Everything outside bundle (served fingerprint, charter root id, served_by) is unsigned convenience the consumer recomputes or ignores; the served bundle_fingerprint is never the anchor.	
+p5	574	5.3.4	stewardship	steward	none		is	states		Everything outside bundle (served object id, charter root id, served_by) is unsigned convenience the consumer recomputes or ignores; the served object id is never the anchor	
 p5	574	5.3.4	mechanism	endpoint	none		is	states		The trust-root bundle response carries no response_signature over the wrapper.	
 p5	574	5.3.4	mechanism	endpoint	none		MUST_NOT	states	4.2.2.1	hardware_class, signature_mode and threshold_policy never appear on the outer bundle envelope; custody class rides each holder's signed key record.	
 p5	574	5.3.4	stewardship	steward	none		MAY	restates	3.2	served_by.accepts_this_root false is legitimate: a node may relay a root it has not accepted (T3).	
@@ -3646,7 +3646,7 @@ p5	578	5.3.4	mechanism	endpoint	none		is	states	5.3.1	The route serves a lineage
 p5	578	5.3.4	stewardship	transparency_log	none		is	states		A consumer walks prev_head_digest from the genesis head, checking each head's quorum against its parent's fold and cosignatures against its parent's directory, never the head's own charter_digest; independent witnesses only.	
 p5	578	5.3.4	stewardship	freshness	none		is	applies	3.2	Fewer than witness_quorum counted cosignatures is trust_root_head_unwitnessed; newest counted cosignature older than attach_window_secs is trust_root_head_stale; the consumer fetches a fresher head or refuses, never attaching on the stale one.	
 p5	578	5.3.4	stewardship	transparency_log	none		SHOULD	states		A consumer obtains at least one counted cosignature from the witness directly.	
-p5	578	5.3.4	stewardship	freshness	window		is	states	3.2	With witnessed mode off (witness_quorum 0, no directory) a root attaches by the pinned bundle_fingerprint with attach_window_secs 604800.	
+p5	578	5.3.4	stewardship	freshness	window		is	states	3.2	With witnessed mode off (witness_quorum 0, no directory) a root attaches by the pinned object id of its bundle with attach_window_secs 604800.	
 p5	578	5.3.4	stewardship	halt	window		is	states	4.2.1.1	The accord's charter carries halt_fuse_secs 86400 (24 hours).	
 p5	578	5.3.4	stewardship	amendment	none		is	states		Witnessed mode is turned on by an amendment signed by a strict majority of the standing accord roster.	
 p5	578	5.3.4	stewardship	transparency_log	window		is	states		Witnessed-mode defaults for ciris-canonical and humanity-accord: attach_window_secs 604800, witness_cadence_secs 86400, exactly three independent witnesses, witness_quorum 2 (floor(n/2)+1); all four are charter members changed only by re-scrub.	
@@ -3786,11 +3786,11 @@ p5	798	5.4.3	mechanism	transport	none		MUST	states		A receiver opens each symbol
 p5	798	5.4.3	mechanism	media	none		is	states	5.3.2.1,5.3.2.11	A reassembled chunk is handled as stored content: the consumer pulls the item's sealed chunks from any holder, decrypts with the cohort key it holds, and verifies the full digest.	
 p5	798	5.4.3	mechanism	transport	none		MUST	states		When no holder is reachable the fetch resolves to ContentMiss, an honest miss, never a silent gap or a downgrade to unverified bytes.	
 p5	802	5.4.4	mechanism	key_plane	none		MUST	states	5.1	MLS Welcome messages are wrapped by HPKE mode_base to the invitee's static X-Wing (ML-KEM-768 + X25519) public key.	
-p5	804	5.4.4	mechanism	signature	none		MUST_NOT	states	5.3.2.8	Sender authentication is never claimed at the HPKE layer (X-Wing has no AuthEncap); it comes from the inviter's hybrid Ed25519+ML-DSA-65 signature over the encapsulation bytes; single-primitive signatures not admitted.	
+p5	804	5.4.4	mechanism	signature	none		MUST_NOT	states	5.3.2.8	Sender authentication is never claimed at the HPKE layer (X-Wing has no AuthEncap); it comes from the inviter's composite signature over the encapsulation bytes; a single-primitive signature is not admitted	
 p5	809	5.4.4	mechanism	wire	none		is	states		HPKE parameters: mode_base, KEM X-Wing (kem_id 0x647a), KDF HKDF-SHA256 (0x0001), AEAD AES-256-GCM (0x0002); suite_id is RFC 9180's own, b'HPKE\x64\x7a\x00\x01\x00\x02'.	
 p5	814	5.4.4	mechanism	wire	none		MUST	states	5.1	The suite_id is RFC 9180's own and is used byte-for-byte identically on both sides in every LabeledExtract/LabeledExpand call.	
 p5	814	5.4.4	mechanism	wire	none		is	restates	5.4.3,5.3.3.7	The HPKE-layer AEAD is AES-256-GCM, distinct from the XChaCha20-Poly1305 symbol framing; the live A/V chunk is AES-256-GCM at every layer.	
-p5	816	5.4.4	mechanism	signature	none		MUST	states	5.3.2.8	The inviter signs encap_signing_bytes in bound hybrid form: Ed25519 over the encoding, then ML-DSA-65 over encoding||ed25519_sig, no algorithm field; the verifier checks both halves, refusing a Welcome with one.	
+p5	816	5.4.4	mechanism	signature	none		MUST	states	5.3.2.8	The inviter signs encap_signing_bytes with one composite signature, no algorithm field; a Welcome carrying one is refused	
 p5	819	5.4.4	mechanism	wire	none		is	states		encap_signing_bytes = enc, the 1120-byte X-Wing ciphertext exactly as sent, with no framing and no length prefix; a malformed enc is refused before signing or checking.	
 p5	825	5.4.4	mechanism	signature	none		MUST	states	5.2	Inviter signature verification is a precondition to unwrapping a Welcome; omitting it forfeits sender authentication and the forwarder-side membership-opacity guarantee.	
 p5	829	5.4.5	mechanism	transparency_log	none		is	states	5.2,5.4.3	What a witness chain may commit to is scoped by tier; no chain carries a count of activity; the amount a node carries is hidden by link shaping only.	
@@ -3975,8 +3975,8 @@ p6	59	6.1.2.1	mechanism	wire	none		MUST_NOT	restates	2.1,6.1.3,8.11.1	Aggregatio
 p6	61	6.1.2.1	mechanism	wire	none		MUST	states	6.1.2.2,6.1.2.3	AggregationMetaV1 preimage order: 16-byte separator AGG-META-v1, u32 version=3, content_id, corpus_kind, u32 tier, algorithm id, u32 source_count, member_commitment[32], noise_floor_descriptor, u32 n_eff, u32 max_source_multiplicity, mass_commitment[32]	
 p6	77	6.1.2.1	mechanism	wire	none		is	states		The domain separator is the same for every version; layouts are discriminated by the version field alone; re-ordering is a vector-invalidating wire change	
 p6	79	6.1.2.1	mechanism	wire	none		MUST	states	6.1.2.3	version = 3 is the only admissible AggregationMetaV1 value with no deprecation window; a verifier rejects version below 3; both admission gates fail closed on a lower version	
-p6	81	6.1.2.1	mechanism	wire	none		is	restates	8.11.11	content_id, byte ids and commitments render as lowercase hex; on the wire commitments are raw 32 bytes	
-p6	81	6.1.2.1	mechanism	signature	none		MUST	restates	6.1.3,5.3.2.8	Bound-hybrid signature Ed25519(preimage) plus ML-DSA-65(preimage,ed25519_sig); a verifier rejects a tier lacking a valid ML-DSA-65 half at ingest and before persistence	
+p6	81	6.1.2.1	mechanism	wire	none		is	restates	2.6.3	content_id, byte ids and commitments render as lowercase hex; on the wire commitments are raw 32 bytes	
+p6	81	6.1.2.1	mechanism	signature	none		MUST	restates	6.1.3,5.3.2.8	One composite signature over the preimage; a verifier rejects a tier lacking a valid composite signature at ingest and before persistence	
 p6	85	6.1.2.2	mechanism	wire	none		MUST	applies	6.1.1	member_commitment is the Merkle root over source member ids using the 6.1.1 construction (SHA-256 leaves, lexicographic order, odd-node duplication, empty sentinel), no RFC 6962 prefix	
 p6	85	6.1.2.2	mechanism	wire	none		MUST	restates	6.1.1	member_commitment is verified by full source-id-list recomputation, never partial proofs; a repeated member_id is refused; the list is sorted and unique	
 p6	91	6.1.2.3	mechanism	wire	formula		is	states	6.1.9	A member's content mass w_i is the L1 norm of its resampled payload; W is the fold's total; a census composite assigns unit mass per owner	
@@ -4019,7 +4019,7 @@ p6	159	6.1.3	mechanism	wire	none		MUST_NOT	restates	2.1,8.11.1,5.3.3.5	The 6.1 p
 p6	159	6.1.3	family	wire	none	census,ballot	is	exception	6.1.9,2.1,8.11.1	Census shares, partials, composites and ballots are the one exception: 2.1 rows encoded under 2.6.1.2 and signed as every row is; binary commitments reach them only as byte strings	
 p6	160	6.1.3	mechanism	wire	none		MUST_NOT	states	5.3.2.6	A 6.1 preimage is binary, length-prefixed, big-endian and domain-separated; an implementer must not encode it as a 2.6.1 payload	
 p6	160	6.1.3	mechanism	wire	none		is	states	6.1.2.1,6.1.5.2,6.1.6,6.1.1,6.1.5,6.1.8,6.1.4	Domain separators are pinned per subsection: AGG-META-v1, CIRIS-STG-BUDGET, CIRIS-WANT-HAVE, CIRISALM-CAPv2, WW-v1-empty; holding claim, compress request and SignedClaim carry their own, pinned by vectors and the register	
-p6	161	6.1.3	mechanism	signature	none		MUST	states	5.3.2.8	Every 6.1 signed object carries the bound hybrid pair; a verifier rejects one lacking a valid ML-DSA-65 half at ingest and before persistence (no store-then-quarantine)	
+p6	161	6.1.3	mechanism	signature	none		MUST	states	5.3.2.8	Every 6.1 signed object carries one composite signature; a verifier rejects one lacking a valid composite signature at ingest and before persistence (no store-then-quarantine)	
 p6	161	6.1.3	kernel	admission_order	none		MUST_NOT	applies	2.7.3	An admission or verdict function verifies signatures itself and never trusts an in-band verified flag; such a flag is non-wire	
 p6	162	6.1.3	mechanism	conformance	none		MUST_NOT	states	1.13.4	Cross-impl-observable bytes (signed preimages, content hashes, deterministic topology output) are pin-normative; local heuristics (ALM parent selection, retention_priority) are edge-internal and never over-pinned; rarity scoring is a recommendation	
 p6	166	6.1.4	mechanism	conformance	evidence		is	states	6.1.5,6.1.5.2,6.1.2	Conformance vectors generated from the reference implementation are the freeze gate for every 6.1 preimage, ALM topology, StorageBudgetV1, CorpusWantV1, WholenessWitness bytes and the below-floor classification	
@@ -4071,7 +4071,7 @@ p6	204	6.1.5.2	family	row_shape	evidence_screen	storage_budget	MUST	states	6.1.5
 p6	205	6.1.5.2	kernel	erasure	none	consent	is	restates	6.1.5	B6: pinning never defeats consent; an active withdraws or consent:state:revoked forces immediate descent below the floor regardless of pin; a pin holds only against capacity pressure	
 p6	207	6.1.5.2	family	wire	none	storage_budget	MUST_NOT	restates	2.1,6.1.3,8.11.1	StorageBudgetV1 is substrate framing, not a 2.1 attestation; its preimage uses the 6.1.3 binary discipline, not the 2.6.1 signed payload	
 p6	209	6.1.5.2	family	wire	none	storage_budget	MUST	states		StorageBudgetV1 preimage: separator CIRIS-STG-BUDGET, u32 version=1, node_id, epoch_id, u64 revision, u32 scope_count, per scope (cohort_scope, u64 budget_bytes, u64 pin_reserve_bytes), u32 pinned_class_count, subject_kinds; lists sorted and deduplicated	
-p6	226	6.1.5.2	family	signature	none	storage_budget	MUST	restates	6.1.3,5.3.2.8	A StorageBudgetV1 is bound-hybrid signed; a verifier rejects one lacking a valid ML-DSA-65 half at ingest and before persistence	
+p6	226	6.1.5.2	family	signature	none	storage_budget	MUST	restates	6.1.3,5.3.2.8	A StorageBudgetV1 is composite-signed; a verifier rejects one lacking a valid composite signature at ingest and before persistence	
 p6	226	6.1.5.2	family	supersede	monotone_field	storage_budget	MUST	states		A higher revision from the same node_id supersedes; a lower one is rejected	
 p6	228	6.1.5.2	family	admission_order	body	storage_budget	MUST	states		A verifier rejects a StorageBudgetV1 if any pin_reserve_bytes exceeds budget_bytes, if scope or subject_kind lists are not sorted and deduplicated, or if a self or family scope entry is present	
 p6	228	6.1.5.2	family	moderation	none	storage_budget,hard_case	MUST_NOT	states	3.1.9.4,6.1.1	Two StorageBudgetV1 from the same (node_id, revision) with differing content are equivocation: a peer retains and surfaces both as hard_case and never silently picks one	
@@ -4369,3 +4369,4 @@ p2	x	2.6.1.3	kernel	wire	none	*	is	states		The roles of also in refs are a close
 p2	x	2.6.1.7	kernel	signature	none	*	is	states		ML-DSA-65 signs the composite's message representative with the label bytes as its FIPS 204 context string, never the empty one; Ed25519 signs it as it is	
 p3	x	3.3.4	family	roster_fold	none	family	is	applies	2.7.8	For a node that has acknowledged a head, a sibling of that head is void too, since it names an older head outside that head's past	
 p2	x	2.7.8	kernel	roster_fold	none		is	states		A reader's voiding of acts that name an older head is its own and binds nobody else	
+p3	x	3.4.7.1	mechanism	wire	none	*	MUST	states	2.6.1.2	Where identity_type enters signed bytes the set MUST be encoded as a 2.6.1.2 set: sorted by the bytewise order of its elements' encodings, without duplicates	

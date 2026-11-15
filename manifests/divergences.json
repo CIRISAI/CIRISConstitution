@@ -11,15 +11,15 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 87,
+  "total": 88,
   "by_status": {
    "runnable": 72,
-   "stated": 11,
+   "stated": 12,
    "wording-only": 4
   },
   "by_implementer": {
    "agent": 1,
-   "edge": 1,
+   "edge": 2,
    "persist": 81,
    "tooling": 4
   },
@@ -27,7 +27,7 @@
    "audience": 4,
    "cosign": 6,
    "count": 3,
-   "door": 18,
+   "door": 19,
    "fold": 9,
    "freshness": 1,
    "lifecycle": 10,
@@ -6843,6 +6843,32 @@
    "gap": "wire"
   },
   {
+   "id": "edge/(link handshake)/transit handshake",
+   "implementer": "edge",
+   "family": "(link handshake)",
+   "where": "transit handshake",
+   "kind": "door",
+   "status": "stated",
+   "sources": [
+    "CLM-transit-kem-handshake-planned"
+   ],
+   "claims": [
+    "CLM-transit-kem-handshake-planned"
+   ],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 5.3.3.10",
+    "quote": "both statics are used and both ends are authenticated by the handshake itself"
+   },
+   "shipped": {
+    "value": "one X25519 + ML-KEM-768 exchange per link that authenticates only the responder; the initiator's identity is a claim held to the link's signed identification, as in the verification library's transit_kex",
+    "source": "CC 5.3.3.10 E1 rules 3, 4 and 12 describe the shipped exchange; the edge and the verification library ship it",
+    "census_cell": null
+   },
+   "reason": "the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake, and the wire waits on the implementer's submission",
+   "gap": "wire"
+  },
+  {
    "id": "persist/(occurrence revocation, cosign:signature)/attestation_id form",
    "implementer": "persist",
    "family": "(occurrence revocation, cosign:signature)",
@@ -6855,7 +6881,7 @@
    "claims": [],
    "text": {
     "value": null,
-    "cc_ref": "CC 3.1.3",
+    "cc_ref": "CC 8.11.17",
     "quote": "sha256(domain ‖ JCS(object))"
    },
    "shipped": {

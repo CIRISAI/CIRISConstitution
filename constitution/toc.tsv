@@ -208,7 +208,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.4.3.17	admission-membership	Membership-change admission per consensus_protocol	§8.1.12.3	0.00220	107	0.26	IV	ceg	policies
 4.4.3.18	quorum-absolute	`quorum:M/N` is absolute-M (normative)	§8.1.12.3.1	0.00109	204	0.13	IV	ceg	policies
 4.4.3.19	cohort	The "Self at login" — app + agent co-self + partnered delegation (normative composition)	§8.1.12.7	0.00218	108	0.26	IV	ceg	policies
-4.4.3.20	canonicalization-signing	Signing member sets (normative — the JCS contract Verify hybrid-signs)	§8.1.12.7.1	0.00192	124	0.23	IV	ceg	policies
+4.4.3.20	canonicalization-signing	Signing member sets (normative)	§8.1.12.7.1	0.00192	124	0.23	IV	ceg	policies
 4.4.3.21	family-membership	Family membership resolution	§8.1.12.2	0.00216	110	0.26	IV	ceg	policies
 4.4.3.22	forward-secrecy	Forward secrecy on member removal	§8.1.12.5	0.00165	149	0.2	IV	ceg	policies
 4.4.3.23	self-collective	Self-collective resolution	§8.1.12.1	0.00092	296	0.11	IV	ceg	policies
@@ -441,6 +441,17 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.11.13	key-revocation-envelope	The key revocation of the earlier form	—	0.00050	449	0.1	APP	ceg	wire
 8.11.14	earlier-commitment	Key commitments of the earlier form	—	0.00050	450	0.1	APP	ceg	wire
 8.11.15	earlier-text-manifest	The agent text manifest statement of the earlier form	—	0.00050	451	0.1	APP	ceg	wire
+8.11.16	earlier-skill-import	The skill import manifest and locale leaves of the earlier form	—	0.00050	452	0.1	APP	ceg	wire
+8.11.17	earlier-occurrence-revocation	The occurrence revocation carrier of the earlier form	—	0.00050	453	0.1	APP	ceg	wire
+8.11.18	earlier-quorum-key	The quorum key of the earlier form	—	0.00050	454	0.1	APP	ceg	wire
+8.11.19	earlier-purge-digest	The purge selection digest of the earlier form	—	0.00050	455	0.1	APP	ceg	wire
+8.11.20	earlier-hop-key	The onion hop key members of the earlier form	—	0.00050	456	0.1	APP	ceg	wire
+8.11.21	earlier-sealed-descriptor	The sealed descriptor of the earlier form	—	0.00050	457	0.1	APP	ceg	wire
+8.11.22	earlier-accord-roster	The accord roster objects of the earlier form	—	0.00050	458	0.1	APP	ceg	wire
+8.11.23	earlier-login-contract	The Self-at-login JCS contract of the earlier form	—	0.00050	459	0.1	APP	ceg	wire
+8.11.24	earlier-bundle-fingerprint	The genesis bundle fingerprint of the earlier form	—	0.00050	460	0.1	APP	ceg	wire
+8.11.25	earlier-identity-type	The identity_type set in the canonical bytes of the earlier form	—	0.00050	461	0.1	APP	ceg	wire
+8.11.26	earlier-sth-cosign	The provenance log's tree-head cosignature of the earlier form	—	0.00050	462	0.1	APP	ceg	wire
 8.12	parable	The parable — Genesis of Ethical Agency (informative)	—	0.00050	448	0.1	APP	accord	charter
 8.12.1	i-quiet	I. The Quiet Threshold	Accord 0.i-the-quiet-threshold	0.00092	303	0.11	APP	accord	charter
 8.12.2	ii-first	II. The First Leaning	Accord 0.ii-the-first-leaning	0.00092	304	0.11	APP	accord	charter

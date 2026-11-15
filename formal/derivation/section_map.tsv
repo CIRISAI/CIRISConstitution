@@ -216,7 +216,7 @@ old_number	old_anchor	old_slug	new_number	new_anchor	new_slug	title	moved	note
 4.4.3.4.2	#4.4.3.4.2	admission-membership	4.4.3.17	#4.4.3.17	admission-membership	Membership-change admission per consensus_protocol	yes	promoted out of 4.4.3.4
 4.4.3.4.2.1	#4.4.3.4.2.1	quorum-absolute	4.4.3.18	#4.4.3.18	quorum-absolute	`quorum:M/N` is absolute-M (normative)	yes	promoted out of 4.4.3.4.2
 4.4.3.4.3	#4.4.3.4.3	cohort	4.4.3.19	#4.4.3.19	cohort	The "Self at login" — app + agent co-self + partnered delegation (normative composition)	yes	promoted out of 4.4.3.4
-4.4.3.4.3.1	#4.4.3.4.3.1	canonicalization-signing	4.4.3.20	#4.4.3.20	canonicalization-signing	Signing member sets (normative — the JCS contract Verify hybrid-signs)	yes	promoted out of 4.4.3.4.3
+4.4.3.4.3.1	#4.4.3.4.3.1	canonicalization-signing	4.4.3.20	#4.4.3.20	canonicalization-signing	Signing member sets (normative)	yes	promoted out of 4.4.3.4.3
 4.4.3.4.4	#4.4.3.4.4	family-membership	4.4.3.21	#4.4.3.21	family-membership	Family membership resolution	yes	promoted out of 4.4.3.4
 4.4.3.4.5	#4.4.3.4.5	forward-secrecy	4.4.3.22	#4.4.3.22	forward-secrecy	Forward secrecy on member removal	yes	promoted out of 4.4.3.4
 4.4.3.4.6	#4.4.3.4.6	self-collective	4.4.3.23	#4.4.3.23	self-collective	Self-collective resolution	yes	promoted out of 4.4.3.4

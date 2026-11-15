@@ -42,7 +42,7 @@ import build_divergences as B     # noqa: E402
 from build_family_model import section_span  # noqa: E402
 sys.dont_write_bytecode = _dwb
 
-MAX_STATED = 11     # shrink-only: an entry leaves `stated` when the kernel model can run it
+MAX_STATED = 12     # shrink-only: an entry leaves `stated` when the kernel model can run it
 
 
 # token -> (entry, row, change): the change makes the shipped reading agree with the text's, so the verdicts must be equal

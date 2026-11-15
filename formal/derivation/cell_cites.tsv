@@ -257,7 +257,7 @@ consent:stream:{kind}	signer_rule	agree	CC 3.3.1	`consent:stream:{kind}` | Pre-p
 consent:{kind}	subject_rule	fills	CC 2.3.1	MUST carry `subject_key_ids` containing that subject
 corpus_health:n_eff_measurable	signer_rule	agree	CC 3.1.3	The `system:*` dimensions here are substrate-self-reports — emittable only by the running substrate itself ([CC 3.4.3](#3.4.3)), which is what makes them honest: the substrate cannot be made to lie about its own
 cosign:{state}	cosign_rule	fills	CC 3.1.3	It is admitted only if the primary's signature verifies and the primary resolves to an active member of the group at the roster head the event names.
-cosign:{state}	fold	agree	CC 3.3.4	it is named by its quorum key, which covers no signature, and cosignatures are counted by signer
+cosign:{state}	fold	agree	CC 3.3.4	it is named by its row id, which covers no signature, and cosignatures are counted by signer
 cosign:{state}	signer_rule	agree	CC 3.1.3	**The collection of cosignatures for an event its protocol has not yet admitted** (registered under CC 3.1.7 R2(a); the hold of [CC 3.3.4](part_3_the_namespace.md#3.3.4), general to any cosigned row of [CC
 custody:{kind}	body	agree	CC 2.1	A signed `none` is a custody fact, not an absence.
 custody:{kind}	body	agree	CC 8.11.4	n/a (REQUIRED on a custody report)
@@ -391,7 +391,7 @@ identity:occurrence	signer_rule	agree	CC 2.4	- occurrences (`identity:occurrence
 identity:occurrence	signer_rule	agree	CC 3.1.3	**Yes:** signed by the identity or a live occurrence of it (`signer_acts_for`)
 identity:occurrence	signer_rule	agree	CC 3.3.6	**Admission is roster maintenance.** An `identity_occurrence` row is signed by a live roster key of the identity (the genesis key or any admitted occurrence) and lands under the two-path policy
 identity:occurrence	signer_rule	agree	CC 3.3.6.1	admitted only when `attesting_key_id == identity_key_id` (or a current occurrence of it)
-identity:occurrence	signer_rule	agree	CC 3.3.6.2	**The binding = a federation-key-signed `identity_occurrence` carrying `transport_destination`.** The occurrence is admitted only when `attesting_key_id == identity_key_id` (or a current occurrence of it), and it is hybrid-signed (Ed25519 + ML-DSA-65).
+identity:occurrence	signer_rule	agree	CC 3.3.6.2	**The binding = a federation-key-signed `identity_occurrence` carrying `transport_destination`.** The occurrence is admitted only when `attesting_key_id == identity_key_id` (or a current occurrence of it), and it carries the composite signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)).
 identity:occurrence	signer_rule	agree	CC 4.4.3.20	signed by `identity_key_id` (or a current occurrence):
 identity:occurrence	signer_rule	agree	CC 4.4.3.23	Any current occurrence (including `I` itself) may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4).
 identity:occurrence_revocation	lifecycle	fills	CC 3.1.3	Wire `identity:occurrence_revocation:v1`. **Never withdrawn.**
@@ -520,7 +520,7 @@ need:{domain}:{kind}	lifecycle	fills	CC 3.1.9.3	(`supersedes` to revise, `withdr
 need:{domain}:{kind}	placement	agree	CC 3.1.9.3	Federation-scope open-call surface
 news:*	signer_rule	agree	CC 3.1.9	None is reserved: all are open-vocabulary content claims under ordinary [CC 4.4](part_4_composition_governance.md#4.4) consumer policy.
 objection:{state}	projection	agree	CC 3.1.9.2	`proposal` is the proposer's own row and counts as its approval; `assent` counts +1; `raised` counts −1
-observation:access_assumption	body	agree	CC 2.1	Start and end of the observation window, each RFC 3339 with milliseconds ([CC 8.11.10](part_8_appendices.md#8.11.10)).
+observation:access_assumption	body	agree	CC 2.1	Start and end of the observation window, each an instant of [CC 2.6.2](#2.6.2).
 observation:access_assumption	body	agree	CC 2.1	`observation:access_assumption:v1`, REQUIRED
 observation:access_assumption	body	agree	CC 2.1	`window_from`, `window_to`
 observation:access_assumption	body	agree	CC 8.11.9	The trace level the observed agent's install emitted at.

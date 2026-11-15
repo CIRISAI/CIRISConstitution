@@ -53,9 +53,9 @@ pointing elsewhere is a row of its own, so the table counts repeats.
 The cut-candidates table gives `file`, `line_start`, `line_end`, `kind` (`rationale`,
 `restated_block`, `informative`, `example`, `duplicate_table`, `history`), `bytes` and a note.
 
-Headline numbers: 4,370 statements (Part 3 1,523, Part 4 960, Part 5 647, Part 2 507, Part 6 226,
-Part 8 200, Part 1 154, Part 7 153); by scope family 1,870, kernel 1,352, mechanism 730, foundation 217,
-stewardship 201; by role states 3,371, restates 688, applies 245, exception 66. 206 cut-candidate
+Headline numbers: 4,371 statements (Part 3 1,516, Part 4 950, Part 5 642, Part 2 507, Part 6 226,
+Part 8 223, Part 1 154, Part 7 153); by scope family 1,870, kernel 1,352, mechanism 731, foundation 217,
+stewardship 201; by role states 3,372, restates 688, applies 245, exception 66. 206 cut-candidate
 blocks, about 260 KB.
 
 Caveats: twelve readers each took one line range, so a rule stated in two ranges may carry two
