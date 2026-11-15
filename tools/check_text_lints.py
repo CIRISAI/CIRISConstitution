@@ -14,7 +14,8 @@
              agent written as a person, and the recorded term conflicts
   force      an RFC 2119 keyword in an informative paragraph or an example; a requirement in lower case
              in a normative paragraph; a restatement whose keyword differs from its home's
-  length     sentences over 40 words in Parts 2 to 8 (Part 1 is not measured), held by Part
+  length     sentences over 40 words in Parts 2 to 8 (Part 1 and the parable of CC 8.12, the owner's
+             verbatim text, are not measured), held by Part
   history    history words ("previously", "no longer", "now" as a time word …), a reference to a ruling,
              a review or a refactor, and product, company or repository names
 
@@ -354,6 +355,7 @@ def lint_force(parts):
 
 # ---------------------------------------------------------------------------------------------- length
 MAX_WORDS = 40
+UNMEASURED = ("8.12",)   # the parable: the owner's verbatim text, held as Part 1 is
 
 
 def exempt():
@@ -367,6 +369,8 @@ def exempt():
 def lint_length(parts):
     hits, keep = [], exempt()
     for part, sec, line, s, _ in sentences_of(parts, which=[p for p in parts if p != "p1"]):
+        if any(sec == u or sec.startswith(u + ".") for u in UNMEASURED):
+            continue
         t = P.plain(s)
         for k in keep:
             t = t.replace(k, "").replace(P.plain(k), "")

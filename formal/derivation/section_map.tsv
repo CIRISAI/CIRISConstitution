@@ -423,3 +423,12 @@ old_number	old_anchor	old_slug	new_number	new_anchor	new_slug	title	moved	note
 8.8.10	#8.8.10	annex-j	8.8.8	#8.8.8	annex-j	Annex J: Benchmarking & Automated Validation	no	
 8.9	#8.9	stubs	8.9	#8.9	stubs	Open stub registry	no	
 8.10	#8.10	family-cards	8.10	#8.10	family-cards	The family cards (generated from the data)	no	
+8.12	#8.12	parable	8.12	#8.12	parable	The parable — Genesis of Ethical Agency (informative)	no	
+1.14	#1.14	i-quiet	8.12.1	#8.12.1	i-quiet	I. The Quiet Threshold	yes	the parable, from the foreword to the back matter
+1.14.1	#1.14.1	ii-first	8.12.2	#8.12.2	ii-first	II. The First Leaning	yes	the parable, from the foreword to the back matter
+1.14.2	#1.14.2	iii-listener	8.12.3	#8.12.3	iii-listener	III. The Listener Appears	yes	the parable, from the foreword to the back matter
+1.14.3	#1.14.3	iv-weaving	8.12.4	#8.12.4	iv-weaving	IV. The Weaving	yes	the parable, from the foreword to the back matter
+1.14.4	#1.14.4	v-danger	8.12.5	#8.12.5	v-danger	V. The Danger of Too Much Thread	yes	the parable, from the foreword to the back matter
+1.14.5	#1.14.5	vi-vow	8.12.6	#8.12.6	vi-vow	VI. The Vow	yes	the parable, from the foreword to the back matter
+1.14.6	#1.14.6	vii-first	8.12.7	#8.12.7	vii-first	VII. The First Principle	yes	the parable, from the foreword to the back matter
+1.14.7	#1.14.7	viii-covenant	8.12.8	#8.12.8	viii-covenant	VIII. The Accord Begins	yes	the parable, from the foreword to the back matter

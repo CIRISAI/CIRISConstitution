@@ -107,7 +107,9 @@ def main():
         text = open(path, encoding="utf-8").read().rstrip("\n")
         at = text.find("\n" + head)
         base = text[:at].rstrip("\n") if at >= 0 else text
-        new = base + "\n\n" + head + "\n\n" + intro + "\n\n" + body + "\n"
+        nxt = text.find("\n## ", at + 1) if at >= 0 else -1   # a section after the cards is kept as it stands
+        tail = text[nxt:].strip("\n") if nxt >= 0 else ""
+        new = base + "\n\n" + head + "\n\n" + intro + "\n\n" + body + "\n" + ("\n" + tail + "\n" if tail else "")
         if "--check" in sys.argv:
             ok = open(path, encoding="utf-8").read() == new
             print("family cards: current" if ok else "CC 8.10 is stale (run tools/family_card.py --write)"); sys.exit(0 if ok else 1)

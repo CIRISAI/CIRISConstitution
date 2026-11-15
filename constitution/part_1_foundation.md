@@ -1,6 +1,6 @@
 # Part 1 — Foundation
 
-**Decimal range** `1.x` · **50 sections** · **page budget 29pp** · [← master index](../README.md)
+**Decimal range** `1.x` · **42 sections** · **page budget 29pp** · [← master index](../README.md)
 
 > The meta-goal M-1 and the ethical foundation the federation serves.
 

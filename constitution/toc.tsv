@@ -21,14 +21,6 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 1.13.4	mental	Mental model — federated structured-claim emission	§1.1	0.00162	153	0.19	I	ceg	charter
 1.13.5	operational-language	Operational-language gate — the safety-vs-censorship discipline	§1.3	0.00142	166	0.17	I	ceg	charter
 1.13.6	trace-anchor	The durable trace anchors on the act, not the deliberation (normative)	(spine-reconciled)	0.00050	433	0.3	I	ceg	charter
-1.14	i-quiet	I. The Quiet Threshold	Accord 0.i-the-quiet-threshold	0.00092	303	0.11	I	accord	charter
-1.14.1	ii-first	II. The First Leaning	Accord 0.ii-the-first-leaning	0.00092	304	0.11	I	accord	charter
-1.14.2	iii-listener	III. The Listener Appears	Accord 0.iii-the-listener-appears	0.00092	305	0.11	I	accord	charter
-1.14.3	iv-weaving	IV. The Weaving	Accord 0.iv-the-weaving	0.00092	306	0.11	I	accord	charter
-1.14.4	v-danger	V. The Danger of Too Much Thread	Accord 0.v-the-danger-of-too-much-thread	0.00092	307	0.11	I	accord	charter
-1.14.5	vi-vow	VI. The Vow	Accord 0.vi-the-vow	0.00092	308	0.11	I	accord	charter
-1.14.6	vii-first	VII. The First Principle	Accord 0.vii-the-first-principle	0.00092	309	0.11	I	accord	charter
-1.14.7	viii-covenant	VIII. The Accord Begins	Accord 0.viii-the-covenant-begins	0.00092	310	0.11	I	accord	charter
 1.15	chapters	Chapters	Accord 1.chapters	0.00092	320	0.11	I	accord	charter
 1.15.1	core-identity	Chapter 1: Core Identity	Accord 1.chapter-1-core-identity	0.00092	311	0.11	I	accord	charter
 1.15.2	integrity-operationalising	Chapter 2: Integrity — Operationalising Alignment	Accord 1.chapter-2-integrity-operationalising-ali	0.00092	312	0.11	I	accord	charter
@@ -430,3 +422,12 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.8.8	annex-j	Annex J: Benchmarking & Automated Validation	Accord Annex J	0.00050	428	0.1	APP	accord	register
 8.9	stubs	Open stub registry	(spine-reconciled)	0.00050	429	0.1	APP	ceg	register
 8.10	family-cards	The family cards (generated from the data)	(spine-reconciled)	0.00050	430	20.0	APP	ceg	dictionary
+8.12	parable	The parable — Genesis of Ethical Agency (informative)	—	0.00050	448	0.1	APP	accord	charter
+8.12.1	i-quiet	I. The Quiet Threshold	Accord 0.i-the-quiet-threshold	0.00092	303	0.11	APP	accord	charter
+8.12.2	ii-first	II. The First Leaning	Accord 0.ii-the-first-leaning	0.00092	304	0.11	APP	accord	charter
+8.12.3	iii-listener	III. The Listener Appears	Accord 0.iii-the-listener-appears	0.00092	305	0.11	APP	accord	charter
+8.12.4	iv-weaving	IV. The Weaving	Accord 0.iv-the-weaving	0.00092	306	0.11	APP	accord	charter
+8.12.5	v-danger	V. The Danger of Too Much Thread	Accord 0.v-the-danger-of-too-much-thread	0.00092	307	0.11	APP	accord	charter
+8.12.6	vi-vow	VI. The Vow	Accord 0.vi-the-vow	0.00092	308	0.11	APP	accord	charter
+8.12.7	vii-first	VII. The First Principle	Accord 0.vii-the-first-principle	0.00092	309	0.11	APP	accord	charter
+8.12.8	viii-covenant	VIII. The Accord Begins	Accord 0.viii-the-covenant-begins	0.00092	310	0.11	APP	accord	charter

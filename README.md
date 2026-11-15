@@ -63,7 +63,7 @@ The kernel derives, for each act, which voices could change the answer, and the 
 | Path | Content |
 |---|---|
 | `constitution/part_1_foundation.md` to `part_8_appendices.md` | The eight Parts: Foundation, The Grammar, The Namespace, Composition and Governance, Transport and Substrate, The Substrate, Lifecycle and Stewardship, Appendices |
-| [`constitution/EXECUTIVE_SUMMARY.md`](constitution/EXECUTIVE_SUMMARY.md), [`constitution/FOREWORD.md`](constitution/FOREWORD.md), [`constitution/SCOPE_AND_DISCLAIMERS.md`](constitution/SCOPE_AND_DISCLAIMERS.md) | The summary, the foreword, the scope and the claim-and-limit |
+| [`constitution/EXECUTIVE_SUMMARY.md`](constitution/EXECUTIVE_SUMMARY.md), [`constitution/SCOPE_AND_DISCLAIMERS.md`](constitution/SCOPE_AND_DISCLAIMERS.md) | The summary, the scope and the claim-and-limit |
 | [`constitution/claims.tsv`](constitution/claims.tsv), [`constitution/evidence_pins.tsv`](constitution/evidence_pins.tsv) | The evidence register and the pinned manifests it resolves against |
 | [`constitution/toc.tsv`](constitution/toc.tsv), [`constitution/codebook.json`](constitution/codebook.json), [`constitution/volumes.tsv`](constitution/volumes.tsv) | The table of contents, the id codebook, and the map of sections to volumes |
 | [`constitution/digest/`](constitution/digest/), [`constitution/covers/`](constitution/covers/) | The plain-language rules, the user's guide to the mesh and the operator's digest; the cover of each volume |

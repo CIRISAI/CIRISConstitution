@@ -38,9 +38,6 @@ TAGS = {"impl", "test", "lean", "bench", "staged", "open", "normative-only"}
 RESOLVABLE_TAGS = {"impl", "test", "lean", "bench"}   # count toward "evidenced"
 TICKET_TAGS = {"staged", "open"}                      # named ticket, NOT evidence
 STATUSES = {"established", "normative", "staged", "open"}
-# The 1.14.x parable was migrated into FOREWORD.md; it is intentionally in toc but
-# has no numbered prose heading. Exempt it from the toc↔prose drift report.
-DRIFT_EXEMPT_PREFIX = ("1.14",)
 
 _HEADING = re.compile(r'^#{2,6}\s+(\d+(?:\.\d+)+)\s+`')
 _HEADING_FULL = re.compile(r'^#{2,6}\s+(\d+(?:\.\d+)+)\s+`([^`]*)`\s*(.*)$')
@@ -274,8 +271,7 @@ def _strip_annotation(s):
 
 def report_toc_drift(toc, prose, errors, warnings, notes):
     missing = sorted(d for d in prose if d not in toc)
-    extra = sorted(d for d in toc if d not in prose
-                   and not d.startswith(DRIFT_EXEMPT_PREFIX) and "." in d)
+    extra = sorted(d for d in toc if d not in prose and "." in d)
     if missing:
         errors.append(f"toc drift: {len(missing)} prose section(s) missing from toc.tsv/codebook "
                       f"(every numbered section MUST have a dual-ID): {', '.join(missing)}")

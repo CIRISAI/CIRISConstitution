@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Build the CIRIS Constitution PDF from the canonical constitution/ markdown.
 
-Front matter is deliberately minimal: title, the Accord foreword (which sets the
-tone), the Scope & Disclaimers, and an explicit chapter-level table of contents
-built from constitution/toc.tsv -- then Parts I-VIII, then the Stewardship note.
+Front matter is deliberately minimal: title, the Scope & Disclaimers, and an
+explicit chapter-level table of contents built from constitution/toc.tsv -- then
+Parts I-VIII (the parable closes Part 8, at CC 8.12), then the Stewardship note.
 
 Output: ciris_constitution-<VERSION>[.<build>].pdf (repo root; pre-release builds auto-iterate).
 Deps: a TeX Live install providing pdflatex (newunicodechar, listings, titlesec,
@@ -108,8 +108,6 @@ def contents_md():
     out, cur = ["# Contents\n"], None
     for r in rows:
         dec = r["decimal_id"]; part = int(dec.split(".")[0])
-        if dec == "1.14" or dec.startswith("1.14."):  # the parable is now the Foreword
-            continue
         if part != cur:
             cur = part; out.append(f"\n## Part {part} — {PART_TITLE[part]}\n")
         if dec.count(".") == 1:                      # chapter level only
@@ -167,8 +165,6 @@ def build_full():
     body = [preamble()]
     body.append(B.convert(prefilter((DOC / "EXECUTIVE_SUMMARY.md").read_text(encoding="utf-8"))))  # exec summary before the opening
     body.append(r"\clearpage")
-    body.append(B.convert(prefilter((DOC / "FOREWORD.md").read_text(encoding="utf-8"))))   # foreword sets the tone
-    body.append(r"\clearpage")
     body.append(B.convert(prefilter((DOC / "SCOPE_AND_DISCLAIMERS.md").read_text(encoding="utf-8"))))  # scope + disclaimers
     body.append(r"\clearpage")
     body.append(B.convert(contents_md()))                                                  # explicit contents
@@ -183,7 +179,7 @@ def build_full():
     stem = f"ciris-constitution-{VERSION}"
     tex = HERE / f"{stem}.tex"
     tex.write_text("\n".join(body), encoding="utf-8")
-    print(f"wrote {tex.name} (foreword + scope + contents + {len(PARTS)} parts)")
+    print(f"wrote {tex.name} (scope + contents + {len(PARTS)} parts)")
     return stem, tex
 
 
@@ -397,10 +393,6 @@ def volume_md(vol):
         chunks[dec] = OMIT.sub(splice, chunks[dec])
     for dec in list(chunks):
         chunks[dec] = OMIT.sub(elsewhere, chunks[dec])
-    # 1.14 (the parable) has no numbered prose heading: it is the Foreword. A volume that prints
-    # its neighbour 1.15 marks the gap the way the other omission markers do.
-    if "1.14" not in chunks and any(d == "1.15" or d.startswith("1.15.") for d in chunks):
-        chunks["1.14"] = "*[1.14 is the Foreword]*" if vol == "charter" else "*[1.14 is the Foreword of The Charter]*"
     order = sorted(chunks, key=lambda d: [int(x) for x in d.split(".")])
     cur, group = None, []
     for dec in order:
@@ -413,7 +405,6 @@ def volume_md(vol):
     if group:
         parts_md.append("\n\n".join(group))
     if vol == "charter":
-        parts_md.insert(1, (DOC / "FOREWORD.md").read_text(encoding="utf-8"))
         parts_md.append((DOC / "STEWARDSHIP.md").read_text(encoding="utf-8"))
     if vol == "register":
         parts_md.append(evidence_appendix_md())
