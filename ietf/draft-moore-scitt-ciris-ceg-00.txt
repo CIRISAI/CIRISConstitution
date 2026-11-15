@@ -4,8 +4,8 @@
 
 Supply Chain Integrity, Transparency, and Trust                 E. Moore
 Internet-Draft                                                 CIRIS L3C
-Intended status: Informational                          13 November 2026
-Expires: 17 May 2027
+Intended status: Informational                          14 November 2026
+Expires: 18 May 2027
 
 
     Signed Attestation Rows of the CIRIS Epistemic Grammar and Their
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Moore                      Expires 17 May 2027                  [Page 1]
+Moore                      Expires 18 May 2027                  [Page 1]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -68,7 +68,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 May 2027.
+   This Internet-Draft will expire on 18 May 2027.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Moore                      Expires 17 May 2027                  [Page 2]
+Moore                      Expires 18 May 2027                  [Page 2]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -165,7 +165,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                  [Page 3]
+Moore                      Expires 18 May 2027                  [Page 3]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -221,7 +221,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                  [Page 4]
+Moore                      Expires 18 May 2027                  [Page 4]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -277,7 +277,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                  [Page 5]
+Moore                      Expires 18 May 2027                  [Page 5]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -333,7 +333,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                  [Page 6]
+Moore                      Expires 18 May 2027                  [Page 6]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -389,7 +389,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                  [Page 7]
+Moore                      Expires 18 May 2027                  [Page 7]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -445,7 +445,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                  [Page 8]
+Moore                      Expires 18 May 2027                  [Page 8]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -501,7 +501,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                  [Page 9]
+Moore                      Expires 18 May 2027                  [Page 9]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -557,7 +557,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 10]
+Moore                      Expires 18 May 2027                 [Page 10]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -613,7 +613,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 11]
+Moore                      Expires 18 May 2027                 [Page 11]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -669,7 +669,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 12]
+Moore                      Expires 18 May 2027                 [Page 12]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -725,7 +725,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 13]
+Moore                      Expires 18 May 2027                 [Page 13]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -781,7 +781,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 14]
+Moore                      Expires 18 May 2027                 [Page 14]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -837,7 +837,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 15]
+Moore                      Expires 18 May 2027                 [Page 15]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -893,7 +893,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 16]
+Moore                      Expires 18 May 2027                 [Page 16]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -949,7 +949,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 17]
+Moore                      Expires 18 May 2027                 [Page 17]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1005,7 +1005,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 18]
+Moore                      Expires 18 May 2027                 [Page 18]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1061,7 +1061,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 19]
+Moore                      Expires 18 May 2027                 [Page 19]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1117,7 +1117,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 20]
+Moore                      Expires 18 May 2027                 [Page 20]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1173,7 +1173,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 21]
+Moore                      Expires 18 May 2027                 [Page 21]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1229,7 +1229,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 22]
+Moore                      Expires 18 May 2027                 [Page 22]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1285,7 +1285,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 23]
+Moore                      Expires 18 May 2027                 [Page 23]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1341,7 +1341,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 24]
+Moore                      Expires 18 May 2027                 [Page 24]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1397,7 +1397,7 @@ Appendix A.  CDDL
 
 
 
-Moore                      Expires 17 May 2027                 [Page 25]
+Moore                      Expires 18 May 2027                 [Page 25]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1453,7 +1453,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 26]
+Moore                      Expires 18 May 2027                 [Page 26]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1509,7 +1509,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 27]
+Moore                      Expires 18 May 2027                 [Page 27]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1565,7 +1565,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 28]
+Moore                      Expires 18 May 2027                 [Page 28]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1621,7 +1621,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 29]
+Moore                      Expires 18 May 2027                 [Page 29]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1677,7 +1677,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 30]
+Moore                      Expires 18 May 2027                 [Page 30]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1733,7 +1733,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 
-Moore                      Expires 17 May 2027                 [Page 31]
+Moore                      Expires 18 May 2027                 [Page 31]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1789,7 +1789,7 @@ Appendix B.  Test Vectors
 
 
 
-Moore                      Expires 17 May 2027                 [Page 32]
+Moore                      Expires 18 May 2027                 [Page 32]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
@@ -1845,4 +1845,4 @@ Author's Address
 
 
 
-Moore                      Expires 17 May 2027                 [Page 33]
+Moore                      Expires 18 May 2027                 [Page 33]
