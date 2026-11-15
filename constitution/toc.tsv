@@ -439,6 +439,8 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.11.11	canonicalization-hexadecimal	Hexadecimal canonicalization	§0.6	0.00443	51	0.53	APP	ceg	wire
 8.11.12	bound-hybrid	The bound-hybrid signature	—	0.00050	444	0.1	APP	ceg	wire
 8.11.13	key-revocation-envelope	The key revocation of the earlier form	—	0.00050	449	0.1	APP	ceg	wire
+8.11.14	earlier-commitment	Key commitments of the earlier form	—	0.00050	450	0.1	APP	ceg	wire
+8.11.15	earlier-text-manifest	The agent text manifest statement of the earlier form	—	0.00050	451	0.1	APP	ceg	wire
 8.12	parable	The parable — Genesis of Ethical Agency (informative)	—	0.00050	448	0.1	APP	accord	charter
 8.12.1	i-quiet	I. The Quiet Threshold	Accord 0.i-the-quiet-threshold	0.00092	303	0.11	APP	accord	charter
 8.12.2	ii-first	II. The First Leaning	Accord 0.ii-the-first-leaning	0.00092	304	0.11	APP	accord	charter

@@ -197,7 +197,7 @@ group:roster	role	unstated	unstated	yes	CC 4.2.3	the accord roster structurally 
 group:roster	statutory_basis	unstated	unstated	no	CC 4.4.3.12	Each authority declares a **type**, a `statutory_basis`, a **per-authority `transparency_mode`**, and optional **carve-out compartments** lawful access cannot reach
 group:roster	transparency_mode	unstated	unstated	no	CC 4.4.3.12	Each authority declares a **type**, a `statutory_basis`, a **per-authority `transparency_mode`**, and optional **carve-out compartments** lawful access cannot reach
 group:roster	transparency_obligations	unstated	unstated	no	CC 4.4.3.12	transparency here is a *duty to publish*, not an *access concession*. Default: none.
-hardware_custody:{platform}	hardware_class	tstr	optional	no	CC 3.1.2	is a JSON property, never a value of `{platform}`).
+hardware_custody:{platform}	hardware_class	tstr	optional	no	CC 3.1.2	is a member of a key record's `attestation_evidence`, never a value of `{platform}`).
 identity:canonical_binding:{canonical_hash}	witness_relation	"self"	unstated	yes	CC 3.3.14	**Self-asserted** (`witness_relation: self`): K declares "I am the federation identity behind H." Hybrid-signed; admitted federation-tier (it grants authority — not local-tier-eligible, [CC 5.3.2.2](part_5_transport_substrate.md#5.3.2.2) discipline).
 identity:occurrence	app_name	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
 identity:occurrence	aspects	unstated	unstated	no	CC 4.4.3.20	carrying the binding; signed by `identity_key_id` (or a current occurrence):
@@ -224,8 +224,8 @@ identity:occurrence	transport_destination	unstated	unstated	no	CC 4.4.3.20	carry
 identity:occurrence	valid_until	unstated	unstated	yes	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
 image:*	alt_text	unstated	required	no	CC 3.3.13	Source struct carries dimensions, format, AI-generation disclosure (EU AI Act Art. 50), mandatory `alt_text` accessibility metadata, license info.
 image:*	format	unstated	unstated	no	CC 3.3.13	Source struct carries dimensions, format, AI-generation disclosure (EU AI Act Art. 50), mandatory `alt_text` accessibility metadata, license info.
-key:record	attestation_evidence	unstated	unstated	yes	CC 4.2.2	The field is carried as a JSON property inside the `attestation_evidence` of a signed key record
-key:record	hardware_class	unstated	unstated	no	CC 4.2.2	The field is carried as a JSON property inside the `attestation_evidence` of a signed key record
+key:record	attestation_evidence	unstated	unstated	yes	CC 4.2.2	The field is carried as a member of the `attestation_evidence` of a signed key record
+key:record	hardware_class	unstated	unstated	no	CC 4.2.2	The field is carried as a member of the `attestation_evidence` of a signed key record
 key_grant:{axis}	at_rest_sha256	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
 key_grant:{axis}	attested_key_id	unstated	unstated	yes	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
 key_grant:{axis}	axis	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.

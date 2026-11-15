@@ -116,7 +116,7 @@ Like root-minting, this is **not** an accord privilege. The identical co-scrub b
 
 This entry fixes the bytes signed to invoke the accord and what a `constitutional` halt is. It says where a halt fires, what it pauses and what it leaves running, when it lapses, and how many signatures each kind takes.
 
-Every `accord:invoke:*` Contribution carries a holder's signature over the canonical bytes below. That signature lies inside the row; the row's own signature covers JCS(`attestation_envelope`), as for any row ([CC 8.11.9](part_8_appendices.md#8.11.9)). BOTH the discriminator AND a per-invocation nonce are in the signed payload. That prevents constitutional ↔ notify ↔ drill cross-replay.
+Every `accord:invoke:*` Contribution carries a holder's signature over the canonical bytes below. That signature lies inside the row; the row's own signature covers its payload, as for any row ([CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1)). BOTH the discriminator AND a per-invocation nonce are in the signed payload. That prevents constitutional ↔ notify ↔ drill cross-replay.
 
 ```
 canonical = sha256(
@@ -221,7 +221,7 @@ The four rules above constrain **authoring on the delegation plane**. Under load
 
 Per-class recommended trust-multipliers: `HSM_FIPS_140_3_L3` = 1.0; `Apple_Secure_Enclave` = 0.95; `YubiKey_5_FIPS` = 0.95; `TPM_2_0` = 0.9; `placeholder_pending_provisioning` = 0.0; `software_hsm_development` = 0.0. **A class this table does not list carries multiplier 0.0** — an unlisted class is a claim nobody rated, not a claim rated by its own spelling.
 
-**Two fields, two questions (normative).** `hardware_class` is the **certified class** a holder asserts. The field is carried as a JSON property inside the `attestation_evidence` of a signed key record, as served in the GenesisBundle's `holders` / `serve_nodes`. The `/v1/accord-holders` route projects it per holder. The field is **not** a dimension, so [CC 3.1.7](part_3_the_namespace.md#3.1.7) R3 does not bind its spelling and its stored values (`YubiKey_5_FIPS` on the ceremony keys) stand. `hardware_custody:{platform}` ([CC 3.1.2](part_3_the_namespace.md#3.1.2)) is the **custody mechanism** the key actually runs on, a closed lowercase vocabulary of custody mechanisms, whose tokens the register pins (CLM-hardware-custody-vocabulary). One is never a value of the other; a consumer that needs both reads both. The classes in use beyond this table — `YubiKey_5`, `Nitrokey`, `ExternalToken_Generic`, `Passkey_Synced`, `Android_Software` / `Android_TEE` / `Android_StrongBox`, `Apple_AppAttest`, `SoftwareOnly_TEST` — are unlisted and therefore 0.0 until a row rates them. `custody_tier` (`portable_2fa` / `software_test`) is a third thing, the holder's operating mode, orthogonal to both. The mapping from class to mechanism:
+**Two fields, two questions (normative).** `hardware_class` is the **certified class** a holder asserts. The field is carried as a member of the `attestation_evidence` of a signed key record, as served in the GenesisBundle's `holders` / `serve_nodes`. The `/v1/accord-holders` route projects it per holder. The field is **not** a dimension, so [CC 3.1.7](part_3_the_namespace.md#3.1.7) R3 does not bind its spelling and its stored values (`YubiKey_5_FIPS` on the ceremony keys) stand. `hardware_custody:{platform}` ([CC 3.1.2](part_3_the_namespace.md#3.1.2)) is the **custody mechanism** the key actually runs on, a closed lowercase vocabulary of custody mechanisms, whose tokens the register pins (CLM-hardware-custody-vocabulary). One is never a value of the other; a consumer that needs both reads both. The classes in use beyond this table — `YubiKey_5`, `Nitrokey`, `ExternalToken_Generic`, `Passkey_Synced`, `Android_Software` / `Android_TEE` / `Android_StrongBox`, `Apple_AppAttest`, `SoftwareOnly_TEST` — are unlisted and therefore 0.0 until a row rates them. `custody_tier` (`portable_2fa` / `software_test`) is a third thing, the holder's operating mode, orthogonal to both. The mapping from class to mechanism:
 
 | `hardware_class` | `hardware_custody:{platform}` it runs on |
 |---|---|
@@ -336,7 +336,7 @@ The live quorum is thus strictly a **restoration** of the accord's operability u
 
 **There is no restore and no contest.** A removal that passes has, by construction, a majority of the whole roster behind it; a removal that lacks one never passes. The domain labels `ciris.accord_contest.v1` and `ciris.accord_restore.v1` are retired and MUST NOT be reused.
 
-**Wire shape — additive, no 1+4 change.** A **halt** is the `accord:invoke` row and nothing else. A **roster change** rides **three** hybrid-signed (Ed25519 + ML-DSA-65, JCS-canonical) objects, and none of them exists on the fire path:
+**Wire shape — additive, no 1+4 change.** A **halt** is the `accord:invoke` row and nothing else. A **roster change** rides **three** hybrid-signed (Ed25519 + ML-DSA-65) objects, and none of them exists on the fire path:
 
 - `accord_proposal` (the action, the proposer's nonce, and `window_until`);
 - `accord_participation` (proof-of-life **+** vote in one signed object — entering `L` and voting are the same act); and

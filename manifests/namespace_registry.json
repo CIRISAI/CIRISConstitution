@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "c07198db279289d65dd6718f9114978190112588263c0ea3d61375f34598c7bb",
+    "registry_sha256": "3167420801eba4c2e854afc85891128911f561fed42acae1bc0da9a1f8389bb9",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "a1232cbeda7b840ab4f3b3321abe4b39ba5fdf3c4a63638e16b85d642eff0dce"
+    "source_sha256": "a7c00db4a97db34bc318f7cbf97092bf9d5449a2e6a6b780b7a0165b6cddc609"
   },
   "families": [
     {
@@ -2790,7 +2790,7 @@
     },
     {
       "cc_section": "3.1.2",
-      "description": "Where the key's seed lives \u2014 the custody mechanism, not the certified class (CC 4.2.2 hardware_class answers that, and is a JSON property, never a value of {platform}).",
+      "description": "Where the key's seed lives \u2014 the custody mechanism, not the certified class (CC 4.2.2 hardware_class answers that, and is a member of a key record's attestation_evidence, never a value of {platform}).",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",

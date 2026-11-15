@@ -1,6 +1,6 @@
 {
   "_note": "The dual-ID codebook of the CIRIS Constitution (CC): decimal_id <-> key <-> semantic_id, one to one, and legacy references -> decimal_id. Maintained data: a section added to constitution/toc.tsv is added here under the key cc:<decimal>, and tools/check_claims.py fails when the two disagree.",
-  "n_concepts": 449,
+  "n_concepts": 451,
   "decimal_to_key": {
     "2.6": "0",
     "2.6.9": "0.1",
@@ -450,7 +450,9 @@
     "8.12.6": "A§0.vi-the-vow",
     "8.12.7": "A§0.vii-the-first-principle",
     "8.12.8": "A§0.viii-the-covenant-begins",
-    "8.11.13": "cc:8.11.13"
+    "8.11.13": "cc:8.11.13",
+    "8.11.14": "cc:8.11.14",
+    "8.11.15": "cc:8.11.15"
   },
   "key_to_decimal": {
     "0": "2.6",
@@ -901,7 +903,9 @@
     "cc:8.11": "8.11",
     "cc:8.11.12": "8.11.12",
     "cc:8.12": "8.12",
-    "cc:8.11.13": "8.11.13"
+    "cc:8.11.13": "8.11.13",
+    "cc:8.11.14": "8.11.14",
+    "cc:8.11.15": "8.11.15"
   },
   "semantic_to_key": {
     "foreword": "0",
@@ -1352,7 +1356,9 @@
     "bound-hybrid": "cc:8.11.12",
     "deterministic-encoding": "cc:2.6.1.2",
     "parable": "cc:8.12",
-    "key-revocation-envelope": "cc:8.11.13"
+    "key-revocation-envelope": "cc:8.11.13",
+    "earlier-commitment": "cc:8.11.14",
+    "earlier-text-manifest": "cc:8.11.15"
   },
   "key_to_semantic": {
     "0": "foreword",
@@ -1803,7 +1809,9 @@
     "cc:8.11": "earlier-signed-object",
     "cc:8.11.12": "bound-hybrid",
     "cc:8.12": "parable",
-    "cc:8.11.13": "key-revocation-envelope"
+    "cc:8.11.13": "key-revocation-envelope",
+    "cc:8.11.14": "earlier-commitment",
+    "cc:8.11.15": "earlier-text-manifest"
   },
   "legacy_to_decimal": {
     "§0": "2.6",

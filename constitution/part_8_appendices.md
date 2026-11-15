@@ -1,6 +1,6 @@
 # Part 8 — Appendices
 
-**Decimal range** `8.x` · **75 sections** · **page budget 6pp** · [← master index](../README.md)
+**Decimal range** `8.x` · **77 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Case studies, glossaries, conformance vectors, interop, and the dual-ID table of contents.
 
@@ -3949,6 +3949,25 @@ The signature of the earlier form is the **bound-hybrid signature** (`[hybrid-si
 ### 8.11.13 `key-revocation-envelope` — The key revocation of the earlier form (normative)
 
 A key revocation of the earlier form names its subject by **`revoked_key_sha256_ed25519_raw`**: the SHA-256 of the revoked key's raw 32-byte Ed25519 public key, 64 lowercase hex digits ([CC 8.11.11](#8.11.11)). It is the full digest whose truncation is the `key_id`'s fingerprint, stable for the life of the key and carrying no label. The member is REQUIRED. `revoked_key_id` is OPTIONAL: when present it MUST name a key whose raw-key digest equals the subject, and the row waits until that key is held and concludes nothing on a mismatch. When absent it is bound as explicit JSON `null`. The signed revocation binds **eight** members inside its own `revocation_envelope`: `revocation_id`, `revoked_key_id` (string or `null`), `revoked_key_sha256_ed25519_raw`, `revoking_key_id`, `reason` (string or `null`), `revoked_at`, `effective_at`, `scrub_timestamp`. Every one is REQUIRED in the bytes, an absent optional bound as explicit `null` (an omitted member is refused as unbound). `revoked_after` is the ninth, optional, absent or `null` meaning unbounded. This is the key plane's own signing contract of the earlier form. `scrub_timestamp` is inside the bytes because it is the anti-rollback ordering key. The explicit `null` is the one exception to the no-null rule of the earlier form's attestation envelope ([CC 8.11.9](#8.11.9)). Readers of this form ask by the digest, and self-revocation is recognised when the revoker's own key digests to the subject. A `moderation:*` score of this form MAY likewise name its subject key by **`subject_sha256_ed25519_raw`**, in the same spelling, and a malformed value is refused. The revocation carries no member table in [CC 8.11.9](#8.11.9), and its signature rule is the key record's.
+
+### 8.11.14 `earlier-commitment` — Key commitments of the earlier form (normative)
+
+A pre-rotation or recovery commitment of the earlier form is `SHA-256(JCS([ {key_id, pubkey_ed25519_base64, pubkey_ml_dsa_65_base64}, … ]))` over the committed successor keys. The array is sorted by `key_id` as UTF-8 bytes. Each entry's three members are exactly as stored on the key record (`pubkey_*_base64`, standard base64). The digest is lowercase hex ([CC 8.11.11](#8.11.11)). The per-holder recovery commitment of [CC 4.2.6](part_4_composition_governance.md#4.2.6) is this over a one-element array. It binds key material, never only the id ([CC 3.2](part_3_the_namespace.md#3.2)).
+
+### 8.11.15 `earlier-text-manifest` — The agent text manifest statement of the earlier form (normative)
+
+An agent text manifest statement ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)) of the earlier form is signed over these canonical bytes:
+
+```
+canonical_bytes = sha256( JCS( {
+  "domain": "ciris.accord_manifest.v1", // domain separation; pinned literal
+  "manifest_sha256": sha256_hex_lowercase, // of the manifest's exact bytes; per CC 8.11.11
+  "manifest_size": byte_length, // JSON integer; the size CC 5.3.2.11 binds beside a digest
+  "signer_identity": signer_key_id // the key id of the signer's key record
+}))
+```
+
+Hybrid signature: Ed25519 over `canonical_bytes`; ML-DSA-65 over `canonical_bytes || ed25519_signature_bytes` (bound payload, [CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)). The Ed25519 half is the pure algorithm of RFC 8032; a pre-hashed or context variant is another algorithm and does not verify.
 
 ## 8.12 `parable` — The parable — Genesis of Ethical Agency (informative)
 
