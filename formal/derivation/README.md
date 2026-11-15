@@ -159,6 +159,16 @@ same payload the row accepts, with the payload member that names its party (`sub
 none). Every quote stands verbatim in its section. A family with a count and no row fails the build, as does a
 counted arm with no count; the open cells of each column are capped, and the number only falls.
 
+`tools/cc_family_select.py` is the one reader of the selector arms in the `count`, `authorship` and
+`second_signers` cells. It binds the leaf from the dimension with `tools/cc_namespace_match.py` under
+the cell's own family, version tail stripped, and takes verb, identity, group and seats from the
+caller, since no sentence reads them from the row alone. An unsupplied key answers unknown; an arm
+is false if any test is false, else unknown if any is; an unknown arm before the decider makes the
+answer unknown. `--write-vectors` writes `manifests/family_select_vectors.json` (every arm held and
+not held, the unknown, order and `{name}` cases) and `manifests/family_authorship.json` (the two
+signer cells and the model's SHA-256, for a consumer that vendors them); the gate replays the
+vectors, runs four broken evaluators they must catch, and checks both files current.
+
 `placement_text.tsv` states where a row goes when its family states no placement of its own.
 Its one `default` row gives the placements a family's rows may take and the sentence that leaves
 the choice to the emitter. A placement cell the census leaves to the signer takes that default

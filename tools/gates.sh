@@ -31,6 +31,8 @@ run python3 tools/span_of.py --self-test
 run python3 tools/check_lifecycle_coverage.py
 run python3 tools/check_family_kinds.py --check
 run python3 tools/build_family_model.py --check
+run python3 tools/cc_family_select.py --self-test
+run python3 tools/cc_family_select.py --check
 run python3 tools/guard_grammar.py
 run python3 tools/change_grammar.py
 run python3 tools/fold_grammar.py
