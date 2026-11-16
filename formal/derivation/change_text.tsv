@@ -36,7 +36,7 @@ retirement:{state}	custodian_minted: by=cosigned, reach=other_attester, cascade=
 *	withdraw: cascade=*/ref:stand	CC 2.4.1.1	Acts the withdrawal has among its ancestors still stand.
 key:revocation	attest: cascade=*/by:void_after:revoked_after	CC 2.4.1.1	a key revoked as compromised is void back to its `revoked_after` bound
 *	withdraw: cascade=consent:deletion_sla:{days}/about:discharged ; replace: cascade=consent:deletion_sla:{days}/about:discharged	CC 3.3.1	Evidence toward D1 below; the watcher is cancelled only by a `withdraws`, `supersedes` or hard deletion of the row.
-*	withdraw: cascade=consent:deletion_sla:{days}/about:discharged ; replace: cascade=consent:deletion_sla:{days}/about:discharged	CC 3.3.1	A producer has proven deletion **iff**, before the deadline, the row was **withdrawn, superseded, or hard-deleted**
+*	withdraw: cascade=consent:deletion_sla:{days}/about:discharged ; replace: cascade=consent:deletion_sla:{days}/about:discharged	CC 3.3.1	A producer has shown deletion **iff**, before the deadline, the row was **withdrawn, superseded, or hard-deleted**
 group:roster	withdraw: cascade=membership:{stage}/under:lapsed, cascade=trust:{job}:{version}/under:lapsed, cascade=key_grant:{axis}/under:stop, key=none	CC 4.4.3.12	The DEK rotates no more and no new seat or grant is issued. Existing seats lapse at that instant. Hierarchy edges and grants end with it
 group:roster	withdraw: cascade=licensure:{authority_id}/by:lapsed	CC 4.4.3.12	It reads `lapsed` from the dissolution instant for every later use, nobody being left to suspend or revoke it.
 group:roster	withdraw: cascade=trust:{job}:{version}/by:lapsed	CC 4.4.3.12	It reads `lapsed` from the dissolution instant for every later use, nobody being left to suspend or revoke it.

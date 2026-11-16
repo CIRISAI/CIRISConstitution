@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "3167420801eba4c2e854afc85891128911f561fed42acae1bc0da9a1f8389bb9",
+    "registry_sha256": "8907d420b32ec88c95d3486b05087a4b651866786048fe7387e712886bfd4c96",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "07a5f837c03881e4ae6289f447fb45fa559613a84673c83b3a58728fceabee78"
+    "source_sha256": "ba3bf46d3d6ed4288e878af06cee1d387b947c85a91c7be8e6818ff7817d389e"
   },
   "families": [
     {
@@ -4341,7 +4341,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "proven_rogue / not_proven (lowercase per CC 3.1.7 R3; the substrate's coined upheld / suspension / expertise_fraud admit as open vocab under CC 4.5.1.1).",
+      "description": "proven_rogue / not_proven (lowercase per CC 3.1.7 R3; the values upheld / suspension / expertise_fraud a substrate emits admit as open vocab under CC 4.5.1.1).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",

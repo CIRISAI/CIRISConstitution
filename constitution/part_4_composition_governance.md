@@ -135,7 +135,7 @@ The signature is the composite signature of [CC 2.6.1.7](part_2_the_grammar.md#2
 
 **What a halt is: an agent pause, with zero data disruption, by construction (normative).** A `constitutional` halt pauses the **effectful acts of AI agents** on every node that accepted the root, with their state preserved. It does nothing else. It does not stop a node, and it does not read, move, hide or delay anyone's data. Replication, storage, holding claims, serving, messaging, streams, files, communities and every consent and audience rule of Parts 3, 5 and 6 continue exactly as before. These continue because none of them reads the latch. The latch is read by exactly one thing, the agent's act gate ([CC 1.13.6](part_1_foundation.md#1.13.6)). "Zero data disruption" is therefore not a promise kept by discipline but a consequence of where the latch is wired. A halt is recoverable because it destroys nothing: an agent resumes from the state it paused in.
 
-**The fuse (normative).** One holder can stop every agent instantly and silently, because a missed halt is the one unrecoverable failure. But one holder MUST NOT be able to keep them stopped alone. A halt signed by one holder **lapses `halt_fuse_secs` after each node received it**, **unless a strict majority of the standing roster confirms it** by a cosigned `accord:lifecycle:confirmed` row naming the halt ([CC 4.2.1.3](#4.2.1.3)). The fuse is counted from receipt on the node's own clock, never from the signer-chosen `asserted_at` ([CC 2.7.5](part_2_the_grammar.md#2.7.5), the window). So a sealed row signed months earlier is live when published, and a future-dated one cannot buy a longer pause. The confirmation names the halt by id, so no clock is shared. The firer's own signature counts toward the majority. `halt_fuse_secs` is a charter member ([CC 2.1](part_2_the_grammar.md#2.1)) whose **absence means 86400**, 24 hours, as a constant of this document that the verifier reads. A charter that omits it is conformant with the 24-hour fuse ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). A confirmed halt stands until a strict majority resumes it. **A strict majority may resume an unconfirmed halt at any time**: a stolen sealed row need not run its fuse if the holders are reachable. Every threshold here is **M of N over the standing roster**, never a fixed 2-of-3: three holders is the seed, not the rule. The confirmation happens *after* the stop has landed, so there is still nothing in flight for an adversary to interrupt. What an adversary who prevents confirmation gains is that the agents resume after the fuse. What it has to do then is prevent every fresh halt by every holder, indefinitely. A holder who fires repeatedly without confirmation is answered on the public record by the roster-change rule ([CC 4.2.6](#4.2.6)).
+**The fuse (normative).** One holder can stop every agent, each at its node's own receipt, and silently, because a missed halt is the one unrecoverable failure. But one holder MUST NOT be able to keep them stopped alone. A halt signed by one holder **lapses `halt_fuse_secs` after each node received it**, **unless a strict majority of the standing roster confirms it** by a cosigned `accord:lifecycle:confirmed` row naming the halt ([CC 4.2.1.3](#4.2.1.3)). The fuse is counted from receipt on the node's own clock, never from the signer-chosen `asserted_at` ([CC 2.7.5](part_2_the_grammar.md#2.7.5), the window). So a sealed row signed months earlier is live when published, and a future-dated one cannot buy a longer pause. The confirmation names the halt by id, so no clock is shared. The firer's own signature counts toward the majority. `halt_fuse_secs` is a charter member ([CC 2.1](part_2_the_grammar.md#2.1)) whose **absence means 86400**, 24 hours, as a constant of this document that the verifier reads. A charter that omits it is conformant with the 24-hour fuse ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). A confirmed halt stands until a strict majority resumes it. **A strict majority may resume an unconfirmed halt at any time**: a stolen sealed row need not run its fuse if the holders are reachable. Every threshold here is **M of N over the standing roster**, never a fixed 2-of-3: three holders is the seed, not the rule. The confirmation happens *after* the stop has landed, so there is still nothing in flight for an adversary to interrupt. What an adversary who prevents confirmation gains is that the agents resume after the fuse. What it has to do then is prevent every fresh halt by every holder, indefinitely. A holder who fires repeatedly without confirmation is answered on the public record by the roster-change rule ([CC 4.2.6](#4.2.6)).
 
 **Signatures per kind (normative).** One table, read by every verifier from one place so that no two sides drift:
 
@@ -149,7 +149,7 @@ The signature is the composite signature of [CC 2.6.1.7](part_2_the_grammar.md#2
 
 The substrate MUST reject duplicate `invocation_id` values within the `valid_until` window (per-kind unique).
 
-**The kinds are lowercase, and the domain label carries the change (normative).** `invocation_kind` takes exactly `constitutional` \| `notify` \| `drill`, the [CC 3.1.7](part_3_the_namespace.md#3.1.7) R3 spelling of the registered leaves `accord:invoke:constitutional:{halt_id}` and siblings. A verifier compares the bytes exactly and never folds. The label is `.v2`, not `ciris.accord_invoke.v1`, so that a signature under the old uppercase spelling fails loudly rather than verifying by accident. This is what the label's version is for. The `EmergencyShutdown CONSTITUTIONAL` message and `IncidentSeverity::INCIDENT_CONSTITUTIONAL` are the *severity* enum of the shutdown message, not a dimension token, and are outside R3.
+**The kinds are lowercase, and the domain label carries the change (normative).** `invocation_kind` takes exactly `constitutional` \| `notify` \| `drill`, the [CC 3.1.7](part_3_the_namespace.md#3.1.7) R3 spelling of the registered leaves `accord:invoke:constitutional:{halt_id}` and siblings. A verifier compares the bytes exactly and never folds. The label is `.v2`, not `ciris.accord_invoke.v1`, so that a signature under the uppercase spelling of the `.v1` label fails loudly rather than verifying by accident. This is what the label's version is for. The `EmergencyShutdown CONSTITUTIONAL` message and `IncidentSeverity::INCIDENT_CONSTITUTIONAL` are the *severity* enum of the shutdown message, not a dimension token, and are outside R3.
 
 **The label on the kill switch holds one invariant (normative).** A label change on the kill switch is the one change where a gap is terminal. A holder whose signature no verifier that matters will honour, during an incident, is a missed fire ([CC 4.2.6](#4.2.6)). So at no instant may every holder's signature be refused by every consumer of the halt. The consumers that matter are the agent instances that verify an invocation and stop, not the servers that tally it.
 
@@ -363,13 +363,13 @@ Verify-side obligations are **fail-closed**:
 - every verifier recomputes the tally over the pinned roster (`federation_keys`);
 - the server is one verifier, and the harness reports its result.
 
-**Canonical-bytes pins.** The proposal and the participation each sign a distinct, wire-isolated domain, and a decision is the bundle above and signs none. The distinct domains prevent invoke ↔ lifecycle ↔ proposal ↔ participation cross-replay. The forward form of the three objects waits on the implementer's submission, and their earlier form is [CC 8.11.22](part_8_appendices.md#8.11.22).
+**Canonical-bytes pins.** The proposal and the participation each sign a distinct, wire-isolated domain, and a decision is the bundle above and signs none. The distinct domains prevent invoke ↔ lifecycle ↔ proposal ↔ participation cross-replay. The forward form of the three objects is an open encoding ([CC 2.6.1.12](part_2_the_grammar.md#2.6.1.12)), and their earlier form is [CC 8.11.22](part_8_appendices.md#8.11.22).
 
 `accord_decision` carries **no separate signing domain** — its authority is the contained `accord_participation` signatures + any roster version it produces. Each signature is the composite of [CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7). **Holder PQC publication:** the accord-holder PQC halves are published as signed key records in the `federation_keys` directory under their own `identity_type`, so the tally resolves every signer at the federation tier under RequireHybrid; absent publication, hybrid resolution **fails closed**. The same signed key records are served in the GenesisBundle's `holders`, which is the accord-family roster ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)).
 
 **Physical assumption (deployment, not constitution).** The model rests only on a survivor getting a few-kilobyte signed proof-of-life to a relaying node with **no standing infrastructure**. That is satisfiable over HF/shortwave skywave + NVIS store-and-forward bridged into the mesh by EMP-hardened, geographically-distributed HF↔Reticulum gateways. The signature is the trust, not the path, so any number of untrusted RF hops is safe. The relay/gateway backbone is itself adversary-targeted infrastructure and belongs in a deployment spec.
 
-**Entrenchment.** This section is part of the **entrenched** [CC 4.2](#4.2) surface ([CC 4.5.1.2](#4.5.1.2)): it sets how the kill-switch quorum is computed. Before the scale gate, the steward's authority over entrenched surfaces applies ([CC 4.5.1](#4.5.1)); after the scale gate, a change to this surface requires the dedicated entrenched accord ratification of [CC 4.5.1.2](#4.5.1.2).
+**Entrenchment.** This section is part of the **entrenched** [CC 4.2](#4.2) surface ([CC 4.5.1.2](#4.5.1.2)): it sets how the kill-switch quorum is computed. Before the scale gate, the steward proposes a change to this surface and the roster's strict majority ratifies it ([CC 4.5.1](#4.5.1)); after the scale gate, a change to this surface requires the dedicated entrenched accord ratification of [CC 4.5.1.2](#4.5.1.2).
 
 ## 4.3 `wise-authority` — Designated Wise Authorities
 
@@ -539,9 +539,10 @@ A proposed membership change is a **new version of the roster record** ([CC 3.2]
 
 ```
 admit_community_change(C, proposed: community_record):
-  current = resolve_community(C, now)
-  protocol = current_community_record(C).consensus_protocol
-  subkind = current_community_record(C).cohort_subkind
+  current = resolve_community(C, at: proposed.refs.head)   // the head the row names (CC 2.7.4)
+  record = the group record of C at proposed.refs.head
+  protocol = record.consensus_protocol
+  subkind = record.cohort_subkind
 
   signatures_ok = evaluate_consensus_protocol(protocol, current, proposed.signatures)
   if not signatures_ok:
@@ -560,7 +561,7 @@ admit_community_change(C, proposed: community_record):
       emit hard_case:community_consensus_protocol_violation:{C}  // with the named membership_* rule
       reject
 
-  subkind_ok = evaluate_subkind_admission(subkind, current, proposed)
+  subkind_ok = evaluate_subkind_admission(subkind, record, current, proposed)
   if not subkind_ok:
     // For geographic: subkind admission failed (e.g., new member's location_proof
     // not contained in geographic_constraint, or expired location_proof)
@@ -576,19 +577,19 @@ The `hard_case:community_consensus_protocol_violation:{C}` row is the record the
 The `evaluate_subkind_admission` predicate dispatches per `cohort_subkind`:
 
 ```
-evaluate_subkind_admission(subkind, current, proposed):
+evaluate_subkind_admission(subkind, record, current, proposed):
   match subkind:
     "geographic":
       # CC 2.6.6.3: a constraint finer than resolution 7 is finer than any proof,
       # so such a community admits by invitation and the constraint does not gate
-      if current.geographic_constraint.cell_resolution > 7:
+      if record.geographic_constraint.cell_resolution > 7:
         return true
       # Per the CC 3.2 geographic admission requirement
       for each NEW member in proposed.members (not in current):
         their_proof = latest valid location_proof from new_member.key_id
         if their_proof IS NULL:
           return false // no location_proof on file
-        if their_proof.cell_id NOT contained in current.geographic_constraint.cell_id:
+        if their_proof.cell_id NOT contained in record.geographic_constraint.cell_id:
           return false // location outside community's geographic bound
         if their_proof.valid_until passed:
           return false // expired
@@ -596,7 +597,7 @@ evaluate_subkind_admission(subkind, current, proposed):
     "public":
       # CC 3.2 `public`: open admission — a standing proposal and the joiner's
       # own acceptance; the widening still passes consensus_protocol
-      protocol = current_community_record(C).consensus_protocol   # read as admit_community_change reads it
+      protocol = record.consensus_protocol   # read as admit_community_change reads it
       if protocol == "open:self_admit":
         for each NEW member in proposed.members (not in current):
           if no membership:acceptance:v1 from new_member naming the standing proposal:
@@ -732,7 +733,7 @@ join) — ride the consensus_protocol choice:
 | Cardinality | Per-subscriber crypto | Epoch handling |
 |---|---|---|
 | **N=1 (observer-share)** | Single `key_grant` ([CC 3.3.2](part_3_the_namespace.md#3.3.2)); no epoch needed (one recipient, one DEK) | No epoch — single grant, single DEK; the grant is never withdrawn; access ends by re-sealing under a fresh key for the remaining recipients ([CC 3.3.2](part_3_the_namespace.md#3.3.2)) |
-| **N>1 (multicast)** | Flat per-epoch `key_grant` cascade — one grant per (subscriber, epoch); the stream-epoch DEK seals content O(1), the cascade distributes the 32-byte epoch key O(N)/epoch per [CC 5.1](part_5_transport_substrate.md#5.1) | Per-`(stream_id, epoch)` axis; epoch rolls on member removal (mandatory), on member addition (the MLS commit) and on time/bytes (optional) per [CC 5.1](part_5_transport_substrate.md#5.1) |
+| **N>1 (multicast)** | Flat per-epoch `key_grant` cascade — one grant per (subscriber, epoch); the stream-epoch DEK seals content O(1), the cascade distributes the 32-byte epoch key O(N)/epoch per [CC 5.1](part_5_transport_substrate.md#5.1) | Per-`(stream_id, epoch)` axis, its epoch the MLS group's stream epoch; epoch rolls on member removal (mandatory), on member addition (the MLS commit) and on time/bytes (optional) per [CC 5.1](part_5_transport_substrate.md#5.1) |
 
 The same Policy M machinery handles both cardinalities — the difference is purely the cascade fan-out factor.
 
@@ -748,7 +749,7 @@ For `delivery_mode: push`, the substrate fans out to `entitled ∧ reachable` pe
 
 On a new-member admission via Policy M, the new member's `history_on_join` envelope value is carried and does not change what is delivered. Its two named values:
 
-- `from_join` (default) — a named value with no effect of its own. What a joiner receives is the tier's rule. At community and affiliations a new member is granted the current epoch's key when a minter's roster gains them, and no earlier epoch's. The epoch rotates because of a removal and never because of an admission. So content sealed earlier in the epoch the member joins is readable, and nothing from a rotated-past epoch is. At self and family admission always runs the re-key walk
+- `from_join` (default) — a named value with no effect of its own. What a joiner receives is the tier's rule. At community and affiliations a new member is granted the current epoch's key when a minter's roster gains them, and no earlier epoch's. The epoch rotates because of a removal and never because of an admission. That epoch is the minter's **content epoch**. The **stream epoch** of an MLS group is another, which advances on every commit, an add included ([CC 5.1](part_5_transport_substrate.md#5.1)). So content sealed earlier in the epoch the member joins is readable, and nothing from a rotated-past epoch is. At self and family admission always runs the re-key walk
 - `full` — no effect on membership delivery: it confers no grant on an earlier epoch, and the tier's rule above governs; on a stream it is the producer's signal that the stream is kept ([CC 5.1](part_5_transport_substrate.md#5.1))
 
 This composes with the [CC 4.4.3.22](#4.4.3.22) removal rule: removed members retain extant `key_grant`s for content they were entitled to during membership; a new member receives what the tier delivers, whatever `history_on_join` carries. The substrate's forward-secrecy posture is uniform across consent, takedown, membership-departure, AND delivery-onboarding surfaces.
@@ -964,8 +965,8 @@ A proposed membership change (addition OR removal) is a **new version of the ros
 
 ```
 admit_family_change(F, proposed: family_record):
-  current = resolve_family(F, proposed.signed_at)   // judged at the row's signed instant (CC 3.3.4)
-  protocol = current_family_record(F).consensus_protocol
+  current = resolve_family(F, at: proposed.refs.head)   // the head the row names (CC 2.7.4)
+  protocol = (the group record of F at proposed.refs.head).consensus_protocol
   signatures = collect_signatures_on(proposed)
 
   match protocol:
@@ -981,7 +982,10 @@ admit_family_change(F, proposed: family_record):
     "majority":
       group_ok = count(sig from m in current) > len(current) / 2
     "quorum:M/N":
-      group_ok = count(sig from m in current) >= M // M is ABSOLUTE — see CC 4.4.3.18
+      if len(current) < M:   // below M the gate counts every live member (CC 4.4.3.18)
+        group_ok = every m.key_id in current has signed
+      else:
+        group_ok = count(sig from m in current) >= M // M is ABSOLUTE — see CC 4.4.3.18
     "weighted:{rubric}":
       group_ok = sum(weight(m) for m in current who signed) >= threshold  // whole numbers on the signed record
   admit = group_ok
@@ -1087,7 +1091,7 @@ A user MAY grant a device co-self while revoking its network agency, or vice-ver
 
 **The assurance duties are held by people, not by nodes.** `assure:age` and `assure:capacity` are not `infra:*` scopes, and a `node`-role delegate holds neither. A person or an institution holds each, conferred by a root the reader trusts ([CC 3.4.7](part_3_the_namespace.md#3.4.7)). The subject of a row never holds the duty over itself, and the proposed steward never holds `assure:capacity` over the ward.
 
-The two membership tokens **replace `infra:join_communities` outright, with no alias**. `community` and `family` are distinct CEG objects in different sensitivity classes. Scopes are exact-string matched, so a vague token is a silent interop hole, not a fallback. Retirement is a coordinated cut, not a deprecation window ([CC 2.6.4](part_2_the_grammar.md#2.6.4)).
+The two membership tokens **replace `infra:join_communities` outright, with no alias**. `community` and `family` are distinct CEG objects in different sensitivity classes. Scopes are exact-string matched, so a vague token is a silent interop hole, not a fallback. No deprecation window admits `infra:join_communities` ([CC 2.6.4](part_2_the_grammar.md#2.6.4)).
 
 **Two granters — standing vs infrastructure role.** A trust-root charter ([CC 4.4.3.34](#4.4.3.34)) MUST NOT carry `infra:network_presence` or either `infra:hold_*_membership`. Those flow from the **owner**, who grants *standing*, while the root blesses only *infrastructure role*. Conflating them lets a root manufacture members.
 
@@ -1103,7 +1107,7 @@ The two membership tokens **replace `infra:join_communities` outright, with no a
 
 #### 4.4.3.20 `canonicalization-signing` — Signing member sets (normative)
 
-Each of the three Self-at-login Contributions is a row signed as every row is ([CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1)), and at login promoted to federation-tier. The [CC 5.3.2.6](part_5_transport_substrate.md#5.3.2.6) promotion signs the **exact committed member set** under the omit rule of [CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2), which is load-bearing; the signer MUST NOT re-default. `scope[]` is a set ([CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2)), and `aspects[]` retains RNS order. All hash and pubkey **byte** fields (the two reticulum pubkeys, `destination_hash`, every digest) are byte strings ([CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2)). Every `*_key_id` (the consent record's `subject_key_id` among them) is an identity reference ([CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1)), never re-cased or re-encoded. Every instant is one of [CC 2.6.2](part_2_the_grammar.md#2.6.2). The member sets the producer commits are pinned below, and the encoding of their payloads waits on the implementer's submission. Optional [CC 2.1](part_2_the_grammar.md#2.1) envelope fields not listed ride the omit rule (absent unless the producer sets them). The JCS contract of the earlier form is [CC 8.11.23](part_8_appendices.md#8.11.23).
+Each of the three Self-at-login Contributions is a row signed as every row is ([CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1)), and at login promoted to federation-tier. The [CC 5.3.2.6](part_5_transport_substrate.md#5.3.2.6) promotion signs the **exact committed member set** under the omit rule of [CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2), which is load-bearing; the signer MUST NOT re-default. `scope[]` is a set ([CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2)), and `aspects[]` retains RNS order. All hash and pubkey **byte** fields (the two reticulum pubkeys, `destination_hash`, every digest) are byte strings ([CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2)). Every `*_key_id` (the consent record's `subject_key_id` among them) is an identity reference ([CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1)), never re-cased or re-encoded. Every instant is one of [CC 2.6.2](part_2_the_grammar.md#2.6.2). The member sets the producer commits are pinned below, and the encoding of their payloads is an open encoding ([CC 2.6.1.12](part_2_the_grammar.md#2.6.1.12)). Optional [CC 2.1](part_2_the_grammar.md#2.1) envelope fields not listed ride the omit rule (absent unless the producer sets them). The JCS contract of the earlier form is [CC 8.11.23](part_8_appendices.md#8.11.23).
 
 **(a) `consent:partnership_grant:v1` (user side) / `consent:partnership_accept:v1` (agent side)** — `consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
 ```
@@ -1548,7 +1552,7 @@ Rule-layer changes (new prefixes, new envelope fields, new policies, calibration
 
 **The sign-off of step 5.** The sign-off is **a strict majority of the standing accord roster of [CC 4.2.3](#4.2.3)**. It is counted as every accord threshold is, never a fixed count ([CC 4.2.6](#4.2.6)). The halt alone fires on one holder's row ([CC 4.2.1.1](#4.2.1.1)). The count is of holders, not keys: a holder's primary and backup keys are one holder, under whichever of their keys is live. No single signer admits an amendment, and no single signer vetoes one by refusing to sign. The sign-off is the secondary check; WA quorum is the primary substantive review. The sign-off reduces the attack surface from "produce N Sybils" to "compromise a majority of specific hardware-attested keys."
 
-**Transitional authority — the scale gate (normative).** The **at-scale** governance is the mechanized process above (federation Contribution → witness diversity → WA quorum → reconsideration → accord-roster sign-off), together with the entrenched M-of-N ratification of [CC 4.5.1.2](#4.5.1.2). It presumes a federation large enough that witness diversity and WA quorum are *meaningful*. Below that scale the machinery is theater, not protection. The scale gate is the point at which the mesh reaches scale: ≥100,000 nodes active in a 24-hour period, measured by the census ([CC 6.1.9](part_6_the_coherence_mathematics.md#6.1.9)). **Until the mesh reaches scale, amendment authority rests with the founder as steward, and any accord-holder may propose an amendment**. This is a maintainer-decides model: the maintainer decides, the work stays forkable under its license, and no one is bound who does not voluntarily join the instance. The federation-Contribution + WA-quorum machinery is **deferred to mechanization** at the scale gate. At that point it *supersedes* founder authority and tightens governance onto the quorum/entrenchment process. Before the scale gate the entrenchment quorum is a strict majority of the standing roster ([CC 4.5.1.2](#4.5.1.2)). After the scale gate governance tightens, never loosens. The scale gate itself is amendable by the steward before the scale gate. After the scale gate it is amendable only by the [CC 4.5.1.2](#4.5.1.2) entrenched process.
+**Transitional authority — the scale gate (normative).** The **at-scale** governance is the mechanized process above (federation Contribution → witness diversity → WA quorum → reconsideration → accord-roster sign-off), together with the entrenched M-of-N ratification of [CC 4.5.1.2](#4.5.1.2). It presumes a federation large enough that witness diversity and WA quorum are *meaningful*. Below that scale the machinery is theater, not protection. The scale gate is the point at which the mesh reaches scale: ≥100,000 nodes active in a 24-hour period, measured by the census ([CC 6.1.9](part_6_the_coherence_mathematics.md#6.1.9)). **Until the mesh reaches scale, amendment authority rests with the founder as steward, and any accord-holder may propose an amendment**. This is a maintainer-decides model: the maintainer decides, the work stays forkable under its license, and no one is bound who does not voluntarily join the instance. The federation-Contribution + WA-quorum machinery is **deferred to mechanization** at the scale gate. At that point it *supersedes* founder authority and tightens governance onto the quorum/entrenchment process. Before the scale gate the entrenchment quorum is a strict majority of the standing roster ([CC 4.5.1.2](#4.5.1.2)). After the scale gate governance tightens, never loosens. Before the scale gate, the scale gate itself is amended by the steward's proposal and the roster's ratification ([CC 4.5.1.2](#4.5.1.2)). After the scale gate it is amendable only by the [CC 4.5.1.2](#4.5.1.2) entrenched process.
 
 **The swap test — a mandatory drafting gate (normative).** Every clause that **confers authority or gates a capability** MUST pass the swap test before adoption. The test is this: *swap the most and least powerful parties the clause names or implies, re-read it, and ask whether it still reads acceptable; if it does not, it was a privilege, not a rule*. This is a drafting gate on what CC may say, never an adjudication rule. It binds amendment and the steward's authority before the scale gate alike. Where the test **fails**, the outcome is recorded on the declared-asymmetry register below.
 
@@ -1623,7 +1627,7 @@ A processor MUST resolve `references_attestation_id` under the emitting operatio
 
 #### 4.5.1.2 `meta-amendment` — Meta-amendment + entrenchment
 
-The CC 4.5.1 amendment process itself, the [CC 1.2](part_1_foundation.md#1.2) T1–T4 prefix-admission gate, and the [CC 4.2](part_4_composition_governance.md#4.2) HUMANITY_ACCORD constitutional layer are **entrenched**. Changes to these three surfaces require a MAJOR version bump per [CC 2.6.4](part_2_the_grammar.md#2.6.4) AND the signatures of a strict majority of the standing HUMANITY_ACCORD roster, M of N. The majority is counted as every accord threshold is ([CC 4.2.6](#4.2.6)), never a fixed 2-of-3, because the roster is meant to grow. These signatures are a separate, dedicated accord ratification, not the CC 4.5.1 step 5 sign-off on an ordinary amendment. An entrenched change still passes steps 1 to 5 of CC 4.5.1, and this ratification is added to them. Without this entrenchment, a single quorum could rewrite the gate admitting the next quorum. This entrenched ratification is the mechanism **after the scale gate**; before the scale gate it is exercised by the steward under the scale gate in [CC 4.5.1](#4.5.1).
+The CC 4.5.1 amendment process itself, the [CC 1.2](part_1_foundation.md#1.2) T1–T4 prefix-admission gate, and the [CC 4.2](part_4_composition_governance.md#4.2) HUMANITY_ACCORD constitutional layer are **entrenched**. Changes to these three surfaces require a MAJOR version bump per [CC 2.6.4](part_2_the_grammar.md#2.6.4) AND the signatures of a strict majority of the standing HUMANITY_ACCORD roster, M of N. The majority is counted as every accord threshold is ([CC 4.2.6](#4.2.6)), never a fixed 2-of-3, because the roster is meant to grow. These signatures are a separate, dedicated accord ratification, not the CC 4.5.1 step 5 sign-off on an ordinary amendment. An entrenched change still passes steps 1 to 5 of CC 4.5.1, and this ratification is added to them. Without this entrenchment, a single quorum could rewrite the gate admitting the next quorum. This entrenched ratification binds before and after the scale gate. Before the scale gate the steward proposes an entrenched change and the roster's strict majority ratifies it, so no single signer admits one ([CC 4.5.1](#4.5.1)).
 
 #### 4.5.1.3 `open-vocabulary` — Open-vocabulary collision rule
 
@@ -1886,7 +1890,7 @@ Content-watchlist auto-detection: a [CC 4.5.5](#4.5.5) `moderate`- or `takedown`
 | **Operator** | the *licensed hash-DB* (IWF/NCMEC/PDQ, [CC 4.5.10.1](#4.5.10.1), operator-provisioned + unshippable) + the NCMEC report obligation | turn it on for a group; act without the authority's opt-in |
 | **Authority** (`moderate`- or `takedown`-holder) | the *opt-in* (per-group enable) | run the match itself; access the licensed list |
 
-**Audit — never silent (normative).** Enabling a watchlist emits `hard_case:watchlist_enabled:{group}` ([CC 3.1.9.4](part_3_the_namespace.md#3.1.9.4)) — who turned it on + which list; **every match** emits `hard_case:watchlist_match:{group}`. Enablement and matches are on the record, always. The record of a match names the group, the list's source and the list version, and names no person. Any member of the group MAY read the count of matches under each source and list version. So a list that has been captured, or has drifted, shows as a rise in that count, and the group can leave it.
+**Audit — never silent (normative).** Enabling a watchlist emits `hard_case:watchlist_enabled:{group}` ([CC 3.1.9.4](part_3_the_namespace.md#3.1.9.4)) — who turned it on + which list; **every match** emits `hard_case:watchlist_match:{group}`, save a match on content its own node's owner offered ([CC 4.5.7](#4.5.7)). Enablement and matches are on the record, always. The record of a match names the group, the list's source and the list version, and names no person. Any member of the group MAY read the count of matches under each source and list version. So a list that has been captured, or has drifted, shows as a rise in that count, and the group can leave it.
 
 **CSAM-disable non-silent floor (normative).** Disabling a **CSAM** watchlist MUST be an audited act: a `withdraws` signed by the authority that **emits `hard_case:watchlist_enabled` (disable variant)**. **Silent removal of a CSAM list is barred** (a predator-operator cannot turn off CSAM detection without leaving a trace). Ordinary (non-CSAM) lists may be freely toggled. This is the floor that keeps the opt-in honest.
 
@@ -1968,7 +1972,7 @@ The cost the subject opts into when emitting the `location_proof` is this. A cop
 
 - **Rough-only** (CC 4.5.9.2): a claim, while it stands, is bounded to resolution ≤ 7, never finer
 - **Opt-in** (CC 4.5.9.1): the claim exists only because the subject signed and emitted it
-- **Auditability**: the subject can prove what they did or did not claim, and when; the tombstone is the receipt, and it carries no cell
+- **Auditability**: the subject can prove what they claimed and withdrew, and when; the tombstone is the receipt, and it carries no cell
 
 #### 4.5.9.4 `documents-what-5` — What this documents
 
@@ -2013,7 +2017,7 @@ Path (b), clearinghouse delegation — substrate operators delegating perceptual
 #### 4.5.10.4 `documents-what-2` — What this documents
 
 - The closed-set of `legal_basis` values that compose with `PerceptualHashCsam` (the only `legal_basis` value that consumes hash-match output as immediate-removal trigger; see [CC 3.3.2](part_3_the_namespace.md#3.3.2))
-- The operator-onboarding contract: an operator running a PDQ matcher MUST register their matcher's source feeds (which hash-list source URLs they're pulling from + freshness cadence) via a `system:perceptual_hash_matcher:registered` Contribution. Composes with [CC 3.1.3](part_3_the_namespace.md#3.1.3) Persist substrate-self-report discipline.
+- The operator-onboarding contract: an operator running a PDQ matcher MUST register their matcher's source feeds (which hash-list source URLs they're pulling from + freshness cadence) via a `system:perceptual_hash_matcher:registered` Contribution. Composes with the substrate self-report discipline of [CC 3.1.3](part_3_the_namespace.md#3.1.3).
 
 What it does NOT do: prescribe which hash databases an operator MUST use. Operator choice. CEG documents the wire-format slot + the operator-onboarding contract + the recommended default; concrete matcher selection is operator policy ([CC 4.5.10](#4.5.10)).
 
@@ -2088,7 +2092,7 @@ This entry says how a decision is taken where presence is authority: who may act
 
 The reverse-quorum of this mechanism is a **fallback for the moderators' absence**. The 48 h figure is tuned so that a **present** moderator always has time to act unilaterally. The community fallback fires **only** on genuine absence. The members' check on an act a moderator did take is a separate door, the lift below.
 
-**Why 48 hours (normative).** The window governs only the fallback, since a moderator rules at any time and a withhold is immediate. Its one job is the legitimacy of the members' majority, and 48 hours is the shortest span that gives every member in every time zone a weekday to respond, where 24 covers one working day and no day off.
+**Why 48 hours (normative).** The window governs only the fallback, since a moderator rules at any time and a withhold is immediate. Its one job is the legitimacy of the members' majority, and 48 hours gives every member, in every time zone, two calendar days to respond, where 24 hours gives one. A weekday for every member, whatever day the window opens, would need 72 hours.
 
 **Two acts, not one (normative).** A member who sees harm has two acts and they are separate choices. A **report filed privately with the duty holder** (a named moderator) opens no window and is not shown to the room. The person named sees that a record exists, its kind, its consequence and who answers for it ([CC 4.5.5](#4.5.5)). It becomes the duty holder's record under [CC 4.5.5](#4.5.5), the reporter shielded where the process protects them. The moderator rules on it at any time or lets it rest. A **moderation action raised in the room** is public, names what is asked, and starts the 48 h window at once, the members responding and the fallback carrying on the moderator's absence. The private report is a `moderation:{allegation_type}` row and the room action a `content_class:reported` row, so the two never share a family. The client offers both and never folds one into the other.
 
