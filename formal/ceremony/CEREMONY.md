@@ -51,7 +51,7 @@ No one is an authority over another's key, and no one signs another's record (CC
 | 8 | each owner's acceptance edge | the owner | the genesis | the owner's nodes are Rooted and in the halt's reach |
 | 9 | each owner-binding, cosigned by the key owned | owner and key | both records | a node or agent is owned; an agent acts only from here, and only with its steward's edge (**model**, P6) |
 | 10 | each community's founding record, the trust-root community's among them | every member, each signing | the members' records | the community, with the members who signed |
-| 11 | the first drill, within 7 days of the genesis's publication (CC 4.2.1.1) | each holder | the holder's record | shown as a drill; confirmation and resumption rehearsed at a strict majority |
+| 11 | the first drill, within 7 days of the genesis's publication (CC 4.2.1.1) | each holder | the holder's record | shown as a drill; it rehearses the fire path. Confirmation and resumption are rehearsed on a `constitutional` halt only when one is fired, since a lifecycle row names a `constitutional` halt and nothing else |
 
 Step 4 is published only once step 3 exists for every holder, so a halt of this form is available from the first
 moment after the genesis (**model**, P8; TLA+ `Inv_HaltAvailable`; the plant `publish_ungated` is caught).

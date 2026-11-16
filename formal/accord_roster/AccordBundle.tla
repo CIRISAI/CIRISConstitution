@@ -29,7 +29,9 @@ CONSTANTS MaxVer,
           SpentReturns,     \* the next commitment need only differ from the one spent
           RecKeyAsSeat,     \* a recovery may name a recovery key as the new signing key
           AnyKeyRecovers,   \* a recovery is accepted under any key, the commitment unchecked
-          SpentKeyRecovers  \* a recovery is accepted under any commitment ever named for the seat
+          SpentKeyRecovers, \* a recovery is accepted under any commitment ever named for the seat
+          RotateNoVoice,    \* a roster change re-seats a holder at a new key without that holder's statement
+          SeatRetired       \* a bundle seats a holder at a key its lineage retired, or at its in-force recovery key
 
 Seats   == {"A", "B", "C", "D"}
 ASign   == {"A0", "A1", "A2"}
@@ -43,24 +45,30 @@ VARIABLES key,    \* [Seats -> signing key | NONE]: the holders of the bundle in
           named,  \* every commitment any bundle of the lineage has named for A
           ver,    \* the version of the bundle in force
           adv,    \* the keys the adversary holds
-          last    \* the last counted bundle, read by the invariants
-vars == <<key, com, spent, named, ver, adv, last>>
+          last,   \* the last counted bundle, read by the invariants
+          left    \* every key a holder was seated at and left: with spent, the lineage's retired keys
+vars == <<key, com, spent, named, ver, adv, last, left>>
 
 Holders(k) == {s \in Seats : k[s] # NONE}
 CurKeys(k) == {k[s] : s \in Holders(k)}
 
 Init == /\ key = [s \in Seats |-> CASE s = "A" -> "A0" [] s = "B" -> "B0" [] s = "C" -> "C0" [] OTHER -> NONE]
         /\ com = [s \in Seats |-> CASE s = "A" -> "RA0" [] s = "B" -> "RB0" [] s = "C" -> "RC0" [] OTHER -> NONE]
-        /\ spent = {} /\ named = {"RA0"} /\ ver = 1 /\ adv = {}
+        /\ spent = {} /\ named = {"RA0"} /\ ver = 1 /\ adv = {} /\ left = {}
         /\ last = [kind |-> "genesis", S |-> {}, pk |-> key, pc |-> com, nk |-> key, nc |-> com,
                    rk |-> NONE, spentBefore |-> {}]
 
 Land(kind, S, nk, nc, rk, sp2) ==
   /\ key' = nk /\ com' = nc /\ spent' = sp2 /\ ver' = ver + 1
   /\ named' = named \cup {nc["A"]}
+  /\ left' = left \cup {key[s] : s \in {x \in Seats : key[x] # NONE /\ nk[x] # NONE /\ nk[x] # key[x]}}
   /\ last' = [kind |-> kind, S |-> S, pk |-> key, pc |-> com, nk |-> nk, nc |-> nc,
               rk |-> rk, spentBefore |-> spent]
   /\ UNCHANGED adv
+
+\* a holder re-seated at a new key: the key may not be one the lineage retired, nor the in-force recovery key
+Moved(nk) == {s \in Seats : key[s] # NONE /\ nk[s] # NONE /\ nk[s] # key[s]}
+NotRetired(nk) == \A s \in Moved(nk) : (nk[s] \notin left \cup spent /\ nk[s] # com[s]) \/ SeatRetired
 
 (* ---- a roster change: a later bundle counted at a strict majority of the predecessor ---------- *)
 Added(nk) == {s \in Seats : key[s] = NONE /\ nk[s] # NONE}
@@ -70,6 +78,8 @@ ChangeCounts(nk, nc, S) ==
   /\ (Cardinality(S \cap CurKeys(key)) * 2 > Cardinality(Holders(key)) \/ (NoCount /\ S \cap CurKeys(key) # {}))
   /\ \A s \in Added(nk) \cup Recommitted(nk, nc) : nk[s] \in S
   /\ \A s \in Seats : nc[s] \notin spent
+  /\ NotRetired(nk)
+  /\ \A s \in Moved(nk) : key[s] \in S \/ RotateNoVoice     \* routine rotation: the holder's own voice, current key
 
 \* the shapes a change takes here: add D, remove C, re-commit B, and the adversary's seat for A
 ChangeTo(op) ==
@@ -77,6 +87,9 @@ ChangeTo(op) ==
     [] op = "removeC"   -> <<[key EXCEPT !["C"] = NONE], [com EXCEPT !["C"] = NONE]>>
     [] op = "recommitB" -> <<key, [com EXCEPT !["B"] = "RB1"]>>
     [] op = "seatX"     -> <<[key EXCEPT !["A"] = "Xs"], com>>
+    [] op = "rotA0"     -> <<[key EXCEPT !["A"] = "A0"], com>>
+    [] op = "rotA1"     -> <<[key EXCEPT !["A"] = "A1"], com>>
+    [] op = "rotRA"     -> <<[key EXCEPT !["A"] = com["A"]], com>>
 
 Signable == CurKeys(key) \cup {"D0"} \cup adv
 Change(op, S) ==
@@ -84,7 +97,7 @@ Change(op, S) ==
   /\ ver < MaxVer
   /\ nk # key \/ nc # com
   /\ S \subseteq (IF op = "seatX" THEN adv ELSE Signable)
-  /\ (op = "seatX" => key["A"] # NONE)
+  /\ (op \in {"seatX", "rotA0", "rotA1", "rotRA"} => key["A"] # NONE)
   /\ ChangeCounts(nk, nc, S)
   /\ Land("change", S, nk, nc, NONE, spent)
 
@@ -95,6 +108,7 @@ RecoveryCounts(rk, nk, nc, other) ==
      \/ (SpentKeyRecovers /\ rk \in named)
   /\ ~other \/ OtherSeat
   /\ nk # key["A"] /\ nk # rk
+  /\ nk \notin left \/ SeatRetired
   /\ nk \notin RecKeys \/ RecKeyAsSeat
   /\ nc # com["A"] /\ nc # rk
   /\ nc \notin spent \/ SpentReturns
@@ -114,11 +128,11 @@ AdvRecover == \E rk \in adv, nc \in ARec :
 
 (* ---- the adversary ---------------------------------------------------------------------- *)
 StealSign == /\ key["A"] \in ASign /\ key["A"] \notin adv
-             /\ adv' = adv \cup {key["A"]} /\ UNCHANGED <<key, com, spent, named, ver, last>>
+             /\ adv' = adv \cup {key["A"]} /\ UNCHANGED <<key, com, spent, named, ver, last, left>>
 StealSpent == \E r \in spent : /\ r \notin adv
-                               /\ adv' = adv \cup {r} /\ UNCHANGED <<key, com, spent, named, ver, last>>
+                               /\ adv' = adv \cup {r} /\ UNCHANGED <<key, com, spent, named, ver, last, left>>
 
-Next == \/ \E op \in {"addD", "removeC", "recommitB", "seatX"}, S \in SUBSET Signable : Change(op, S)
+Next == \/ \E op \in {"addD", "removeC", "recommitB", "seatX", "rotA0", "rotA1", "rotRA"}, S \in SUBSET Signable : Change(op, S)
         \/ HonestRecover \/ AdvRecover \/ StealSign \/ StealSpent
 Spec == Init /\ [][Next]_vars
 
@@ -156,9 +170,19 @@ Inv_SignKeyCannotRecover == \A s \in Seats : key[s] # "Xs"
 \* B6 An adversary holding a spent recovery key gains nothing.
 Inv_SpentKeyGainsNothing == \A s \in Seats : key[s] # "Xp"
 
+\* B7 A roster change re-seats a holder at a new key only with that holder's statement under its current key.
+Inv_RotationConsented ==
+  last.kind = "change" =>
+    \A s \in Seats : (last.pk[s] # NONE /\ last.nk[s] # NONE /\ last.nk[s] # last.pk[s]) => last.pk[s] \in last.S
+
+\* B8 No bundle seats a holder at a key its lineage retired (a key it left, or a spent recovery key), nor at its
+\*    in-force recovery key.
+Inv_NoRetiredSeat == \A s \in Seats : key[s] \notin left \cup spent
+
 \* Witnesses that the paths are reached, each checked to FAIL: a holder recovers twice, a holder is
 \* added, a re-commitment lands, and the adversary holds a spent recovery key.
 NotRecoveredTwice == Cardinality(spent) < 2
+NotRotated == ~(last.kind = "change" /\ last.pk["A"] # NONE /\ last.nk["A"] # NONE /\ last.nk["A"] # last.pk["A"])
 NotAdded == key["D"] = NONE
 NotRecommitted == com["B"] = "RB0"
 NoSpentKeyStolen == adv \cap ARec = {}

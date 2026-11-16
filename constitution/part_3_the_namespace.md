@@ -1854,10 +1854,10 @@ An unauthenticated announce (no matching signed `transport_destination`) is **ad
 
 | Member | Type | Required when |
 |---|---|---|
-| `transport_destination` | a map: `reticulum_x25519_pubkey`, `reticulum_ed25519_pubkey`, `app_name`, `aspects` and `destination_hash` ([CC 3.3.6.3](#3.3.6.3)) | always |
+| `transport_destination` | a map of exactly five members, no more: `reticulum_x25519_pubkey`, `reticulum_ed25519_pubkey`, `app_name`, `aspects` and `destination_hash` ([CC 3.3.6.3](#3.3.6.3)) | always |
 | `transit_xwing_pubkey` | 1216 bytes, beside `transport_destination` | on a node that relays, and on every seat |
 | `onion_hop_xwing_pubkey` | 1216 bytes, beside `transport_destination` | on a node that relays, and on every serve node |
-| `onion_relay` | the map `{"opt_out": true}` | on a node that opts out of relaying |
+| `onion_relay` | exactly the map `{"opt_out": true}`, or absent | on a node that opts out of relaying |
 | `refs` | the node's own key record, by row id under the `also` role `cites` | on a seat's binding |
 
 **Key separation is normative and admission-enforced**: the transit pair is distinct from the signing keys, from the content KEM keys of 3.3.6.1, and from the Reticulum link x25519 above. A binding that reuses any of them is refused.

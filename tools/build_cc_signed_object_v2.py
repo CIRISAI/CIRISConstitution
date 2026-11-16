@@ -303,7 +303,7 @@ ISS = "urn:ietf:params:oauth:ckt:sha-256:" + "A" * 43
 CTY = "application/vnd.ciris.row+cbor"
 
 
-def statement(payload, sig=3373, iss=ISS, cty=CTY, rtype="scores", family="custody:ack", unprotected=None):
+def statement(payload, sig=3373, iss=ISS, cty=CTY, rtype="scores", family="custody:.kind", unprotected=None):
     """A row statement in deterministic CBOR (no real key): the protected header of CC 2.6.1.1."""
     prot = {1: -70100, 3: cty, 4: bytes(32), 15: {1: iss, 2: "sample-sub", 6: 1763078400, -70003: 2},
             16: "ceg-row/2", -70001: rtype, -70002: family}
@@ -398,7 +398,7 @@ def accord_samples():
     inv = {"author": ISS, "accord_root": "humanity-accord", "invocation_id": "halt-1", "nonce": bytes(32), "asserted_at": 1763078400000,
            "valid_until": 1763164800000}
     ref = lambda n: [2, [-16, bytes([n]) * 32]]
-    life = {"refs": {"head": ref(1), "target": ref(2)}, "dimension": "accord:lifecycle:active", "accord_root": "humanity-accord",
+    life = {"refs": {"head": ref(1), "target": ref(2)}, "dimension": "accord:lifecycle:active:v1", "accord_root": "humanity-accord",
             "invocation_id": "resume-1", "nonce": bytes(32), "asserted_at": 1763078400000, "valid_until": 1763164800000}
     return [("accord-invocation", cde(inv), [
                 ("an invocation carrying invocation_kind", cde(dict(inv, invocation_kind="constitutional"))),
@@ -413,6 +413,40 @@ def accord_samples():
                 ("a lifecycle row naming no halt", cde(dict(life, refs={"head": ref(1)}))),
                 ("a lifecycle row naming its halt by an id string", cde(dict(life, resumes_halt_id="halt-1"))),
                 ("a lifecycle row naming an earlier-form halt", cde(dict(life, refs={"head": ref(1), "target": [1, [-16, bytes(32)]]})))])]
+
+
+def accord_rule(p):
+    """The accord payload's rule the CDDL cannot state (CC 4.2.1.1): valid_until is later than asserted_at."""
+    return "valid_until_not_after_asserted_at" if p["valid_until"] <= p["asserted_at"] else None
+
+
+def family_ids():
+    """Every registry prefix as a family id (CC 2.6.1.1): each {name} written .name and each * written ."""
+    import json, re as _re
+    reg = json.load(open(os.path.join(ROOT, "manifests", "namespace_registry.json"), encoding="utf-8"))
+    return {_re.sub(r"\{([a-z_]+)\}", r".\1", f["prefix"]).replace("*", ".") for f in reg["families"]}
+
+
+def family_checks():
+    """(line, problems): the samples' family ids are registry family ids, the lifecycle sample's dimension matches its
+    family with no refusal, and the accord rule refuses a valid_until not after asserted_at."""
+    import cc_namespace_match as NM
+    bad = []
+    ids = family_ids()
+    for fam in ("custody:.kind",):
+        if fam not in ids:
+            bad.append(f"sample family id {fam} is not a registry family id")
+    man = NM.load_manifest()
+    dim = "accord:lifecycle:active:v1"
+    got = NM.match_family(man, dim)
+    if not got or got[0] != "accord:lifecycle:{kind}" or got[2] is not None:
+        bad.append(f"sample dimension {dim} does not match its family: {got}")
+    if NM.match_family(man, "accord:lifecycle:active")[2] is None:
+        bad.append("deliberate break not caught: a lifecycle dimension with no version segment matched")
+    ok = {"author": ISS, "asserted_at": 1763078400000, "valid_until": 1763164800000}
+    if accord_rule(ok) is not None or accord_rule(dict(ok, valid_until=ok["asserted_at"])) != "valid_until_not_after_asserted_at":
+        bad.append("deliberate break not caught: a valid_until equal to asserted_at")
+    return "sample families are registry family ids; the lifecycle dimension matches; valid_until not after asserted_at is refused", bad
 
 
 def binding_samples():
@@ -540,6 +574,17 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
             return "Invalid", "recovery_key_is_signing_key"
         if keys.get(h) == prev["keys"].get(h):
             return "Invalid", "recovery_reuses_signing_key"
+    # then, for every later bundle: no holder re-seated at a key its lineage retired or its in-force recovery key.
+    # It reads the cited records and the predecessor only, never the statements held.
+    retired = {x: set(v) for x, v in prev.get("retired", {}).items()} if later else {}
+    moved = set()
+    if later:
+        for x in H & set(prev["holders"]):
+            if keys.get(x) != prev["keys"].get(x):
+                moved.add(x)
+                if (cde(keys.get(x)) in retired.get(x, set())
+                        or recovery_commitment(keys.get(x)) == prev["coms"].get(x)):
+                    return "Invalid", "holder_key_retired"
     # 5. the custody gate
     for x in H:
         ev = place[("record", x)][1]
@@ -559,14 +604,19 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
             if ("recovery_key", h) not in place or prev["coms"].get(h) != recovery_commitment(rk):
                 return "nothing", "genesis_bundle_count_unmet:recovery_commitment_mismatch"
             spent.add(cde(prev["coms"][h]))
+            retired.setdefault(h, set()).add(cde(rk))
         else:
             yes = {v for v in voices if isinstance(v, str)}
+            if not moved <= yes:              # a routine rotation: the holder's own counted voice, current key
+                return "nothing", "genesis_bundle_row_invalid"
             added = H - PH
             recom = {x for x in H & PH if coms[x] != prev["coms"][x]}
             if len(yes & PH) * 2 <= len(PH) or not (added | recom) <= yes:
                 return "nothing", "genesis_bundle_count_unmet"
     ever |= {cde(x) for x in coms.values()}
-    return "Valid", {"holders": sorted(H), "seats": {s: place[("binding", s)][1]["xwing"] for s in sorted(S)},
+    for x in moved:
+        retired.setdefault(x, set()).add(cde(prev["keys"][x]))
+    return "Valid", {"retired": retired, "holders": sorted(H), "seats": {s: place[("binding", s)][1]["xwing"] for s in sorted(S)},
                      "version": P["version"], "family_key_id": P["family_key_id"], "keys": keys, "coms": coms,
                      "spent": spent, "ever": ever,
                      "charter_rest": {k: v for k, v in P["charter"].items() if k != "recovery_commitments"}}
@@ -904,6 +954,10 @@ def main(argv):
     rline, rbad = reader_checks()
     lines.append(rline)
     bad += rbad
+    sys.path.insert(0, HERE)
+    fline, fbad = family_checks()
+    lines.append(fline)
+    bad += fbad
     n_members = sum(1 for r in rows if r["rule"] != "-")
     print(f"{NAME}: {len(rows)} rows ({n_members} members, {len(rows) - n_members} logical names); "
           f"table and CDDL agree on {len(members(text))} members; three deliberate breaks caught" if not bad else

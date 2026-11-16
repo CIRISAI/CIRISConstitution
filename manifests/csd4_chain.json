@@ -3,7 +3,7 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "7ae4a6e2be0562e20d292da802478b3a04dcc62b477ddc33477f7625ae50abe4",
-   "invariants_sha256": "4f0c752a043fdcc1feaabb5c639a1321b54d4592629d4ade2ec6eb4222575d85",
+   "invariants_sha256": "36226602dc89d20b030d99ada25a07a5d8fb912cf39aa1aa5e26bd906fac601c",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
    "claims_sha256": "d7b77d478aab2ad4fae9a650b0addef2259fe2756c7c555a2d15abb3ee93b5a2",
@@ -29,7 +29,7 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 230,
+   "invariants": 232,
    "claims": 606,
    "entries": 20,
    "refusal_tokens": 107
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "705b9284d5aaf88ddd125c8cb7554894aa52eaa255380bd9171e75413bc3e063"
+  "chain_sha256": "5a1313ea8d67696352799342f17b1b35181cf2e2f2720e4996ce3f81c1285cce"
  },
  "chain": [
   {
@@ -344,6 +344,24 @@
      "kind": "safety",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "closes; spentkey twin fails"
+    },
+    {
+     "inv_id": "AB.rotate",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RotationConsented",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; rotatenovoice twin fails"
+    },
+    {
+     "inv_id": "AB.retired",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_NoRetiredSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; seatretired twin fails"
     }
    ],
    "claims": [
@@ -1268,6 +1286,24 @@
      "kind": "safety",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "closes; spentkey twin fails"
+    },
+    {
+     "inv_id": "AB.rotate",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RotationConsented",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; rotatenovoice twin fails"
+    },
+    {
+     "inv_id": "AB.retired",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_NoRetiredSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; seatretired twin fails"
     }
    ],
    "claims": [
@@ -27198,6 +27234,24 @@
      "kind": "safety",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "closes; spentkey twin fails"
+    },
+    {
+     "inv_id": "AB.rotate",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RotationConsented",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; rotatenovoice twin fails"
+    },
+    {
+     "inv_id": "AB.retired",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_NoRetiredSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; seatretired twin fails"
     }
    ],
    "claims": [

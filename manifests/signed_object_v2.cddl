@@ -304,7 +304,9 @@ genesis-charter = {
 ; attestation-envelope, as a key record's are. An invocation (the families accord:invoke:constitutional,
 ; accord:invoke:notify and accord:invoke:drill, each over its id) is ONE holder's statement over this payload,
 ; verified against the holders of the bundle in force. There is no inner signature and no text preimage; the
-; row's type and family separate the kinds, so the payload carries no invocation_kind. The map is closed.
+; row's type and family separate the kinds, so the payload carries no invocation_kind. The map is closed. The row is a
+; claim, type scores; its sub is the accord's family_key_id (the value of accord_root). valid_until is later than
+; asserted_at, refused valid_until_not_after_asserted_at otherwise (checked in prose).
 accord-invocation = {
   "author": identity-ref,          ; the holder who signs: the statement's iss
   "accord_root": tstr,             ; the accord's family_key_id: picks the bundle in force the row is verified against
