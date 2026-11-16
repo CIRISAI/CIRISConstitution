@@ -150,8 +150,8 @@ def load_prose():
 # --- manifests ---------------------------------------------------------------
 
 def _recut():
-    """old -> new section number from formal/derivation/section_map.tsv (a manifest pinned before the re-cut cites old numbers)."""
-    p = os.path.join(ROOT, "formal", "derivation", "section_map.tsv")
+    """old -> new section number from formal/derivation/section_map_rc19.tsv (a manifest pinned before the re-cut cites old numbers)."""
+    p = os.path.join(ROOT, "formal", "derivation", "section_map_rc19.tsv")
     if not os.path.exists(p):
         return {}
     rows = csv.DictReader((l for l in open(p, encoding="utf-8") if not l.startswith("#")), delimiter="\t")
@@ -162,12 +162,13 @@ RECUT = _recut()
 
 
 def _moves():
-    """old -> new for the sections this edition moved (formal/derivation/section_moves.tsv), applied after the re-cut."""
-    p = os.path.join(ROOT, "formal", "derivation", "section_moves.tsv")
+    """1.0-rc19 number -> this edition's (formal/derivation/section_map.tsv), applied after the re-cut; a section new
+    in this edition has no 1.0-rc19 number."""
+    p = os.path.join(ROOT, "formal", "derivation", "section_map.tsv")
     if not os.path.exists(p):
         return {}
     rows = csv.DictReader((l for l in open(p, encoding="utf-8") if not l.startswith("#")), delimiter="\t")
-    return {r["old_number"]: r["new_number"] for r in rows}
+    return {r["old_number"]: r["new_number"] for r in rows if r["old_number"] != "—" and r["old_number"] != r["new_number"]}
 
 
 MOVES = _moves()
