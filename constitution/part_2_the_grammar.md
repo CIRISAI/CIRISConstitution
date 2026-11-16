@@ -914,7 +914,7 @@ An earlier-form object names nothing by digest, so a chain enters the earlier fo
 
 The known-answer vectors of this object are the verifier's: the row id, the earlier-form name of each family, the refusals of non-deterministic encodings, the order of the sets in `refs`, a counted row as several statements, and the three answers.
 
-The verifier publishes two files of them ([edition-2-vectors]). The composite signature's is checked against the examples of [composite-sig]. The row statements hold three valid statements and 23 refusals. The vectors of the other signed objects, the genesis bundle and the revocation snapshot among them, are still the verifier's to publish.
+The verifier publishes three files of them ([edition-2-vectors]). The composite signature's is checked against the examples of [composite-sig]. The row statements hold five valid statements and 40 refusals, with key records, references and earlier-form names. The substrate file holds one composite signature for each preimage. The vectors of the other signed objects, the genesis bundle and the revocation snapshot among them, are still the verifier's to publish.
 
 ### 2.6.2 `instants` — Instants (normative)
 
