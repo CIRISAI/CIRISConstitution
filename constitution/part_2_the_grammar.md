@@ -1301,6 +1301,7 @@ An attacker keeps these, each bounded as stated:
 
 - Keys that met a past count can fork on a past head. That unlists members and never lists one, and it moves only a reader with no acknowledgement of its own.
 - A relay can choose the order of delivery and withhold a row until it is delivered. An emission made meanwhile cannot be unsent.
+- A relay can withhold the row that would answer a window until one node's clock has closed it. That node's answer then differs for good from that of a node that held the row in time, even once both hold the same rows. Each first-held instant is an input ([CC 2.7.1](#2.7.1)). The halt's fuse is one such window: a confirmation after it lapses confirms nothing, and a fresh halt is fired instead ([CC 4.2.1.3](part_4_composition_governance.md#4.2.1.3)).
 - A lone landing is never final against a key that can still sign, and the window's length is the concluder's own word.
 - Whoever controls a new reader's first view can make a wrong head stick, until the reader withdraws its own rows.
 - Whoever holds an ended key's private half can revive it, and only the key's own revocation makes its end final.
