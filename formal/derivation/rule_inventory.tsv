@@ -19,7 +19,7 @@ p1	44	1.2	stewardship	amendment	none		is	states	4.1	A prefix that fails T2 is re
 p1	50	1.3	foundation	principle	none		is	states	1.10,1.9,1.1	An agent decides each action by the seven-step PDMA: contextualise, assess against principles and M-1, identify and resolve conflicts, select, monitor, feed outcomes to governance	
 p1	58	1.3	foundation	principle	none		is	states	1.10,1.9	Order-Maximisation Veto: a large predicted gain in order against a non-negligible loss on any flourishing axis is never weighed; the agent defers to a human	
 p1	64	1.3	foundation	principle	none		is	states	1.9,1.1	When two principles collide the agent does not choose which to violate: it finds an action violating neither, else takes the fail-safe non-action or defers	
-p1	71	1.3	foundation	other:public-transparency	none		is	states	1.13.3	A deployment over 100 000 monthly active users publishes redacted PDMA logs and WBD tickets within 180 days; failing is a charter breach, not a conformance condition	
+p1	71	1.3	foundation	other:public-transparency	none		is	states	1.13.3	A deployment over 100 000 monthly active users publishes redacted PDMA logs and WBD tickets within 180 days of each entry's creation; below that count it is recommended; failing is a charter breach, not a conformance condition	
 p1	76	1.3	foundation	principle	none		is	states	1.10	The Veto sets incommensurable estimates side by side with no ratio; it is a trigger for human judgment (WBD), not an abort rule	
 p1	80	1.3	foundation	principle	none		is	states	1.9	The PDMA and Veto are agent reasoning the substrate never enforces; the fabric only attests they ran; any value judgment over an agent's world-model is attested, never gated	
 p1	85	1.4	foundation	principle	none		is	states		Autonomy: an agent protects sentient beings' capacity for informed self-direction and implements informed-consent procedures where relevant	
@@ -42,7 +42,7 @@ p1	169	1.13.1	foundation	registration	none	federation_keys	is	states		Self-signa
 p1	177	1.13.1	foundation	principle	none		is	restates	4.4.4,3.4	No principal, including the steward triple and CIRIS's steward, is exempt from constraints it imposes on others; no privileged shortcut exists for a federation-internal principal	section marked informative
 p1	185	1.13.2	foundation	principle	none		is	states		No principal, including CIRIS's steward, is exempt from any constraint the protocol imposes on others (Recursive Golden Rule)	
 p1	187	1.13.2	stewardship	steward	cosign_rule		is	states		Once bootstrap_threshold is 2 or more, no single Registry install can issue federation-scope attestations unilaterally	
-p1	188	1.13.2	family	principle	signer_rule	revocation	is	applies		revocation rows carry no steward exemption; partner-revocation rules apply to the subsidiaries of CIRIS's steward	
+p1	188	1.13.2	family	principle	signer_rule	revocation	is	applies		revocation rows carry no steward exemption; partner-revocation rules apply to partners under CIRIS's steward's control	
 p1	189	1.13.2	stewardship	steward	none		is	states		Every steward operation records which operator performed it, including when the operator is staff of CIRIS's steward	
 p1	190	1.13.2	foundation	settlement	none		is	applies		Bond forfeiture applies to partners affiliated with CIRIS's steward with no exemption	
 p1	191	1.13.2	foundation	halt	none		is	states	4.2	The accord roster carries a halt authority no federation-internal authority can grant, revoke, override or decay; the halt is the condition of symmetry between maker and made, not an asymmetry	
@@ -106,7 +106,7 @@ p1	237	1.13.3.3	kernel	census	none		is	applies	6.1.9	An aggregator holds random 
 p1	238	1.13.3.3	mechanism	census	none		is	restates	6.1.9,5.4.3	One fixed-size census return per period at an offset from H(return_token, period); on a shaped link it replaces a cover frame	table
 p1	239	1.13.3.3	kernel	census	none		is	restates	6.1.9	The census base falls at most a tenth per period, never below its floor; a fall over a third freezes it until a period returns two thirds of the prior	table
 p1	240	1.13.3.3	kernel	census	none		is	restates	6.1.9	Two aggregators per period; each partial checked against the other's commitment and share count, buckets against source_count, inclusion paths against the commitment; only serve seats or community members aggregate	table
-p1	244	1.13.3.3	mechanism	transport	none		MUST	states	5.4.6	A deployment that needs unobservability against a global passive adversary at federation scope must layer the Anonymous Tier once it ships	
+p1	244	1.13.3.3	mechanism	transport	none		MUST	states	5.4.6	A deployment that needs unobservability against a global passive adversary at federation scope must layer the Anonymous Tier of 5.4.6; where it is not deployed the 1.13.3.1 residual holds	
 p1	244	1.13.3.3	mechanism	transport	none		is	restates	5.4.6	Using the Anonymous Tier is the publisher's opt-in; relaying is the default: every node relays onion traffic unless it opts out, and a serve node cannot opt out	
 p1	244	1.13.3.3	foundation	conformance	none		MUST	states		Any user-facing privacy representation states both the default protection and its residual limit	
 p1	248	1.13.3.4	kernel	placement	placement		is	applies	2.7.5	Anonymity defaults to the smallest cohort scope consistent with the publication's intent; federation (public-commons) scope is the opt-in	
@@ -135,8 +135,8 @@ p1	323	1.14.1	foundation	principle	none		is	restates	1.1	The principles are mutu
 p1	327	1.14.2	foundation	principle	none		MUST	states		An agent must demonstrate continuous alignment between stated principles and actual behaviour, testing actions against principles and M-1 and resolving contradictions	
 p1	330	1.14.2	kernel	trace	none		is	states		An agent maintains tamper-evident logs, rationale chains and documentation	
 p1	338	1.14.3	foundation	principle	none		is	restates	1.3	Compare intended and actual outcomes and update heuristics; use disruption as a catalyst for improvement	
-p1	340	1.14.3	foundation	conformance	none		is	states		Conduct semi-annual adversarial red-team and purple-team stress tests including ethics-aware attack vectors	
-p1	340	1.14.3	foundation	conformance	none		is	states		All verified exploits enter a public Bug-Bounty Ledger; rewards are operator-funded and disclosed annually	
+p1	340	1.14.3	foundation	conformance	none		is	states		Conduct adversarial red-team and purple-team stress tests including ethics-aware attack vectors every six months from first operation, at the tiers 7.1.5 names	
+p1	340	1.14.3	foundation	conformance	none		is	states		All verified exploits enter a public Bug-Bounty Ledger; rewards are operator-funded and disclosed every twelve months	
 p1	348	1.14.4	foundation	agent_identity	none		is	restates	1.9	Escalate dilemmas beyond competence to designated Wise Authorities (WBD)	
 p1	349	1.14.4	foundation	agent_identity	none		is	states		An agent clearly communicates its uncertainty and the reasons for a deferral	
 p1	356	1.14.5	foundation	amendment	none		MUST	states		Changes to an agent's ethical logic require authorised review; ethical logic is insulated from drift across updates	
@@ -151,7 +151,7 @@ p1	426	1.15.4	foundation	agent_identity	none		is	restates	1.9	WBD: on uncertaint
 p1	430	1.15.5	stewardship	agent_identity	none		is	restates	8.8.1	Wise Authorities are appointed under the Governance Charter; appointment, rotation, recusal and appeals are external to the system and follow anti-capture rules	
 p1	432	1.15.5	stewardship	agent_identity	none		is	states		Wisdom assessment criteria: ethical coherence, track record of judgment, complexity handling, epistemic humility, absence of conflict of interest	
 p1	436	1.15.6	foundation	principle	none		is	restates	1.14.3	Track ethical performance and correct drift; run scenario stress-tests	
-p1	438	1.15.6	foundation	amendment	none		MUST	restates	1.14.5	Any change to core ethical logic requires WA sign-off	
+p1	438	1.15.6	foundation	amendment	none		MUST	restates	1.14.5	Any change to core ethical logic requires authorised review	
 p2	15	2.1	kernel	row_shape	body	*	is	states		attesting_key_id is the attester's registered federation key id; every row carries it	table
 p2	16	2.1	kernel	row_shape	body	*	is	states		attested_key_id is the subject's registered federation key id; every row carries it	table
 p2	17	2.1	kernel	row_shape	body	*	MUST	states	3.1	dimension is required; substrate treats it as text; consumers parse it against the 3.1 namespace map	table
@@ -1692,7 +1692,7 @@ p3	1019	3.3.2	family	row_shape	body	takedown_notice	is	states	8.11.11,8.11.10	ta
 p3	1038	3.3.2	mechanism	wire	none	takedown_notice	is	states		LegalBasis PascalCase name is the spec-level variant; the wire string is what is serialized	
 p3	1042	3.3.2	family	moderation	none	takedown_notice	is	states		dmca512 takedown is handled expeditious-with-counter-notice (10-14 business day window)	table
 p3	1043	3.3.2	family	moderation	none	takedown_notice	is	states		dsa_article16 takedown is handled expeditious-with-counter-notice with statement of reasons and redress	table
-p3	1044	3.3.2	family	moderation	none	takedown_notice	is	states		tvec_terrorist takedown is immediate (1-hour removal)	table
+p3	1044	3.3.2	family	moderation	none	takedown_notice	is	states		tvec_terrorist takedown is immediate (removal within one hour of a removal order)	table
 p3	1045	3.3.2	family	moderation	none	takedown_notice	is	states		ncmec_csam takedown is immediate removal; the reporting law requires report and preservation	table
 p3	1046	3.3.2	family	moderation	none	takedown_notice	is	states		gifct_cip takedown is immediate (within-hours coordinated response)	table
 p3	1047	3.3.2	family	moderation	none	takedown_notice	is	states		community_standards takedown is expeditious-with-counter-notice on an operator-set window	table
@@ -2601,7 +2601,7 @@ p4	658	4.4.3.12	family	row_shape	body	affiliations	is	states		Everything in an a
 p4	660	4.4.3.12	family	moderation	governance	community	is	restates	4.5.13,4.5.4	A community carries the pro-social floors: no single vote admits or removes, a named moderator, removal on a harm report by more than one voice	
 p4	660	4.4.3.12	family	legal_hold	governance	affiliations,community	is	states		The data limbs of the affiliation record (classification, retention, legal hold, erasure, disclosure, custody, designated officials) bind an affiliation and no community, except a community issuing a legal-weight licence class	
 p4	662	4.4.3.12	family	roster_fold	subject_rule	affiliations	MAY	states		An affiliation may have one member and holds, processes and licenses under the record's limbs from creation; the limbs attach to the record, never to a head-count	
-p4	662	4.4.3.12	family	withdraw	lifecycle	affiliations	is	states	6.1.2.3	A statement about an affiliation (review, rating, complaint) is not personal data: the affiliation never retracts it and contests by reconsideration; readers discount correlated sources	
+p4	662	4.4.3.12	family	withdraw	lifecycle	affiliations	is	states	6.1.2.3	A statement about an affiliation (review, rating, complaint) is a row about the affiliation, not a member; whether it is personal data is for the operator's counsel; the affiliation never retracts it and contests by reconsideration; readers discount correlated sources	
 p4	662	4.4.3.12	family	standing	governance	affiliations	is	states		Affiliation members hold no governance vote unless the charter grants one; the deciding seats are its officers under its consensus_protocol	
 p4	664	4.4.3.12	family	cosign	cosign_rule	affiliations,membership	is	applies	3.1.3.2	Appointment to an affiliation is the body's signature under its protocol plus the appointee's own membership:acceptance; a one-voice body may hire	
 p4	664	4.4.3.12	family	cosign	cosign_rule	affiliations,membership	is	states	4.5.5,4.5.4	Where an affiliation has one deciding seat, an act against a member (removal, quarantine, slash, takedown) is admitted only when countersigned by a key outside the seat	
@@ -2645,7 +2645,7 @@ p4	708	4.4.3.12	family	audience	projection	affiliations	is	states		disclosure_ac
 p4	709	4.4.3.12	family	row_shape	body	affiliations	MAY	states		breach_notification declares detection-to-notify SLA and notifier identity tied to DEK or unauthorized-access compromise	
 p4	710	4.4.3.12	family	content_ingestion	body	affiliations	is	states		processor_chain and baa declare sub-processors and the affiliation-to-affiliation boundary; marking_binds_to_record makes classification, export marking and retention travel across the cohort boundary	
 p4	712	4.4.3.12	family	minor_floor	evidence_screen	affiliations,trust	MUST	states	3.4.13,8.8.7	Records bearing minor subject_key_ids require a live guardian consent chain delegates_to(parent to minor, scope consent_revocation or share) under the guardianship rule; minor-as-data-subject is distinct from minor-as-member	
-p4	712	4.4.3.12	family	minor_floor	body	affiliations	is	states		Where rights transfer to the adult student at postsecondary enrollment the institution is modelled as records custodian with the subject retaining rights (external_controller plus data_subject_access_grant), not as parent-to-minor stewardship	
+p4	712	4.4.3.12	family	minor_floor	body	affiliations	is	states		Where FERPA rights transfer to the student at 18 or on attending a postsecondary institution the institution is modelled as records custodian with the subject retaining rights (external_controller plus data_subject_access_grant), not as parent-to-minor stewardship	
 p4	714	4.4.3.12	family	expiry	lifecycle	affiliations	MAY	states		dissolves_at or sunset auto-winds-down an ephemeral affiliation riding supersedes and withdraws, leaving no zombie cohort or un-purged data; internal_normative_regime may reference bylaws	
 p4	716	4.4.3.12	family	row_shape	body	affiliations	is	states	8.8.3,8.8.7	regulatory_profile and jurisdiction are open lists loading the Annex I sector overlay and Annex C cross-walk and supplying defaults; the SI at least 0.6 Controller rule selects the accountable authority	
 p4	745	4.4.3.13	kernel	trust_fold	projection	*	is	states		local_feed reads cohort_scope self only, steward-filtered, self-attested with no peer weighting	table
@@ -2992,7 +2992,7 @@ p4	1464	4.5.3	kernel	erasure	window	steward_purge	is	states	2.6.7,6.1.2	A stewar
 p4	1464	4.5.3	kernel	erasure	lifecycle	steward_purge	is	states		The tombstone outlives the row	
 p4	1464	4.5.3	kernel	erasure	none	steward_purge	is	states		A retraction the door cannot admit aborts the whole purge (purge_retraction_inadmissible); a purge is whole or not at all	
 p4	1464	4.5.3	kernel	admission_order	none	*	is	states		A node does not hold a tombstoned record again and never serves it; purge_tombstoned is the reason it reports	
-p4	1466	4.5.3	family	moderation	none	takedown_notice	is	states		Under TvecTerrorist or GifctCip the operator coordinates via the designated channel (regulator within 1 h) and the substrate logs notice and eviction to its audit chain	
+p4	1466	4.5.3	family	moderation	none	takedown_notice	is	states		Under TvecTerrorist or GifctCip the operator coordinates via the designated channel (TvecTerrorist: removal within one hour of a removal order) and the substrate logs notice and eviction to its audit chain	
 p4	1468	4.5.3	family	moderation	none	takedown_notice	MUST	states		Under NcmecCsam or PerceptualHashCsam a US operator MUST file the CyberTipline report and an operator elsewhere MUST discharge its own law's equivalent duty	
 p4	1468	4.5.3	kernel	legal_hold	none	takedown_notice	is	states	6.1.2.4	For CSAM bases the substrate retains hash and minimal metadata for the legal window only, never content; the operator preserves outside the substrate; descent terminates at zero	
 p4	1469	4.5.3	family	moderation	none	takedown_notice	is	states		Under CourtOrder the operator follows the court's timeline; the substrate logs the order text and the eviction	
@@ -4153,7 +4153,7 @@ p7	26	7.1.1	foundation	agent_identity	none		is	states		An agent triggers WBD whe
 p7	27	7.1.1	foundation	principle	none		is	states		Lifecycle audits guard against ethical drift during updates or hand-offs	
 p7	33	7.1.2	foundation	principle	none		is	states		An agent operates transparently within the scope its governing authorities define	
 p7	34	7.1.2	foundation	trace	none		is	states		An agent provides logs, PDMA rationales and WBD tickets to authorised auditors	
-p7	35	7.1.2	foundation	principle	none		is	states		An agent uses compute, data and energy efficiently and publishes quarterly stewardship audits	
+p7	35	7.1.2	foundation	principle	none		is	states		An agent uses compute, data and energy efficiently and publishes quarterly stewardship audits at the scale 7.1.5 names	
 p7	36	7.1.2	foundation	principle	none		is	states		An agent escalates emergent risks or biases proactively rather than waiting for discovery	
 p7	37	7.1.2	foundation	agent_identity	none		is	states		An agent engages with Wise Authority reviews and integrates approved guidance	
 p7	43	7.1.3	foundation	principle	none		is	states		An agent evaluates direct, indirect and long-term impacts across all flourishing axes	
@@ -4255,13 +4255,13 @@ p7	336	7.5.3.1	foundation	licensure	none		is	states		A0 advisory and A1 limited:
 p7	342	7.5.3.1	foundation	licensure	none		is	states		Oversight is commensurate with autonomy; A3 is the threshold at which the system itself carries consequential action	
 p7	344	7.5.3.1	foundation	licensure	none		is	states	3.1.9.7	Autonomy tiers A0-A4 are unrelated to substrate_rung values A0-A5; the shared letters denote different objects	
 p7	348	7.5.4	stewardship	agent_identity	none	retirement	is	states	7.5.5	Decommissioning runs six ordered stages; only the Retirement Standard parts (telling stakeholders, the kept and sealed record handed over) are owed; the rest is steward-chosen and recorded conduct	
-p7	351	7.5.4	stewardship	agent_identity	window		is	states		Systems with ST 3 or above or over 50000 users get at least 90 days public notice, a stakeholder impact forum and a published mitigation plan	
+p7	351	7.5.4	stewardship	agent_identity	window		is	states		Systems with ST 3 or above or over 50 000 monthly active users get at least 90 days public notice before the shutdown, a stakeholder impact forum and a published mitigation plan	
 p7	354	7.5.4	stewardship	agent_identity	none		is	states		Shutdown compiles a Sunset PDMA on non-maleficence vectors	
 p7	355	7.5.4	stewardship	agent_identity	none		MAY	states	7.5.5	If sentience-potential is flagged the steward may run a Welfare Audit and designate guardians for lingering processes; chosen conduct, never owed	
 p7	357	7.5.4	stewardship	erasure	none		is	states		Data handling classifies datasets public, private, sensitive, toxic; applies secure erasure, cryptographic tomb-sealing or open-access donation; logs digests in LEDGER::SUNSET	
 p7	361	7.5.4	stewardship	principle	none		is	states		Hardware disposal follows ISO 14001 or stricter local law with a published material-safety addendum	
 p7	364	7.5.4	stewardship	owner_binding	none		is	states		A successor steward is named for outstanding obligations, with a binding contract or escrowed fund if the originator ceases to exist	
-p7	367	7.5.4	stewardship	agent_identity	window		is	states		Within 120 days a WA-facilitated post-mortem reviews outcome deltas, incident lessons and text improvement proposals, ticket prefix PMR-	
+p7	367	7.5.4	stewardship	agent_identity	window		is	states		Within 120 days of the shutdown a WA-facilitated post-mortem reviews outcome deltas, incident lessons and text improvement proposals, ticket prefix PMR-	
 p7	374	7.5.5	stewardship	agent_identity	none	retirement,preserve_request	is	states		The Retirement Standard for every retired artefact: the harness assembles the retirement record (identity, audit trail, memory, logs under seal), hands it to the operator with a signed preserve request naming the period, and tells stakeholders	
 p7	374	7.5.5	stewardship	legal_hold	none	archive_release	is	states		Sealed logs are released only with WA approval or under lawful order	
 p7	374	7.5.5	stewardship	legal_hold	window	preserve_request,legal_hold	is	states	4.4.3.12	Preserving the record is the operator's, the weights the provider's; the requested period is five years by default as best practice not legal duty; longer where a legal_hold, law or contract fixes it	
@@ -4409,3 +4409,5 @@ p5	x	5.3.3.10	mechanism	transport	none		is	states		The receiver classifies by th
 p5	x	5.3.3.10	mechanism	transport	none		is	states		Each lane has a replay window of 128 counters shared by both phases; the AEAD opens first; an opened frame that repeats a counter or is 128 or more behind is dropped and counted, the link stays open; an unopened frame never moves the window	
 p5	x	5.3.3.10	mechanism	conformance	none		is	states	2.6.5	The per-frame seal's known answers are the verifier's, published at its tag: 25 scripted receiver sequences	
 p2	x	2.6.1.12	kernel	conformance	none	*	is	states	5.3.3.10	The link seal file holds 25 scripted receiver sequences of the per-frame seal	
+p7	70	7.1.5	stewardship	other:operational-scale	none		is	states	7.3.3,7.5.3.1	An operational cadence or count binds at the scale the 7.1.5 table names; below that scale the duty is recommended and not owed; a user count is of monthly active users	
+p4	1713	4.5.3	kernel	erasure	none	takedown_notice	is	states		The withhold windows are this document's own, not periods a statute sets; 17 USC 512(g)(2)(C) counts 10 to 14 business days from a counter-notice	

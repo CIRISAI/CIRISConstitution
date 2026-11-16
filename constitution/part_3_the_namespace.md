@@ -1374,7 +1374,7 @@ takedown_notice {
 |---|---|---|---|
 | `Dmca512` | `dmca512` | US 17 USC §512 | Expeditious-with-counter-notice (10-day withhold window, [CC 4.5.3](part_4_composition_governance.md#4.5.3)) |
 | `DsaArticle16` | `dsa_article16` | EU Digital Services Act Article 16 | Expeditious-with-counter-notice (Article 17 statement of reasons; Articles 20–21 redress) |
-| `TvecTerrorist` | `tvec_terrorist` | EU Terrorist Content Regulation 2021/784 | **Immediate** (1-hour removal obligation) |
+| `TvecTerrorist` | `tvec_terrorist` | EU Terrorist Content Regulation 2021/784 | **Immediate** (removal within one hour of a removal order, Art. 3(3)) |
 | `NcmecCsam` | `ncmec_csam` | US 18 USC §2258A (NCMEC) | Immediate removal as this Part's discipline; the reporting law itself requires report and preservation |
 | `GifctCip` | `gifct_cip` | GIFCT Content Incident Protocol | **Immediate** (within-hours coordinated response) |
 | `CommunityStandards` | `community_standards` | Operator-defined community standards | Expeditious-with-counter-notice (30-day withhold window, [CC 4.5.3](part_4_composition_governance.md#4.5.3)) |
@@ -2844,7 +2844,7 @@ Q1 sets the bands inside the `minor` band, and what a minor in each band may do 
 
 **Co-sign is paired with safeguarding.** Guardian co-sign MUST be paired with the WBD safeguarding path (Q4/Q7) for safeguarding-sensitive actions. The reason is that the guardian may be the threat actor.
 
-**Verified-rung preference.** Where a verified rung is required, the substrate MUST prefer a **zero-leak proof**, ranked **above** full-ID-scan providers. One case that requires a verified rung is `content_class:adult` in a jurisdiction mandating age verification. An mDL `age_over_18` selective disclosure (ISO 18013-5), which proves adulthood without revealing identity, is a zero-leak proof. Such a proof satisfies the legal mandate and the anonymity posture together (ISO/IEC 27566 privacy-preserving age assurance, [CC 1.13.3.4](part_1_foundation.md#1.13.3.4)). Acceptable verified emitters: an mDL or wallet credential (`government` rung); a platform's declared age range or age signal, verified at the `provider` rung; vetted vendors.
+**Verified-rung preference.** Where a verified rung is required, the substrate MUST prefer a **zero-leak proof**, ranked **above** full-ID-scan providers. One case that requires a verified rung is `content_class:adult` in a jurisdiction mandating age verification. An mDL `age_over_18` selective disclosure (ISO 18013-5), which proves adulthood without revealing identity, is a zero-leak proof. Such a proof is designed to serve an age-verification mandate and the anonymity posture together (ISO/IEC 27566 privacy-preserving age assurance, [CC 1.13.3.4](part_1_foundation.md#1.13.3.4)). Acceptable verified emitters: an mDL or wallet credential (`government` rung); a platform's declared age range or age signal, verified at the `provider` rung; vetted vendors.
 
 #### Q2 — Jurisdiction
 
@@ -2937,7 +2937,7 @@ M-of-N co-guardianship is supported as a verified DAG over `delegates_to` (guard
 
 ### 3.4.14 `synthesis-disclosure` — Machine-generation disclosure — the attestation IS the marking (normative)
 
-CEG's foundational act is attesting to a source: who signed these bytes, under what role, revocable by whom. Machine origin is therefore not a new thing to record. Where the producer is an agent, machine origin is *already* carried by the attesting key's role-set. Where the producer is a person, the existing `content_class` vocabulary already names it. This section makes carrying machine origin **mandatory rather than incidental**. Doing so closes the [CC 8.4.2](part_8_appendices.md#8.4.2) profile's open emit limb and discharges the EU AI Act Art. 50(2) machine-readable-marking obligation with **zero new wire surface** — no new primitive, no new envelope field, no new prefix family. 1+4 untouched.
+CEG's foundational act is attesting to a source: who signed these bytes, under what role, revocable by whom. Machine origin is therefore not a new thing to record. Where the producer is an agent, machine origin is *already* carried by the attesting key's role-set. Where the producer is a person, the existing `content_class` vocabulary already names it. This section makes carrying machine origin **mandatory rather than incidental**. Doing so closes the [CC 8.4.2](part_8_appendices.md#8.4.2) profile's open emit limb with **zero new wire surface** — no new primitive, no new envelope field, no new prefix family. It is designed to support a provider's machine-readable-marking obligation under EU AI Act Art. 50(2); whether it discharges that obligation is a legal question this document does not decide. 1+4 untouched.
 
 **Definitions.** *Generated* — content wholly or substantially produced by an AI system. *Materially altered* — human-origin content whose meaning-bearing substance an AI system has altered (the Art. 50(4) deep-fake limb). *Assistive* — spell-check, grammar, formatting, transport re-encoding, lossless transcode, and other operations that do not substantially alter their input; explicitly NOT generation (R4).
 

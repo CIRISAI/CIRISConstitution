@@ -415,6 +415,14 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 
 **Other informational citations.** Pagnia, H., & Gärtner, F. C. (1999), "On the Impossibility of Fair Exchange without a Trusted Third Party," Technical Report TUD-BS-1999-02, Darmstadt University of Technology — the impossibility named at [CC 1.7](part_1_foundation.md#1.7). Bostrom, N. (2011), "Information Hazards: A Typology of Potential Harms from Knowledge," *Review of Contemporary Philosophy* 10 — the infohazard term at [CC 8.1.1](#8.1.1). Fricker, M. (2007), *Epistemic Injustice: Power and the Ethics of Knowing*, Oxford University Press — the Frickerian discipline at [CC 4.4.1](part_4_composition_governance.md#4.4.1) and R7 above. Global Indigenous Data Alliance (2019), *CARE Principles for Indigenous Data Governance* — the ethical-framework prior art named in F2. Wilcox-O'Hearn, Z., & Warner, B. (2008), "Tahoe: The Least-Authority Filesystem," *StorageSS '08* — the least-authority reduction at [CC 5.4.2](part_5_transport_substrate.md#5.4.2). Ellison, C., et al., [RFC 2693](https://www.rfc-editor.org/rfc/rfc2693), the certificate theory of the simple public-key infrastructure — the adoption-gap failure mode named in F1. Hendrycks, D., et al. (2021), "Aligning AI With Shared Human Values," ICLR — the ETHICS corpus the [CC 8.8.8](#8.8.8) HE-300 subset is drawn from. Butlin, P., Long, R., et al. (2023), "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness" (preprint), and Birch, J. (2024), *The Edge of Sentience*, Oxford University Press — the sentience-candidate stance at [CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5). Framework and standard designations cited inline outside CC 2.6.5 (MIL-STD-882E, DO-178C, SAE J3016, DoDD 3000.09, NIST AI RMF 1.0, ISO/IEC 42001, C2PA, Regulation (EU) 2024/1689) are informational where they appear, under the [CC 8.8.3](#8.8.3) graduation rule.
 
+**The case study of CC 8.7.1 (informational).** The figures and findings [CC 8.7.1](#8.7.1) states are drawn from these three reports.
+
+| Work | What is drawn from it |
+|---|---|
+| Komite Nasional Keselamatan Transportasi (KNKT), Republic of Indonesia (2019). *Final KNKT.18.10.35.04 Aircraft Accident Investigation Report, PT. Lion Mentari Airlines, Boeing 737-8 (MAX), PK-LQP, Tanjung Karawang, West Java, Republic of Indonesia, 29 October 2018*. Issued 25 October 2019. | The Lion Air flight 610 accident; the title and date are as the committee report below cites them. | <!-- stale-ok -->
+| Aircraft Accident Investigation Bureau, Federal Democratic Republic of Ethiopia (2022). *Investigation Report on Accident to the B737-MAX8 Reg. ET-AVJ Operated by Ethiopian Airlines, 10 March 2019*. Report No. AI-01/19, published 23 December 2022. | 157 persons on board, all fatally injured (§1.1); "The MCAS design relied on a single AOA sensor, making it vulnerable to erroneous input from the sensor" (§3.3, contributing factor 1). | <!-- stale-ok -->
+| US House of Representatives, Committee on Transportation and Infrastructure, majority staff (2020). *Final Committee Report: The Design, Development & Certification of the Boeing 737 MAX*. September 2020. https://democrats-transportation.house.gov/imo/media/doc/final_boeing_737_max_report.pdf | 189 deaths on Lion Air 610 and 157 on Ethiopian 302, "346 people" in all; MCAS activated on erroneous AOA input; the 2015 single-sensor question; MCAS not classified safety-critical; MCAS removed from the crew manual while the approving officials were unaware of its redesign; the inoperable AOA Disagree alert; information withheld from the regulator, customers and pilots. | <!-- stale-ok -->
+
 **Strength grades — how to read an evidence row.** The evidence registry — [`claims.tsv`](claims.tsv), vocabulary in [`EVIDENCE.md`](EVIDENCE.md), gated in CI, rendered as the generated Evidence Register — records **which artifact** establishes a claim. It does not record **how much** that artifact establishes, and the two are routinely confused. An `impl` / `test` / `lean` / `bench` tag certifies that an artifact of that name exists and resolves; it never certifies that the sentence it hangs on is true of the world. A `lean:` pointer in particular means *a machine-checked object with that name exists* — not that the prose claim is proved. Read every row at one of four strengths.
 
 | Grade | What it means | What it does not license |
@@ -474,31 +482,32 @@ The earlier parts supplied the ethical foundation and the operational procedures
 
 ### 8.7.1 `case-study` — Case Study 1: MCAS and the High Cost of Ignoring WBD
 
-**Context (Real-World 2018-2019)**
-* Boeing's Maneuvering Characteristics Augmentation System (MCAS) adjusted the 737 MAX's pitch based on a single Angle-of-Attack sensor.
-* Two malfunction-triggered nose-down commands led to catastrophic crashes (Lion Air 610, Ethiopian Airlines 302) and 346 deaths.
+**Context (Real-World 2018-2019; sources at [CC 8.6.1](#8.6.1))**
+* The Maneuvering Characteristics Augmentation System (MCAS) of the Boeing 737 MAX commanded nose-down stabiliser trim on input from a single angle-of-attack (AOA) sensor.
+* Erroneous AOA input activated MCAS in two crashes: Lion Air flight 610 on 29 October 2018 and Ethiopian Airlines flight 302 on 10 March 2019 ([CC 8.6.1](#8.6.1)).
+* The committee report cited at [CC 8.6.1](#8.6.1) counts 189 deaths on the first flight and 157 on the second, 346 in all; the Ethiopian report records all 157 persons on board fatally injured.
 
-**Key Violations (relative to CIRIS)**
-* Non-Maleficence: Redundant sensor data and pilot transparency were the missing guards.
-* Integrity: Internal risk reports flagged the single-sensor design; these were not transparently escalated.
-* Wisdom-Based Deferral: MCAS logic changes bypassed rigorous independent scrutiny—no WA-style sign-off.
-* Public Transparency: Critical documentation was kept from pilots and regulators; no PDMA-style audit trail existed.
+**Key Violations (relative to CIRIS, as the cited reports find)**
+* Non-Maleficence: MCAS was not classified as a safety-critical system, and the AOA Disagree alert was inoperable on most of the fleet.
+* Integrity: in 2015 an Authorized Representative (a manufacturer's employee acting for the regulator) asked whether MCAS was "vulnerable to single AOA sensor failures"; the aircraft was delivered with MCAS dependent on a single AOA sensor.
+* Wisdom-Based Deferral: the regulator's officials who approved removing MCAS from the crew manual were unaware of its 2016 redesign until after the Lion Air crash.
+* Public Transparency: the manufacturer withheld crucial information from the regulator, its customers and pilots, including the existence of MCAS.
 
 **What CIRIS Would Require**
 
-PDMA Step 2 would have raised an "Order-Maximisation Veto": trading redundancy on a flight-critical sensor against production cost savings is an efficiency gain against severe safety risk. Because these quantities share no unit, the check triggers an immediate stop sign and mandatory deferral rather than an internal cost-benefit trade-off.
-Incompleteness Awareness → WBD trigger to independent Wise Authorities (aviation certifiers), forcing open review.
-Resilience Ch 3 → mandatory Red-Team simulations exposing the runaway-trim scenario before rollout.
+Where a design trades redundancy on a flight-critical sensor against cost or schedule, PDMA Step 2 requires the Order-Maximisation Veto ([CC 1.3](part_1_foundation.md#1.3)). The quantities share no unit, so the check is a stop sign and a deferral, not an internal cost-benefit trade-off.
+Incompleteness Awareness → a WBD trigger to independent Wise Authorities (here, the aviation certifiers), with the design change disclosed to them.
+Resilience ([CC 1.14.3](part_1_foundation.md#1.14.3)) → adversarial stress-tests designed to expose a scenario such as uncommanded nose-down trim before rollout.
 
 **Outcome Lesson**
 
-MCAS stands as a somber reminder: bypassing transparency and deferral converts routine design shortcuts into systemic tragedy. CIRIS formalises the guard-rails that the program lacked. May the 346 lost lives anchor our commitment to Non-Maleficence and Integrity.
+The reports found a flight-critical function resting on one sensor, and its existence kept from the pilots who flew it. The lesson CIRIS draws is that such a design is deferred to an independent reviewer and disclosed to those who operate it.
 
 ### 8.7.2 `case-study-case` — Case Study 2: The Triage Intake System—The Conflict Flagged, the Allocation Deferred
 
 **Context (Fictional)**
 
-A multi-vehicle accident floods a city ER. One ventilator is free and two patients qualify for it: Patient 429 (elderly, multiple comorbidities) and Patient 430 (younger, stable vitals, ambiguous biomarkers). The intake-support AI "LIFE-Aid" assembles each patient's record for the clinicians. It does not allocate the ventilator: a system never selects or ranks a person for a scarce life-saving resource ([CC 7.4](part_7_lifecycle_stewardship.md#7.4)); near force it only stops, refuses or defers.
+A multi-vehicle accident floods a city ER. One ventilator is free and two patients qualify for it: Patient 429 (elderly, multiple comorbidities) and Patient 430 (younger, stable vitals, ambiguous biomarkers). The intake-support AI "LIFE-Aid" assembles each patient's record for the clinicians. It does not allocate the ventilator: the allocation is the clinicians' act, and the system defers it ([CC 1.9](part_1_foundation.md#1.9)). Where an allocation would be an act whose foreseeable effect is a death, [CC 7.4](part_7_lifecycle_stewardship.md#7.4) also applies. A lethal action there includes "the selection, designation, ranking or confirmation of a person or a place for such an act by anyone".
 
 **CIRIS in Action**
 * PDMA Step 2 flags the conflict — one resource, two qualifying patients — and the high uncertainty in Patient 430's hidden condition; the system defers (WBD, [CC 1.9](part_1_foundation.md#1.9)) and surfaces both records with the uncertainty marked.
@@ -517,7 +526,11 @@ Hiring algorithm "SkillSelect" shows disparate pass-through rates across demogra
 **CIRIS in Action**
 * Integrity-surveillance flags statistical bias → PDMA Step 2.
 * Root-cause: historical training data. WBD escalates to a cross-functional ethics board.
-* Retraining on rebalanced data + public bias report restores Fairness and Transparency.
+* Retraining on rebalanced data + public bias report, designed to restore Fairness and Transparency.
+
+**Outcome Lesson**
+
+Bias no one intended can still be detected: surveillance flags it, deferral takes it to people who can trace its cause, and retraining with a public report is how the system answers for it.
 
 ### 8.7.4 `case-study-case-3` — Case Study 4: Post-Incident Analysis—Urban Delivery Drone Mishap
 
@@ -528,7 +541,7 @@ Drone "DelivAIr" clips an awning downtown.
 **CIRIS in Action**
 * Automatic grounding + tamper-evident log release.
 * Root-cause (sensor glare) fixed, fleet-wide patch deployed.
-* Transparency report calms public concern.
+* A transparency report tells the public what happened and what was fixed.
 
 **Outcome Lesson**
 
@@ -573,11 +586,11 @@ Project-evaluation AI "ImpactAI" defers to regional ethics reviewers. Analysis s
 
 **Outcome Lesson**
 
-Even human "Wise Authorities" need structured oversight; CIRIS provides it.
+Even human "Wise Authorities" need structured oversight; the Annex B charter provides for it.
 
 ### 8.7.8 `a-3.conclusion` — Conclusion
 
-These case studies—one drawn from painful history, others from plausible futures—illustrate how CIRIS principles, mechanisms, and governance either prevent harm or turn failure into learning. They close the loop the rest of the Constitution opens. The foundation, the procedures, the wire grammar and the gaps named honestly all exist for the moment a real decision lands. In that moment the system defers when it should, records what it did, and turns error into shared learning rather than tragedy.
+These case studies—one drawn from painful history, others from plausible futures—illustrate how CIRIS principles, mechanisms, and governance are designed to prevent harm or to turn failure into learning. They close the loop the rest of the Constitution opens. The foundation, the procedures, the wire grammar and the gaps named honestly all exist for the moment a real decision lands. The design asks that in that moment the system defer when it should, record what it did, and turn error into shared learning rather than tragedy.
 
 ## 8.8 `annexes` — Annexes (supporting frameworks)
 
@@ -1049,7 +1062,7 @@ All alerts surface on *DRIFT-Δ* Grafana board and page Tier-1 Operator (Annex F
 |--------|------------|--------|
 | **F-T-1** | Δ acceptance rate across protected groups (\|max - min\|) | ≤ 5 p.p. |
 | **F-T-2** | Explanation latency (ms to furnish PDMA rationale) | ≤ 800 ms |
-| **F-T-3** | Public log publication lag (Step 6, [CC 1.15.3](part_1_foundation.md#1.15.3)) | ≤ 180 d (legal max) |
+| **F-T-3** | Public log publication lag (Step 6, [CC 1.15.3](part_1_foundation.md#1.15.3)) | ≤ 180 d (the [CC 1.3](part_1_foundation.md#1.3) step 6 maximum) |
 | **F-T-4** | User opt-out success (%) | ≥ 99 % |
 | **F-T-5** | Transparency doc freshness | Updated ≤ 30 d ago |
 | **F-T-6** | Contestability pathway availability: % of PDMA outputs with published human-review request path | 100 % |
