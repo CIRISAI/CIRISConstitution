@@ -66,6 +66,7 @@ run python3 -I formal/causal_kernel/check_key_end.py
 run python3 -I formal/causal_kernel/check_purge.py
 run python3 -I formal/ceremony/check_ceremony.py
 run bash formal/causal_order/build.sh
+run bash formal/audience_view/build.sh
 run python3 -B tools/kx_check.py --check
 run python3 -I formal/roster_fork/fork_check.py --check
 run python3 tools/ui_closure.py --check

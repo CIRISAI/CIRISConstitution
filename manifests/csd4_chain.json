@@ -6,7 +6,7 @@
    "invariants_sha256": "e0261d6e7c50af300bca07bc26591efa27bed4bc09fe680cc3e81dd37d41c518",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "5e606e8df36e91f7c96a05aa8415cd7dfff76e543dca216468bf51bebcc55324",
+   "claims_sha256": "35161002356b2a7fc02a3e27946ceefe3af4149ddc47706bcac4c3aea7b87426",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 221,
-   "claims": 603,
+   "claims": 606,
    "entries": 20,
    "refusal_tokens": 102
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "4efc01d66c1a36e3240f52a7081eef9c3cd0245d4071c3db4684da5dffc02f88"
+  "chain_sha256": "c0ba23bb21254c5cc02cab80b2c30c40987cc8f1e25b0855643ee111d5843246"
  },
  "chain": [
   {
@@ -1066,6 +1066,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -1909,6 +1922,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -3367,6 +3393,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -4173,6 +4212,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -8236,6 +8288,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -10174,6 +10239,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -12898,6 +12976,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -14377,6 +14468,19 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
       }
      ]
     },
@@ -17031,6 +17135,19 @@
      ]
     },
     {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-family-subject",
      "cc_ref": "3.3.4",
      "status": "established",
@@ -17642,6 +17759,19 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -18235,6 +18365,19 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
       }
      ]
     }
@@ -19311,6 +19454,19 @@
      ]
     },
     {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-registry-named",
      "cc_ref": "4.5.4",
      "status": "established",
@@ -19868,6 +20024,19 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
       }
      ]
     }
@@ -20856,6 +21025,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -21678,6 +21860,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -25005,6 +25200,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -25789,6 +25997,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -26571,6 +26792,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -27517,6 +27751,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -32127,6 +32374,19 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -32614,6 +32874,19 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
       }
      ]
     }
@@ -33105,6 +33378,19 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -33594,6 +33880,19 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -34081,6 +34380,19 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
       }
      ]
     }
@@ -37862,6 +38174,19 @@
        "symbols": [
         "check_cohort_standing_resolved"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-rows",
+     "cc_ref": "2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#party_rows_decided,party_decisions_decided,outside_row_hidden,admit_outside_is_held,admit_inside_is_closed,carriage_not_closed,carriage_closed_with_wait",
+       "object": ""
       }
      ]
     }
@@ -51038,6 +51363,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
