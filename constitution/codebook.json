@@ -1,6 +1,6 @@
 {
   "_note": "The dual-ID codebook of the CIRIS Constitution (CC): decimal_id <-> key <-> semantic_id, one to one, and legacy references -> decimal_id. Maintained data: a section added to constitution/toc.tsv is added here under the key cc:<decimal>, and tools/check_claims.py fails when the two disagree.",
-  "n_concepts": 464,
+  "n_concepts": 465,
   "decimal_to_key": {
     "2.6": "0",
     "2.6.9": "0.1",
@@ -465,7 +465,8 @@
     "8.11.25": "cc:8.11.25",
     "8.11.26": "cc:8.11.26",
     "8.11.27": "cc:8.11.27",
-    "8.11.28": "cc:8.11.28"
+    "8.11.28": "cc:8.11.28",
+    "8.11.29": "cc:8.11.29"
   },
   "key_to_decimal": {
     "0": "2.6",
@@ -931,7 +932,8 @@
     "cc:8.11.25": "8.11.25",
     "cc:8.11.26": "8.11.26",
     "cc:8.11.27": "8.11.27",
-    "cc:8.11.28": "8.11.28"
+    "cc:8.11.28": "8.11.28",
+    "cc:8.11.29": "8.11.29"
   },
   "semantic_to_key": {
     "foreword": "0",
@@ -1397,7 +1399,8 @@
     "earlier-identity-type": "cc:8.11.25",
     "earlier-sth-cosign": "cc:8.11.26",
     "earlier-canonical-envelope": "cc:8.11.27",
-    "earlier-transit-pair": "cc:8.11.28"
+    "earlier-transit-pair": "cc:8.11.28",
+    "earlier-accord-invocation": "cc:8.11.29"
   },
   "key_to_semantic": {
     "0": "foreword",
@@ -1863,7 +1866,8 @@
     "cc:8.11.25": "earlier-identity-type",
     "cc:8.11.26": "earlier-sth-cosign",
     "cc:8.11.27": "earlier-canonical-envelope",
-    "cc:8.11.28": "earlier-transit-pair"
+    "cc:8.11.28": "earlier-transit-pair",
+    "cc:8.11.29": "earlier-accord-invocation"
   },
   "legacy_to_decimal": {
     "§0": "2.6",

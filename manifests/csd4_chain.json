@@ -3,7 +3,7 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "7ae4a6e2be0562e20d292da802478b3a04dcc62b477ddc33477f7625ae50abe4",
-   "invariants_sha256": "4cd4275e73a66f2d1b93ecb654e3dbb8ee22b1ae929e1e837c62061c8f01ef84",
+   "invariants_sha256": "4f0c752a043fdcc1feaabb5c639a1321b54d4592629d4ade2ec6eb4222575d85",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
    "claims_sha256": "ecb995fc531fe036de61bc8039a0b5c68d4758008b5e130461b6d49806d05dbb",
@@ -29,17 +29,17 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 221,
+   "invariants": 230,
    "claims": 606,
    "entries": 20,
-   "refusal_tokens": 102
+   "refusal_tokens": 111
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "a2a4202f9ea13cb5acb8185e64958d31e03420892e32f0aa0f9fa4a5c093a3ef"
+  "chain_sha256": "24f0abfe4d6ede76fa30df78a62d0f804f3489428dd11fa434676cc235cfa1a8"
  },
  "chain": [
   {
@@ -290,6 +290,60 @@
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.ownseat",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecoveryOwnSeat",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; otherseat twin fails"
+    },
+    {
+     "inv_id": "AB.spent",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentNeverReturns",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentreturns twin fails"
+    },
+    {
+     "inv_id": "AB.reckey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecKeyNeverSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; reckeyseat twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -336,6 +390,18 @@
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-livequorum",
+     "cc_ref": "4.2.6",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISVerify#302"
       }
      ]
     },
@@ -1148,6 +1214,60 @@
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.ownseat",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecoveryOwnSeat",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; otherseat twin fails"
+    },
+    {
+     "inv_id": "AB.spent",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentNeverReturns",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentreturns twin fails"
+    },
+    {
+     "inv_id": "AB.reckey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecKeyNeverSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; reckeyseat twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -1194,6 +1314,18 @@
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-livequorum",
+     "cc_ref": "4.2.6",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISVerify#302"
       }
      ]
     },
@@ -4515,6 +4647,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "AW.holder",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HaltFromHolder",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; stranger twin fails"
+    },
+    {
      "inv_id": "AH.nowin",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -4629,6 +4770,24 @@
      "symbol": "Act_HaltLeavesTheMembersTheirVote",
      "kind": "safety-temporal",
      "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AW.names",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LifecycleNamesHalt",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; anytarget twin fails"
+    },
+    {
+     "inv_id": "AW.fuse",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LoneBounded",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
     }
    ],
@@ -5286,6 +5445,33 @@
      "kind": "safety-temporal",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AW.holder",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HaltFromHolder",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; stranger twin fails"
+    },
+    {
+     "inv_id": "AW.names",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LifecycleNamesHalt",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; anytarget twin fails"
+    },
+    {
+     "inv_id": "AW.fuse",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LoneBounded",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -5681,6 +5867,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "AW.holder",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HaltFromHolder",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; stranger twin fails"
+    },
+    {
      "inv_id": "AH.nowin",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -5804,6 +5999,24 @@
      "symbol": "Act_HaltLeavesTheMembersTheirVote",
      "kind": "safety-temporal",
      "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AW.names",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LifecycleNamesHalt",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; anytarget twin fails"
+    },
+    {
+     "inv_id": "AW.fuse",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LoneBounded",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
     }
    ],
@@ -27011,6 +27224,60 @@
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.ownseat",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecoveryOwnSeat",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; otherseat twin fails"
+    },
+    {
+     "inv_id": "AB.spent",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentNeverReturns",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentreturns twin fails"
+    },
+    {
+     "inv_id": "AB.reckey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecKeyNeverSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; reckeyseat twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -27033,6 +27300,18 @@
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-livequorum",
+     "cc_ref": "4.2.6",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISVerify#302"
       }
      ]
     },
@@ -28024,6 +28303,33 @@
      "kind": "theorem (any N)",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -28510,6 +28816,33 @@
      "kind": "theorem (any N)",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -28996,6 +29329,33 @@
      "kind": "theorem (any N)",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -29482,6 +29842,33 @@
      "kind": "theorem (any N)",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -53622,6 +54009,12 @@
   "goal_meta_alignment_malformed": {
    "3.1.9.7": "after_refusal"
   },
+  "iat_mismatch": {
+   "2.6.1.11": "after_refusal"
+  },
+  "iat_missing": {
+   "2.6.1.11": "after_refusal"
+  },
   "identity_amendment": {
    "8.10": "bold"
   },
@@ -53730,6 +54123,18 @@
   "received_at": {
    "5.3.3.11": "after_refusal"
   },
+  "recovery_changes_other": {
+   "2.6.1.11": "after_refusal"
+  },
+  "recovery_key_as_signing_key": {
+   "2.6.1.11": "after_refusal"
+  },
+  "recovery_key_not_committed": {
+   "2.6.1.11": "after_refusal"
+  },
+  "recovery_reuses_signing_key": {
+   "2.6.1.11": "after_refusal"
+  },
   "retention_policy": {
    "4.4.3.12": "bold"
   },
@@ -53762,14 +54167,23 @@
   "signed_at": {
    "5.3.1": "after_refusal"
   },
+  "statement_invalid": {
+   "2.6.1.11": "after_refusal"
+  },
+  "statement_kid_not_iss": {
+   "2.6.1.11": "after_refusal"
+  },
+  "statement_no_role": {
+   "2.6.1.11": "after_refusal"
+  },
+  "statement_not_genesis_bundle": {
+   "2.6.1.11": "after_refusal"
+  },
   "trace_field_shape_violation": {
    "3.1.5": "after_refusal"
   },
   "trace_run_kind_mock": {
    "3.1.5": "after_refusal"
-  },
-  "transit_xwing_pubkey": {
-   "3.3.6.2": "after_refusal"
   },
   "trust_accepts_classes_malformed": {
    "4.4.3.34": "after_refusal"

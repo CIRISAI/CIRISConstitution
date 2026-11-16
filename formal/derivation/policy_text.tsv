@@ -58,9 +58,9 @@ moderator_election	voices	ballot	CC 4.5.13	A ballot names that id, and every bal
 cosigned_act	count_set	protocol	CC 3.3.4	Counts signatures on the row (via the `consensus_protocol` rule)
 cosigned_act	voices	scrubs	CC 3.3.4	hold the event as a `cosign:pending` row and collect the members' `cosign:signature` rows
 cosigned_act	counted_at	named	CC 3.1.3	the signer is an active member at the roster head the event names
-accord_majority	count_set	holder	CC 4.2.1.3	It is a cosigned row by a strict majority of the standing roster
+accord_majority	count_set	holder	CC 4.2.1.3	It is a counted row of a strict majority of the standing roster
 accord_majority	voice	person	CC 4.2.3	Each holder is a person.
-accord_majority	voices	scrubs	CC 4.2.1.3	It is a cosigned row by a strict majority of the standing roster
+accord_majority	voices	scrubs	CC 4.2.1.3	It is a counted row of a strict majority of the standing roster
 poll	count_set	member	CC 4.5.13	Those who vote are members of the roster the opening row names
 poll	voice	person	CC 4.5.13	one ballot counts for each person
 poll	counted_at	named	CC 4.5.13	Those who vote are members of the roster the opening row names

@@ -1850,6 +1850,16 @@ An unauthenticated announce (no matching signed `transport_destination`) is **ad
 
 **A seat's transit key (normative).** A seated serve node's transit key is first the one its binding in the genesis bundle carries ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)), and it moves only by `transport:canonical_rebind`, counted by the accord's holders. A binding of this form carries `transit_xwing_pubkey` only. A node of this form takes a seat's `transit_xwing_pubkey` from the bundle or from such a re-bind, and a seat's own binding that carries another key is not honoured.
 
+**The binding's members (normative).** The binding is a row of the family `identity:occurrence`, authored and signed by the identity it binds. Its payload carries these members, each at its top level ([CC 2.6.1.4](part_2_the_grammar.md#2.6.1.4)):
+
+| Member | Type | Required when |
+|---|---|---|
+| `transport_destination` | a map: `reticulum_x25519_pubkey`, `reticulum_ed25519_pubkey`, `app_name`, `aspects` and `destination_hash` ([CC 3.3.6.3](#3.3.6.3)) | always |
+| `transit_xwing_pubkey` | 1216 bytes, beside `transport_destination` | on a node that relays, and on every seat |
+| `onion_hop_xwing_pubkey` | 1216 bytes, beside `transport_destination` | on a node that relays, and on every serve node |
+| `onion_relay` | the map `{"opt_out": true}` | on a node that opts out of relaying |
+| `refs` | the node's own key record, by row id under the `also` role `cites` | on a seat's binding |
+
 **Key separation is normative and admission-enforced**: the transit pair is distinct from the signing keys, from the content KEM keys of 3.3.6.1, and from the Reticulum link x25519 above. A binding that reuses any of them is refused.
 
 **Scope of the admission check:** admission enforces the separation **in-row**, the transit pair against every key carried on the same signed row. Those keys are the RNS link x25519, the transport ed25519, the signer's pinned key, and the content KEM keys of 3.3.6.1 when they ride this row. That is exactly as 3.3.6.1 scopes its own check. Separation from keys carried on a *different* row (the content KEM keys of 3.3.6.1 when they ride a separate occurrence row) is the **producer's duty**. That is because an admission verdict that depended on which row arrived first would differ between nodes holding the same rows ([CC 3.2](#3.2) T8 vii).

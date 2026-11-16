@@ -17,7 +17,7 @@ Each statement is marked **text** (the Parts say it), **model** (the check in th
 |---|---|
 | The edition | 1.0-rc20 is tagged, and every implementer pins it |
 | The genesis bundle | the `ceg-genesis-bundle/2` payload rule (CC 2.6.1.11); its known-answer vectors, the verifier's |
-| The verifier | the composite, the row reader and the link handshake (v23.1.1, the text's pin); the bundle's payload rule; the accord invocation's composite known answer; the accord roster objects' forward form, without which no roster change or recovery can be signed (CC 4.2.6) |
+| The verifier | the composite, the row reader and the link handshake (v23.1.1, the text's pin); the bundle's payload rule; the accord invocation's composite known answer; the later bundle's count and the recovery's exception (CC 2.6.1.11) |
 | The store | key liveness only by a `key:record` of this form; `canonical` as a conferral; a seat's X-Wing key only from the bundle or a counted re-bind; no migration of earlier rows |
 | Edge | the composite on every producer; the mutual X-Wing handshake (`CTKX` 0x02) and seal frame 0x02, the earlier versions refused by name; a fresh X-Wing transit key per relaying node |
 | The server | the route serving the bundle of this form and its object id; the holders' thumbprints as the default anchor, the object id once published |
@@ -51,7 +51,7 @@ No one is an authority over another's key, and no one signs another's record (CC
 | 8 | each owner's acceptance edge | the owner | the genesis | the owner's nodes are Rooted and in the halt's reach |
 | 9 | each owner-binding, cosigned by the key owned | owner and key | both records | a node or agent is owned; an agent acts only from here, and only with its steward's edge (**model**, P6) |
 | 10 | each community's founding record, the trust-root community's among them | every member, each signing | the members' records | the community, with the members who signed |
-| 11 | the first drill | one holder | the holder's record | shown as a drill; confirmation and resumption rehearsed at a strict majority |
+| 11 | the first drill, within 7 days of the genesis's publication (CC 4.2.1.1) | each holder | the holder's record | shown as a drill; confirmation and resumption rehearsed at a strict majority |
 
 Step 4 is published only once step 3 exists for every holder, so a halt of this form is available from the first
 moment after the genesis (**model**, P8; TLA+ `Inv_HaltAvailable`; the plant `publish_ungated` is caught).
@@ -79,14 +79,14 @@ and the earlier mesh goes on.
 | Event | What happens |
 |---|---|
 | a holder is unavailable | no genesis can be signed (**model**, F2); the ceremony waits, or the holders re-form the roster in the earlier mesh first |
-| a holder's key is lost after | the roster and its count stand (**model**, P3); recovery needs the roster objects' forward form |
+| a holder's key is lost after | the roster and its count stand (**model**, P3); the holder recovers by a later bundle signed by its recovery key alone (**model**, P11) |
 | two geneses | a fork. A reader without an object-id anchor holds both as tips and takes only what both name; one anchored by an object id holds the other void (**model**, P7) |
 | the pin is published wrong | a node pinned to a bundle no holder signed roots on nothing; it changes its own pin |
 | a key holder never signs a record | it has no standing in this mesh, and is never removed from anything by silence, since nothing of it was carried |
 
 ## 6. What the model checks
 
-`check_ceremony.py` runs P1 to P9 over the kernel's own functions, with planted breaks, and nine findings.
+`check_ceremony.py` runs P1 to P11 over the kernel's own functions, with planted breaks, and nine findings.
 `Cutover.tla` runs the interleavings under TLC. The README gives the numbers.
 
 ## 7. Open, for the owner

@@ -260,7 +260,7 @@ def cases():
          "A `licensure:{community_key_id}` row is a **cosigned row** ([CC 2.4](#2.4)) whose protocol source is the authority named in the dimension.",
          "none", ("licensure:{authority_id}", COSIGN[0]), "cosign_rule[authority=organisation]"),
         ("persist", "accord:lifecycle:{kind}", ["C457"], "CC 4.2.1.3",
-         "**It is a cosigned row by a strict majority of the standing roster**", "none",
+         "**It is a counted row of a strict majority of the standing roster**", "none",
          ("accord:lifecycle:{kind}", COSIGN[0]), "cosign_rule"),
     ]:
         e = signer_entry(impl, f, srcs, cc, q, [["count:protocol@group"]], [["seat:member@group"]], sw,

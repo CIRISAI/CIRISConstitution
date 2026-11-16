@@ -454,6 +454,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.11.26	earlier-sth-cosign	The provenance log's tree-head cosignature of the earlier form (normative)	—	0.00050	462	0.1	APP	ceg	wire
 8.11.27	earlier-canonical-envelope	The canonical key's envelope of the earlier form (normative)	—	0.00050	463	0.1	APP	ceg	wire
 8.11.28	earlier-transit-pair	The transit pair of the earlier form (normative)	—	0.00050	464	0.1	APP	ceg	wire
+8.11.29	earlier-accord-invocation	The accord invocation and lifecycle preimages of the earlier form (normative)	—	0.00050	465	0.1	APP	ceg	wire
 8.12	parable	The parable — Genesis of Ethical Agency (informative)	—	0.00050	448	0.1	APP	accord	charter
 8.12.1	i-quiet	I. The Quiet Threshold	Accord 0.i-the-quiet-threshold	0.00092	303	0.11	APP	accord	charter
 8.12.2	ii-first	II. The First Leaning	Accord 0.ii-the-first-leaning	0.00092	304	0.11	APP	accord	charter

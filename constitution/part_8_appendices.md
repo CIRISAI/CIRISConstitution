@@ -1,6 +1,6 @@
 # Part 8 — Appendices
 
-**Decimal range** `8.x` · **90 sections** · **page budget 6pp** · [← master index](../README.md)
+**Decimal range** `8.x` · **91 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Case studies, glossaries, conformance vectors, interop, and the dual-ID table of contents.
 
@@ -1743,7 +1743,7 @@ Count: `leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@ac
 Authorship: `counted` (CC 3.4.1, CC 4.2.1.3)
 
 Guard:
-- attest: `when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else exclude` (CC 4.2.1.3)
+- attest: `when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[id=ref:target] else exclude` (CC 4.2.1.3)
 - attest: `when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else exclude` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6)
 
 Fold:
@@ -1754,7 +1754,7 @@ In time:
 - [confirmed] on close(fuse): read closed (CC 3.4.1, CC 4.2.1.1, CC 4.2.6, CC 4.2.1.3)
 - [confirmed] landing of `fuse`: each node for itself, nothing signed; a late answer does not count (CC 4.2.1.1, CC 4.2.1.3)
 
-Body: `accord_root`, `confirms_halt_id` (text only), `invocation_id` (text only), `invocation_kind` (text only), `resumes_halt_id` (text only)
+Body: `accord_root`, `invocation_id`, `nonce`, `dimension`, `target`
 
 **`age_assurance:{level}:{band}:{version}`** — Facts, account
 
@@ -4149,6 +4149,37 @@ The transit key of [CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2) in the earlier 
   "ml_kem_768_base64": "<base64 of exactly 1184 bytes>",
   "x25519_base64":     "<base64 of exactly 32 bytes>"
 }
+```
+
+### 8.11.29 `earlier-accord-invocation` — The accord invocation and lifecycle preimages of the earlier form (normative)
+
+In the earlier form an `accord:invoke:*` Contribution carries, inside the row, a holder's hybrid signature over the canonical bytes below ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)). The row's own signature covers its payload, and `payload_sha256` binds that payload into the inner signature:
+
+```
+canonical = sha256(
+  "ciris.accord_invoke.v2\n" ||                       // v2: lowercase kinds
+  "invocation_kind=" || ("constitutional" | "notify" | "drill") || "\n" ||
+  "invocation_id=" || halt_id_or_notify_id_or_drill_id || "\n" ||
+  "nonce=" || base64url(rand_32_bytes) || "\n" ||
+  "asserted_at=" || rfc3339_canonical || "\n" ||
+  "valid_until=" || rfc3339_canonical || "\n" ||
+  "payload_sha256=" || sha256_hex_lowercase_of_payload)
+```
+
+`invocation_kind` takes exactly `constitutional`, `notify` or `drill`, in lowercase, and a verifier compares the bytes exactly. The label is `.v2`, not `ciris.accord_invoke.v1`, so a signature under the uppercase spelling of the `.v1` label fails rather than verifying by accident.
+
+A lifecycle row of the earlier form ([CC 4.2.1.3](part_4_composition_governance.md#4.2.1.3)) signs its own domain, so an invoke signature is never replayed as a resumption. A confirmation writes `invocation_kind=lifecycle:confirmed`, with `confirms_halt_id=` in place of `resumes_halt_id=`:
+
+```
+canonical = sha256(
+  "ciris.accord_lifecycle.v1\n" ||                       // distinct domain — NOT accord_invoke.v2
+  "invocation_kind=lifecycle:active\n" ||
+  "invocation_id=" || resumption_id || "\n" ||
+  "resumes_halt_id=" || prior_constitutional_invocation_id || "\n" ||
+  "nonce=" || base64url(rand_32_bytes) || "\n" ||
+  "asserted_at=" || rfc3339_canonical || "\n" ||
+  "valid_until=" || rfc3339_canonical || "\n" ||
+  "payload_sha256=" || sha256_hex_lowercase_of_payload)
 ```
 
 ## 8.12 `parable` — The parable — Genesis of Ethical Agency (informative)

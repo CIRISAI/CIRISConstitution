@@ -43,8 +43,25 @@ latch. Two nodes, one sealed row, one publication.
 The instant is each node's own, as the fuse's is: no clock is shared. A node that is offline
 when the row is published is bound when the row reaches it, if it holds an edge then.
 
+**The halt as a row (`AccordHaltRow.tla`, CC 4.2.1.1, CC 4.2.1.3).** A halt is an ordinary row with one
+statement, its holder's signature over the row's payload, verified against the holders of the bundle in force at the
+node. The lifecycle rows are counted rows, each statement naming the halt it confirms or ends by row id in
+`refs.target`. The fuse is the charter's `halt_fuse_secs`. One node, three holders and a later bundle that removes one,
+a stranger key, two halt rows by any key, and lifecycle statements by any key naming any halt row that exists, so a
+stockpiled statement naming an earlier halt is in the world.
+
+| Config | Result |
+|---|---|
+| `AccordHaltRow.cfg` | closes at 838,014 distinct states: a halt latches only on a holder's statement (`Inv_HaltFromHolder`); a confirmation or resumption counts only statements naming that halt (`Inv_LifecycleNamesHalt`); a lone halt lapses at the fuse (`Inv_LoneBounded`) |
+| `AccordHaltRow_stranger.cfg` | `Inv_HaltFromHolder` violated: a halt counted from a key not among the bundle's holders |
+| `AccordHaltRow_anytarget.cfg` | `Inv_LifecycleNamesHalt` violated: a statement naming another halt counted for this one |
+| `AccordHaltRow_reach_confirm.cfg`, `AccordHaltRow_reach_removed.cfg` | witnesses, each violated as required: a confirmation lands, and a halt is resumed after the roster change |
+
+The model keeps a halt latched on a holder's row when a later bundle removes that holder, until its fuse or its
+resumption. The text does not say whether the removal ends such a latch; that is an open question, not a result.
+
 **What it does not cover.** An adversary that jams every channel to every node *before* any holder
 intends to halt (the row path is not immune to that; nothing is), and an AI that acts faster
 than a row propagates (answered only by agents checking the latch before every effectful act).
 
-Run: `java -cp tla2tools.jar tlc2.TLC -workers auto -metadir /tmp/tlc -deadlock -config AccordHalt_<cfg>.cfg AccordHalt.tla` (TLA+ tools 1.7.4; each finishes in seconds).
+Run: `java -cp tla2tools.jar tlc2.TLC -workers auto -metadir /tmp/tlc -deadlock -config AccordHalt_<cfg>.cfg AccordHalt.tla` (TLA+ tools 1.7.4; each finishes in seconds; `AccordHaltRow.cfg` in about two minutes).

@@ -3,7 +3,7 @@
 # with source cc-table, its cc_ref, and the census reading kept as `code`. The quote must stand verbatim in the cited section.
 # A cell the census closes is never overridden here: where text and build differ, that is a departure with a reason.
 family	column	value	cc_ref	quote
-accord:invoke:constitutional:{halt_id}	cosign_rule	none	CC 4.2.1.1	A `constitutional` halt is one holder's signature
+accord:invoke:constitutional:{halt_id}	cosign_rule	none	CC 4.2.1.1	A `constitutional` halt is one holder's statement
 accord:invoke:drill:{drill_id}	cosign_rule	none	CC 4.2.1.1	| `drill` | **one** holder |
 accord:invoke:notify:{notify_id}	cosign_rule	none	CC 4.2.1.1	| `notify` | **one** holder |
 device:label	placement	self_collective	CC 3.1.1	at `cohort_scope: self`, the name in the envelope's `label`

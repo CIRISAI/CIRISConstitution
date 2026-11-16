@@ -65,6 +65,8 @@ OBJECTS = [
     ("object", "A signed object that is not a row, and its object id"),
     ("snapshot", "The revocation snapshot (typ `ceg-revocation-snapshot/2`)"),
     ("genesis", "The genesis bundle (typ `ceg-genesis-bundle/2`)"),
+    ("accord", "The accord's rows: an invocation and a lifecycle row"),
+    ("binding", "The transport destination binding (`identity:occurrence`)"),
     ("room", "The seat commitment of a room key"),
     ("disclosure", "A disclosure of a blinded member"),
     ("logical", "Logical names with no member of their own"),
@@ -351,7 +353,7 @@ def genesis_payload(**change):
     payload = {"refs": {"also": {"cites": cites}}, "version": 1, "asserted_at": 1763078400000,
                "family_key_id": "humanity-accord", "holders": holders, "serve_nodes": [iref(3), iref(4)],
                "charter": {"recovery_commitments": {h: [-16, bytes([9]) * 32] for h in holders},
-                           "scope": ["infra:attest", "infra:serve"]}}
+                           "scope": ["infra:serve", "infra:attest"]}}     # a set, in CDE order: the shorter first
     for k, v in change.items():
         if v is None:
             payload.pop(k, None)
@@ -391,6 +393,41 @@ def key_record_samples():
     ]
 
 
+def accord_samples():
+    """(valid, broken) for the accord's invocation and lifecycle payloads (CC 4.2.1.1, CC 4.2.1.3)."""
+    inv = {"author": ISS, "invocation_id": "halt-1", "nonce": bytes(32), "asserted_at": 1763078400000,
+           "valid_until": 1763164800000}
+    ref = lambda n: [2, [-16, bytes([n]) * 32]]
+    life = {"refs": {"head": ref(1), "target": ref(2)}, "dimension": "accord:lifecycle:active",
+            "invocation_id": "resume-1", "nonce": bytes(32), "asserted_at": 1763078400000, "valid_until": 1763164800000}
+    return [("accord-invocation", cde(inv), [
+                ("an invocation carrying invocation_kind", cde(dict(inv, invocation_kind="constitutional"))),
+                ("an invocation with a nonce of 31 bytes", cde(dict(inv, nonce=bytes(31)))),
+                ("an invocation with no author", cde({k: v for k, v in inv.items() if k != "author"})),
+                ("an invocation carrying the earlier payload_sha256", cde(dict(inv, payload_sha256="00" * 32))),
+                ("an invocation with valid_until as text", cde(dict(inv, valid_until="2026-11-15T00:00:00.000Z")))]),
+            ("accord-lifecycle", cde(life), [
+                ("a lifecycle row with an author", cde(dict(life, author=ISS))),
+                ("a lifecycle row naming no halt", cde(dict(life, refs={"head": ref(1)}))),
+                ("a lifecycle row naming its halt by an id string", cde(dict(life, resumes_halt_id="halt-1"))),
+                ("a lifecycle row naming an earlier-form halt", cde(dict(life, refs={"head": ref(1), "target": [1, [-16, bytes(32)]]})))])]
+
+
+def binding_samples():
+    """(valid, broken) for the transport destination binding (CC 3.3.6.2)."""
+    td = {"reticulum_x25519_pubkey": bytes(32), "reticulum_ed25519_pubkey": bytes([1]) * 32, "app_name": "ciris",
+          "aspects": ["node", "transit"], "destination_hash": bytes(16)}
+    b = {"transport_destination": td, "transit_xwing_pubkey": bytes([2]) * 1216, "onion_hop_xwing_pubkey": bytes([3]) * 1216,
+         "refs": {"also": {"cites": [[2, [-16, bytes([4]) * 32]]]}}}
+    return cde(b), [
+        ("a binding with no transport_destination", cde({k: v for k, v in b.items() if k != "transport_destination"})),
+        ("a transit key of 1184 bytes", cde(dict(b, transit_xwing_pubkey=bytes(1184)))),
+        ("an X-Wing key inside transport_destination", cde(dict(b, transport_destination=dict(td, transit_xwing_pubkey=bytes(1216))))),
+        ("a destination_hash in hex", cde(dict(b, transport_destination=dict(td, destination_hash="00" * 16)))),
+        ("an opt-out marker of false", cde(dict(b, onion_relay={"opt_out": False}))),
+    ]
+
+
 def recovery_samples():
     key = {1: 7, 3: -70100, -1: bytes(1984)}
     return cde(["CEG-recovery/2", [key]]), [("a commitment over no key", cde(["CEG-recovery/2", []]))]
@@ -404,26 +441,57 @@ def object_id(typ, payload_bytes):
     return [-16, hashlib.sha256(cde(["CEG-object/2", typ, None, payload_bytes])).digest()]
 
 
-def read_bundle(payload, statements, rows, anchor):
-    """CC 2.6.1.11 over one first bundle, structure only (no signature is computed here): `statements` are the
-    holders' voices as (iss, iat), each taken as verified; `rows` maps a cited row id to (family, author, extra).
-    Returns ("Valid", placement), ("Invalid", reason), ("Waiting", ids) or ("nothing", reason)."""
+def recovery_commitment(key):
+    """CC 3.2 T3: [-16, SHA-256(CDE(["CEG-recovery/2", keys]))] over one composite key."""
+    return [-16, hashlib.sha256(cde(["CEG-recovery/2", [key]])).digest()]
+
+
+def is_set(xs):
+    enc = [cde(x) for x in xs]
+    return enc == sorted(set(enc)) and len(enc) == len(set(enc))
+
+
+def read_bundle(payload, statements, rows, anchor, prev=None):
+    """CC 2.6.1.11 over one bundle, structure only (no signature is computed here), in the order of verification.
+    `statements` are the voices as (voice, iat), each taken as verified: a holder's identity reference, or
+    ("recovery", key) for a recovery key's statement. `rows` maps a cited row id to (family, author, extra).
+    `prev` is None for a first bundle or a prev not held, "not_valid" for a prev held and not Valid, or the
+    predecessor's Valid placement. Returns ("Valid", placement), ("Invalid", detail) with the token
+    genesis_bundle_malformed, ("Waiting", ids) or ("nothing", token)."""
     P = payload
+    # 1. each statement alone: one whose iat disagrees is refused alone, and the rest are read
+    voices = [v for v, iat in statements if iat == P["asserted_at"] // 1000]
+    # 2. the payload against its rule
     H, S = set(P["holders"]), set(P["serve_nodes"])
     W = set(P["charter"].get("witnesses", []))
-    if ("prev" in P["refs"]) != (P["version"] != 1):
+    later = "prev" in P["refs"]
+    if later != (P["version"] != 1):
         return "Invalid", "version_prev_mismatch"
+    for xs in (P["holders"], P["serve_nodes"], P["charter"]["scope"], P["charter"].get("witnesses", []),
+               P["refs"]["also"]["cites"]):
+        if not is_set(xs):
+            return "Invalid", "federation_set_semantics_unsorted"
     if H & S or H & W or S & W:
         return "Invalid", "holders_seats_overlap"
     if set(P["charter"]["recovery_commitments"]) != H:
         return "Invalid", "recovery_commitments_not_holders"
     if not {"infra:attest", "infra:serve"} <= set(P["charter"]["scope"]):
         return "Invalid", "scope_missing_infra"
-    if any(iat != P["asserted_at"] // 1000 for _, iat in statements):
-        return "Invalid", "iat_mismatch"
-    kind, value = anchor
-    if (kind == "thumbprints" and set(value) != H) or (kind == "object_id" and value != object_id(GENESIS_TYP, cde(P))):
-        return "nothing", "genesis_bundle_not_anchored"
+    # 3. the anchor, or prev
+    if later:
+        if prev is None:
+            return "Waiting", ["prev"]
+        if prev == "not_valid":
+            return "nothing", "genesis_bundle_prev_not_valid"
+        if P["version"] != prev["version"] + 1:
+            return "Invalid", "version_prev_mismatch"
+        if P["family_key_id"] != prev["family_key_id"]:
+            return "Invalid", "family_key_id_changed"
+    else:
+        kind, value = anchor
+        if (kind == "thumbprints" and set(value) != H) or (kind == "object_id" and value != object_id(GENESIS_TYP, cde(P))):
+            return "nothing", "genesis_bundle_not_anchored"
+    # 4. the named rows
     cites = P["refs"]["also"]["cites"]
     missing = [c for c in cites if c[1][1] not in rows]
     if missing:
@@ -439,40 +507,88 @@ def read_bundle(payload, statements, rows, anchor):
             return "nothing", "genesis_bundle_row_unplaced"
         if slot in place:
             return "nothing", "genesis_bundle_row_unplaced"
-        place[slot] = extra
+        place[slot] = (c, extra)
     for party in H | S | W:
         if ("record", party) not in place:
             return "nothing", "genesis_bundle_row_unplaced"
     for seat in S:
         if ("binding", seat) not in place:
             return "nothing", "genesis_bundle_row_unplaced"
+        rec_ref, rec = place[("record", seat)]
+        _, binding = place[("binding", seat)]
+        if rec.get("valid_until", 0) <= P["asserted_at"] or binding.get("cites") != rec_ref:
+            return "nothing", "genesis_bundle_row_invalid"
+    # 5. the custody gate
     for h in H:
-        ev = place[("record", h)]
+        ev = place[("record", h)][1]
         if not ev.get("chain_verifies") or ev.get("pq_custody") != "removable_offline":
             return "nothing", "genesis_holder_custody"
-    if not H <= {iss for iss, _ in statements}:
-        return "nothing", "genesis_bundle_count_unmet"
-    return "Valid", {"holders": sorted(H), "seats": {s: place[("binding", s)]["xwing"] for s in sorted(S)}}
+    keys = {h: place[("record", h)][1].get("key") for h in H}
+    coms = dict(P["charter"]["recovery_commitments"])
+    spent = set(prev["spent"]) if later else set()
+    ever = set(prev["ever"]) if later else set()
+    # 6. the count, or a recovery's one statement
+    if not later:
+        if not H <= {v for v in voices if isinstance(v, str)}:
+            return "nothing", "genesis_bundle_count_unmet"
+    else:
+        PH = set(prev["holders"])
+        if any(cde(x) in spent for x in coms.values()):
+            return "nothing", "genesis_bundle_commitment_spent"       # a spent commitment never returns
+        recs = [v for v in voices if not isinstance(v, str)]
+        if len(voices) == 1 and recs:
+            rk = recs[0][1]
+            mine = [h for h in PH if prev["coms"][h] == recovery_commitment(rk)]
+            changed = {h for h in H | PH if keys.get(h) != prev["keys"].get(h) or coms.get(h) != prev["coms"].get(h)}
+            if (len(mine) != 1 or changed != set(mine) or H != PH or S != set(prev["seats"])
+                    or {k: v for k, v in P["charter"].items() if k != "recovery_commitments"} != prev["charter_rest"]):
+                return "nothing", "genesis_bundle_recovery_refused"
+            h = mine[0]
+            if keys[h] in (prev["keys"][h], rk) or cde(recovery_commitment(keys[h])) in ever:
+                return "nothing", "genesis_bundle_recovery_refused"
+            if coms[h] == prev["coms"][h] or coms[h] == recovery_commitment(rk):
+                return "nothing", "genesis_bundle_recovery_refused"
+            spent.add(cde(prev["coms"][h]))
+        else:
+            yes = {v for v in voices if isinstance(v, str)}
+            added = H - PH
+            recom = {h for h in H & PH if coms[h] != prev["coms"][h]}
+            if len(yes & PH) * 2 <= len(PH) or not (added | recom) <= yes:
+                return "nothing", "genesis_bundle_count_unmet"
+    ever |= {cde(x) for x in coms.values()}
+    return "Valid", {"holders": sorted(H), "seats": {s: place[("binding", s)][1]["xwing"] for s in sorted(S)},
+                     "version": P["version"], "family_key_id": P["family_key_id"], "keys": keys, "coms": coms,
+                     "spent": spent, "ever": ever,
+                     "charter_rest": {k: v for k, v in P["charter"].items() if k != "recovery_commitments"}}
 
 
 def reader_samples():
-    """The reference reader over a valid first bundle and one break per rule it states; each break must give its
-    own answer, never Valid."""
+    """The reference reader over a valid first bundle, later bundles on it, and one break per rule it states; each
+    break must give its own answer, never Valid."""
     H = [iref(0), iref(1), iref(2)]
     S = [iref(3), iref(4)]
+    D = iref(5)
+    key = lambda n: {1: 7, 3: -70100, -1: bytes([n]) * 1984}
     rid = lambda n: [2, [-16, bytes([n]) * 32]]
     rows = {}
-    for n, h in enumerate(H):
-        rows[bytes([0x10 + n]) * 32] = ("key:record", h, {"chain_verifies": True, "pq_custody": "removable_offline"})
+    for n, h in enumerate(H + [D]):
+        rows[bytes([0x10 + n]) * 32] = ("key:record", h, {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(n)})
     for n, s_ in enumerate(S):
-        rows[bytes([0x20 + n]) * 32] = ("key:record", s_, {})
-        rows[bytes([0x30 + n]) * 32] = ("identity:occurrence", s_, {"xwing": ("transit-%d" % n, "onion-%d" % n)})
-    cites = sorted((rid(b[0]) for b in rows), key=cde)
+        rows[bytes([0x20 + n]) * 32] = ("key:record", s_, {"valid_until": 1794614400000})
+        rows[bytes([0x30 + n]) * 32] = ("identity:occurrence", s_, {"xwing": ("transit-%d" % n, "onion-%d" % n),
+                                                                     "cites": rid(0x20 + n)})
+    # A's rotated record (key 7) and the record of a key that is A's recovery key (key 50)
+    rows[bytes([0x17]) * 32] = ("key:record", H[0], {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(7)})
+    rows[bytes([0x18]) * 32] = ("key:record", H[0], {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(50)})
+    base = [0x10, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31]
+    cites_of = lambda ids: sorted((rid(n) for n in ids), key=cde)
+    rc = lambda n: recovery_commitment(key(n))
+    coms0 = {H[0]: rc(50), H[1]: rc(51), H[2]: rc(52)}
 
-    def payload(**ch):
-        p = {"refs": {"also": {"cites": cites}}, "version": 1, "asserted_at": 1763078400000,
-             "family_key_id": "humanity-accord", "holders": H, "serve_nodes": S,
-             "charter": {"recovery_commitments": {h: [-16, bytes(32)] for h in H}, "scope": ["infra:serve", "infra:attest"]}}
+    def payload(cites=base, coms=coms0, holders=H, **ch):
+        p = {"refs": {"also": {"cites": cites_of(cites)}}, "version": 1, "asserted_at": 1763078400000,
+             "family_key_id": "humanity-accord", "holders": sorted(holders, key=cde), "serve_nodes": S,
+             "charter": {"recovery_commitments": dict(coms), "scope": ["infra:serve", "infra:attest"]}}
         p.update(ch)
         return p
     voices = [(h, 1763078400) for h in H]
@@ -481,32 +597,71 @@ def reader_samples():
     bad_custody[bytes([0x10]) * 32] = ("key:record", H[0], {"chain_verifies": True, "pq_custody": "software_wrapped"})
     no_chain = dict(rows)
     no_chain[bytes([0x11]) * 32] = ("key:record", H[1], {"chain_verifies": False, "pq_custody": "removable_offline"})
+    short_seat = dict(rows)
+    short_seat[bytes([0x20]) * 32] = ("key:record", S[0], {"valid_until": 1763078400000})
     good = payload()
+    g_ans, g_place = read_bundle(good, voices, rows, anchor)
+    gid = object_id(GENESIS_TYP, cde(good))
+    later = lambda cites=base, coms=coms0, holders=H, **ch: payload(cites, coms, holders, version=2,
+                                                                     refs={"prev": gid, "also": {"cites": cites_of(cites)}}, **ch)
+    addD = later(base + [0x13], {**coms0, D: rc(53)}, H + [D])
+    rec = later([0x17, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60)})
+    rec_v = [(("recovery", key(50)), 1763078400)]
     breaks = [
         ("a missing holder signature", (good, voices[:2], rows, anchor), ("nothing", "genesis_bundle_count_unmet")),
-        ("an iat not floor(asserted_at / 1000)", (good, voices[:2] + [(H[2], 1763078401)], rows, anchor), ("Invalid", "iat_mismatch")),
-        ("a seat whose binding is not in cites", (payload(refs={"also": {"cites": [c for c in cites if c[1][1] != bytes([0x31]) * 32]}}),
-                                                  voices, rows, anchor), ("nothing", "genesis_bundle_row_unplaced")),
+        ("an iat not floor(asserted_at / 1000), refused alone", (good, voices[:2] + [(H[2], 1763078401)], rows, anchor),
+         ("nothing", "genesis_bundle_count_unmet")),
+        ("a seat whose binding is not in cites", (payload(cites=[n for n in base if n != 0x31]), voices, rows, anchor),
+         ("nothing", "genesis_bundle_row_unplaced")),
         ("holders and serve_nodes overlapping", (payload(serve_nodes=[H[0], S[0]]), voices, rows, anchor), ("Invalid", "holders_seats_overlap")),
         ("a holder not removable_offline", (good, voices, bad_custody, anchor), ("nothing", "genesis_holder_custody")),
         ("a holder whose chain does not verify", (good, voices, no_chain, anchor), ("nothing", "genesis_holder_custody")),
-        ("a holder set unlike the anchor", (good, voices, rows, ("thumbprints", H[:2] + [iref(5)])), ("nothing", "genesis_bundle_not_anchored")),
+        ("a holder set unlike the anchor", (good, voices, rows, ("thumbprints", H[:2] + [iref(6)])), ("nothing", "genesis_bundle_not_anchored")),
         ("an object id unlike the anchor", (good, voices, rows, ("object_id", [-16, bytes(32)])), ("nothing", "genesis_bundle_not_anchored")),
         ("a cited row not held", (good, voices, {k: v for k, v in rows.items() if k != bytes([0x20]) * 32}, anchor), ("Waiting", None)),
         ("a version 2 with no prev", (payload(version=2), voices, rows, anchor), ("Invalid", "version_prev_mismatch")),
+        ("a scope out of set order", (payload(charter={"recovery_commitments": coms0, "scope": ["infra:attest", "infra:serve"]}),
+                                      voices, rows, anchor), ("Invalid", "federation_set_semantics_unsorted")),
+        ("a seat whose record ends before the bundle", (good, voices, short_seat, anchor), ("nothing", "genesis_bundle_row_invalid")),
+        ("a seat whose binding does not name its record",
+         (good, voices, {**rows, bytes([0x30]) * 32: ("identity:occurrence", S[0], {"xwing": ("transit-0", "onion-0")})}, anchor),
+         ("nothing", "genesis_bundle_row_invalid")),
+        # later bundles
+        ("a later bundle whose prev is not held", (addD, voices + [(D, 1763078400)], rows, anchor, None), ("Waiting", None)),
+        ("a later bundle whose prev is not Valid", (addD, voices + [(D, 1763078400)], rows, anchor, "not_valid"),
+         ("nothing", "genesis_bundle_prev_not_valid")),
+        ("a later bundle changing family_key_id", (dict(addD, family_key_id="another-accord"), voices + [(D, 1763078400)], rows, anchor, g_place),
+         ("Invalid", "family_key_id_changed")),
+        ("an added holder who did not sign", (addD, voices, rows, anchor, g_place), ("nothing", "genesis_bundle_count_unmet")),
+        ("a change on a minority", (addD, voices[:1] + [(D, 1763078400)], rows, anchor, g_place), ("nothing", "genesis_bundle_count_unmet")),
+        ("a recovery under the holder's signing key", (rec, [(("recovery", key(0)), 1763078400)], rows, anchor, g_place),
+         ("nothing", "genesis_bundle_recovery_refused")),
+        ("a recovery that also re-commits another holder", (later([0x17, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60), H[1]: rc(61)}),
+                                                             rec_v, rows, anchor, g_place), ("nothing", "genesis_bundle_recovery_refused")),
+        ("a recovery seating its own recovery key", (later([0x18, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60)}),
+                                                     rec_v, rows, anchor, g_place), ("nothing", "genesis_bundle_recovery_refused")),
+        ("a recovery keeping the spent commitment", (later([0x17, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], coms0), rec_v, rows, anchor, g_place),
+         ("nothing", "genesis_bundle_recovery_refused")),
     ]
-    return (good, voices, rows, anchor), (cde(good), object_id(GENESIS_TYP, cde(good))), breaks
+    later_ok = [("a roster change adding a holder, signed by a majority and the added holder",
+                 (addD, voices[:2] + [(D, 1763078400)], rows, anchor, g_place)),
+                ("a recovery by the recovery key alone", (rec, rec_v, rows, anchor, g_place))]
+    return (good, voices, rows, anchor), (cde(good), gid), breaks, later_ok
 
 
 def reader_checks():
-    """(line, problems) for the reference reader: the valid bundle is Valid under both anchors with its placement,
-    and each break gives its own answer."""
+    """(line, problems) for the reference reader: the valid bundle is Valid under both anchors with its placement, the
+    valid later bundles are Valid, and each break gives its own answer."""
     bad = []
-    (g, v, r, a), (_, oid), breaks = reader_samples()
+    (g, v, r, a), (_, oid), breaks, later_ok = reader_samples()
     for anc in (a, ("object_id", oid)):
         ans, out = read_bundle(g, v, r, anc)
         if ans != "Valid" or out["seats"].get(iref(3)) != ("transit-0", "onion-0") or len(out["holders"]) != 3:
             bad.append(f"reference reader: the valid bundle gives {ans} under {anc[0]}")
+    for why, args in later_ok:
+        ans, out = read_bundle(*args)
+        if ans != "Valid":
+            bad.append(f"reference reader: {why} gives {ans} {out if isinstance(out, str) else ''}")
     caught = 0
     for why, args, (want, reason) in breaks:
         ans, out = read_bundle(*args)
@@ -514,7 +669,32 @@ def reader_checks():
             bad.append(f"deliberate break not caught: {why} gives {ans} {out if isinstance(out, str) else ''}")
         else:
             caught += 1
-    return f"reference bundle reader: the valid bundle is Valid under both anchors; {caught} broken bundles give their own answer", bad
+    # a spent commitment never returns, across bundles: a second recovery on the first
+    rec, rec_v, rows, anchor, gp = later_ok[1][1]
+    ans, p1 = read_bundle(rec, rec_v, rows, anchor, gp)
+    if ans == "Valid":
+        rows2 = dict(rows)
+        h0 = next(h for h in p1["holders"] if p1["keys"][h] != gp["keys"][h])
+        key = lambda n: {1: 7, 3: -70100, -1: bytes([n]) * 1984}
+        rows2[bytes([0x19]) * 32] = ("key:record", h0, {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(8)})
+        cites = [c for c in rec["refs"]["also"]["cites"] if c[1][1] != bytes([0x17]) * 32] + [[2, [-16, bytes([0x19]) * 32]]]
+        cites = sorted(cites, key=cde)
+        nxt = lambda com: dict(rec, version=3, refs={"prev": object_id(GENESIS_TYP, cde(rec)), "also": {"cites": cites}},
+                               charter=dict(rec["charter"], recovery_commitments={**rec["charter"]["recovery_commitments"], h0: com}))
+        v2 = [(("recovery", key(60)), 1763078400)]
+        a_ret, o_ret = read_bundle(nxt(recovery_commitment(key(50))), v2, rows2, anchor, p1)
+        a_new, _ = read_bundle(nxt(recovery_commitment(key(70))), v2, rows2, anchor, p1)
+        a_old, _ = read_bundle(nxt(recovery_commitment(key(70))), [(("recovery", key(50)), 1763078400)], rows2, anchor, p1)
+        if (a_ret, o_ret) != ("nothing", "genesis_bundle_commitment_spent"):
+            bad.append(f"deliberate break not caught: a second recovery naming the spent commitment gives {a_ret}")
+        elif a_old == "Valid":
+            bad.append("deliberate break not caught: a second recovery under the spent recovery key is Valid")
+        elif a_new != "Valid":
+            bad.append(f"reference reader: a second recovery with a fresh commitment gives {a_new}")
+        else:
+            caught += 2
+    return (f"reference bundle reader: the valid bundle is Valid under both anchors, {len(later_ok)} later bundles are "
+            f"Valid; {caught} broken bundles give their own answer"), bad
 
 
 def cddl_checks(text):
@@ -567,8 +747,12 @@ def cddl_checks(text):
             else:
                 grefused += 1
         lines.append(f"1 genesis bundle sample validates; {grefused} broken bundles are refused")
+        acc = {root: (ok, broken) for root, ok, broken in accord_samples()}
         for root, (ok, broken), what in (("key-record-members", key_record_samples(), "key record with its custody member"),
-                                         ("recovery-commitment-input", recovery_samples(), "recovery commitment input")):
+                                         ("recovery-commitment-input", recovery_samples(), "recovery commitment input"),
+                                         ("accord-invocation", acc["accord-invocation"], "accord invocation payload"),
+                                         ("accord-lifecycle", acc["accord-lifecycle"], "accord lifecycle payload"),
+                                         ("transport-destination-binding", binding_samples(), "transport destination binding")):
             rp = os.path.join(d, root + ".cddl")
             open(rp, "w", encoding="utf-8").write(f"sample-root = {root}\n" + text)
             open(f, "wb").write(ok)

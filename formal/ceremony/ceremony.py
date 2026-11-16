@@ -13,8 +13,13 @@ Rows (dicts of causal_kernel.row) carry `form`: "e1" for the earlier JSON form (
 
     rec      a key record. `key`, `typ`, `vf`, `vu`; `as_` names the person an earlier key belonged to, read only by
              planted breaks that carry something across.
-    bundle2  a `ceg-genesis-bundle/2` with no `prev`: a genesis. `roster` is its holders' keys, `serve` its seats'
-             keys, `voices` the statements. Its count is the seats' canonical conferral (CC 4.2.1).
+    bundle2  a `ceg-genesis-bundle/2`. With no `prev` it is a genesis: `roster` is its holders' keys, `coms` each
+             holder's recovery commitment (the recovery key it commits to: the hash is injective), `serve` its
+             seats' keys, `voices` the statements; its count is the seats' canonical conferral (CC 4.2.1). With a
+             `prev` it is a later bundle: `keys` maps each seat (a holder, named by its genesis key) to its signing
+             key and `coms` to its commitment. A roster change counts at a strict majority of the predecessor's
+             holders, with each holder it adds and each it re-commits; a recovery is one statement by the recovery
+             key the commitment in force commits to, changing that seat alone (CC 2.6.1.11, CC 4.2.6).
     rebind   `transport:canonical_rebind` for `seat`, carrying `xw`, counted by the holders.
     td       a seat's `transport_destination` carrying `xw`; the genesis names the seats' bindings.
     confer   any other counted act of the holders.
@@ -52,6 +57,10 @@ def row(id, kind, signer, names=(), form="e2", **kw):
 def rec(id, key, typ, form="e2", vf=0, vu=None, names=(), as_=None):
     return row(id, "rec", key, names, form, key=key, typ=typ, vf=vf, vu=vu, succ_of=None,
                sigs=frozenset({key}), as_=as_)
+
+
+LATER_PLANTS = ("change_minority", "added_unsigned", "recommit_unsigned", "recovery_any_key", "recovery_other_seat",
+               "spent_returns", "reckey_as_seat", "spent_key_recovers")
 
 
 EARLIER_PLANTS = ("earlier_until_genesis", "earlier_named", "by_arrival", "earlier_record_live", "earlier_votes",
@@ -139,18 +148,22 @@ def answers(rows, reader, now=5, first=None):
                 continue
             tgt = person.get(r["target"], r["target"]) if r["form"] == "e1" else r["target"]
             own = person.get(r["owner"], r["owner"]) if r["form"] == "e1" else r["owner"]
-            if tgt == k and {r["owner"], r["target"]} <= set(r["voices"]):
+            # ruling 3: the owner's revocation of the key it owns ends the binding's standing, never the key's life
+            revoked = any(q["kind"] == "revoke" and q["form"] == "e2" and q["key"] == tgt and q["signer"] == r["owner"]
+                          for q in A.values()) and "owner_revocation_ignored" not in MUT
+            if tgt == k and {r["owner"], r["target"]} <= set(r["voices"]) and not revoked:
                 os_.add(own)
         return next(iter(os_)) if len(os_) == 1 else None
 
     def live(k, depth=2):
-        """CC 2.4.1.1: a key is live only by its own record of this form that covers now, unless one of the three
-        revokers (the key, its owner, the roster that seats it) has revoked it."""
+        """CC 2.4.1.1: a key is live only by its own record of this form that covers now, unless the key itself has
+        revoked it. An owner's revocation ends the owner-binding's standing (owner_of), a roster's removal ends the
+        seat, and neither ends the key's liveness."""
         revs = [r for r in A.values() if r["kind"] == "revoke" and r["key"] == k and r["form"] == "e2"]
         for r in revs:
             if r["signer"] == k or "third_party_ends" in MUT:
                 return False
-            if "owner_revocation_ignored" not in MUT and depth and owner_of(k) == r["signer"] and live(r["signer"], depth - 1):
+            if "owner_revocation_ends" in MUT and depth and r["signer"] != k:
                 return False
         for r in recs(k):
             vu = INF if r["vu"] is None else r["vu"]
@@ -162,6 +175,77 @@ def answers(rows, reader, now=5, first=None):
                 r["id"] in q["names"] and q["signer"] != k for q in fwd.values()) for r in fwd.values()):
             return True
         return False
+
+    # the lineage: from each genesis in force, the later bundles that count, by prev (CC 2.6.1.11). A recovery is
+    # one statement by the recovery key the commitment in force commits to; anything else is a roster change.
+    def later_counts(b, st):
+        keys, coms, spent, named = st
+        nk, nc, vs = dict(b["keys"]), dict(b["coms"]), set(b["voices"])
+        diff = {s for s in set(keys) | set(nk) if keys.get(s) != nk.get(s) or coms.get(s) != nc.get(s)}
+        if len(vs) == 1 and diff:
+            v = next(iter(vs))
+            mine = [s for s in diff if coms.get(s) == v] or (
+                [s for s in diff if v in named.get(s, ())] if "spent_key_recovers" in MUT else []) or (
+                [s for s in diff if s in keys] if "recovery_any_key" in MUT else [])
+            for s in mine:
+                if s not in keys or s not in nk:
+                    continue
+                if len(diff) != 1 and "recovery_other_seat" not in MUT:
+                    continue
+                ever = set().union(*named.values()) | spent
+                if nk[s] == keys[s] or (("reckey_as_seat" not in MUT) and (nk[s] == v or nk[s] in ever)):
+                    continue
+                if nc[s] == coms[s] or nc[s] == v or (nc[s] in spent and "spent_returns" not in MUT):
+                    continue
+                if not live(nk[s]):
+                    continue
+                n2 = {k: set(x) for k, x in named.items()}
+                n2.setdefault(s, set()).add(nc[s])
+                return (nk, nc, spent | {coms[s]}, n2)
+        holders = set(keys)
+        signed = {s for s in holders if keys[s] in vs and live(keys[s])}
+        need = 1 if "change_minority" in MUT else len(holders) // 2 + 1
+        if len(signed) < need:
+            return None
+        added = {s for s in nk if s not in keys}
+        recom = {s for s in nk if s in keys and nc.get(s) != coms.get(s)}
+        must = (set() if "added_unsigned" in MUT else added) | (set() if "recommit_unsigned" in MUT else recom)
+        if any(nk[s] not in vs or not live(nk[s]) for s in must):
+            return None
+        if any(c in spent for c in nc.values()):
+            return None
+        n2 = {k: set(x) for k, x in named.items()}
+        for s, c in nc.items():
+            n2.setdefault(s, set()).add(c)
+        return (nk, nc, spent, n2)
+
+    later = [r for r in fwd.values() if r["kind"] == "bundle2" and r.get("prev") is not None]
+    lineage_counted = set()
+
+    def step(bid, st, depth=0):
+        nexts = []
+        for b in sorted(later, key=lambda r: r["id"]):
+            if b["prev"] == bid and depth < 8:
+                s2 = later_counts(b, st)
+                if s2 is not None:
+                    nexts.append((b["id"], s2))
+        if not nexts:
+            return [st]
+        out = []
+        for i, s2 in nexts:
+            lineage_counted.add(i)
+            out += step(i, s2, depth + 1)
+        return out
+
+    tips = []
+    for c in cut:
+        g = fwd[c]
+        g_coms = dict(g.get("coms", {}))
+        tips += step(c, ({h: h for h in g["roster"]}, g_coms, frozenset(),
+                         {h: {x} for h, x in g_coms.items()}))
+    if tips and later:
+        rs = [frozenset(st[0].values()) for st in tips]
+        roster = frozenset.union(*rs) if "fork_union" in MUT else frozenset.intersection(*rs)
 
     R = roster
     if "roster_shrinks" in MUT:
@@ -181,7 +265,7 @@ def answers(rows, reader, now=5, first=None):
 
     def counted(r):
         if r["kind"] == "bundle2":
-            return r["id"] in cut
+            return r["id"] in cut or r["id"] in lineage_counted
         need = 1 if ("one_holder_rebind" in MUT and r["kind"] == "rebind") else M
         return bool(R) and len(voices_of(r)) >= need
 
@@ -264,6 +348,7 @@ def answers(rows, reader, now=5, first=None):
         "may_act": tuple((a, may_act(a)) for a in agents),
         "members": members(),
         "honoured": frozenset(honoured), "resumed": frozenset(resumed),
+        "bundles": frozenset(lineage_counted),
     }
 
 

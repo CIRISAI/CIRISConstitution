@@ -105,6 +105,30 @@ genesis	genesis-charter	"witness_cadence_secs"	-	object	1..4294967295	where witn
 genesis	genesis-charter	"witness_quorum"	-	object	2..4294967295	where witnessed mode is on	3.2 2.1	floor(|witnesses| / 2) + 1; absence is witnessed mode off, and 0 is never written.
 genesis	genesis-charter	"witnesses"	-	object	[+ identity-ref]	where witnessed mode is on	3.2 2.1 2.6.1.2	The witness directory: a set, disjoint from holders and serve_nodes; each witness's key record stands in refs.
 genesis	recovery-commitment-input	keys	-	derived	[+ ceg-key]	always	3.2 4.2.6 2.6.1.2	The committed composite keys, a set; one for a holder's recovery commitment. The commitment is [-16, SHA-256] over the array.
+accord	accord-invocation	"author"	attesting_key_id	payload	identity-ref	always	4.2.1.1 2.6.1.3	The holder who signs: the statement's iss. One holder's statement is the halt.
+accord	accord-invocation	"invocation_id"	-	payload	tstr	always	4.2.1.1	The id of the halt, the notify or the drill; duplicates within valid_until are refused per kind.
+accord	accord-invocation	"nonce"	-	payload	bstr .size 32	always	4.2.1.1	Minted by the holder; single-use within valid_until.
+accord	accord-invocation	"asserted_at"	asserted_at	payload	ms-time	always	4.2.1.1 2.6.2	POSIX milliseconds.
+accord	accord-invocation	"valid_until"	valid_until	payload	ms-time	always	4.2.1.1 2.6.2	Bounds the reuse of the nonce, never the reach of a halt.
+accord	accord-lifecycle	"refs"	references_attestation_id	payload	accord-lifecycle-refs	always	4.2.1.3 2.6.1.9	The halt the row confirms or ends, and the bundle it is counted over.
+accord	accord-lifecycle	"dimension"	dimension	payload	tstr	always	4.2.1.3	Names the kind, confirmed or active, so the two kinds are two payloads and two row ids.
+accord	accord-lifecycle	"invocation_id"	-	payload	tstr	always	4.2.1.3	The lifecycle row's own id.
+accord	accord-lifecycle	"nonce"	-	payload	bstr .size 32	always	4.2.1.3	Thirty-two random bytes.
+accord	accord-lifecycle	"asserted_at"	asserted_at	payload	ms-time	always	4.2.1.3 2.6.2	POSIX milliseconds.
+accord	accord-lifecycle	"valid_until"	valid_until	payload	ms-time	always	4.2.1.3 2.6.2	POSIX milliseconds.
+accord	accord-lifecycle-refs	"head"	-	payload:refs	row-ref	always	4.2.1.3 2.6.1.9	The bundle in force the row is counted over, by its object id.
+accord	accord-lifecycle-refs	"target"	-	payload:refs	row-ref	always	4.2.1.3	The halt row the lifecycle row confirms or ends; a statement counts for that halt only.
+binding	transport-destination-binding	"transport_destination"	transport_destination	payload	transport-destination	always	3.3.6.2 3.3.6.3	The RNS members, from which destination_hash is recomputed.
+binding	transport-destination-binding	"transit_xwing_pubkey"	-	payload	bstr .size 1216	on a node that relays, and on every seat	3.3.6.2	At the payload's top level, beside transport_destination; a seat's is taken from the bundle or a counted re-bind.
+binding	transport-destination-binding	"onion_hop_xwing_pubkey"	-	payload	bstr .size 1216	on a node that relays, and on every serve node	3.3.6.2	At the payload's top level, beside transport_destination.
+binding	transport-destination-binding	"onion_relay"	-	payload	map	on a node that opts out of relaying	3.3.6.2 5.4.6	The opt-out marker; a node carrying it carries no hop key.
+binding	transport-destination-binding	"onion_relay"."opt_out"	-	payload	true	always	3.3.6.2	The constant true.
+binding	transport-destination-binding	"refs"	references_attestation_id	payload	refs	on a seat's binding	3.3.6.2 2.6.1.11	The seat's own key record, under the also role cites.
+binding	transport-destination	"reticulum_x25519_pubkey"	-	payload	bstr .size 32	always	3.3.6.3	The RNS link X25519 key.
+binding	transport-destination	"reticulum_ed25519_pubkey"	-	payload	bstr .size 32	always	3.3.6.3	The RNS transport Ed25519 key.
+binding	transport-destination	"app_name"	-	payload	tstr	always	3.3.6.3	The RNS application name.
+binding	transport-destination	"aspects"	-	payload	[* tstr]	always	3.3.6.3 2.6.1.2	A sequence: the hash reads the aspects in this order.
+binding	transport-destination	"destination_hash"	-	payload	bstr .size 16	always	3.3.6.3	Recomputed by the two-stage hash; a disagreement is refused.
 room	seat-commitment-input	room	-	derived	tstr	always	2.6.1.11	The room's id as its rows carry it.
 room	seat-commitment-input	room_key	-	derived	kid	always	2.6.1.11	The room key's thumbprint.
 room	seat-commitment-input	person	-	derived	identity-ref	always	2.6.1.11	The person's identity reference.

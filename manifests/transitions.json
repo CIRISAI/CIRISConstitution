@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "4d4b7ad5b582639a3d1e7d1eac84747f1e223b51ed208f41b3fb73e1252c1dbb",
+  "source_sha256": "84a046e73d3f9a3ff7e428f7211eb58db704f515ab4f306d35792d486c9e5110",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -636,7 +636,7 @@
         "reach": "whole"
        },
        {
-        "guard": "when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else exclude",
+        "guard": "when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[id=ref:target] else exclude",
         "cc_ref": [
          "CC 4.2.1.3"
         ],

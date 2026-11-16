@@ -11,7 +11,7 @@ family	column	selector	value	cc_ref	quote
 group:roster	authorship	*	counted	CC 3.1.3	as a cosigned `scores` row
 transport:canonical_rebind	authorship	*	counted	CC 3.1.3	admitted at the accord charter's threshold
 accord:lifecycle:{kind}	authorship	*	counted	CC 3.4.1	a strict majority of the standing roster, one cosigned row naming the halt
-accord:lifecycle:{kind}	authorship	*	counted	CC 4.2.1.3	It is a cosigned row by a strict majority of the standing roster
+accord:lifecycle:{kind}	authorship	*	counted	CC 4.2.1.3	It is a counted row of a strict majority of the standing roster
 accord:*	authorship	leaf=lifecycle:{kind}	counted	CC 3.4.1	a strict majority of the standing roster, one cosigned row naming the halt
 accord:*	authorship	*	authored	CC 3.4.1	One accord holder's signed row
 accord:invoke:constitutional:{halt_id}	authorship	*	authored	CC 3.4.1	pre-signable, fired on receipt, no vote

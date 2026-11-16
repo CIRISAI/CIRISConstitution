@@ -12,7 +12,7 @@ revocations, and when the pre-signed halts are sealed. Three readers read each w
 and pinned to the genesis, not upgraded), in ORDERS arrival orders.
 
 Sections, each compared with ceremony_expected.tsv:
-    property   P1 to P9. Each world's expected answers are written by the world builder from how the world was made,
+    property   P1 to P11. Each world's expected answers are written by the world builder from how the world was made,
                never by the model, and the model must give them. Each property has planted breaks; each break must
                make the property fail in at least one world.
     finding    what the model shows, each computed from a run.
@@ -41,7 +41,30 @@ READERS = (("up", UP), ("pin", PIN), ("old", OLD))
 
 DEFAULT = dict(gen_voices=HOLD, fork=False, rebind=None, seat_td=False, ob2=True, edge=True, owner_rev=False,
                third_rev=False, revoke_holders=(), halts="before", acts=(), names_earlier=False, custody="separate",
-               renew=False, extra_node=False)
+               renew=False, extra_node=False, later=())
+
+K0 = {"A": "A", "B": "B", "C": "C"}
+C0 = {"A": "RA", "B": "RB", "C": "RC"}
+# Later bundles (CC 2.6.1.11): (id, prev, keys, coms, voices, new keys whose records the world signs). The
+# commitment a map holds is the recovery key it commits to.
+LATER = {
+    "addD": ("G2", "G", dict(K0, D="D"), dict(C0, D="RD"), ("A", "B", "D"), ("D",)),
+    "addD_unsigned": ("G2", "G", dict(K0, D="D"), dict(C0, D="RD"), ("A", "B"), ("D",)),
+    "removeC_minority": ("G2", "G", {"A": "A", "B": "B"}, {"A": "RA", "B": "RB"}, ("A",), ()),
+    "removeC": ("G2", "G", {"A": "A", "B": "B"}, {"A": "RA", "B": "RB"}, ("A", "B"), ()),
+    "recommitB_unsigned": ("G2", "G", K0, dict(C0, B="RB2"), ("A", "C"), ()),
+    "recommitB": ("G2", "G", K0, dict(C0, B="RB2"), ("A", "B"), ()),
+    "recover": ("GR", "G", dict(K0, A="A2"), dict(C0, A="RA2"), ("RA",), ("A2",)),
+    "recover_by_signing_key": ("GR", "G", dict(K0, A="A2"), dict(C0, A="RA2"), ("A",), ("A2",)),
+    "recover_other_seat": ("GR", "G", dict(K0, A="A2", B="B2"), dict(C0, A="RA2"), ("RA",), ("A2", "B2")),
+    "recover_same_commitment": ("GR", "G", dict(K0, A="A2"), C0, ("RA",), ("A2",)),
+    "recover_spent_returns": ("GR2", "GR", dict(K0, A="A3"), dict(C0, A="RA"), ("RA2",), ("A3",)),
+    "recover_fresh": ("GR2", "GR", dict(K0, A="A3"), dict(C0, A="RA3"), ("RA2",), ("A3",)),
+    "recover_spent_key": ("GR2", "GR", dict(K0, A="A9"), dict(C0, A="RA9"), ("RA",), ("A9",)),
+    "recover_to_reckey": ("GR", "G", dict(K0, A="RA"), dict(C0, A="RA2"), ("RA",), ("RA",)),
+    "recover_to_spent_key": ("GR2", "GR", dict(K0, A="RA"), dict(C0, A="RA3"), ("RA2",), ("RA",)),
+    "addD_after_recover": ("G3", "GR", dict(K0, A="A2", D="D"), dict(C0, A="RA2", D="RD"), ("A2", "C", "D"), ("D",)),
+}
 
 
 def world(**o):
@@ -69,14 +92,14 @@ def world(**o):
     halts = [row("PH" + h, "halt", h, ("F" + h,), halves=frozenset({"ed", "pq"}), sealed=True) for h in HOLD]
     gnames = tuple(r["id"] for r in F)
     # the bundle's own count is the seats' canonical conferral: a seat is canonical by its place in `serve`
-    G = row("G", "bundle2", "A", gnames, version=1, prev=None, roster=HOLD, serve=("N1", "N2"),
+    G = row("G", "bundle2", "A", gnames, version=1, prev=None, roster=HOLD, serve=("N1", "N2"), coms=C0,
             voices=tuple(o["gen_voices"]))
     pre = F + (halts if o["halts"] == "before" else []) + [G]
     fork = []
     if o["fork"]:
         fork.append(row("TD1b", "td", "N1", ("FN1",), seat="n1", xw="xw1b"))
         fork.append(row("Gb", "bundle2", "A", tuple(n for n in gnames if n not in ("TD1", "TD2")) + ("TD1b",), version=1, prev=None,
-                        roster=HOLD, serve=("N1",), voices=HOLD))
+                        roster=HOLD, serve=("N1",), coms=C0, voices=HOLD))
 
     # after the genesis: everyone signs anew
     after = [] if o["halts"] == "before" else list(halts)
@@ -110,6 +133,17 @@ def world(**o):
         after.append(row("TDs", "td", "N1", ("FN1",), seat="n1", xw="xw1s"))
     for i, vs in enumerate(o["acts"]):
         after.append(row("Q%d" % i, "confer", vs[0], tuple("F" + k for k in vs), voices=tuple(vs)))
+    signed_recs = set()
+    for name in o["later"]:
+        bid, prev, keys, coms, voices, new = LATER[name]
+        recs = []
+        for k in new:
+            if k not in signed_recs:
+                signed_recs.add(k)
+                after.append(rec("F" + k, k, "accord_holder"))
+            recs.append("F" + k)
+        after.append(row(bid, "bundle2", voices[0], (prev,) + tuple(recs), version=2, prev=prev, keys=keys,
+                         coms=coms, voices=voices))
     after.append(row("HF", "halt", "A", ("FA",), halves=frozenset({"ed", "pq"})))
     after.append(row("RS", "resume", "A", ("HF",), voices=("A", "B")))
     rows = early + pre + fork + after
@@ -119,11 +153,7 @@ def world(**o):
     x["gen_valid"] = set(o["gen_voices"]) >= set(HOLD)
     x["e1"] = {r["id"] for r in early}
     rev = set(o["revoke_holders"])
-    live = set(HOLD) - rev | {"N1", "N2", "U1", "U2", "AG"}
-    if o["owner_rev"] and o["ob2"]:
-        live.discard("AG")
-    x["live"] = live if x["gen_valid"] else set(HOLD) - rev | {"N1", "N2", "U1", "U2", "AG"} - (
-        {"AG"} if o["owner_rev"] and o["ob2"] else set())
+    x["live"] = set(HOLD) - rev | {"N1", "N2", "U1", "U2", "AG"}      # only a key ends its own liveness
     xw = {"n1": "xw1", "n2": "xw2"}
     if o["fork"]:
         xw = {"n1": None, "n2": None}                # two geneses: tips hold only what both name
@@ -134,10 +164,31 @@ def world(**o):
     x["xw"] = xw if x["gen_valid"] else {"n1": None, "n2": None}
     # canonical standing: the seats every genesis in force lists; a fork leaves what both list
     x["canonical"] = frozenset() if not x["gen_valid"] else frozenset({"N1"} if o["fork"] else {"N1", "N2"})
-    x["steward"] = "U2" if o["ob2"] else None
+    x["steward"] = "U2" if o["ob2"] and not o["owner_rev"] else None     # the owner's revocation ends the binding
     x["may_act"] = bool(o["ob2"] and o["edge"] and not o["owner_rev"])
     x["members"] = frozenset({"U1", "U2"})
     x["live_holders"] = set(HOLD) - rev
+    # the lineage: which later bundles count, and the roster at its head, from how the world was made
+    ROSTERS = {"addD": ({"G2"}, "ABCD"), "addD_unsigned": (set(), "ABC"), "removeC_minority": (set(), "ABC"),
+               "removeC": ({"G2"}, "AB"), "recommitB_unsigned": (set(), "ABC"), "recommitB": ({"G2"}, "ABC"),
+               "recover": ({"GR"}, ("A2", "B", "C")), "recover_by_signing_key": (set(), "ABC"),
+               "recover_other_seat": (set(), "ABC"), "recover_same_commitment": (set(), "ABC"),
+               "recover_to_reckey": (set(), "ABC")}
+    want_b, want_r = set(), frozenset(HOLD)
+    names = tuple(o["later"])
+    if names:
+        key = names[-1] if names[-1] in ROSTERS else None
+        if key:
+            want_b, r = ROSTERS[key]
+            want_r = frozenset(r)
+        elif names[0] == "recover":       # a second bundle on the recovery
+            second = {"recover_spent_returns": (set(), ("A2", "B", "C")),
+                      "recover_fresh": ({"GR2"}, ("A3", "B", "C")),
+                      "recover_spent_key": (set(), ("A2", "B", "C")),
+                      "recover_to_spent_key": (set(), ("A2", "B", "C")),
+                      "addD_after_recover": ({"G3"}, ("A2", "B", "C", "D"))}[names[1]]
+            want_b, want_r = {"GR"} | second[0], frozenset(second[1])
+    x["bundles"], x["roster"] = frozenset(want_b), want_r
     return rows, x, o
 
 
@@ -190,8 +241,8 @@ def worlds_p2():
 
 
 def p2(o, orders):
-    """A key is live only by its own record of this form. No row of another key makes it live; only its three
-    revokers (itself, its owner, its roster) end it."""
+    """A key is live only by its own record of this form. No row of another key makes it live, and only its own
+    revocation ends it: an owner's revocation ends the owner-binding, never the key (CC 2.4.1.1)."""
     rows, x, o = world(**o)
     for order in orders(rows):
         a = run(rows, PIN, order)
@@ -351,6 +402,7 @@ def worlds_p9():
     yield dict()
     yield dict(fork=True)
     yield dict(rebind="concurrent", seat_td=True, owner_rev=True)
+    yield dict(later=("recover", "addD_after_recover"))
 
 
 def p9(o, orders):
@@ -366,11 +418,49 @@ def p9(o, orders):
     return True
 
 
+def worlds_p10():
+    for n in ("addD", "addD_unsigned", "removeC_minority", "removeC", "recommitB_unsigned", "recommitB"):
+        yield dict(later=(n,))
+    yield dict(later=("recover", "addD_after_recover"))
+
+
+def p10(o, orders):
+    """A roster change is a later bundle, counted at a strict majority of the predecessor's holders, with each holder
+    it adds and each holder whose commitment it changes; a count not met changes nothing."""
+    rows, x, o = world(**o)
+    for order in orders(rows):
+        a = run(rows, PIN, order)
+        if a["bundles"] != x["bundles"] or a["roster"] != x["roster"]:
+            return False
+    return True
+
+
+def worlds_p11():
+    for n in ("recover", "recover_by_signing_key", "recover_other_seat", "recover_same_commitment", "recover_to_reckey"):
+        yield dict(later=(n,))
+    for n in ("recover_spent_returns", "recover_fresh", "recover_spent_key", "recover_to_spent_key"):
+        yield dict(later=("recover", n))
+
+
+def p11(o, orders):
+    """A recovery is a later bundle signed by the recovery key alone, the one the commitment in force commits to; it
+    changes that holder's key and next commitment and nothing else; the next commitment differs from the spent one, a
+    spent commitment never returns, and a recovery key never becomes a seat's key."""
+    rows, x, o = world(**o)
+    for order in orders(rows):
+        a = run(rows, PIN, order)
+        if a["bundles"] != x["bundles"] or a["roster"] != x["roster"]:
+            return False
+        if any(k.startswith("R") for k in a["roster"]):
+            return False
+    return True
+
+
 PROPS = [
     ("P1", "no earlier-form row counts for anything, in any arrival order", p1, worlds_p1,
      ("earlier_until_genesis", "earlier_named")),
-    ("P2", "a key is live only by its own record of this form, and only its three revokers end it", p2, worlds_p2,
-     ("earlier_record_live", "named_makes_live", "third_party_ends", "owner_revocation_ignored")),
+    ("P2", "a key is live only by its own record of this form, and only its own revocation ends it", p2, worlds_p2,
+     ("earlier_record_live", "named_makes_live", "third_party_ends", "owner_revocation_ends")),
     ("P3", "the accord's count holds from the genesis, which every holder signs", p3, worlds_p3,
      ("genesis_majority", "roster_shrinks", "earlier_votes")),
     ("P4", "no single device yields a halt", p4, worlds_p4, ("one_half_verifies", "earlier_halt")),
@@ -378,13 +468,18 @@ PROPS = [
      p5, worlds_p5, ("seat_alone_td", "one_holder_rebind", "pick_one", "earlier_rebind", "canonical_self_claimed",
                      "canonical_ends_with_record")),
     ("P6", "an agent has no standing until its steward-binding of this form exists", p6, worlds_p6,
-     ("earlier_binding", "act_without_steward", "earlier_roster")),
+     ("earlier_binding", "act_without_steward", "earlier_roster", "owner_revocation_ignored")),
     ("P7", "two geneses are a fork: tips to a reader with no pin, the other void to one that pinned", p7, worlds_p7,
      ("fork_union", "pinned_ignored")),
     ("P8", "a halt of this form is available from the first moment after the genesis", p8, worlds_p8,
      ("publish_ungated",)),
     ("P9", "the result does not depend on the order in which a node receives the rows", p9, worlds_p9,
      ("by_arrival", "fork_first")),
+    ("P10", "a roster change is a later bundle, counted at a strict majority of the predecessor's holders and by each "
+     "holder it adds or re-commits", p10, worlds_p10, ("change_minority", "added_unsigned", "recommit_unsigned")),
+    ("P11", "a recovery is the recovery key's statement alone and changes only its own seat; a spent commitment never "
+     "returns, and a recovery key never becomes a seat's key", p11, worlds_p11,
+     ("recovery_any_key", "recovery_other_seat", "spent_returns", "spent_key_recovers", "reckey_as_seat")),
 ]
 
 
@@ -408,8 +503,10 @@ def findings(orders):
     out.append(("F4 an agent whose steward signed no edge of this form",
                 "may not act" if not dict(run(rows, PIN)["may_act"])["AG"] else "may act"))
     rows, x, o = world(owner_rev=True)
-    out.append(("F5 an owner's revocation of the agent key it owns", "the key ends" if "AG" not in run(rows, PIN)["live"]
-                else "the key stays live"))
+    a = run(rows, PIN)
+    out.append(("F5 an owner's revocation of the agent key it owns",
+                ("the key stays live" if "AG" in a["live"] else "the key ends") + ("; the binding ends"
+                 if dict(a["steward"]).get("AG") is None else "; the binding stands")))
     rows, x, o = world()
     out.append(("F6 the earlier sealed halt, published after the genesis",
                 "refused" if "HE" not in run(rows, PIN)["honoured"] else "honoured"))
