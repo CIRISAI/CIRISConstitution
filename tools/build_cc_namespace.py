@@ -200,6 +200,8 @@ def _reserved_rules():
         # CC 3.1.3 planes as rows: cosigned or possession-admitted, never substrate self-reports.
         (lambda p, c: p.startswith("group:roster"),
          "cosigned under the group's consensus_protocol; withdrawn only by a cosigned withdraws", "CC 3.1.3"),
+        (lambda p, c: p.startswith("trust:blessing"),
+         "cosigned under the conferring family's consensus_protocol (for the accord, a strict majority of the standing roster); withdrawn only by a cosigned withdraws", "CC 3.1.3"),
         (lambda p, c: p.startswith("key:record"),
          "self only (attesting_key_id == attested_key_id == the key), admitted by proof of possession", "CC 3.1.3"),
         (lambda p, c: p.startswith("key:revocation"),

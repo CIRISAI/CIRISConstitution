@@ -129,7 +129,7 @@ lapsed has it in its past. Only the key's own revocation ends its liveness: the 
 owner-binding's standing and the seating roster's removal ends the seat, and neither moves liveness. The check reads
 twelve properties over 9,450 generated worlds at six instants in eight
 arrival orders each, with a plant per property that must be caught. It runs six candidate readings of "renewed
-in time", the class condition read from the record and from an owner-binding, eleven attacks in every arrival
+in time", the class condition read from the record and from an owner-binding, twelve attacks in every arrival
 order of up to seven rows, and the store's steady state from stated rates. Nothing here is measured. Whoever
 holds an ended key's private half can revive it, and that is recorded as conceded.
 

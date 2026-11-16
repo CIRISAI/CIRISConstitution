@@ -45,6 +45,12 @@ second adult, or by a person a row on record places in a minor band, and each ma
 
 Each has a planted break the check must catch.
 
+Announcement (CC 5.4.6, CC 3.4.13 Q5), over every owner (an adult, or a person with no band row) and every set of
+occurrences a node carries (of an adult, of a person a row places in a minor band, of a person with no band row):
+
+  A1  a node carrying the occurrence of a person a row places in a minor band is never announced, whoever owns it
+  A2  any other node with an owner may be announced (the refusal reads nothing else)
+
 The rule is the last reading: nothing is refused and forgotten, the reader counts the live bindings the node's
 own key cosigned, and any count other than one is no owner (CC 3.2). It holds all eight. Every reading with a door
 that refuses gives something up, and the check pins what, so the reason the door went is on record (C557).
@@ -215,8 +221,40 @@ def steward_main():
     return rc
 
 
+# ---- announcement: the refusal reads the device's occurrences -------------------------------------------------
+BANDS = ("adult", "minor", None)          # None: no band row on record
+
+
+def may_announce(owner_band, occ_bands):
+    if owner_band == "minor":
+        return False                       # never an owner (S3); kept for the plant's reading
+    if "reads_owner_band" in SMUT:         # PLANT: the refusal reads only the owner's band
+        return True
+    return "minor" not in occ_bands
+
+
+def announce_main():
+    fail = {}
+    n = 0
+    for owner in ("adult", None):
+        for k in range(0, 4):
+            for occ in itertools.combinations(BANDS, k):
+                n += 1
+                v = may_announce(owner, set(occ))
+                if "minor" in occ and v: fail.setdefault("A1", (owner, occ))
+                if "minor" not in occ and not v: fail.setdefault("A2", (owner, occ))
+    rc = 0 if not fail else 1
+    print(f"  announcement: {n} cases, A1-A2 " + ("hold" if not fail else f"break {sorted(fail)}"))
+    SMUT.add("reads_owner_band")
+    caught = any("minor" in occ and may_announce(o, set(occ)) for o in ("adult", None)
+                 for k in range(4) for occ in itertools.combinations(BANDS, k))
+    SMUT.discard("reads_owner_band")
+    print("    plant reads_owner_band: A1 " + ("caught" if caught else "NOT CAUGHT"))
+    return rc | (0 if caught else 1)
+
+
 def main():
-    rc = steward_main()
+    rc = steward_main() | announce_main()
     for refusal, cosign in READINGS:
         n, fail = check(refusal, cosign)
         bad = {p for p, v in fail.items() if v}
@@ -225,7 +263,7 @@ def main():
         print(f"  refusal {refusal:5} cosign {cosign:7}: {n} runs, gives up {', '.join(sorted(bad)) or 'nothing'}" + ("" if ok else f"  FAIL expected {sorted(EXPECTED[(refusal, cosign)])}"))
         if "-v" in sys.argv:
             for p in sorted(bad): print(f"    {p}: {fail[p]}")
-    print("owner_binding: the fold over counted bindings holds O1-O8 and S1-S5; each of the four door readings gives up what is pinned (C557)" if not rc else "owner_binding: FAIL")
+    print("owner_binding: the fold over counted bindings holds O1-O8, S1-S5 and A1-A2; each of the four door readings gives up what is pinned (C557)" if not rc else "owner_binding: FAIL")
     return rc
 
 if __name__ == "__main__":

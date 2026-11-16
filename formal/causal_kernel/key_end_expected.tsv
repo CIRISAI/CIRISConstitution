@@ -36,6 +36,7 @@ attack	K8 another voice revives an ended key	HOLDS	facts hold
 attack	K9 a stranger rotates a key it does not hold	HOLDS	facts hold
 attack	K10 a row signed after its key's held end	HOLDS	facts hold
 attack	K11 an owner or a seating roster revokes a key to end its liveness	HOLDS	facts hold
+attack	K12 an owner settles two concurrent rotations by revoking one successor's binding	HOLDS	facts hold
 numbers	no end (today), after one year	770150 rows, growing 2110 a day for ever
 numbers	no end (today), after five years	3850750 rows, growing 2110 a day for ever
 numbers	default end, 365 days	steady state m*e*r = 770150 rows (83950.0 keys)

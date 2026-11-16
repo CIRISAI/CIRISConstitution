@@ -510,6 +510,18 @@ def k11():
              ("a row the key signs afterwards concludes", v[3]), ("every arrival order agrees", agree)])
 
 
+@attack("K12 an owner settles two concurrent rotations by revoking one successor's binding")
+def k12():
+    rows = [pX, rec("pA", "A", 0, 10), rec("qB", "B", 4, 12, names=("pA",), succ_of="A", at_old=4),
+            rec("qC", "C", 6, 14, names=("pA",), succ_of="A", at_old=6), unbind("o", "X", "C", 7, "binding")]
+    f = lambda S: (KE.successor(S, "A"), KE.standing(S, "C", 8, "binding"), KE.standing(S, "B", 8, "binding"), KE.live(S, "C", 8))
+    v, agree = every_order(rows, f)
+    return ("HOLDS", "the owner of the key",
+            "the owner's revocation of one successor's binding settles ownership; the hand-on stays empty until a rotation names both, and the revoked successor stays live",
+            [("no successor is handed on", v[0] is None), ("the revoked successor's binding has ended", not v[1]),
+             ("the other successor's binding stands", v[2]), ("the revoked successor is still live", v[3]), ("every arrival order agrees", agree)])
+
+
 # ---- numbers ---------------------------------------------------------------------------------------------------
 def numbers():
     m, atts = 230, 1650

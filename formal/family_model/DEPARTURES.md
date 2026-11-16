@@ -486,11 +486,11 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 ## A minor's node is never announced to the federation
 
-**When.** The owner of the node is a minor.
+**When.** The node carries the occurrence of a person a row places in a minor band, whoever owns the node.
 
-**Why.** A binding at federation scope makes its owner findable and contactable by adults with no connection to them. No steward, guardian or consent lifts that floor, so the promotion is refused.
+**Why.** A binding at federation scope makes the node findable and contactable by adults with no connection to the minor who uses it. No steward, guardian or consent lifts that floor, so the promotion is refused.
 
-**Text.** CC 5.4.6: "a node whose owner a row on record places in a minor band MUST NOT carry a federation-scope owner-binding"
+**Text.** CC 5.4.6: "a node that carries the occurrence of a `user` key a row on record places in a minor band MUST NOT carry a federation-scope owner-binding"
 
 | column | families |
 |---|---|

@@ -57,6 +57,12 @@ All five hold and every plant is caught. The minor-band test reads the band row,
 reading and not at the binding's door: a minor's binding is held and counts for nothing, as a stranger's does. An
 owner with no band row on record counts, as CC 3.4.13's fail-secure rule lets an unassured owner announce a node.
 
+**Announcement.** A third section reads CC 5.4.6's refusal over every owner (an adult, or a person with no band row)
+and every set of occurrences a node carries (an adult's, a minor-band person's, an unbanded person's): 16 cases. A1: a
+node carrying a minor-band person's occurrence is never announced, whoever owns it. A2: any other owned node may be.
+Both hold, and the plant `reads_owner_band` (the refusal reads only the owner's band, so a guardian could announce a
+child's device) is caught.
+
 **What it does not model.** Lapse by `delegation_valid_until` (a withdrawal stands for it); how a band comes to
 be on record (`formal/age_assurance`); the audience of each re-signed row (`formal/mesh_net`);
 the steward-binding gate on admission (`formal/membership`).
