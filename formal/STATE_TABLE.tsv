@@ -88,8 +88,8 @@ consent	node×community	consent.community_trust	bounded	3.3.1	a revocation is a 
 consent	node×peer node	consent.replication	none	3.3.7	—	—	consent.Consent.tla:replication=none	consent.replication.none	modelled
 consent	node×peer node	consent.replication	granted	3.3.7	consent:replication:v1 by the adder naming the contact's node(s) as subject	adder (node owner)	consent.Consent.tla:replication=granted	contact.added contact.via_code	modelled
 content	row	row.tier	local	5.3.2.4	local-tier write, signature deferred	producer	mesh_life.MeshLife.tla:Write	—	modelled
-content	row	row.tier	federation	5.3.2.4 2.6.1.8	promotion: hybrid signature over JCS(attestation_envelope)	producer	mesh_life.MeshLife.tla:Write	—	modelled
-content	row	row.standing	admitted	2.1 2.6.1.8	admission gates pass	producer	withdraws_admission.WithdrawsAdmission.tla:admitted	row.standing.admitted	modelled
+content	row	row.tier	federation	5.3.2.4 8.11.9	promotion: hybrid signature over JCS(attestation_envelope)	producer	mesh_life.MeshLife.tla:Write	—	modelled
+content	row	row.standing	admitted	2.1 8.11.9	admission gates pass	producer	withdraws_admission.WithdrawsAdmission.tla:admitted	row.standing.admitted	modelled
 content	row	row.standing	withdrawn	2.4.1.1	withdraws under rules 0–5	producer / subject / proxy / delegate	withdraws_admission.WithdrawsAdmission.tla:withdrawn	file.withdrawn	modelled
 content	row	row.standing	recanted	2.4.1.4	recants by the producer	producer	—	—	text-only
 content	row	row.standing	superseded	2.4.1	supersedes by the same attester	producer	—	—	text-only
@@ -110,8 +110,8 @@ content	row	row.scope	affiliations	2.3.3 5.2	the producer's cohort_scope (mirror
 content	row	row.scope	species	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	—	—	text-only
 content	row	row.scope	biosphere	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	—	—	text-only
 content	row	row.scope	federation	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	contact.reachable	modelled
-content	blob	blob.delivery	inline	2.6.1.4	JCS image at or below 1 MiB carried in the row	producer	mesh_life.MeshLife.tla:Write	—	modelled
-content	blob	blob.delivery	chunked	2.6.1.4 5.3.3 5.3.3.11	above the cap: chunk plane, chunk-DAG, per-device delivery receipts	producer	mesh_life.MeshLife.tla:Write	file.large	modelled
+content	blob	blob.delivery	inline	8.11.5	JCS image at or below 1 MiB carried in the row	producer	mesh_life.MeshLife.tla:Write	—	modelled
+content	blob	blob.delivery	chunked	8.11.5 5.3.3 5.3.3.11	above the cap: chunk plane, chunk-DAG, per-device delivery receipts	producer	mesh_life.MeshLife.tla:Write	file.large	modelled
 authority	delegation link	delegation.link	live	2.4.1.2 4.4.3.12	delegates_to admitted at the door (term within ceiling)	principal	authority_tree.authority_tree.py:links	delegation.chain	modelled
 authority	delegation link	delegation.link	withdrawn	4.4.3.19	withdraws by the principal; cascade	principal	authority_tree.authority_tree.py:withdraw	delegation.link.withdrawn	modelled
 authority	delegation link	delegation.link	expired	4.4.3.12	delegation_valid_until passed (a withdrawal)	principal	authority_tree.authority_tree.py:I10	delegation.link.expired	modelled

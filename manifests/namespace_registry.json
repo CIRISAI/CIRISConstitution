@@ -218,14 +218,14 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc19",
+    "cc_version": "1.0-rc20",
     "components_outside_normative": [
       "cirisbench"
     ],
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 184,
+    "n_families": 186,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
@@ -233,7 +233,7 @@
       "cirisbench": 1,
       "lens": 9,
       "node": 50,
-      "persist": 34,
+      "persist": 36,
       "registry": 20,
       "transport-delivery": 7
     },
@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "7a1bd198d592befe880d6a76afbb3a1da3399beab6a843022baaa390fb8351b1",
+    "registry_sha256": "4ad83caa00b33a4b7097f8fa655ced9d47cf56de6cb258b604a7744cb2abcca0",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "66f7209466bc9cc9d59026bb8cf9e9c6fcd7f2e5f2aae5b2d79f8da304712982"
+    "source_sha256": "c6631c9cd71a7f1094ea538b3b0ae643656ca118da9032492b6592b8858d2545"
   },
   "families": [
     {
@@ -2790,7 +2790,7 @@
     },
     {
       "cc_section": "3.1.2",
-      "description": "Where the key's seed lives \u2014 the custody mechanism, not the certified class (CC 4.2.2 hardware_class answers that, and is a JSON property, never a value of {platform}).",
+      "description": "Where the key's seed lives \u2014 the custody mechanism, not the certified class (CC 4.2.2 hardware_class answers that, and is a member of a key record's attestation_evidence, never a value of {platform}).",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
@@ -3328,6 +3328,29 @@
             "national",
             "federation"
           ]
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "A subject's rough-location declaration (CC 3.3.3): the scores row whose envelope is the location_proof payload, its cell at resolution 7 or coarser (CC 2.6.6.1).",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "location_proof:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 4.5.9",
+        "rule": "subject-only (attesting_key_id is the subject; no delegation mints one)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "location_proof"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
         }
       ]
     },
@@ -4341,7 +4364,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "proven_rogue / not_proven (lowercase per CC 3.1.7 R3; the substrate's coined upheld / suspension / expertise_fraud admit as open vocab under CC 4.5.1.1).",
+      "description": "proven_rogue / not_proven (lowercase per CC 3.1.7 R3; the values upheld / suspension / expertise_fraud a substrate emits admit as open vocab under CC 4.5.1.1).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",
@@ -4577,7 +4600,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "The holders' re-bind of a seated serve node's transport destination and transit pair (registered under CC 3.1.7 R2(a); the quorum act of CC 3.3.6.2 and CC 5.3.4): an attestation row about a seated serve node, authored by an accord holder an",
+      "description": "The holders' re-bind of a seated serve node's transport destination and transit pair (registered under CC 3.1.7 R2(a); the quorum act of CC 3.3.6.2 and CC 5.3.4): an attestation row about a seated serve node, a counted row the accord's hold",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -4618,6 +4641,29 @@
         {
           "class": "vocab",
           "segment": "{kind}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "A conferring roster's counted conferral on the ceremony plane (CC 3.2 T2): a scores row cosigned under the root's conferring family's consensus_protocol, whose payload names the subject's key record by row id and carries the roles conferred",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "trust:blessing",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "cosigned under the conferring family's consensus_protocol (for the accord, a strict majority of the standing roster); withdrawn only by a cosigned withdraws"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "trust"
+        },
+        {
+          "class": "literal",
+          "segment": "blessing"
         }
       ]
     },

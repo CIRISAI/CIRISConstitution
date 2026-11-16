@@ -107,7 +107,7 @@ def rule_of(s):
         return OrderedDict([("kind", "voted_majority"), ("count", int(m.group(1)))])
     if s.startswith("more than 1/2 of the others"):
         return OrderedDict([("kind", "strict_majority_of_others")])
-    if s in ("1/2 confirms", "more than 1/2"):
+    if s in ("more than 1/2 confirms", "more than 1/2"):
         return OrderedDict([("kind", "strict_majority")])
     m = re.match(r"^role:([a-z_|]+) at (\d+)$", s)
     if m:

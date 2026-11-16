@@ -200,6 +200,8 @@ def _reserved_rules():
         # CC 3.1.3 planes as rows: cosigned or possession-admitted, never substrate self-reports.
         (lambda p, c: p.startswith("group:roster"),
          "cosigned under the group's consensus_protocol; withdrawn only by a cosigned withdraws", "CC 3.1.3"),
+        (lambda p, c: p.startswith("trust:blessing"),
+         "cosigned under the conferring family's consensus_protocol (for the accord, a strict majority of the standing roster); withdrawn only by a cosigned withdraws", "CC 3.1.3"),
         (lambda p, c: p.startswith("key:record"),
          "self only (attesting_key_id == attested_key_id == the key), admitted by proof of possession", "CC 3.1.3"),
         (lambda p, c: p.startswith("key:revocation"),
@@ -209,6 +211,9 @@ def _reserved_rules():
         # CC 3.3.2 / 3.1.3 key wraps: sealer- or minter-signed, about the recipient occurrence.
         (lambda p, c: p.startswith("key_grant:"),
          "sealer-only: attesting_key_id speaks for the content/stream owner (content, stream) or is the epoch's minter (epoch); attested_key_id = the recipient occurrence; never withdrawn", "CC 3.3.2"),
+        # CC 3.3.3 / 4.5.9: a location proof is the subject's own act.
+        (lambda p, c: p.startswith("location_proof:"),
+         "subject-only (attesting_key_id is the subject; no delegation mints one)", "CC 4.5.9"),
         # CC 3.1.3 legacy delegation labels: not a substrate self-report.
         (lambda p, c: p.startswith("self:delegates_to"),
          "legacy label on an owner's own delegates_to row; claims no job, confers nothing; closed", "CC 3.1.3"),

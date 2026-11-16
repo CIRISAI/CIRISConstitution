@@ -9,13 +9,14 @@ checkpoint.py: which counted rows of a group's ledger count for a reader.
                         row. There is no other way for a head act to fail.
     the reader's line   A reader's own acknowledgement of a head (an `ack` row under its key, with `room` and `head`)
                         makes the acknowledged act, and every counted act in its past, that reader's line. For that
-                        reader the line counts, and a counted act that is concurrent with an act of the line and is
-                        counted over heads all strictly older than the heads that act names does not count. So a line
-                        grown from below what the reader acknowledged is void for it, however long it is. An act counted
-                        over the SAME head as an act of the reader's line is not void: it waits as a tip, as for
-                        everyone (KERNEL 7), and a counted row naming both is accepted by that reader like any other.
-                        This is relative to the reader. It ranks no line above another: a reader with no acknowledgement
-                        has no line, and for it every counted act the cut lets count, built on acts that count, counts.
+                        reader the line counts, and a counted act concurrent with an act of the line that names only
+                        heads strictly in that act's past does not count (CC 2.7.8: "holds void every counted act
+                        that names an older head and is not in that head's past"). So a line grown from below what
+                        the reader acknowledged is void for it, however long it is, and so is a SIBLING of the
+                        acknowledged act (it names their common predecessor), and a row built on either. For a reader
+                        with no acknowledgement on that line two versions of one head wait as tips (CC 2.7.8: "Two
+                        versions of one head wait as tips"), and a counted row naming both makes one head again.
+                        This is relative to the reader and binds nobody else. It ranks no line above another.
 
 Both are functions of (rows, own key). No instant, no arrival order and no digest is compared.
 
@@ -69,14 +70,19 @@ def settle(S, C, obj, own=None, group=False):
     line = {r["id"] for r in acts}
     built = {r["id"]: [h for h in r["head"] if h in line] for r in live}          # the counted acts it is built on
     mine = {r["id"] for r in own_line(S, own, obj)} & {r["id"] for r in live}
+    # the reader's line: r names only heads strictly in the past of the line's act c (CC 2.7.8)
+    line_behind = lambda r, c: c["id"] != r["id"] and S.concurrent(r["id"], c["id"]) and older(S, r["head"], [c["id"]])
+    # the refused group checkpoint (group=True only): r's heads strictly older than the heads c names
     behind = lambda r, c: c["id"] != r["id"] and S.concurrent(r["id"], c["id"]) and older(S, r["head"], c["head"])
 
     def gamma(I):
         """The acts that count if exactly the acts in I (and the reader's line) are the checkpoints."""
-        marks = [c for c in live if c["id"] in mine or (group and c["id"] in I)]
+        marks = [c for c in live if group and c["id"] in I and c["id"] not in mine]
+        line = [c for c in live if c["id"] in mine]
         out = set()
         for r in live:                                                  # ancestors first
-            if r["id"] in mine or (all(h in out for h in built[r["id"]]) and not any(behind(r, c) for c in marks)):
+            if r["id"] in mine or (all(h in out for h in built[r["id"]]) and not any(line_behind(r, c) for c in line)
+                                   and not any(behind(r, c) for c in marks)):
                 out.add(r["id"])
         return frozenset(out)
     T = frozenset()
@@ -113,10 +119,13 @@ def versions(ids, builds_on, past, valid, ack=None, group=False):
     heads version i extends; past[i]: every version in its past; valid(i): counted over the heads it extends. ack: the
     version this reader has acknowledged, or None. Returns (certain, possible); they differ only with group=True."""
     conc = lambda i, j: i != j and i not in past[j] and j not in past[i]
+    # the refused group checkpoint (group=True only): i's heads strictly older than the heads j extends
     stale = lambda i, j: conc(i, j) and bool(builds_on[j]) and bool(builds_on[i]) and all(any(e in past[h] for h in builds_on[j]) for e in builds_on[i])
+    # the reader's line: i extends only versions strictly in the past of j, an act of the line (CC 2.7.8)
+    behind = lambda i, j: conc(i, j) and bool(builds_on[i]) and all(e in past[j] for e in builds_on[i])
     P = [i for i in ids if valid(i)]
     mine = frozenset() if ack is None else frozenset({ack}) | frozenset(past[ack])       # the reader checkpoint: its acknowledged line
-    P = sorted((i for i in P if i in mine or not any(stale(i, a) for a in mine)), key=lambda i: len(past[i]))
+    P = sorted((i for i in P if i in mine or not any(behind(i, a) for a in mine)), key=lambda i: len(past[i]))
 
     def gamma(I):
         out = set()

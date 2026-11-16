@@ -169,7 +169,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A halt or a roster act counts only toward the accord it names. A row that names no accord, or one the reader does not hold, is refused when the rows are read.
 
-**Text.** CC 2.6.1.8: "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold"
+**Text.** CC 8.11.9: "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold"
 
 | column | families |
 |---|---|
@@ -486,11 +486,11 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 ## A minor's node is never announced to the federation
 
-**When.** The owner of the node is a minor.
+**When.** The node carries the occurrence of a person a row places in a minor band, whoever owns the node.
 
-**Why.** A binding at federation scope makes its owner findable and contactable by adults with no connection to them. No steward, guardian or consent lifts that floor, so the promotion is refused.
+**Why.** A binding at federation scope makes the node findable and contactable by adults with no connection to the minor who uses it. No steward, guardian or consent lifts that floor, so the promotion is refused.
 
-**Text.** CC 5.4.6: "a node whose owner a row on record places in a minor band MUST NOT carry a federation-scope owner-binding"
+**Text.** CC 5.4.6: "a node that carries the occurrence of a `user` key a row on record places in a minor band MUST NOT carry a federation-scope owner-binding"
 
 | column | families |
 |---|---|
@@ -715,7 +715,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** The recipient field names the addressed recipient. Such a row is held by its author's node and that key's node and by no other.
 
-**Text.** CC 2.6.1.8: "Also carried on consent:state rows."
+**Text.** CC 8.11.9: "Also carried on consent:state rows."
 
 | column | families |
 |---|---|

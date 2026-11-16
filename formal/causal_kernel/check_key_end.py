@@ -39,7 +39,7 @@ def limit():
 limit()
 import key_end as KE  # noqa: E402
 
-rec, att, edge, revoke = KE.rec, KE.att, KE.edge, KE.revoke
+rec, att, edge, revoke, unbind = KE.rec, KE.att, KE.edge, KE.revoke, KE.unbind
 KEYS = ("A", "B", "C", "D", "X")
 PARTIES = ("X",)
 SUBJECTS = ("X",)
@@ -51,7 +51,7 @@ pX = rec("pX", "X", 0, None, typ="user")
 # ---- generated worlds --------------------------------------------------------------------------------------
 REN = (None, (4, 14), (8, 18), (11, 20), (11, 20, "w"), (4, 9), (10, 21))
 ROT = (None, "B@4", "B@11", "B-unsigned", "B@4+C@6")
-EXTRA = (None, "revoke9", "futureD")
+EXTRA = (None, "revoke9", "futureD", "owner9", "roster9")
 
 
 def world(vuA, ren, ren2, rot, at_a, edg, extra):
@@ -79,6 +79,10 @@ def world(vuA, ren, ren2, rot, at_a, edg, extra):
         rows.append(revoke("v", "A", 9))
     if extra == "futureD":
         rows += [rec("pD", "D", 12, 20), att("d1", "D", 13, "pD", about="X")]
+    if extra == "owner9":
+        rows.append(unbind("o", "X", "A", 9, "binding"))         # the owner's revocation of A
+    if extra == "roster9":
+        rows.append(unbind("s", "C", "A", 9, "seat"))            # the seating roster's removal of A
     return rows
 
 
@@ -182,6 +186,27 @@ def p_own_rows(rows):
     return None
 
 
+def p_other_life(rows):
+    S = KE.state(rows)
+    T = KE.state([r for r in rows if not (r["kind"] == "revoke" and r["signer"] != r["key"])])
+    for k in KEYS:
+        for n in NOWS:
+            if KE.live(S, k, n) != KE.live(T, k, n) or KE.ended(S, k, n) != KE.ended(T, k, n):
+                return "%s's liveness at %d moved by another voice's revocation" % (k, n)
+    return None
+
+
+def p_other_standing(rows):
+    S = KE.state(rows)
+    for r in KE.K.sel(S.Cs, kind="revoke"):
+        if r["signer"] == r["key"]:
+            continue
+        for n in NOWS:
+            if n >= r["ra"] and KE.standing(S, r["key"], n, r["of"]):
+                return "%s keeps its %s standing at %d after %s's revocation" % (r["key"], r["of"], n, r["signer"])
+    return None
+
+
 PROPS = [
     ("P1 every answer is the same in every arrival order", "kept, concluded, derived at six instants", "arrival_clock", p_order),
     ("P2 a key whose holder signs nothing more ends at most the ceiling after the last record it signed", "the door, read from the record alone", "no_ceiling", p_ceiling),
@@ -193,6 +218,8 @@ PROPS = [
     ("P5b a rotation without the old key's signature is not kept", "the door", "rotation_one_sig", p_rotation_sigs),
     ("P6 with the same rows, a key ended at an instant is live at no later instant; the end is the greatest stated end", "ended over every record", "end_from_newest", p_ended_stays),
     ("P7 a key's life is moved only by rows the key signed (no other voice revives it)", "live over the key's own rows", "witness_revives", p_own_rows),
+    ("P8 no revocation by another voice (the owner's, the seating roster's) ends a key's liveness", "live and ended over the key's own revocation", "other_ends_life", p_other_life),
+    ("P9 the owner's revocation ends the owner-binding's standing and the roster's removal ends the seat", "standing over the other voice's revocation", "unbind_ignored", p_other_standing),
 ]
 
 
@@ -469,6 +496,30 @@ def k10():
     return ("HOLDS", "nobody",
             "a row whose own instant lies past the record it names concludes nothing: one voice's own instants compared; a back-dated instant is K3's concession, not a new one",
             [("the late row concludes nothing", not S.C.get("late"))])
+
+
+@attack("K11 an owner or a seating roster revokes a key to end its liveness")
+def k11():
+    rows = [pX, rec("pA", "A", 0, 10), unbind("o", "X", "A", 3, "binding"), unbind("s", "C", "A", 3, "seat"),
+            att("a1", "A", 5, "pA", about="X")]
+    f = lambda S: (KE.live(S, "A", 5), KE.standing(S, "A", 5, "binding"), KE.standing(S, "A", 5, "seat"), bool(S.C.get("a1")))
+    v, agree = every_order(rows, f)
+    return ("HOLDS", "nobody but the key itself",
+            "the owner's revocation ends the owner-binding's standing and the roster's removal ends the seat; the key stays live and its own rows still conclude",
+            [("the key is still live", v[0]), ("the binding's standing has ended", not v[1]), ("the seat has ended", not v[2]),
+             ("a row the key signs afterwards concludes", v[3]), ("every arrival order agrees", agree)])
+
+
+@attack("K12 an owner settles two concurrent rotations by revoking one successor's binding")
+def k12():
+    rows = [pX, rec("pA", "A", 0, 10), rec("qB", "B", 4, 12, names=("pA",), succ_of="A", at_old=4),
+            rec("qC", "C", 6, 14, names=("pA",), succ_of="A", at_old=6), unbind("o", "X", "C", 7, "binding")]
+    f = lambda S: (KE.successor(S, "A"), KE.standing(S, "C", 8, "binding"), KE.standing(S, "B", 8, "binding"), KE.live(S, "C", 8))
+    v, agree = every_order(rows, f)
+    return ("HOLDS", "the owner of the key",
+            "the owner's revocation of one successor's binding settles ownership; the hand-on stays empty until a rotation names both, and the revoked successor stays live",
+            [("no successor is handed on", v[0] is None), ("the revoked successor's binding has ended", not v[1]),
+             ("the other successor's binding stands", v[2]), ("the revoked successor is still live", v[3]), ("every arrival order agrees", agree)])
 
 
 # ---- numbers ---------------------------------------------------------------------------------------------------

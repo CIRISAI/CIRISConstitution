@@ -11,7 +11,7 @@
    "fold": "the value the fold gives",
    "owed": "the effects owed, or nothing"
   },
-  "count": 69
+  "count": 71
  },
  "returns": "To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.",
  "vectors": [
@@ -4228,6 +4228,196 @@
    }
   },
   {
+   "id": "persist/licensure:{authority_id}/cosign_rule[short of the count]",
+   "family": "licensure:{authority_id}",
+   "where": "cosign_rule[short of the count]",
+   "kind": "cosign",
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "licensure:{authority_id}",
+      "group": "g",
+      "head": [
+       "g"
+      ]
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "licensure:{authority_id}",
+    "gate": [
+     [
+      "count:protocol@group"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/licensure:{authority_id}/cosign_rule[roster at the signed instant]",
+   "family": "licensure:{authority_id}",
+   "where": "cosign_rule[roster at the signed instant]",
+   "kind": "count",
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "u"
+      ],
+      "family": "licensure:{authority_id}",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "licensure:{authority_id}",
+    "gate": [
+     [
+      "count:protocol@group"
+     ]
+    ]
+   }
+  },
+  {
    "id": "persist/group:roster/lifecycle.withdraws_by[rule 0]",
    "family": "group:roster",
    "where": "lifecycle.withdraws_by[rule 0]",
@@ -4630,13 +4820,13 @@
      "target": "e2"
     }
    },
-   "expect_kernel": "concludes nothing",
+   "expect_kernel": "admitted",
    "expect_shipped": "refused",
    "kernel_parameter": {
     "family": "self:delegates_to",
     "gate": [
      [
-      "acyclic"
+      "any"
      ]
     ]
    }
@@ -4974,7 +5164,7 @@
   {
    "id": "persist/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
    "status": "stated",
-   "reason": "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
+   "reason": "the guard reads the binding's signed `profile` (CC 5.3.3.5); the shipped store reads no such member, and the kernel's rows carry no binding",
    "cc_ref": "CC 5.3.3.11",
    "quote": "For accountable streams, \"published\" means **witness-cosigned**"
   },
@@ -4982,7 +5172,7 @@
    "id": "persist/(occurrence revocation, cosign:signature)/attestation_id form",
    "status": "stated",
    "reason": "how a 32-byte digest id folds to the uuid form is a byte form, not a row",
-   "cc_ref": "CC 3.1.3",
+   "cc_ref": "CC 8.11.17",
    "quote": "sha256(domain ‖ JCS(object))"
   },
   {

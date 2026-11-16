@@ -770,7 +770,7 @@ def fold_sets(family, parts, seed, n=24, maxrows=5, when=None):
                  "leafname": rnd.choice(when["leaves"]) if when and rnd.random() < .75 else rnd.choice(leafnames), "val": {}, "leaf": {}, "ref": {}, "names": frozenset()}
             for m in members:
                 r["val"][m] = frozenset(rnd.sample(KEYS, rnd.randint(0, 3))) if m in setm else \
-                    rnd.choice(KEYS[:2]) if m.endswith("key_id") or m in ("owner", "person", "quorum_key") else rnd.randint(0, 2)
+                    rnd.choice(KEYS[:2]) if m.endswith("key_id") or m in ("owner", "person") else rnd.randint(0, 2)
             r["val"]["value"] = rnd.randint(0, 1); r["val"]["terminal"] = int(rnd.random() < .15); r["val"]["present"] = rnd.randint(0, 1)
             if rnd.random() < .2: r["val"]["valid_until"] = rnd.randint(0, 6)
             if rows and rnd.random() < .5:
@@ -1028,7 +1028,7 @@ def count_ref(arms, s):
         if a["selector"] != "*":
             for t in a["selector"].split(" & "):
                 k, vs = t.split("="); vs = vs.split("|")
-                v = {"leaf": s.get("leafname"), "verb": s.get("verb"), "identity": typeof(s.get("attested")), "group": getf(s, ["group"]), "seats": getf(s, ["seats"])}[k]
+                v = {"leaf": s.get("leafname"), "verb": s.get("verb"), "identity": typeof(s.get("attested")), "group": getf(s, ["group"]), "seats": getf(s, ["seats"]), "act": getf(s, ["act"])}[k]
                 ok = ok and v in vs
         if ok:
             md = re.fullmatch(r"(none|shut)|([a-z_]+)(?:@([a-z_]+))?(?:!(confers|result))?", a["doors"])

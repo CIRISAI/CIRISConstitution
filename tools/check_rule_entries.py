@@ -29,8 +29,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PARTS = {"p1": "part_1_foundation.md", "p2": "part_2_the_grammar.md", "p3": "part_3_the_namespace.md",
          "p4": "part_4_composition_governance.md", "p5": "part_5_transport_substrate.md",
-         "p6": "part_6_the_coherence_mathematics.md", "p7": "part_7_lifecycle_stewardship.md"}
-HOME_PART = {"2": "p2", "3": "p3", "4": "p4", "5": "p5", "6": "p6", "7": "p7", "1": "p1"}
+         "p6": "part_6_the_coherence_mathematics.md", "p7": "part_7_lifecycle_stewardship.md",
+         "p8": "part_8_appendices.md"}
+HOME_PART = {"2": "p2", "3": "p3", "4": "p4", "5": "p5", "6": "p6", "7": "p7", "8": "p8", "1": "p1"}
 # Paragraphs inside a home section that belong to a rule not yet landed, by their bold lead.
 NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its subject", "**A purge is a tombstone",
                           "**What the signer keeps"),

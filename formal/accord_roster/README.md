@@ -24,3 +24,30 @@ Results (all proved, no `sorry`):
   keys held by the same holders help healing and never help an adversary.
 
 Check: `lean AccordRoster.lean` (Lean 4.14, core only).
+
+## The roster as a lineage of bundles (`AccordBundle.tla`, CC 2.6.1.11, CC 4.2.6)
+
+The counting above fixes the rule; `AccordBundle.tla` checks its form. A roster change is a later genesis bundle,
+counted at a strict majority of the predecessor's holders, with each holder it adds and each holder whose recovery
+commitment it changes. A recovery is a later bundle signed by the recovering holder's recovery key alone, the key the
+commitment in force commits to. It changes that holder's signing key and next commitment and nothing else. The world:
+three holders, one who may be added, one who may recover twice and one who may re-commit; an adversary that may steal
+the recovering holder's signing key, and any recovery key once a recovery has spent it. Any party may present any
+bundle; the reader's rule is what is checked. `AccordBundle.cfg` closes at 21,200 distinct states (`MaxVer` 4).
+
+| Invariant | What holds | Twin that fails it |
+|---|---|---|
+| `Inv_ChangeCounted` | no change without the count | `AccordBundle_nocount.cfg`: a change counted on any one holder |
+| `Inv_RecoveryOwnSeat` | a recovery is the recovery key's one statement and changes only its own seat | `AccordBundle_otherseat.cfg`: a recovery that changes a second seat |
+| `Inv_SpentNeverReturns` | a spent commitment is never in force again and no recovery uses one, across any sequence of bundles | `AccordBundle_spentreturns.cfg`: the next commitment need only differ from the one spent |
+| `Inv_RecKeyNeverSeat` | a recovery key never becomes a seat's key | `AccordBundle_reckeyseat.cfg`: a recovery key named as the new signing key |
+| `Inv_SignKeyCannotRecover` | a holder's stolen signing key does not recover the seat | `AccordBundle_anykey.cfg`: a recovery accepted under any key |
+| `Inv_SpentKeyGainsNothing` | a stolen spent recovery key gains nothing | `AccordBundle_spentkey.cfg`: a recovery accepted under any commitment ever named |
+| `Inv_RotationConsented` | a roster change re-seats a holder at a new key only with that holder's statement under its current key | `AccordBundle_rotatenovoice.cfg`: a rotation without the holder's statement |
+| `Inv_NoRetiredSeat` | no bundle seats a holder at a key its lineage retired, or at its in-force recovery key | `AccordBundle_seatretired.cfg`: a rotation back to a key the holder left |
+
+Five witnesses, each required to fail, show the paths are reached: a holder recovers twice, a holder is added, a
+re-commitment lands, a holder rotates, and the adversary holds a spent recovery key. The Lean theorems above are unchanged: the bundle's
+count is the standing rule they decide.
+
+    bash formal/accord_roster/run_tlc.sh /path/to/tla2tools.jar     # one closes, eight twins and five witnesses fail

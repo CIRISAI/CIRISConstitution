@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "3bc63897b6c0880f942f032d381a726e652d6a75781d4b225757dfa260194e91",
+  "source_sha256": "04446a5b50ee07b94c21139cd770e0de84317fe9e84240e6f0d68ee574b8caa0",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -636,7 +636,7 @@
         "reach": "whole"
        },
        {
-        "guard": "when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else exclude",
+        "guard": "when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[id=ref:target] else exclude",
         "cc_ref": [
          "CC 4.2.1.3"
         ],
@@ -12996,10 +12996,26 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "accord_majority"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.3",
+       "CC 4.2.1"
+      ],
+      "count": "act=group => accord_majority@accord ; none",
+      "cases": [
+       {
+        "when": "act=group",
+        "policy": "cosigned",
+        "rows": [
+         "accord_majority"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -13718,10 +13734,26 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "cosigned_act"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 2.4",
+       "CC 2.4.1.3"
+      ],
+      "count": "act=group => cosigned_act@dimension_authority ; none",
+      "cases": [
+       {
+        "when": "act=group",
+        "policy": "cosigned",
+        "rows": [
+         "cosigned_act"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -13772,7 +13804,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "selfAct",
+      "policy": "cosigned",
       "source": "derived"
      },
      "confirm": {
@@ -14244,7 +14276,7 @@
         "reach": "whole"
        },
        {
-        "guard": "each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else exclude",
+        "guard": "each(subject) when(leaf=widening,type(key,node)) one trust:blessing@landed[attested=key] else exclude",
         "cc_ref": [
          "CC 3.1.3.2"
         ],

@@ -811,7 +811,7 @@ def descendsFrom : Step → Option Step
 def witnessOf : Step → List String
   | .metaGoal => ["CC 1.1: the vow and the operational form",
                   "M-1's rejection clause — DERIVED from the swap (efficiency_at_weak_expense_fails_swap, §15)"]
-  | .constraints => ["CC 1.1 constraints, not weights; CC 1.15.1 the list of record",
+  | .constraints => ["CC 1.1 constraints, not weights; CC 1.14.1 the list of record",
                      "no_gain_buys_a_violation, gain_is_never_read (§16)"]
   | .decision => ["CC 1.3 the PDMA and the Veto; CC 1.9 deferral",
                   "the tie-break — DERIVED from the swap (weak_position_decides, §15); deferral universal (maturity_exempts_no_one, §11)"]
@@ -835,7 +835,7 @@ theorem nothing_beside_m1 :
 /-- every step names where it is stated and what witnesses it -/
 theorem every_step_witnessed : Step.all.all (fun s => !(witnessOf s).isEmpty) = true := by decide
 
-/-- the six principles of CC 1.15.1, the list of record -/
+/-- the six principles of CC 1.14.1, the list of record -/
 inductive Principle | autonomy | nonMaleficence | integrity | beneficence | fidelity | justice
   deriving DecidableEq, Repr
 

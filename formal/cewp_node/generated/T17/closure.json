@@ -33,7 +33,7 @@
   "row.standing.admitted": {
    "plane": "content",
    "state_predicate": "row.standing=admitted",
-   "cc_ref": "2.1 2.6.1.8",
+   "cc_ref": "2.1 8.11.9",
    "in_state_table": true,
    "plane_models": "mesh_net"
   },

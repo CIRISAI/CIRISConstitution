@@ -53,9 +53,9 @@ pointing elsewhere is a row of its own, so the table counts repeats.
 The cut-candidates table gives `file`, `line_start`, `line_end`, `kind` (`rationale`,
 `restated_block`, `informative`, `example`, `duplicate_table`, `history`), `bytes` and a note.
 
-Headline numbers: 4,353 statements (Part 3 1,525, Part 4 955, Part 2 696, Part 5 644, Part 6 226,
-Part 1 154, Part 7 153); by scope family 1,864, kernel 1,344, mechanism 727, foundation 217,
-stewardship 201; by role states 3,355, restates 688, applies 244, exception 66. 206 cut-candidate
+Headline numbers: 4,435 statements (Part 3 1,535, Part 4 952, Part 5 662, Part 2 517, Part 6 227,
+Part 8 229, Part 1 155, Part 7 158); by scope family 1,884, kernel 1,370, mechanism 757, foundation 218,
+stewardship 206; by role states 3,426, restates 697, applies 245, exception 66, reason 1. 206 cut-candidate
 blocks, about 260 KB.
 
 Caveats: twelve readers each took one line range, so a rule stated in two ranges may carry two
@@ -93,7 +93,7 @@ lost capacity (CC 3.4.12, 35 statements) reuses the same row and lands as its ow
 `row_shape` at CC 2.1 (43 statements): the members a signed row carries, in three tables: those
 every row carries, those any row may carry with the reading when one is absent, and those one
 family requires. Each member's type, placement and presence rule stay in the generated table of
-CC 2.6.1.8, so the entry says what a member means and the table says how it is written. The
+CC 8.11.9, so the entry says what a member means and the table says how it is written. The
 sentences that had sat inside table cells (whom a targeted row may name, what a subject key may
 do, the oversight-mode shift, cosignatures beside the row) are short titled paragraphs under the
 tables, and the rules they belong to cite them there.
@@ -152,6 +152,24 @@ applies a row only over an open cell and keeps the census reading as `code`. A c
 closes is never overridden here: where text and build differ, that is a departure and takes a
 reason in `departure_reasons.json`. `signer_rule_text.tsv` does the same for the signer column,
 with its own grammar.
+
+`authorship_text.tsv` states who signs a family's row: the `authorship` cell, authored or counted, in arms on the
+count column's selector keys and `act`, and the `second_signers` cell, each role besides the author whose statement over the
+same payload the row accepts, with the payload member that names its party (`sub`, or `gap` where the text names
+none). Every quote stands verbatim in its section. A family with a count and no row fails the build, as does a
+counted arm with no count; the open cells of each column are capped, and the number only falls.
+
+`tools/cc_family_select.py` is the one reader of the selector arms in the `count`, `authorship` and
+`second_signers` cells. It binds the leaf from the dimension with `tools/cc_namespace_match.py` under
+the cell's own family, version tail stripped, and takes verb, identity, group, seats and act from the
+caller, since no sentence reads them from the row alone. `act` is `group` when the row is signed as the act of a
+roster under its `consensus_protocol`, by several statements over one payload (CC 2.6.1.9), and `own` when it is
+one signer's own row; a count arm does not read it. An unsupplied key answers unknown; an arm
+is false if any test is false, else unknown if any is; an unknown arm before the decider makes the
+answer unknown. `--write-vectors` writes `manifests/family_select_vectors.json` (every arm held and
+not held, the unknown, order and `{name}` cases) and `manifests/family_authorship.json` (the two
+signer cells and the model's SHA-256, for a consumer that vendors them); the gate replays the
+vectors, runs four broken evaluators they must catch, and checks both files current.
 
 `placement_text.tsv` states where a row goes when its family states no placement of its own.
 Its one `default` row gives the placements a family's rows may take and the sentence that leaves

@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "875d06b803aecbd94630df288c3faa75d37e368ca31061b8c7700cb279a7b773",
+  "registry_sha256": "5c8bcf87732b37f9e653e0e45190ae599d6f86f077b5ca02bd6c7a7039806002",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -23,10 +23,12 @@
    "replication": "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}",
    "projection": "{table, rebuild ∈ {byte_equal, none}}",
    "erasure_route": "dsar | purge | legal_hold | none",
-   "blind": "members minted as disclosures (CC 2.6.1.9): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
+   "blind": "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
    "fold": "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)",
    "count": "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)",
+   "authorship": "authored | counted | arms `selector => authored|counted` joined by ` ; `, on the count column's selector keys and `act` (group: the row is signed as the act of a roster under its consensus_protocol, by several statements over one payload, CC 2.6.1.9; own: one signer's own row; caller-supplied), the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)",
+   "second_signers": "[{role, member, when?, cc_ref}]: each role besides the author whose statement over the same payload the row accepts; member is the payload member that names the party, `sub` where the party is the attested key, `owner_of_sub` where it is the owner the owner-binding of the attested key names, or `gap` where the text names none; [] means only the author signs (formal/derivation/authorship_text.tsv)",
    "derived": "projection_id | none (the row must equal the named projection's rebuild; formal/derivation/confers_text.tsv)",
    "read_by": "the named answers that read the family's rows (state, stands, tally, may, audience, missing, owed, window), from the KX of its rule cells (tools/kx_translate.py over tools/kx_prelude.kx); `by` names each cell. A family with no cell of its own takes the default reading (state, stands) of the default fold and change: rule default, stated once and checked for none of the families it covers",
    "confers": "nothing | a permission (binds the signer: one row) | a seat (binds the placer and the holder: two consents) | an ending, with scope, conferrer, consent and ends (formal/derivation/family_shapes.tsv, confers_text.tsv)",
@@ -228,12 +230,28 @@
     "gap": 0
    },
    "count": {
-    "cc-table": 16,
+    "cc-table": 18,
+    "code-v61": 0,
+    "generic": 162,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 4
+   },
+   "authorship": {
+    "cc-table": 20,
     "code-v61": 0,
     "generic": 164,
     "prose": 0,
     "mixed": 0,
-    "gap": 4
+    "gap": 0
+   },
+   "second_signers": {
+    "cc-table": 7,
+    "code-v61": 0,
+    "generic": 177,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
    },
    "derived": {
     "cc-table": 3,
@@ -437,8 +455,8 @@
     "witnesses: a witnessed lineage's charter"
    ],
    "members_from_text": {
-    "in_cddl": 97,
-    "named_by_the_text_alone": 151
+    "in_cddl": 101,
+    "named_by_the_text_alone": 147
    }
   },
   "fold": {
@@ -448,7 +466,7 @@
      "fold": "bound=narrow_only(cohort_scope)",
      "cc_ref": [
       "CC 2.1",
-      "CC 2.6.1.8"
+      "CC 8.11.9"
      ]
     },
     {
@@ -552,7 +570,7 @@
     "agree": 3,
     "authority": 1,
     "boundary": 6,
-    "chain": 4,
+    "chain": 5,
     "deciding_seats": 1,
     "forward": 2,
     "founders": 5,
@@ -567,7 +585,7 @@
     "trusted": 6,
     "whole": 1
    },
-   "marks_total": 47
+   "marks_total": 48
   },
   "conferral": {
    "confers": {
@@ -600,7 +618,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#* (CC 2.6.1.8)",
+      "cell": "formal/derivation/fold_text.tsv#* (CC 8.11.9)",
       "answers": [
        "state"
       ]
@@ -735,6 +753,22 @@
     ]
    },
    "reading": "rule default: the one stated default (confers: a claim or content confers nothing; read_by: the default fold and change, checked for none of the families it covers); shape: the family's consent parameters in formal/derivation/family_shapes.tsv; stated: a sentence for this family; class: every placeholder names no key by its registry class; cells: the family's own rule cells; gap: listed with what is missing"
+  },
+  "authorship": {
+   "source": "formal/derivation/authorship_text.tsv",
+   "families": {
+    "authored": 169,
+    "counted": 3,
+    "mixed": 12,
+    "gap": 0
+   },
+   "second_signers": {
+    "families_with_roles": 7,
+    "families_author_only": 177,
+    "roles": 10,
+    "roles_without_member": 0
+   },
+   "reading": "authorship gives each family's rows as authored (one party authors; the payload carries author) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)"
   },
   "default_row": {
    "columns": {
@@ -921,7 +955,7 @@
      "when": "The row is an accord's act: its standing, a halt, a notice or a drill.",
      "why": "A halt or a roster act counts only toward the accord it names. A row that names no accord, or one the reader does not hold, is refused when the rows are read.",
      "basis": "text",
-     "cc_ref": "CC 2.6.1.8",
+     "cc_ref": "CC 8.11.9",
      "quote": "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold",
      "cells": 7
     },
@@ -1168,11 +1202,11 @@
     {
      "id": "minor_not_announced",
      "title": "A minor's node is never announced to the federation",
-     "when": "The owner of the node is a minor.",
-     "why": "A binding at federation scope makes its owner findable and contactable by adults with no connection to them. No steward, guardian or consent lifts that floor, so the promotion is refused.",
+     "when": "The node carries the occurrence of a person a row places in a minor band, whoever owns the node.",
+     "why": "A binding at federation scope makes the node findable and contactable by adults with no connection to the minor who uses it. No steward, guardian or consent lifts that floor, so the promotion is refused.",
      "basis": "text",
      "cc_ref": "CC 5.4.6",
-     "quote": "a node whose owner a row on record places in a minor band MUST NOT carry a federation-scope owner-binding",
+     "quote": "a node that carries the occurrence of a `user` key a row on record places in a minor band MUST NOT carry a federation-scope owner-binding",
      "cells": 1
     },
     {
@@ -1347,7 +1381,7 @@
      "when": "The row is a consent state that carries the recipient field.",
      "why": "The recipient field names the addressed recipient. Such a row is held by its author's node and that key's node and by no other.",
      "basis": "text",
-     "cc_ref": "CC 2.6.1.8",
+     "cc_ref": "CC 8.11.9",
      "quote": "Also carried on consent:state rows.",
      "cells": 1
     },
@@ -1542,7 +1576,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -1776,7 +1810,7 @@
       ]
      },
      {
-      "fold": "key=attested_key_id; pick=max(version); absent=from(trust:{job}:{version})",
+      "fold": "key=attested_key_id; pick=chain(prev); absent=from(trust:{job}:{version})",
       "cc_ref": [
        "CC 4.2.6"
       ]
@@ -1798,6 +1832,34 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "leaf=lifecycle:{kind} => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "leaf=lifecycle:{kind}",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.4.1"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 3.4.1"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.4.1"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -1975,7 +2037,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -2166,6 +2228,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -2345,7 +2417,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -2599,6 +2671,27 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 3.4.1"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.4.1"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -2778,7 +2871,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -2969,6 +3062,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -3148,7 +3251,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -3339,6 +3442,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -3514,7 +3627,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -3713,6 +3826,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -3903,37 +4026,37 @@
        "cc_ref": "CC 2.1"
       },
       {
-       "member": "confirms_halt_id",
-       "type": "unstated",
-       "presence": "unstated",
-       "in_cddl": false,
-       "cc_ref": "CC 4.2.1.3"
-      },
-      {
        "member": "invocation_id",
-       "type": "unstated",
-       "presence": "unstated",
-       "in_cddl": false,
+       "type": "tstr",
+       "presence": "required",
+       "in_cddl": true,
        "cc_ref": "CC 4.2.1.3"
       },
       {
-       "member": "invocation_kind",
-       "type": "unstated",
-       "presence": "unstated",
-       "in_cddl": false,
+       "member": "nonce",
+       "type": "bstr .size 32",
+       "presence": "required",
+       "in_cddl": true,
        "cc_ref": "CC 4.2.1.3"
       },
       {
-       "member": "resumes_halt_id",
-       "type": "unstated",
-       "presence": "unstated",
-       "in_cddl": false,
+       "member": "dimension",
+       "type": "tstr",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 4.2.1.3"
+      },
+      {
+       "member": "target",
+       "type": "row-ref",
+       "presence": "required",
+       "in_cddl": true,
        "cc_ref": "CC 4.2.1.3"
       }
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -4275,6 +4398,29 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "counted",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "*",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.4.1",
+       "CC 4.2.1.3"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.4.1",
+     "CC 4.2.1.3"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -4610,6 +4756,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -5006,6 +5162,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -5373,6 +5539,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -5732,6 +5908,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -6060,6 +6246,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -6191,7 +6387,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -6303,6 +6499,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [],
@@ -6700,6 +6906,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -7051,6 +7267,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -7413,6 +7639,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -7788,6 +8024,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -8156,6 +8402,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -8322,7 +8578,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -8512,6 +8768,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -8847,6 +9113,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -9178,6 +9454,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -9301,7 +9587,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": null,
      "source": "gap"
@@ -9529,6 +9815,27 @@
      }
     ],
     "source": "cc-table"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 4.5.13"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 4.5.13"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": null,
@@ -9811,6 +10118,27 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 4.5.13"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 4.5.13"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": null,
     "source": "gap",
@@ -10020,7 +10348,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -10028,7 +10356,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      },
      {
@@ -10222,6 +10550,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -10561,6 +10899,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -10891,6 +11239,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -11225,6 +11583,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -11565,6 +11933,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -11892,6 +12270,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -12066,7 +12454,7 @@
        "type": "[* consent-basis]",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
+       "cc_ref": "CC 8.11.9"
       },
       {
        "member": "feature_dim",
@@ -12101,7 +12489,7 @@
        "type": "number",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
+       "cc_ref": "CC 8.11.9"
       },
       {
        "member": "sample_size",
@@ -12134,7 +12522,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -12388,6 +12776,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -12600,7 +12998,7 @@
        "type": "[* consent-basis]",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
+       "cc_ref": "CC 8.11.9"
       },
       {
        "member": "epoch",
@@ -12642,7 +13040,7 @@
        "type": "number",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
+       "cc_ref": "CC 8.11.9"
       },
       {
        "member": "sample_size",
@@ -12682,7 +13080,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -12899,6 +13297,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -13094,7 +13502,7 @@
        "type": "[* consent-basis]",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
+       "cc_ref": "CC 8.11.9"
       },
       {
        "member": "feature_dim",
@@ -13129,7 +13537,7 @@
        "type": "number",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
+       "cc_ref": "CC 8.11.9"
       },
       {
        "member": "sample_size",
@@ -13162,7 +13570,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -13360,6 +13768,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -13740,6 +14158,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -14103,6 +14531,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -14536,6 +14974,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -14757,7 +15205,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -14765,7 +15213,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      },
      {
@@ -15010,6 +15458,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -15186,7 +15644,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -15194,7 +15652,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      }
     ]
@@ -15418,6 +15876,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -15604,7 +16072,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -15612,7 +16080,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      }
     ]
@@ -15798,6 +16266,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -15941,7 +16419,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -15949,7 +16427,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      }
     ]
@@ -16053,7 +16531,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "fills"
      }
     ]
@@ -16163,6 +16641,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -16359,7 +16847,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -16367,7 +16855,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      }
     ]
@@ -16569,6 +17057,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -16706,7 +17204,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -16714,7 +17212,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      }
     ]
@@ -16818,7 +17316,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "fills"
      },
      {
@@ -16936,6 +17434,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -17278,6 +17786,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -17612,6 +18130,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -17941,6 +18469,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -18293,6 +18831,35 @@
     "note": "the cosign cell is not none and no arm is typed",
     "cosign_rule": "CC group_consensus_protocol for amendments; not built"
    },
+   "authorship": {
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "act=group",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.1.3.4"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 2.6.1.3"
+      ],
+      "rule": "default"
+     }
+    ],
+    "cc_ref": [
+     "CC 3.1.3.4"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -18626,6 +19193,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -18773,7 +19350,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -18984,6 +19561,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -19381,6 +19968,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -19721,6 +20318,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -20047,6 +20654,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -20375,6 +20992,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -20701,6 +21328,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -21136,6 +21773,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -21546,6 +22193,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -21886,6 +22543,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -22307,6 +22974,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -22537,7 +23214,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none on release-61",
      "source": "gap"
@@ -22794,6 +23471,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -23016,7 +23703,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none on release-61",
      "source": "gap"
@@ -23274,6 +23961,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -23672,6 +24369,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -24062,6 +24769,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -24574,6 +25291,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -24953,6 +25680,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -25319,6 +26056,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -25710,6 +26457,27 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 3.3.12"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.3.12"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -26050,6 +26818,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -26384,6 +27162,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -26655,13 +27443,13 @@
    "fold": {
     "value": [
      {
-      "fold": "key=quorum_key,attesting_key_id; pick=union",
+      "fold": "key=event_row_id,attesting_key_id; pick=union",
       "cc_ref": [
        "CC 3.1.3"
       ]
      },
      {
-      "fold": "key=quorum_key,attesting_key_id; pick=union; by=node",
+      "fold": "key=event_row_id,attesting_key_id; pick=union; by=node",
       "cc_ref": [
        "CC 3.3.4"
       ]
@@ -26685,6 +27473,16 @@
      }
     ],
     "source": "cc-table"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": null,
@@ -27019,6 +27817,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -27168,11 +27976,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.3",
+      "cc_ref": "CC 8.11.4",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      },
      {
@@ -27452,6 +28260,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -27797,6 +28615,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -27958,7 +28786,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -28162,6 +28990,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -28555,6 +29393,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -28896,6 +29744,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -29094,7 +29952,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -29293,6 +30151,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -29678,6 +30546,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -30076,6 +30954,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -30444,6 +31332,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -30817,6 +31715,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -31211,6 +32119,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -31383,7 +32301,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -31579,6 +32497,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -31917,6 +32845,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -32248,6 +33186,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -32574,6 +33522,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -32902,6 +33860,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -33224,6 +34192,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -33572,6 +34550,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -33908,6 +34896,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -34256,6 +35254,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -34588,6 +35596,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -34937,6 +35955,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -35278,6 +36306,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -35618,6 +36656,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -35784,7 +36832,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -35978,6 +37026,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -36309,6 +37367,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -36659,6 +37727,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -36992,6 +38070,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -37362,6 +38450,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -37878,14 +38976,14 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.2.6)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 3.3.4)",
       "answers": [
        "window"
       ]
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.4.3.18)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 3.3.4)",
       "answers": [
        "window"
       ]
@@ -37906,7 +39004,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.2.6)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 3.3.4)",
       "answers": [
        "state",
        "stands",
@@ -37915,7 +39013,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.2.6)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 3.3.4)",
       "answers": [
        "state",
        "stands",
@@ -37928,10 +39026,10 @@
     "value": {
      "relation": "seat",
      "binds": "body+holder",
-     "roster": "community|accord|infra",
+     "roster": "community|infra",
      "holders": "fixed by the charter",
      "consent": "same_row (each holder signs the record)",
-     "door": "accord_roster_change"
+     "door": "community_remove[unanimous]|community_remove[majority]|community_remove[quorum]"
     },
     "source": "cc-table",
     "cc_ref": [
@@ -37944,7 +39042,7 @@
      "roster": "quote:CC 3.1.3.2 \"A founding record seats a listed member iff that member **signed** the record\"",
      "holders": "quote:CC 3.4.7 \"The accord's holders are fixed by the accord's charter\"",
      "consent": "quote:CC 3.1.3.2 \"A founding record seats a listed member iff that member **signed** the record\"",
-     "door": "row:formal/causal_kernel/doors.tsv#accord_roster_change"
+     "door": "row:formal/causal_kernel/doors.tsv#community_remove[majority]"
     },
     "cells_from": [
      "formal/derivation/confers_text.tsv",
@@ -38067,6 +39165,34 @@
     "source": "gap",
     "note": "the cosign cell is not none and no arm is typed",
     "cosign_rule": "group_consensus_protocol (count_distinct_roster_scrubs over base + additional_scrubs[])"
+   },
+   "authorship": {
+    "value": "counted",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "*",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.1.3"
+    ]
+   },
+   "second_signers": {
+    "value": [
+     {
+      "role": "listed_member",
+      "member": "members",
+      "cc_ref": [
+       "CC 3.1.3.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -38457,6 +39583,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -38622,7 +39758,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -38819,6 +39955,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -39164,6 +40310,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -39282,7 +40438,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -39472,6 +40628,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -39948,6 +41114,27 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 3.3.6.4"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.3.6.4"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -40313,6 +41500,34 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "identity=user => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "identity=user",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.1.3"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -40664,6 +41879,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -41011,6 +42236,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -41177,7 +42412,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -41367,6 +42602,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -41699,6 +42944,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -42025,6 +43280,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -42357,6 +43622,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -42632,6 +43907,7 @@
     "value": [
      "state",
      "stands",
+     "tally",
      "may",
      "owed"
     ],
@@ -42659,6 +43935,13 @@
       "answers": [
        "state",
        "owed"
+      ]
+     },
+     {
+      "grammar": "count",
+      "cell": "formal/derivation/count_text.tsv#key:record",
+      "answers": [
+       "tally"
       ]
      },
      {
@@ -42708,9 +43991,56 @@
     "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "value": "act=group => accord_majority@accord ; none",
+    "arms": [
+     {
+      "when": "act=group",
+      "doors": "accord_majority@accord",
+      "cc_ref": "CC 4.2.1"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.1.3"
+     }
+    ],
+    "source": "cc-table"
+   },
+   "authorship": {
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "act=group",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 2.6.1.3"
+      ],
+      "rule": "default"
+     }
+    ],
+    "cc_ref": [
+     "CC 3.1.3"
+    ]
+   },
+   "second_signers": {
+    "value": [
+     {
+      "role": "predecessor_key",
+      "member": "target",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -43169,6 +44499,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -43529,6 +44869,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -43760,7 +45110,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -44104,6 +45454,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -44255,7 +45615,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -44363,6 +45723,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [],
@@ -44754,6 +46124,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -44937,7 +46317,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -45138,6 +46518,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -45499,6 +46889,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -45872,6 +47272,7 @@
     "value": [
      "state",
      "stands",
+     "tally",
      "owed"
     ],
     "source": "cc-table",
@@ -45940,6 +47341,13 @@
       "answers": [
        "state",
        "owed"
+      ]
+     },
+     {
+      "grammar": "count",
+      "cell": "formal/derivation/count_text.tsv#licensure:{authority_id}",
+      "answers": [
+       "tally"
       ]
      }
     ]
@@ -46030,9 +47438,49 @@
     ]
    },
    "count": {
-    "value": "none",
+    "value": "act=group => cosigned_act@dimension_authority ; none",
+    "arms": [
+     {
+      "when": "act=group",
+      "doors": "cosigned_act@dimension_authority",
+      "cc_ref": "CC 2.4.1.3"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 2.4"
+     }
+    ],
+    "source": "cc-table"
+   },
+   "authorship": {
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "act=group",
+      "value": "counted",
+      "cc_ref": [
+       "CC 2.4"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 2.6.1.3"
+      ],
+      "rule": "default"
+     }
+    ],
+    "cc_ref": [
+     "CC 2.4"
+    ]
+   },
+   "second_signers": {
+    "value": [],
     "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -46432,6 +47880,16 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -46776,6 +48234,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -47110,6 +48578,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -47272,7 +48750,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -47284,11 +48762,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.3",
+      "cc_ref": "CC 8.11.4",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      },
      {
@@ -47848,6 +49326,34 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "leaf=widening|removal => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "leaf=widening|removal",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.1.3.2"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 3.1.3.2"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.1.3.2"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -48277,6 +49783,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -48612,6 +50128,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -48771,7 +50297,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -48961,6 +50487,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -49354,6 +50890,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -49734,6 +51280,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -50072,6 +51628,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -50409,6 +51975,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -50750,6 +52326,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -51080,6 +52666,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -51251,7 +52847,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -51481,6 +53077,16 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -51642,7 +53248,7 @@
        "type": "[* consent-basis]",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
+       "cc_ref": "CC 8.11.9"
       },
       {
        "member": "evidence_refs",
@@ -51661,7 +53267,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -51673,7 +53279,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      }
     ]
@@ -51871,6 +53477,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -52007,7 +53623,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -52208,6 +53824,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -52576,6 +54202,24 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [
+     {
+      "role": "bound_node",
+      "member": "sub",
+      "cc_ref": [
+       "CC 3.2",
+       "CC 3.4.5"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -52929,6 +54573,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -53271,6 +54925,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -53504,6 +55168,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -53638,7 +55312,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -53767,6 +55441,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [],
@@ -53962,7 +55646,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -54155,6 +55839,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -54486,6 +56180,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -54649,7 +56353,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -54852,6 +56556,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -55015,7 +56729,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -55220,6 +56934,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -55392,7 +57116,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -55588,6 +57312,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -55924,6 +57658,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -56308,6 +58052,35 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "group=affiliations & seats=one => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "group=affiliations & seats=one",
+      "value": "counted",
+      "cc_ref": [
+       "CC 4.4.3.12"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 4.4.3.19"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 4.4.3.12",
+     "CC 4.4.3.19"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -56671,6 +58444,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -57005,6 +58788,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -57334,6 +59127,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -57665,6 +59468,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -57995,6 +59808,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -58324,6 +60147,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -58681,6 +60514,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -59018,6 +60861,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -59384,6 +61237,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -59542,7 +61405,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -59724,6 +61587,43 @@
       "when": "*",
       "doors": "none",
       "cc_ref": "CC 7.5.5"
+     }
+    ],
+    "source": "cc-table"
+   },
+   "authorship": {
+    "value": "leaf=custodian_minted => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "leaf=custodian_minted",
+      "value": "counted",
+      "cc_ref": [
+       "CC 7.5.5"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 3.1.5"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 7.5.5",
+     "CC 3.1.5"
+    ]
+   },
+   "second_signers": {
+    "value": [
+     {
+      "role": "custodian",
+      "member": "custodian",
+      "when": "leaf=retired|custodian_minted",
+      "cc_ref": [
+       "CC 7.5.5"
+      ]
      }
     ],
     "source": "cc-table"
@@ -60102,6 +62002,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -60444,6 +62354,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -60769,6 +62689,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -61110,6 +63040,30 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [
+     {
+      "role": "delegate",
+      "member": "sub",
+      "cc_ref": [
+       "CC 2.6.1.9"
+      ]
+     },
+     {
+      "role": "delegate_owner",
+      "member": "owner_of_sub",
+      "cc_ref": [
+       "CC 4.4.3.19"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -61303,7 +63257,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -61513,6 +63467,30 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [
+     {
+      "role": "delegate",
+      "member": "sub",
+      "cc_ref": [
+       "CC 2.6.1.9"
+      ]
+     },
+     {
+      "role": "delegate_owner",
+      "member": "owner_of_sub",
+      "cc_ref": [
+       "CC 4.4.3.19"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -61668,7 +63646,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -61680,11 +63658,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.3",
+      "cc_ref": "CC 8.11.4",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      }
     ]
@@ -61973,6 +63951,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -62333,6 +64321,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -62759,6 +64757,35 @@
     ],
     "source": "cc-table"
    },
+   "authorship": {
+    "value": "group=affiliations & seats=one => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "group=affiliations & seats=one",
+      "value": "counted",
+      "cc_ref": [
+       "CC 4.4.3.12"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 4.4.3.19"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 4.4.3.12",
+     "CC 4.4.3.19"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -63111,6 +65138,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -63333,7 +65370,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -63660,6 +65697,43 @@
      }
     ],
     "source": "cc-table"
+   },
+   "authorship": {
+    "value": "leaf=steward_purge => counted ; group=affiliations & seats=one => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "leaf=steward_purge",
+      "value": "counted",
+      "cc_ref": [
+       "CC 2.4.1.1"
+      ]
+     },
+     {
+      "when": "group=affiliations & seats=one",
+      "value": "counted",
+      "cc_ref": [
+       "CC 4.4.3.12"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 4.4.3.19"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 2.4.1.1",
+     "CC 4.4.3.12",
+     "CC 4.4.3.19"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -64024,6 +66098,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -64362,6 +66446,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -64704,6 +66798,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -65065,6 +67169,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -65390,6 +67504,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -65730,6 +67854,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -66055,6 +68189,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -66411,6 +68555,27 @@
      }
     ],
     "source": "cc-table"
+   },
+   "authorship": {
+    "value": "counted",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "*",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.1.3"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -66777,6 +68942,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -66906,7 +69081,7 @@
        "type": "hex64 presence=optional leaf=trust:charter",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
+       "cc_ref": "CC 8.11.9"
       },
       {
        "member": "recovery_commitments",
@@ -66918,7 +69093,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -66930,7 +69105,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      }
     ]
@@ -67211,7 +69386,7 @@
     "source": "cc-table",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.8",
+      "cc_ref": "CC 8.11.9",
       "reading": "agree"
      }
     ]
@@ -67221,6 +69396,51 @@
     "source": "gap",
     "note": "the cosign cell is not none and no arm is typed",
     "cosign_rule": "family charter witness quorum (check_charter_witness_quorum)"
+   },
+   "authorship": {
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "act=group",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.4.5"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 2.6.1.3"
+      ],
+      "rule": "default"
+     }
+    ],
+    "cc_ref": [
+     "CC 3.4.5"
+    ]
+   },
+   "second_signers": {
+    "value": [
+     {
+      "role": "delegate",
+      "member": "sub",
+      "when": "leaf=confers",
+      "cc_ref": [
+       "CC 2.6.1.9"
+      ]
+     },
+     {
+      "role": "delegate_owner",
+      "member": "owner_of_sub",
+      "when": "leaf=confers",
+      "cc_ref": [
+       "CC 4.4.3.19"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -67569,6 +69789,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -67756,7 +69986,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.8",
+    "cc_ref": "CC 8.11.9",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -67946,6 +70176,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -68298,6 +70538,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -68645,6 +70895,35 @@
     "source": "gap",
     "note": "the cosign cell is not none and no arm is typed",
     "cosign_rule": "WA quorum re-derived (no vocabulary value; CC moderator_quorum? no)"
+   },
+   "authorship": {
+    "value": "leaf=abandonment|seizure|successor => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "leaf=abandonment|seizure|successor",
+      "value": "counted",
+      "cc_ref": [
+       "CC 4.3"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 3.1.9.4"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 4.3",
+     "CC 3.1.9.4"
+    ]
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -69034,6 +71313,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -69377,6 +71666,16 @@
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
    },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -69708,6 +72007,16 @@
     "value": "none",
     "source": "generic",
     "note": "the cosign cell reads none: one signature carries the row"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [

@@ -302,9 +302,9 @@ decider closes an agent's objection window at retirement by the `decided` row, w
 agent's own landing closes nothing. Where the text has
 each node read the close on its own clock, the cell says `local` and nothing is signed: the moderation window,
 a harm report, a person's own roster and the halt's fuse (CC 4.5.13, CC 3.3.6.4). A late answer is closed for
-the fuse, an invitation and the accord's roster change, and counts for an election and a takedown. Seven doors state whether the opening row is in force while its window is open: the halt and a takedown's
-withhold are, from each node's own receipt; a moderation action, a harm report, an invitation, a device's
-addition and the accord's roster change are not. **run**: the **state** answer gives each while no landing
+the fuse and an invitation, and counts for an election and a takedown. Six doors state whether the opening row is in force while its window is open: the halt and a takedown's
+withhold are, from each node's own receipt; a moderation action, a harm report, an invitation and a device's
+addition are not. **run**: the **state** answer gives each while no landing
 stands, and a cell read the other way is caught at every door. The invitation counts the invitee's yes by the
 policy row's `target_voice` cell, and a room of one admits nobody on its founder's proposal alone. A removal, a
 cosigned act and an adjudication read their count from the protocol the group's founding row declares.
@@ -555,7 +555,8 @@ limits that folder's README lists.
 
 **A reader's own line.** A reader that has acknowledged a head does not let a line from below that head
 displace it: for that reader such a line is void, however many rows it has. A sibling of the acknowledged head
-waits as a tip, and a version naming both is accepted. This is each reader's own, and it ranks no line for
+names an older head outside its past, so for that reader it is void too; a reader with no acknowledgement
+holds the two as tips (`Reader.sibling_by_acknowledgement`). A version naming both is accepted. This is each reader's own, and it ranks no line for
 anyone else.
 
 **No line wins by being longer.** A rule was tried under which a counted row left behind every counted act
@@ -579,7 +580,7 @@ What that leaves, each **run** with its witness:
 | The same, by leaked keys of removed members | whoever holds removed keys that once met a count | only against a reader with no acknowledgement of its own, as test 18 |
 | A new reader's first view | whoever controls a new reader's first view | until the reader withdraws its own rows; its own acknowledgement makes the wrong head stick |
 | A row withheld from some | the cut's own signer, or a relay, by omission | as long as the row is withheld; a row cited from another room is carried only by its own signer, so a cut that names one waits until then |
-| Rows signed to no purpose | any key at all, one signature a row | no answer moves; a `node` or `agent` key that stops renewing lapses at its own end, so a node that compacts holds at most mint rate × `key_record_max_secs` of abandoned keys; a key that keeps renewing, a person's key and a key record from before the rule that states no end are held without a bound |
+| Rows signed to no purpose | any key at all, one signature a row | no answer moves; a `node` or `agent` key that stops renewing lapses at its own end, so a node that compacts holds at most mint rate × `key_record_max_secs` of abandoned keys; a key that keeps renewing and a person's key are held without a bound, and a key record of the earlier form gives no standing |
 | An ended key revived | whoever holds its private half | a further record revives it at every node alike, and no reader can tell when it was signed; only the key's own revocation makes an end final |
 | History carried by a reply | any one member, by replying | intended carriage, row by row; cannot be undone |
 | One conferring seat seating many | one seated key whose seat may confer | one row seats any number of keys; ends with one withdrawal by its conferrer |

@@ -36,7 +36,7 @@ guardian, which is the standing rule against operating without one and is not so
 whose guardian will not step down stays with that guardian on the wire, under the floor, with the report raised;
 the court's power to compel the step-down is the only remedy, and the text says so.
 
-**What it does not model.** How the band came to be on record (`formal/age_assurance`); the family that carries
+**What it does not model.** A minor with several guardians, whose bindings `is_steward_bound` reads as a set (`formal/owner_binding`, S1 and S2); how the band came to be on record (`formal/age_assurance`); the family that carries
 an attestation of an order, which is not yet registered; an adult under incapacity (CC 3.4.12), where the same
 question stands and is not settled; whether a community goes on recognising a guardian, which is each
 community's own decision.

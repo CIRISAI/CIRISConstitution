@@ -26,6 +26,10 @@
   `rdCounts`, `rdPoss`, `rd_function`, `rdT_anti`, `no_line_is_group`, `acked_not_left_behind`,
   `line_voids_old_fork`, `old_fork_void_for_reader`, `old_fork_void_for_ever`,
   `built_on_void_for_reader`, `line_no_obstacle`, `sibling_waits`, `merge_accepted`).
+  THE SIBLING (CC 2.7.8, as the text reads it): an act of the line leaves behind every concurrent act that
+  names only heads in ITS past (`olderThan`), not only heads older than the heads it names. So a sibling of
+  the acknowledged act is void for that reader (`sibling_void`), and for a reader with no acknowledgement the
+  two wait as tips (`sibling_waits`); `sibling_by_acknowledgement` states both.
   Uses from Harden3.lean only the neutral `CP.olderHeads` and `CP.same_head_not_older`, and,
   for the race, the rejected `CP.cpCounts`, `CP.cpPoss`, `CP.stale_never_counts`.
 
@@ -48,10 +52,15 @@ variable (parent : Row → Row → Prop) (head : Row → Row → Prop) (isAct : 
    (checkpoint.py `own_line`). `L`: the counted acts the cut lets count. -/
 variable (mine : Row → Prop) (L : Row → Prop)
 
-/-- LEFT BEHIND by the reader's line (checkpoint.py `behind`, marks = the line ∩ what the cut
-    lets count). -/
+/-- `r` names only heads strictly in the past of `m` (CC 2.7.8: "names an older head and is not in that
+    head's past", read against an act `m` of the reader's line). -/
+def olderThan (r m : Row) : Prop :=
+  (∃ h, head r h) ∧ ∀ h, head r h → TransGen parent h m
+
+/-- LEFT BEHIND by the reader's line (checkpoint.py `line_behind`, marks = the line ∩ what the cut
+    lets count): concurrent with an act of the line, and naming only heads in that act's past. -/
 def behind (r : Row) : Prop :=
-  ∃ m, mine m ∧ L m ∧ isAct m ∧ conc parent m r ∧ CP.olderHeads parent head r m
+  ∃ m, mine m ∧ L m ∧ isAct m ∧ conc parent m r ∧ olderThan parent head r m
 
 /-- One step of `settle`'s `gamma`, group off. -/
 def rdF (P : Row → Prop) (r : Row) : Prop :=
@@ -111,7 +120,7 @@ theorem acked_counts (r : Row) (hm : mine r) :
     off the line, concurrent with `m`, naming only heads older than the heads `m` names, does
     not count for this reader. Nothing is asked about who signed `v` or how many did. -/
 theorem line_voids_old_fork (m v : Row) (hm : mine m) (hLm : L m) (hact : isAct m)
-    (hv : ¬ mine v) (hc : conc parent m v) (ho : CP.olderHeads parent head v m) :
+    (hv : ¬ mine v) (hc : conc parent m v) (ho : olderThan parent head v m) :
     ¬ rd parent head isAct mine L v :=
   fun h => ((rd_iff parent head isAct mine L v).1 h).2.2.elim hv
     (fun ⟨_, hn⟩ => hn ⟨m, hm, hLm, hact, hc, ho⟩)
@@ -121,7 +130,7 @@ theorem line_voids_old_fork (m v : Row) (hm : mine m) (hLm : L m) (hact : isAct 
 theorem old_fork_void_for_ever (wf : WellFounded parent) (wellFormed : Row → Prop)
     (S : Row → Prop) (m v : Row) (hk : kept parent wf wellFormed S m) (hv' : ¬ S v)
     (hnn : ¬ TransGen parent m v) (hm : mine m) (hact : isAct m) (hv : ¬ mine v)
-    (ho : CP.olderHeads parent head v m) (L' : Row → Prop) (hLm : L' m) :
+    (ho : olderThan parent head v m) (L' : Row → Prop) (hLm : L' m) :
     ¬ rd parent head isAct mine L' v :=
   have hn := new_row_not_ancestor parent wf wellFormed S v m hk hv'
   line_voids_old_fork parent head isAct mine L' m v hm hLm hact hv ⟨hnn, hn.2, hn.1⟩ ho
@@ -167,7 +176,7 @@ theorem no_line_is_plain (r : Row) :
 /-- Where the line is no obstacle to `s`: the reader judges `s` by the cut and the built-on
     clause alone. -/
 theorem line_no_obstacle (s : Row) (hs : ¬ mine s)
-    (hno : ∀ m, mine m → conc parent m s → ¬ CP.olderHeads parent head s m) :
+    (hno : ∀ m, mine m → conc parent m s → ¬ olderThan parent head s m) :
     rd parent head isAct mine L s ↔
       (L s ∧ isAct s ∧ ∀ h, head s h → isAct h → rd parent head isAct mine L h) := by
   rw [rd_iff]
@@ -198,23 +207,35 @@ theorem line_no_obstacle_all
       exact (rd_iff parent head isAct mine L q).2
         ⟨a, b, (Classical.em (mine q)).elim Or.inl (fun hm => Or.inr ⟨x.1, hno q hm⟩)⟩
 
-/-- (4) A SIBLING WAITS. The reader acknowledged `H`, counted over the one head `h`; the rest of
-    its line is `h` or in the past of `h`. An act `s` counted over `h` (which it names) is not
-    left behind: the reader judges it by the cut and the built-on clause, and the two wait as
-    two tips. -/
-theorem sibling_waits (wf : WellFounded parent) (H h s : Row)
-    (hline : ∀ m, mine m → m = H ∨ m = h ∨ TransGen parent m h)
-    (hH : ∀ h', head H h' → h' = h) (hsh : head s h) (hnamed : parent h s) (hs : ¬ mine s) :
-    rd parent head isAct mine L s ↔
-      (L s ∧ isAct s ∧ ∀ h', head s h' → isAct h' → rd parent head isAct mine L h') := by
-  apply line_no_obstacle parent head isAct mine L s hs
-  intro m hm hc ho
-  cases hline m hm with
-  | inl e => exact CP.same_head_not_older parent head wf s H h hsh hH (e ▸ ho)
-  | inr h' =>
-    cases h' with
-    | inl e => exact hc.1 (e ▸ TransGen.single hnamed)
-    | inr ha => exact hc.1 (TransGen.tail ha hnamed)
+/-- (4) A SIBLING, FOR A READER WITH NO ACKNOWLEDGEMENT, WAITS (CC 2.7.8, "Two versions of one head wait
+    as tips"). With no line, `s` is judged by the cut and the built-on clause alone, as its sibling is. -/
+theorem sibling_waits (s : Row) :
+    rd parent head isAct (fun _ => False) L s ↔
+      (L s ∧ isAct s ∧ ∀ h', head s h' → isAct h' → rd parent head isAct (fun _ => False) L h') :=
+  no_line_is_plain parent head isAct L s
+
+/-- (4) A SIBLING, FOR A READER THAT ACKNOWLEDGED `H`, IS VOID (CC 2.7.8, "holds void every counted act
+    that names an older head and is not in that head's past"). `s` names only heads in `H`'s past and is
+    concurrent with `H`: their common predecessor is older than `H`. -/
+theorem sibling_void (H s : Row) (hm : mine H) (hLH : L H) (hact : isAct H) (hs : ¬ mine s)
+    (hc : conc parent H s) (hold : olderThan parent head s H) : ¬ rd parent head isAct mine L s :=
+  line_voids_old_fork parent head isAct mine L H s hm hLH hact hs hc hold
+
+/-- **Both cases of CC 2.7.8 in one statement.** Two versions `H` and `s` of one head `h` (each names
+    `h`, and only `h`, and neither names the other). For a reader with no acknowledgement, each is judged by
+    the cut and the built-on clause alone, so the two wait as tips. For a reader whose line is `H` (and the
+    rows in its past), `s` is void. -/
+theorem sibling_by_acknowledgement (H s h : Row) (hHh : head H h) (hsh : head s h)
+    (hsOnly : ∀ h', head s h' → h' = h) (hp : TransGen parent h H) (hc : conc parent H s)
+    (hLH : L H) (hact : isAct H) (lineH : Row → Prop) (hline : lineH H) (hs : ¬ lineH s) :
+    (rd parent head isAct (fun _ => False) L s ↔
+      (L s ∧ isAct s ∧ ∀ h', head s h' → isAct h' → rd parent head isAct (fun _ => False) L h')) ∧
+    (rd parent head isAct (fun _ => False) L H ↔
+      (L H ∧ isAct H ∧ ∀ h', head H h' → isAct h' → rd parent head isAct (fun _ => False) L h')) ∧
+    ¬ rd parent head isAct lineH L s :=
+  ⟨no_line_is_plain parent head isAct L s, no_line_is_plain parent head isAct L H,
+   sibling_void parent head isAct lineH L H s hline hLH hact hs hc
+     ⟨⟨h, hsh⟩, fun h' hh' => (hsOnly h' hh') ▸ hp⟩⟩
 
 /-- (4) A MERGE IS ACCEPTED. An act that has the acknowledged `H` in its past is concurrent
     with no act of the line: it is judged by the cut and the built-on clause. -/
@@ -340,6 +361,8 @@ end Reader
 #print axioms Reader.line_no_obstacle
 #print axioms Reader.line_no_obstacle_all
 #print axioms Reader.sibling_waits
+#print axioms Reader.sibling_void
+#print axioms Reader.sibling_by_acknowledgement
 #print axioms Reader.merge_accepted
 #print axioms Reader.rdCounts_function
 #print axioms Reader.rdCounts_sub_cut

@@ -66,7 +66,6 @@ LANDS = {
     "harm_report": ("content_class:{class}", "reported", "window"),
     "moderator_election": ("ballot:moderator", None, "window"),
     "deletion_sla": ("consent:deletion_sla:{days}", None, "sla"),
-    "accord_roster_change": ("group:roster", None, "W"),
     "takedown_withhold": ("takedown_notice:{basis}", "Dmca512", "withhold"),
     "retirement_objection": ("retirement:{state}", "decided", "objection"),
     "decay_stage": ("consent:decay:{stage}", None, "anonymise"),
@@ -529,12 +528,6 @@ def door_specs():
         cells={"clock": "sla, dur self.days (the opener row's own member)", "answers": "unless withdrawn/superseded/purged by producer",
                "close": "emit hard_case:deletion_window_breach by identity:substrate_persist"},
         unstated=[]), "deletion_sla", "substrate")
-    D["accord_roster_change"] = stated(dict(policy="group:roster (accord)", kind="clock", opener="holder", counted="holder", extra=(), target_votes=False,
-        opener_says="yes", kinds=("yes",), clauses=(("close", "yes", ("strict", 1, 2, 1), "all", "landed"),), silent=None, default="lapsed",
-        secs=259200, concluder="holder", late="counts", outcomes=("landed", "lapsed", "open"),
-        cells={"clock": "W admission_freshness_window_secs max accord_roster_window_max_secs, from first_held by receipt",
-               "close": "lapsed unless fold policy_met", "count": "CC 4.2.6: yes against the standing roster"},
-        unstated=["concluder: a holder", "W is also the proposal's own window_until (cells.tsv:171)"]), "accord_roster_change", "holder")
     D["harm_report"] = stated(dict(policy="content_class:{class}[reported]", kind="clock", opener="member", counted="member", extra=("moderate",),
         target_votes=False, opener_says=None, kinds=("keep",),
         clauses=(("once", "keep", ("abs", 1), "extra", "kept"), ("close", "keep", ("strict", 1, 2, 2), "voted", "kept")),

@@ -57,3 +57,27 @@ before committing.
 ## Superseded vectors (normative reading rule)
 
 A **known-failing (`xfail`) conformance vector is not automatically a gap.** Where a ratified change moves the standard under an existing vector, or where a control migrates from the conformance tier into the substrate, the vector fails *because it encodes the superseded rule* — and the honest disposition is **superseded**, carrying the amendment that moved it and the substrate symbol that now witnesses the behavior. Two rules keep this from becoming an excuse: a vector may be called superseded only when a **named substrate witness publishes the equivalent control** (an unpublished symbol is a gap, not a supersession — a claim MUST NOT be repointed at a symbol no manifest carries), and a green sibling row at the same decimal **never** clears a failing vector on its own. Live instance: the CC 3.2 steward-binding family and the CC 3.4.x age plane, moved by the [CC 3.2](part_3_the_namespace.md) conferral-is-not-stewardship ruling (CIRISConstitution#87) — supersession tracked at CIRISPersist#729 / CIRISConformance#89.
+
+## Span hashes (`span_sha256`)
+
+An implementer's manifest may carry a trailing `span_sha256` column. Its definition, as CIRISVerify
+states it: "the ``span_sha256`` column is the SHA-256 of the item's own text, from its declaration
+keyword to its closing ``}`` or ``;`` (doc comments and attributes above it excluded; CRLF read as LF)."
+A qualified `Owner::member` resolves inside the owner's impl or trait block, and a name declared more
+than once is refused. The reference extractor is [`../tools/span_of.py`](../tools/span_of.py), copied
+unchanged from CIRISVerify; another repository copies it whole so every manifest's hash means the same bytes.
+
+Every implementer manifest should carry the column. The implementer's own gate then fails when a cited
+item's body changes under an unchanged name, and the claim it backs is re-read in the same commit.
+
+`check_claims.py` reads the column by name. When a pin moves, each row carrying a hash is compared with
+the same row (claim id and symbol) in the manifest vendored at the earlier pin, found in this
+repository's git history. Each claim whose span changed is listed as
+`re-read CLM-x: its code changed at <repo> <old>→<new>`. The listing is a note; `--span-changes-block`
+makes it an error. A manifest without the column is skipped.
+
+The constitution's own Lean citations are pinned by statement, not proof:
+[`../formal/derivation/lean_statements.tsv`](../formal/derivation/lean_statements.tsv) records the hash
+of each cited theorem's text from `theorem` to the `:=` that starts its proof, comments removed and
+whitespace normalised. [`../tools/lean_statement_hash.py`](../tools/lean_statement_hash.py) fails when a
+statement changes without the table; re-proving a theorem leaves its hash alone.

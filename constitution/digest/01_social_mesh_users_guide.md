@@ -30,11 +30,11 @@ A post is a row in a room. A reply is a row that names it; a reaction is a score
 
 ## Files and photos
 
-Your files live in a circle like everything else. A file's row says which of your devices hold its bytes, and a large file crosses between devices in pieces with a receipt for each (CC 3.1.3.3, 2.6.1.4). *[works today]* Nothing is stored on your device that you did not agree to, except what you wrote yourself; your device never holds a stranger's data for them (CC 5.2). *[works today]*
+Your files live in a circle like everything else. A file's row says which of your devices hold its bytes, and a large file crosses between devices in pieces with a receipt for each (CC 3.1.3.3, 2.6.1.6). *[works today]* Nothing is stored on your device that you did not agree to, except what you wrote yourself; your device never holds a stranger's data for them (CC 5.2). *[works today]*
 
 ## When something is wrong
 
-You have two acts, and they are separate choices. **File a report privately** with the room's moderator or the steward: nobody else sees it, it opens no clock, and it becomes the duty holder's record with you shielded; the moderator rules on it at any time or lets it rest (CC 4.5.4, 4.5.5). **Raise a moderation action** in the room: it is public, it names what you ask, and it starts a 48-hour window; the members respond, a moderator rules at any time, and if nobody has ruled when the window closes the majority of those who responded decides (CC 4.5.4, 4.5.13). *[being built]* The moderator may be a CIRIS agent held by a named person; the halt that stops every agent stops its rulings too, and never the members' vote (CC 4.5.4, 4.2.1.1). The 48 hours is the shortest span that gives every member in every time zone a weekday to respond (CC 4.5.4). A warning you speak about someone is theirs to retract; a warning you file with the moderator is not (CC 4.5.5). *[a rule, no code yet]*
+You have two acts, and they are separate choices. **File a report privately** with the room's moderator or the steward: nobody else sees it, it opens no clock, and it becomes the duty holder's record with you shielded; the moderator rules on it at any time or lets it rest (CC 4.5.4, 4.5.5). **Raise a moderation action** in the room: it is public, it names what you ask, and it starts a 48-hour window; the members respond, a moderator rules at any time, and if nobody has ruled when the window closes the majority of those who responded decides (CC 4.5.4, 4.5.13). *[being built]* The moderator may be a CIRIS agent held by a named person; the halt that stops every agent stops its rulings too, and never the members' vote (CC 4.5.4, 4.2.1.1). The 48 hours gives every member, in every time zone, two calendar days to respond, where 24 would give one (CC 4.5.4). A warning you speak about someone is theirs to retract; a warning you file with the moderator is not (CC 4.5.5). *[a rule, no code yet]*
 
 ## What is said about you
 
@@ -50,7 +50,7 @@ A business, a school or a court is a room that acts as one voice. It licenses, i
 
 ## Your agent
 
-An agent that works for you has a key held by a named person who answers for it, with listed powers reviewed yearly; with no live bond it cannot operate (CC 3.2, 7.5). It decides by published principles, shows its reasoning, and stops to ask a named human when it is unsure (CC 1.3, 1.9, 4.3). Anyone who holds the root it follows can pause it with one signed row; a lone pause lapses after a day unless a majority confirms it (CC 4.2.1.1). You can walk away from it, and the people who hold it owe duties about how it is changed or ended (CC 7.5). *[works today]*
+An agent that works for you has a key held by a named person who answers for it, with listed powers reviewed yearly; with no live bond it cannot operate (CC 3.2, 7.5). It decides by published principles, shows its reasoning, and stops to ask a named human when it is unsure (CC 1.3, 1.9, 4.3). Anyone who holds the root it follows can pause it with one signed row; a lone pause lapses after a day unless a majority confirms it (CC 4.2.1.1). *[works today]* You can walk away from it, and the people who hold it owe duties about how it is changed or ended (CC 7.5). *[works today for consensual shutdown and refusal; the Retirement Standard is being built: CIRISAgent#1250]*
 
 ## Consent, and taking it back
 

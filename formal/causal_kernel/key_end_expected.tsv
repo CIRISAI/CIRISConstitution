@@ -9,6 +9,8 @@ property	P5a two concurrent rotations of one key name no successor (both or neit
 property	P5b a rotation without the old key's signature is not kept	holds	caught
 property	P6 with the same rows, a key ended at an instant is live at no later instant; the end is the greatest stated end	holds	caught
 property	P7 a key's life is moved only by rows the key signed (no other voice revives it)	holds	caught
+property	P8 no revocation by another voice (the owner's, the seating roster's) ends a key's liveness	holds	caught
+property	P9 the owner's revocation ends the owner-binding's standing and the roster's removal ends the seat	holds	caught
 in_time	T1 self-contained: the renewal is a further record of the key naming its own earlier one, bounded alone	a function of the rows and now	counts a back-dated renewal	never refuses one signed in time
 in_time	T2 live when first held: the renewal counts only if this node held it before the record's end	NOT a function of the rows and now	never counts a back-dated renewal	refuses one signed in time
 in_time	T3 witnessed: the renewal counts only if a row by another voice names it	a function of the rows and now	counts a back-dated renewal	refuses one signed in time
@@ -33,6 +35,8 @@ attack	K7 a renewal read as activity to track an anonymous holder	CONCEDED	facts
 attack	K8 another voice revives an ended key	HOLDS	facts hold
 attack	K9 a stranger rotates a key it does not hold	HOLDS	facts hold
 attack	K10 a row signed after its key's held end	HOLDS	facts hold
+attack	K11 an owner or a seating roster revokes a key to end its liveness	HOLDS	facts hold
+attack	K12 an owner settles two concurrent rotations by revoking one successor's binding	HOLDS	facts hold
 numbers	no end (today), after one year	770150 rows, growing 2110 a day for ever
 numbers	no end (today), after five years	3850750 rows, growing 2110 a day for ever
 numbers	default end, 365 days	steady state m*e*r = 770150 rows (83950.0 keys)

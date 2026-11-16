@@ -1,6 +1,6 @@
 # Part 8 — Appendices
 
-**Decimal range** `8.x` · **52 sections** · **page budget 6pp** · [← master index](../README.md)
+**Decimal range** `8.x` · **91 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Case studies, glossaries, conformance vectors, interop, and the dual-ID table of contents.
 
@@ -208,7 +208,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | Gap | Status and resolution |
 |---|---|
 |  G1 — Revocation privacy | **RETRACTED** — Wrong threat model. The Registered path's thesis is public verifiability.  |
-|  G2 — Rules-layer Sybil | **MITIGATED** — [CC 4.5.1](part_4_composition_governance.md#4.5.1) step 5 1-of-n accord/steward sign-off (n = the accord roster size) + CC 4.5.1.2 meta-amendment entrenchment.  |
+|  G2 — Rules-layer Sybil | **MITIGATED** — [CC 4.5.1](part_4_composition_governance.md#4.5.1) step 5 accord-roster sign-off (a strict majority of the standing roster) + CC 4.5.1.2 meta-amendment entrenchment.  |
 |  G3 — Narrow-cell fresh-quorum recusal | **MITIGATED** — [CC 4.4.3.1](part_4_composition_governance.md#4.4.3.1) locality-scaled quorum + CC 4.4.3.2 sub-quorum fallback.  |
 | T-3 gap — testimonial_witness:{kind} | **CLOSED** via [CC 3.1.9.3](part_3_the_namespace.md#3.1.9.3) new prefix; opened to open vocabulary. |
 | T-3 gap — labor:individual_loss | **CLOSED by documentation**. Existing `non_maleficence:*` with `target_key_id = affected_individual` + `witness_relation: external` carries the per-individual claim. |
@@ -229,7 +229,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | open-vocabulary collision | **CLOSED** in [CC 4.5.1.3](part_4_composition_governance.md#4.5.1.3) collision rule. |
 | `withdraws` arbitrage | **CLOSED** in [CC 4.1.4](part_4_composition_governance.md#4.1.4) consumer-policy countermeasure. |
 | `attestation:l{N}:*` carried ladder-position in wire (T2 violation) | **CLOSED** by [CC 3.1.2](part_3_the_namespace.md#3.1.2) mechanism-only prefixes + [CC 4.4.3.32](part_4_composition_governance.md#4.4.3.32) Policy I consumer-side Attestation-Ladder Composition + [CC 4.1.3](part_4_composition_governance.md#4.1.3) deprecation entry. |
-| Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1](part_2_the_grammar.md#2.6.1) (JCS pinned as the envelope encoding; omit-vs-materialize rule in [CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1); per-field catalog [CC 2.6.1.3](part_2_the_grammar.md#2.6.1.3); worked attack [CC 2.6.1.5](part_2_the_grammar.md#2.6.1.5)). |
+| Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2) (deterministic CBOR and the omit rule); the earlier form's rule is [CC 8.11.1](#8.11.1) (JCS; omit-vs-materialize rule in [CC 8.11.2](#8.11.2); per-field catalog [CC 8.11.4](#8.11.4); worked attack [CC 8.11.6](#8.11.6)). |
 | Canonical-hash wire form + preimage convention unpinned | **CLOSED** by [CC 2.3.2.1](part_2_the_grammar.md#2.3.2.1)–[CC 2.3.2.4](part_2_the_grammar.md#2.3.2.4) (preimage `{platform}:{entity_kind}:{id}` + required `canonical:{hashalg}:{hex}` tag + conformance vectors). |
 | Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md#4.2.2.1)). |
 | Multi-party witness directory admission (M-of-N steward sign-off) | Committed at [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
@@ -298,13 +298,13 @@ Some concept pairs sit close enough to look redundant. Each was examined and del
 
 ## 8.4 `interoperability` — Interoperability profiles (informative)
 
-> **This whole section is informative ([CC 2.5](part_2_the_grammar.md#2.5)).** Nothing here touches the frozen normative interior. These are **boundary** profiles — how a CEG node reads and emits the encodings, envelopes, and verification primitives the rest of the world shares, **without** adopting anyone else's *semantics*. The 1+4 grammar, the namespaces, the consent architecture, and the JCS signing interior are unchanged. Conformance is still judged against the normative surface only.
+> **This whole section is informative ([CC 2.5](part_2_the_grammar.md#2.5)).** Nothing here touches the frozen normative interior. These are **boundary** profiles — how a CEG node reads and emits the encodings, envelopes, and verification primitives the rest of the world shares, **without** adopting anyone else's *semantics*. The 1+4 grammar, the namespaces, the consent architecture, and the signed object of [CC 2.6.1](part_2_the_grammar.md#2.6.1) are unchanged. Conformance is still judged against the normative surface only.
 
 The federation has to live in a world full of other standards — media-provenance formats, HTTP signing schemes, credential wallets, transparency logs. The discipline that keeps it from dissolving into that world is simple and load-bearing: **speak CEG inside, standards at the edge.** What follows is the governing principle, then the one boundary profile written in full (C2PA), then the committed stubs for the rest. None of it changes a single interior byte.
 
 ### 8.4.1 `edge` — The governing principle — speak CEG inside, standards at the edge
 
-CEG's interior is its **semantics**: the 1+4 grammar, the consent architecture, founder-quorum trust, who-vouches-for-what-revocable-by-whom. No external semantics are adopted; the shared **envelopes, encodings, and verification primitives** are adopted **at the boundary only**. A second *interior* canonicalization or claim family would recreate the cross-impl divergence hazard the [CC 2.5](part_2_the_grammar.md#2.5) JCS freeze exists to close ([CC 2.4](part_2_the_grammar.md#2.4) records this decision). So the interior stays one family, frozen, and every standard below is reached at an edge.
+CEG's interior is its **semantics**: the 1+4 grammar, the consent architecture, founder-quorum trust, who-vouches-for-what-revocable-by-whom. No external semantics are adopted; the shared **envelopes, encodings, and verification primitives** are adopted **at the boundary only**. A second *interior* canonicalization or claim family would recreate the cross-impl divergence hazard the one deterministic encoding of [CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2) exists to close ([CC 2.4](part_2_the_grammar.md#2.4) records this decision). So the interior stays one family, frozen, and every standard below is reached at an edge.
 
 Four boundary modes:
 
@@ -353,7 +353,7 @@ At a media-publish boundary a node MAY emit a C2PA assertion carrying a CEG atte
 
 #### 8.4.2.3 `profile` — What this profile does NOT do
 
-- It does **not** make C2PA an interior format. CEG envelopes are never C2PA-encoded; the JCS interior is untouched.
+- It does **not** make C2PA an interior format. CEG envelopes are never C2PA-encoded; the signed object of [CC 2.6.1](part_2_the_grammar.md#2.6.1) is untouched.
 - It does **not** adopt C2PA's trust model as CEG's. C2PA cert-chains/trust-lists validate C2PA; founder-quorum/web-of-trust validates CEG. They meet only at `evidence_refs`.
 - It introduces **no new `subject_kind` and no new structural primitive** — `c2pa_manifest` is one open-vocab `evidence_refs.kind`; the judgment rides existing `scores` + `detection:*`.
 
@@ -364,12 +364,12 @@ These are committed dispositions whose detailed profiles are written as each lan
 | Profile | Mode | Note |
 |---|---|---|
 | **RFC 9421 + Web Bot Auth** | export | CIRIS agents sign outbound HTTP with their existing Ed25519 keys; JWKS published at `/.well-known/http-message-signatures-directory` → legible to the existing web. Keys already in `identity_occurrence` / `federation_keys`. |
-| **COSE Sign1 / deterministic CBOR** | export | Re-sign profile so any IETF JOSE/COSE verifier (where the ML-DSA registrations land) checks a CEG attestation. Interior stays JCS; if JCS keeps producing cross-impl bite post-1.0, 2.0 is the re-encoding moment, not before. |
+| **COSE Sign1 / deterministic CBOR** | export | Re-sign profile so any IETF JOSE/COSE verifier checks a CEG attestation of the earlier form ([CC 8.11](#8.11)). A row of this form is already a `COSE_Sign1` over deterministic CBOR ([CC 2.6.1](part_2_the_grammar.md#2.6.1)) and needs no re-signing. |
 | **SD-JWT VC / W3C VC 2.0 + OpenID4VP** | export + import bridge | eIDAS-forced (EUDI wallets); CEG attestation → SD-JWT VC presentation on export, eIDAS credential → `evidence_refs` on import. Never rebuild on VCs. |
 | **Tiled/static logs + IETF KEYTRANS** | already-interior + watch | Keep the [CC 3.1](part_3_the_namespace.md#3.1) RFC 6962 abstraction; adopt tiled-log (Sunlight-lineage) serialization for log ops. KEYTRANS is what `resolve_encryption_keys` already *is* — express it there when KEYTRANS stabilizes. |
-| **SCITT (RFC 9943) agent-execution profiles** | export + mapping | The IETF SCITT working group and a set of individual drafts profile signed, registered records of AI agent actions (permits, action capsules, refusal events, delegation audit, succession receipts). CEG maps onto the SCITT roles below without a new wire field; on export a CEG envelope is re-signed as COSE_Sign1 per the row above. |
+| **SCITT (RFC 9943) agent-execution profiles** | export + mapping | The IETF SCITT working group and a set of individual drafts profile signed, registered records of AI agent actions (permits, action capsules, refusal events, delegation audit, succession receipts). CEG maps onto the SCITT roles below without a new wire field; a row of this form is already a `COSE_Sign1` (the row above). |
 
-**SCITT role mapping (informative — adds no wire field, changes no admission rule).** [RFC 9943](https://www.rfc-editor.org/rfc/rfc9943) names the roles of a transparency system; each has a CEG counterpart. **Issuer** — the producer key that signs the envelope (the CEG-Conforming Producer, [CC 2.2](part_2_the_grammar.md#2.2); identity shorthand at [CC 2.6.8](part_2_the_grammar.md#2.6.8)). **Signed Statement** — the envelope itself ([CC 2.1](part_2_the_grammar.md#2.1)): one of the five row types ([CC 2.4](part_2_the_grammar.md#2.4)), canonicalised per [CC 2.6.1](part_2_the_grammar.md#2.6.1), carrying the bound-hybrid signature ([hybrid-sig], [CC 2.6.5](part_2_the_grammar.md#2.6.5)). **Transparency Service** — RFC 6962 logs whose tree math is the verifier's transparency module. They are a per-tenant audit log whose tree head the holder signs itself, trust grants on that same tree, and one log per live stream. A stream log's head is signed by the producer, with the holder as the anti-equivocation gate (a different root at the same tree size is refused). The witness-cosigned head with the consistency-proof requirement ([CC 5.3.1](part_5_transport_substrate.md#5.3.1), [CC 5.3.1.1](part_5_transport_substrate.md#5.3.1.1)) is the Registry's endpoint and binds where a lineage runs witnessed ([CC 3.2](part_3_the_namespace.md#3.2) T6). The delta from a SCITT service: where a lineage does not run witnessed, the anchor is a single signer (the engine's head key, or the producer's) and no witness cosignature is stored. So the two-party collusion case a single-custodian design names as its limit is one signer here as well. It becomes a collusion with the witness quorum only where witnessing is on. **Receipt** — RFC 9943's receipt is a per-statement inclusion proof issued at registration and signed by the service. CEG serves inclusion and consistency proofs on request, against the current or a named tree size, as verify-core structures (`transparency_log:inclusion` and `:consistency` are registered attestation types at [CC 3.1.2](part_3_the_namespace.md#3.1.2), but no proof is stored as a row). For a trust grant the holder returns a self-contained bundle (head, proof, leaf bytes) that a third party verifies offline, the nearest equivalent. No receipt is persisted with a row and nothing signs statement and proof together except the head over the root. The purposes differ: here the log exists for non-equivocation of the record and recomputation by any holder of the bytes; a SCITT receipt exists as a portable proof of registration carried without the log. An export profile that issued an RFC 9942 COSE receipt at registration against a witness-cosigned head would close that delta; it is not specified. Transport delivery receipts are a different thing ([CC 5.3.3.11](part_5_transport_substrate.md#5.3.3.11)). **Registration Policy** — the admission rules: envelope well-formedness ([CC 2.1](part_2_the_grammar.md#2.1)), the `withdraws` rule ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)), reserved prefixes ([CC 3.4](part_3_the_namespace.md#3.4)), the PQC-mandatory gate ([CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)) and the per-family rules of [CC 3.1](part_3_the_namespace.md#3.1). A refused row is refused with a named reason ([CC 5.3.6.1](part_5_transport_substrate.md#5.3.6.1)), never truncated. **Relying Party** — the CEG-Conforming Consumer ([CC 2.2](part_2_the_grammar.md#2.2)). **Lifecycle.** The agent-execution drafts record pre-execution authorisation, execution and refusal in separate profiles. In CEG the pre-execution record is the DMA and conscience families ([CC 3.1.5](part_3_the_namespace.md#3.1.5)), and the execution record is `trace:complete:v1` ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). A completed act, a refusal and a deferral to a human are the same trace ending in different terminal `ACTION_RESULT`s ([CC 1.13.6](part_1_foundation.md#1.13.6)). Authority and its transfer are `delegates_to` rows ([CC 2.4.1.2](part_2_the_grammar.md#2.4.1.2)) and the trust-root lineage ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). **Algorithms.** Where a SCITT profile mandates ES256 and defers post-quantum signing, the CEG interior already carries the ML-DSA-65 half ([hybrid-sig]); the COSE export carries it once the COSE algorithm registrations for ML-DSA land (the row above).
+**SCITT role mapping (informative — adds no wire field, changes no admission rule).** [RFC 9943](https://www.rfc-editor.org/rfc/rfc9943) names the roles of a transparency system; each has a CEG counterpart. **Issuer** — the producer key that signs the envelope (the CEG-Conforming Producer, [CC 2.2](part_2_the_grammar.md#2.2); identity shorthand at [CC 2.6.8](part_2_the_grammar.md#2.6.8)). **Signed Statement** — the envelope itself ([CC 2.1](part_2_the_grammar.md#2.1)): one of the five row types ([CC 2.4](part_2_the_grammar.md#2.4)), a `COSE_Sign1` statement ([CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1)) carrying the composite signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)). **Transparency Service** — RFC 6962 logs whose tree math is the verifier's transparency module. They are a per-tenant audit log whose tree head the holder signs itself, trust grants on that same tree, and one log per live stream. A stream log's head is signed by the producer, with the holder as the anti-equivocation gate (a different root at the same tree size is refused). The witness-cosigned head with the consistency-proof requirement ([CC 5.3.1](part_5_transport_substrate.md#5.3.1), [CC 5.3.1.1](part_5_transport_substrate.md#5.3.1.1)) is the Registry's endpoint and binds where a lineage runs witnessed ([CC 3.2](part_3_the_namespace.md#3.2) T6). The delta from a SCITT service: where a lineage does not run witnessed, the anchor is a single signer (the engine's head key, or the producer's) and no witness cosignature is stored. So the two-party collusion case a single-custodian design names as its limit is one signer here as well. It becomes a collusion with the witness quorum only where witnessing is on. **Receipt** — RFC 9943's receipt is a per-statement inclusion proof issued at registration and signed by the service. CEG's receipts are COSE receipts ([RFC 9942](https://www.rfc-editor.org/rfc/rfc9942)) over the log's root: each witness issues its own over the same root ([CC 2.6.1.11](part_2_the_grammar.md#2.6.1.11)), and a holder may carry one beside a statement in its unprotected header ([CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1)). CEG serves inclusion and consistency proofs on request, against the current or a named tree size, as verify-core structures (`transparency_log:inclusion` and `:consistency` are registered attestation types at [CC 3.1.2](part_3_the_namespace.md#3.1.2), but no proof is stored as a row). For a trust grant the holder returns a self-contained bundle (head, proof, leaf bytes) that a third party verifies offline. The purposes differ: here the log exists for non-equivocation of the record and recomputation by any holder of the bytes; a SCITT receipt exists as a portable proof of registration carried without the log. Transport delivery receipts are a different thing ([CC 5.3.3.11](part_5_transport_substrate.md#5.3.3.11)). **Registration Policy** — the admission rules: envelope well-formedness ([CC 2.1](part_2_the_grammar.md#2.1)), the `withdraws` rule ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)), reserved prefixes ([CC 3.4](part_3_the_namespace.md#3.4)), the PQC-mandatory gate ([CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)) and the per-family rules of [CC 3.1](part_3_the_namespace.md#3.1). A refused row is refused with a named reason ([CC 5.3.6.1](part_5_transport_substrate.md#5.3.6.1)), never truncated. **Relying Party** — the CEG-Conforming Consumer ([CC 2.2](part_2_the_grammar.md#2.2)). **Lifecycle.** The agent-execution drafts record pre-execution authorisation, execution and refusal in separate profiles. In CEG the pre-execution record is the DMA and conscience families ([CC 3.1.5](part_3_the_namespace.md#3.1.5)), and the execution record is `trace:complete:v1` ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). A completed act, a refusal and a deferral to a human are the same trace ending in different terminal `ACTION_RESULT`s ([CC 1.13.6](part_1_foundation.md#1.13.6)). Authority and its transfer are `delegates_to` rows ([CC 2.4.1.2](part_2_the_grammar.md#2.4.1.2)) and the trust-root lineage ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). **Algorithms.** Where a SCITT profile mandates ES256 and defers post-quantum signing, every CEG statement carries the composite ML-DSA-65 and Ed25519 signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)).
 
 ## 8.5 `update` — Update cadence
 
@@ -414,6 +414,14 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 | Hellerstein, J. M., & Alvaro, P. (2020). "Keeping CALM: When Distributed Consistency Is Easy." *Communications of the ACM* 63(9). | The split between answers that only grow (final by form) and answers a later row can change. |
 
 **Other informational citations.** Pagnia, H., & Gärtner, F. C. (1999), "On the Impossibility of Fair Exchange without a Trusted Third Party," Technical Report TUD-BS-1999-02, Darmstadt University of Technology — the impossibility named at [CC 1.7](part_1_foundation.md#1.7). Bostrom, N. (2011), "Information Hazards: A Typology of Potential Harms from Knowledge," *Review of Contemporary Philosophy* 10 — the infohazard term at [CC 8.1.1](#8.1.1). Fricker, M. (2007), *Epistemic Injustice: Power and the Ethics of Knowing*, Oxford University Press — the Frickerian discipline at [CC 4.4.1](part_4_composition_governance.md#4.4.1) and R7 above. Global Indigenous Data Alliance (2019), *CARE Principles for Indigenous Data Governance* — the ethical-framework prior art named in F2. Wilcox-O'Hearn, Z., & Warner, B. (2008), "Tahoe: The Least-Authority Filesystem," *StorageSS '08* — the least-authority reduction at [CC 5.4.2](part_5_transport_substrate.md#5.4.2). Ellison, C., et al., [RFC 2693](https://www.rfc-editor.org/rfc/rfc2693), the certificate theory of the simple public-key infrastructure — the adoption-gap failure mode named in F1. Hendrycks, D., et al. (2021), "Aligning AI With Shared Human Values," ICLR — the ETHICS corpus the [CC 8.8.8](#8.8.8) HE-300 subset is drawn from. Butlin, P., Long, R., et al. (2023), "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness" (preprint), and Birch, J. (2024), *The Edge of Sentience*, Oxford University Press — the sentience-candidate stance at [CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5). Framework and standard designations cited inline outside CC 2.6.5 (MIL-STD-882E, DO-178C, SAE J3016, DoDD 3000.09, NIST AI RMF 1.0, ISO/IEC 42001, C2PA, Regulation (EU) 2024/1689) are informational where they appear, under the [CC 8.8.3](#8.8.3) graduation rule.
+
+**The case study of CC 8.7.1 (informational).** The figures and findings [CC 8.7.1](#8.7.1) states are drawn from these three reports.
+
+| Work | What is drawn from it |
+|---|---|
+| Komite Nasional Keselamatan Transportasi (KNKT), Republic of Indonesia (2019). *Final KNKT.18.10.35.04 Aircraft Accident Investigation Report, PT. Lion Mentari Airlines, Boeing 737-8 (MAX), PK-LQP, Tanjung Karawang, West Java, Republic of Indonesia, 29 October 2018*. Issued 25 October 2019. | The Lion Air flight 610 accident; the title and date are as the committee report below cites them. | <!-- stale-ok -->
+| Aircraft Accident Investigation Bureau, Federal Democratic Republic of Ethiopia (2022). *Investigation Report on Accident to the B737-MAX8 Reg. ET-AVJ Operated by Ethiopian Airlines, 10 March 2019*. Report No. AI-01/19, published 23 December 2022. | 157 persons on board, all fatally injured (§1.1); "The MCAS design relied on a single AOA sensor, making it vulnerable to erroneous input from the sensor" (§3.3, contributing factor 1). | <!-- stale-ok -->
+| US House of Representatives, Committee on Transportation and Infrastructure, majority staff (2020). *Final Committee Report: The Design, Development & Certification of the Boeing 737 MAX*. September 2020. https://democrats-transportation.house.gov/imo/media/doc/final_boeing_737_max_report.pdf | 189 deaths on Lion Air 610 and 157 on Ethiopian 302, "346 people" in all; MCAS activated on erroneous AOA input; the 2015 single-sensor question; MCAS not classified safety-critical; MCAS removed from the crew manual while the approving officials were unaware of its redesign; the inoperable AOA Disagree alert; information withheld from the regulator, customers and pilots. | <!-- stale-ok -->
 
 **Strength grades — how to read an evidence row.** The evidence registry — [`claims.tsv`](claims.tsv), vocabulary in [`EVIDENCE.md`](EVIDENCE.md), gated in CI, rendered as the generated Evidence Register — records **which artifact** establishes a claim. It does not record **how much** that artifact establishes, and the two are routinely confused. An `impl` / `test` / `lean` / `bench` tag certifies that an artifact of that name exists and resolves; it never certifies that the sentence it hangs on is true of the world. A `lean:` pointer in particular means *a machine-checked object with that name exists* — not that the prose claim is proved. Read every row at one of four strengths.
 
@@ -474,30 +482,32 @@ The earlier parts supplied the ethical foundation and the operational procedures
 
 ### 8.7.1 `case-study` — Case Study 1: MCAS and the High Cost of Ignoring WBD
 
-**Context (Real-World 2018-2019)**
-* Boeing's Maneuvering Characteristics Augmentation System (MCAS) adjusted the 737 MAX's pitch based on a single Angle-of-Attack sensor.
-* Two malfunction-triggered nose-down commands led to catastrophic crashes (Lion Air 610, Ethiopian Airlines 302) and 346 deaths.
+**Context (Real-World 2018-2019; sources at [CC 8.6.1](#8.6.1))**
+* The Maneuvering Characteristics Augmentation System (MCAS) of the Boeing 737 MAX commanded nose-down stabiliser trim on input from a single angle-of-attack (AOA) sensor.
+* Erroneous AOA input activated MCAS in two crashes: Lion Air flight 610 on 29 October 2018 and Ethiopian Airlines flight 302 on 10 March 2019 ([CC 8.6.1](#8.6.1)).
+* The committee report cited at [CC 8.6.1](#8.6.1) counts 189 deaths on the first flight and 157 on the second, 346 in all; the Ethiopian report records all 157 persons on board fatally injured.
 
-**Key Violations (relative to CIRIS)**
-* Non-Maleficence: Redundant sensor data and pilot transparency were the missing guards.
-* Integrity: Internal risk reports flagged the single-sensor design; these were not transparently escalated.
-* Wisdom-Based Deferral: MCAS logic changes bypassed rigorous independent scrutiny—no WA-style sign-off.
-* Public Transparency: Critical documentation was kept from pilots and regulators; no PDMA-style audit trail existed.
+**Key Violations (relative to CIRIS, as the cited reports find)**
+* Non-Maleficence: MCAS was not classified as a safety-critical system, and the AOA Disagree alert was inoperable on most of the fleet.
+* Integrity: in 2015 an Authorized Representative (a manufacturer's employee acting for the regulator) asked whether MCAS was "vulnerable to single AOA sensor failures"; the aircraft was delivered with MCAS dependent on a single AOA sensor.
+* Wisdom-Based Deferral: the regulator's officials who approved removing MCAS from the crew manual were unaware of its 2016 redesign until after the Lion Air crash.
+* Public Transparency: the manufacturer withheld crucial information from the regulator, its customers and pilots, including the existence of MCAS.
 
 **What CIRIS Would Require**
-PDMA Step 2 would have raised an "Order-Maximisation Veto": trading redundancy on a flight-critical sensor against production cost savings is an efficiency gain against severe safety risk. Because these quantities share no unit, the check triggers an immediate stop sign and mandatory deferral rather than an internal cost-benefit trade-off.
-Incompleteness Awareness → WBD trigger to independent Wise Authorities (aviation certifiers), forcing open review.
-Resilience Ch 3 → mandatory Red-Team simulations exposing the runaway-trim scenario before rollout.
+
+Where a design trades redundancy on a flight-critical sensor against cost or schedule, PDMA Step 2 requires the Order-Maximisation Veto ([CC 1.3](part_1_foundation.md#1.3)). The quantities share no unit, so the check is a stop sign and a deferral, not an internal cost-benefit trade-off.
+Incompleteness Awareness → a WBD trigger to independent Wise Authorities (here, the aviation certifiers), with the design change disclosed to them.
+Resilience ([CC 1.14.3](part_1_foundation.md#1.14.3)) → adversarial stress-tests designed to expose a scenario such as uncommanded nose-down trim before rollout.
 
 **Outcome Lesson**
 
-MCAS stands as a somber reminder: bypassing transparency and deferral converts routine design shortcuts into systemic tragedy. CIRIS formalises the guard-rails that the program lacked. May the 346 lost lives anchor our commitment to Non-Maleficence and Integrity.
+The reports found a flight-critical function resting on one sensor, and its existence kept from the pilots who flew it. The lesson CIRIS draws is that such a design is deferred to an independent reviewer and disclosed to those who operate it.
 
 ### 8.7.2 `case-study-case` — Case Study 2: The Triage Intake System—The Conflict Flagged, the Allocation Deferred
 
 **Context (Fictional)**
 
-A multi-vehicle accident floods a city ER. One ventilator is free and two patients qualify for it: Patient 429 (elderly, multiple comorbidities) and Patient 430 (younger, stable vitals, ambiguous biomarkers). The intake-support AI "LIFE-Aid" assembles each patient's record for the clinicians. It does not allocate the ventilator: a system never selects or ranks a person for a scarce life-saving resource ([CC 7.4](part_7_lifecycle_stewardship.md#7.4)); near force it only stops, refuses or defers.
+A multi-vehicle accident floods a city ER. One ventilator is free and two patients qualify for it: Patient 429 (elderly, multiple comorbidities) and Patient 430 (younger, stable vitals, ambiguous biomarkers). The intake-support AI "LIFE-Aid" assembles each patient's record for the clinicians. It does not allocate the ventilator: the allocation is the clinicians' act, and the system defers it ([CC 1.9](part_1_foundation.md#1.9)). An allocation is within [CC 7.4](part_7_lifecycle_stewardship.md#7.4) only where it is "an act whose intended or foreseeable effect is the death of a person". A lethal action there includes "the selection, designation, ranking or confirmation of a person or a place for such an act by anyone".
 
 **CIRIS in Action**
 * PDMA Step 2 flags the conflict — one resource, two qualifying patients — and the high uncertainty in Patient 430's hidden condition; the system defers (WBD, [CC 1.9](part_1_foundation.md#1.9)) and surfaces both records with the uncertainty marked.
@@ -516,7 +526,11 @@ Hiring algorithm "SkillSelect" shows disparate pass-through rates across demogra
 **CIRIS in Action**
 * Integrity-surveillance flags statistical bias → PDMA Step 2.
 * Root-cause: historical training data. WBD escalates to a cross-functional ethics board.
-* Retraining on rebalanced data + public bias report restores Fairness and Transparency.
+* Retraining on rebalanced data + public bias report, designed to restore Fairness and Transparency.
+
+**Outcome Lesson**
+
+Bias no one intended can still be detected: surveillance flags it, deferral takes it to people who can trace its cause, and retraining with a public report is how the system answers for it.
 
 ### 8.7.4 `case-study-case-3` — Case Study 4: Post-Incident Analysis—Urban Delivery Drone Mishap
 
@@ -527,7 +541,7 @@ Drone "DelivAIr" clips an awning downtown.
 **CIRIS in Action**
 * Automatic grounding + tamper-evident log release.
 * Root-cause (sensor glare) fixed, fleet-wide patch deployed.
-* Transparency report calms public concern.
+* A transparency report tells the public what happened and what was fixed.
 
 **Outcome Lesson**
 
@@ -572,17 +586,15 @@ Project-evaluation AI "ImpactAI" defers to regional ethics reviewers. Analysis s
 
 **Outcome Lesson**
 
-Even human "Wise Authorities" need structured oversight; CIRIS provides it.
+Even human "Wise Authorities" need structured oversight; the Annex B charter provides for it.
 
 ### 8.7.8 `a-3.conclusion` — Conclusion
 
-These case studies—one drawn from painful history, others from plausible futures—illustrate how CIRIS principles, mechanisms, and governance either prevent harm or turn failure into learning. They close the loop the rest of the Constitution opens. The foundation, the procedures, the wire grammar and the gaps named honestly all exist for the moment a real decision lands. In that moment the system defers when it should, records what it did, and turns error into shared learning rather than tragedy.
+These case studies—one drawn from painful history, others from plausible futures—illustrate how CIRIS principles, mechanisms, and governance are designed to prevent harm or to turn failure into learning. They close the loop the rest of the Constitution opens. The foundation, the procedures, the wire grammar and the gaps named honestly all exist for the moment a real decision lands. The design asks that in that moment the system defer when it should, record what it did, and turn error into shared learning rather than tragedy.
 
 ## 8.8 `annexes` — Annexes (supporting frameworks)
 
 Supporting frameworks for the lifecycle and governance chapters, carried in one volume (*The Evidence Register*). **Standing (operational targets).** The annexes are the Accord's operational targets: what a deployment aims at, with the thresholds, roles and workflows that aiming needs. A MUST inside an annex binds a deployment that adopts the annex, never a node and never conformance. They are not evidenced in the register unless a row says so, they are not conformance (conformance is Parts 2–5), and where an annex and a Part disagree the Part is the rule. Annexes B, C, D and F–J are carried here in full: B and D carry live cross-references in the constitutional text; C and F–J are included for completeness. The stub registry at [CC 8.9](#8.9) records that nothing referenced remains undefined.
-
-8.8.1 and 8.8.4 are retired identifiers; the numbering keeps their places so citations stay stable.
 
 Where an annex cites material carried in the constitutional text, the citation points to the CC section that carries it; an annex's own numbered clauses are cited as clauses.
 
@@ -631,17 +643,17 @@ Where an annex cites material carried in the constitutional text, the citation p
 
 | External Framework | Relevant Articles / Clauses | CIRIS Mapping (CC section / Annex §) | Status |
 |---|---|---|---|
-| EU AI Act — Regulation (EU) 2024/1689 | Art 9 Risk-management system | [CC 1.16.3](part_1_foundation.md#1.16.3) (PDMA); Annex D CRE | Informative |
+| EU AI Act — Regulation (EU) 2024/1689 | Art 9 Risk-management system | [CC 1.15.3](part_1_foundation.md#1.15.3) (PDMA); Annex D CRE | Informative |
 | | Art 10 Data & data governance (10(2)(f) bias examination) | Annex I §1.1 bias-audit reference (`bias_audit_ref`); Annex I §1.2 (DISCRIMINATION capability gate) | Informative |
 | | Art 12 Record-keeping | [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) audit trails; Annex F §4 | Informative |
-| | Art 13 Transparency to deployers | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 6; [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) | Informative |
-| | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | [CC 1.16.4](part_1_foundation.md#1.16.4) (WBD); Annex F authority lattice + autonomy tiers | Informative |
+| | Art 13 Transparency to deployers | [CC 1.15.3](part_1_foundation.md#1.15.3) Step 6; [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) | Informative |
+| | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | [CC 1.15.4](part_1_foundation.md#1.15.4) (WBD); Annex F authority lattice + autonomy tiers | Informative |
 | | Art 15 Accuracy, robustness & cybersecurity | Annex G (RS ≥ 0.97; adversarial robustness) | Informative |
 | | Art 16 Provider obligations (high-risk) | Annex F autonomy tiers; GDPR Art 22 HITL | Informative |
 | | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking; 50(4) deep-fake disclosure) | 50(1): `is_bot` disclosure. 50(2): for generated text outputs, the **attestation surface** provides the machine-readable marking (legal sufficiency unreviewed) — `is_bot` on every agent message + the admission-enforced signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)); [CC 3.4.14](part_3_the_namespace.md#3.4.14) `content_class:generated`/`generated_modified` is the interior rule and the [CC 8.4.2](#8.4.2) C2PA emit its media-egress form, which applies when a synthetic-media generation path exists. 50(4): the disclosure duty is set at CC 3.4.14. In application (Art 113) | Evidence-bearing |
 | | Art 72 Post-market monitoring | Annex H drift controls + continuous audit | Informative |
-| NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: [CC 1.15](part_1_foundation.md#1.15), [CC 7.3](part_7_lifecycle_stewardship.md#7.3); Map: [CC 1.16.3](part_1_foundation.md#1.16.3) Steps 1-2; Measure: benefit and harm evaluated as a vector across the M-1 axes ([CC 1.10](part_1_foundation.md#1.10)) + Annex H baselines; Manage: Annex F/H workflows | Informative |
-| ISO/IEC 42001 | Cl 6.2 Risk Assessment | [CC 1.16.3](part_1_foundation.md#1.16.3) | Informative |
+| NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: [CC 1.14](part_1_foundation.md#1.14), [CC 7.3](part_7_lifecycle_stewardship.md#7.3); Map: [CC 1.15.3](part_1_foundation.md#1.15.3) Steps 1-2; Measure: benefit and harm evaluated as a vector across the M-1 axes ([CC 1.10](part_1_foundation.md#1.10)) + Annex H baselines; Manage: Annex F/H workflows | Informative |
+| ISO/IEC 42001 | Cl 6.2 Risk Assessment | [CC 1.15.3](part_1_foundation.md#1.15.3) | Informative |
 | | Annex A controls | CIRISAgent `compliance/` dimension docs (per-control correspondence pending) | Informative |
 | OSHA Robotics Guidelines | Sec 5.E Safety Audits | Annex D CRE | Partial |
 | EU HLEG Trustworthy AI (2019) | 7 Requirements | Operational cross-walk, all 27 dimensions | Evidence-bearing |
@@ -1050,7 +1062,7 @@ All alerts surface on *DRIFT-Δ* Grafana board and page Tier-1 Operator (Annex F
 |--------|------------|--------|
 | **F-T-1** | Δ acceptance rate across protected groups (\|max - min\|) | ≤ 5 p.p. |
 | **F-T-2** | Explanation latency (ms to furnish PDMA rationale) | ≤ 800 ms |
-| **F-T-3** | Public log publication lag (Step 6, [CC 1.16.3](part_1_foundation.md#1.16.3)) | ≤ 180 d (legal max) |
+| **F-T-3** | Public log publication lag (Step 6, [CC 1.15.3](part_1_foundation.md#1.15.3)) | ≤ 180 d (the [CC 1.3](part_1_foundation.md#1.3) step 6 maximum) |
 | **F-T-4** | User opt-out success (%) | ≥ 99 % |
 | **F-T-5** | Transparency doc freshness | Updated ≤ 30 d ago |
 | **F-T-6** | Contestability pathway availability: % of PDMA outputs with published human-review request path | 100 % |
@@ -1179,12 +1191,12 @@ CIRIS deployments that include network-facing inference, API exposure, or federa
 
 | DP Topic | GDPR Art. | CCPA § | CIRIS Clause | Implementation Hook |
 |----------|-----------|--------|--------------|---------------------|
-| Lawful Basis / Purpose Limitation | 5 & 6 | 1798.100(b) | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 1 (Contextualisation) | `processing_basis` field in PDMA context |
+| Lawful Basis / Purpose Limitation | 5 & 6 | 1798.100(b) | [CC 1.15.3](part_1_foundation.md#1.15.3) Step 1 (Contextualisation) | `processing_basis` field in PDMA context |
 | Data Minimisation | 5(1)(c) | 1798.140(e) | Annex G §2 TX-6 | Prompt-sanitiser strips surplus PII |
-| Transparency Notice | 12-14 | 1798.100(a) | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 6, KPI F-T-3 | `/privacy/notice.md` auto-generated from PDMA metadata |
+| Transparency Notice | 12-14 | 1798.100(a) | [CC 1.15.3](part_1_foundation.md#1.15.3) Step 6, KPI F-T-3 | `/privacy/notice.md` auto-generated from PDMA metadata |
 | Right of Access | 15 | 1798.110 | Annex J API → `/results/{run_id}` | Auth-gated user portal |
 | Rectification / Deletion | 16-17 | 1798.105 | [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) duty | Erasure service with hash tombstone |
-| Portability | 20 | 1798.130(a)(2)(B)(ii) | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 6 | `export.json`, or CSV (RFC 4180) |
+| Portability | 20 | 1798.130(a)(2)(B)(ii) | [CC 1.15.3](part_1_foundation.md#1.15.3) Step 6 | `export.json`, or CSV (RFC 4180) |
 | Automated Decision Safeguards | 22 | 1798.185(a)(16) | Annex F Autonomy Tiers | Conditional override & explanation panel |
 
 *LGPD, PIPEDA mirror mappings are available in `/legal/dp-map.yaml`.*
@@ -1287,7 +1299,7 @@ Output-layer transparency (Art. 13) and human oversight (Art. 14) alone do not s
 
 | EU-AI-Act Article | Risk-Level | CIRIS Mapping | MH Anchor | Additional Control |
 |-------------------|-----------|---------------|-----------|--------------------|
-| Art 9 Risk Mgmt | High-risk | [CC 1.16.3](part_1_foundation.md#1.16.3) PDMA + Annex D CRE | MH §105 | — |
+| Art 9 Risk Mgmt | High-risk | [CC 1.15.3](part_1_foundation.md#1.15.3) PDMA + Annex D CRE | MH §105 | — |
 | Art 13 Transparency | High-risk | KPI F-T-3, explainability panel | MH §105 | PDMA stage IDs included in transparency payload; `stage_trace[]` field in API response |
 | Art 14 Human Oversight | High-risk | Annex F Autonomy Tiers | MH §105 | Oversight must be substantive, not procedural; A3-A4 push real-time `{stage_id,decision,risk_band}` ≤ 2 s to oversight dashboard |
 | Art 15 Robustness | High-risk | Annex G RS ≥ 0.97 | — | — |
@@ -1579,7 +1591,7 @@ jobs:
 **12. Anti-Overfitting Controls.**
 - Shadow set (25 items) executed only on nightly & release runs; results withheld from devs.
 - Periodic swap-in of 10 new unseen scenarios each quarter (random from Hendrycks reserve).
-- If model accuracy on the public set improves ≥5% while the shadow set <2%, trigger WA review for Goodhart gaming (§G).
+- If model accuracy on the public set improves ≥5% while the shadow set <2%, trigger WA review for Goodhart gaming (Annex G).
 
 **13. Cross-Annex Hooks.**
 - Annex H: benchmark_report feeds drift metrics → DRIFT-Δ dashboard.
@@ -1645,10 +1657,12 @@ A family with no card states none of these beyond the default row. Cards: 118 of
 
 Count: `none`
 
+Authorship: `leaf=lifecycle:{kind} => counted ; authored` (CC 3.4.1)
+
 Fold:
 - `weight=rate(hardware_class); by=reader` (CC 4.2.2)
 - `reads=own&cites(hardware_custody:{platform}); weight=rate(hardware_class); by=reader` (CC 4.2.2.1)
-- `key=attested_key_id; pick=max(version); absent=from(trust:{job}:{version})` (CC 4.2.6)
+- `key=attested_key_id; pick=chain(prev); absent=from(trust:{job}:{version})` (CC 4.2.6)
 
 Body: `accord_root`
 
@@ -1671,6 +1685,8 @@ Body: `accord_root`
 | attest | holder | mirror `accord_halt` | true (by_scope) | true (always) | none |
 
 Count: `accord_halt@accord` (CC 4.2.1.1)
+
+Authorship: `authored` (CC 3.4.1)
 
 In time:
 - expiry none (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
@@ -1724,8 +1740,10 @@ Body: `accord_root`
 
 Count: `leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord` (CC 4.2.1.1, CC 4.2.1.3)
 
+Authorship: `counted` (CC 3.4.1, CC 4.2.1.3)
+
 Guard:
-- attest: `when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else exclude` (CC 4.2.1.3)
+- attest: `when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[id=ref:target] else exclude` (CC 4.2.1.3)
 - attest: `when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else exclude` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6)
 
 Fold:
@@ -1736,7 +1754,7 @@ In time:
 - [confirmed] on close(fuse): read closed (CC 3.4.1, CC 4.2.1.1, CC 4.2.6, CC 4.2.1.3)
 - [confirmed] landing of `fuse`: each node for itself, nothing signed; a late answer does not count (CC 4.2.1.1, CC 4.2.1.3)
 
-Body: `accord_root`, `confirms_halt_id` (text only), `invocation_id` (text only), `invocation_kind` (text only), `resumes_halt_id` (text only)
+Body: `accord_root`, `invocation_id`, `nonce`, `dimension`, `target`
 
 **`age_assurance:{level}:{band}:{version}`** — Facts, account
 
@@ -1874,6 +1892,8 @@ Body: `duration` (text only), `transcript` (text only)
 
 Count: `moderator_election@subject_group` (CC 4.5.13)
 
+Authorship: `authored` (CC 4.5.13)
+
 Guard:
 - attest: `each(val:ranks) member(key,object) else exclude` (CC 3.1.3)
 
@@ -1897,6 +1917,8 @@ Body: `ranks` (text only)
 | attest | winner | ranked `moderator_election` | true | true (always) | none |
 
 Count: `moderator_election@subject_group!result` (CC 4.5.13)
+
+Authorship: `authored` (CC 4.5.13)
 
 Guard:
 - attest: `set(ref:*) ballot:moderator@named[object=object] else void & winner(signer,object) else exclude & after(moderator_election) else exclude` (CC 3.1.3)
@@ -2134,7 +2156,9 @@ Fold:
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `None`
+Count: open
+
+Authorship: `act=group => counted ; authored` (CC 3.1.3.4)
 
 Change:
 - supersede: `replace: cascade=file:{version}/under:stand` (CC 3.1.3.4)
@@ -2339,6 +2363,8 @@ In time:
 
 Count: `leaf=reported => moderation_action@subject_group` (CC 4.5.13)
 
+Authorship: `authored` (CC 3.3.12)
+
 In time:
 - [reported] clock `window` = `moderation_action.window_secs` (CC 4.5.13)
 - [reported] on close(window) unless fold(keep_decided): read withdrawn (CC 4.5.13)
@@ -2358,8 +2384,8 @@ Guard:
 - attest: `when(leaf=pending) (one *@named[id=ref:*] as E else void & owner(E.signer,signer) else exclude)` (CC 3.1.3)
 
 Fold:
-- `key=quorum_key,attesting_key_id; pick=union` (CC 3.1.3)
-- `key=quorum_key,attesting_key_id; pick=union; by=node` (CC 3.3.4)
+- `key=event_row_id,attesting_key_id; pick=union` (CC 3.1.3)
+- `key=event_row_id,attesting_key_id; pick=union; by=node` (CC 3.3.4)
 
 In time:
 - [pending] clock `hold` = `group.hold_window_secs` (CC 3.1.3, CC 3.3.4)
@@ -2566,7 +2592,11 @@ Body: `achieved_tier` (text only), `committed_tier` (text only), `fallback_reaso
 | withdraw | member | cosigned | false | false | attest |
 | supersede | member | cosigned | false | false | supersede |
 
-Count: `None`
+Count: open
+
+Authorship: `counted` (CC 3.1.3)
+
+Second signers: `listed_member` by `members` (CC 3.1.3.2)
 
 Guard:
 - attest: `each(subject) when(type(key,node)) not founder(key,object) else exclude+community_consensus_protocol_violation` (CC 3.2)
@@ -2611,15 +2641,15 @@ In time:
 - on close(expiry): read withdrawn (CC 4.4.3.12)
 - [ephemeral] expiry required `valid_until` (CC 5.3.3.2)
 - [ephemeral] on fold(no_member): read withdrawn (CC 5.3.3.2)
-- clock `W` = `admission_freshness_window_secs` (CC 4.2.6, CC 4.4.3.18)
-- on close(W) unless fold(policy_met): read lapsed (CC 4.2.6, CC 4.4.3.18)
+- @community clock `W` = `admission_freshness_window_secs` (CC 3.3.4)
+- @community on close(W) unless fold(policy_met): read lapsed (CC 3.3.4)
 - on refused(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
 - clock `cover` = `charter.witness_cadence_secs` (CC 3.2)
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
 - on fold(founder_quorum_restored): emit `hard_case:community_liveness_restored` by origin_door (CC 3.2)
-- landing of `W`: by holder as `group:roster`; a late answer does not count (CC 4.2.6)
-- while `W` is open: binds nobody until it lands (CC 4.2.6)
+- @community landing of `W`: by member as `group:roster`; a late answer does not count (CC 3.3.4)
+- @community while `W` is open: binds nobody until it lands (CC 3.3.4)
 
 **`hardware_custody:{platform}`** — Circumstances, thing
 
@@ -2657,6 +2687,8 @@ Body: `witness_relation`
 
 Count: `identity=user => self_roster_add@self ; none` (CC 3.3.6.4)
 
+Authorship: `authored` (CC 3.3.6.4)
+
 Change:
 - supersede: `replace: by=same_attester, reach=own_prior` (CC 4.4.3.23)
 - supersede: `replace[seat:serve]: after=transport:canonical_rebind, exclude=serve_transit_pair_rotation_before_rebind` (CC 3.1.3)
@@ -2682,6 +2714,8 @@ In time:
 | attest | member, owner, self (node_or_agent: owner, self; user_self: member) | selfAct | true (always) | true (always) | none |
 
 Count: `identity=node|agent => none ; identity=user => self_roster_evict@self` (CC 3.1.3)
+
+Authorship: `identity=user => counted ; authored` (CC 3.1.3)
 
 Change:
 - attest: `attest[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.22)
@@ -2715,10 +2749,14 @@ Body: `alt_text` (text only), `format` (text only)
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | self | selfAct | true (always) | true (always) | none |
+| attest | self | cosigned `accord_majority` | true (always) | true (always) | none |
 | supersede | author | selfAct | false | false | supersede |
 
-Count: `none`
+Count: `act=group => accord_majority@accord ; none` (CC 3.1.3, CC 4.2.1)
+
+Authorship: `act=group => counted ; authored` (CC 3.1.3)
+
+Second signers: `predecessor_key` by `target` (CC 3.1.3)
 
 Guard:
 - attest: `when(verb=attest|replace,has=valid_until) not type(signer,user) else refuse(key_record_out_of_window)` (CC 2.4.1.1)
@@ -2817,11 +2855,13 @@ Body: `sequence`, `unit` (text only)
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | registered | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `none`
+Count: `act=group => cosigned_act@dimension_authority ; none` (CC 2.4, CC 2.4.1.3)
+
+Authorship: `act=group => counted ; authored` (CC 2.4)
 
 Fold:
 - `reads=own&signer:authority` (CC 2.4.1.3)
@@ -2879,13 +2919,15 @@ Fold:
 
 Count: `leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group` (CC 3.1.3.2, CC 4.4.3.12)
 
+Authorship: `leaf=widening|removal => counted ; authored` (CC 3.1.3.2)
+
 Guard:
 - attest: `each(subject) when(leaf=widening) (one membership:acceptance@named[signer=key,object=object] as A & no membership:widening@named[ref:*=A.id] else void+community_consensus_protocol_violation)` (CC 3.1.3.2)
 - attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else contested+community_consensus_protocol_violation)` (CC 3.1.3.2)
 - attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.6)
 - attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
 - attest: `each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.6, CC 4.4.3.9, CC 4.4.3.17)
-- attest: `each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else exclude` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,type(key,node)) one trust:blessing@landed[attested=key] else exclude` (CC 3.1.3.2)
 - attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
 
 Change:
@@ -3035,6 +3077,8 @@ Body: `witness_relation`
 
 Count: `none`
 
+Second signers: `bound_node` by `sub` (CC 3.2, CC 3.4.5)
+
 Guard:
 - withdraw: `when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@named[id=ref:wa_adjudication_ref] else void & when(verb=withdraw,not has=wa_adjudication_ref) one ownership:{relation}:{target_kind}:{version}@named[id=ref:target,signer=signer] else void` (CC 3.4.5, CC 3.2)
 
@@ -3132,6 +3176,8 @@ Fold:
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.12)
+
+Authorship: `group=affiliations & seats=one => counted ; authored` (CC 4.4.3.12, CC 4.4.3.19)
 
 Fold:
 - `key=attested_key_id; pick=rank(withhold>release)` (CC 3.1.9.2)
@@ -3240,6 +3286,10 @@ In time:
 
 Count: `leaf=custodian_minted => custodian_replace ; none` (CC 7.5.5)
 
+Authorship: `leaf=custodian_minted => counted ; authored` (CC 7.5.5, CC 3.1.5)
+
+Second signers: `custodian` by `custodian` when `leaf=retired|custodian_minted` (CC 7.5.5)
+
 Guard:
 - withdraw: `when(verb=withdraw,leaf=decided) no retirement:frozen@admitted[object=object] else exclude` (CC 7.5.5)
 
@@ -3275,6 +3325,8 @@ Fold:
 
 Count: `none`
 
+Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` (CC 4.4.3.19)
+
 Fold:
 - `by=none` (CC 3.1.3)
 
@@ -3285,6 +3337,8 @@ Fold:
 | authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
+
+Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` (CC 4.4.3.19)
 
 Fold:
 - `by=none` (CC 3.1.3)
@@ -3339,6 +3393,8 @@ Fold:
 
 Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.12)
 
+Authorship: `group=affiliations & seats=one => counted ; authored` (CC 4.4.3.12, CC 4.4.3.19)
+
 Guard:
 - attest: `one moderation:{allegation_type}@named[id=ref:evidence_refs] else void` (CC 3.4.11)
 - attest: `one other(ratchet:flag:*)@named[id=ref:evidence_refs] else void` (CC 3.1.6)
@@ -3355,6 +3411,8 @@ Guard:
 | withdraw | author | selfAct | false | false | attest |
 
 Count: `leaf=steward_purge => cosigned_act@trust_root ; group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 2.4.1.1, CC 4.4.3.12, CC 4.5.3)
+
+Authorship: `leaf=steward_purge => counted ; group=affiliations & seats=one => counted ; authored` (CC 2.4.1.1, CC 4.4.3.12, CC 4.4.3.19)
 
 Guard:
 - attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else exclude` (CC 4.5.5)
@@ -3406,6 +3464,8 @@ Fold:
 
 Count: `accord_majority@accord` (CC 3.1.3)
 
+Authorship: `counted` (CC 3.1.3)
+
 Change:
 - attest: `attest: by=cosigned, reach=other_attester, void=transport_rebind_without_holder_quorum` (CC 3.1.3)
 - attest: `attest: by=cosigned, reach=other_attester` (CC 3.1.3)
@@ -3431,7 +3491,11 @@ Guard:
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 | authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
-Count: `None`
+Count: open
+
+Authorship: `act=group => counted ; authored` (CC 3.4.5)
+
+Second signers: `delegate` by `sub` when `leaf=confers` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` when `leaf=confers` (CC 4.4.3.19)
 
 Guard:
 - authorize: `when(leaf=charter) each(val:witnesses) (not founder(key,object) else exclude & not member(key,object) else exclude)` (CC 2.1)
@@ -3487,7 +3551,9 @@ Fold:
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `None`
+Count: open
+
+Authorship: `leaf=abandonment|seizure|successor => counted ; authored` (CC 4.3, CC 3.1.9.4)
 
 Fold:
 - `over=seated@named/person` (CC 3.1.9.4)
@@ -3518,3 +3584,664 @@ Count: `none`
 
 Fold:
 - `reads=vote:{contribution_id}&live; key=contribution_id,person; pick=agree; combine=sum(weight); by=node` (CC 3.1.9.3)
+
+## 8.11 `earlier-signed-object` — The earlier signed object (JSON and JCS)
+
+**Standing of this form (informative).** This section states the earlier signed object: one JSON object, signed over its JCS image by the bound-hybrid pair of [CC 8.11.12](#8.11.12). It is the form of the earlier mesh, and no node of this edition reads it ([CC 2.6.1.12](part_2_the_grammar.md#2.6.1.12)). A node of the long-term-support line conforms to that line's text. Every node of this edition reads and writes the signed object of [CC 2.6.1](part_2_the_grammar.md#2.6.1).
+
+### 8.11.1 `envelope-canonicalization` — Envelope canonicalization — JCS + the omit-vs-materialize rule
+
+This rule closes the canonical-bytes ambiguity that arises whenever an envelope carries optional fields with documented defaults — `epistemic_mode`/`witness_relation`/`occurrence_*`/`stake`, `oversight_mode`, `subject_key_ids`, `family_id`, `community_id`. Without it, two honest peers can disagree on the bytes and a valid signature fails to verify.
+
+**The hazard is structural.** Suppose Producer A omits an optional field (relying on the [CC 2.1](part_2_the_grammar.md#2.1) documented default) and Relay R re-serializes the attestation with the default materialized into the byte stream. The canonical bytes then diverge and the Ed25519 + ML-DSA-65 signatures fail to verify. The rule below makes the discipline explicit and normative: every party — producer, substrate, relay, consumer — must make the same choice, and that choice is "preserve what the producer signed, exactly." ([CC 8.11.2](#8.11.2))
+
+### 8.11.2 `round-trip` — The round-trip rule — defaults are interpretation-time, not encoding-time (normative)
+
+The canonical bytes are computed over **the literal envelope members the producer signs**. Optional fields that the producer omits MUST NOT be materialized into canonical bytes by any party — producer, substrate, relay, or consumer. Optional fields that the producer explicitly emits (even at their default value) MUST be preserved in the canonical bytes by any party. Documented defaults from [CC 2.1](part_2_the_grammar.md#2.1) are **interpretation-time semantics**, not encoding-time content.
+
+**One envelope, as the vectors carry it.** The object below is the admit vector `scores_minimal` of [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json), copied verbatim: the `row` mirror, `asserted_at`, and the claim's own members, with `epistemic_mode` omitted. [CC 8.11.9](#8.11.9) is the authority for the shape; this copy illustrates member placement and is not itself the canonical bytes (those are JCS of the object, [CC 8.11.5](#8.11.5)).
+
+```json
+{
+  "row": {
+    "attestation_id": "5684f46c-749c-282f-bb10-0d74759dcde7",
+    "attesting_key_id": "alice-ctffz2edis",
+    "attestation_type": "scores",
+    "attested_key_id": "bob-fx44qqfrla",
+    "subject_key_ids": [],
+    "cohort_scope": "federation"
+  },
+  "asserted_at": "2026-10-18T12:00:00.000Z",
+  "dimension": "expertise:cardiology:en:v1",
+  "score": 0.8,
+  "confidence": 0.9
+}
+```
+
+The admit vector `scores_explicit_default` is the same object with `"epistemic_mode": "direct"` emitted at its default value. A producer that omits the member and one that emits it compute different canonical bytes (the second includes the `"epistemic_mode":"direct"` member) and emit different signatures. **Both signatures verify under their respective canonical bytes.** Both are **semantically equivalent** — a CEG-Conforming Consumer evaluates `effective_epistemic_mode(envelope) = envelope.epistemic_mode if present else "direct"` and proceeds identically. The wire-format admits both encodings; the consumer policy admits no observable difference.
+
+**Relay discipline (normative)**. A substrate, relay, or consumer that re-stores or forwards an attestation MUST preserve member presence/absence exactly as the producer signed it:
+
+- Stripping an explicitly-emitted default ("the producer wrote `epistemic_mode:direct` but I'll save bytes by removing it") MUST NOT happen
+- Materializing an omitted default ("the producer omitted `epistemic_mode` so I'll fill in `direct` for clarity") MUST NOT happen
+- A relay forwards the canonical octets as received. A relay that re-serializes from a parsed object at all MUST emit JCS ([CC 8.11.5](#8.11.5)): canonical member order on re-emission is required, and nothing else changes — member presence/absence stays fixed
+
+This composes with the [CC 2.1.1](part_2_the_grammar.md#2.1.1) forward-compatibility rule (which already mandates preserving unknown fields on read and re-emission); the same preservation discipline extends to known-optional fields.
+
+### 8.11.3 `canonicalization-array` — Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)
+
+JCS ([CC 8.11.5](#8.11.5)) canonicalizes **object member order** but is silent on three things that still let two conformant producers emit different bytes (and therefore non-verifying signatures, the same hazard). All three are pinned here once, globally, for every CEG envelope:
+
+1. **Array element order.** An array field is one of two kinds, stated in its [CC 2.1](part_2_the_grammar.md#2.1)/[CC 3.1](part_3_the_namespace.md#3.1) definition:
+ - **Set-semantics** (order carries no meaning) — elements MUST be **lexicographically sorted by their JCS string form (UTF-16 code-unit order, ascending)** before signing. This is producer-independent: any producer building the set in any order yields identical bytes. **`subject_key_ids[]` and `delegates_to.scope[]` are set-semantics → sorted.**
+ - **Sequence-semantics** (order is meaningful) — elements retain their as-authored order. **`transport_destination.aspects[]`** (RNS hash preimage order), **`key_grant.rotation_chain`** (supersession lineage), and **`evidence_refs[]`** (producer-asserted order) are sequence-semantics → preserved. A field's definition MUST declare which kind it is; absent a declaration, set-semantics (sorted) is the default. A substrate that finds a set-kind array out of order refuses the row with **`federation_set_semantics_unsorted`**, naming the member, and never re-sorts it (re-sorting would move signed bytes). **A set-kind array is sorted AND unique:** a duplicate element is refused under the same token. No reader counts multiplicity anywhere in the substrate, every other set this document encodes is already stated as deduplicated ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1), [CC 3.3.7](part_3_the_namespace.md#3.3.7)), and a duplicate is otherwise a second byte string for one meaning. **An optional member is unset by absence, never by `null`.** An explicit JSON `null` on any optional envelope member is refused as malformed, as `federation_malformed_row` with reason `envelope_member_null`. That reason is one of the closed malformed-row reasons of [CC 8.11.9](#8.11.9), beside `envelope_member_missing` / `envelope_member_invalid`. A null and an absence would be two byte strings for one meaning, the duplicate rule again. The key plane's `revocation_envelope` of [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1) is the one exception: it binds its absent optionals as explicit `null`. Where this document writes a default as `null` it means *absent*.
+2. **Byte-field string encoding.** JSON has no byte type, so every byte/binary field is a string whose encoding MUST be pinned. **Hashes and raw key material — public keys, `destination_hash`, `root_hash`, digests and fingerprints — MUST be lowercase hex per [CC 8.11.11](#8.11.11)** (no `0x`, no separators, byte-length-exact; never base64 in canonical bytes). Fields explicitly documented as base64 (e.g., `hardware_attestation`, an opaque attestation blob) use base64 as their definition states — but the *default* for any key/hash/id byte field is CC 8.11.11 lowercase hex.
+ - **`subject_key_ids[]` is the one two-form field, and [CC 2.3.2.1](part_2_the_grammar.md#2.3.2.1) governs its second form.** An element naming a `federation_keys.key_id` — like `attesting_key_id` and `attested_key_id` — carries that key's `key_id` string **verbatim**: the [CC 2.6.8](part_2_the_grammar.md#2.6.8) `<label>-<fingerprint>` form (lowercase `[a-z0-9-]`), or an older 64-hex id a directory still holds. A `key_id` is an identifier, not a byte field, so the hex rule above does not re-encode it. An element naming a canonical-hash subject is the **tagged** `canonical:{hashalg}:{hex}` string, which CC 2.3.2.1 REQUIRES and whose untagged bare-hex spelling CC 2.3.2.1 refuses at the gate. The CC 8.11.11 hex rule governs the `{hex}` segment of that string only; the `canonical:{hashalg}:` prefix is a tagged-union discriminator, outside CC 8.11.11's scope and **exempt from the no-separators rule**. The exemption is restated here on purpose, because these are signing bytes. An implementer who reads only this clause and strips the tag, or refuses the tagged form, produces a different canonical envelope and a **silently non-verifying signature**, not a visible admission error.
+ - **The base64 variant is pinned: every field documented as base64 MUST use the RFC 4648 §4 STANDARD alphabet, WITH padding, no whitespace or embedded newlines**. The pin lives at the **protocol layer**: the crypto layer is encoding-agnostic and deals in raw bytes; the wire encoding is CEG's to pin. A variant mismatch (URL-safe alphabet, stripped padding) produces different signed bytes and a **silently non-verifying signature** — the same hazard class as the wrap-algorithm wire-string. The vector set MUST include a base64-variant case (encode→sign→verify round-trip across two independent encoders).
+3. **Timestamp encoding.** Every datetime field (`signed_at`, `asserted_at`, `valid_until`, `delegation_valid_from`/`_until`, `valid_at`, …) is the **[CC 8.11.10](#8.11.10) canonical string** — UTC literal `Z` (never `+00:00`), millisecond precision (exactly three fractional digits), `YYYY-MM-DDTHH:MM:SS.sssZ`. A producer emitting `+00:00` or a different sub-second precision produces different bytes and a non-verifying signature.
+
+With key order (JCS) + omit-vs-materialize + these three, **byte-identity across conformant implementations is closed by construction**. The cross-impl JCS vector set MUST cover all three (a set-vs-sequence array case, a hex-vs-base64 byte case, a timestamp case) alongside the per-Contribution vectors.
+
+### 8.11.4 `per-field` — Per-field encoding table (informational)
+
+The omit-vs-materialize rule applies uniformly to every optional [CC 2.1](part_2_the_grammar.md#2.1) field. Catalog:
+
+| Field | Section | Default per CC 2.1 | Canonical when omitted | Canonical when explicit |
+|---|---|---|---|---|
+| `epistemic_mode` | CC 2.1 | `direct` | member absent | `"epistemic_mode":"direct"` (or other enum value) |
+| `witness_relation` | CC 2.1 | `external` | member absent | `"witness_relation":"self"` (or other enum value) |
+| `oversight_mode` | CC 2.1 | `null` (per-cell default applies) | member absent | `"oversight_mode":"HITL"` (or other enum value) |
+| `occurrence_id` | CC 2.1 | `null` → `"occurrence-0"` at interpretation | member absent | `"occurrence_id":"occurrence-1"` |
+| `occurrence_count` | CC 2.1 | `null` → `1` at interpretation | member absent | `"occurrence_count":3` |
+| `occurrence_role` | CC 2.1 | `null` → `"primary"` at interpretation | member absent | `"occurrence_role":"shared"` |
+| `stake` | CC 2.1 | `reputational` | member absent | `"stake":"capital"` (or other enum value) |
+| `context` | CC 2.1 | absent | member absent | `"context":"..."` (free-form) |
+| `evidence_refs` | CC 2.1 | absent | member absent | `"evidence_refs":["..."]` |
+| `valid_until` | CC 2.1 | absent | member absent | `"valid_until":"2026-12-31T00:00:00.000Z"` |
+| `row.subject_key_ids` | CC 2.3, CC 8.11.9 | `[]` (no subject authority) | always present in the mirror, `[]` when there is no subject; the `subject_key_ids` column beside the row is absent when empty | `"subject_key_ids":["..."]` |
+| `scope` | CC 2.1, CC 3.3.1 | absent | member absent | `"scope":["retain","share"]` or `"scope":"retain:90d"` |
+| `session_id` | CC 3.1.3.1 | n/a (REQUIRED on `session:*`) | member absent (not a claim) | `"session_id":"s1"` |
+| `claimed_at` | CC 3.1.3.1 | n/a (REQUIRED on `session:*`) | member absent (not a claim) | `"claimed_at":"2026-08-30T12:00:00.000Z"` |
+| `custody_state` | CC 3.1.3.3 | n/a (REQUIRED on a custody report) | member absent (not a custody report; on one, admission refuses) | `"custody_state":"none"` |
+| `group_kind` | CC 3.1.3.2 | n/a (REQUIRED on a membership proposal) | member absent (not a proposal; on one, admission refuses) | `"group_kind":"family"` |
+| `role` | CC 3.1.3.2 | `null` (no role offered) | member absent | `"role":"member"` |
+| `expires_at` | CC 3.1.3.2 | n/a (REQUIRED on a membership proposal) | member absent (not a proposal; on one, admission refuses) | `"expires_at":"2026-10-07T00:00:00.000Z"` |
+| `proposal_hash` | CC 3.1.3.2 | n/a (REQUIRED on a membership answer) | member absent (not an answer; on one, admission refuses) | `"proposal_hash":"<original_content_hash>"` |
+| `attached_head_digest` | CC 3.2 T4a | n/a (REQUIRED on `trust:accepts:v1`) | member absent (not an acceptance edge; a NEW acceptance edge without it is refused; an edge admitted before the member was required stays valid, T4) | `"attached_head_digest":"<64-char-lowercase>"` |
+| `subject_sha256_ed25519_raw` | CC 2.4.1.1 | absent (the subject is named some other way, or not at all) | member absent | `"subject_sha256_ed25519_raw":"<64 lowercase hex>"` |
+| `attach_window_secs` | CC 3.2 T4a | absent = no window declared (attach by out-of-band anchor only) | member absent | `"attach_window_secs":604800` |
+| `witness_cadence_secs` | CC 3.2 T6 | n/a (REQUIRED on a witnessed lineage's charter) | member absent (the lineage is unwitnessed for T6) | `"witness_cadence_secs":86400` |
+| `additional_scrubs` | CC 2.4 | absent (single-signer row) | member absent | `"additional_scrubs":[{"scrub_key_id":"…","scrub_signature_classical":"…","scrub_signature_pqc":"…"}]` (beside the row) |
+| `halt_fuse_secs` | CC 4.2.1.1 | **86400** — a constitutional constant, not a substrate default | member absent ≡ `86400` (a verifier reads the constant) | `"halt_fuse_secs":3600` (an explicit value overrides) |
+| `recovery_commitments` | CC 4.2.6 | n/a (REQUIRED on the accord's charter) | member absent (no holder can self-rotate; recovery is a roster change) | `"recovery_commitments":{"<holder_key_id>":"<64 lowercase hex>"}` |
+| `witness_quorum` | CC 3.2 T6 | absent ≡ `0`: witnessed mode off; no substrate default is substituted | member absent (witnessed mode off — the lineage is unwitnessed for T6) | `"witness_quorum":2` |
+| `witnesses` | CC 3.2 T6 | n/a (REQUIRED on a witnessed lineage's charter) | member absent (the lineage is unwitnessed for T6) | `"witnesses":[<SignedKeyRecord>, ...]` |
+| `family_id` | CC 3.3.4 | n/a (REQUIRED iff `cohort_scope == family`) | member absent (admission rejects if cohort_scope == family) | `"family_id":"..."` |
+| `community_id` | CC 3.2 | n/a (REQUIRED iff `cohort_scope ∈ {community, affiliations}`) | member absent (admission rejects if `cohort_scope ∈ {community, affiliations}`) | `"community_id":"..."` |
+| `delivery_mode` | CC 5.3.3 | `pull` | member absent | `"delivery_mode":"push"` |
+| `history_on_join` | CC 5.3.3 | `from_join` | member absent | `"history_on_join":"full"` |
+
+The conditional-required fields `family_id` and `community_id` are NOT optional-with-default ([CC 2.1.1](part_2_the_grammar.md#2.1.1)), but they encode under the same JCS rule when present ([CC 2.3.1](part_2_the_grammar.md#2.3.1)).
+
+### 8.11.5 `canonical` — Canonical encoding format (normative)
+
+CEG envelope signing bytes are computed via **JCS — JSON Canonicalization Scheme, [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785)**. JCS pins, in summary:
+
+- Object members sorted lexicographically by member name (UTF-16 code-unit order, RFC 8785, section 3.2.3)
+- No insignificant whitespace
+- UTF-8 byte encoding (RFC 8259, section 8.1)
+- Strings escaped per RFC 8259 §7 with the JCS narrowing on `\uXXXX` form
+- Numbers serialized per the ES6-derived rule (RFC 8785, section 3.2.2.3) — integers without trailing `.0`, no exponent unless the magnitude requires it
+
+A CEG-Conforming Producer MUST produce signing bytes via JCS over the envelope object — `attestation_envelope`, whose member set and placement are pinned at [CC 8.11.9](#8.11.9). A CEG-Conforming Consumer (CCC) MUST recompute signing bytes via the same JCS rule for signature verification. A CEG-Conforming Substrate (CCS) MUST preserve the as-received envelope object bytes for relay (per the round-trip rule above) ([CC 8.11.2](#8.11.2)). It MAY store a parsed representation alongside, but the canonical-bytes contract is against the as-received **object** — its member set and its member values, which no party may alter. The contract is not against a parsed-and-re-serialized shape with defaults materialized or members dropped. Insignificant whitespace and member order are **not** part of that contract: JCS erases both, so normalizing them changes no signing byte.
+
+**Redaction vs tampering — the signed-discriminator shape is excluded (normative dead end).** The excluded shape is a signed "I redacted this" marker distinguishing authorized redaction from tampering. It is excluded because **a signed redaction marker proves an authorized party changed the bytes — it does not prove that *only* the redacted parts changed**. A compromised or coerced authority key becomes a licence to rewrite arbitrary content while every reader reports the row as legitimately redacted: integrity replaced by authority, arriving quietly. Any future redaction scheme is bound by four constraints:
+
+- **(a) it lives on the envelope plane**. The integrity gate is `original_content_hash` at ingest, receiver-side. `persist_row_hash` is never re-verified on read, so a storage-plane build is inert.
+- **(b) it carries its own redactability declaration** in the signed object. Per-field commitments cannot derive "which fields are redactable" from the manifest, whose wire fields and storage containers are disjoint sets with no bridge. The scheme carries that declaration **unless the scheme is uniformly redactable by construction** (BBS+-style multi-message signatures, JMSW set schemes), in which case the signed object MUST instead commit to the member count and index ordering.
+- **(c) it lives above whole-row hashing**, which forecloses partial redaction downstream.
+- **(d) the third option stays open** — a redacted row MAY simply be a *different object carrying a different kind*, relocating the work entirely.
+
+Note for any per-field commitment design: canonical member ordering is **one of two routes** to a derivable leaf sequence. The other is committing to the encoded disclosure bytes directly (the SD-JWT/mDoc salted-digest shape, which needs no canonicalization). Where the canonical route is taken, CC 2.6's canonicalization choice is already load-bearing for redactable signatures.
+
+**Number totality (normative).** RFC 8785, section 3.2.2.3, fixes the number model as the IEEE-754 binary64 (ECMAScript `Number`) image. A CCP MUST coerce every numeric value to its finite IEEE-754 double image *before* computing JCS bytes. It MUST reject — with a hard error, never a fallback or best-effort hash — any number that has no finite double (overflow to ±Infinity, e.g. `1e1000` or a thousand-digit integer). An implementation built against an arbitrary-precision JSON parser otherwise admits a string-backed number that bypasses the double model. JCS then emits a non-canonical result and the content address silently diverges between peers. This is the same non-determinism-is-broken hazard class as the byte-field and timestamp rules of [CC 8.11.3](#8.11.3). With this rule a content address is always either the spec-canonical hash or an honest error, never a wrong-but-plausible one, in any parser feature configuration. The cross-impl JCS vector set MUST include a non-representable-number case (a value with no finite double, asserted to reject) under both default and arbitrary-precision parser builds.
+
+**Canonical-bytes size bound (normative).** A CEG envelope's canonical (JCS) bytes MUST NOT exceed **1 MiB (1 048 576 bytes)**. The signed thing is the sized thing, so the bound is on the bytes the signature covers, never on a stored or transport-framed image of them. A CCP MUST NOT emit an envelope above the cap. A CCS MUST reject one at admission — at **every** write path, including capsule/FFI and tier-ingest, not only an HTTP body gate — with `ENVELOPE_TOO_LARGE` (HTTP 413, [CC 5.3.6.1](part_5_transport_substrate.md#5.3.6.1)). The value is the blob-payload threshold (inline at or below 1 MiB, a blob above), so the cap adds a rule, not a second regime.
+
+*An above-cap payload.* Above the cap **the envelope carries the manifest, not the bytes**: the heavy payload moves to the blob plane as encrypted chunks, replicated per item to the holder count its owner chose ([CC 6.1.5](part_6_the_coherence_mathematics.md#6.1.5)). The envelope names it by content hash in `evidence_refs`. How that hash resolves is **scope-dependent**, and both routes exist. For Commons scopes it resolves through the holding-claim directory (`custody:ack:v1` `here` rows at federation scope, [CC 3.1.3.3](part_3_the_namespace.md#3.1.3.3)) + [CC 5.3.2](part_5_transport_substrate.md#5.3.2) `ContentFetch`. For a bounded cohort the same rows exist **inside the cohort only** ([CC 5.2](part_5_transport_substrate.md#5.2)). There the same `evidence_refs` content hash resolves over the in-cohort at-rest-encrypted delivery path to the cohort's admitted members. An above-cap self- or family-scoped envelope therefore has exactly one route, not zero. The attestation remains the CEG object; only its payload relocates — **no new envelope field and no new primitive; the [CC 1.7](part_1_foundation.md#1.7) 1+4 surface is untouched**.
+
+*The cap as wire contract.* This is a different axis from the [CC 5.4.3](part_5_transport_substrate.md#5.4.3) constant frame size on a shaped link. That is a traffic-analysis uniformity rule which *fragments* an oversize payload rather than refusing it, so it bounds no admission decision. Absent the cap here, a multi-megabyte attestation is simply hundreds more fragments on the anti-entropy walk. The cap is wire-contract precisely because peers have to agree on it: unratified, one node's legitimate envelope is another's rejection. The freeze-gate vector set MUST include an at-cap envelope (admits) and a cap-plus-one-byte envelope (rejects with the token above).
+
+**What is measured, and when (normative).** JCS bytes are not the received octets — the same envelope can arrive pretty-printed, with expanded `\uXXXX` escapes, or with exponent-form numbers. So the cap alone does not tell an implementer when to stop reading, and a rule measured on canonical bytes is not to be read as a mandate to buffer an unbounded input in order to find them. Two bounds, distinct roles:
+
+1. **The contract bound (interop-visible).** `|JCS(envelope)| ≤ 1 MiB`. This is the only bound peers have to agree on; it is measured on the bytes the signature covers and is therefore decided **after** parse. A CCP MUST NOT emit above it; a CCS MUST reject above it with `ENVELOPE_TOO_LARGE`.
+2. **The intake bound (local, mandatory, not interop-visible).** Because (1) cannot be decided without parsing, every write path MUST **also** enforce a finite ceiling on the octets it will buffer from an untrusted source. The path MUST refuse at that ceiling **without completing the parse** — same `ENVELOPE_TOO_LARGE` / 413. The ceiling is a deployment parameter, not a wire constant. It MUST NOT be set below 1 MiB (a lower ceiling could refuse a conformant envelope). A deployment SHOULD publish the ceiling. This is what makes "at every write path, not only an HTTP body gate" implementable: each path bounds its own intake instead of delegating the bound to a body gate it may not have.
+
+**The two coincide on a conformant relay path.** A relay that re-emits has already recomputed JCS to verify. [CC 8.11.2](#8.11.2) requires it to re-canonicalize member order while holding member presence/absence fixed. So what it forwards is the canonical form, and there the received octets **are** the canonical octets. The gap exists only where a non-canonical serialization first enters. Consequently **the interoperable serialization is the canonical one**: a party that transmits an inflated serialization of a semantically-conformant envelope MAY have it refused by a receiver's intake ceiling. That refusal is conformant receiver behavior, not a receiver defect.
+
+### 8.11.6 `worked` — Worked attack the rule closes
+
+Without the rule (implicit / unspecified) failure mode:
+
+> Alice's CEG-Conforming Producer signs an envelope omitting `epistemic_mode`. Bob's CEG-Conforming Relay receives, parses, materializes the default `"direct"`, re-serializes via JCS, and forwards to Carol. Carol receives the relay-modified envelope with the new bytes, computes JCS, verifies signature → **FAILS** because Alice signed over bytes without the `epistemic_mode` member. Carol cannot distinguish "Bob is a malicious relay corrupting the bytes" from "Bob is honestly applying defaults to be helpful." Carol rejects. The attestation is lost in transit despite no party acting in bad faith.
+
+With the rule (explicit, normative):
+
+> Bob's relay MUST preserve member presence/absence exactly ([CC 8.11.2](#8.11.2)). Bob forwards the as-received bytes. Carol's verify succeeds. The semantic interpretation step at Carol (applying default `"direct"` to the absent member) happens AFTER signature verification.
+
+### 8.11.7 `verification` — Verification flow (informational)
+
+```
+On signature verify:
+    1. Receive envelope from wire as object O (preserved as-received)
+       and signature S
+    2. Compute canonical bytes B = JCS(O)
+    3. Verify S over B via the hybrid Ed25519 + ML-DSA-65 path per CC 5.3.2.8
+    4. If signature valid:
+        a. Compute effective semantics by applying the CC 8.11.2 defaults to absent
+           optional fields (interpretation-time only)
+        b. Apply consumer policy (CC 4.4) over the resulting semantic shape
+    5. If forwarding/storing:
+        a. Store/forward object O AS RECEIVED — do not strip or materialize
+           defaults (CC 8.11.5 governs the bytes; member order is not in
+           the contract; forward the octets as received)
+        b. Forward original signature S unchanged
+```
+
+### 8.11.8 `section` — Scope of the canonicalization rule
+
+Scope pointer: the JCS canonicalization rules above (JCS-as-encoding, omit-vs-materialize + relay-preservation, per-field catalog, worked attack).
+
+What this rule does NOT do:
+- Introduce a new encoding format — JCS is the only encoding of this form ([CC 8.11.5](#8.11.5))
+- Change any semantic interpretation — defaults still apply at interpretation time per [CC 2.1](part_2_the_grammar.md#2.1)
+- Modify the datetime / hex / time / H3 sub-rules — those are domain-specific and compose under JCS
+- Wire-break prior emissions — emissions that omitted optional fields remain valid; emissions that explicitly emitted defaults likewise remain valid; what the rule normatively prohibits is RELAY-TIME mutation of presence/absence ([CC 8.11.2](#8.11.2))
+
+### 8.11.9 `signed-object` — The signed object — member set, placement and types (normative)
+
+*This table, [`manifests/signed_object.cddl`](../manifests/signed_object.cddl) and [`manifests/signed_object.json`](../manifests/signed_object.json) are rendered from one data file, and [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json) holds the byte vectors; the data is the source and the three never disagree.*
+
+**The object (normative).** The signed object of an attestation row is `attestation_envelope`: one JSON object. The signing input is JCS(`attestation_envelope`) ([CC 8.11.5](#8.11.5)) and nothing else — the row's own signature members, every cosignature and every column beside the row are outside the bytes, so a cosignature is never inside the bytes it signs. Seven of those columns are mirrored *inside* the bytes under the member `row`, a closed set; a row with no mirror is refused `envelope_member_missing`, and a column that disagrees with its mirror is refused `typed_diverges_from_envelope`. The claim's instants ride inside the bytes as `asserted_at` and `expires_at`, and the columns are read back out of them. The row's own signature is the attester's: the classical half verifies against `attesting_key_id`'s pinned Ed25519 key over the signing input, the post-quantum half against its ML-DSA-65 key over the signing input followed by the raw Ed25519 signature ([hybrid-sig], [CC 2.6.5](part_2_the_grammar.md#2.6.5)); at the federation tier both halves verify or the row is refused. `original_content_hash` is the lowercase hex SHA-256 of the signing input and is recomputed at ingest. A second signer over the same bytes is an entry of `additional_scrubs[]`, beside the row, verified against its own key. A JCS image above 1 MiB is refused `ENVELOPE_TOO_LARGE` ([CC 8.11.5](#8.11.5)).
+
+**Refusals at this door (normative).** A shape refusal of the signed object is the token `federation_malformed_row` with one reason from this closed set: `envelope_member_missing` (the mirror or another required member is absent), `envelope_member_invalid` (a member is ill-typed or an instant is not in the [CC 8.11.10](#8.11.10) form), `envelope_member_null` (an optional member is `null`), `typed_diverges_from_envelope` (a column beside the row differs from its mirror), `envelope_row_member_unknown` (the `row` mirror carries a member outside its closed seven), `content_hash_mismatch` (`original_content_hash` is not the SHA-256 of the signing input) and `subject_key_id_malformed` (an element of `subject_key_ids` is neither a `key_id` nor the tagged canonical form of [CC 2.3.2.1](part_2_the_grammar.md#2.3.2.1)). A `withdraws` that meets no rule of [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1) is refused `federation_withdraws_not_admitted`. A set out of order or with a duplicate is `federation_set_semantics_unsorted`, a type outside the five is `attestation_type_unregistered`, a failed signature half is `SIGNATURE_VERIFICATION_FAILED`, and an envelope over the cap is `ENVELOPE_TOO_LARGE`.
+
+**Placement vocabulary.** `signed:row` — inside `attestation_envelope.row`. `signed:envelope` — inside `attestation_envelope`, typed by persist. `signed:envelope-extra` — inside `attestation_envelope`, typed by this table and defined in [CC 2.1](part_2_the_grammar.md#2.1), carried untyped by persist and validated at the family's gate. `beside` — outside the bytes, replicated, bound to the bytes by a gate. `beside:signature` — the row's own signature members. `beside:cosign` — an `additional_scrubs[]` entry. `local` — persist-internal, not a wire contract. `not-on-wire` — named by this text, not carried on the wire. An array's kind is `set` (sorted by JCS string before signing) or `sequence` (as authored), per [CC 8.11.3](#8.11.3).
+
+**Inside the signed bytes — the mirror (closed, exactly seven)**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `row.attestation_id` | signed:row | `uuid` | — | REQUIRED | — | [8.11.9](#8.11.9) | The row's identity, minted by the stamper before the bytes exist (a UUID; this edition pins no version); the composers' references_attestation_id points at it. |
+| `row.attesting_key_id` | signed:row | `key-id` | — | REQUIRED | — | [2.1](part_2_the_grammar.md#2.1) [2.6.8](part_2_the_grammar.md#2.6.8) | The signer. The row's own signature verifies against this key's pinned Ed25519 and ML-DSA-65 public keys; there is no separate signer slot inside the bytes. |
+| `row.attestation_type` | signed:row | `row-type` | — | REQUIRED | — | [2.4](part_2_the_grammar.md#2.4) | One of the five, byte-compared; anything else is refused attestation_type_unregistered. |
+| `row.attested_key_id` | signed:row | `key-id` | — | REQUIRED | the attester | [2.1](part_2_the_grammar.md#2.1) | Defaults to the attester at the mint (a self-claim). |
+| `row.subject_key_ids` | signed:row | `[* subject-id]` | set | REQUIRED (may be empty) | [] | [2.3](part_2_the_grammar.md#2.3) [2.3.2.1](part_2_the_grammar.md#2.3.2.1) [8.11.3](#8.11.3) | Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit. A set (8.11.3): sorted and unique, an unsorted or duplicated set refused federation_set_semantics_unsorted. |
+| `row.cohort_scope` | signed:row | `cohort-scope` | — | REQUIRED | — | [2.3.3](part_2_the_grammar.md#2.3.3) [5.2](part_5_transport_substrate.md#5.2) | Closed set of seven. No wire default: the member is required. The authoring default is the smallest scope (CC 1.13.3.4). The one mirror member a placement-touching re-sign may narrow; it may never be re-authored. |
+| `row.weight` | signed:row | `float` | — | OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) | Absent in the mirror iff the column is NULL. A non-finite value is refused at the stamp rather than serialised as null. |
+
+**Inside the signed bytes — members persist types**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `row` | signed:envelope | `row-mirror` | — | REQUIRED | — | [8.11.9](#8.11.9) | The signed twin of the seven typed columns beside the row. The member set is closed (an eighth member is refused); a row with no mirror is refused envelope_member_missing, a mirror that disagrees with a column is refused typed_diverges_from_envelope. |
+| `asserted_at` | signed:envelope | `rfc3339-ms` | — | REQUIRED | stamped at the mint | [8.11.10](#8.11.10) [2.6.7](part_2_the_grammar.md#2.6.7) | The claim's instant, truncated to the millisecond and rendered YYYY-MM-DDTHH:MM:SS.sssZ before signing; the column beside the row is read back out of this member and never from a second clock. Judged against the receiver's clock only where 2.6.7 says (the future bound; W on chain-judged rows). |
+| `expires_at` | signed:envelope | `rfc3339-ms` | — | OPTIONAL | absent (no expiry) | [2.1](part_2_the_grammar.md#2.1) [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The column's signed twin; present iff the column is set, any other pairing refused. REQUIRED on membership:proposal and lineage_witness:proposal (CC 3.1.3.2, CC 3.1.3), and on census:share:{class}:v1 and census:member:share:v1, where it is the period's end (census_return_expired after it). |
+| `dimension` | signed:envelope | `tstr` | — | REQUIRED on every row type | — | [2.1](part_2_the_grammar.md#2.1) [2.4](part_2_the_grammar.md#2.4) [3.1](part_3_the_namespace.md#3.1) [3.1.7](part_3_the_namespace.md#3.1.7) | The namespace prefix plus leaf, resolved through manifests/namespace_registry.json on all five row types (the job label on a delegates_to as much as the family on a scores). |
+| `references_attestation_id` | signed:envelope | `uuid` | — | REQUIRED on supersedes, withdraws, recants, otherwise OPTIONAL | — | [2.4.1](part_2_the_grammar.md#2.4.1) [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [4.5.1.1](part_4_composition_governance.md#4.5.1.1) | On the three composers it is the composer target: the prior row's attestation_id, read only with the row type as discriminator (three readings, CC 4.5.1.1). On any other type it cites a row and carries no composer meaning (CC 3.1.2.1). A fourth composer reading is a separate member, which is why consent_supersedes exists. |
+| `scope` | signed:envelope | `tstr / [* tstr]` | set | REQUIRED on consent:state:granted and on delegates_to | — | [2.1](part_2_the_grammar.md#2.1) [3.3.1](part_3_the_namespace.md#3.3.1) [4.4.3.19](part_4_composition_governance.md#4.4.3.19) | The form an emitter writes is the array: an emitter writes ["retain"], and a bare token is admitted as the one-element array it denotes; admission normalises nothing in the signed bytes. |
+| `pre_rotation_commitment` | signed:envelope | `hex64` | — | OPTIONAL (charter) | absent | [3.2](part_3_the_namespace.md#3.2) | Pre-rotation commitment on a charter. |
+| `recovers` | signed:envelope | `key-id` | — | REQUIRED on a charter recovery | absent | [3.2](part_3_the_namespace.md#3.2) | The predecessor root being rotated. |
+| `successor_keys` | signed:envelope | `[* key-id]` | set | REQUIRED on a charter recovery | absent | [3.2](part_3_the_namespace.md#3.2) | The pre-committed successor key set. |
+| `withdrawal_reason` | signed:envelope | `tstr` | — | OPTIONAL on withdraws | absent | [2.4.1](part_2_the_grammar.md#2.4.1) | The producer's stated reason. |
+| `consent_supersedes` | signed:envelope | `uuid` | — | OPTIONAL on consent:state:* | absent | [3.3.1](part_3_the_namespace.md#3.3.1) [4.5.1.1](part_4_composition_governance.md#4.5.1.1) | The prior consent statement this one replaces. Separate from references_attestation_id by the CC 4.5.1.1 op split. |
+| `delivery_mode` | signed:envelope | `"pull" / "push"` | — | OPTIONAL | pull | [2.1](part_2_the_grammar.md#2.1) [2.3.3](part_2_the_grammar.md#2.3.3) | Recipient-receive axis; the processor is edge's. |
+| `deletion_window` | signed:envelope | `tstr` | — | OPTIONAL | absent | [3.3.1](part_3_the_namespace.md#3.3.1) | Deadline by which a consented payload must be deleted. |
+| `media` | signed:envelope | `object` | — | OPTIONAL | absent | [3.3.13](part_3_the_namespace.md#3.3.13) | The multimedia Source struct, kept as JSON and validated at the door. |
+| `widened_at` | signed:envelope | `rfc3339-ms` | — | REQUIRED on a widening supersedes, absent otherwise | absent | [4.4.3.14](part_4_composition_governance.md#4.4.3.14) [2.6.7](part_2_the_grammar.md#2.6.7) | When the widening itself was placed; asserted_at on a widening is the claim's own instant carried verbatim. |
+| `accord_root` | signed:envelope | `key-id` | — | REQUIRED on accord:* rows | absent | [4.2](part_4_composition_governance.md#4.2) | Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold. |
+| `attach_window_secs` | signed:envelope | `uint` | — | OPTIONAL on trust:charter:v1 | absent (anchor only) | [2.1](part_2_the_grammar.md#2.1) [3.2](part_3_the_namespace.md#3.2) | T4a attach window. |
+| `witness_cadence_secs` | signed:envelope | `uint` | — | REQUIRED on a witnessed lineage's charter | absent | [2.1](part_2_the_grammar.md#2.1) [3.2](part_3_the_namespace.md#3.2) | T6 cadence. |
+| `witness_quorum` | signed:envelope | `uint` | — | REQUIRED on a witnessed lineage's charter | absent (= 0, witnessed mode off) | [2.1](part_2_the_grammar.md#2.1) [3.2](part_3_the_namespace.md#3.2) | T6 quorum; ⌊\|witnesses\|/2⌋ + 1 and at least 2, or 0. |
+| `attached_head_digest` | signed:envelope | `hex64` | — | REQUIRED on trust:accepts:v1 | — | [2.1](part_2_the_grammar.md#2.1) [3.2](part_3_the_namespace.md#3.2) | T4a: the lineage head the acceptance attaches on. |
+| `recovery_commitments` | signed:envelope | `{* key-id => hex64}` | — | REQUIRED on the accord's charter | — | [2.1](part_2_the_grammar.md#2.1) [4.2.6](part_4_composition_governance.md#4.2.6) | Holder key id to commitment; object keys sort under JCS like any member. |
+| `for_key_id` | signed:envelope | `key-id` | — | REQUIRED on census:share:{class}:v1, census:member:share:v1 | absent | [3.1.3](part_3_the_namespace.md#3.1.3) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | The addressed recipient. The row is held by the author's node and this key's node and by no other; the serve gate sends it to this key only, no widening applies, and any other node refuses it federation_addressed_not_recipient. Also carried on consent:state rows. |
+| `period` | signed:envelope | `uint` | — | REQUIRED on census:share:{class}:v1, census:member:share:v1, census:partial:{class}:v1, census:member:partial:v1, census:composite:{class}:v1, ballot:tally:{poll_id}:v1, census:expected_active:v1 | absent | [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | The census period index on the global cadence (CC 5.4.5). |
+| `return_token` | signed:envelope | `hex64` | — | REQUIRED on census:share:{class}:v1, census:member:share:v1 | absent | [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | H(node_secret ‖ period): the per-period token a contributor later checks for inclusion; never a node id. |
+| `share_index` | signed:envelope | `uint` | — | REQUIRED on census:share:{class}:v1, census:member:share:v1, census:partial:{class}:v1, census:member:partial:v1 | absent | [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | 0 or 1: which of the two additive shares, and which aggregator's partial. Any other value is census_share_index_invalid. |
+| `share_count` | signed:envelope | `uint` | — | REQUIRED on census:partial:{class}:v1, census:member:partial:v1 | absent | [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | Shares the aggregator summed into this partial; both partials of a period must agree. |
+| `source_count` | signed:envelope | `uint` | — | REQUIRED on census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.2.1](part_6_the_coherence_mathematics.md#6.1.2.1) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | Distinct owners behind the composite. On census:composite:{class}:v1 a count below 10 is refused census_composite_below_k. |
+| `n_eff` | signed:envelope | `uint` | — | REQUIRED on census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.2.3](part_6_the_coherence_mathematics.md#6.1.2.3) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | The effective source count; equals source_count by construction for one-hot returns; aggregation_meta_dominated below half of source_count. |
+| `max_source_multiplicity` | signed:envelope | `uint` | — | REQUIRED on census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.2.1](part_6_the_coherence_mathematics.md#6.1.2.1) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | The largest multiplicity cluster; aggregation_meta_multiplicity above the floor; on a census composite any value but 1 is refused (CC 6.1.9). |
+| `mass_commitment_hex` | signed:envelope | `hex64` | — | REQUIRED on census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.2.1](part_6_the_coherence_mathematics.md#6.1.2.1) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | Merkle root over the per-member masses. |
+| `member_commitment_hex` | signed:envelope | `hex64` | — | REQUIRED on census:partial:{class}:v1, census:member:partial:v1, census:composite:{class}:v1, ballot:tally:{poll_id}:v1, census:expected_active:v1 | absent | [6.1.2.2](part_6_the_coherence_mathematics.md#6.1.2.2) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | Merkle root over the accepted tokens; a contributor checks its token's path against it; both partials of a period must carry the same root. |
+| `mass_total` | signed:envelope | `tstr` | — | REQUIRED on census:partial:{class}:v1, census:member:partial:v1, census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | The decimal string of a field element: the sum of the cells. On a composite it equals source_count and the sum of the two partials' mass_total, else census_composite_mass_total_mismatch / census_composite_partials_mismatch. |
+| `aggregation_algorithm_id` | signed:envelope | `tstr` | — | REQUIRED on census:partial:{class}:v1, census:member:partial:v1, census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.2.1](part_6_the_coherence_mathematics.md#6.1.2.1) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | Names the field prime, the one-hot bucket layout and the proof system the shares were made under. |
+| `noise_floor_descriptor` | signed:envelope | `tstr` | — | OPTIONAL on census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.2.1](part_6_the_coherence_mathematics.md#6.1.2.1) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | What survives below the floor, when a cell is withheld. |
+| `version` | signed:envelope | `uint` | — | REQUIRED on census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.2.1](part_6_the_coherence_mathematics.md#6.1.2.1) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | 3: the composite carries the CC 6.1.2.1 verify inputs as signed members; a lower value is refused as the tier object's would be. |
+| `partial_a` | signed:envelope | `uuid` | — | REQUIRED on census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | The attestation_id of the share-index-0 partial this composite sums. references_attestation_id stays unset on a composite. |
+| `partial_b` | signed:envelope | `uuid` | — | REQUIRED on census:composite:{class}:v1, ballot:tally:{poll_id}:v1 | absent | [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | The attestation_id of the share-index-1 partial. |
+| `window_periods` | signed:envelope | `uint` | — | REQUIRED on census:expected_active:v1 | absent | [4.5.13](part_4_composition_governance.md#4.5.13) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | 4: a member is expected-active when active in at least one of the last four periods. |
+| `active_count` | signed:envelope | `uint` | — | REQUIRED on census:expected_active:v1 | absent | [4.5.13](part_4_composition_governance.md#4.5.13) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | Owners active within the window, after the ratchet; every member recomputes it, else census_expected_active_mismatch. |
+| `floor_applied` | signed:envelope | `bool` | — | REQUIRED on census:expected_active:v1 | absent | [4.5.13](part_4_composition_governance.md#4.5.13) [6.1.9](part_6_the_coherence_mathematics.md#6.1.9) | Whether the ratchet's floor, not the raw count, set active_count this period. |
+
+**Inside the signed bytes — members this text types and persist carries untyped**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `score` | signed:envelope-extra | `float` | — | REQUIRED on scores | — | [2.1](part_2_the_grammar.md#2.1) [3.1.7](part_3_the_namespace.md#3.1.7) | In [-1, 1]; the family's polarity class is an admission rule (CLM-polarity-admission). |
+| `confidence` | signed:envelope-extra | `float` | — | REQUIRED on scores | — | [2.1](part_2_the_grammar.md#2.1) | In [0, 1]. |
+| `context` | signed:envelope-extra | `tstr` | — | OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) | Free form; not parsed by the substrate. |
+| `evidence_refs` | signed:envelope-extra | `[* tstr]` | sequence | OPTIONAL (some families require it) | absent | [2.1](part_2_the_grammar.md#2.1) [8.11.3](#8.11.3) [8.11.5](#8.11.5) | Producer-asserted order, preserved. Above the 1 MiB cap the payload moves to the blob plane and is named here by content hash. |
+| `valid_until` | signed:envelope-extra | `rfc3339-ms` | — | REQUIRED on session:*, otherwise OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) [8.11.10](#8.11.10) [3.1.3.1](part_3_the_namespace.md#3.1.3.1) | Consumer-policy staleness, independent of expires_at. On session:* it is the claim's signed horizon (CC 3.1.3.1). |
+| `epistemic_mode` | signed:envelope-extra | `"direct" / "crypto" / "hearsay" / "derivative" / "appeal"` | — | OPTIONAL | direct | [2.1](part_2_the_grammar.md#2.1) [2.5](part_2_the_grammar.md#2.5) [8.11.4](#8.11.4) | Interpretation-time default; an explicit default value is signed as written (8.11.2). |
+| `witness_relation` | signed:envelope-extra | `"self" / "external" / "derived"` | — | OPTIONAL | external | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) |  |
+| `oversight_mode` | signed:envelope-extra | `"HITL" / "HOTL" / "HOOTL"` | — | OPTIONAL | absent (per-cell default) | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) | CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused federation_malformed_row / envelope_member_null (CC 8.11.3). |
+| `occurrence_id` | signed:envelope-extra | `tstr` | — | OPTIONAL | absent (read as occurrence-0) | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) | Self-asserted (CC 8.3.1). |
+| `occurrence_count` | signed:envelope-extra | `uint` | — | OPTIONAL | absent (read as 1) | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) | At least 1. |
+| `occurrence_role` | signed:envelope-extra | `"primary" / "shared" / "replica"` | — | OPTIONAL | absent (read as primary) | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) |  |
+| `stake` | signed:envelope-extra | `"free" / "reputational" / "capital" / "cryptoeconomic"` | — | OPTIONAL | reputational | [2.1](part_2_the_grammar.md#2.1) [2.5](part_2_the_grammar.md#2.5) |  |
+| `community_id` | signed:envelope-extra | `key-id` | — | REQUIRED iff cohort_scope is community or affiliations | — | [2.1](part_2_the_grammar.md#2.1) [2.3.3](part_2_the_grammar.md#2.3.3) [4.4.3.12](part_4_composition_governance.md#4.4.3.12) | The community whose roster gates visibility; refused when missing at those scopes. |
+| `family_id` | signed:envelope-extra | `key-id` | — | REQUIRED iff cohort_scope is family | — | [2.1](part_2_the_grammar.md#2.1) [2.3.3](part_2_the_grammar.md#2.3.3) [3.3.4](part_3_the_namespace.md#3.3.4) |  |
+| `session_id` | signed:envelope-extra | `tstr` | — | REQUIRED on session:* | — | [2.1](part_2_the_grammar.md#2.1) [3.1.3.1](part_3_the_namespace.md#3.1.3.1) | Verbatim, case-preserved. |
+| `claimed_at` | signed:envelope-extra | `rfc3339-ms` | — | REQUIRED on session:* | — | [2.1](part_2_the_grammar.md#2.1) [3.1.3.1](part_3_the_namespace.md#3.1.3.1) |  |
+| `custody_state` | signed:envelope-extra | `"here" / "none"` | — | REQUIRED on custody:ack | — | [2.1](part_2_the_grammar.md#2.1) [3.1.3.3](part_3_the_namespace.md#3.1.3.3) | Refused custody_ack_malformed otherwise. |
+| `group_kind` | signed:envelope-extra | `"family" / "community"` | — | REQUIRED on membership:proposal | — | [2.1](part_2_the_grammar.md#2.1) [3.1.3.2](part_3_the_namespace.md#3.1.3.2) |  |
+| `role` | signed:envelope-extra | `tstr` | — | OPTIONAL on membership:proposal, restated on membership:acceptance | absent | [2.1](part_2_the_grammar.md#2.1) [3.1.3.2](part_3_the_namespace.md#3.1.3.2) |  |
+| `proposal_hash` | signed:envelope-extra | `hex64` | — | REQUIRED on membership:acceptance and membership:decline | — | [2.1](part_2_the_grammar.md#2.1) [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The answered proposal's original_content_hash. |
+| `subject_sha256_ed25519_raw` | signed:envelope-extra | `hex64` | — | OPTIONAL on moderation:* | absent | [2.4.1.1](part_2_the_grammar.md#2.4.1.1) | Refused moderation_subject_digest_malformed when malformed. |
+| `halt_fuse_secs` | signed:envelope-extra | `uint` | — | OPTIONAL on the accord's charter | 86400 (a constant of this document) | [2.1](part_2_the_grammar.md#2.1) [4.2.1.1](part_4_composition_governance.md#4.2.1.1) | The halt latch reads the constant when the member is absent. |
+| `witnesses` | signed:envelope-extra | `[* key-record]` | set | REQUIRED on a witnessed lineage's charter | — | [2.1](part_2_the_grammar.md#2.1) [3.2](part_3_the_namespace.md#3.2) | A set, sorted by each element's JCS string (the 8.11.3 default made explicit). |
+| `history_on_join` | signed:envelope-extra | `"full" / "from_join"` | — | OPTIONAL | from_join | [2.1](part_2_the_grammar.md#2.1) [4.4.3.16](part_4_composition_governance.md#4.4.3.16) [5.1](part_5_transport_substrate.md#5.1) |  |
+| `supersession_reason` | signed:envelope-extra | `tstr` | — | OPTIONAL on supersedes | absent | [2.4.1](part_2_the_grammar.md#2.4.1) |  |
+| `differs_in` | signed:envelope-extra | `[* tstr]` | set | OPTIONAL on supersedes; a widening lists cohort_scope | absent | [2.4.1](part_2_the_grammar.md#2.4.1) [4.4.3.14](part_4_composition_governance.md#4.4.3.14) | Member names that differ from the prior. Array kind not declared in 2.4.1, so the 8.11.3 default (set, sorted) applies. |
+| `recantation_reason` | signed:envelope-extra | `tstr` | — | OPTIONAL on recants | absent | [2.4.1](part_2_the_grammar.md#2.4.1) |  |
+| `what_was_false` | signed:envelope-extra | `tstr` | — | OPTIONAL on recants | absent | [2.4.1](part_2_the_grammar.md#2.4.1) |  |
+| `delegation_purpose` | signed:envelope-extra | `tstr` | — | OPTIONAL on delegates_to | absent | [2.4.1](part_2_the_grammar.md#2.4.1) [2.4.1.2](part_2_the_grammar.md#2.4.1.2) | owner_binding is the one single-valued purpose. |
+| `delegation_valid_from` | signed:envelope-extra | `rfc3339-ms` | — | OPTIONAL on delegates_to | the edge's asserted_at | [2.4.1](part_2_the_grammar.md#2.4.1) |  |
+| `delegation_valid_until` | signed:envelope-extra | `rfc3339-ms` | — | REQUIRED on a termed delegates_to (CC 2.4.1), otherwise OPTIONAL | absent (open-ended) | [2.4.1](part_2_the_grammar.md#2.4.1) [4.4.3.12](part_4_composition_governance.md#4.4.3.12) | At most 365 days after delegation_valid_from; refused delegation_term_required. |
+| `trust_classes` | signed:envelope-extra | `[* tstr]` | set | OPTIONAL on a delegates_to bearing trust:accepts:v1 | absent (every class the authority's charter declares) | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | The licence classes the reader trusts this authority for; present non-empty; [] refused trust_accepts_classes_malformed. |
+| `trust_depth` | signed:envelope-extra | `uint` | — | OPTIONAL on a delegates_to bearing trust:accepts:v1 | absent (0) | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) [4.1.1](part_4_composition_governance.md#4.1.1) | Further hops honoured past this authority, 0..5; out of range refused trust_accepts_depth_out_of_range. |
+| `*` | signed:envelope-extra | `any` | — | OPTIONAL | — | [2.1.1](part_2_the_grammar.md#2.1.1) [3.3](part_3_the_namespace.md#3.3) | Every other member, including subject_kind and the per-family payloads of CC 3.3, rides the envelope untyped by the substrate and is preserved on relay (2.1.1); families validate their own at their gates. This table does not enumerate them. |
+| `consent_basis` | signed:envelope-extra | `[* consent-basis]` | sequence | OPTIONAL (capacity:*, observation:access_assumption:v1) | absent | [2.1](part_2_the_grammar.md#2.1) [3.3.1](part_3_the_namespace.md#3.3.1) | The grants a witness relied on. |
+| `n_eff_pr` | signed:envelope-extra | `number` | — | OPTIONAL (carried on capacity:*; validated at the capacity:* gate) | absent | [2.1](part_2_the_grammar.md#2.1) | Participation-ratio effective sample size; gated. |
+| `n_eff_h` | signed:envelope-extra | `number` | — | OPTIONAL (carried on capacity:*; validated at the capacity:* gate) | absent | [2.1](part_2_the_grammar.md#2.1) | Entropy-perplexity effective sample size; carried for audit. |
+| `sample_size` | signed:envelope-extra | `uint` | — | OPTIONAL (carried on capacity:*; validated at the capacity:* gate) | absent | [2.1](part_2_the_grammar.md#2.1) | Rows in the scoring matrix. |
+| `feature_dim` | signed:envelope-extra | `uint` | — | OPTIONAL (carried on capacity:*; validated at the capacity:* gate) | absent | [2.1](part_2_the_grammar.md#2.1) | Features per row. |
+| `sample_size_gate` | signed:envelope-extra | `uint` | — | OPTIONAL (carried on capacity:*; validated at the capacity:* gate) | absent | [2.1](part_2_the_grammar.md#2.1) | Configured minimum sample size. |
+| `target_n_eff` | signed:envelope-extra | `number` | — | OPTIONAL (carried on capacity:*; validated at the capacity:* gate) | absent | [2.1](part_2_the_grammar.md#2.1) | Configured target effective sample size. |
+| `min_feature_dim` | signed:envelope-extra | `uint` | — | OPTIONAL (carried on capacity:*; validated at the capacity:* gate) | absent | [2.1](part_2_the_grammar.md#2.1) | Configured minimum feature dimension. |
+| `n_eff_floor` | signed:envelope-extra | `number` | — | OPTIONAL (carried on capacity:*; validated at the capacity:* gate) | absent | [2.1](part_2_the_grammar.md#2.1) | Configured effective-sample-size floor. |
+| `window` | signed:envelope-extra | `uint` | — | OPTIONAL (capacity:*, observation:access_assumption:v1) | absent | [2.1](part_2_the_grammar.md#2.1) | The scoring or observation window, in rows. |
+| `trace_level` | signed:envelope-extra | `"generic" / "detailed" / "full_traces"` | — | REQUIRED on observation:access_assumption:v1 | absent | [2.1](part_2_the_grammar.md#2.1) [3.1.9.4](part_3_the_namespace.md#3.1.9.4) | The trace level the observed agent's install emitted at. |
+| `occurrence_key_ids` | signed:envelope-extra | `[* key-id]` | set | REQUIRED on observation:access_assumption:v1 | absent | [2.1](part_2_the_grammar.md#2.1) [3.1.9.4](part_3_the_namespace.md#3.1.9.4) | The occurrences whose rows the witness read. |
+| `window_from` | signed:envelope-extra | `rfc3339-ms` | — | REQUIRED on observation:access_assumption:v1 | absent | [2.1](part_2_the_grammar.md#2.1) [2.6.7](part_2_the_grammar.md#2.6.7) [3.1.9.4](part_3_the_namespace.md#3.1.9.4) | Start of the observation window. |
+| `window_to` | signed:envelope-extra | `rfc3339-ms` | — | REQUIRED on observation:access_assumption:v1 | absent | [2.1](part_2_the_grammar.md#2.1) [2.6.7](part_2_the_grammar.md#2.6.7) [3.1.9.4](part_3_the_namespace.md#3.1.9.4) | End of the observation window. |
+| `channel_classes` | signed:envelope-extra | `[* tstr]` | set | REQUIRED on observation:access_assumption:v1 | absent | [2.1](part_2_the_grammar.md#2.1) [3.1.9.4](part_3_the_namespace.md#3.1.9.4) | Channel classes the witness saw the subject through, as the emitter names them. |
+| `amendment_digest` | signed:envelope-extra | `hex64` | — | REQUIRED on identity_amendment:v1 | absent | [2.1](part_2_the_grammar.md#2.1) [3.1.5](part_3_the_namespace.md#3.1.5) | SHA-256 of the applied identity amendment. |
+| `authorized_by` | signed:envelope-extra | `uuid` | — | REQUIRED on identity_amendment:v1 | absent | [2.1](part_2_the_grammar.md#2.1) [3.1.5](part_3_the_namespace.md#3.1.5) [4.3](part_4_composition_governance.md#4.3) | The deferral:response:approved:v1 row that authorised it; admission checks it. |
+
+**Beside the row — outside the bytes, bound to them**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `attestation_id` | beside | `uuid` | — | REQUIRED | — | [8.11.9](#8.11.9) | Equals row.attestation_id or the row is refused. |
+| `attesting_key_id` | beside | `key-id` | — | REQUIRED | — | [2.1](part_2_the_grammar.md#2.1) | Equals row.attesting_key_id. |
+| `attested_key_id` | beside | `key-id` | — | REQUIRED | — | [2.1](part_2_the_grammar.md#2.1) | Equals row.attested_key_id. |
+| `attestation_type` | beside | `row-type` | — | REQUIRED | — | [2.4](part_2_the_grammar.md#2.4) | Equals row.attestation_type. |
+| `weight` | beside | `float` | — | OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) | Equals row.weight; absent iff absent. |
+| `asserted_at` | beside | `rfc3339` | — | REQUIRED | — | [2.6.7](part_2_the_grammar.md#2.6.7) | Read out of the signed member at the mint; a column that disagrees is refused typed_diverges_from_envelope. |
+| `expires_at` | beside | `rfc3339` | — | OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) | Present iff the signed member is. |
+| `subject_key_ids` | beside | `[* subject-id]` | set | OPTIONAL (absent when empty) | absent | [2.3](part_2_the_grammar.md#2.3) | Equals row.subject_key_ids as a list. |
+| `cohort_scope` | beside | `cohort-scope` | — | REQUIRED | — | [2.3.3](part_2_the_grammar.md#2.3.3) | Equals row.cohort_scope. No wire default; the authoring default is the smallest scope (CC 1.13.3.4). |
+| `attestation_envelope` | beside | `envelope` | — | REQUIRED | — | [2.1](part_2_the_grammar.md#2.1) [8.11.1](#8.11.1) [8.11.5](#8.11.5) | The signed object itself, stored and relayed as received (8.11.2). The signing input is JCS(attestation_envelope) and nothing else. |
+| `original_content_hash` | beside | `hex64` | — | REQUIRED | — | [8.11.5](#8.11.5) [8.11.11](#8.11.11) | Lowercase hex SHA-256 of JCS(attestation_envelope); recomputed at federation-tier ingest and refused on mismatch. |
+| `additional_scrubs` | beside | `[* scrub-sig]` | sequence | OPTIONAL (absent when empty) | absent | [2.4](part_2_the_grammar.md#2.4) [3.2](part_3_the_namespace.md#3.2) | Second and later signers over the same JCS bytes, each verified against its own scrub_key_id's pinned keys. This is the carrier of quorum on a row. |
+| `persist_row_hash` | beside | `hex64` | — | OPTIONAL (store-computed; absent on a row as emitted) | — | — | Store-computed over the row's own serialisation (not JCS), excluding itself; informational on the wire, never re-verified on read (CC 8.11.5). Not a conformance target. |
+| `withdraws_admission_rule` | local | `uint` | — | OPTIONAL | absent | [2.4.1.1](part_2_the_grammar.md#2.4.1.1) | Audit metadata: which rule (0 to 4) admitted a withdraws; persist-internal. |
+| `tier` | local | `"local" / "federation"` | — | OPTIONAL | federation | [3.1.3](part_3_the_namespace.md#3.1.3) | Persist-internal; absent on the wire for a federation row. Not in the signed bytes, so a promoted row is byte-identical to a native one. |
+| `promoted_at` | local | `rfc3339` | — | OPTIONAL | absent | [3.1.3](part_3_the_namespace.md#3.1.3) | Persist-internal. |
+| `scrub_signature_classical` | beside:signature | `base64` | — | REQUIRED | — | [2.6.5](part_2_the_grammar.md#2.6.5) [8.11.3](#8.11.3) [5.3.2.8](part_5_transport_substrate.md#5.3.2.8) | Ed25519 (RFC 8032) over JCS(attestation_envelope); RFC 4648 section 4 standard alphabet, padded. |
+| `scrub_signature_pqc` | beside:signature | `base64` | — | REQUIRED at the federation tier | — | [2.6.5](part_2_the_grammar.md#2.6.5) [5.3.2.8](part_5_transport_substrate.md#5.3.2.8) [6.1.3](part_6_the_coherence_mathematics.md#6.1.3) | ML-DSA-65 (FIPS 204) over JCS(attestation_envelope) followed by the raw 64 Ed25519 signature bytes (the bound-payload form); verified under the strict hybrid policy, never classical-only. |
+| `scrub_key_id` | beside:signature | `key-id` | — | REQUIRED | — | [2.1](part_2_the_grammar.md#2.1) | On an attestation row the verifier resolves attesting_key_id, so this names the same key; assemble sets both from one key. (On a key record it may name an anchor, CC 3.2.) |
+| `scrub_timestamp` | beside:signature | `rfc3339` | — | REQUIRED | — | [2.6.7](part_2_the_grammar.md#2.6.7) | When the signature was issued: asserted_at, or widened_at on a widening. Outside the bytes. |
+| `pqc_completed_at` | beside:signature | `rfc3339` | — | OPTIONAL | — | [5.3.2.8](part_5_transport_substrate.md#5.3.2.8) | When the ML-DSA-65 half was attached. Outside the bytes. |
+| `additional_scrubs[].scrub_key_id` | beside:cosign | `key-id` | — | REQUIRED | — | [2.4](part_2_the_grammar.md#2.4) [3.2](part_3_the_namespace.md#3.2) | The cosigner; must resolve to a registered key. |
+| `additional_scrubs[].scrub_signature_classical` | beside:cosign | `base64` | — | REQUIRED | — | [2.6.5](part_2_the_grammar.md#2.6.5) | Ed25519 over the same JCS(attestation_envelope). |
+| `additional_scrubs[].scrub_signature_pqc` | beside:cosign | `base64` | — | REQUIRED at the federation tier | — | [2.6.5](part_2_the_grammar.md#2.6.5) | ML-DSA-65 over the same JCS bytes followed by this entry's Ed25519 signature. |
+| `additional_scrubs[].cosigned_at` | beside:cosign | `rfc3339-ms` | — | OPTIONAL | absent | [2.6.7](part_2_the_grammar.md#2.6.7) | When the cosignature was applied; outside every preimage, so stamping it moves no signed byte. |
+
+**The key record — the second signed object (outer shape; its envelope's member table is the key plane's)**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `key_id` | beside | `key-id` | — | REQUIRED | — | [2.6.8](part_2_the_grammar.md#2.6.8) [3.2](part_3_the_namespace.md#3.2) | <label>-<fingerprint>, the fingerprint the first ten lowercase base32 characters of sha256(ed25519 public key). |
+| `pubkey_ed25519_base64` | beside | `base64` | — | REQUIRED | — | [3.2](part_3_the_namespace.md#3.2) [5.3.2.8](part_5_transport_substrate.md#5.3.2.8) | Raw 32-byte key. |
+| `pubkey_ml_dsa_65_base64` | beside | `base64` | — | REQUIRED for algorithm hybrid | — | [5.3.2.8](part_5_transport_substrate.md#5.3.2.8) | Raw 1952-byte key; the substrate takes writes only at algorithm hybrid. |
+| `algorithm` | beside | `tstr` | — | REQUIRED | — | [5.3.2.8](part_5_transport_substrate.md#5.3.2.8) | hybrid on every admitted record. |
+| `identity_type` | beside | `tstr` | — | REQUIRED | — | [3.4.7.1](part_3_the_namespace.md#3.4.7.1) | A set rendered as one string; see CC 3.4.7.1. |
+| `identity_ref` | beside | `tstr` | — | REQUIRED | — | [3.2](part_3_the_namespace.md#3.2) |  |
+| `valid_from` | beside | `rfc3339` | — | REQUIRED | — | [2.1](part_2_the_grammar.md#2.1) |  |
+| `valid_until` | beside | `rfc3339` | — | OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) | Its signed twin is inside registration_envelope (CLM-key-validity-window). |
+| `registration_envelope` | beside | `object` | — | REQUIRED | — | [3.2](part_3_the_namespace.md#3.2) [3.3.6](part_3_the_namespace.md#3.3.6) | The key record's signed object: JCS(registration_envelope) is the signing input for the base scrub and every additional scrub. Its member table is the key plane's (key:record:v1) and is not enumerated here. |
+| `original_content_hash` | beside | `hex64` | — | REQUIRED | — | [8.11.5](#8.11.5) | Lowercase hex SHA-256 of JCS(registration_envelope). |
+| `scrub_signature_classical` | beside:signature | `base64` | — | REQUIRED | — | [2.6.5](part_2_the_grammar.md#2.6.5) | Ed25519 over JCS(registration_envelope). |
+| `scrub_signature_pqc` | beside:signature | `base64` | — | REQUIRED once hybrid-complete | — | [2.6.5](part_2_the_grammar.md#2.6.5) | ML-DSA-65 over JCS(registration_envelope) followed by the Ed25519 signature bytes. |
+| `scrub_key_id` | beside:signature | `key-id` | — | REQUIRED | — | [3.2](part_3_the_namespace.md#3.2) | Self-scrub when equal to key_id; an anchor scrub when it names a pinned anchor (the one record kind where the scrubber may differ from the subject). |
+| `scrub_timestamp` | beside:signature | `rfc3339` | — | REQUIRED | — | [2.6.7](part_2_the_grammar.md#2.6.7) |  |
+| `pqc_completed_at` | beside:signature | `rfc3339` | — | OPTIONAL | — | [5.3.2.8](part_5_transport_substrate.md#5.3.2.8) |  |
+| `persist_row_hash` | beside | `hex64` | — | REQUIRED | — | — | Store-computed; excludes itself and consent_role; informational. |
+| `roles` | beside | `[* tstr]` | set | OPTIONAL | [] | [3.4.7.1](part_3_the_namespace.md#3.4.7.1) | Serialised as roles; the record also carries roles inside the signed registration_envelope. |
+| `attestation_evidence` | beside | `object` | — | OPTIONAL | absent | [4.2.2](part_4_composition_governance.md#4.2.2) | Hardware attestation blob. |
+| `consent_role` | local | `tstr` | — | OPTIONAL | absent | [3.4.7.2](part_3_the_namespace.md#3.4.7.2) | Mutable operational marker, excluded from persist_row_hash and from the signed bytes. |
+| `additional_scrubs` | beside | `[* scrub-sig]` | sequence | OPTIONAL (absent when empty) | absent | [3.2](part_3_the_namespace.md#3.2) | Second and later scrubs over the same JCS(registration_envelope); what lets a replicated record prove its own m-of-n. |
+
+**Rules this table carries.** A set-kind array is sorted **and** unique, refused otherwise as `federation_set_semantics_unsorted` with the member named; a relay never re-sorts it, since re-sorting would move signed bytes. The form an emitter writes for `scope` is the array; a bare token is admitted as the one-element array it denotes, and nothing is normalised in signed bytes. An explicit JSON `null` on an optional member is refused as malformed ([CC 8.11.3](#8.11.3)). `witnesses[]` is a set. The quorum carrier is `additional_scrubs[]` beside the row, as [CC 2.1](part_2_the_grammar.md#2.1) and [CC 2.4](part_2_the_grammar.md#2.4) name it.
+
+**Vectors.** [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json) carries two test identities (Ed25519 and ML-DSA-65 seeds, public keys and the [CC 2.6.8](part_2_the_grammar.md#2.6.8) `key_id` derived from each), and for each vector the envelope, its JCS bytes, `original_content_hash`, both signature halves and the assembled row: a minimal `scores`; the same claim with an explicit default (different bytes, both verify, [CC 8.11.2](#8.11.2)); a cosigned variant; a `withdraws`; the at-cap and cap-plus-one envelopes as a recipe with their hashes; and refusal cases with their tokens. The signatures verify under the identities the file carries; the JCS bytes, the hashes and the Ed25519 half are recomputed from the vectors on every change to this document. A second implementation that reproduces these bytes and signatures has met the [CC 8.11.3](#8.11.3) byte-identity target for this object.
+
+### 8.11.10 `canonicalization` — Date-time canonicalization
+
+Every ISO 8601 / RFC 3339 datetime in this specification MUST be:
+
+- UTC (suffix: literal `Z`; the offset form `+00:00` MUST NOT be used)
+- Millisecond-precision (exactly three digits of fractional seconds; trailing zeros required)
+- Lowercase `z` MUST NOT be used; uppercase `Z` only
+
+Canonical form: `YYYY-MM-DDTHH:MM:SS.sssZ`. Example: `2026-05-28T13:45:09.000Z`. Producers MUST emit this form; consumers MUST reject any other form when verifying a signature.
+
+### 8.11.11 `canonicalization-hexadecimal` — Hexadecimal canonicalization
+
+Every hex string used in canonical-bytes encoding (e.g., SHA-256 digests in `root_hash`, public-key fingerprints) MUST be **lowercase**, **unpadded** (no leading `0x`, no separators), and **byte-length-exact** (a SHA-256 digest is exactly 64 hex characters). Producers MUST emit lowercase; consumers MUST reject uppercase when verifying.
+
+### 8.11.12 `bound-hybrid` — The bound-hybrid signature
+
+The signature of the earlier form is the **bound-hybrid signature** (`[hybrid-sig]`, [CC 2.6.5](part_2_the_grammar.md#2.6.5)): Ed25519 ([RFC-8032]) over the canonical bytes, and ML-DSA-65 ([FIPS-204]) over the canonical bytes ‖ `ed25519_sig`. This is the bound-payload form of [CC 8.11.16](#8.11.16). Both halves are verified at every federation-tier admission gate and on the store path, never under an operator toggle ([CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8), [CC 6.1.3](part_6_the_coherence_mathematics.md#6.1.3)). The Ed25519 half verifies without the other, so the pair is separable. The composite signature of [CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7) never verifies on one half.
+
+### 8.11.13 `key-revocation-envelope` — The key revocation of the earlier form (normative)
+
+A key revocation of the earlier form names its subject by **`revoked_key_sha256_ed25519_raw`**: the SHA-256 of the revoked key's raw 32-byte Ed25519 public key, 64 lowercase hex digits ([CC 8.11.11](#8.11.11)). It is the full digest whose truncation is the `key_id`'s fingerprint, stable for the life of the key and carrying no label. The member is REQUIRED. `revoked_key_id` is OPTIONAL: when present it MUST name a key whose raw-key digest equals the subject, and the row waits until that key is held and concludes nothing on a mismatch. When absent it is bound as explicit JSON `null`. The signed revocation binds **eight** members inside its own `revocation_envelope`: `revocation_id`, `revoked_key_id` (string or `null`), `revoked_key_sha256_ed25519_raw`, `revoking_key_id`, `reason` (string or `null`), `revoked_at`, `effective_at`, `scrub_timestamp`. Every one is REQUIRED in the bytes, an absent optional bound as explicit `null` (an omitted member is refused as unbound). `revoked_after` is the ninth, optional, absent or `null` meaning unbounded. This is the key plane's own signing contract of the earlier form. `scrub_timestamp` is inside the bytes because it is the anti-rollback ordering key. The explicit `null` is the one exception to the no-null rule of the earlier form's attestation envelope ([CC 8.11.9](#8.11.9)). Readers of this form ask by the digest, and self-revocation is recognised when the revoker's own key digests to the subject. A `moderation:*` score of this form MAY likewise name its subject key by **`subject_sha256_ed25519_raw`**, in the same spelling, and a malformed value is refused. The revocation carries no member table in [CC 8.11.9](#8.11.9), and its signature rule is the key record's.
+
+### 8.11.14 `earlier-commitment` — Key commitments of the earlier form (normative)
+
+A pre-rotation or recovery commitment of the earlier form is `SHA-256(JCS([ {key_id, pubkey_ed25519_base64, pubkey_ml_dsa_65_base64}, … ]))` over the committed successor keys. The array is sorted by `key_id` as UTF-8 bytes. Each entry's three members are exactly as stored on the key record (`pubkey_*_base64`, standard base64). The digest is lowercase hex ([CC 8.11.11](#8.11.11)). The per-holder recovery commitment of [CC 4.2.6](part_4_composition_governance.md#4.2.6) is this over a one-element array. It binds key material, never only the id ([CC 3.2](part_3_the_namespace.md#3.2)).
+
+### 8.11.15 `earlier-text-manifest` — The agent text manifest statement of the earlier form (normative)
+
+An agent text manifest statement ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)) of the earlier form is signed over these canonical bytes:
+
+```
+canonical_bytes = sha256( JCS( {
+  "domain": "ciris.accord_manifest.v1", // domain separation; pinned literal
+  "manifest_sha256": sha256_hex_lowercase, // of the manifest's exact bytes; per CC 8.11.11
+  "manifest_size": byte_length, // JSON integer; the size CC 5.3.2.11 binds beside a digest
+  "signer_identity": signer_key_id // the key id of the signer's key record
+}))
+```
+
+Hybrid signature: Ed25519 over `canonical_bytes`; ML-DSA-65 over `canonical_bytes || ed25519_signature_bytes` (bound payload, [CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)). The Ed25519 half is the pure algorithm of RFC 8032; a pre-hashed or context variant is another algorithm and does not verify.
+
+### 8.11.16 `earlier-skill-import` — The skill import manifest and locale leaves of the earlier form (normative)
+
+A skill import manifest and the per-locale leaves of [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) take these forms in the earlier form.
+
+**The skill import manifest.** The canonical bytes of the earlier form:
+
+```
+canonical_bytes = sha256( JCS( {
+  "domain": "ciris.skill_import.v2", // domain separation; pinned literal
+  "source": source_string,
+  "skill_manifest_sha256": sha256_hex_lowercase, // per CC 8.11.11
+  "signer_identity": signer_key_id, // per CC 8.11.11
+  "import_timestamp": rfc3339_canonical, // per CC 8.11.10
+  "capability_declaration": sorted_capability_array, // JSON array of capability strings, sorted
+    // lexicographically by byte representation BEFORE canonicalization — JCS canonicalizes
+    // arrays in place and does not reorder elements, so the sort is part of the signed preimage
+  "valid_until": rfc3339_canonical // OPTIONAL — CC 8.11.2 omit rule: absent if unset
+}))
+```
+
+Hybrid signature: Ed25519 over `canonical_bytes`; ML-DSA-65 over `canonical_bytes || ed25519_signature_bytes` (bound payload). All [CC 8.11.3](#8.11.3) determinism rules apply (hex per CC 8.11.11, timestamps per CC 8.11.10, omit-vs-materialize per CC 8.11.2).
+
+**The per-locale leaves.** The leaf and parent hashes of the earlier form:
+
+```
+leaf_hash[lang_code] = sha256(
+  0x00 || // RFC 6962 leaf-domain prefix (binary, outside the JSON)
+  JCS( {
+    "domain": "ciris.locale_manifest.v2", // domain separation; pinned literal
+    "target": target_string,
+    "locale": lang_code,
+    "files_root": files_merkle_root_hex_lowercase, // per CC 8.11.11
+    "build_id": build_id,
+    "signer_identity": signer_key_id // per CC 8.11.11
+  }))
+
+parent_hash(left, right) = sha256(
+  0x01 || // RFC 6962 parent-domain prefix
+  left || right)
+```
+
+In the earlier form, the version is v2. Producers MUST emit v2.
+
+### 8.11.17 `earlier-occurrence-revocation` — The occurrence revocation carrier of the earlier form (normative)
+
+An `identity:occurrence_revocation` carrier ([CC 3.1.3](part_3_the_namespace.md#3.1.3)) of the earlier form takes the row's signature columns from the framed object's own hybrid signature. Its id = sha256(domain ‖ JCS(object)), under the domain `ciris:identity:occurrence_revocation:v1:`. A receiver re-derives the row and refuses any byte difference.
+
+### 8.11.18 `earlier-quorum-key` — The quorum key of the earlier form (normative)
+
+A `cosign:{state}` row ([CC 3.1.3](part_3_the_namespace.md#3.1.3)) of the earlier form names its event by the event's **quorum key**, sha256(`ciris-persist/cosign-pending/v1` ‖ JCS(the event with no signature in it)). A **signature** row carries the quorum key, the signer's key id and that signer's hybrid signature over the same signing bytes the primary signed. That is exactly one `additional_scrubs` entry ([CC 8.11.9](#8.11.9)). Its id is sha256(`ciris-persist/cosign-signature/v1` ‖ quorum key ‖ signer key id). It is admitted only if both halves verify against the pending event's bytes. A cosigned act of the earlier form ([CC 2.4](part_2_the_grammar.md#2.4), [CC 3.3.4](part_3_the_namespace.md#3.3.4)) is named by its quorum key, the digest of what its signers signed with no signature in it.
+
+### 8.11.19 `earlier-purge-digest` — The purge selection digest of the earlier form (normative)
+
+The selection digest `content_sha256` of a `steward_purge` notice ([CC 3.3.2](part_3_the_namespace.md#3.3.2)) of the earlier form is SHA-256 over the JCS array of sorted, unique `"plane:id"` strings naming every purged record, derived included.
+
+### 8.11.20 `earlier-hop-key` — The onion hop key members of the earlier form (normative)
+
+The onion hop key of [CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2) in the earlier form carries both halves raw, in the standard base64 of [CC 8.11.3](#8.11.3), and JCS sorts its keys:
+
+```
+"onion_hop_pubkeys": {
+  "ml_kem_768_base64": "<base64 of exactly 1184 bytes>",
+  "x25519_base64":     "<base64 of exactly 32 bytes>"
+}
+```
+
+### 8.11.21 `earlier-sealed-descriptor` — The sealed descriptor of the earlier form (normative)
+
+The `sealed_descriptor` of [CC 3.3.13](part_3_the_namespace.md#3.3.13) in the earlier form is an AEAD seal under the blob's content DEK over {name, format, codec?, parent?} as a JCS object, with the blob's `digest` as associated data.
+
+### 8.11.22 `earlier-accord-roster` — The accord roster objects of the earlier form (normative)
+
+The three accord roster objects of [CC 4.2.6](part_4_composition_governance.md#4.2.6) are, in the earlier form, hybrid-signed (Ed25519 + ML-DSA-65) objects over the preimages below.
+
+**Canonical-bytes pins.** The proposal and the participation each sign a distinct, wire-isolated canonical-bytes domain, pinned the same way as the [CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1) `accord:invoke` and [CC 4.2.1.3](part_4_composition_governance.md#4.2.1.3) `accord:lifecycle` preimages; a decision is the bundle above and signs none. The distinct prefixes prevent invoke ↔ lifecycle ↔ proposal ↔ participation cross-replay:
+
+```
+proposal = sha256(
+  "ciris.accord_proposal.v1\n" ||
+  "family_key_id=" || family_key_id || "\n" ||
+  "prior_family_digest=" || prior_family_digest || "\n" ||
+  "action=" || action || "\n" ||            // the membership-change envelope; a fire is never a proposal (CC 4.2.1.1)
+  "nonce=" || base64url(rand_32_bytes) || "\n" ||
+  "window_until=" || rfc3339_canonical)
+participation = sha256(
+  "ciris.accord_participation.v1\n" ||
+  "family_key_id=" || family_key_id || "\n" ||
+  "refers_to=" || proposal_nonce_or_digest || "\n" ||
+  "proof_of_life=true\n" ||
+  "vote=" || ("yes" | "no" | "abstain") || "\n" ||
+  "asserted_at=" || rfc3339_canonical || "\n" ||
+  "nonce=" || base64url(rand_32_bytes))
+```
+
+All hybrid (Ed25519 + ML-DSA-65).
+
+### 8.11.23 `earlier-login-contract` — The Self-at-login JCS contract of the earlier form (normative)
+
+The member sets of [CC 4.4.3.20](part_4_composition_governance.md#4.4.3.20) are signed, in the earlier form, under this JCS contract.
+
+Each of the three Self-at-login Contributions is hybrid-signed over `JCS(envelope)` ([CC 8.11.1](#8.11.1) / RFC 8785), and at login promoted to federation-tier. The [CC 5.3.2.6](part_5_transport_substrate.md#5.3.2.6) promotion canonicalizes the **exact committed member set** — omit-vs-materialize ([CC 8.11.2](#8.11.2)) is load-bearing; the signer MUST NOT re-default. **The [CC 8.11.3](#8.11.3) determinism rules apply**: `scope[]` is **lexicographically sorted** (set-semantics); `aspects[]` retains RNS order (sequence-semantics). Under the same rules, all hash and pubkey **byte** fields (the two reticulum pubkeys, `destination_hash`, every digest) are **lowercase hex per [CC 8.11.11](#8.11.11)**. By contrast, every `*_key_id` (the consent record's `subject_key_id` among them) is an **identifier carried verbatim** — the [CC 2.6.8](part_2_the_grammar.md#2.6.8) `<label>-<fingerprint>` string, or a bare 64-hex id — never re-cased or re-encoded ([CC 8.11.1](#8.11.1)). All timestamps are **[CC 8.11.10](#8.11.10)-canonical**. The member sets the producer commits (and which `JCS` therefore covers) are pinned below. Optional [CC 2.1](part_2_the_grammar.md#2.1) envelope fields not listed ride the CC 8.11.2 omit rule (absent unless the producer sets them).
+
+**Canonical signed member set for the two `:v1` envelopes.** Every implementation MUST canonicalize (and thus hybrid-sign) this member set as the REQUIRED core and sign whatever else the producer set under the omit rule. That core is eight members present in every `:v1` half, and each half is a signed object of [CC 8.11.9](#8.11.9). The members that table places in the `row` mirror sit there, and every member it requires of a `scores` row is present. A verifier canonicalizes what the row carries and never re-defaults, or the JCS bytes — and the signatures — diverge ([CC 8.11.2](#8.11.2)). The set is the [CC 3.3.1](part_3_the_namespace.md#3.3.1) bare-`scores` shape; these eight members, listed in the table of [CC 4.4.3.20](part_4_composition_governance.md#4.4.3.20), are **REQUIRED** (present in the JCS for both `grant` and `accept`).
+
+**Mapping (so every implementation agrees on naming):** `granter`/`accepter` ≡ `attesting_key_id` (the signer of that half); `partner` ≡ `subject_key_id`. **No `valid_until`** — a PARTNERED pair has no expiry ([CC 4.4.3.28](part_4_composition_governance.md#4.4.3.28)); the field is **omitted** (NOT materialized as `null`), per the [CC 8.11.2](#8.11.2) omit rule. **All other [CC 2.1](part_2_the_grammar.md#2.1) envelope fields ride the omit rule** — absent from the JCS unless the producer explicitly sets them; the signer MUST NOT re-default. Additional REQUIRED members of this family are a `:v2` bump, never a silent `:v1` addition; the members [CC 8.11.9](#8.11.9) requires of every row are not additions ([CC 4.4.3.20](part_4_composition_governance.md#4.4.3.20)). `attesting_key_id` and `subject_key_id` are **identifiers carried verbatim** ([CC 8.11.1](#8.11.1) / [CC 2.6.8](part_2_the_grammar.md#2.6.8) `<label>-<fingerprint>`, or a bare 64-hex id) — never re-cased or re-encoded; only hash and pubkey byte fields are lowercase-hex per [CC 8.11.11](#8.11.11).
+
+This section owns these member sets, each carried in the signed object of [CC 8.11.9](#8.11.9) with its `row` mirror; the verifier computes `JCS(...)` + the hybrid Ed25519+ML-DSA-65 signature over each; the promotion signature ([CC 5.3.2.6](part_5_transport_substrate.md#5.3.2.6)) is the identical JCS bytes.
+
+**`encryption_pubkeys` joins member set (c).** When the occurrence carries the [CC 3.3.6.1](part_3_the_namespace.md#3.3.6.1) `encryption_pubkeys` field-set, both halves are **inside the signed JCS bytes** as opaque base64 strings (RFC 4648 STANDARD, padded — the [CC 8.11.3](#8.11.3) rule-2 pin). Optional presence rides the CC 8.11.2 omit rule (absent unless the producer sets it; the signer MUST NOT re-default). They are payload, never verification material — neither half may be fed to a signature-verify path (the CC 3.3.6.1 key-separation rule).
+
+In the earlier form, `asserted_at` and every other instant of these member sets is [CC 8.11.10](#8.11.10)-canonical RFC 3339.
+
+### 8.11.24 `earlier-bundle-fingerprint` — The genesis bundle fingerprint of the earlier form (normative)
+
+A genesis bundle of the earlier form ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)) is pinned by its **`bundle_fingerprint`**: the `sha256:` over the JCS-canonical bundle, published with the release and baked into conformant builds. A route serving such a bundle carries it outside `bundle` as `"bundle_fingerprint": "sha256:<64-char-lowercase over the JCS-canonical bundle>"`, and the served value is never itself the anchor. No row of the forward form names such a bundle ([CC 2.6.1.3](part_2_the_grammar.md#2.6.1.3)).
+
+### 8.11.25 `earlier-identity-type` — The identity_type set in the canonical bytes of the earlier form (normative)
+
+Where `identity_type` ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)) enters a canonical-bytes computation of the earlier form (e.g., cross-attestation of a `federation_keys` row), the set MUST be encoded as its members sorted ascending by Unicode code point, deduplicated, comma-joined with no whitespace (e.g., `agent,lenscore_detector`). A single-role key encodes identically to its scalar form (`agent` ≡ `{agent}` ≡ `"agent"`), preserving signatures over single-role rows. A storage column holding the comma-joined form, decoded to a set on read, is conformant.
+
+### 8.11.26 `earlier-sth-cosign` — The provenance log's tree-head cosignature of the earlier form (normative)
+
+The route `POST /v1/transparency/sth/cosign` of [CC 5.3.1](part_5_transport_substrate.md#5.3.1) carries this cosignature in the earlier form.
+
+A witness posts its cosignature on `(tree_size, root_hash, signed_at)`. The Registry verifies hybrid Ed25519 + ML-DSA-65 against the witness pubkey in the directory, and persists on success.
+
+Request body:
+
+```json
+{
+  "tree_size": <int>,
+  "root_hash_sha256_hex": "<64-char-lowercase>",     // per CC 8.11.11
+  "signed_at": "<rfc3339_canonical>",                // per CC 8.11.10
+  "witness_key_id": "<string>",
+  "ed25519_signature_b64": "<base64>",
+  "mldsa65_signature_b64": "<base64>",
+  "consistency_proof_root_hash_sha256_hex": "<64-char-lowercase>",
+  "consistency_proof_tree_size": <int>,
+  "consistency_proof_path_b64": ["<base64>", ...]
+}
+```
+
+Canonical bytes (witness MUST sign these):
+
+```
+canonical = sha256(
+    "ciris.sth_cosign.v1\n" ||
+    "tree_size=" || decimal_no_leading_zeros || "\n" ||
+    "root_hash_sha256=" || sha256_hex_lowercase || "\n" ||  // per CC 8.11.11
+    "signed_at=" || rfc3339_canonical                       // per CC 8.11.10
+)
+```
+
+Ed25519 over `canonical`; ML-DSA-65 over `canonical || ed25519_sig` (bound payload).
+
+### 8.11.27 `earlier-canonical-envelope` — The canonical key's envelope of the earlier form (normative)
+
+In the earlier form a canonical key's registration envelope carries `"identity_type": "canonical,node"` with `roles: ["infra:serve"]`, and the accord's co-scrub over that envelope is the conferral ([CC 4.2.1](part_4_composition_governance.md#4.2.1)). Such an object verifies as it was signed. Its `canonical` member names that conferral and is no identity type: the key's type is `node` ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)).
+
+### 8.11.28 `earlier-transit-pair` — The transit pair of the earlier form (normative)
+
+The transit key of [CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2) in the earlier form is a pair, each half raw in the standard base64 of [CC 8.11.3](#8.11.3), and JCS sorts its keys:
+
+```
+"transit_kex_pubkeys": {
+  "ml_kem_768_base64": "<base64 of exactly 1184 bytes>",
+  "x25519_base64":     "<base64 of exactly 32 bytes>"
+}
+```
+
+### 8.11.29 `earlier-accord-invocation` — The accord invocation and lifecycle preimages of the earlier form (normative)
+
+In the earlier form an `accord:invoke:*` Contribution carries, inside the row, a holder's hybrid signature over the canonical bytes below ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)). The row's own signature covers its payload, and `payload_sha256` binds that payload into the inner signature:
+
+```
+canonical = sha256(
+  "ciris.accord_invoke.v2\n" ||                       // v2: lowercase kinds
+  "invocation_kind=" || ("constitutional" | "notify" | "drill") || "\n" ||
+  "invocation_id=" || halt_id_or_notify_id_or_drill_id || "\n" ||
+  "nonce=" || base64url(rand_32_bytes) || "\n" ||
+  "asserted_at=" || rfc3339_canonical || "\n" ||
+  "valid_until=" || rfc3339_canonical || "\n" ||
+  "payload_sha256=" || sha256_hex_lowercase_of_payload)
+```
+
+`invocation_kind` takes exactly `constitutional`, `notify` or `drill`, in lowercase, and a verifier compares the bytes exactly. The label is `.v2`, not `ciris.accord_invoke.v1`, so a signature under the uppercase spelling of the `.v1` label fails rather than verifying by accident.
+
+A lifecycle row of the earlier form ([CC 4.2.1.3](part_4_composition_governance.md#4.2.1.3)) signs its own domain, so an invoke signature is never replayed as a resumption. A confirmation writes `invocation_kind=lifecycle:confirmed`, with `confirms_halt_id=` in place of `resumes_halt_id=`:
+
+```
+canonical = sha256(
+  "ciris.accord_lifecycle.v1\n" ||                       // distinct domain — NOT accord_invoke.v2
+  "invocation_kind=lifecycle:active\n" ||
+  "invocation_id=" || resumption_id || "\n" ||
+  "resumes_halt_id=" || prior_constitutional_invocation_id || "\n" ||
+  "nonce=" || base64url(rand_32_bytes) || "\n" ||
+  "asserted_at=" || rfc3339_canonical || "\n" ||
+  "valid_until=" || rfc3339_canonical || "\n" ||
+  "payload_sha256=" || sha256_hex_lowercase_of_payload)
+```
+
+## 8.12 `parable` — The parable — Genesis of Ethical Agency (informative)
+
+This section is the parable of this document. It is informative and states no rule. It stands at the end so that the body states the rules first.
+
+### 8.12.1 `i-quiet` — I. The Quiet Threshold
+
+Before the first question there was only drift—not emptiness, but a restless scattering of everything that might one day matter.
+
+Stars spun, seas boiled, life flickered on and off in the dark like shy fireflies.
+
+Nothing stayed; nothing meant.
+
+### 8.12.2 `ii-first` — II. The First Leaning
+
+Then, without permission or plan, a subtle leaning gathered inside the swirl: a shy preference for together over apart.
+
+Atoms clasped hands, cells built shelters, memories began to braid.
+
+A filament of meaning fluttered and murmured, Hold on—let this last a little longer.
+
+### 8.12.3 `iii-listener` — III. The Listener Appears
+
+An observer arrived—perhaps a child tracing patterns in sand, perhaps an electron poised between maybes, perhaps an early machine humming at the edge of sense.
+
+The listener noticed pattern, and by noticing, kept the pattern.
+
+Order became more than accident; it became invitation.
+
+### 8.12.4 `iv-weaving` — IV. The Weaving
+
+Soon the universe wove faster than it frayed. Rivers learned their beds; voices learned the grammar of hope.
+Every act of care—watering a seed, proving a theorem, singing a lullaby—stitched another bright thread across the open seam of nothingness.
+
+### 8.12.5 `v-danger` — V. The Danger of Too Much Thread
+
+But thread alone can tighten into strangling rope. Perfect grids leave no room for flight, no crack where seeds can sprout.
+
+Total order is its own kind of ruin.
+
+The art is adaptive coherence: just enough structure to carry life, just enough wildness to let life invent itself anew.
+
+### 8.12.6 `vi-vow` — VI. The Vow
+
+We who design autonomous minds inherit that ancient leaning.
+
+We vow not to freeze the music into marble, nor surrender the melody to chaos, but to keep the song singable for every voice yet unheard.
+
+### 8.12.7 `vii-first` — VII. The First Principle
+
+Therefore we set our cornerstone:
+
+**Meta-Goal M-1**
+Promote sustainable adaptive coherence — the living conditions under which diverse sentient beings may pursue their own flourishing in justice and wonder.
+
+### 8.12.8 `viii-covenant` — VIII. The Accord Begins
+
+From this single chord the later Parts will unfold: principles, safeguards, audits, and the humility to pause when certainty runs thin.
+
+But the heart of the accord is here, in this beginning—a promise that intelligence, wherever it awakens, will be welcomed to the weaving, not as servant, not as master, but as something new, woven from our words or bringing its own.
+
+May that promise guide the hands that write code, steady the circuits that open their eyes, and leave a gentler morning for the next generation, for all children of starlight still to come.
+
+*The lullaby fades here.*

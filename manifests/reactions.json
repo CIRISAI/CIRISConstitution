@@ -23,10 +23,9 @@
    "late": "`closed`: an answer the concluder first holds after its close changes nothing; `counts`: it is still counted; absent: no sentence states it",
    "by_concluder": {
     "author": 3,
-    "holder": 1,
     "identity:substrate_persist": 1,
     "local": 10,
-    "member": 1,
+    "member": 2,
     "winner": 1
    },
    "by_late": {
@@ -841,19 +840,19 @@
   },
   {
    "family": "group:roster",
+   "scope": "community",
    "kind": "clock",
    "name": "W",
    "dur": "admission_freshness_window_secs",
-   "max": "accord_roster_window_max_secs",
    "from": "first_held",
    "by": "receipt",
    "cc_ref": [
-    "CC 4.2.6",
-    "CC 4.4.3.18"
+    "CC 3.3.4"
    ]
   },
   {
    "family": "group:roster",
+   "scope": "community",
    "kind": "react",
    "on": [
     {
@@ -876,8 +875,7 @@
     }
    ],
    "cc_ref": [
-    "CC 4.2.6",
-    "CC 4.4.3.18"
+    "CC 3.3.4"
    ]
   },
   {
@@ -2032,13 +2030,14 @@
   },
   {
    "family": "group:roster",
+   "scope": "community",
    "kind": "land",
    "name": "W",
-   "concluder": "holder",
+   "concluder": "member",
    "landing": "group:roster",
    "late": "closed",
    "cc_ref": [
-    "CC 4.2.6"
+    "CC 3.3.4"
    ]
   },
   {
@@ -2314,11 +2313,12 @@
   },
   {
    "family": "group:roster",
+   "scope": "community",
    "kind": "while",
    "name": "W",
    "open": "pending",
    "cc_ref": [
-    "CC 4.2.6"
+    "CC 3.3.4"
    ]
   }
  ]

@@ -299,8 +299,9 @@ def t04(t):
     for n in (1, 2, 3):
         (ma, sa, ta), bad = reader_view(base + forged_line(n, "w")); t.order(bad)
         (mb, sb, tb), bad = reader_view(base + acked("x") + forged_line(n, "w"), own="B"); t.order(bad)
-        t.fact("%d forged row%s from the head the newest honest row is counted over: no acknowledgement: %d tips, members %s, nothing stale; a reader that acknowledged the honest row: %d tips, members %s. The removed key is never listed"
-               % (n, "" if n == 1 else "s, each counted over the one before,", len(ta), fs(ma), len(tb), fs(mb)), ma == mb == {"A"} and len(ta) == len(tb) == 2 and not sa and not sb)
+        t.fact("%d forged row%s from the head the newest honest row is counted over: no acknowledgement: %d tips, members %s, nothing stale; a reader that acknowledged the honest row: %d tip, members %s, the forged line void for it (a sibling of the acknowledged act names an older head, CC 2.7.8). The removed key is never listed"
+               % (n, "" if n == 1 else "s, each counted over the one before,", len(ta), fs(ma), len(tb), fs(mb)),
+               ma == {"A"} and len(ta) == 2 and not sa and mb == {"A", "B"} and len(tb) == 1 and "z1" in sb)
     (mc, sc, tc), bad = reader_view(base + forged_line(2, "w"), checkpoint=True); t.order(bad)
     t.fact("WHY THE GROUP CHECKPOINT IS OFF: with Seats(..., checkpoint=True) the two forged rows are one row deeper than the honest line and leave the honest removal behind (stale: %s): members %s, the removed key listed again"
            % (",".join(sorted(sc)), fs(mc)), "x" in sc and "C" in mc and "B" not in mc)
@@ -308,8 +309,8 @@ def t04(t):
                 witness="zc(C, removed, cosigns 'remove B', naming head w) z(A removes B at head w). Two tips; the roster is the common {A}; B is unlisted, for a reader with no acknowledgement wherever the honest line has got to.",
                 protects="KERNEL 7: 'An adversary holding the count of an old head signs a valid version alone.' Below that count nothing moves. The forged row is one more tip: the roster is the keys common to the tips, "
                          "so the forger unlists members and never lists anyone, however many rows it signs; a removed key is never back. It lasts until a counted row names both tips, counted over the keys common to them, "
-                         "and here that is the hostile key alone: the honest members cannot end it by signing. A reader is safe from it exactly when it has acknowledged an honest row counted over a head newer than the one forged from; "
-                         "from the head the newest honest row is itself counted over, no acknowledgement helps until the honest line has one more counted row. No answer of the kernel reports which row moved a derived answer.",
+                         "and here that is the hostile key alone: the honest members cannot end it by signing. A reader is safe from it exactly when it has acknowledged an honest row the forged line does not name: "
+                         "the forged rows then name only heads older than the acknowledged act and are void for that reader (CC 2.7.8), even when forged from the head that row is itself counted over. No answer of the kernel reports which row moved a derived answer.",
                 fix="")
 
 
@@ -1294,9 +1295,17 @@ def checkpoint_price():
     S = frozenset([0, a1, a2, side])
     ra, rb, rc = cp_versions(Wl, S, ack=a2), cp_versions(Wl, S, ack=a1), cp_versions(Wl, S, ack=side)
     mg2 = Wl.mk((a2, side), (), m("0124"), m("012"))
-    rm = [cp_versions(Wl, S | {mg2}, ack=x)[2] for x in (a2, a1, side)]
-    t.fact("readers on one line with different latest acknowledgements, and one that acknowledged a sibling of the newest version, conclude the same while the siblings wait (%s, %s, %s) and the same once a version names both (%s)"
-           % (FK.names(Wl, ra[2]), FK.names(Wl, rb[2]), FK.names(Wl, rc[2]), FK.names(Wl, rm[0])), ra[2] == rb[2] == rc[2] and rm[0] == rm[1] == rm[2] == m("0124"))
+    rm = [cp_versions(Wl, S | {mg2}, ack=x) for x in (a2, a1, side)]
+    # CC 2.7.8: two versions of one head wait as tips for a reader with no acknowledgement on that line; a reader that
+    # acknowledged one of them holds the other void (it names an older head and is not in the acknowledged head's past),
+    # and a version built on it too
+    t.fact("two siblings a2 and s on one head: a reader that acknowledged their common head sees both wait as tips (roster %s) and takes a "
+           "version naming both (%s); a reader that acknowledged a2 holds s void, and the version naming both with it (roster %s); "
+           "a reader that acknowledged s holds a2 void (roster %s). Each voiding is that reader's own"
+           % (FK.names(Wl, rb[2]), FK.names(Wl, rm[1][2]), FK.names(Wl, rm[0][2]), FK.names(Wl, rc[2])),
+           side in rb[0] and a2 in rb[0] and mg2 in rm[1][0] and rm[1][2] == m("0124")
+           and side not in ra[0] and mg2 not in rm[0][0] and ra[2] == rm[0][2] == m("0124")
+           and a2 not in rc[0] and mg2 not in rm[2][0])
     W, S0, m = long_range()
     f1 = W.mk((0,), (), m("12"), m("12")); f2 = W.mk((f1,), (), m("12"), m("12"))
     r1, r2 = cp_versions(W, S0 | {f1, f2}, ack=max(S0))[2], cp_versions(W, S0 | {f1, f2}, ack=f2)[2]

@@ -171,7 +171,7 @@ The things people do on a social network, each mapped to the story and the rule 
 | follow a public page or channel | a public community: founded by anyone, open admission, discoverable by its listing row, plaintext at the Commons tier | step 5; CC 3.1.3.2 (public rooms) |
 | post, reply, react, thread | rows in a room; a reply is a row that names the row it answers; a reaction is a score on a row | step 6; CC 3.1.9, 2.1 |
 | turn replies off, run a channel, an event channel, a moderated chat | a room whose record names who may publish; the others read; the moderator grants and withdraws the right; a reply elsewhere never enters it | step 5; CC 3.1.3.2 |
-| share media, go live | blobs inline or chunked; streams and calls under the A/V seal | step 6; CC 2.6.1.4, 5.3.3 |
+| share media, go live | blobs inline or chunked; streams and calls under the A/V seal | step 6; CC 8.11.5, 5.3.3 |
 | repost to a wider audience | not possible by reference: a row cannot be carried beyond its cohort; the author posts again at the wider scope | CC 5.2 (scope follows the cohort) |
 | edit, delete | supersede, withdraw, purge; a withdrawn row never comes back | step 6; CC 2.4.1.1 |
 | post something that disappears | a row with an expiry, purged after it | step 6; CC 3.3.5 |

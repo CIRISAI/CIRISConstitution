@@ -5,7 +5,7 @@ category: info
 submissiontype: IETF
 docname: draft-moore-scitt-ciris-ceg-latest
 number:
-date:
+date: 2026-11-14
 v: 3
 area: "Security"
 workgroup: "Supply Chain Integrity, Transparency, and Trust"

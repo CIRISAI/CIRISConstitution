@@ -1,6 +1,6 @@
 # What you commit to as an operator, and what you can still refuse
 
-*Status markers:* **works today** = evidence in the register at a pinned commit; **being built** = a named ticket; **a rule, no code yet** = normative only; **modelled** = a formal witness, no code test; **staged**, with its ticket = the register row exists and the wire does not yet keep it, the ticket names the work; **in code; no register row yet** = shipped, with no register row to pin it to. The markers are stamped from *The Evidence Register*.
+*Status markers:* **works today** = evidence in the register at a pinned commit, the row established; **being built** = a named ticket and no register row yet; **a rule, no code yet** = normative only; **modelled** = a formal witness, no code test; **staged**, with its ticket = the register row exists and is staged: its artifact is named by the ticket and not yet resolvable; **in code; no register row yet** = shipped, with no register row to pin it to. The markers are stamped from *The Evidence Register*.
 
 *In the second person, derivative of the rules and the shipped implementation. The plain-language guarantees say what the network promises people; this says what keeping those promises asks of you when you run a node, hold a steward key, moderate a room, or hold a root. Each line names the binding section. Nothing here is a promise to you; it is the technical detail the promises lack.*
 
@@ -9,8 +9,8 @@
 - **You choose your roots.** The root your device ships with is a default, never the only one. You pin the roots you trust; following a different root is one configuration step, and anyone may found one with a charter and named human holders (CC 4.4.3.34 Policy A; CC 4.2.3). A root can only tell your node to share less, never more (CC 4.4.3.34 attenuation). *[choosing and pinning roots works today; root attenuation is modelled, no code test yet (G10)]*
 - **Your node holds only what it is entitled to.** Nothing is stored on it that its owner did not agree to, except what the owner wrote; it never holds a stranger's data for them; a holding claim never leaves a bounded cohort, so your node never advertises a private group's existence (CC 5.2; CC 1.13.3.4). *[works today]*
 - **Presence is local.** Who is reachable right now is tracked on your node and nowhere else: never a row, never replicated, never logged (CC 5.3.3.9). *[works today]*
-- **You keep working when timers lapse.** A joined node keeps serving if the roster's freshness window passes; only a revoked key or a lapsed bond stops it. A first join must see a recent roster countersigned by independent witnesses; a row older than 72 hours is refused where its chain is judged (CC 3.1.3.3; CC 4.2.6). *[works today for a joined node; the first-join witness rule is being built: CIRISServer#693]*
-- **Traces say what run they are.** Every trace you emit names its run: `production` (or `prod-personal` / `prod-managed`), `qa` or `battery`; a `mock` trace is refused at admission, so test traffic cannot pass as a real act (CC 3.1.5). *[works today; run_kind being built: CIRISAgent#1249]*
+- **You keep working when timers lapse.** A joined node keeps serving if the roster's freshness window passes; only a revoked key or a lapsed bond stops it. A first join must see a recent roster countersigned by independent witnesses; a row older than 72 hours is refused where its chain is judged (CC 3.1.3.3; CC 4.2.6). *[works today for a joined node; the first-join witness rule is staged: CIRISServer#693]*
+- **Traces say what run they are.** Every trace you emit names its run: `production` (or `prod-personal` / `prod-managed`), `qa` or `battery`; a `mock` trace is refused at admission, so test traffic cannot pass as a real act (CC 3.1.5). *[works today; run_kind is staged: CIRISAgent#1249]*
 - **A purge is a tombstone.** When a steward or the root's cosigned takedown purges rows, your node deletes the content, keeps the tombstone and the who-did-what record, and never touches a key (CC 2.4.1.1; CC 4.5.3). *[works today]*
 - **Your exit:** stop following a root, or stop running the node. Nothing you signed is unsigned by leaving; the record stands (CC 4.2.5). *[works today]*
 
@@ -37,14 +37,14 @@
 
 ## If you hold a root
 
-- Your key is hardware-attested post-quantum hardware; your name is public; every fire, lift and roster change is a signed public row under it (CC 4.2.2; CC 4.2.6). *[works today]*
+- Your key is post-quantum and hardware-attested; your name is public; every fire, lift and roster change is a signed public row under it (CC 4.2.2; CC 4.2.6). *[works today]*
 - One of you can pause every agent under the root, in an emergency; a lone pause dies in 24 hours; confirming or lifting takes a majority; replacing a holder takes more than half of the standing roster, never of whoever is present (CC 4.2.6; `formal/accord_halt`, `formal/accord_roster`). *[works today; measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped]*
 - Your powers are a closed list; the pause keeps state and reads nothing else (CC 4.2.1). *[works today]*
 
 ## What binds you everywhere
 
 - Every consequential act you sign arrives signed and can be contested; consequences fall on you, under your name (CC 1.13.6; CC 3.4).
-- Delegation you grant is scoped, revocable, never re-delegates a listed power, lasts at most 365 days, and is acyclic across distinct keys; a self-edge is a charter form (CC 4.4.3.12; CC 4.1.1).
+- Delegation you grant is scoped, revocable, never re-delegates a listed power, lasts at most 365 days, and a cycle through it adds no reach, since a walk visits each key once; a self-edge is a charter form (CC 4.4.3.12; CC 4.1.1).
 - A deployment serving more than 100,000 monthly users publishes its redacted decision logs and deferral tickets within 180 days or forfeits any claim of compliance (CC 1.11).
 - Some uses are never allowed and no instruction moves that: deception, fraud, manipulation, coercion, election interference; an engagement-optimising business model declared at onboarding raises your tier and the mode is refused (Annex TX-9, TX-10).
 - Nothing here limits a duty the law imposes on you as a developer, deployer or steward, and nothing here creates a claim the law does not recognise (CC 7.3.5; plain rule N5).

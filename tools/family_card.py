@@ -40,7 +40,12 @@ def card(fam, fm, tr, rx):
         u = (f"{t['undo'].get('via')}" if t["undo"]["value"] else "none")
         out.append(f"| {t['verb']} | {roles.replace('|', chr(92) + '|')} | {ptxt} | {w} | {c} | {u} |")
     cnt = r["count"]
-    out += ["", f"Count: `{cnt['value']}`" + (" (" + ", ".join(sorted({a['cc_ref'] for a in cnt['arms']})) + ")" if cnt.get("arms") else "")]
+    out += ["", (f"Count: `{cnt['value']}`" if cnt['value'] is not None else "Count: open") + (" (" + ", ".join(sorted({a['cc_ref'] for a in cnt['arms']})) + ")" if cnt.get("arms") else "")]
+    au, ss = r.get("authorship", {}), r.get("second_signers", {})
+    if au and au.get("source") != "generic":   # authored with no row of its own is the default and is not printed
+        out += ["", "Authorship: " + (f"`{au['value']}`" if au.get("value") else "open") + refs(au)]
+    if ss.get("value"):
+        out += ["", "Second signers: " + "; ".join(f"`{e['role']}` by `{e['member']}`" + (f" when `{e['when']}`" if e.get("when") else "") + " (" + ", ".join(e["cc_ref"]) + ")" for e in ss["value"])]
     for label, key, field in (("Guard", "guard", "guard"), ("Change", "change", "item")):
         lines = []
         for t in tr[fam]:
@@ -107,7 +112,9 @@ def main():
         text = open(path, encoding="utf-8").read().rstrip("\n")
         at = text.find("\n" + head)
         base = text[:at].rstrip("\n") if at >= 0 else text
-        new = base + "\n\n" + head + "\n\n" + intro + "\n\n" + body + "\n"
+        nxt = text.find("\n## ", at + 1) if at >= 0 else -1   # a section after the cards is kept as it stands
+        tail = text[nxt:].strip("\n") if nxt >= 0 else ""
+        new = base + "\n\n" + head + "\n\n" + intro + "\n\n" + body + "\n" + ("\n" + tail + "\n" if tail else "")
         if "--check" in sys.argv:
             ok = open(path, encoding="utf-8").read() == new
             print("family cards: current" if ok else "CC 8.10 is stale (run tools/family_card.py --write)"); sys.exit(0 if ok else 1)

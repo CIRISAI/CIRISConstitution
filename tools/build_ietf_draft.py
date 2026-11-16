@@ -19,8 +19,8 @@ Run:  python3 tools/build_ietf_draft.py [--rev 00] [--idnits]
 --check parses both CDDL files and validates the admit vectors against each, then compares what the
 build would write with the committed files: ietf/signed_object.cddl always, and the .xml and .txt of
 the draft when kramdown-rfc and xml2rfc are installed (a line says so when they are not). A
-difference exits 1: run the build and commit ietf/. The draft's date is the day of the build
-(the source leaves `date:` empty), so the draft compares equal only on the day it was built.
+difference exits 1: run the build and commit ietf/. The draft's date is the source's `date:`
+line, so a build on any day compares equal; set it when the draft is revised.
 Each run also alters the generated CDDL's persist pin and requires the comparison to catch it.
 Tools: kramdown-rfc and cddl (gem install --user-install kramdown-rfc cddl), xml2rfc (pip).
 """

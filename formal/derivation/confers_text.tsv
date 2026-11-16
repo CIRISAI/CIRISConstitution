@@ -21,7 +21,7 @@ binds_segment	consent:deletion_sla:{days} {days}	none	CC 3.3.1	Numeric value car
 binds_segment	class=literal	none	CC 3.1.7	a stem this Part fixes
 binds_segment	class=vocab	none	CC 3.1.7	an open or closed vocabulary this Part defines
 binds_segment	class=external	none	CC 3.1.7	a token whose spelling an outside standard fixes
-binds_segment	class=wildcard	none	CC 3.1.7	It matches one *or more* remaining segments, never exactly one.
+binds_segment	class=wildcard	none	CC 3.1.7	It matches one *or more* remaining segments, not only one.
 derived	census:composite:{class}	census:partial:{class} (composite = partial_a + partial_b)	CC 6.1.9	`composite = partial_a + partial_b` in the field.
 derived	census:expected_active	census:member:partial (the count of owners whose recent bit is set)	CC 6.1.9	recomputed by every member from the two partials
 derived	ballot:tally:{poll_id}	census:member:partial (the two tally members' fold of the poll cells)	CC 6.1.9	the result is `ballot:tally:{poll_id}:v1`, recomputed by every member

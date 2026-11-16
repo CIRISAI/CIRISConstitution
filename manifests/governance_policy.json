@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "9b68ee39a48f2067c026f050bd37152a9933d344943fdf6df81a629153a4192c",
+  "policy_sha256": "32cfcb6c9503fecf6f1827075342bc438ebe721360253f936c680f4d1944247a",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -682,7 +682,7 @@
    "standing_set": "the accord holders",
    "base": "standing",
    "enact": "1/N fires",
-   "cancel": "1/2 confirms",
+   "cancel": "more than 1/2 confirms",
    "floor": null,
    "enact_rule": {
     "kind": "one_of_n"

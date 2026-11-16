@@ -114,10 +114,6 @@ accord_majority	lands only when the protocol's count is met	holds
 accord_majority	plant: mutation one_voice	caught
 deletion_sla	a breach whose past or recount holds the producer's deletion does not stand	holds
 deletion_sla	plant: mutation void	caught
-accord_roster_change	a change carries only on a strict majority of the standing roster; a presumed-dead holder's yes is counted	holds
-accord_roster_change	while its window is open the opening row is pending at the node holding it	holds
-accord_roster_change	plant: mutation one_voice	caught
-accord_roster_change	plant: mutation force_flipped	caught
 harm_report	a moderator's keep is not overridden	holds
 harm_report	while its window is open the opening row is pending at the node holding it	holds
 harm_report	plant: mutation void	caught
@@ -188,7 +184,6 @@ moderator_election	one answer in every arrival order	same
 cosigned_act	one answer in every arrival order	same
 accord_majority	one answer in every arrival order	same
 deletion_sla	one answer in every arrival order	same
-accord_roster_change	one answer in every arrival order	same
 harm_report	one answer in every arrival order	same
 takedown_withhold	one answer in every arrival order	same
 retirement_objection	one answer in every arrival order	same
@@ -242,7 +237,6 @@ moderation_action	concluder, landing row and late answer read from reactions.jso
 accord_halt@node+late_closed	concluder, landing row and late answer read from reactions.json	target; none: each node reads its own close; late closed
 moderator_election	concluder, landing row and late answer read from reactions.json	winner; ballot:moderator_acceptance; late counts
 deletion_sla	concluder, landing row and late answer read from reactions.json	substrate; hard_case:deletion_window_breach; late not stated
-accord_roster_change	concluder, landing row and late answer read from reactions.json	holder; group:roster; late closed
 harm_report	concluder, landing row and late answer read from reactions.json	member; none: each node reads its own close; late not stated
 takedown_withhold	concluder, landing row and late answer read from reactions.json	target; none: each node reads its own close; late counts
 retirement_objection	concluder, landing row and late answer read from reactions.json	decider; retirement:{state}; late not stated
@@ -254,13 +248,12 @@ moderation_action	while its window is open, read from reactions.json	pending
 accord_halt@holder	while its window is open, read from reactions.json	in_force
 accord_halt@node	while its window is open, read from reactions.json	in_force
 accord_halt@node+late_closed	while its window is open, read from reactions.json	in_force
-accord_roster_change	while its window is open, read from reactions.json	pending
 harm_report	while its window is open, read from reactions.json	pending
 takedown_withhold	while its window is open, read from reactions.json	in_force
 invitation	while its window is open, read from reactions.json	pending
 accord_halt@node+late_closed	plant: the fuse's while entry rewritten to pending	caught
 door_text.tsv	quotes standing in their sections	21 of 21
 door_text.tsv	plant: a changed quote	caught
-doors.tsv	parameters no table states	16
+doors.tsv	parameters no table states	15
 accord_halt@node+late_closed	plant: the fuse's land entry rewritten to a holder	caught
 doors.tsv	written from the doors as run	current

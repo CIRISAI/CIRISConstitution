@@ -712,7 +712,8 @@ def label_words(grammar, text):
     return sorted(set(m.group(0) for m in re.finditer(rx, text))) if rx else []
 
 
-COUNT_KEYS = {"leaf": "self.leafname", "verb": "self.verb", "identity": "typeof(self.attested)", "group": "self.group", "seats": "self.seats"}
+COUNT_KEYS = {"leaf": "self.leafname", "verb": "self.verb", "identity": "typeof(self.attested)", "group": "self.group", "seats": "self.seats",
+              "act": "self.act"}
 
 
 def door_kx(d):

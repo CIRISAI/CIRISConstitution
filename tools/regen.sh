@@ -1,6 +1,6 @@
 #!/bin/bash
 # Regenerate what a text edit moves (the namespace registry and its match vectors, the family
-# model, the transitions, the mesh story), print regen_fail=N, then list every path at which
+# model and its selector vectors, the transitions, the mesh story), print regen_fail=N, then list every path at which
 # manifests/namespace_registry.json differs from the copy saved before the edit in
 # $GATES_TMP/registry.before.json (default /tmp/cc-gates). Exits N.
 #   cp manifests/namespace_registry.json "${GATES_TMP:-/tmp/cc-gates}/registry.before.json"   # before the edit
@@ -8,7 +8,7 @@
 cd "$(git rev-parse --show-toplevel)"
 S="${GATES_TMP:-/tmp/cc-gates}"; mkdir -p "$S"
 f=0
-for c in "python3 tools/build_cc_namespace.py" "python3 tools/cc_namespace_match.py --write-vectors" "python3 tools/build_family_model.py" "python3 tools/build_transitions.py" "python3 -I tools/mesh_story.py"; do $c > $S/regen.out 2>&1 || { f=1; echo "XX $c"; tail -5 $S/regen.out; }; done
+for c in "python3 tools/build_cc_namespace.py" "python3 tools/cc_namespace_match.py --write-vectors" "python3 tools/build_family_model.py" "python3 tools/cc_family_select.py --write-vectors" "python3 tools/build_transitions.py" "python3 -I tools/mesh_story.py"; do $c > $S/regen.out 2>&1 || { f=1; echo "XX $c"; tail -5 $S/regen.out; }; done
 echo regen_fail=$f
 python3 - <<'P'
 import json

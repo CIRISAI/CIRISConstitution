@@ -6,8 +6,9 @@ How to consume: each entry is one test: build `case`, ask `ask`, assert `expect_
 
 To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.
 
-1 entries: 0 runnable, 0 disputed, 1 stated, 0 wording only.
+2 entries: 0 runnable, 0 disputed, 2 stated, 0 wording only.
 
 | id | family | where | the sentence | the case | assert |
 |---|---|---|---|---|---|
-| edge/transparency_log:cosigned:{tree_size}/guard[accountable stream] | transparency_log:cosigned:{tree_size} | guard[accountable stream] | CC 5.3.3.11: For accountable streams, "published" means **witness-cosigned** | (stated) the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it | - |
+| edge/transparency_log:cosigned:{tree_size}/guard[accountable stream] | transparency_log:cosigned:{tree_size} | guard[accountable stream] | CC 5.3.3.11: For accountable streams, "published" means **witness-cosigned** | (stated) the guard reads the binding's signed `profile` (CC 5.3.3.5); the binding the edge ships carries no such member, so no shipped rule reads one | - |
+| edge/(link handshake)/transit handshake | (link handshake) | transit handshake | CC 5.3.3.10: both statics are used and both ends are authenticated by the handshake itself | (stated) the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake | - |

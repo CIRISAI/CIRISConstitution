@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "b6af2d7b7c3731af4f75524c8624a0e9fd9329966ac4ce9214eb6b1769c30094",
-   "invariants_sha256": "e0261d6e7c50af300bca07bc26591efa27bed4bc09fe680cc3e81dd37d41c518",
-   "vocabulary_sha256": "a976e0619c4d9b1705ba721924bc42391796ffec10b6e84127a46c41fc045556",
+   "state_table_sha256": "7ae4a6e2be0562e20d292da802478b3a04dcc62b477ddc33477f7625ae50abe4",
+   "invariants_sha256": "36226602dc89d20b030d99ada25a07a5d8fb912cf39aa1aa5e26bd906fac601c",
+   "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "d3a7016cac4da7cf42d16bea25cd90c55e18a26ab83412228b7f6d393d419839",
+   "claims_sha256": "d7b77d478aab2ad4fae9a650b0addef2259fe2756c7c555a2d15abb3ee93b5a2",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -21,7 +21,7 @@
     "coherence-ratchet": "0c4edfb",
     "RATCHET": "c89356bd",
     "CIRISAgent": "f0a07995",
-    "CIRISVerify": "7146fa4",
+    "CIRISVerify": "6a09755",
     "CIRISPersist": "f74d1b2a",
     "CIRISEdge": "3a6011b9"
    }
@@ -29,17 +29,17 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 221,
-   "claims": 603,
+   "invariants": 232,
+   "claims": 606,
    "entries": 20,
-   "refusal_tokens": 98
+   "refusal_tokens": 107
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "adc1c067a8ead271975e353923efdd2f595c53cf75dfac47ae31f7f413c8eb4b"
+  "chain_sha256": "5a1313ea8d67696352799342f17b1b35181cf2e2f2720e4996ce3f81c1285cce"
  },
  "chain": [
   {
@@ -290,6 +290,78 @@
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.ownseat",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecoveryOwnSeat",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; otherseat twin fails"
+    },
+    {
+     "inv_id": "AB.spent",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentNeverReturns",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentreturns twin fails"
+    },
+    {
+     "inv_id": "AB.reckey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecKeyNeverSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; reckeyseat twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
+    },
+    {
+     "inv_id": "AB.rotate",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RotationConsented",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; rotatenovoice twin fails"
+    },
+    {
+     "inv_id": "AB.retired",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_NoRetiredSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; seatretired twin fails"
     }
    ],
    "claims": [
@@ -336,6 +408,18 @@
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-livequorum",
+     "cc_ref": "4.2.6",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISVerify#302"
       }
      ]
     },
@@ -1064,6 +1148,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -1135,6 +1232,78 @@
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.ownseat",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecoveryOwnSeat",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; otherseat twin fails"
+    },
+    {
+     "inv_id": "AB.spent",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentNeverReturns",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentreturns twin fails"
+    },
+    {
+     "inv_id": "AB.reckey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecKeyNeverSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; reckeyseat twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
+    },
+    {
+     "inv_id": "AB.rotate",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RotationConsented",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; rotatenovoice twin fails"
+    },
+    {
+     "inv_id": "AB.retired",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_NoRetiredSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; seatretired twin fails"
     }
    ],
    "claims": [
@@ -1181,6 +1350,18 @@
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-livequorum",
+     "cc_ref": "4.2.6",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISVerify#302"
       }
      ]
     },
@@ -1909,6 +2090,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -3367,6 +3561,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -4175,6 +4382,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -4463,6 +4683,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "AW.holder",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HaltFromHolder",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; stranger twin fails"
+    },
+    {
      "inv_id": "AH.nowin",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -4577,6 +4806,24 @@
      "symbol": "Act_HaltLeavesTheMembersTheirVote",
      "kind": "safety-temporal",
      "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AW.names",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LifecycleNamesHalt",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; anytarget twin fails"
+    },
+    {
+     "inv_id": "AW.fuse",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LoneBounded",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
     }
    ],
@@ -4981,46 +5228,6 @@
      ]
     },
     {
-     "claim_id": "CLM-accord-invoke-lowercase",
-     "cc_ref": "4.2.1.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ACCORD_HEARTBEAT_DIMENSION"
-       ]
-      },
-      {
-       "kind": "staged",
-       "ticket": "CIRISVerify#297"
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-accord-invoke-cutover",
-     "cc_ref": "4.2.1.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISVerify#297"
-      },
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#691"
-      },
-      {
-       "kind": "staged",
-       "ticket": "CIRISAgent#1227"
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-two-path-model",
      "cc_ref": "4.2.1.1",
      "status": "established",
@@ -5233,6 +5440,33 @@
      "symbol": "Act_HaltLeavesTheMembersTheirVote",
      "kind": "safety-temporal",
      "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AW.holder",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HaltFromHolder",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; stranger twin fails"
+    },
+    {
+     "inv_id": "AW.names",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LifecycleNamesHalt",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; anytarget twin fails"
+    },
+    {
+     "inv_id": "AW.fuse",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LoneBounded",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
     }
    ],
@@ -5629,6 +5863,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "AW.holder",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HaltFromHolder",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; stranger twin fails"
+    },
+    {
      "inv_id": "AH.nowin",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -5752,6 +5995,24 @@
      "symbol": "Act_HaltLeavesTheMembersTheirVote",
      "kind": "safety-temporal",
      "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AW.names",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LifecycleNamesHalt",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; anytarget twin fails"
+    },
+    {
+     "inv_id": "AW.fuse",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_LoneBounded",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
     }
    ],
@@ -6040,46 +6301,6 @@
        "symbols": [
         "Invocation::canonical_bytes"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-accord-invoke-lowercase",
-     "cc_ref": "4.2.1.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ACCORD_HEARTBEAT_DIMENSION"
-       ]
-      },
-      {
-       "kind": "staged",
-       "ticket": "CIRISVerify#297"
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-accord-invoke-cutover",
-     "cc_ref": "4.2.1.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISVerify#297"
-      },
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#691"
-      },
-      {
-       "kind": "staged",
-       "ticket": "CIRISAgent#1227"
       }
      ]
     },
@@ -8236,6 +8457,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -10174,6 +10408,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -12898,6 +13145,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -14381,6 +14641,19 @@
      ]
     },
     {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-subject_kind",
      "cc_ref": "3.3.2",
      "status": "established",
@@ -14449,18 +14722,6 @@
        "symbols": [
         "trust_root_cosigners_over"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-purge-digest-preimage",
-     "cc_ref": "3.3.2",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#803"
       }
      ]
     }
@@ -14757,14 +15018,14 @@
   "file.large": {
    "plane": "content",
    "state_predicate": "blob.delivery=chunked",
-   "cc_ref": "2.6.1.4 5.3.3",
+   "cc_ref": "8.11.5 5.3.3",
    "added_in": 1,
    "states": [
     {
      "variable": "blob.delivery",
      "state": "chunked",
      "plane": "content",
-     "cc_ref": "2.6.1.4 5.3.3 5.3.3.11",
+     "cc_ref": "8.11.5 5.3.3 5.3.3.11",
      "enters_by": "above the cap: chunk plane, chunk-DAG, per-device delivery receipts",
      "signer": "producer",
      "model_ref": "mesh_life.MeshLife.tla:Write",
@@ -14775,7 +15036,7 @@
    "claims": [
     {
      "claim_id": "CLM-canonical",
-     "cc_ref": "2.6.1.4",
+     "cc_ref": "8.11.5",
      "status": "established",
      "join": "by_section",
      "evidence": [
@@ -14791,7 +15052,7 @@
     },
     {
      "claim_id": "CLM-envelope-size",
-     "cc_ref": "2.6.1.4",
+     "cc_ref": "8.11.5",
      "status": "established",
      "join": "by_section",
      "evidence": [
@@ -17043,6 +17304,19 @@
      ]
     },
     {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-family-subject",
      "cc_ref": "3.3.4",
      "status": "established",
@@ -17654,6 +17928,19 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -18247,6 +18534,19 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
       }
      ]
     }
@@ -19323,6 +19623,19 @@
      ]
     },
     {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-registry-named",
      "cc_ref": "4.5.4",
      "status": "established",
@@ -19880,6 +20193,19 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
       }
      ]
     }
@@ -20868,6 +21194,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -21692,6 +22031,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -21786,7 +22138,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -21937,20 +22289,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -22239,7 +22596,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -22390,20 +22747,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -25017,6 +25379,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -25799,6 +26174,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -26585,6 +26973,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -26645,7 +27046,7 @@
     {
      "claim_id": "CLM-identity-set",
      "cc_ref": "3.4.7.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26717,7 +27118,7 @@
     {
      "claim_id": "CLM-identity-set",
      "cc_ref": "3.4.7.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26779,6 +27180,78 @@
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.ownseat",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecoveryOwnSeat",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; otherseat twin fails"
+    },
+    {
+     "inv_id": "AB.spent",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentNeverReturns",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentreturns twin fails"
+    },
+    {
+     "inv_id": "AB.reckey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RecKeyNeverSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; reckeyseat twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
+    },
+    {
+     "inv_id": "AB.rotate",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_RotationConsented",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; rotatenovoice twin fails"
+    },
+    {
+     "inv_id": "AB.retired",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_NoRetiredSeat",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; seatretired twin fails"
     }
    ],
    "claims": [
@@ -26801,6 +27274,18 @@
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-livequorum",
+     "cc_ref": "4.2.6",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISVerify#302"
       }
      ]
     },
@@ -27531,6 +28016,19 @@
        "ticket": "CIRISPersist#1257"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -27779,6 +28277,33 @@
      "kind": "theorem (any N)",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -28265,6 +28790,33 @@
      "kind": "theorem (any N)",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -28751,6 +29303,33 @@
      "kind": "theorem (any N)",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -29237,6 +29816,33 @@
      "kind": "theorem (any N)",
      "claim_id": "CLM-accord-livequorum",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AB.count",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_ChangeCounted",
+     "kind": "safety-action",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; nocount twin fails"
+    },
+    {
+     "inv_id": "AB.signkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SignKeyCannotRecover",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; anykey twin fails"
+    },
+    {
+     "inv_id": "AB.spentkey",
+     "model": "accord_roster",
+     "source": "formal/accord_roster/AccordBundle.tla",
+     "symbol": "Inv_SpentKeyGainsNothing",
+     "kind": "safety",
+     "claim_id": "CLM-accord-livequorum",
+     "verdict": "closes; spentkey twin fails"
     }
    ],
    "claims": [
@@ -32139,6 +32745,19 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -32626,6 +33245,19 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
       }
      ]
     }
@@ -33117,6 +33749,19 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -33606,6 +34251,19 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -34093,6 +34751,19 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-private-room",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#standing_reads_rows,member_decides_membership,member_decides_who_said,member_decides_count,rows_hide_who_said,rows_hide_membership,person_count_needs_bindings,outsider_hides_membership,outsider_hides_existence,rows_see_a_joining",
+       "object": ""
       }
      ]
     }
@@ -37447,14 +38118,14 @@
   "row.standing.admitted": {
    "plane": "content",
    "state_predicate": "row.standing=admitted",
-   "cc_ref": "2.1 2.6.1.8",
+   "cc_ref": "2.1 8.11.9",
    "added_in": 2,
    "states": [
     {
      "variable": "row.standing",
      "state": "admitted",
      "plane": "content",
-     "cc_ref": "2.1 2.6.1.8",
+     "cc_ref": "2.1 8.11.9",
      "enters_by": "admission gates pass",
      "signer": "producer",
      "model_ref": "withdraws_admission.WithdrawsAdmission.tla:admitted",
@@ -37874,6 +38545,19 @@
        "symbols": [
         "check_cohort_standing_resolved"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-rows",
+     "cc_ref": "2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#party_rows_decided,party_decisions_decided,outside_row_hidden,admit_outside_is_held,admit_inside_is_closed,carriage_not_closed,carriage_closed_under_wait,list_view_shows_arrival_order",
+       "object": ""
       }
      ]
     }
@@ -39458,7 +40142,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -39609,20 +40293,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -39815,7 +40504,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -39966,20 +40655,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -40212,7 +40906,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -40363,20 +41057,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -40497,18 +41196,6 @@
        "symbols": [
         "trust_root_cosigners_over"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-purge-digest-preimage",
-     "cc_ref": "3.3.2",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#803"
       }
      ]
     }
@@ -45269,46 +45956,6 @@
      ]
     },
     {
-     "claim_id": "CLM-accord-invoke-lowercase",
-     "cc_ref": "4.2.1.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ACCORD_HEARTBEAT_DIMENSION"
-       ]
-      },
-      {
-       "kind": "staged",
-       "ticket": "CIRISVerify#297"
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-accord-invoke-cutover",
-     "cc_ref": "4.2.1.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISVerify#297"
-      },
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#691"
-      },
-      {
-       "kind": "staged",
-       "ticket": "CIRISAgent#1227"
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-halt-one-row",
      "cc_ref": "4.2.1.1",
      "status": "established",
@@ -47253,7 +47900,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -47404,20 +48051,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -47704,7 +48356,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -47855,20 +48507,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -48155,7 +48812,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -48306,20 +48963,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -49126,7 +49788,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -49277,20 +49939,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -49554,7 +50221,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -49705,20 +50372,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -50005,7 +50677,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -50156,20 +50828,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -50290,18 +50967,6 @@
        "symbols": [
         "trust_root_cosigners_over"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-purge-digest-preimage",
-     "cc_ref": "3.3.2",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#803"
       }
      ]
     }
@@ -51074,6 +51739,19 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-audience-view-public-roster",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "lean",
+       "repo": "@formal/audience_view/AudienceView.lean#public_roster_decides_membership,stranger_decides_announced,stranger_never_learns_owned_route,stranger_never_learns_contacts,stranger_never_learns_scoped,stranger_never_learns_sealed_occurrence,stranger_closed_hold,stranger_not_closed_binding",
+       "object": ""
       }
      ]
     }
@@ -53108,6 +53786,10 @@
   "access_control_model": {
    "4.4.3.12": "bold"
   },
+  "accord_holder": {
+   "2.4.1.1": "after_refusal",
+   "2.6.1.7": "after_refusal"
+  },
   "accountable_root": {
    "4.5.5": "bold"
   },
@@ -53160,6 +53842,9 @@
   "breach_notification": {
    "4.4.3.12": "bold"
   },
+  "bundle_fingerprint": {
+   "8.11.24": "bold"
+  },
   "canonical_binding": {
    "2.3.2.2": "bold"
   },
@@ -53211,10 +53896,11 @@
    "4.4.3.12": "bold"
   },
   "envelope_member_missing": {
-   "2.6.1.8": "after_refusal"
+   "8.11.9": "after_refusal"
   },
   "envelope_member_null": {
-   "2.6.1.2": "after_refusal"
+   "2.6.1.2": "after_refusal",
+   "8.11.3": "after_refusal"
   },
   "erasure_policy": {
    "4.4.3.12": "bold",
@@ -53230,30 +53916,38 @@
   },
   "federation_malformed_row": {
    "2.6.1.2": "after_refusal",
-   "2.6.1.8": "after_refusal",
    "3.1.9.7": "after_refusal",
    "5.3.6.1": "after_refusal",
-   "6.1.1": "after_refusal"
+   "6.1.1": "after_refusal",
+   "8.11.3": "after_refusal",
+   "8.11.9": "after_refusal"
   },
   "federation_rendezvous_key_not_an_identity": {
    "3.1.4": "after_refusal"
   },
   "federation_set_semantics_unsorted": {
-   "2.6.1.2": "bold",
-   "2.6.1.8": "after_refusal"
+   "2.6.1.2": "after_refusal",
+   "8.11.3": "bold",
+   "8.11.9": "after_refusal"
   },
   "federation_trace_dimension_invalid": {
    "3.4.5": "after_refusal"
   },
   "federation_withdraws_not_admitted": {
    "2.4.1.1": "after_refusal",
-   "2.6.1.8": "after_refusal"
+   "8.11.9": "after_refusal"
   },
   "fold_source_count_exceeded": {
    "6.1.2.3": "after_refusal"
   },
   "goal_meta_alignment_malformed": {
    "3.1.9.7": "after_refusal"
+  },
+  "iat_mismatch": {
+   "2.6.1.11": "after_refusal"
+  },
+  "iat_missing": {
+   "2.6.1.11": "after_refusal"
   },
   "identity_amendment": {
    "8.10": "bold"
@@ -53264,14 +53958,24 @@
   "is_named_moderator": {
    "4.5.5": "bold"
   },
+  "kat_outfox_xwing_v1": {
+   "5.4.6": "after_refusal"
+  },
+  "kat_split_and_seed_forms_agree": {
+   "5.4.6": "after_refusal"
+  },
   "key_grant": {
    "2.4.1.3": "after_refusal"
   },
-  "key_record_end_required_from": {
-   "2.4.1.1": "after_refusal"
+  "key_record_bad_attestation_evidence": {
+   "4.2.2.1": "after_refusal"
+  },
+  "key_record_bad_pq_custody": {
+   "4.2.2.1": "after_refusal"
   },
   "key_record_out_of_window": {
-   "2.4.1.1": "after_refusal"
+   "2.4.1.1": "after_refusal",
+   "2.6.1.7": "after_refusal"
   },
   "lawful_access": {
    "4.4.3.12": "bold"
@@ -53360,10 +54064,10 @@
    "6.1.3": "bold"
   },
   "revoked_after": {
-   "2.4.1.1": "after_refusal"
+   "8.11.13": "after_refusal"
   },
   "revoked_key_sha256_ed25519_raw": {
-   "2.4.1.1": "bold"
+   "8.11.13": "bold"
   },
   "run_kind": {
    "3.1.5": "bold"
@@ -53379,23 +54083,29 @@
   "serve_seat_owner_unannounced": {
    "5.4.6": "after_refusal"
   },
-  "serve_transport_destinations": {
-   "5.3.4": "bold"
-  },
   "session_claim_out_of_window": {
    "3.1.3.1": "after_refusal"
   },
   "signed_at": {
    "5.3.1": "after_refusal"
   },
+  "statement_invalid": {
+   "2.6.1.11": "after_refusal"
+  },
+  "statement_kid_not_iss": {
+   "2.6.1.11": "after_refusal"
+  },
+  "statement_no_role": {
+   "2.6.1.11": "after_refusal"
+  },
+  "statement_not_genesis_bundle": {
+   "2.6.1.11": "after_refusal"
+  },
   "trace_field_shape_violation": {
    "3.1.5": "after_refusal"
   },
   "trace_run_kind_mock": {
    "3.1.5": "after_refusal"
-  },
-  "transit_kex_pubkeys": {
-   "3.3.6.2": "after_refusal"
   },
   "trust_accepts_classes_malformed": {
    "4.4.3.34": "after_refusal"
@@ -53407,7 +54117,7 @@
    "3.2": "after_refusal"
   },
   "typed_diverges_from_envelope": {
-   "2.6.1.8": "after_refusal"
+   "8.11.9": "after_refusal"
   },
   "under_13": {
    "3.1.2": "after_refusal",

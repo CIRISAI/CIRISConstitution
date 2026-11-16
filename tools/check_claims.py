@@ -25,7 +25,11 @@ pinned manifest does not publish (or publishes in a non-backed state), a
 semantic-id mismatch. A pointer whose manifest simply does not yet reach this
 decimal is a WARNING (pending), not a failure.
 
-Usage:  python3 tools/check_claims.py [--xfail-blocks]
+Rows of a vendored manifest that carry `span_sha256` are compared with the same rows at the earlier pin
+(found in this repository's git history); each claim whose cited span changed is listed as a NOTE
+(an error with --span-changes-block).
+
+Usage:  python3 tools/check_claims.py [--xfail-blocks] [--span-changes-block]
 """
 import csv, json, os, sys, re, glob
 from collections import Counter, defaultdict, OrderedDict
@@ -38,9 +42,6 @@ TAGS = {"impl", "test", "lean", "bench", "staged", "open", "normative-only"}
 RESOLVABLE_TAGS = {"impl", "test", "lean", "bench"}   # count toward "evidenced"
 TICKET_TAGS = {"staged", "open"}                      # named ticket, NOT evidence
 STATUSES = {"established", "normative", "staged", "open"}
-# The 1.14.x parable was migrated into FOREWORD.md; it is intentionally in toc but
-# has no numbered prose heading. Exempt it from the toc↔prose drift report.
-DRIFT_EXEMPT_PREFIX = ("1.14",)
 
 _HEADING = re.compile(r'^#{2,6}\s+(\d+(?:\.\d+)+)\s+`')
 _HEADING_FULL = re.compile(r'^#{2,6}\s+(\d+(?:\.\d+)+)\s+`([^`]*)`\s*(.*)$')
@@ -148,16 +149,16 @@ def load_prose():
 
 # --- manifests ---------------------------------------------------------------
 
-def _recut():
-    """old -> new section number from formal/derivation/section_map.tsv (a manifest pinned before the re-cut cites old numbers)."""
-    p = os.path.join(ROOT, "formal", "derivation", "section_map.tsv")
-    if not os.path.exists(p):
-        return {}
-    rows = csv.DictReader((l for l in open(p, encoding="utf-8") if not l.startswith("#")), delimiter="\t")
-    return {r["old_number"]: r["new_number"] for r in rows if r["old_number"] != r["new_number"]}
+def _generations():
+    """{cc_numbering: number -> this edition's number}: one map per generation of section numbers a pinned manifest
+    cites, each read in one step through the slug (tools/recut_sections.py GENERATIONS); never one after another."""
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    import recut_sections as R
+    rows = R.read_map()
+    return {g: R.generation_map(rows, g) for g in R.GENERATIONS}
 
 
-RECUT = _recut()
+GENERATIONS = _generations()
 
 
 def load_manifests():
@@ -180,7 +181,10 @@ def load_manifests():
             dec = (r.get("decimal_id") or r.get("cc_decimal_id") or "").strip()
             if not dec or dec == "—":            # non-section row (e.g. h3ere StepPoint)
                 continue
-            dec = RECUT.get(dec, dec) if row.get("cc_numbering", "") != "recut" else dec
+            gen = (row.get("cc_numbering") or "").strip()
+            if gen not in GENERATIONS:
+                raise SystemExit(f"evidence_pins.tsv: {repo} cc_numbering {gen!r} is not one of {sorted(GENERATIONS)}")
+            dec = GENERATIONS[gen].get(dec, dec)
             is_backed = spec["backed"](r)
             if is_backed:
                 backed.add(dec)
@@ -274,8 +278,7 @@ def _strip_annotation(s):
 
 def report_toc_drift(toc, prose, errors, warnings, notes):
     missing = sorted(d for d in prose if d not in toc)
-    extra = sorted(d for d in toc if d not in prose
-                   and not d.startswith(DRIFT_EXEMPT_PREFIX) and "." in d)
+    extra = sorted(d for d in toc if d not in prose and "." in d)
     if missing:
         errors.append(f"toc drift: {len(missing)} prose section(s) missing from toc.tsv/codebook "
                       f"(every numbered section MUST have a dual-ID): {', '.join(missing)}")
@@ -661,6 +664,111 @@ def check_pin_staleness(errors, warnings, notes):
         notes.append("pin-staleness gate: every evidence pin is at its upstream head")
 
 
+# --- implementation spans across a pin bump ------------------------------------
+# A manifest row may carry `span_sha256`: the SHA-256 of the cited item's own source text (EVIDENCE.md,
+# "Span hashes"). When a pin moves, a row whose span differs from the same row at the earlier pin names a
+# claim whose code changed under an unchanged name. The listing is a NOTE, or an error under
+# --span-changes-block. A manifest without the column is skipped silently.
+
+def _manifest_rows(text):
+    lines = [l for l in text.splitlines() if l.strip() and not l.lstrip().startswith("#")]
+    return list(csv.DictReader(lines, delimiter="\t"))
+
+
+def _span_key(r, spec):
+    claim = (r.get("claim_id") or r.get("cc_claim_id") or "").strip()
+    syms = tuple((r.get(c) or "").strip() for c in spec["symbol_cols"])
+    return claim, syms
+
+
+def span_changes(old_rows, new_rows, spec):
+    """[(claim, symbols)] for rows present in both manifests whose recorded span_sha256 differs.
+
+    Rows are matched by claim id and symbol cells. A row with no hash on either side is not compared."""
+    old = {}
+    for r in old_rows:
+        h = (r.get("span_sha256") or "").strip()
+        if h:
+            old[_span_key(r, spec)] = h
+    out = []
+    for r in new_rows:
+        h = (r.get("span_sha256") or "").strip()
+        k = _span_key(r, spec)
+        if h and k in old and old[k] != h:
+            out.append(k)
+    return out
+
+
+def _git(*args):
+    import subprocess as _sp
+    try:
+        o = _sp.run(["git", "-C", ROOT] + list(args), capture_output=True, text=True, timeout=30)
+    except Exception:
+        return None
+    return o.stdout if o.returncode == 0 else None
+
+
+def earlier_pin(repo, current_pin, vendored_rel):
+    """(old_pin, old manifest text) at the newest commit whose evidence_pins.tsv pins `repo` elsewhere.
+
+    The repository's own history is the stored copy: no network is read. None when no such commit exists
+    or git cannot be read."""
+    log = _git("log", "--format=%H", "--", "constitution/evidence_pins.tsv")
+    if not log:
+        return None
+    for c in log.split():
+        pins = _git("show", f"{c}:constitution/evidence_pins.tsv")
+        if pins is None:
+            continue
+        for r in csv.DictReader(pins.splitlines(), delimiter="\t"):
+            if r.get("repo") == repo and r.get("commit") and r["commit"] != current_pin:
+                text = _git("show", f"{c}:constitution/{r.get('vendored') or vendored_rel}")
+                return (r["commit"], text) if text is not None else None
+    return None
+
+
+def _span_break():
+    """The deliberate break, run every time: a changed span must be listed, an unchanged or unhashed one not."""
+    spec = {"symbol_cols": ["path#symbol"]}
+    hdr = "decimal_id\tclaim_id\trepo\tpath#symbol\tspan_sha256"
+    old = _manifest_rows(f"{hdr}\n1\tCLM-a\tR\tsrc/a.rs#f\t{'0' * 64}\n1\tCLM-b\tR\tsrc/b.rs#g\t{'1' * 64}\n"
+                         f"1\tCLM-c\tR\tsrc/c.rs#h\t")
+    new = _manifest_rows(f"{hdr}\n1\tCLM-a\tR\tsrc/a.rs#f\t{'2' * 64}\n1\tCLM-b\tR\tsrc/b.rs#g\t{'1' * 64}\n"
+                         f"1\tCLM-c\tR\tsrc/c.rs#h\t{'3' * 64}")
+    return span_changes(old, new, spec) == [("CLM-a", ("src/a.rs#f",))]
+
+
+def check_span_changes(errors, warnings, notes, block=False):
+    if not _span_break():
+        errors.append("span changes: the deliberate break (one changed span) was not listed — the comparator is broken")
+    path = os.path.join(DOC, "evidence_pins.tsv")
+    if not os.path.exists(path):
+        return
+    for row in csv.DictReader(open(path, encoding="utf-8"), delimiter="\t"):
+        repo, pin, vend = row["repo"], row["commit"], row["vendored"]
+        spec = MANIFESTS.get(repo)
+        vp = os.path.join(DOC, vend)
+        if spec is None or not os.path.exists(vp):
+            continue
+        new_rows = _manifest_rows(open(vp, encoding="utf-8").read())
+        if not new_rows or "span_sha256" not in new_rows[0]:
+            continue
+        prev = earlier_pin(repo, pin, vend)
+        if prev is None:
+            notes.append(f"span changes: {repo} carries span_sha256 but no earlier pin is in this repository's "
+                         f"history — nothing compared")
+            continue
+        old_pin, old_text = prev
+        changed = span_changes(_manifest_rows(old_text), new_rows, spec)
+        for claim, _syms in changed:
+            line = f"re-read {claim}: its code changed at {repo} {old_pin}→{pin}"
+            (errors if block else notes).append(line)
+        if not changed:
+            notes.append(f"span changes: {repo} {old_pin}→{pin}: no cited span changed"
+                         + ("" if any((r.get("span_sha256") or "").strip() for r in _manifest_rows(old_text))
+                            else " (the earlier manifest records no span_sha256)"))
+
+
 def main():
     xfail_blocks = "--xfail-blocks" in sys.argv
     errors, warnings, notes = [], [], []
@@ -964,6 +1072,7 @@ def main():
     check_ticket_states(rows, errors, warnings, notes)
     check_unevidenced_slices(errors, warnings, notes)
     check_pin_staleness(errors, warnings, notes)
+    check_span_changes(errors, warnings, notes, block="--span-changes-block" in sys.argv)
 
     if notes:
         print(f"\n{len(notes)} note(s):")

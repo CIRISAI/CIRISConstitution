@@ -11,6 +11,7 @@ run(){ "$@" > "$S/gate.out" 2>&1; rc=$?; if [ $rc -ne 0 ] || grep -q "FAIL" "$S/
 run python3 tools/build_cc_namespace.py
 run python3 tools/cc_namespace_match.py --write-vectors
 run python3 tools/build_cc_signed_object.py
+run python3 tools/build_cc_signed_object_v2.py
 run python3 tools/build_governance_policy.py
 run python3 tools/build_csd4_chain.py
 run python3 tools/topology_to_cfg.py --all
@@ -25,9 +26,13 @@ run python3 tools/check_stale_refs.py
 run python3 tools/check_formal_counts.py
 run python3 tools/recut_sections.py --evidence-rows --check
 run python3 tools/check_formal_tables.py
+run python3 tools/lean_statement_hash.py
+run python3 tools/span_of.py --self-test
 run python3 tools/check_lifecycle_coverage.py
 run python3 tools/check_family_kinds.py --check
 run python3 tools/build_family_model.py --check
+run python3 tools/cc_family_select.py --self-test
+run python3 tools/cc_family_select.py --check
 run python3 tools/guard_grammar.py
 run python3 tools/change_grammar.py
 run python3 tools/fold_grammar.py
@@ -59,7 +64,9 @@ run python3 -I formal/causal_kernel/check_time.py
 run python3 -I formal/causal_kernel/check_shapes.py
 run python3 -I formal/causal_kernel/check_key_end.py
 run python3 -I formal/causal_kernel/check_purge.py
+run python3 -I formal/ceremony/check_ceremony.py
 run bash formal/causal_order/build.sh
+run bash formal/audience_view/build.sh
 run python3 -B tools/kx_check.py --check
 run python3 -I formal/roster_fork/fork_check.py --check
 run python3 tools/ui_closure.py --check

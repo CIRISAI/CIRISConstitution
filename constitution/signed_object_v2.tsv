@@ -1,0 +1,152 @@
+object	rule	member	logical_name	placement	type	required_when	cc_ref	note
+statement	COSE_Sign1	protected	-	statement	bstr .cbor statement-protected	always	2.6.1.1 2.6.1.2	The protected header as bytes, in deterministic encoding and with exactly its seven members; the signature covers them.
+statement	COSE_Sign1	unprotected	-	statement	unprotected-header	always	2.6.1.1	Never signed; a rule never reads it.
+statement	COSE_Sign1	payload	-	statement	bstr .cbor attestation-envelope	always	2.6.1.1 2.6.1.2	The payload as bytes, in deterministic encoding; a payload that is not the deterministic re-encoding of the value it decodes to is refused. Never nil.
+statement	COSE_Sign1	signature	scrub_signature_classical, scrub_signature_pqc	statement	composite-signature	always	2.6.1.7	The composite ML-DSA-65 with Ed25519 signature, 3373 bytes; neither half verifies alone.
+unprotected	unprotected-header	17	sd_claims	header:unprotected	[+ bstr .cbor sd-disclosure]	when disclosures are presented beside the statement	2.6.1.10	sd_claims of SD-CWT: disclosures as presented to one who may see them; they travel and are held as bytes, never in the row.
+protected	statement-protected	1	-	header:protected	composite-alg	always	2.6.1.7	alg: -70100, the composite; a private-use identifier until one is assigned.
+protected	statement-protected	3	-	header:protected	row-cty	always	2.6.1.1	cty: application/vnd.ciris.row+cbor, with no parameters; any other is refused.
+protected	statement-protected	-70001	attestation_type	header:protected	row-type	always	2.6.1.1	The row's type, one of the five; refused on any object that is not a row. The row id reads it.
+protected	statement-protected	-70002	-	header:protected	family-id	always	2.6.1.1	The row's family id, never a leaf; the payload's dimension MUST resolve to it. The row id reads it.
+protected	statement-protected	4	attesting_key_id	header:protected	kid	always	2.6.1.7	kid: the 32-byte thumbprint of the signer's composite key, fixed for the key's life.
+protected	statement-protected	15	-	header:protected	cwt-claims	always	2.6.1.1	The CWT claims.
+protected	statement-protected	16	-	header:protected	"ceg-row/2"	always	2.6.1.1 2.6.1.11	typ: ceg-row/2 for every row.
+cwt	cwt-claims	1	attesting_key_id	header:cwt	identity-ref	always	2.6.1.1 2.6.1.7	iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the room key's own.
+cwt	cwt-claims	2	attested_key_id	header:cwt	tstr	always	2.6.1.1 2.6.1.3	sub: what the row is about; a key subject is an identity reference; the row id reads it.
+cwt	cwt-claims	6	-	header:cwt	uint	always	2.6.2	iat: floor(asserted_at / 1000); a disagreement is refused.
+cwt	cwt-claims	5	-	header:cwt	uint	iff the payload carries valid_from	2.6.2	nbf: floor(valid_from / 1000); a disagreement is refused.
+cwt	cwt-claims	4	-	header:cwt	uint	iff the payload carries valid_until	2.6.2	exp: floor(valid_until / 1000); a disagreement is refused.
+cwt	cwt-claims	-70003	-	header:cwt	2	always	2.6.1.1	edition: the constant 2.
+payload	attestation-envelope	"author"	attesting_key_id	payload	identity-ref	iff the family is authored	2.6.1.3 2.6.1.9	The iss of the author, read by the row id from the payload. A counted family carries none, and its row id takes null.
+payload	attestation-envelope	"refs"	references_attestation_id	payload	refs	iff the row names a row	2.6.1.3	Every row this row names, and the only member that names a row; never empty.
+payload	attestation-envelope	"dimension"	dimension	payload	tstr	where the family scores a dimension	2.6.1.1	The full scored dimension, leaf and version; it resolves to the family id of label -70002, and is refused otherwise.
+payload	attestation-envelope	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	where the row cites a blob	2.6.1.6 2.6.1.2	The blobs the row cites, by content hash: a sequence, bytes never hex.
+payload	attestation-envelope	"seat_commitment"	-	payload	hash-digest	on the seat row of a room key of a private room	2.6.1.11	The commitment to the seat's person, which the binding opens.
+payload	attestation-envelope	"score"	score	payload	fixed6-score	where the family carries a score	2.6.1.5	fixed6 in [-10^6, 10^6]; an indeterminate result has none.
+payload	attestation-envelope	"confidence"	confidence	payload	fixed6-unit	where the family carries a confidence	2.6.1.5	fixed6 in [0, 10^6].
+payload	attestation-envelope	"weight"	weight	payload	fixed6-weight	where the family carries a weight	2.6.1.5	fixed6 in [0, 10^6] unless the family states a wider range.
+payload	attestation-envelope	"passed"	passed	payload	count32	on a safety-battery interpret row	2.6.1.5	At most total; with total, the input the score is derived from in integers and checked by exact equality.
+payload	attestation-envelope	"total"	total	payload	1..4294967295	on a safety-battery interpret row	2.6.1.5	At least 1; present iff passed is.
+payload	attestation-envelope	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+payload	attestation-envelope	"valid_from"	valid_from	payload	ms-time	where the row states a start	2.6.2	POSIX milliseconds.
+payload	attestation-envelope	"valid_until"	valid_until	payload	ms-time	where the row states its own end	2.6.2	POSIX milliseconds; the row's own end, read from the statement alone.
+payload	attestation-envelope	"expires_at"	expires_at	payload	ms-time	where the family states it	2.6.2	POSIX milliseconds.
+payload	attestation-envelope	"reason"	reason	payload	uint	where the family carries a reason	2.6.1.10	A code from a closed registry; 0 is unspecified.
+payload	attestation-envelope	"salt"	salt	payload	bstr .size 16	where the content is low-entropy	2.6.1.3	Sixteen random bytes bound by every signer, so neither the row id nor a statement id confirms a guess.
+payload	attestation-envelope	redacted_claim_keys	-	payload	[+ bstr .size 32]	where a member of the payload was minted blind	2.6.1.10	SD-CWT simple(59): the digests of the payload's blinded members, in mint order: a sequence.
+payload	attestation-envelope	"body"	-	payload	body	where the family carries a body	2.6.1.10	The family's body.
+payload	body	"note"	context	payload:body	tstr .size (0..2048)	where the row carries a note	2.6.1.10	At most 2,048 bytes; blinded first where the family's erasure route is a subject request or a purge.
+payload	body	redacted_claim_keys	-	payload:body	[+ bstr .size 32]	where a member of the body was minted blind	2.6.1.10	SD-CWT simple(59): the digests of the body's blinded members, body.note among them; a sequence.
+refs	refs-members	"head"	-	payload:refs	row-ref	on a counted row, and on a roster version	2.6.1.9	The roster head the row is counted over, inside what every voice signs.
+refs	refs-members	"further_heads"	-	payload:refs	row-ref-set	where a row names further tips	2.6.1.9 2.6.1.2	Further tips beside head: a set.
+refs	refs-members	"prev"	-	payload:refs	row-ref	where a signer's own series names its predecessor	2.6.1.11	The predecessor in a signer's own series.
+refs	refs-members	"answers"	-	payload:refs	row-ref	where the row answers a row	2.6.1.3	The proposal voted on or accepted, the window opened, the row replied to.
+refs	refs-members	"target"	-	payload:refs	row-ref	on a supersession, withdrawal, recantation, cut or removal	2.6.1.3	The row superseded, withdrawn, recanted, cut or removed.
+refs	refs-members	"trusted_through"	-	payload:refs	row-ref-set	on a key revocation that names rows held good	2.6.1.11 2.6.1.2	The last rows of the revoked key held good: a set.
+refs	refs-members	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names any other row	2.6.1.3 2.6.1.2	Any other named row, under a role of the closed registry: ack or cites; each list a set.
+row_id	row-id-input	type	attestation_type	derived	row-type	always	2.6.1.3	The type of label -70001, one of the five, as a text string.
+row_id	row-id-input	family	-	derived	family-id	always	2.6.1.3	The family id of label -70002, as a text string.
+row_id	row-id-input	sub	-	derived	tstr	always	2.6.1.3	The CWT sub.
+row_id	row-id-input	author	attesting_key_id	derived	identity-ref / null	always	2.6.1.3	The payload's author for an authored family; null for a counted one.
+row_id	row-id-input	payload	-	derived	bstr .cbor attestation-envelope	always	2.6.1.3	The payload bytes as signed, entered as a byte string, never as the decoded map.
+row_id	hash-digest	alg	-	derived	-16	always	2.6.1.3	-16, SHA-256: one name per row.
+row_id	hash-digest	digest	-	derived	bstr .size 32	always	2.6.1.3	Thirty-two bytes.
+row_id	row-ref	edition	-	derived	2	always	2.6.1.3	The constant 2: a row-ref names a signed object of this form, never one of the earlier form.
+row_id	row-ref	id	attestation_id	derived	hash-digest	always	2.6.1.3	The row id, or the object id of a signed object that is not a row.
+statement_id	statement-id-input	protected	-	derived	bstr	always	2.6.1.3	The protected header bytes as signed.
+statement_id	statement-id-input	payload	-	derived	bstr	always	2.6.1.3	The payload bytes as signed; the statement id names one voice, the row id names the row.
+key	ceg-key	1	-	object	7	always	2.6.1.7	kty 7, AKP.
+key	ceg-key	3	-	object	composite-alg	always	2.6.1.7	alg: -70100, the composite.
+key	ceg-key	-1	pubkey_ed25519_base64, pubkey_ml_dsa_65_base64	object	bstr .size 1984	always	2.6.1.7	pub: the ML-DSA-65 public key then the Ed25519 public key, one byte string.
+key_record	key-record-members	"key"	-	payload	ceg-key	always	2.6.1.7	The composite key.
+key_record	key-record-members	"identity_type"	identity_type	payload	[+ tstr]	always	2.6.1.7 2.4.1.1	A set of roles; user or accord_holder never with node or agent.
+key_record	key-record-members	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+key_record	key-record-members	"valid_until"	valid_until	payload	ms-time	as the key's end rule states	2.6.1.7	Absent where the set contains user or accord_holder; required where it contains node or agent, unless a room key of a private room; a set mixing the two groups is refused. At most key_record_max_secs after asserted_at.
+key_record	key-record-members	"attestation_evidence"	-	payload	attestation-evidence	where the record asserts a hardware class	4.2.2 4.2.2.1	The custody of the key's Ed25519 half and where its ML-DSA-65 half is held.
+key_record	attestation-evidence	"hardware_class"	-	payload	tstr	always	4.2.2	A class of the CC 4.2.2 table; an unlisted class is read at multiplier 0.0.
+key_record	attestation-evidence	"pq_custody"	-	payload	"same_element" / "removable_offline" / "software_wrapped"	where the record asserts a class	4.2.2.1	Absent: read at multiplier 0.0; any other value is refused key_record_bad_pq_custody.
+key_record	attestation-evidence	"chain"	-	payload	[+ bstr]	where the class's mechanism has a chain	4.2.2.1 2.6.1.2	X.509 DER, leaf first: a sequence; verified to the mechanism's attestation root where a holder is seated.
+object	ceg-object-statement	protected	-	statement	bstr .cbor object-protected	always	2.6.1.11	The protected header of a signed object that is not a row, in deterministic encoding.
+object	ceg-object-statement	unprotected	-	statement	unprotected-header	always	2.6.1.11	Never signed; a rule never reads it.
+object	ceg-object-statement	payload	-	statement	bstr	always	2.6.1.11	The deterministic encoding of the rule its typ names.
+object	ceg-object-statement	signature	-	statement	composite-signature	always	2.6.1.7	The composite signature.
+object	object-protected	1	-	header:protected	composite-alg	always	2.6.1.7	alg: -70100.
+object	object-protected	4	-	header:protected	kid	always	2.6.1.7	kid: the signer's key thumbprint.
+object	object-protected	15	-	header:protected	object-claims	always	2.6.1.11	The CWT claims.
+object	object-protected	16	-	header:protected	object-typ	always	2.6.1.11	typ: one of the closed list.
+object	object-claims	1	-	header:cwt	identity-ref	always	2.6.1.11	iss.
+object	object-claims	6	-	header:cwt	uint	where the object states an instant	2.6.1.11	iat; a revocation snapshot carries none, and a genesis bundle MUST carry floor(asserted_at / 1000).
+object	object-claims	-70003	-	header:cwt	2	always	2.6.1.11	edition: the constant 2.
+object	object-id-input	typ	-	derived	object-typ	always	2.6.1.11	The object's typ.
+object	object-id-input	author	-	derived	identity-ref / null	always	2.6.1.11	The payload's author, or null where it has none.
+object	object-id-input	payload	-	derived	bstr	always	2.6.1.11	The payload bytes as signed.
+snapshot	revocation-snapshot	"author"	-	object	identity-ref	always	2.6.1.11	The signer, so the object id, prev and seq are one signer's.
+snapshot	revocation-snapshot	"refs"	-	object	refs	always	2.6.1.11	prev, absent on the first; the acknowledgement of the head of the revocation scope under also ack.
+snapshot	revocation-snapshot	"seq"	-	object	uint	always	2.6.1.11	Strictly greater than prev's; it orders one signer's own snapshots only. One seq with two contents is contested, and neither counts.
+snapshot	revocation-snapshot	"revoked"	-	object	[* revoked-entry]	always	2.6.1.11 2.6.1.2	A set, with no winner across signers.
+snapshot	revoked-entry	key	-	object	kid	always	2.6.1.11	The revoked key's thumbprint, the same bytes as its kid.
+snapshot	revoked-entry	revocation	-	object	row-ref	always	2.6.1.11	The revocation row.
+snapshot	revoked-entry	trusted_through	-	object	[* row-ref]	always	2.6.1.11 2.6.1.2	The last rows of the revoked key held good: a set.
+genesis	ceg-genesis-bundle	"refs"	-	object	genesis-refs	always	2.6.1.11 5.3.4	Every row the bundle names, and prev on a bundle after the first.
+genesis	ceg-genesis-bundle	"version"	-	object	1..4294967295	always	2.6.1.11	A sequence from 1: prev's version plus one where the bundle has a prev, a consistency check only.
+genesis	ceg-genesis-bundle	"asserted_at"	-	object	ms-time	always	2.6.2 2.6.1.11	POSIX milliseconds; each statement's iat is floor(asserted_at / 1000), and a disagreement is refused.
+genesis	ceg-genesis-bundle	"family_key_id"	-	object	tstr	always	5.3.4 4.2.3	The accord's name as its rows carry it; a name, never an anchor.
+genesis	ceg-genesis-bundle	"holders"	-	object	[+ identity-ref]	always	4.2.3 5.3.4 2.6.1.2	The accord's roster: a set; each holder's key record stands in refs.
+genesis	ceg-genesis-bundle	"serve_nodes"	-	object	[+ identity-ref]	always	5.3.4 3.3.6.2 2.6.1.2	The seated serve nodes: a set, disjoint from holders; each seat's key record and binding stand in refs; the bundle's count is each seat's canonical conferral.
+genesis	ceg-genesis-bundle	"charter"	-	object	genesis-charter	always	2.1 4.2.6	The accord's parameters, which no row carries.
+genesis	genesis-refs	"prev"	-	object	row-ref	on every bundle after the first	2.6.1.11	The predecessor bundle's object id.
+genesis	genesis-refs	"also"	-	object	map	always	2.6.1.3	The one role cites, and no other.
+genesis	genesis-refs	"also"."cites"	-	object	row-ref-set	always	2.6.1.3 2.6.1.2	Every row the bundle names: each holder's and each seat's key record, each witness's, and each seat's binding; a set.
+genesis	genesis-charter	"recovery_commitments"	-	object	{ + identity-ref => hash-digest }	always	4.2.6 3.2	One entry per holder, keyed by its identity reference; each the commitment over that holder's one recovery key.
+genesis	genesis-charter	"scope"	-	object	[+ tstr]	always	3.2 2.6.1.2	A set; it holds infra:attest and infra:serve.
+genesis	genesis-charter	"halt_fuse_secs"	-	object	1..4294967295	where the charter states a fuse	4.2.1.1 2.1	Absent means 86400.
+genesis	genesis-charter	"attach_window_secs"	-	object	1..4294967295	where the charter states a window	3.2 5.3.4	Absent: attachable through an out-of-band anchor only.
+genesis	genesis-charter	"witness_cadence_secs"	-	object	1..4294967295	where witnessed mode is on	3.2 2.1	Present with witness_quorum and witnesses, or none of the three.
+genesis	genesis-charter	"witness_quorum"	-	object	2..4294967295	where witnessed mode is on	3.2 2.1	floor(|witnesses| / 2) + 1; absence is witnessed mode off, and 0 is never written.
+genesis	genesis-charter	"witnesses"	-	object	[+ identity-ref]	where witnessed mode is on	3.2 2.1 2.6.1.2	The witness directory: a set, disjoint from holders and serve_nodes; each witness's key record stands in refs.
+genesis	recovery-commitment-input	keys	-	derived	[+ ceg-key]	always	3.2 4.2.6 2.6.1.2	The committed composite keys, a set; one for a holder's recovery commitment. The commitment is [-16, SHA-256] over the array.
+accord	accord-invocation	"author"	attesting_key_id	payload	identity-ref	always	4.2.1.1 2.6.1.3	The holder who signs: the statement's iss. One holder's statement is the halt.
+accord	accord-invocation	"accord_root"	-	payload	tstr	always	4.2.1.1 2.1	The accord's family_key_id; it picks the bundle in force the row is verified against.
+accord	accord-invocation	"invocation_id"	-	payload	tstr	always	4.2.1.1	The id of the halt, the notify or the drill; duplicates within valid_until are refused per kind.
+accord	accord-invocation	"nonce"	-	payload	bstr .size 32	always	4.2.1.1	Minted by the holder; single-use within valid_until.
+accord	accord-invocation	"asserted_at"	asserted_at	payload	ms-time	always	4.2.1.1 2.6.2	POSIX milliseconds.
+accord	accord-invocation	"valid_until"	valid_until	payload	ms-time	always	4.2.1.1 2.6.2	Bounds the reuse of the nonce, never the reach of a halt.
+accord	accord-invocation	"payload_digest"	-	payload	hash-digest	on a notify	4.2.1.1	SHA-256 over the notify's message, a separate object held as bytes.
+accord	accord-lifecycle	"refs"	references_attestation_id	payload	accord-lifecycle-refs	always	4.2.1.3 2.6.1.9	The halt the row confirms or ends, and the bundle it is counted over.
+accord	accord-lifecycle	"dimension"	dimension	payload	tstr	always	4.2.1.3	Names the kind, confirmed or active, so the two kinds are two payloads and two row ids.
+accord	accord-lifecycle	"accord_root"	-	payload	tstr	always	4.2.1.3 2.1	The accord's family_key_id.
+accord	accord-lifecycle	"invocation_id"	-	payload	tstr	always	4.2.1.3	The lifecycle row's own id.
+accord	accord-lifecycle	"nonce"	-	payload	bstr .size 32	always	4.2.1.3	Thirty-two random bytes.
+accord	accord-lifecycle	"asserted_at"	asserted_at	payload	ms-time	always	4.2.1.3 2.6.2	POSIX milliseconds.
+accord	accord-lifecycle	"valid_until"	valid_until	payload	ms-time	always	4.2.1.3 2.6.2	POSIX milliseconds.
+accord	accord-lifecycle-refs	"head"	-	payload:refs	row-ref	always	4.2.1.3 2.6.1.9	The bundle in force the row is counted over, by its object id.
+accord	accord-lifecycle-refs	"target"	-	payload:refs	row-ref	always	4.2.1.3	The halt row the lifecycle row confirms or ends; a statement counts for that halt only.
+binding	transport-destination-binding	"transport_destination"	transport_destination	payload	transport-destination	always	3.3.6.2 3.3.6.3	The RNS members, from which destination_hash is recomputed.
+binding	transport-destination-binding	"transit_xwing_pubkey"	-	payload	bstr .size 1216	on a node that relays, and on every seat	3.3.6.2	At the payload's top level, beside transport_destination; a seat's is taken from the bundle or a counted re-bind.
+binding	transport-destination-binding	"onion_hop_xwing_pubkey"	-	payload	bstr .size 1216	on a node that relays, and on every serve node	3.3.6.2	At the payload's top level, beside transport_destination.
+binding	transport-destination-binding	"onion_relay"	-	payload	map	on a node that opts out of relaying	3.3.6.2 5.4.6	The opt-out marker; a node carrying it carries no hop key.
+binding	transport-destination-binding	"onion_relay"."opt_out"	-	payload	true	always	3.3.6.2	The constant true.
+binding	transport-destination-binding	"refs"	references_attestation_id	payload	refs	on a seat's binding	3.3.6.2 2.6.1.11	The seat's own key record, under the also role cites.
+binding	transport-destination	"reticulum_x25519_pubkey"	-	payload	bstr .size 32	always	3.3.6.3	The RNS link X25519 key.
+binding	transport-destination	"reticulum_ed25519_pubkey"	-	payload	bstr .size 32	always	3.3.6.3	The RNS transport Ed25519 key.
+binding	transport-destination	"app_name"	-	payload	tstr	always	3.3.6.3	The RNS application name.
+binding	transport-destination	"aspects"	-	payload	[* tstr]	always	3.3.6.3 2.6.1.2	A sequence: the hash reads the aspects in this order.
+binding	transport-destination	"destination_hash"	-	payload	bstr .size 16	always	3.3.6.3	Recomputed by the two-stage hash; a disagreement is refused.
+room	seat-commitment-input	room	-	derived	tstr	always	2.6.1.11	The room's id as its rows carry it.
+room	seat-commitment-input	room_key	-	derived	kid	always	2.6.1.11	The room key's thumbprint.
+room	seat-commitment-input	person	-	derived	identity-ref	always	2.6.1.11	The person's identity reference.
+room	seat-commitment-input	nonce	-	derived	bstr .size 32	always	2.6.1.11	Thirty-two fresh random bytes.
+disclosure	salted-claim	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes; a blinded map member is disclosed as [salt, value, key].
+disclosure	salted-claim	value	-	object	ceg-value	always	2.6.1.10	The blinded member's value.
+disclosure	salted-claim	key	-	object	tstr	always	2.6.1.10	The blinded member's name; the digest is SHA-256 over the disclosure's bytes as sd_claims carries them.
+disclosure	salted-element	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes; a blinded array element is disclosed as [salt, value].
+disclosure	salted-element	value	-	object	ceg-value	always	2.6.1.10	The blinded element's value.
+logical	-	the row id	attestation_id	none	-	-	2.6.1.3	Computed by every holder from the statement; the same for every voice of a counted row.
+logical	-	kid, iss and author	attesting_key_id	none	-	-	2.6.1.7	kid names the signing key; iss the signer's stable identity; author the author of an authored row.
+logical	-	label -70001	attestation_type	none	-	-	2.6.1.1	One of the five.
+logical	-	sub	attested_key_id	none	-	-	2.6.1.1	-
+logical	-	a member of refs	references_attestation_id	none	-	-	2.6.1.3	Under the label the family's role gives it.
+logical	-	a further statement over the same payload	additional_scrubs	none	-	-	2.6.1.9	Each voice is its own statement, found by the row id.
+logical	-	none	original_content_hash	none	-	-	2.6.1.3	The earlier form's content hash; no row of this form names an earlier-form row.
+logical	-	none	row	none	-	-	2.6.1.1	The protected header carries type, family and kid; the CWT claims carry iss and sub.
+logical	-	body.note	context	none	-	-	2.6.1.10	Bounded; no free text outside it.

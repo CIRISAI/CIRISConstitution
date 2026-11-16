@@ -13,7 +13,7 @@ constants the harness builds it from, and the coverage gate says where no model 
 | `catalog/` | the twenty entries `T0`–`T19` and `requirements.yaml`, vendored byte for byte from CIRISServer `main` (tag `v0.5.232`) (`PIN.tsv` names the commit); CC re-vendors at the first pushed commit and at every `catalogue_version` bump |
 | `generated/<Tn>/` | written by `python3 tools/topology_to_cfg.py --all`; CI regenerates and diffs. Per entry: `trust_root_<root>.cfg`, `accord_halt_<root>.cfg`, `accord_fuse_<root>.cfg` (infrastructure roots), `self_roster_<person>_{stolen,lost}.cfg` (every person), `root_reach.cfg`, `MeshNet_<Tn>.tla` + `mesh_net.cfg` (a wrapper instantiating the parametric `MeshNet`), `closure.json` |
 | `generated/SUMMARY.json` | the catalogue's maxima (roots 2, canonicals 2, nodes 4, persons 3, devices per person 2, holders 3) and the atom coverage count |
-| `../STATE_TABLE.tsv`, `../INVARIANTS.tsv` | the normalized state vector (242 states, 81 variables, 12 planes) and the 221 properties restated over it; `tools/check_formal_tables.py` gates them |
+| `../STATE_TABLE.tsv`, `../INVARIANTS.tsv` | the normalized state vector (242 states, 81 variables, 12 planes) and the 232 properties restated over it; `tools/check_formal_tables.py` gates them |
 | `manifests/topology_vocabulary.json` | the 156 atoms (catalogue version 6), each mapped to a state-table predicate; `closure.json` reads it |
 
 ## Running a generated configuration
@@ -54,7 +54,7 @@ guard). It checks only what no plane sees alone:
 | X1 | a constitutional halt is not a trust leg: the latch moves no standing, stops no serving and no replication, and moves exactly the agent's act gate; a latched node can still serve and replicate (`ENABLED`) | 3.2 T8 (v), 4.2.1.1 |
 | X2 | the authority of a roster key ends with its eviction; any live roster key acts as the self | 3.3.6.4 |
 | X3 | replication of a peer's content needs that peer's consent; a revocation is a boundary | 3.3.7, 3.3.1 |
-| X4 | a local-tier row never leaves its node; a served row is a signed federation-tier row | 5.3.2.7, 2.6.1.8 |
+| X4 | a local-tier row never leaves its node; a served row is a signed federation-tier row | 5.3.2.7, 8.11.9 |
 | X5 | leaving the root is one act: the subscription falls and the latch lifts together, the record stands | 4.2.1 |
 
 `CewpNode.cfg` (three roster keys, one peer, two rows) **closes at 483,840 distinct states** (the reach pin `bound` of CC 4.2.1 added the difference).

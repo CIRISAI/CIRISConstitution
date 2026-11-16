@@ -86,7 +86,7 @@
   "file.large": {
    "plane": "content",
    "state_predicate": "blob.delivery=chunked",
-   "cc_ref": "2.6.1.4 5.3.3",
+   "cc_ref": "8.11.5 5.3.3",
    "in_state_table": true,
    "plane_models": "mesh_net"
   },

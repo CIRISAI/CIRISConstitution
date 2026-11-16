@@ -11,9 +11,9 @@ Source of truth: constitution/digest/promise_status.tsv  (surface, key, status, 
 Marker form: " *[status]*" or " *[status; note]*", appended to the line; an existing marker is
 replaced, so the run is idempotent. A legend line is kept under each surface's title; the
 executive summary keeps it where it stands, under the closing table.
-Vocabulary: works today = evidence in the register at a pinned commit; being built = a named
-ticket; a rule, no code yet = normative only; modelled = a formal witness, no code test;
-staged, with its ticket = register row exists, wire does not yet keep it; in code; no register row yet = shipped, no row to pin to.
+Vocabulary: works today = evidence in the register at a pinned commit (established); being built = a named
+ticket and no register row yet; a rule, no code yet = normative only; modelled = a formal witness, no code test;
+staged, with its ticket = register row exists and is staged, its artifact not yet resolvable; in code; no register row yet = shipped, no row to pin to.
 Run: python3 tools/build_promise_status.py
 """
 import csv, os, re, sys
@@ -23,9 +23,9 @@ FILES = {"plain": "constitution/digest/00_guarantees_plain.md",
          "exec": "constitution/EXECUTIVE_SUMMARY.md",
          "operator": "constitution/digest/00_operator_digest.md"}
 MARK = re.compile(r"\s*\*\[[^\]]*\]\*\s*$")
-LEGEND = ("*Status markers:* **works today** = evidence in the register at a pinned commit; "
-          "**being built** = a named ticket; **a rule, no code yet** = normative only; "
-          "**modelled** = a formal witness, no code test; **staged**, with its ticket = the register row exists and the wire does not yet keep it, the ticket names the work; "
+LEGEND = ("*Status markers:* **works today** = evidence in the register at a pinned commit, the row established; "
+          "**being built** = a named ticket and no register row yet; **a rule, no code yet** = normative only; "
+          "**modelled** = a formal witness, no code test; **staged**, with its ticket = the register row exists and is staged: its artifact is named by the ticket and not yet resolvable; "
           "**in code; no register row yet** = shipped, with no register row to pin it to. The markers are stamped from *The Evidence Register*.")
 
 def marker(status, note):

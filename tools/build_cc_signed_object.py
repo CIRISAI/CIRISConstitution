@@ -19,7 +19,12 @@ EnvelopeCore / RowMirror / Attestation structs at the pinned commit
 Outputs (all deterministic; CI regenerates and diffs):
   manifests/signed_object.json      the table as JSON with _meta (source hash, pin)
   manifests/signed_object.cddl      RFC 8610 CDDL (JSON profile, Appendix E) derived from the table
-  constitution/part_2_the_grammar.md the body of CC 2.6.1.8 between its heading and the next heading
+  the Part block           between the lines <!-- BEGIN GENERATED: signed_object --> and
+                           <!-- END GENERATED: signed_object --> in whichever Part holds them, or, with no
+                           markers, the body of the section whose heading slug is `signed-object`, from its
+                           heading to the next numbered heading. The section number in the outputs is that
+                           section's, and every link the block writes is resolved by heading slug, so the
+                           block follows its section wherever a re-cut puts it.
 
 Checks:
   --self-test            recompute every vector in manifests/signed_object_vectors.json:
@@ -40,16 +45,68 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(ROOT, "constitution", "signed_object.tsv")
 PINS = os.path.join(ROOT, "constitution", "evidence_pins.tsv")
-PART2 = os.path.join(ROOT, "constitution", "part_2_the_grammar.md")
+PARTS = os.path.join(ROOT, "constitution", "part_*.md")
 OUT_JSON = os.path.join(ROOT, "manifests", "signed_object.json")
 OUT_CDDL = os.path.join(ROOT, "manifests", "signed_object.cddl")
 VECTORS = os.path.join(ROOT, "manifests", "signed_object_vectors.json")
-SECTION = "2.6.1.8"
+SLUG = "signed-object"
+BEGIN = "<!-- BEGIN GENERATED: signed_object -->"
+END = "<!-- END GENERATED: signed_object -->"
 PLACEMENTS = ["signed:row", "signed:envelope", "signed:envelope-extra", "beside",
               "beside:signature", "beside:cosign", "local", "not-on-wire"]
 ROW_TYPES = ["scores", "delegates_to", "supersedes", "withdraws", "recants"]
 COHORT_SCOPES = ["self", "family", "community", "affiliations", "species", "biosphere", "federation"]
 ENVELOPE_CAP = 1_048_576
+
+
+def headings():
+    """{slug: (decimal, Part path)} for every numbered heading of the Parts."""
+    out = {}
+    for p in sorted(glob.glob(PARTS)):
+        for ln in open(p, encoding="utf-8").read().split("\n"):
+            m = re.match(r"^#{1,7}\s+(\d+(?:\.\d+)*)\s+`([^`]+)`", ln)
+            if m:
+                out.setdefault(m.group(2), (m.group(1), p))
+    return out
+
+
+def locate(text):
+    """(start, end, form): the line span of the block's body (the lines between the markers, or from below
+    the heading to the next numbered heading) in one Part's text, or None."""
+    lines = text.split("\n")
+    b = [i for i, l in enumerate(lines) if l.strip() == BEGIN]
+    e = [i for i, l in enumerate(lines) if l.strip() == END]
+    if b or e:
+        if len(b) != 1 or len(e) != 1 or e[0] < b[0]:
+            raise SystemExit("signed_object: the marker lines must stand once each, BEGIN before END")
+        return b[0] + 1, e[0], "markers"
+    for i, l in enumerate(lines):
+        if re.match(r"^#{2,6}\s+\d+(?:\.\d+)*\s+`" + re.escape(SLUG) + r"`", l):
+            j = i + 1
+            while j < len(lines) and not re.match(r"^#{2,6}\s+\d", lines[j]):
+                j += 1
+            return i + 1, j, "heading"
+    return None
+
+
+def target():
+    """(path, text, span, section number) of the Part that holds the block."""
+    hits = []
+    for p in sorted(glob.glob(PARTS)):
+        t = open(p, encoding="utf-8").read()
+        loc = locate(t)
+        if loc:
+            hits.append((p, t, loc))
+    hits = [h for h in hits if h[2][2] == "markers"] or hits
+    if len(hits) != 1:
+        raise SystemExit(f"signed_object: {len(hits)} Parts hold the block (markers or a `{SLUG}` heading); one must")
+    p, t, loc = hits[0]
+    sec = ""
+    for ln in t.split("\n")[:loc[0]]:
+        m = re.match(r"^#{1,7}\s+(\d+(?:\.\d+)*)\s", ln)
+        if m:
+            sec = m.group(1)
+    return p, t, loc, sec
 
 
 def sha256_file(p):
@@ -92,7 +149,7 @@ def build_json(rows):
     findings = sorted(set(m.group(1) for r in rows for m in [re.search(r"\(finding (F\d+)", r["note"])] if m))
     return OrderedDict([
         ("_meta", OrderedDict([
-            ("cc_section", SECTION),
+            ("cc_section", target()[3]),
             ("source", "constitution/signed_object.tsv"),
             ("source_sha256", sha256_file(SRC)),
             ("typed_from", OrderedDict([("repo", "CIRISPersist"), ("commit", persist_pin()),
@@ -130,10 +187,15 @@ TYPE_MAP = {
 }
 
 
-def cc_link(d):
-    """A section link from Part 2: same-file for 2.x, the owning Part's file otherwise."""
+def part_of(path):
+    m = re.match(r"part_(\d+)_", os.path.basename(path))
+    return m.group(1) if m else None
+
+
+def cc_link(d, here):
+    """A section link from the Part at `here`: same-file within that Part, the owning Part's file otherwise."""
     part = d.split(".")[0]
-    if part == "2":
+    if part == part_of(here):
         return f"[{d}](#{d})"
     hits = glob.glob(os.path.join(ROOT, "constitution", f"part_{part}_*.md"))
     return f"[{d}]({os.path.basename(hits[0])}#{d})" if hits else f"[{d}](#{d})"
@@ -169,7 +231,7 @@ def build_cddl(rows, meta):
     beside = [r for r in A if r["placement"] in ("beside", "beside:signature")]
     cosign = [r for r in A if r["placement"] == "beside:cosign"]
     out = []
-    out.append("; CC 2.6.1.8 — the signed object. GENERATED by tools/build_cc_signed_object.py from")
+    out.append(f"; CC {meta['_meta']['cc_section']} — the signed object. GENERATED by tools/build_cc_signed_object.py from")
     out.append("; constitution/signed_object.tsv; do not edit. RFC 8610 CDDL, JSON profile (Appendix E).")
     out.append(f"; Typed from CIRISPersist {meta['_meta']['typed_from']['commit']} src/federation/envelope.rs.")
     out.append("; The signing input is JCS(attestation-row.attestation_envelope), RFC 8785, and nothing else.")
@@ -182,15 +244,15 @@ def build_cddl(rows, meta):
     out.append("  ; persist-internal members (tier, promoted_at, withdraws_admission_rule) are not part of this contract")
     out.append("}")
     out.append("")
-    out.append("; The signed object. Member presence is exactly what the producer signed (CC 2.6.1.1):")
-    out.append("; an absent optional member is absent, never materialised; unknown members are preserved (CC 2.1.1).")
+    out.append("; The signed object. Member presence is exactly what the producer signed ({cc:round-trip}):")
+    out.append("; an absent optional member is absent, never materialised; unknown members are preserved ({cc:forward-compatibility}).")
     out.append("envelope = {")
     out.append("  row: row-mirror,  ; REQUIRED; the closed mirror of the seven columns beside the row")
     for r in env:
         e = cddl_entry(r)
         if e:
             out.append(e)
-    out.append("  * tstr => any,  ; family payload members (CC 3.3) and anything a consumer has not learned yet")
+    out.append("  * tstr => any,  ; family payload members ({cc:content-ingestion}) and anything a consumer has not learned yet")
     out.append("}")
     out.append("")
     out.append("; Closed: exactly these seven members. deny_unknown_fields.")
@@ -217,40 +279,52 @@ def build_cddl(rows, meta):
             out.append(e)
     out.append("}")
     out.append("")
-    out.append("; CC 2.1 consent_basis entry.")
+    out.append("; {cc:envelope} consent_basis entry.")
     out.append('consent-basis = { principal: key-id, paths: [* ("subject" / "occurrence_of" / "delegates_to")], attestation_id: uuid }')
     out.append("")
     out.append("row-type = " + " / ".join(f'"{t}"' for t in ROW_TYPES))
     out.append("cohort-scope = " + " / ".join(f'"{t}"' for t in COHORT_SCOPES))
     out.append('uuid = tstr .regexp "[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}"')
-    out.append('key-id = tstr .regexp "[a-z0-9-]+"  ; <label>-<fingerprint>, CC 2.6.8; a legacy 64-hex id is also a key-id')
-    out.append('canonical-id = tstr .regexp "canonical:[a-z0-9-]+:[0-9a-f]+"  ; CC 2.3.2.1, tag required')
+    out.append('key-id = tstr .regexp "[a-z0-9-]+"  ; <label>-<fingerprint>, {cc:key_id}; a legacy 64-hex id is also a key-id')
+    out.append('canonical-id = tstr .regexp "canonical:[a-z0-9-]+:[0-9a-f]+"  ; {cc:registry-canonical}, tag required')
     out.append("subject-id = key-id / canonical-id")
-    out.append('hex64 = tstr .regexp "[0-9a-f]{64}"  ; CC 2.6.3')
+    out.append('hex64 = tstr .regexp "[0-9a-f]{64}"  ; {cc:canonicalization-hexadecimal}')
     out.append('base64 = tstr .regexp "[A-Za-z0-9+/]+={0,2}"  ; RFC 4648 section 4, padded, no whitespace')
-    out.append('rfc3339-ms = tstr .regexp "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\\\.[0-9]{3}Z"  ; CC 2.6.2')
+    out.append('rfc3339-ms = tstr .regexp "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\\\.[0-9]{3}Z"  ; {cc:canonicalization}')
     out.append("rfc3339 = tstr  ; a column rendered by the store; the signed twin inside the envelope is rfc3339-ms")
     out.append("")
-    return "\n".join(out) + "\n"
+    return re.sub(r"\{cc:([^}]+)\}", lambda m: "CC " + headings()[m.group(1)][0], "\n".join(out) + "\n")
 
 
-# ---------------------------------------------------------------- Part 2 body
+# ---------------------------------------------------------------- the Part block
 def md_cell(s):
     return s.replace("|", "\\|")
 
 
-def build_section_body(rows, meta):
+def resolve(text, here):
+    """Each {cc:slug} becomes a link to the section that heading slug names, from the Part at `here`."""
+    heads = headings()
+
+    def link(m):
+        if m.group(1) not in heads:
+            raise SystemExit(f"signed_object: the block links to `{m.group(1)}`, and no heading has that slug")
+        d, p = heads[m.group(1)]
+        return f"[CC {d}](#{d})" if p == here else f"[CC {d}]({os.path.basename(p)}#{d})"
+    return re.sub(r"\{cc:([^}]+)\}", link, text)
+
+
+def build_section_body(rows, meta, here):
     A = [r for r in rows if r["object"] == "attestation_row"]
     K = [r for r in rows if r["object"] == "key_record"]
     L = []
     L.append("")
     L.append("*This table, [`manifests/signed_object.cddl`](../manifests/signed_object.cddl) and [`manifests/signed_object.json`](../manifests/signed_object.json) are rendered from one data file, and [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json) holds the byte vectors; the data is the source and the three never disagree.*")
     L.append("")
-    L.append("**The object (normative).** The signed object of an attestation row is `attestation_envelope`: one JSON object. The signing input is JCS(`attestation_envelope`) ([CC 2.6.1.4](#2.6.1.4)) and nothing else — the row's own signature members, every cosignature and every column beside the row are outside the bytes, so a cosignature is never inside the bytes it signs. Seven of those columns are mirrored *inside* the bytes under the member `row`, a closed set; a row with no mirror is refused `envelope_member_missing`, and a column that disagrees with its mirror is refused `typed_diverges_from_envelope`. The claim's instants ride inside the bytes as `asserted_at` and `expires_at`, and the columns are read back out of them. The row's own signature is the attester's: the classical half verifies against `attesting_key_id`'s pinned Ed25519 key over the signing input, the post-quantum half against its ML-DSA-65 key over the signing input followed by the raw Ed25519 signature ([hybrid-sig], [CC 2.6.5](#2.6.5)); at the federation tier both halves verify or the row is refused. `original_content_hash` is the lowercase hex SHA-256 of the signing input and is recomputed at ingest. A second signer over the same bytes is an entry of `additional_scrubs[]`, beside the row, verified against its own key. A JCS image above 1 MiB is refused `ENVELOPE_TOO_LARGE` ([CC 2.6.1.4](#2.6.1.4)).")
+    L.append("**The object (normative).** The signed object of an attestation row is `attestation_envelope`: one JSON object. The signing input is JCS(`attestation_envelope`) ({cc:canonical}) and nothing else — the row's own signature members, every cosignature and every column beside the row are outside the bytes, so a cosignature is never inside the bytes it signs. Seven of those columns are mirrored *inside* the bytes under the member `row`, a closed set; a row with no mirror is refused `envelope_member_missing`, and a column that disagrees with its mirror is refused `typed_diverges_from_envelope`. The claim's instants ride inside the bytes as `asserted_at` and `expires_at`, and the columns are read back out of them. The row's own signature is the attester's: the classical half verifies against `attesting_key_id`'s pinned Ed25519 key over the signing input, the post-quantum half against its ML-DSA-65 key over the signing input followed by the raw Ed25519 signature ([hybrid-sig], {cc:references}); at the federation tier both halves verify or the row is refused. `original_content_hash` is the lowercase hex SHA-256 of the signing input and is recomputed at ingest. A second signer over the same bytes is an entry of `additional_scrubs[]`, beside the row, verified against its own key. A JCS image above 1 MiB is refused `ENVELOPE_TOO_LARGE` ({cc:canonical}).")
     L.append("")
-    L.append("**Refusals at this door (normative).** A shape refusal of the signed object is the token `federation_malformed_row` with one reason from this closed set: `envelope_member_missing` (the mirror or another required member is absent), `envelope_member_invalid` (a member is ill-typed or an instant is not in the [CC 2.6.2](#2.6.2) form), `envelope_member_null` (an optional member is `null`), `typed_diverges_from_envelope` (a column beside the row differs from its mirror), `envelope_row_member_unknown` (the `row` mirror carries a member outside its closed seven), `content_hash_mismatch` (`original_content_hash` is not the SHA-256 of the signing input) and `subject_key_id_malformed` (an element of `subject_key_ids` is neither a `key_id` nor the tagged canonical form of [CC 2.3.2.1](#2.3.2.1)). A `withdraws` that meets no rule of [CC 2.4.1.1](#2.4.1.1) is refused `federation_withdraws_not_admitted`. A set out of order or with a duplicate is `federation_set_semantics_unsorted`, a type outside the five is `attestation_type_unregistered`, a failed signature half is `SIGNATURE_VERIFICATION_FAILED`, and an envelope over the cap is `ENVELOPE_TOO_LARGE`.")
+    L.append("**Refusals at this door (normative).** A shape refusal of the signed object is the token `federation_malformed_row` with one reason from this closed set: `envelope_member_missing` (the mirror or another required member is absent), `envelope_member_invalid` (a member is ill-typed or an instant is not in the {cc:canonicalization} form), `envelope_member_null` (an optional member is `null`), `typed_diverges_from_envelope` (a column beside the row differs from its mirror), `envelope_row_member_unknown` (the `row` mirror carries a member outside its closed seven), `content_hash_mismatch` (`original_content_hash` is not the SHA-256 of the signing input) and `subject_key_id_malformed` (an element of `subject_key_ids` is neither a `key_id` nor the tagged canonical form of {cc:registry-canonical}). A `withdraws` that meets no rule of {cc:withdraws} is refused `federation_withdraws_not_admitted`. A set out of order or with a duplicate is `federation_set_semantics_unsorted`, a type outside the five is `attestation_type_unregistered`, a failed signature half is `SIGNATURE_VERIFICATION_FAILED`, and an envelope over the cap is `ENVELOPE_TOO_LARGE`.")
     L.append("")
-    L.append("**Placement vocabulary.** `signed:row` — inside `attestation_envelope.row`. `signed:envelope` — inside `attestation_envelope`, typed by persist. `signed:envelope-extra` — inside `attestation_envelope`, typed by this table and defined in [CC 2.1](#2.1), carried untyped by persist and validated at the family's gate. `beside` — outside the bytes, replicated, bound to the bytes by a gate. `beside:signature` — the row's own signature members. `beside:cosign` — an `additional_scrubs[]` entry. `local` — persist-internal, not a wire contract. `not-on-wire` — named by this text, not carried on the wire. An array's kind is `set` (sorted by JCS string before signing) or `sequence` (as authored), per [CC 2.6.1.2](#2.6.1.2).")
+    L.append("**Placement vocabulary.** `signed:row` — inside `attestation_envelope.row`. `signed:envelope` — inside `attestation_envelope`, typed by persist. `signed:envelope-extra` — inside `attestation_envelope`, typed by this table and defined in {cc:envelope}, carried untyped by persist and validated at the family's gate. `beside` — outside the bytes, replicated, bound to the bytes by a gate. `beside:signature` — the row's own signature members. `beside:cosign` — an `additional_scrubs[]` entry. `local` — persist-internal, not a wire contract. `not-on-wire` — named by this text, not carried on the wire. An array's kind is `set` (sorted by JCS string before signing) or `sequence` (as authored), per {cc:canonicalization-array}.")
     L.append("")
 
     def table(title, subset):
@@ -259,7 +333,7 @@ def build_section_body(rows, meta):
         L.append("| Member | Placement | Type | Array | Presence | Default | CC | Note |")
         L.append("|---|---|---|---|---|---|---|---|")
         for r in subset:
-            cc = " ".join(cc_link(d) if d != "-" else "—" for d in r["cc_ref"].split())
+            cc = " ".join(cc_link(d, here) if d != "-" else "—" for d in r["cc_ref"].split())
             L.append("| `%s` | %s | `%s` | %s | %s | %s | %s | %s |" % (
                 md_cell(r["member"]), r["placement"], md_cell(r["type"]),
                 "—" if r["array_kind"] == "-" else r["array_kind"],
@@ -279,34 +353,24 @@ def build_section_body(rows, meta):
     L.append("**Rules this table carries.** "
              "A set-kind array is sorted **and** unique, refused otherwise as `federation_set_semantics_unsorted` with the member named; a relay never re-sorts it, since re-sorting would move signed bytes. "
              "The form an emitter writes for `scope` is the array; a bare token is admitted as the one-element array it denotes, and nothing is normalised in signed bytes. "
-             "An explicit JSON `null` on an optional member is refused as malformed ([CC 2.6.1.2](#2.6.1.2)). "
+             "An explicit JSON `null` on an optional member is refused as malformed ({cc:canonicalization-array}). "
              "`witnesses[]` is a set. "
-             "The quorum carrier is `additional_scrubs[]` beside the row, as [CC 2.1](#2.1) and [CC 2.4](#2.4) name it.")
+             "The quorum carrier is `additional_scrubs[]` beside the row, as {cc:envelope} and {cc:primitive} name it.")
     L.append("")
-    L.append("**Vectors.** [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json) carries two test identities (Ed25519 and ML-DSA-65 seeds, public keys and the [CC 2.6.8](#2.6.8) `key_id` derived from each), and for each vector the envelope, its JCS bytes, `original_content_hash`, both signature halves and the assembled row: a minimal `scores`; the same claim with an explicit default (different bytes, both verify, [CC 2.6.1.1](#2.6.1.1)); a cosigned variant; a `withdraws`; the at-cap and cap-plus-one envelopes as a recipe with their hashes; and refusal cases with their tokens. The signatures verify under the identities the file carries; the JCS bytes, the hashes and the Ed25519 half are recomputed from the vectors on every change to this document. A second implementation that reproduces these bytes and signatures has met the [CC 2.6.1.2](#2.6.1.2) byte-identity target for this object.")
+    L.append("**Vectors.** [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json) carries two test identities (Ed25519 and ML-DSA-65 seeds, public keys and the {cc:key_id} `key_id` derived from each), and for each vector the envelope, its JCS bytes, `original_content_hash`, both signature halves and the assembled row: a minimal `scores`; the same claim with an explicit default (different bytes, both verify, {cc:round-trip}); a cosigned variant; a `withdraws`; the at-cap and cap-plus-one envelopes as a recipe with their hashes; and refusal cases with their tokens. The signatures verify under the identities the file carries; the JCS bytes, the hashes and the Ed25519 half are recomputed from the vectors on every change to this document. A second implementation that reproduces these bytes and signatures has met the {cc:canonicalization-array} byte-identity target for this object.")
     L.append("")
-    return "\n".join(L)
+    return resolve("\n".join(L), here)
 
 
 def write_section(rows, meta):
-    text = open(PART2, encoding="utf-8").read().split("\n")
-    hdr = None
-    for i, ln in enumerate(text):
-        if re.match(r"^#{2,6}\s+" + re.escape(SECTION) + r"\s+`", ln):
-            hdr = i
-            break
-    if hdr is None:
-        raise SystemExit(f"CC {SECTION} heading not found in {PART2}; add it first")
-    nxt = len(text)
-    for j in range(hdr + 1, len(text)):
-        if re.match(r"^#{2,6}\s+\d", text[j]):
-            nxt = j
-            break
-    body = build_section_body(rows, meta).split("\n")
-    new = text[:hdr + 1] + body + text[nxt:]
-    out = "\n".join(new)
-    if out != "\n".join(text):
-        open(PART2, "w", encoding="utf-8").write(out)
+    path, text, (start, end, form), _ = target()
+    lines = text.split("\n")
+    body = build_section_body(rows, meta, path).split("\n")
+    if form == "markers":
+        body = body[1:] if body and body[0] == "" else body
+    out = "\n".join(lines[:start] + body + lines[end:])
+    if out != text:
+        open(path, "w", encoding="utf-8").write(out)
         return True
     return False
 
@@ -540,8 +604,9 @@ def main():
         f.write(build_cddl(rows, meta))
     changed = write_section(rows, meta)
     c = meta["_meta"]["counts"]
+    c_sec = meta["_meta"]["cc_section"]
     print(f"signed_object: {len(rows)} rows ({', '.join(f'{k} {v}' for k, v in c.items())}); "
-          f"source {meta['_meta']['source_sha256'][:12]}…; Part 2 {'updated' if changed else 'unchanged'}")
+          f"source {meta['_meta']['source_sha256'][:12]}…; CC {c_sec} {'updated' if changed else 'unchanged'}")
 
 
 if __name__ == "__main__":

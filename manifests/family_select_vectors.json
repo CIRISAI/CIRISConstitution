@@ -1,0 +1,2447 @@
+{
+ "_meta": {
+  "cc_version": "1.0-rc20",
+  "family_model_sha256": "04446a5b50ee07b94c21139cd770e0de84317fe9e84240e6f0d68ee574b8caa0",
+  "generator": "tools/cc_family_select.py",
+  "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown",
+  "keys": {
+   "leaf": "bound from the dimension: the family's non-literal segment values joined by ':', version tail stripped; `{name}` in a value matches one segment",
+   "verb": "caller-supplied: one of attest, authorize, replace, withdraw, recant",
+   "identity": "caller-supplied: the identity_type set of the identity the row concerns; holds when it contains a value",
+   "group": "caller-supplied: the cohort_scope of the group the row is about (family, community, affiliations)",
+   "seats": "caller-supplied: the group's deciding-seat count at the head the row names; `one` is 1",
+   "act": "caller-supplied: group when the row is the act of a roster under its consensus_protocol, several statements over one payload (CC 2.6.1.9); own when it is one signer's own row"
+  },
+  "counts": {
+   "false_beats_unknown": 7,
+   "holds": 67,
+   "no_arm": 2,
+   "not_holds": 52,
+   "order": 2,
+   "unknown": 36,
+   "unknown_after_decider": 8,
+   "wildcard": 3
+  }
+ },
+ "vectors": [
+  {
+   "family": "accord:*",
+   "cell": "authorship",
+   "dimension": "accord:lifecycle:active:v1",
+   "matcher_family": "accord:lifecycle:{kind}",
+   "leaf": "lifecycle:active",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=lifecycle:{kind}) is the first that holds"
+  },
+  {
+   "family": "accord:*",
+   "cell": "authorship",
+   "dimension": "accord:human_dignity:v1",
+   "matcher_family": "accord:human_dignity",
+   "leaf": "human_dignity",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=lifecycle:{kind}) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "accord:*",
+   "cell": "authorship",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=lifecycle:{kind}) is unknown and no later arm may decide"
+  },
+  {
+   "family": "accord:*",
+   "cell": "authorship",
+   "dimension": "accord:human_dignity:v1",
+   "matcher_family": "accord:human_dignity",
+   "leaf": "human_dignity",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "accord:*",
+   "cell": "authorship",
+   "dimension": "accord:lifecycle:active:v1",
+   "matcher_family": "accord:lifecycle:{kind}",
+   "leaf": "lifecycle:active",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "cell": "count",
+   "dimension": "accord:invoke:constitutional:id1:v1",
+   "matcher_family": "accord:invoke:constitutional:{halt_id}",
+   "leaf": "id1",
+   "ctx": {},
+   "expect": "accord_halt@accord",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "cell": "authorship",
+   "dimension": "accord:invoke:constitutional:id1:v1",
+   "matcher_family": "accord:invoke:constitutional:{halt_id}",
+   "leaf": "id1",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "cell": "count",
+   "dimension": "accord:lifecycle:confirmed:v1",
+   "matcher_family": "accord:lifecycle:{kind}",
+   "leaf": "confirmed",
+   "ctx": {},
+   "expect": "accord_halt@accord",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=confirmed) is the first that holds"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "cell": "count",
+   "dimension": "accord:lifecycle:active:v1",
+   "matcher_family": "accord:lifecycle:{kind}",
+   "leaf": "active",
+   "ctx": {},
+   "expect": "accord_majority@accord",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=confirmed) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "cell": "count",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=confirmed) is unknown and no later arm may decide"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "cell": "count",
+   "dimension": "accord:lifecycle:active:v1",
+   "matcher_family": "accord:lifecycle:{kind}",
+   "leaf": "active",
+   "ctx": {},
+   "expect": "accord_majority@accord",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (leaf=active) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "cell": "count",
+   "dimension": "accord:lifecycle:confirmed:v1",
+   "matcher_family": "accord:lifecycle:{kind}",
+   "leaf": "confirmed",
+   "ctx": {},
+   "expect": "accord_halt@accord",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "arm 1 (leaf=active) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "cell": "authorship",
+   "dimension": "accord:lifecycle:active:v1",
+   "matcher_family": "accord:lifecycle:{kind}",
+   "leaf": "active",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "ballot:moderator",
+   "cell": "count",
+   "dimension": "ballot:moderator:v1",
+   "matcher_family": "ballot:moderator",
+   "leaf": "",
+   "ctx": {},
+   "expect": "moderator_election@subject_group",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "ballot:moderator",
+   "cell": "authorship",
+   "dimension": "ballot:moderator:v1",
+   "matcher_family": "ballot:moderator",
+   "leaf": "",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "ballot:moderator_acceptance",
+   "cell": "count",
+   "dimension": "ballot:moderator_acceptance:v1",
+   "matcher_family": "ballot:moderator_acceptance",
+   "leaf": "",
+   "ctx": {},
+   "expect": "moderator_election@subject_group!result",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "ballot:moderator_acceptance",
+   "cell": "authorship",
+   "dimension": "ballot:moderator_acceptance:v1",
+   "matcher_family": "ballot:moderator_acceptance",
+   "leaf": "",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "collection:{kind}",
+   "cell": "authorship",
+   "dimension": "collection:sample:v1",
+   "matcher_family": "collection:{kind}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "collection:{kind}",
+   "cell": "authorship",
+   "dimension": "collection:sample:v1",
+   "matcher_family": "collection:{kind}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "collection:{kind}",
+   "cell": "authorship",
+   "dimension": "collection:sample:v1",
+   "matcher_family": "collection:{kind}",
+   "leaf": "sample",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "collection:{kind}",
+   "cell": "authorship",
+   "dimension": "collection:sample:v1",
+   "matcher_family": "collection:{kind}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "collection:{kind}",
+   "cell": "authorship",
+   "dimension": "collection:sample:v1",
+   "matcher_family": "collection:{kind}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "content_class:{class}",
+   "cell": "count",
+   "dimension": "content_class:reported:v1",
+   "matcher_family": "content_class:{class}",
+   "leaf": "reported",
+   "ctx": {},
+   "expect": "moderation_action@subject_group",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=reported) is the first that holds"
+  },
+  {
+   "family": "content_class:{class}",
+   "cell": "count",
+   "dimension": "content_class:zz_other:v1",
+   "matcher_family": "content_class:{class}",
+   "leaf": "zz_other",
+   "ctx": {},
+   "expect": null,
+   "decided_by": null,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=reported) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "content_class:{class}",
+   "cell": "count",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=reported) is unknown and no later arm may decide"
+  },
+  {
+   "family": "content_class:{class}",
+   "cell": "count",
+   "dimension": "content_class:zz_other:v1",
+   "matcher_family": "content_class:{class}",
+   "leaf": "zz_other",
+   "ctx": {},
+   "expect": null,
+   "decided_by": null,
+   "kind": "no_arm",
+   "why": "every arm reads false: the cell gives no answer for this row"
+  },
+  {
+   "family": "content_class:{class}",
+   "cell": "authorship",
+   "dimension": "content_class:sample:v1",
+   "matcher_family": "content_class:{class}",
+   "leaf": "sample",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "cosign:{state}",
+   "cell": "count",
+   "dimension": "cosign:pending:v1",
+   "matcher_family": "cosign:{state}",
+   "leaf": "pending",
+   "ctx": {},
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "group:roster",
+   "cell": "authorship",
+   "dimension": "group:roster:v1",
+   "matcher_family": "group:roster",
+   "leaf": "",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "identity:occurrence",
+   "cell": "count",
+   "dimension": "identity:occurrence:v1",
+   "matcher_family": "identity:occurrence",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "user"
+    ]
+   },
+   "expect": "self_roster_add@self",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (identity=user) is the first that holds"
+  },
+  {
+   "family": "identity:occurrence",
+   "cell": "count",
+   "dimension": "identity:occurrence:v1",
+   "matcher_family": "identity:occurrence",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "node"
+    ]
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (identity=user) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "identity:occurrence",
+   "cell": "count",
+   "dimension": "identity:occurrence:v1",
+   "matcher_family": "identity:occurrence",
+   "leaf": "",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "identity is not supplied, so arm 0 (identity=user) is unknown and no later arm may decide"
+  },
+  {
+   "family": "identity:occurrence",
+   "cell": "count",
+   "dimension": "identity:occurrence:v1",
+   "matcher_family": "identity:occurrence",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "node"
+    ]
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "identity:occurrence",
+   "cell": "count",
+   "dimension": "identity:occurrence:v1",
+   "matcher_family": "identity:occurrence",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "user"
+    ]
+   },
+   "expect": "self_roster_add@self",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "identity:occurrence",
+   "cell": "authorship",
+   "dimension": "identity:occurrence:v1",
+   "matcher_family": "identity:occurrence",
+   "leaf": "",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "count",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "node"
+    ]
+   },
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (identity=node|agent) is the first that holds"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "count",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "user"
+    ]
+   },
+   "expect": "self_roster_evict@self",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (identity=node|agent) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "count",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "identity is not supplied, so arm 0 (identity=node|agent) is unknown and no later arm may decide"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "count",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "user"
+    ]
+   },
+   "expect": "self_roster_evict@self",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (identity=user) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "count",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "node"
+    ]
+   },
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "arm 1 (identity=user) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "count",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "accord_holder"
+    ]
+   },
+   "expect": null,
+   "decided_by": null,
+   "kind": "no_arm",
+   "why": "every arm reads false: the cell gives no answer for this row"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "authorship",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "user"
+    ]
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (identity=user) is the first that holds"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "authorship",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "node"
+    ]
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (identity=user) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "authorship",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "identity is not supplied, so arm 0 (identity=user) is unknown and no later arm may decide"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "authorship",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "node"
+    ]
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "identity:occurrence_revocation",
+   "cell": "authorship",
+   "dimension": "identity:occurrence_revocation:v1",
+   "matcher_family": "identity:occurrence_revocation",
+   "leaf": "",
+   "ctx": {
+    "identity": [
+     "user"
+    ]
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "accord_majority@accord",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "accord_majority@accord",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "cosigned_act@dimension_authority",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "cosigned_act@dimension_authority",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "lineage_witness:{stage}",
+   "cell": "count",
+   "dimension": "lineage_witness:proposal:v1",
+   "matcher_family": "lineage_witness:{stage}",
+   "leaf": "proposal",
+   "ctx": {},
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:proposal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "proposal",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=proposal|acceptance|decline) is the first that holds"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:widening:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "widening",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "cosigned_act@subject_group",
+   "decided_by": 3,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=proposal|acceptance|decline) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=proposal|acceptance|decline) is unknown and no later arm may decide"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:proposal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "proposal",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "unknown_after_decider",
+   "why": "group is not supplied, and arm 0 decides before any arm that reads it"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:proposal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "proposal",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "unknown_after_decider",
+   "why": "seats is not supplied, and arm 0 decides before any arm that reads it"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:resignation:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "resignation",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (leaf=resignation) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:proposal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "proposal",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "arm 1 (leaf=resignation) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:resignation:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "resignation",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "unknown_after_decider",
+   "why": "group is not supplied, and arm 1 decides before any arm that reads it"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:resignation:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "resignation",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "unknown_after_decider",
+   "why": "seats is not supplied, and arm 1 decides before any arm that reads it"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:removal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "removal",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "affiliation_member_action@subject_group",
+   "decided_by": 2,
+   "kind": "holds",
+   "why": "arm 2 (leaf=removal & group=affiliations & seats=one) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:proposal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "proposal",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "arm 2 (leaf=removal & group=affiliations & seats=one) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:removal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "removal",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "group is not supplied, so arm 2 (leaf=removal & group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:removal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "removal",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "seats is not supplied, so arm 2 (leaf=removal & group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:proposal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "proposal",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "false_beats_unknown",
+   "why": "group is not supplied but leaf reads false, so arm 2 (leaf=removal & group=affiliations & seats=one) is false and the next arm is read"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:widening:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "widening",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "cosigned_act@subject_group",
+   "decided_by": 3,
+   "kind": "holds",
+   "why": "arm 3 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "count",
+   "dimension": "membership:proposal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "proposal",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "authorship",
+   "dimension": "membership:widening:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "widening",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=widening|removal) is the first that holds"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "authorship",
+   "dimension": "membership:proposal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "proposal",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=widening|removal) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "authorship",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=widening|removal) is unknown and no later arm may decide"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "authorship",
+   "dimension": "membership:proposal:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "proposal",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "membership:{stage}",
+   "cell": "authorship",
+   "dimension": "membership:widening:v1",
+   "matcher_family": "membership:{stage}",
+   "leaf": "widening",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "objection:{state}",
+   "cell": "count",
+   "dimension": "objection:proposal:v1",
+   "matcher_family": "objection:{state}",
+   "leaf": "proposal",
+   "ctx": {},
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "count",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "affiliation_member_action@subject_group",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (group=affiliations & seats=one) is the first that holds"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "count",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (group=affiliations & seats=one) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "count",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "group is not supplied, so arm 0 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "count",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "seats is not supplied, so arm 0 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "count",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "family"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "false_beats_unknown",
+   "why": "seats is not supplied but group reads false, so arm 0 (group=affiliations & seats=one) is false and the next arm is read"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "count",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "count",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "affiliation_member_action@subject_group",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "authorship",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (group=affiliations & seats=one) is the first that holds"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "authorship",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (group=affiliations & seats=one) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "authorship",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "group is not supplied, so arm 0 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "authorship",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "seats is not supplied, so arm 0 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "authorship",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "family"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "false_beats_unknown",
+   "why": "seats is not supplied but group reads false, so arm 0 (group=affiliations & seats=one) is false and the next arm is read"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "authorship",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "quarantine:{state}",
+   "cell": "authorship",
+   "dimension": "quarantine:sample:v1",
+   "matcher_family": "quarantine:{state}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "count",
+   "dimension": "retirement:custodian_minted:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "custodian_minted",
+   "ctx": {},
+   "expect": "custodian_replace",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=custodian_minted) is the first that holds"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "count",
+   "dimension": "retirement:zz_other:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "zz_other",
+   "ctx": {},
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=custodian_minted) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "count",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=custodian_minted) is unknown and no later arm may decide"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "count",
+   "dimension": "retirement:zz_other:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "zz_other",
+   "ctx": {},
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "count",
+   "dimension": "retirement:custodian_minted:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "custodian_minted",
+   "ctx": {},
+   "expect": "custodian_replace",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "authorship",
+   "dimension": "retirement:custodian_minted:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "custodian_minted",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=custodian_minted) is the first that holds"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "authorship",
+   "dimension": "retirement:zz_other:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "zz_other",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=custodian_minted) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "authorship",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=custodian_minted) is unknown and no later arm may decide"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "authorship",
+   "dimension": "retirement:zz_other:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "zz_other",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "authorship",
+   "dimension": "retirement:custodian_minted:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "custodian_minted",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "second_signers",
+   "dimension": "retirement:retired:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "retired",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "custodian",
+     "member": "custodian"
+    }
+   ],
+   "kind": "holds",
+   "why": "entry 0 (leaf=retired|custodian_minted) holds, so its role signs besides the author"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "second_signers",
+   "dimension": "retirement:zz_other:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "zz_other",
+   "ctx": {},
+   "expect": [],
+   "kind": "not_holds",
+   "why": "entry 0 (leaf=retired|custodian_minted) does not hold, so its role is not asked"
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "second_signers",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "kind": "unknown",
+   "why": "no dimension, so the leaf is unknown and entry 0 (leaf=retired|custodian_minted) answers unknown"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "count",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "affiliation_member_action@subject_group",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (group=affiliations & seats=one) is the first that holds"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "count",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (group=affiliations & seats=one) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "count",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "group is not supplied, so arm 0 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "count",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "seats is not supplied, so arm 0 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "count",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "family"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "false_beats_unknown",
+   "why": "seats is not supplied but group reads false, so arm 0 (group=affiliations & seats=one) is false and the next arm is read"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "count",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "count",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "affiliation_member_action@subject_group",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "authorship",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (group=affiliations & seats=one) is the first that holds"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "authorship",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (group=affiliations & seats=one) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "authorship",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "group is not supplied, so arm 0 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "authorship",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "seats is not supplied, so arm 0 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "authorship",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "family"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "false_beats_unknown",
+   "why": "seats is not supplied but group reads false, so arm 0 (group=affiliations & seats=one) is false and the next arm is read"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "authorship",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "slashing:{outcome}",
+   "cell": "authorship",
+   "dimension": "slashing:sample:v1",
+   "matcher_family": "slashing:{outcome}",
+   "leaf": "sample",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:steward_purge:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "steward_purge",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "cosigned_act@trust_root",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=steward_purge) is the first that holds"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "affiliation_member_action@subject_group",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=steward_purge) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=steward_purge) is unknown and no later arm may decide"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:steward_purge:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "steward_purge",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "cosigned_act@trust_root",
+   "decided_by": 0,
+   "kind": "unknown_after_decider",
+   "why": "group is not supplied, and arm 0 decides before any arm that reads it"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:steward_purge:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "steward_purge",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "cosigned_act@trust_root",
+   "decided_by": 0,
+   "kind": "unknown_after_decider",
+   "why": "seats is not supplied, and arm 0 decides before any arm that reads it"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:steward_purge:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "steward_purge",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "cosigned_act@trust_root",
+   "decided_by": 0,
+   "kind": "order",
+   "why": "arms 0 (leaf=steward_purge) and 1 (group=affiliations & seats=one) both hold; the earlier decides"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "affiliation_member_action@subject_group",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (group=affiliations & seats=one) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "none",
+   "decided_by": 2,
+   "kind": "not_holds",
+   "why": "arm 1 (group=affiliations & seats=one) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "group is not supplied, so arm 1 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "seats is not supplied, so arm 1 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "family"
+   },
+   "expect": "none",
+   "decided_by": 2,
+   "kind": "false_beats_unknown",
+   "why": "seats is not supplied but group reads false, so arm 1 (group=affiliations & seats=one) is false and the next arm is read"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "none",
+   "decided_by": 2,
+   "kind": "holds",
+   "why": "arm 2 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "count",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "affiliation_member_action@subject_group",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:steward_purge:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "steward_purge",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=steward_purge) is the first that holds"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=steward_purge) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=steward_purge) is unknown and no later arm may decide"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:steward_purge:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "steward_purge",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "unknown_after_decider",
+   "why": "group is not supplied, and arm 0 decides before any arm that reads it"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:steward_purge:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "steward_purge",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "unknown_after_decider",
+   "why": "seats is not supplied, and arm 0 decides before any arm that reads it"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:steward_purge:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "steward_purge",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "order",
+   "why": "arms 0 (leaf=steward_purge) and 1 (group=affiliations & seats=one) both hold; the earlier decides"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (group=affiliations & seats=one) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "authored",
+   "decided_by": 2,
+   "kind": "not_holds",
+   "why": "arm 1 (group=affiliations & seats=one) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "seats": 1
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "group is not supplied, so arm 1 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations"
+   },
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "seats is not supplied, so arm 1 (group=affiliations & seats=one) is unknown and no later arm may decide"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "family"
+   },
+   "expect": "authored",
+   "decided_by": 2,
+   "kind": "false_beats_unknown",
+   "why": "seats is not supplied but group reads false, so arm 1 (group=affiliations & seats=one) is false and the next arm is read"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 2
+   },
+   "expect": "authored",
+   "decided_by": 2,
+   "kind": "holds",
+   "why": "arm 2 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "cell": "authorship",
+   "dimension": "takedown_notice:dmca512:v1",
+   "matcher_family": "takedown_notice:{basis}",
+   "leaf": "dmca512",
+   "ctx": {
+    "group": "affiliations",
+    "seats": 1
+   },
+   "expect": "counted",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "transport:canonical_rebind",
+   "cell": "count",
+   "dimension": "transport:canonical_rebind:v1",
+   "matcher_family": "transport:canonical_rebind",
+   "leaf": "",
+   "ctx": {},
+   "expect": "accord_majority@accord",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "transport:canonical_rebind",
+   "cell": "authorship",
+   "dimension": "transport:canonical_rebind:v1",
+   "matcher_family": "transport:canonical_rebind",
+   "leaf": "",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "authorship",
+   "dimension": "trust:sample:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "authorship",
+   "dimension": "trust:sample:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "authorship",
+   "dimension": "trust:sample:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "sample",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "authorship",
+   "dimension": "trust:sample:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "authorship",
+   "dimension": "trust:sample:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "second_signers",
+   "dimension": "trust:confers:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "confers",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "holds",
+   "why": "entry 0 (leaf=confers) holds, so its role signs besides the author"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "second_signers",
+   "dimension": "trust:zz_other:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "zz_other",
+   "ctx": {},
+   "expect": [],
+   "kind": "not_holds",
+   "why": "entry 0 (leaf=confers) does not hold, so its role is not asked"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "second_signers",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "kind": "unknown",
+   "why": "no dimension, so the leaf is unknown and entry 0 (leaf=confers) answers unknown"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "second_signers",
+   "dimension": "trust:confers:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "confers",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "holds",
+   "why": "entry 1 (leaf=confers) holds, so its role signs besides the author"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "second_signers",
+   "dimension": "trust:zz_other:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "zz_other",
+   "ctx": {},
+   "expect": [],
+   "kind": "not_holds",
+   "why": "entry 1 (leaf=confers) does not hold, so its role is not asked"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "second_signers",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "kind": "unknown",
+   "why": "no dimension, so the leaf is unknown and entry 1 (leaf=confers) answers unknown"
+  },
+  {
+   "family": "wa_adjudication:{state}",
+   "cell": "authorship",
+   "dimension": "wa_adjudication:abandonment:v1",
+   "matcher_family": "wa_adjudication:{state}",
+   "leaf": "abandonment",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (leaf=abandonment|seizure|successor) is the first that holds"
+  },
+  {
+   "family": "wa_adjudication:{state}",
+   "cell": "authorship",
+   "dimension": "wa_adjudication:petition:v1",
+   "matcher_family": "wa_adjudication:{state}",
+   "leaf": "petition",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (leaf=abandonment|seizure|successor) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "wa_adjudication:{state}",
+   "cell": "authorship",
+   "dimension": null,
+   "matcher_family": null,
+   "leaf": null,
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "the dimension is not supplied, so arm 0 (leaf=abandonment|seizure|successor) is unknown and no later arm may decide"
+  },
+  {
+   "family": "wa_adjudication:{state}",
+   "cell": "authorship",
+   "dimension": "wa_adjudication:petition:v1",
+   "matcher_family": "wa_adjudication:{state}",
+   "leaf": "petition",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "wa_adjudication:{state}",
+   "cell": "authorship",
+   "dimension": "wa_adjudication:abandonment:v1",
+   "matcher_family": "wa_adjudication:{state}",
+   "leaf": "abandonment",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "accord:*",
+   "cell": "authorship",
+   "dimension": "accord:lifecycle:v1",
+   "matcher_family": "accord:lifecycle",
+   "leaf": "lifecycle",
+   "ctx": {},
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "wildcard",
+   "why": "the leaf lifecycle has a different segment count from lifecycle:{kind}, so the wildcard does not match"
+  },
+  {
+   "family": "accord:*",
+   "cell": "authorship",
+   "dimension": "accord:lifecycle:active:v1",
+   "matcher_family": "accord:lifecycle:{kind}",
+   "leaf": "lifecycle:active",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "wildcard",
+   "why": "the leaf lifecycle:active fills lifecycle:{kind}: `{name}` matches any one segment"
+  },
+  {
+   "family": "accord:*",
+   "cell": "authorship",
+   "dimension": "accord:lifecycle:confirmed:v1",
+   "matcher_family": "accord:lifecycle:{kind}",
+   "leaf": "lifecycle:confirmed",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "wildcard",
+   "why": "the leaf lifecycle:confirmed fills lifecycle:{kind}: `{name}` matches any one segment"
+  }
+ ]
+}
