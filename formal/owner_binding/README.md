@@ -41,8 +41,24 @@ The fold holds all eight, and it is the rule (CC 3.2, the steward's ruling of 20
 
 Every reading with a door that refuses gives something up. A refusal that is final leaves two nodes with the same rows reading different owners. A cosign asked only of the first binding opens a released key to the first claimant. And where the node's own key cosigns for two owners, a door keeps whichever arrived first, so two nodes differ for good; the fold reads no owner at both. The check pins what each door reading gives up, so the reason the door went is on record (conflict C557).
 
-**What it does not model.** Lapse by `delegation_valid_until` (a withdrawal stands for it); who may be an owner
-(the `user` role and the age band, `formal/age_assurance`); the audience of each re-signed row (`formal/mesh_net`);
+**Steward-bound: one owner, or a set of guardians.** A second section reads `is_steward_bound` over every set of up
+to four rows about one subject, in every order (1,551 runs). The subject is a `node`, an `agent` or a minor's `user`
+key. A binding is by one of two adults or by a person a row on record places in a minor band, and each may be withdrawn.
+
+| | Property | Planted break |
+|---|---|---|
+| S1 | a minor with two live guardian bindings is steward-bound: the bindings are read as a set | `single_for_minor` |
+| S2 | a minor with no live guardian binding is not steward-bound | `withdrawal_ignored` |
+| S3 | a binding by a person a row on record places in a minor band binds nothing, so a minor owns no node or agent | `minor_may_own` |
+| S4 | a node or an agent with two live owners is not steward-bound: the single-owner rule stands | `set_for_node` |
+| S5 | the reading is a function of the rows held, whatever the order | `first_arrival` |
+
+All five hold and every plant is caught. The minor-band test reads the band row, another row, so it sits in the
+reading and not at the binding's door: a minor's binding is held and counts for nothing, as a stranger's does. An
+owner with no band row on record counts, as CC 3.4.13's fail-secure rule lets an unassured owner announce a node.
+
+**What it does not model.** Lapse by `delegation_valid_until` (a withdrawal stands for it); how a band comes to
+be on record (`formal/age_assurance`); the audience of each re-signed row (`formal/mesh_net`);
 the steward-binding gate on admission (`formal/membership`).
 
 Run: `python3 formal/owner_binding/owner_binding_model.py --check`

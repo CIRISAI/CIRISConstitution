@@ -67,7 +67,7 @@ Self-judgement alone is insufficient; these standing bodies keep oversight exter
 * Deferral Deliberation Councils for meta-review of WBD quality.
 * Regular external audits; results published with redactions as needed.
 
-**Scale of the operational duties (normative).** A cadence or count below binds at the scale its row names. Below that scale the duty is recommended and not owed. A row marked never owed binds at no scale: it states where a steward's chosen and recorded conduct applies ([CC 7.5.5](#7.5.5)). An autonomy tier is that of [CC 7.5.3.1](#7.5.3.1) and a Stewardship Tier that of [CC 7.3.3](#7.3.3). A user count is of monthly active users.
+**Scale of the operational duties (normative).** A cadence or count below binds at the scale its row names. Below that scale the duty is recommended and not owed. An autonomy tier is that of [CC 7.5.3.1](#7.5.3.1) and a Stewardship Tier that of [CC 7.3.3](#7.3.3). A user count is of monthly active users.
 
 | Duty | Stated at | Binds at | Period, and when it starts |
 |---|---|---|---|
@@ -79,8 +79,8 @@ Self-judgement alone is insufficient; these standing bodies keep oversight exter
 | Group review of a collective action | [CC 7.3.4](#7.3.4) E | an expected affected population over 50 000 individuals | before the action |
 | Publish a collective action's rationale | [CC 7.3.4](#7.3.4) E | every collective action | within 30 days of the action's initiation |
 | Stakeholder vote as a sunset trigger | [CC 7.5.3](#7.5.3) | a public-facing system with more than 100 000 monthly active users | when the vote is taken |
-| Public notice of a decommissioning | [CC 7.5.4](#7.5.4) stage 1 | Stewardship Tier 3 or above, or more than 50 000 monthly active users; chosen and recorded conduct, never owed | at least 90 days before the shutdown |
-| Post-mortem review | [CC 7.5.4](#7.5.4) stage 6 | every decommissioning; chosen and recorded conduct, never owed | within 120 days of the shutdown |
+| Public notice of a decommissioning | [CC 7.5.4](#7.5.4) stage 1 | Stewardship Tier 3 or above, or more than 50 000 monthly active users | at least 90 days before the shutdown |
+| Post-mortem review | [CC 7.5.4](#7.5.4) stage 6 | every decommissioning | within 120 days of the shutdown |
 
 The affected population of a collective action and the audience of a creation are counts of people reached, not of users, and are named apart. The scale gate of [CC 4.5.1](part_4_composition_governance.md#4.5.1) counts nodes across the mesh and grades no deployment's duties.
 
@@ -231,7 +231,7 @@ This initial RM assessment is predictive, based on the intended design and fores
 **STEP C: Stewardship Tier (ST)**
 Calculate the Stewardship Tier based on influence and potential risk.
 
-`ST = ceil( (CIS × RM) / 7 )` — a whole number from 1 to 5 for every party on the ledger.
+`ST = ceil( (CIS × RM) / 7 )` — a whole number from 1 to 5 for every party on the ledger. A system's Stewardship Tier is the highest tier of any party on its Creator Ledger.
 
 **CIS = 0 is out of scope, not a tier.** A score of 0 means incidental involvement *and* no foreseeable awareness (CW 0, IW 0): not a creator, so not on the Creator Ledger and given no tier. Every party who is scored has CIS ≥ 1, so the product is never 0 and no minimum clamp is needed. Awareness without action is a tier: a party involved only incidentally (CW 0) who was negligent, looked away, or wanted the outcome scores IW 1–3, hence CIS 1–3, and at RM 5 lands on Tier 1, 2 or 3. CW and IW are whole numbers; there are no fractional grades.
 
@@ -362,7 +362,7 @@ Per EU AI Act Article 14, oversight is commensurate with the level of autonomy. 
 
 ### 7.5.4 `4-de` — Chapter 4: De-commissioning Protocol (DCP)
 
-Once a trigger fires, decommissioning is not an event but a sequence. A steward's decommissioning runs through six ordered stages: from advance notice, through ethically designed shutdown and the safe handling of data and hardware, to the assignment of residual duties and a closing review. Each stage closes off a way that an ending can go wrong. Of the six, the [CC 7.5.5](#7.5.5) Retirement Standard is the telling of stakeholders in stage 1 and the record of stage 3: identity, audit trail, memory and logs kept, the logs sealed, the sealed archive handed over. Everything else here, the notice periods, the Sunset PDMA and Welfare Audit, hardware disposal, the contracts of stage 5 and the review of stage 6, is conduct a steward chooses and records:
+Once a trigger fires, decommissioning is not an event but a sequence. A steward's decommissioning runs through six ordered stages: from advance notice, through ethically designed shutdown and the safe handling of data and hardware, to the assignment of residual duties and a closing review. Each stage closes off a way that an ending can go wrong. Of the six, the [CC 7.5.5](#7.5.5) Retirement Standard is the telling of stakeholders in stage 1 and the record of stage 3: identity, audit trail, memory and logs kept, the logs sealed, the sealed archive handed over. The notice of stage 1 and the review of stage 6 are owed at the scale [CC 7.1.5](#7.1.5) states. Everything else here, the Sunset PDMA and Welfare Audit, hardware disposal and the contracts of stage 5, is conduct a steward chooses and records:
 
 1. **Advance Notice & Consultation**
    * ≥ 90 days public notice before the shutdown for systems with ST ≥ 3 or more than 50 000 monthly active users.

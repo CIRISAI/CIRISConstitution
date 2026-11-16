@@ -3,7 +3,7 @@
 # One row per statement of the text. The quote must stand verbatim in the cited section. The family `*` is every family.
 family	change	cc_ref	quote
 key:record	replace[recovery]: by=committed_key	CC 2.1	A holder rotates lost signing-key material by a self-`supersedes` under a key whose record hashes to its entry.
-trust:{job}:{version}	replace: by=cosigned_prior	CC 2.1	A change is a charter re-scrub, witnessed by the directory before it.
+trust:{job}:{version}	replace: by=cosigned_prior	CC 2.1	A change is a later bundle, an amend ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)), witnessed by the directory before it.
 key:revocation	replace: field=revoked_after:lower	CC 2.4	`revoked_after` only ever lowering
 key:revocation	replace: field=revoked_after:lower	CC 2.4.1.1	A later revocation MAY lower it and MUST NOT raise it
 transport:canonical_rebind	attest: by=cosigned, reach=other_attester, void=transport_rebind_without_holder_quorum	CC 3.1.3	It lands Rooted on every node that holds the root and **supersedes the bundle-seeded binding**

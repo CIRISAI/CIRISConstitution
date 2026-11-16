@@ -36,7 +36,7 @@ Each promise holds for human and AI participants alike. Each ends with a short s
 
 10. **What an agent and its node consume is measured, weighed before an act, and never hidden.** An agent counts the tokens, energy, carbon and water it uses, and sees the count before it acts. A node under pressure protects itself by a published ladder. What an agent costs the world is on the record like its other acts. *[in code; no register row yet]*
 
-11. **Everything on the wire is encrypted and signed.** Every link and record is encrypted end to end with hybrid post-quantum keys, and a removed member cannot read what comes after. No act can be forged, and no producer can show two viewers two histories. Software runs only against a registered build. *[works today in part]*
+11. **Everything on the wire is encrypted and signed.** Every link and record is encrypted end to end with hybrid post-quantum keys, and a removed member cannot read what comes after. No act can be forged without the keys that sign it, and no producer can show two viewers two histories. Software runs only against a registered build. *[works today in part]*
 
 Two things sit beside the promises. This document creates no legal claim and rules on no legal matter. And every rule names what keeps it, or the register says nothing does yet.
 

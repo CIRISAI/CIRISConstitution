@@ -33,6 +33,18 @@ Properties, over every set of up to four rows in every order of arrival:
   O7  the same, where the node's key cosigned two bindings for one unowned period
   O8  a reader that holds two live owners reads none and never picks one
 
+Steward-bound (CC 3.2 `is_steward_bound`, CC 3.4.13 Q7), over every set of up to four rows about one subject in
+every order of arrival. The subject is a `node`, an `agent` or a minor's `user` key; a binding is by an adult, by a
+second adult, or by a person a row on record places in a minor band, and each may be withdrawn:
+
+  S1  a minor with two live guardian bindings is steward-bound (the bindings are read as a set)
+  S2  a minor with no live guardian binding is not steward-bound
+  S3  a binding by a person a row on record places in a minor band binds nothing: a minor owns no node or agent
+  S4  a node or an agent with two live owners is not steward-bound (the single-owner rule stands)
+  S5  the reading is a function of the rows held, whatever the order
+
+Each has a planted break the check must catch.
+
 The rule is the last reading: nothing is refused and forgotten, the reader counts the live bindings the node's
 own key cosigned, and any count other than one is no owner (CC 3.2). It holds all eight. Every reading with a door
 that refuses gives something up, and the check pins what, so the reason the door went is on record (C557).
@@ -143,8 +155,68 @@ EXPECTED = {("final", "first"): {"O2", "O5", "O6", "O7"}, ("final", "unowned"): 
             ("again", "first"): {"O5", "O6", "O7"}, ("again", "unowned"): {"O7"}, ("fold", "unowned"): set()}
 
 
+# ---- steward-bound: a set of guardians for a minor, one owner for a node or an agent ----------------------------
+SUBJECTS = ("node", "agent", "minor")
+PEOPLE = {"A": "adult", "B": "adult", "M": "minor"}     # M: a row on record places this person in a minor band
+SROWS = [("bind", x) for x in PEOPLE] + [("withdraw", x) for x in PEOPLE]
+SMUT = set()
+
+
+def steward_bound(subject, order):
+    held = list(order)
+    if "first_arrival" in SMUT:                          # PLANT: the first binding to arrive decides
+        firsts = [r for r in held if r[0] == "bind"]
+        return bool(firsts) and firsts[0][1] not in {r[1] for r in held if r[0] == "withdraw"}
+    gone = set() if "withdrawal_ignored" in SMUT else {r[1] for r in held if r[0] == "withdraw"}
+    live = {r[1] for r in held if r[0] == "bind" and r[1] not in gone}
+    if "minor_may_own" not in SMUT:
+        live = {x for x in live if PEOPLE[x] == "adult"}  # an owner and a guardian are adults
+    if subject == "minor" and "single_for_minor" not in SMUT:
+        return len(live) >= 1                            # a guardian set: one live guardian binds
+    if subject != "minor" and "set_for_node" in SMUT:
+        return len(live) >= 1
+    return len(live) == 1
+
+
+def steward_check():
+    fail = {}
+    n = 0
+    for subject in SUBJECTS:
+        for size in range(0, 5):
+            for rows in itertools.combinations(SROWS, size):
+                seen = set()
+                for order in itertools.permutations(rows):
+                    n += 1
+                    v = steward_bound(subject, order); seen.add(v)
+                    wd = {r[1] for r in rows if r[0] == "withdraw"}
+                    live = {r[1] for r in rows if r[0] == "bind" and r[1] not in wd}
+                    adults = {x for x in live if PEOPLE[x] == "adult"}
+                    if subject == "minor" and len(adults) >= 2 and not v: fail.setdefault("S1", (subject, order))
+                    if subject == "minor" and not adults and v: fail.setdefault("S2", (subject, order))
+                    if live == {"M"} and v: fail.setdefault("S3", (subject, order))
+                    if subject != "minor" and len(adults) >= 2 and v: fail.setdefault("S4", (subject, order))
+                if len(seen) > 1: fail.setdefault("S5", (subject, rows))
+    return n, fail
+
+
+STEWARD_PLANTS = {"S1": "single_for_minor", "S2": "withdrawal_ignored", "S3": "minor_may_own", "S4": "set_for_node",
+                  "S5": "first_arrival"}
+
+
+def steward_main():
+    n, fail = steward_check()
+    rc = 0 if not fail else 1
+    print(f"  steward-bound: {n} runs over node, agent and minor subjects, S1-S5 " + ("hold" if not fail else f"break {sorted(fail)}"))
+    for p, plant in sorted(STEWARD_PLANTS.items()):
+        SMUT.add(plant); _, f = steward_check(); SMUT.discard(plant)
+        caught = p in f
+        rc |= 0 if caught else 1
+        print(f"    plant {plant}: {p} " + ("caught" if caught else "NOT CAUGHT"))
+    return rc
+
+
 def main():
-    rc = 0
+    rc = steward_main()
     for refusal, cosign in READINGS:
         n, fail = check(refusal, cosign)
         bad = {p for p, v in fail.items() if v}
@@ -153,7 +225,7 @@ def main():
         print(f"  refusal {refusal:5} cosign {cosign:7}: {n} runs, gives up {', '.join(sorted(bad)) or 'nothing'}" + ("" if ok else f"  FAIL expected {sorted(EXPECTED[(refusal, cosign)])}"))
         if "-v" in sys.argv:
             for p in sorted(bad): print(f"    {p}: {fail[p]}")
-    print("owner_binding: the fold over counted bindings holds O1-O8; each of the four door readings gives up what is pinned (C557)" if not rc else "owner_binding: FAIL")
+    print("owner_binding: the fold over counted bindings holds O1-O8 and S1-S5; each of the four door readings gives up what is pinned (C557)" if not rc else "owner_binding: FAIL")
     return rc
 
 if __name__ == "__main__":

@@ -125,9 +125,11 @@ orders and records which survive. Three made-up families that fit no shape must 
 states its own end, at most `key_record_max_secs` after its `asserted_at`, read from the record alone. A key is
 live while one of its own records covers now, renewal is a further record of the key, and rotation is the next
 key's record carrying the old key's signature. A row lapses when its key has ended and no row that has not
-lapsed has it in its past. The check reads ten properties over 5,670 generated worlds at six instants in eight
+lapsed has it in its past. Only the key's own revocation ends its liveness: the owner's revocation ends the
+owner-binding's standing and the seating roster's removal ends the seat, and neither moves liveness. The check reads
+twelve properties over 9,450 generated worlds at six instants in eight
 arrival orders each, with a plant per property that must be caught. It runs six candidate readings of "renewed
-in time", the class condition read from the record and from an owner-binding, ten attacks in every arrival
+in time", the class condition read from the record and from an owner-binding, eleven attacks in every arrival
 order of up to seven rows, and the store's steady state from stated rates. Nothing here is measured. Whoever
 holds an ended key's private half can revive it, and that is recorded as conceded.
 

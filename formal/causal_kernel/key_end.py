@@ -16,6 +16,8 @@ Rows (dicts of causal_kernel.row):
              optionally `about` a key and naming further rows.
     edge     a trust edge `signer -> to`, an att with `to`.
     revoke   the key's own revocation, `ra` = revoked_after (statements after it do not count; never withdrawn).
+    unbind   another voice's revocation of the key: the owner's (`of` = "binding") or the seating roster's removal
+             (`of` = "seat"), from instant `ra`. It ends that standing and never the key's liveness (CC 2.4.1.1).
 
 Layers
     kept       CK.kept with WF below (the row alone).
@@ -62,6 +64,11 @@ def edge(id, signer, to, at, cover, names=()):
 
 def revoke(id, key, ra):
     return CK.row(id, "revoke", key, (), key=key, ra=ra)
+
+
+def unbind(id, signer, key, ra, of="binding"):
+    """Another voice's revocation of `key`: the owner's ends the owner-binding's standing, the roster's the seat."""
+    return CK.row(id, "revoke", signer, (), key=key, ra=ra, of=of)
 
 
 # ---- the door: the row alone -----------------------------------------------------------------------------
@@ -143,8 +150,19 @@ def recs(S, k):
 
 
 def rev_bound(S, k):
-    ras = [r["ra"] for r in K.sel(S.Cs, kind="revoke") if r["key"] == k and r["signer"] == k]
+    ras = [r["ra"] for r in K.sel(S.Cs, kind="revoke") if r["key"] == k and (r["signer"] == k or "other_ends_life" in MUT)]
     return min(ras) if ras else INF
+
+
+def standing(S, k, now, of):
+    """The key's standing in its owner-binding (`of` = "binding") or its seat (`of` = "seat"): it holds while the key
+    is live and no revocation of that standing by another voice has taken effect by now (CC 2.4.1.1)."""
+    if not live(S, k, now):
+        return False
+    if "unbind_ignored" in MUT:           # PLANT: the owner's revocation and the roster's removal end nothing
+        return True
+    return not any(r["key"] == k and r["signer"] != k and r.get("of") == of and now >= r["ra"]
+                   for r in K.sel(S.Cs, kind="revoke"))
 
 
 def live(S, k, now, witnessed_late=False):
@@ -222,6 +240,7 @@ def answers(S, now, keys, parties, subjects):
     return {
         "live": frozenset(k for k in keys if live(S, k, now)),
         "ended": frozenset(k for k in keys if ended(S, k, now)),
+        "standing": frozenset((k, of) for k in keys for of in ("binding", "seat") if standing(S, k, now, of)),
         "succ": tuple((k, successor(S, k, ret)) for k in keys),
         "reach": tuple((p, reach(S, p, now, keys, ret)) for p in parties),
         "score": tuple((s, score(S, s, now, ret)) for s in subjects),

@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc20",
-    "registry_sha256": "8907d420b32ec88c95d3486b05087a4b651866786048fe7387e712886bfd4c96",
+    "registry_sha256": "3baa258c9c360775323fd85719ed7f87b8766099895425dfd0f07fcef75dfd07",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -4865,6 +4865,42 @@
       "family": "locality:decision:{scale}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "location_proof:v1",
+      "family": "location_proof:{version}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "location_proof:V1",
+      "family": "location_proof:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "location_proof:v1:v2",
+      "family": "location_proof:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "location_proof:v1beta",
+      "family": "location_proof:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Location_proof:v1",
+      "family": "location_proof:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "location_proof",
+      "family": "location_proof:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
     },
     {
       "dimension": "manifold_conformity:id1:v1",

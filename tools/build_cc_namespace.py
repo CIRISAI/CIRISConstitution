@@ -209,6 +209,9 @@ def _reserved_rules():
         # CC 3.3.2 / 3.1.3 key wraps: sealer- or minter-signed, about the recipient occurrence.
         (lambda p, c: p.startswith("key_grant:"),
          "sealer-only: attesting_key_id speaks for the content/stream owner (content, stream) or is the epoch's minter (epoch); attested_key_id = the recipient occurrence; never withdrawn", "CC 3.3.2"),
+        # CC 3.3.3 / 4.5.9: a location proof is the subject's own act.
+        (lambda p, c: p.startswith("location_proof:"),
+         "subject-only (attesting_key_id is the subject; no delegation mints one)", "CC 4.5.9"),
         # CC 3.1.3 legacy delegation labels: not a substrate self-report.
         (lambda p, c: p.startswith("self:delegates_to"),
          "legacy label on an owner's own delegates_to row; claims no job, confers nothing; closed", "CC 3.1.3"),
