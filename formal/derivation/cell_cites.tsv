@@ -393,7 +393,7 @@ identity:occurrence	signer_rule	agree	CC 3.3.6	**Admission is roster maintenance
 identity:occurrence	signer_rule	agree	CC 3.3.6.1	admitted only when `attesting_key_id == identity_key_id` (or a current occurrence of it)
 identity:occurrence	signer_rule	agree	CC 3.3.6.2	**The binding = a federation-key-signed `identity_occurrence` carrying `transport_destination`.** The occurrence is admitted only when `attesting_key_id == identity_key_id` (or a current occurrence of it), and it carries the composite signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)).
 identity:occurrence	signer_rule	agree	CC 4.4.3.20	signed by `identity_key_id` (or a current occurrence):
-identity:occurrence	signer_rule	agree	CC 4.4.3.23	Any current occurrence (including `I` itself) may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4).
+identity:occurrence	signer_rule	agree	CC 4.4.3.23	Any current occurrence but an agent's ([CC 4.4.3.19](#4.4.3.19)), `I` itself included, may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4).
 identity:occurrence_revocation	lifecycle	fills	CC 3.1.3	Wire `identity:occurrence_revocation:v1`. **Never withdrawn.**
 identity:occurrence_revocation	projection	agree	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row
 identity:occurrence_revocation	projection	fills	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row

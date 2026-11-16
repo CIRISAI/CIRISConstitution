@@ -893,7 +893,7 @@ record_id_input = CBOR_dCE({
 record_id       = HMAC-SHA3-256(K_record_id, record_id_input)
 ```
 
-`CBOR_dCE` is RFC 8949, section 4.2.1, Core Deterministic Encoding (shortest-form integer encoding, definite lengths only, no floating-point unless required), with map keys ordered **by encoded-length first, then lexicographically by encoded key bytes**. The four-entry map at `v=1` therefore serializes keys in the canonical order `v, epc, iid, typ`.
+`CBOR_dCE` is RFC 8949, section 4.2.1, Core Deterministic Encoding (shortest-form integer encoding, definite lengths only, no floating-point unless required), with map keys ordered **in the bytewise lexicographic order of their deterministic encodings**. The four-entry map at `v=1` therefore serializes keys in the canonical order `v, epc, iid, typ`.
 
 **Major types are pinned.** Within the map the four keys (`v`, `epc`, `iid`, `typ`) are CBOR text strings (major type 3). The values of `v`, `epc`, and `typ` are unsigned integers (major type 0). The value of `iid` is a **CBOR byte string (major type 2)** — `internal_id` is committed as its raw bytes, never as a text string, even when those bytes are human-readable (e.g. `record-0001`). Encoding `iid` as a text string (major type 3) produces a different preimage and a different `record_id`; the byte-string header is why the vectors below carry `0x4b`/`0x41` (major-2) and not `0x6b`/`0x61` (major-3) at the `iid` value position.
 
@@ -1058,7 +1058,7 @@ suite_id = "HPKE" ‖ I2OSP(kem_id, 2) ‖ I2OSP(kdf_id, 2) ‖ I2OSP(aead_id, 2
 
 The KEM id is X-Wing's as [draft-ietf-hpke-pq](https://datatracker.ietf.org/doc/draft-ietf-hpke-pq/) lists it, and X-Wing is the construction of draft-connolly-cfrg-xwing-kem revision 11. The `suite_id` is RFC 9180's own and MUST be used, byte-for-byte identically on both sides, in every `LabeledExtract` / `LabeledExpand` call. X-Wing's shared secret is HPKE's `shared_secret`, and `enc` is the X-Wing ciphertext `ct_M ‖ ct_X`, 1120 bytes. The invitee's static key is generated from its 32-byte seed by X-Wing's key generation (section 5.2 of the draft), never by HPKE `DeriveKeyPair`. This is the only Welcome construction. The HPKE-layer AEAD is **AES-256-GCM** — distinct from the XChaCha20-Poly1305 of the scope-privacy envelope framing ([CC 5.4.3](#5.4.3)); the live A/V chunk is sealed with AES-256-GCM at every layer ([CC 5.3.3.7](#5.3.3.7)).
 
-**Inviter signature.** The inviter MUST sign the encapsulation bytes with one composite signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)), as every signature in this Part is signed ([CC 5.3.2.8](#5.3.2.8)). It carries no `algorithm` field, and a verifier refuses a Welcome that carries one. Its byte layout is the verification library's known answers. The bytes are:
+**Inviter signature.** The inviter MUST sign the encapsulation bytes with one composite signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)), as every signature in this Part is signed but the per-chunk media trailer ([CC 5.3.2.8](#5.3.2.8), [CC 2.6.1.11](part_2_the_grammar.md#2.6.1.11)). It carries no `algorithm` field, and a verifier refuses a Welcome that carries one. Its byte layout is the verification library's known answers. The bytes are:
 
 ```
 encap_signing_bytes = enc      (the 1120-byte X-Wing ciphertext, exactly as sent)

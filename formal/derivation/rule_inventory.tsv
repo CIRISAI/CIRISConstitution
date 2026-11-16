@@ -89,7 +89,7 @@ p1	231	1.13.3.3	mechanism	transparency_log	none		is	restates	5.3.3.8,5.3.1.1	An 
 p1	232	1.13.3.3	stewardship	steward	none	hard_case	is	restates	3.2,5.3.1	Two witnessed heads for one trust-root lineage are a hard_case:lineage_equivocation row, never a silent first-seen fork; exposure bounded by the charter's witness_cadence	table
 p1	232	1.13.3.3	stewardship	steward	none		MUST_NOT	restates	3.2	A stale lineage prefix cannot be attached to	table
 p1	233	1.13.3.3	kernel	trust_fold	none		is	restates	2.3.2,4.4.3.34	A key is an identifier; standing comes only from attestations others make about it under policies the consumer chose	table
-p1	233	1.13.3.3	kernel	owner_binding	subject_rule	identity_occurrence	MUST	restates	3.2	An agent or node key must have a bound human steward, the user identity holding its one live owner-binding, to hold non-infrastructure membership	table
+p1	233	1.13.3.3	kernel	owner_binding	subject_rule	identity_occurrence	MUST	restates	3.2	An agent key must have a bound human steward, the user identity holding its one live owner-binding, to hold membership in any community, and a node key to hold membership outside infrastructure	table
 p1	233	1.13.3.3	kernel	announce	none		MUST_NOT	restates	5.3.3.9	Liveness is never a durable claim: reachability is an ephemeral node-local fact, never an attestation and never logged; directory presence never reads as live	table
 p1	233	1.13.3.3	family	registration	evidence_screen	identity_occurrence	is	restates	3.1.1	A self-attested identity_occurrence is self-assertion until cross-attested	table
 p1	234	1.13.3.3	kernel	trust_fold	none		is	restates	4.4.3.34	The conformance-floor policy composes only attesters in the consumer's pinned trust set; a fresh key has no weight until a trusted party confers it	table
@@ -2793,7 +2793,7 @@ p4	1030	4.4.3.23	family	supersede	lifecycle	identity_occurrence	is	states		An oc
 p4	1031	4.4.3.23	family	roster_fold	lifecycle	identity_occurrence	is	restates	3.3.6.4	An occurrence is evicted by a landed self-roster proposal, quorum or lone path, or by a node or agent single-signer revocation	
 p4	1032	4.4.3.23	family	expiry	lifecycle	identity_occurrence	is	states		An occurrence whose valid_until has passed is not in the self-collective	
 p4	1036	4.4.3.23	family	signer	signer_rule	identity_occurrence	is	states		The root identity_key is implicitly a member and always an admissible signer for its own content	
-p4	1036	4.4.3.23	family	roster_fold	signer_rule	identity_occurrence	MAY	restates	3.3.6	Any current occurrence, including the root, may admit a new occurrence by single vouch on a fresh identity_occurrence row	
+p4	1036	4.4.3.23	family	roster_fold	signer_rule	identity_occurrence	MAY	restates	3.3.6	Any current occurrence but an agent's, including the root, may admit a new occurrence by single vouch on a fresh identity_occurrence row	
 p4	1044	4.4.3.24	family	withdraw	subject_rule	*	is	applies	4.4.3.25	A cohort_scope family Contribution naming subject_key_ids is admitted at family visibility and the subject keeps independent revocation authority	
 p4	1045	4.4.3.24	family	key_plane	replication	key_grant	is	applies		A cohort_scope self Contribution about a named subject stays in the author's self-collective; the subject gets no key_grant unless in that self	
 p4	1045	4.4.3.24	kernel	withdraw	subject_rule	withdraws	is	restates		A named subject can issue withdraws against a Contribution naming them regardless of its cohort scope	
@@ -3709,7 +3709,7 @@ p5	677	5.4.1	mechanism	key_plane	none		MUST	states		Implementations derive S_rec
 p5	677	5.4.1	mechanism	key_plane	none		MUST_NOT	states		The second-stage labels are never routed through RFC 9420 MLS_Exporter(); the raw exporter_secret is never used directly.	
 p5	677	5.4.1	mechanism	key_plane	none		is	states	5.4.6	S_dest is a separate exporter under its own label.	restates 868
 p5	682	5.4.1	mechanism	wire	none		is	states		record_id_input = CBOR_dCE({v:1, epc:mls_group_epoch, iid:internal_id, typ:record_type}); record_id = HMAC-SHA3-256(K_record_id, record_id_input).	
-p5	691	5.4.1	mechanism	wire	none		is	states		CBOR_dCE is RFC 8949 4.2.1 Core Deterministic Encoding, map keys ordered by encoded length then lexicographically; the v=1 map serializes keys v, epc, iid, typ.	
+p5	691	5.4.1	mechanism	wire	none		is	states		CBOR_dCE is RFC 8949 4.2.1 Core Deterministic Encoding, map keys in bytewise lexicographic order of their encodings; the v=1 map serializes keys v, epc, iid, typ.	
 p5	693	5.4.1	mechanism	wire	none		is	states		Map keys are CBOR text strings; v, epc, typ values are unsigned integers; iid is a CBOR byte string (major type 2), never text.	
 p5	697	5.4.1	mechanism	wire	none		is	states		RecordType integers: reserved 0, SelfRecord 1, FamilyRecord 2, CommunityRecord 3, FederationRecord 4.	table
 p5	705	5.4.1	stewardship	amendment	none		is	states	2.6.4	Additional record types extend the RecordType table only by amendment.	

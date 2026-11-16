@@ -85,6 +85,6 @@ operator	If you moderate a community|Looking in order to act is not a view.	work
 operator	If you moderate a community|You report harm to a child the moment you learn of it	the channel works today	the duty is a rule
 operator	If you moderate a community|You cannot ban a room, and nobody can ban yours.	works today, by construction	
 operator	If you moderate a community|A takedown on the fast path still passes the duty-holder gate	works today	
-operator	If you hold a root|Your key is hardware-attested	works today	
+operator	If you hold a root|Your key is post-quantum and hardware-attested	works today	
 operator	If you hold a root|One of you can pause every agent	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
 operator	If you hold a root|Your powers are a closed list	works today	

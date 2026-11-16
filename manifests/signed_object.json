@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "8.11.9",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "0b2547c11af86a71c4faf4c276f730f737607ffd882284406fdd19e62d1b4e8b",
+    "source_sha256": "afeaefe9e04afabc04db99250bb642353834d19116f2bc031feb0dfdf227106f",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "f74d1b2a",
@@ -133,7 +133,7 @@
         "default": "[]",
         "cc_ref": "2.3 2.3.2.1 8.11.3",
         "impl": "src/federation/envelope.rs#RowMirror",
-        "note": "Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit. A set (2.6.1.2): sorted and unique, an unsorted or duplicated set refused federation_set_semantics_unsorted."
+        "note": "Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit. A set (8.11.3): sorted and unique, an unsorted or duplicated set refused federation_set_semantics_unsorted."
       },
       {
         "member": "row.cohort_scope",
@@ -469,7 +469,7 @@
         "default": "direct",
         "cc_ref": "2.1 2.5 8.11.4",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "Interpretation-time default; an explicit default value is signed as written (2.6.1.1)."
+        "note": "Interpretation-time default; an explicit default value is signed as written (8.11.2)."
       },
       {
         "member": "witness_relation",
@@ -493,7 +493,7 @@
         "default": "absent (per-cell default)",
         "cc_ref": "2.1 8.11.4",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused federation_malformed_row / envelope_member_null (CC 2.6.1.2)."
+        "note": "CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused federation_malformed_row / envelope_member_null (CC 8.11.3)."
       },
       {
         "member": "occurrence_id",
@@ -673,7 +673,7 @@
         "default": "-",
         "cc_ref": "2.1 3.2",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "A set, sorted by each element's JCS string (the 2.6.1.2 default made explicit)."
+        "note": "A set, sorted by each element's JCS string (the 8.11.3 default made explicit)."
       },
       {
         "member": "history_on_join",
@@ -709,7 +709,7 @@
         "default": "absent",
         "cc_ref": "2.4.1 4.4.3.14",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "Member names that differ from the prior. Array kind not declared in 2.4.1, so the 2.6.1.2 default (set, sorted) applies."
+        "note": "Member names that differ from the prior. Array kind not declared in 2.4.1, so the 8.11.3 default (set, sorted) applies."
       },
       {
         "member": "recantation_reason",
@@ -1357,7 +1357,7 @@
         "default": "-",
         "cc_ref": "2.1 8.11.1 8.11.5",
         "impl": "src/verify/canonical.rs#JcsCanonicalizer",
-        "note": "The signed object itself, stored and relayed as received (2.6.1.1). The signing input is JCS(attestation_envelope) and nothing else."
+        "note": "The signed object itself, stored and relayed as received (8.11.2). The signing input is JCS(attestation_envelope) and nothing else."
       },
       {
         "member": "original_content_hash",
@@ -1393,7 +1393,7 @@
         "default": "-",
         "cc_ref": "-",
         "impl": "src/federation/types.rs#compute_persist_row_hash",
-        "note": "Store-computed over the row's own serialisation (not JCS), excluding itself; informational on the wire, never re-verified on read (CC 2.6.1.4). Not a conformance target."
+        "note": "Store-computed over the row's own serialisation (not JCS), excluding itself; informational on the wire, never re-verified on read (CC 8.11.5). Not a conformance target."
       },
       {
         "member": "withdraws_admission_rule",

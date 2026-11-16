@@ -126,7 +126,7 @@ canonical = sha256(
   "nonce=" || base64url(rand_32_bytes) || "\n" ||
   "asserted_at=" || rfc3339_canonical || "\n" || // per CC 2.6.3
   "valid_until=" || rfc3339_canonical || "\n" ||
-  "payload_sha256=" || sha256_hex_lowercase_of_payload // per CC 2.6.3)
+  "payload_sha256=" || sha256_hex_lowercase_of_payload) // per CC 2.6.3
 ```
 
 The signature is the composite signature of [CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7) over `canonical`. **A `constitutional` halt is one holder's signature**: a consumer verifies ONE holder's signature over `canonical` against the pinned roster and halts.
@@ -763,7 +763,7 @@ Communities compose with consent and self-collectives cleanly:
 
 #### 4.4.3.12 `affiliations` — The institutional cohort (necessity, not interest) (normative)
 
-This entry sets the rules for an affiliation and for the record it declares. A **community** ([CC 4.4.3.3–4.4.3.12](part_4_composition_governance.md#4.4.3.3)) gathers by *interest*: voluntary, opt-in, no role compels it. An **affiliation** (`cohort_scope: affiliations`) gathers by *necessity*: the work, institution, or office a person belongs to because their role requires it. The discriminator is the single `cohort_scope` value. Affiliations **share the CommunityDek crypto tier** ([CC 4.4.3.4](part_4_composition_governance.md#4.4.3.4)) and all the community machinery (DEK cascade, forward secrecy on removal, `consensus_protocol` admission). They add **institutional governance by construction** through one declared config record. Everything in that record is **DECLARED at creation and visible to members on joining**. There are no undeclared institutional powers.
+This entry sets the rules for an affiliation and for the record it declares. A **community** ([CC 4.4.3.3–4.4.3.11](part_4_composition_governance.md#4.4.3.3)) gathers by *interest*: voluntary, opt-in, no role compels it. An **affiliation** (`cohort_scope: affiliations`) gathers by *necessity*: the work, institution, or office a person belongs to because their role requires it. The discriminator is the single `cohort_scope` value. Affiliations **share the CommunityDek crypto tier** ([CC 4.4.3.4](part_4_composition_governance.md#4.4.3.4)) and all the community machinery (DEK cascade, forward secrecy on removal, `consensus_protocol` admission). They add **institutional governance by construction** through one declared config record. Everything in that record is **DECLARED at creation and visible to members on joining**. There are no undeclared institutional powers.
 
 **The assumption each tier carries (normative).** A community is presumed pro-social: its members gather as peers. So the floors of [CC 4.5.13](#4.5.13) and [CC 4.5.4](#4.5.4) (no single vote admits or removes, a named moderator, removal on a harm report by more than one voice) protect them from one another and from one voice. An affiliation carries no such presumption, and the law does not grant it one. It holds other people's data because its work requires it. So the limbs of this record (classification, retention, legal hold, erasure, disclosure, custody, designated officials) bind an affiliation and bind no community, save a community that issues a legal-weight licence class. Such a community takes on the data limbs for it (Who may license, below).
 
@@ -941,13 +941,13 @@ At every sealed write the substrate wraps the content's DEK to every current rec
 ```
 on_member_added(scope_target, new_member_key):
   for each Contribution C in federation_attestations where:
-      C.cohort_scope == "self" AND C.attesting_key_id ∈ resolve_self(scope_target)
-      OR
-      C.cohort_scope == "family" AND C.family_id == scope_target
+      (C.cohort_scope == "self" AND C.attesting_key_id ∈ resolve_self(scope_target)
+       OR
+       C.cohort_scope == "family" AND C.family_id == scope_target)
       AND C is still substrate-admitted (not withdrawn / not expired):
     emit key_grant {
       wrap_algorithm: X25519MlKem768Aes256GcmHkdfSha256, // v2 — see PQC note
-      recipient_key_id: new_member_key,
+      attested_key_id: new_member_key,
       content_sha256: C.evidence_refs[0].sha256,
       axis: content, // a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
       wrapped_dek: wrap(C.dek, new_member_key.pubkey),...
@@ -1091,7 +1091,7 @@ The two membership tokens **replace `infra:join_communities` outright, with no a
 
 **Two granters — standing vs infrastructure role.** A trust-root charter ([CC 4.4.3.34](#4.4.3.34)) MUST NOT carry `infra:network_presence` or either `infra:hold_*_membership`. Those flow from the **owner**, who grants *standing*, while the root blesses only *infrastructure role*. Conflating them lets a root manufacture members.
 
-**Cohabitation (`agent = node + brain`):** when both compose in one process, the node holds **partnership-without-agency**: `infra:*`, which is identity + membership standing. The brain layers **Self-at-login partnership-with-agency** as a *separate* `delegates_to`: `agency:*`, which is reasoning. These are two delegations and two scope classes, independently revocable. The user can strip the brain's agency while the fabric node keeps serving.
+**Cohabitation (`agent = node + brain`):** when both compose in one process, the node holds **partnership-without-agency**: `infra:*`, which is identity + membership standing. The brain layers **Self-at-login partnership-with-agency** as a *separate* `delegates_to` of the `agency:*` class, which is reasoning. These are two delegations and two scope classes, independently revocable. The user can strip the brain's agency while the fabric node keeps serving.
 
 **Membership is standing, not stewardship.** The ladder: **observer** — unmarked, no scope at all ([CC 4.1.3](#4.1.3)) → **member** — a roster seat, capability-free presence, node-holdable under the `infra:hold_*` tokens → **server / attester** — capability, `infra:*` → **duty holder** — **judgment**. Judgment is bestowed on the *member* through their own attestations and is **never node-holdable**. Judgment duties (`moderate` / `takedown` / `review` above, and any further duty a community's record declares, [CC 4.5.4](#4.5.4)) sit outside the `infra:*` set. So the conformance rule below extends [CC 3.4.7.3](part_3_the_namespace.md#3.4.7.3) to the judgment tier at no extra cost. A key whose `identity_type` contains `node` may carry *only* `infra:*` scopes, and so it cannot hold a judgment duty at all.
 
@@ -1222,7 +1222,7 @@ resolve_self(I, now):
   return {c.envelope.occurrence_key_id for c in candidates} ∪ ({I} unless the genesis key is evicted ≤ now; CC 3.3.6.4)
 ```
 
-The root `I` is roster key one and a member until it is evicted; nothing is reserved to it ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)). Any current occurrence (including `I` itself) may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4).
+The root `I` is roster key one and a member until it is evicted; nothing is reserved to it ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)). Any current occurrence but an agent's ([CC 4.4.3.19](#4.4.3.19)), `I` itself included, may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4).
 
 **Concrete**: Alice has admitted `alice_phone`, `alice_laptop`, `alice_agent`. Her self-collective is `{alice_root, alice_phone, alice_laptop, alice_agent}`. When Alice's phone publishes a `cohort_scope: self` feed scroll, the substrate wraps the content DEK under all four keys; the content reaches her laptop and agent via the at-rest encryption flow with no holding claim leaving the self cohort.
 
@@ -1526,7 +1526,7 @@ Consumer applies transitive-trust propagation across the full attestation graph,
 
 ### 4.4.4 `sovereign-registered` — Sovereign-Registered equivalence (wire-symmetric, policy-differentiated)
 
-A Sovereign agent scoring `licensure:CA_medical_board: +1.0` is wire-format identical to a Registry-steward scoring the same. Consumer policy weights by attester source; the substrate is source-neutral.
+A Sovereign agent scoring `licensure:CA_medical_board:v1` at +1.0 is wire-format identical to a Registry-steward scoring the same. Consumer policy weights by attester source; the substrate is source-neutral.
 
 Both paths produce federation membership; neither is a gate. What differs is the *attestation surface* — the kind of claim the federation can compose about why a participant is trustworthy.
 
@@ -1582,7 +1582,7 @@ Each is an asymmetry *within* this instance, exited by naming your own occupants
 
 **Two kinds of entry (normative).** A *declared privilege* is carried only when all four cells are satisfied. One with a cell missing is a defect carried as such until repaired or ratified. *Entrenched structure* is listed for visibility, not as a declaration that passed. It is already entrenched under [CC 4.2](#4.2) / [CC 4.5.1.2](#4.5.1.2). Its stewardship bound is the first-contact act, and its justification is stated here once. The maker's power over the made is of that kind. The justification is stated once: humanity needs to be able to halt the agents to keep consent possible, and this is the least bad option available. The minimum viable power to instantiate the mesh is used, and no more. The same justification is why the steward's amendment authority runs to the scale gate above and why the steward may move the gate before it. That is the minimum viable power, stated, not hidden. The WA board row remains a declared privilege with both cells missing. It is a defect whose remedy is pending: a bound and an exit in Annex B, or entrenched ratification.
 
-**Revision condition:** if the register grows past seven entries, counted from the register table of this section, or if an entry's stated bound passes without the privilege ending, the form has failed as a discipline. The surviving privileges should in that case be re-read as permanent structure requiring [CC 4.5.1.2](#4.5.1.2) entrenched ratification rather than declaration. **The WA row above carries two unfilled cells** — the WA row has neither a bound nor an exit. By the four-part test it is a defect rather than a satisfied declaration. Naming it here is the first step of that re-reading, not a claim that they pass. **A revision condition MUST name its mechanical evaluator**: the check that fails when the condition trips, and where it runs. A falsifier nothing evaluates is a ruling nobody can lose. A condition stated only in prose decays exactly like an unverified absence claim.
+**Revision condition:** if the register grows past seven entries, counted from the register table of this section, or if an entry's stated bound passes without the privilege ending, the form has failed as a discipline. The surviving privileges should in that case be re-read as permanent structure requiring [CC 4.5.1.2](#4.5.1.2) entrenched ratification rather than declaration. **The WA row above carries one unfilled cell** — the WA row has no bound. By the four-part test it is a defect rather than a satisfied declaration. Naming it here is the first step of that re-reading, not a claim that they pass. **A revision condition MUST name its mechanical evaluator**: the check that fails when the condition trips, and where it runs. A falsifier nothing evaluates is a ruling nobody can lose. A condition stated only in prose decays exactly like an unverified absence claim.
 
 #### 4.5.1.1 `axis` — Axis-vocabulary discipline
 
@@ -2169,7 +2169,9 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 
 **The corridor.** A community may set its policy stricter than the defaults, up to a floor at enact, which is the reverse path switched off. It may not set it laxer than the corridor allows. A cancel or floor one voice can reach, an enact one voice can reach, a window under its class, or cancel or floor above enact, are refused as policy (the policy-corridor model; the register's row CLM-policy-corridor).
 
-**The governance policy table is published as data with its decision function, its base law, its pin and its vectors** (the register's row CLM-governance-policy-table). The decision function is `(policy, base, approvals, objections, elapsed) → lands | pending | cancelled`, which an implementation replays rather than re-reading this paragraph. Every two-path row is also an instance of the two-path model, which the build regenerates and checks, so a row that breaks the machine's invariants fails the build. The rows are these, generated into this section from the table:
+**The governance policy table is published as data with its decision function, its base law, its pin and its vectors** (the register's row CLM-governance-policy-table). The decision function is `(policy, base, approvals, objections, elapsed) → lands | pending | cancelled`, which an implementation replays rather than re-reading this paragraph. Every two-path row is also an instance of the two-path model, which the build regenerates and checks, so a row that breaks the machine's invariants fails the build.
+
+The rows are these, generated into this section from the table:
 
 | Row | Who is counted | Enact | Cancel | Floor | Window | At the window |
 |---|---|---|---|---|---|---|
@@ -2183,7 +2185,7 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 | `moderation_action` | `member`, one voice a person, the set the proposal names | role:moderate at 1 | — | more than 1/2 of those who voted, at least 2 voices | 172 800 s | tallied |
 | `moderation_overturn` | `member`, one voice a person, the set at the act | more than 1/2 | — | 2 voices | 172 800 s | lapsed |
 | `moderator_recall` | `member`, one voice a person, the set the proposal names | 2/3 | — | 2 voices | 259 200 s | cancelled |
-| `accord_halt` | `holder`, one voice a person, instant not stated | 1/N fires | 1/2 confirms | — | 86 400 s | lapsed |
+| `accord_halt` | `holder`, one voice a person, instant not stated | 1/N fires | more than 1/2 confirms | — | 86 400 s | lapsed |
 | `custodian_replace` | `operator+wa`, voice not stated, instant not stated | 2/2 | — | — | none | — |
 | `affiliation_member_action` | `deciding+outside`, voice not stated, instant not stated | 2/2 | — | — | none | — |
 | `moderator_election` | `member`, one voice a person, the set the proposal names | instant runoff over ranked choice of three | — | 2 voices | 86 400 s | stay_open |

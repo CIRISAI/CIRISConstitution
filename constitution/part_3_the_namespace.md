@@ -508,7 +508,7 @@ This section states four rules on the families of the namespace, labelled R1 to 
 
 *A placeholder with no class.* A placeholder the generator cannot classify fails the build rather than defaulting. A family's classification is amended in the generator's class table in the same change that adds the family (R2(a) discipline).
 
-*A trailing `*` is variadic.* It matches one *or more* remaining segments, never exactly one. `accord:*` covers `accord:invoke:notify:{notify_id}` ([CC 3.4.1](part_3_the_namespace.md#3.4.1)) and `dma:dsdma:{domain}:*` covers every verdict leaf beneath its domain. The rule is carried as `_meta.case_rule.wildcard_rule` plus a `variadic` flag on the wildcard segment, so a consumer that pairs `*` with a single segment has misread the registry, not this Part.
+*A trailing `*` is variadic.* It matches one *or more* remaining segments, not only one. `accord:*` covers `accord:invoke:notify:{notify_id}` ([CC 3.4.1](part_3_the_namespace.md#3.4.1)) and `dma:dsdma:{domain}:*` covers every verdict leaf beneath its domain. The rule is carried as `_meta.case_rule.wildcard_rule` plus a `variadic` flag on the wildcard segment, so a consumer that pairs `*` with a single segment has misread the registry, not this Part.
 
 *The version segment (normative).* Every scored dimension carries **exactly one trailing `:v{N}` version segment after its family's segments** (`objection:raised:v1` on the row `objection:{state}`, `config:admission:v1` on `config:{scope}`). A row whose last segment is `{version}` names that segment rather than adding a second. The version is the **rule version** T1–T4 re-check against ([CC 1.13](part_1_foundation.md#1.13) T3), and `evidence_refs[]` carries the calibration artifacts, which is a different thing. A consumer matches a dimension to its family by **stripping that one segment** and comparing the rest byte-exactly. The segment is `v` and digits, dotted where a suite versions that way (`v1`, `v2`, `v1.2`), per `version_segment.pattern`. A dimension without it is refused with **`missing_version_segment`**, never admitted as a second leaf beside its versioned sibling. That holds for a row whose last segment is `{version}` just as for one whose tail is implicit.
 
@@ -985,7 +985,7 @@ A consumer that widens `self` to a person's several devices through `owner_of` M
 
 **The first binding (MUST).** An owner's signature alone does not prove authority over the node. So an owner-binding counts toward ownership only when the node's own key cosigned it, or the node's genesis record carries it ([CC 2.7.5](part_2_the_grammar.md#2.7.5)). The first is set at provisioning, and a binding after a handover is cosigned the same way. Provisioning custody decides it, never who reaches a node first and never a `key_id` sort. A node with no first owner is unowned, with an empty `self`. It is not open to the first claimant: a remote party cannot sign a binding onto an unclaimed node's `key_id` ahead of its owner. A person's next device takes its first binding by **Adding a device**, below.
 
-**What the binding opens: the steward-binding gate.** A `node` or `agent` key MUST be steward-bound before it is admitted to any community that is not `infrastructure`: a `family`, a `community` or an organisation. A node evaluating such an admission MUST reject a `node`-role or `agent`-role member that lacks a live owner-binding. With no owner, a key MAY trust and serve `infrastructure` communities and does nothing more. Such a key lives to its own record's end and renews itself there ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)). Once it stops renewing, its rows lapse unless a live row names them. It holds no `serve` seat, which needs an owner who has announced the node ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)). Membership outside `infrastructure` is an authority act, standing to speak in the group. Authority MUST root in an accountable human, never in a bare node ([CC 1.13.2](part_1_foundation.md#1.13.2), [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)). The ground of the gate is custody, not substrate; `identity_type` is how the wire reads that fact. The binding is a precondition and not the vote. The admitting community's `consensus_protocol` still decides whether the owned key is admitted.
+**What the binding opens: the steward-binding gate.** A `node` or `agent` key MUST be steward-bound before it is admitted to any community that is not `infrastructure`: a `family`, a `community` or an organisation. An `agent` key MUST be steward-bound before it is admitted to an `infrastructure` community too. The one exemption is a `node` member of an `infrastructure` community, which has no agency and is never asked ([CC 3.1.3.2](#3.1.3.2)); its owner is tested at its `serve` seat ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)). A node evaluating an admission MUST reject an `agent`-role member that lacks a live owner-binding in any community, and a `node`-role member that lacks one outside `infrastructure`. With no owner, a key MAY trust and serve `infrastructure` communities and does nothing more. Such a key lives to its own record's end and renews itself there ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)). Once it stops renewing, its rows lapse unless a live row names them. It holds no `serve` seat, which needs an owner who has announced the node ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)). Membership outside `infrastructure` is an authority act, standing to speak in the group. Authority MUST root in an accountable human, never in a bare node ([CC 1.13.2](part_1_foundation.md#1.13.2), [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)). The ground of the gate is custody, not substrate; `identity_type` is how the wire reads that fact. The binding is a precondition and not the vote. The admitting community's `consensus_protocol` still decides whether the owned key is admitted.
 
 **Conferral is not stewardship.** Stewardship is a custody relation over a key that cannot accept for itself. A capability conferral is a grant the receiving side must accept (T3 below): a person for themselves and for the keys they own. No ceremony substitutes for that acceptance. An act the receiving side must accept cannot be custody of the target. So `is_steward_bound`, its admission gate and the `steward_bindings_of` fold read owner-bindings alone. They never read conferrals, occurrences or any other edge. Four consequences follow, paired so the gate and the fold never disagree.
 
@@ -1261,7 +1261,7 @@ The exception is bounded the way a restore-only power is bounded. It can only *a
 - the edge deleted (`→ NotRooted`, one row, T3);
 - a revocation, `withdraws` or `revoked_after` crossing that takes the active set to M or fewer (`Rooted → Stalled`);
 - the T7 recovery widening restoring the margin (`Stalled → Rooted`);
-- a new witnessed head that removes a leg — a charter re-scrub dropping the recovery commitment, a directory collapse — (`→ NotRooted`);
+- a new witnessed head that removes a leg — a charter re-scrub dropping the recovery commitment — (`→ NotRooted`);
 - a competing witnessed head (no transition for an attached node — the freeze is attach-time only — and nobody attaches);
 - a `revoked_after` lowered below a head's `asserted_at` (see viii).
 
@@ -1625,7 +1625,7 @@ Alice's household (a family subject_kind instance):
 
 When Alice's phone sends a family-scoped photo (e.g., dinner photo) at
 cohort_scope: family + family_id: acme-household:
-  - Substrate wraps the DEK to each member's live occurrence encryption keys, one `key_grant:content:v1` row per recipient ([CC 3.3.2](part_3_the_namespace.md)); a member whose occurrence carries no ML-KEM-768 key is fail-secure excluded
+  - Substrate wraps the DEK to each member's live occurrence encryption keys, one key_grant:content:v1 row per recipient (CC 3.3.2); a member whose occurrence carries no ML-KEM-768 key is fail-secure excluded
   - Photo bytes reach Bob's devices, the TV, the kitchen tablet,
     the hall thermostat — every admitted family node
   - No holding claim leaves the family (CC 5.2); non-family peers
@@ -2234,7 +2234,7 @@ parent          id             optional; ONLY inside sealed_descriptor, never in
                                collection:directory containing this file (CC 3.1.3.4)
 content_digest  sha256:<hex>   optional: plaintext hash when digest is over ciphertext (community+ scopes, per-epoch HPKE)
 derived_from    sha256:<hex>   optional: this blob is a rendition of that one
-sealed_descriptor base64       optional: AEAD seal under the blob's content DEK over {name, format, codec?, parent?} (plaintext encoding: CC 8.11.21),
+sealed_descriptor base64       optional: AEAD seal under the blob's content DEK over {name, format, codec?, parent?} (earlier-form plaintext encoding: CC 8.11.21),
                                associated data = digest; when present, name / format / codec MUST be absent in clear
 ```
 

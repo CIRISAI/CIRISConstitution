@@ -243,6 +243,12 @@ def bullet_indent(ln):
     return len(m.group(1).expandtabs(4)) if m else None
 
 
+def item_tex(text):
+    """An item's LaTeX: text that opens with '[' (a card's leaf selector) would be read as the
+    item's optional label and set in the left margin, so an empty group comes first."""
+    return (r'\item {}' if text.startswith('[') else r'\item ') + text
+
+
 def bullet_item(lines, i, n):
     """One bullet's text: its line plus the indented continuation lines that open no block."""
     item = [re.sub(r'^\s*[-*]\s+', '', lines[i])]; i += 1
@@ -300,7 +306,9 @@ def convert(md):
             while k > 0 and out[k-1] == '':
                 k -= 1
             lead = None
-            if k > 0 and len(out[k-1]) < 160 and out[k-1].startswith(('\\section', '\\subsection', '\\subsubsection', '\\paragraph', '\\subparagraph', '\\textbf{')):
+            # (a short sentence ending in a colon that introduces the table is such a lead-in too)
+            if k > 0 and len(out[k-1]) < 160 and (out[k-1].startswith(('\\section', '\\subsection', '\\subsubsection', '\\paragraph', '\\subparagraph', '\\textbf{'))
+                                                  or (out[k-1].endswith(':') and not out[k-1].startswith('\\'))):
                 lead = out[k-1]; del out[k-1:]
                 k = len(out)
                 while k > 0 and out[k-1] == '':
@@ -332,14 +340,14 @@ def convert(md):
             while i < n and re.match(r'^\s*[-*]\s+', lines[i]):
                 depth = bullet_indent(lines[i])
                 text, i = bullet_item(lines, i, n)
-                out.append(r'\item ' + text)
+                out.append(item_tex(text))
                 # bullets indented under this one (two or more spaces, or a tab) are its sub-points
                 # and nest one level; deeper indents stay at that level
                 if i < n and (d := bullet_indent(lines[i])) is not None and d > depth and d >= 2:
                     out.append(r'\begin{itemize}\setlength\itemsep{0pt}')
                     while i < n and (d := bullet_indent(lines[i])) is not None and d > depth:
                         text, i = bullet_item(lines, i, n)
-                        out.append(r'\item ' + text)
+                        out.append(item_tex(text))
                         i = skip_gap(lines, i, n)
                     out.append(r'\end{itemize}')
                 i = skip_gap(lines, i, n)
@@ -353,7 +361,7 @@ def convert(md):
                 if num != expect:            # the number the markdown gives is the one printed
                     out.append(r'\setcounter{enumi}{%d}' % (num - 1))
                 expect = num + 1
-                out.append(r'\item ' + inline(lines[i][m.end():])); i += 1
+                out.append(item_tex(inline(lines[i][m.end():]))); i += 1
                 # what sits between this item and the next belongs to this item: bullets (the
                 # master writes a step's sub-points as bullets under it, indented or not) and
                 # indented continuation lines; blank lines between do not end the list
@@ -372,7 +380,7 @@ def convert(md):
                         while j < n and (re.match(r'^\s*[-*]\s+', lines[j]) or
                                          (lines[j].strip() == '' and j + 1 < n and re.match(r'^\s*[-*]\s+', lines[j+1]))):
                             if lines[j].strip():
-                                out.append(r'\item ' + inline(re.sub(r'^\s*[-*]\s+', '', lines[j])))
+                                out.append(item_tex(inline(re.sub(r'^\s*[-*]\s+', '', lines[j]))))
                             j += 1
                         out.append(r'\end{itemize}')
                     else:
@@ -394,7 +402,15 @@ def convert(md):
         if len(txt) < 160 and re.fullmatch(r'\\textbf\{[^{}]*\}[.:]?', txt) and j < n and not block_start(lines[j]):
             # a bold-only lead line is a run-in label for the paragraph after it: it asks for
             # room and never ends a page
-            out.append(r'\Needspace*{3\baselineskip}')
+            # right under a heading the heading's own request grows to cover the label and its
+            # lines, since a second request between them is a page break that strands the heading
+            k = len(out)
+            while k > 0 and out[k-1] == '':
+                k -= 1
+            if k >= 2 and out[k-2] == KEEP and out[k-1].startswith(('\\section', '\\subsection', '\\subsubsection', '\\paragraph', '\\subparagraph')):
+                out[k-2] = r'\Needspace*{7\baselineskip}'
+            else:
+                out.append(r'\Needspace*{3\baselineskip}')
             txt += r'\par\nopagebreak'
         out.append(txt); out.append('')
     return '\n'.join(out)

@@ -30,7 +30,7 @@ A post is a row in a room. A reply is a row that names it; a reaction is a score
 
 ## Files and photos
 
-Your files live in a circle like everything else. A file's row says which of your devices hold its bytes, and a large file crosses between devices in pieces with a receipt for each (CC 3.1.3.3, 8.11.5). *[works today]* Nothing is stored on your device that you did not agree to, except what you wrote yourself; your device never holds a stranger's data for them (CC 5.2). *[works today]*
+Your files live in a circle like everything else. A file's row says which of your devices hold its bytes, and a large file crosses between devices in pieces with a receipt for each (CC 3.1.3.3, 2.6.1.6). *[works today]* Nothing is stored on your device that you did not agree to, except what you wrote yourself; your device never holds a stranger's data for them (CC 5.2). *[works today]*
 
 ## When something is wrong
 

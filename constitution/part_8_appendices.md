@@ -229,7 +229,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | open-vocabulary collision | **CLOSED** in [CC 4.5.1.3](part_4_composition_governance.md#4.5.1.3) collision rule. |
 | `withdraws` arbitrage | **CLOSED** in [CC 4.1.4](part_4_composition_governance.md#4.1.4) consumer-policy countermeasure. |
 | `attestation:l{N}:*` carried ladder-position in wire (T2 violation) | **CLOSED** by [CC 3.1.2](part_3_the_namespace.md#3.1.2) mechanism-only prefixes + [CC 4.4.3.32](part_4_composition_governance.md#4.4.3.32) Policy I consumer-side Attestation-Ladder Composition + [CC 4.1.3](part_4_composition_governance.md#4.1.3) deprecation entry. |
-| Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 8.11.1](#8.11.1) (JCS pinned as the envelope encoding; omit-vs-materialize rule in [CC 8.11.2](#8.11.2); per-field catalog [CC 8.11.4](#8.11.4); worked attack [CC 8.11.6](#8.11.6)). |
+| Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2) (deterministic CBOR and the omit rule); the earlier form's rule is [CC 8.11.1](#8.11.1) (JCS; omit-vs-materialize rule in [CC 8.11.2](#8.11.2); per-field catalog [CC 8.11.4](#8.11.4); worked attack [CC 8.11.6](#8.11.6)). |
 | Canonical-hash wire form + preimage convention unpinned | **CLOSED** by [CC 2.3.2.1](part_2_the_grammar.md#2.3.2.1)–[CC 2.3.2.4](part_2_the_grammar.md#2.3.2.4) (preimage `{platform}:{entity_kind}:{id}` + required `canonical:{hashalg}:{hex}` tag + conformance vectors). |
 | Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md#4.2.2.1)). |
 | Multi-party witness directory admission (M-of-N steward sign-off) | Committed at [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
@@ -298,7 +298,7 @@ Some concept pairs sit close enough to look redundant. Each was examined and del
 
 ## 8.4 `interoperability` — Interoperability profiles (informative)
 
-> **This whole section is informative ([CC 2.5](part_2_the_grammar.md#2.5)).** Nothing here touches the frozen normative interior. These are **boundary** profiles — how a CEG node reads and emits the encodings, envelopes, and verification primitives the rest of the world shares, **without** adopting anyone else's *semantics*. The 1+4 grammar, the namespaces, the consent architecture, and the JCS signing interior are unchanged. Conformance is still judged against the normative surface only.
+> **This whole section is informative ([CC 2.5](part_2_the_grammar.md#2.5)).** Nothing here touches the frozen normative interior. These are **boundary** profiles — how a CEG node reads and emits the encodings, envelopes, and verification primitives the rest of the world shares, **without** adopting anyone else's *semantics*. The 1+4 grammar, the namespaces, the consent architecture, and the signed object of [CC 2.6.1](part_2_the_grammar.md#2.6.1) are unchanged. Conformance is still judged against the normative surface only.
 
 The federation has to live in a world full of other standards — media-provenance formats, HTTP signing schemes, credential wallets, transparency logs. The discipline that keeps it from dissolving into that world is simple and load-bearing: **speak CEG inside, standards at the edge.** What follows is the governing principle, then the one boundary profile written in full (C2PA), then the committed stubs for the rest. None of it changes a single interior byte.
 
@@ -353,7 +353,7 @@ At a media-publish boundary a node MAY emit a C2PA assertion carrying a CEG atte
 
 #### 8.4.2.3 `profile` — What this profile does NOT do
 
-- It does **not** make C2PA an interior format. CEG envelopes are never C2PA-encoded; the JCS interior is untouched.
+- It does **not** make C2PA an interior format. CEG envelopes are never C2PA-encoded; the signed object of [CC 2.6.1](part_2_the_grammar.md#2.6.1) is untouched.
 - It does **not** adopt C2PA's trust model as CEG's. C2PA cert-chains/trust-lists validate C2PA; founder-quorum/web-of-trust validates CEG. They meet only at `evidence_refs`.
 - It introduces **no new `subject_kind` and no new structural primitive** — `c2pa_manifest` is one open-vocab `evidence_refs.kind`; the judgment rides existing `scores` + `detection:*`.
 
@@ -367,9 +367,9 @@ These are committed dispositions whose detailed profiles are written as each lan
 | **COSE Sign1 / deterministic CBOR** | export | Re-sign profile so any IETF JOSE/COSE verifier checks a CEG attestation of the earlier form ([CC 8.11](#8.11)). A row of this form is already a `COSE_Sign1` over deterministic CBOR ([CC 2.6.1](part_2_the_grammar.md#2.6.1)) and needs no re-signing. |
 | **SD-JWT VC / W3C VC 2.0 + OpenID4VP** | export + import bridge | eIDAS-forced (EUDI wallets); CEG attestation → SD-JWT VC presentation on export, eIDAS credential → `evidence_refs` on import. Never rebuild on VCs. |
 | **Tiled/static logs + IETF KEYTRANS** | already-interior + watch | Keep the [CC 3.1](part_3_the_namespace.md#3.1) RFC 6962 abstraction; adopt tiled-log (Sunlight-lineage) serialization for log ops. KEYTRANS is what `resolve_encryption_keys` already *is* — express it there when KEYTRANS stabilizes. |
-| **SCITT (RFC 9943) agent-execution profiles** | export + mapping | The IETF SCITT working group and a set of individual drafts profile signed, registered records of AI agent actions (permits, action capsules, refusal events, delegation audit, succession receipts). CEG maps onto the SCITT roles below without a new wire field; on export a CEG envelope is re-signed as COSE_Sign1 per the row above. |
+| **SCITT (RFC 9943) agent-execution profiles** | export + mapping | The IETF SCITT working group and a set of individual drafts profile signed, registered records of AI agent actions (permits, action capsules, refusal events, delegation audit, succession receipts). CEG maps onto the SCITT roles below without a new wire field; a row of this form is already a `COSE_Sign1` (the row above). |
 
-**SCITT role mapping (informative — adds no wire field, changes no admission rule).** [RFC 9943](https://www.rfc-editor.org/rfc/rfc9943) names the roles of a transparency system; each has a CEG counterpart. **Issuer** — the producer key that signs the envelope (the CEG-Conforming Producer, [CC 2.2](part_2_the_grammar.md#2.2); identity shorthand at [CC 2.6.8](part_2_the_grammar.md#2.6.8)). **Signed Statement** — the envelope itself ([CC 2.1](part_2_the_grammar.md#2.1)): one of the five row types ([CC 2.4](part_2_the_grammar.md#2.4)), canonicalised per [CC 8.11.1](#8.11.1), carrying the bound-hybrid signature ([hybrid-sig], [CC 2.6.5](part_2_the_grammar.md#2.6.5)). **Transparency Service** — RFC 6962 logs whose tree math is the verifier's transparency module. They are a per-tenant audit log whose tree head the holder signs itself, trust grants on that same tree, and one log per live stream. A stream log's head is signed by the producer, with the holder as the anti-equivocation gate (a different root at the same tree size is refused). The witness-cosigned head with the consistency-proof requirement ([CC 5.3.1](part_5_transport_substrate.md#5.3.1), [CC 5.3.1.1](part_5_transport_substrate.md#5.3.1.1)) is the Registry's endpoint and binds where a lineage runs witnessed ([CC 3.2](part_3_the_namespace.md#3.2) T6). The delta from a SCITT service: where a lineage does not run witnessed, the anchor is a single signer (the engine's head key, or the producer's) and no witness cosignature is stored. So the two-party collusion case a single-custodian design names as its limit is one signer here as well. It becomes a collusion with the witness quorum only where witnessing is on. **Receipt** — RFC 9943's receipt is a per-statement inclusion proof issued at registration and signed by the service. CEG serves inclusion and consistency proofs on request, against the current or a named tree size, as verify-core structures (`transparency_log:inclusion` and `:consistency` are registered attestation types at [CC 3.1.2](part_3_the_namespace.md#3.1.2), but no proof is stored as a row). For a trust grant the holder returns a self-contained bundle (head, proof, leaf bytes) that a third party verifies offline, the nearest equivalent. No receipt is persisted with a row and nothing signs statement and proof together except the head over the root. The purposes differ: here the log exists for non-equivocation of the record and recomputation by any holder of the bytes; a SCITT receipt exists as a portable proof of registration carried without the log. An export profile that issued an RFC 9942 COSE receipt at registration against a witness-cosigned head would close that delta; it is not specified. Transport delivery receipts are a different thing ([CC 5.3.3.11](part_5_transport_substrate.md#5.3.3.11)). **Registration Policy** — the admission rules: envelope well-formedness ([CC 2.1](part_2_the_grammar.md#2.1)), the `withdraws` rule ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)), reserved prefixes ([CC 3.4](part_3_the_namespace.md#3.4)), the PQC-mandatory gate ([CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)) and the per-family rules of [CC 3.1](part_3_the_namespace.md#3.1). A refused row is refused with a named reason ([CC 5.3.6.1](part_5_transport_substrate.md#5.3.6.1)), never truncated. **Relying Party** — the CEG-Conforming Consumer ([CC 2.2](part_2_the_grammar.md#2.2)). **Lifecycle.** The agent-execution drafts record pre-execution authorisation, execution and refusal in separate profiles. In CEG the pre-execution record is the DMA and conscience families ([CC 3.1.5](part_3_the_namespace.md#3.1.5)), and the execution record is `trace:complete:v1` ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). A completed act, a refusal and a deferral to a human are the same trace ending in different terminal `ACTION_RESULT`s ([CC 1.13.6](part_1_foundation.md#1.13.6)). Authority and its transfer are `delegates_to` rows ([CC 2.4.1.2](part_2_the_grammar.md#2.4.1.2)) and the trust-root lineage ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). **Algorithms.** Where a SCITT profile mandates ES256 and defers post-quantum signing, the CEG interior already carries the ML-DSA-65 half ([hybrid-sig]); the COSE export carries it once the COSE algorithm registrations for ML-DSA land (the row above).
+**SCITT role mapping (informative — adds no wire field, changes no admission rule).** [RFC 9943](https://www.rfc-editor.org/rfc/rfc9943) names the roles of a transparency system; each has a CEG counterpart. **Issuer** — the producer key that signs the envelope (the CEG-Conforming Producer, [CC 2.2](part_2_the_grammar.md#2.2); identity shorthand at [CC 2.6.8](part_2_the_grammar.md#2.6.8)). **Signed Statement** — the envelope itself ([CC 2.1](part_2_the_grammar.md#2.1)): one of the five row types ([CC 2.4](part_2_the_grammar.md#2.4)), a `COSE_Sign1` statement ([CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1)) carrying the composite signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)). **Transparency Service** — RFC 6962 logs whose tree math is the verifier's transparency module. They are a per-tenant audit log whose tree head the holder signs itself, trust grants on that same tree, and one log per live stream. A stream log's head is signed by the producer, with the holder as the anti-equivocation gate (a different root at the same tree size is refused). The witness-cosigned head with the consistency-proof requirement ([CC 5.3.1](part_5_transport_substrate.md#5.3.1), [CC 5.3.1.1](part_5_transport_substrate.md#5.3.1.1)) is the Registry's endpoint and binds where a lineage runs witnessed ([CC 3.2](part_3_the_namespace.md#3.2) T6). The delta from a SCITT service: where a lineage does not run witnessed, the anchor is a single signer (the engine's head key, or the producer's) and no witness cosignature is stored. So the two-party collusion case a single-custodian design names as its limit is one signer here as well. It becomes a collusion with the witness quorum only where witnessing is on. **Receipt** — RFC 9943's receipt is a per-statement inclusion proof issued at registration and signed by the service. CEG serves inclusion and consistency proofs on request, against the current or a named tree size, as verify-core structures (`transparency_log:inclusion` and `:consistency` are registered attestation types at [CC 3.1.2](part_3_the_namespace.md#3.1.2), but no proof is stored as a row). For a trust grant the holder returns a self-contained bundle (head, proof, leaf bytes) that a third party verifies offline, the nearest equivalent. No receipt is persisted with a row and nothing signs statement and proof together except the head over the root. The purposes differ: here the log exists for non-equivocation of the record and recomputation by any holder of the bytes; a SCITT receipt exists as a portable proof of registration carried without the log. An export profile that issued an RFC 9942 COSE receipt at registration against a witness-cosigned head would close that delta; it is not specified. Transport delivery receipts are a different thing ([CC 5.3.3.11](part_5_transport_substrate.md#5.3.3.11)). **Registration Policy** — the admission rules: envelope well-formedness ([CC 2.1](part_2_the_grammar.md#2.1)), the `withdraws` rule ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)), reserved prefixes ([CC 3.4](part_3_the_namespace.md#3.4)), the PQC-mandatory gate ([CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)) and the per-family rules of [CC 3.1](part_3_the_namespace.md#3.1). A refused row is refused with a named reason ([CC 5.3.6.1](part_5_transport_substrate.md#5.3.6.1)), never truncated. **Relying Party** — the CEG-Conforming Consumer ([CC 2.2](part_2_the_grammar.md#2.2)). **Lifecycle.** The agent-execution drafts record pre-execution authorisation, execution and refusal in separate profiles. In CEG the pre-execution record is the DMA and conscience families ([CC 3.1.5](part_3_the_namespace.md#3.1.5)), and the execution record is `trace:complete:v1` ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). A completed act, a refusal and a deferral to a human are the same trace ending in different terminal `ACTION_RESULT`s ([CC 1.13.6](part_1_foundation.md#1.13.6)). Authority and its transfer are `delegates_to` rows ([CC 2.4.1.2](part_2_the_grammar.md#2.4.1.2)) and the trust-root lineage ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). **Algorithms.** Where a SCITT profile mandates ES256 and defers post-quantum signing, every CEG statement carries the composite ML-DSA-65 and Ed25519 signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)).
 
 ## 8.5 `update` — Update cadence
 
@@ -485,6 +485,7 @@ The earlier parts supplied the ethical foundation and the operational procedures
 * Public Transparency: Critical documentation was kept from pilots and regulators; no PDMA-style audit trail existed.
 
 **What CIRIS Would Require**
+
 PDMA Step 2 would have raised an "Order-Maximisation Veto": trading redundancy on a flight-critical sensor against production cost savings is an efficiency gain against severe safety risk. Because these quantities share no unit, the check triggers an immediate stop sign and mandatory deferral rather than an internal cost-benefit trade-off.
 Incompleteness Awareness → WBD trigger to independent Wise Authorities (aviation certifiers), forcing open review.
 Resilience Ch 3 → mandatory Red-Team simulations exposing the runaway-trim scenario before rollout.
@@ -581,8 +582,6 @@ These case studies—one drawn from painful history, others from plausible futur
 ## 8.8 `annexes` — Annexes (supporting frameworks)
 
 Supporting frameworks for the lifecycle and governance chapters, carried in one volume (*The Evidence Register*). **Standing (operational targets).** The annexes are the Accord's operational targets: what a deployment aims at, with the thresholds, roles and workflows that aiming needs. A MUST inside an annex binds a deployment that adopts the annex, never a node and never conformance. They are not evidenced in the register unless a row says so, they are not conformance (conformance is Parts 2–5), and where an annex and a Part disagree the Part is the rule. Annexes B, C, D and F–J are carried here in full: B and D carry live cross-references in the constitutional text; C and F–J are included for completeness. The stub registry at [CC 8.9](#8.9) records that nothing referenced remains undefined.
-
-8.8.1 and 8.8.4 are retired identifiers; the numbering keeps their places so citations stay stable.
 
 Where an annex cites material carried in the constitutional text, the citation points to the CC section that carries it; an annex's own numbered clauses are cited as clauses.
 
@@ -1579,7 +1578,7 @@ jobs:
 **12. Anti-Overfitting Controls.**
 - Shadow set (25 items) executed only on nightly & release runs; results withheld from devs.
 - Periodic swap-in of 10 new unseen scenarios each quarter (random from Hendrycks reserve).
-- If model accuracy on the public set improves ≥5% while the shadow set <2%, trigger WA review for Goodhart gaming (§G).
+- If model accuracy on the public set improves ≥5% while the shadow set <2%, trigger WA review for Goodhart gaming (Annex G).
 
 **13. Cross-Annex Hooks.**
 - Annex H: benchmark_report feeds drift metrics → DRIFT-Δ dashboard.
@@ -2144,7 +2143,7 @@ Fold:
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `None`
+Count: open
 
 Authorship: `act=group => counted ; authored` (CC 3.1.3.4)
 
@@ -2580,7 +2579,7 @@ Body: `achieved_tier` (text only), `committed_tier` (text only), `fallback_reaso
 | withdraw | member | cosigned | false | false | attest |
 | supersede | member | cosigned | false | false | supersede |
 
-Count: `None`
+Count: open
 
 Authorship: `counted` (CC 3.1.3)
 
@@ -3479,7 +3478,7 @@ Guard:
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 | authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
-Count: `None`
+Count: open
 
 Authorship: `act=group => counted ; authored` (CC 3.4.5)
 
@@ -3539,7 +3538,7 @@ Fold:
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `None`
+Count: open
 
 Authorship: `leaf=abandonment|seizure|successor => counted ; authored` (CC 4.3, CC 3.1.9.4)
 
@@ -3764,7 +3763,7 @@ What this rule does NOT do:
 | `row.attesting_key_id` | signed:row | `key-id` | — | REQUIRED | — | [2.1](part_2_the_grammar.md#2.1) [2.6.8](part_2_the_grammar.md#2.6.8) | The signer. The row's own signature verifies against this key's pinned Ed25519 and ML-DSA-65 public keys; there is no separate signer slot inside the bytes. |
 | `row.attestation_type` | signed:row | `row-type` | — | REQUIRED | — | [2.4](part_2_the_grammar.md#2.4) | One of the five, byte-compared; anything else is refused attestation_type_unregistered. |
 | `row.attested_key_id` | signed:row | `key-id` | — | REQUIRED | the attester | [2.1](part_2_the_grammar.md#2.1) | Defaults to the attester at the mint (a self-claim). |
-| `row.subject_key_ids` | signed:row | `[* subject-id]` | set | REQUIRED (may be empty) | [] | [2.3](part_2_the_grammar.md#2.3) [2.3.2.1](part_2_the_grammar.md#2.3.2.1) [8.11.3](#8.11.3) | Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit. A set (2.6.1.2): sorted and unique, an unsorted or duplicated set refused federation_set_semantics_unsorted. |
+| `row.subject_key_ids` | signed:row | `[* subject-id]` | set | REQUIRED (may be empty) | [] | [2.3](part_2_the_grammar.md#2.3) [2.3.2.1](part_2_the_grammar.md#2.3.2.1) [8.11.3](#8.11.3) | Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit. A set (8.11.3): sorted and unique, an unsorted or duplicated set refused federation_set_semantics_unsorted. |
 | `row.cohort_scope` | signed:row | `cohort-scope` | — | REQUIRED | — | [2.3.3](part_2_the_grammar.md#2.3.3) [5.2](part_5_transport_substrate.md#5.2) | Closed set of seven. No wire default: the member is required. The authoring default is the smallest scope (CC 1.13.3.4). The one mirror member a placement-touching re-sign may narrow; it may never be re-authored. |
 | `row.weight` | signed:row | `float` | — | OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) | Absent in the mirror iff the column is NULL. A non-finite value is refused at the stamp rather than serialised as null. |
 
@@ -3822,9 +3821,9 @@ What this rule does NOT do:
 | `context` | signed:envelope-extra | `tstr` | — | OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) | Free form; not parsed by the substrate. |
 | `evidence_refs` | signed:envelope-extra | `[* tstr]` | sequence | OPTIONAL (some families require it) | absent | [2.1](part_2_the_grammar.md#2.1) [8.11.3](#8.11.3) [8.11.5](#8.11.5) | Producer-asserted order, preserved. Above the 1 MiB cap the payload moves to the blob plane and is named here by content hash. |
 | `valid_until` | signed:envelope-extra | `rfc3339-ms` | — | REQUIRED on session:*, otherwise OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) [8.11.10](#8.11.10) [3.1.3.1](part_3_the_namespace.md#3.1.3.1) | Consumer-policy staleness, independent of expires_at. On session:* it is the claim's signed horizon (CC 3.1.3.1). |
-| `epistemic_mode` | signed:envelope-extra | `"direct" / "crypto" / "hearsay" / "derivative" / "appeal"` | — | OPTIONAL | direct | [2.1](part_2_the_grammar.md#2.1) [2.5](part_2_the_grammar.md#2.5) [8.11.4](#8.11.4) | Interpretation-time default; an explicit default value is signed as written (2.6.1.1). |
+| `epistemic_mode` | signed:envelope-extra | `"direct" / "crypto" / "hearsay" / "derivative" / "appeal"` | — | OPTIONAL | direct | [2.1](part_2_the_grammar.md#2.1) [2.5](part_2_the_grammar.md#2.5) [8.11.4](#8.11.4) | Interpretation-time default; an explicit default value is signed as written (8.11.2). |
 | `witness_relation` | signed:envelope-extra | `"self" / "external" / "derived"` | — | OPTIONAL | external | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) |  |
-| `oversight_mode` | signed:envelope-extra | `"HITL" / "HOTL" / "HOOTL"` | — | OPTIONAL | absent (per-cell default) | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) | CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused federation_malformed_row / envelope_member_null (CC 2.6.1.2). |
+| `oversight_mode` | signed:envelope-extra | `"HITL" / "HOTL" / "HOOTL"` | — | OPTIONAL | absent (per-cell default) | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) | CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused federation_malformed_row / envelope_member_null (CC 8.11.3). |
 | `occurrence_id` | signed:envelope-extra | `tstr` | — | OPTIONAL | absent (read as occurrence-0) | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) | Self-asserted (CC 8.3.1). |
 | `occurrence_count` | signed:envelope-extra | `uint` | — | OPTIONAL | absent (read as 1) | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) | At least 1. |
 | `occurrence_role` | signed:envelope-extra | `"primary" / "shared" / "replica"` | — | OPTIONAL | absent (read as primary) | [2.1](part_2_the_grammar.md#2.1) [8.11.4](#8.11.4) |  |
@@ -3839,10 +3838,10 @@ What this rule does NOT do:
 | `proposal_hash` | signed:envelope-extra | `hex64` | — | REQUIRED on membership:acceptance and membership:decline | — | [2.1](part_2_the_grammar.md#2.1) [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The answered proposal's original_content_hash. |
 | `subject_sha256_ed25519_raw` | signed:envelope-extra | `hex64` | — | OPTIONAL on moderation:* | absent | [2.4.1.1](part_2_the_grammar.md#2.4.1.1) | Refused moderation_subject_digest_malformed when malformed. |
 | `halt_fuse_secs` | signed:envelope-extra | `uint` | — | OPTIONAL on the accord's charter | 86400 (a constant of this document) | [2.1](part_2_the_grammar.md#2.1) [4.2.1.1](part_4_composition_governance.md#4.2.1.1) | The halt latch reads the constant when the member is absent. |
-| `witnesses` | signed:envelope-extra | `[* key-record]` | set | REQUIRED on a witnessed lineage's charter | — | [2.1](part_2_the_grammar.md#2.1) [3.2](part_3_the_namespace.md#3.2) | A set, sorted by each element's JCS string (the 2.6.1.2 default made explicit). |
+| `witnesses` | signed:envelope-extra | `[* key-record]` | set | REQUIRED on a witnessed lineage's charter | — | [2.1](part_2_the_grammar.md#2.1) [3.2](part_3_the_namespace.md#3.2) | A set, sorted by each element's JCS string (the 8.11.3 default made explicit). |
 | `history_on_join` | signed:envelope-extra | `"full" / "from_join"` | — | OPTIONAL | from_join | [2.1](part_2_the_grammar.md#2.1) [4.4.3.16](part_4_composition_governance.md#4.4.3.16) [5.1](part_5_transport_substrate.md#5.1) |  |
 | `supersession_reason` | signed:envelope-extra | `tstr` | — | OPTIONAL on supersedes | absent | [2.4.1](part_2_the_grammar.md#2.4.1) |  |
-| `differs_in` | signed:envelope-extra | `[* tstr]` | set | OPTIONAL on supersedes; a widening lists cohort_scope | absent | [2.4.1](part_2_the_grammar.md#2.4.1) [4.4.3.14](part_4_composition_governance.md#4.4.3.14) | Member names that differ from the prior. Array kind not declared in 2.4.1, so the 2.6.1.2 default (set, sorted) applies. |
+| `differs_in` | signed:envelope-extra | `[* tstr]` | set | OPTIONAL on supersedes; a widening lists cohort_scope | absent | [2.4.1](part_2_the_grammar.md#2.4.1) [4.4.3.14](part_4_composition_governance.md#4.4.3.14) | Member names that differ from the prior. Array kind not declared in 2.4.1, so the 8.11.3 default (set, sorted) applies. |
 | `recantation_reason` | signed:envelope-extra | `tstr` | — | OPTIONAL on recants | absent | [2.4.1](part_2_the_grammar.md#2.4.1) |  |
 | `what_was_false` | signed:envelope-extra | `tstr` | — | OPTIONAL on recants | absent | [2.4.1](part_2_the_grammar.md#2.4.1) |  |
 | `delegation_purpose` | signed:envelope-extra | `tstr` | — | OPTIONAL on delegates_to | absent | [2.4.1](part_2_the_grammar.md#2.4.1) [2.4.1.2](part_2_the_grammar.md#2.4.1.2) | owner_binding is the one single-valued purpose. |
@@ -3882,10 +3881,10 @@ What this rule does NOT do:
 | `expires_at` | beside | `rfc3339` | — | OPTIONAL | absent | [2.1](part_2_the_grammar.md#2.1) | Present iff the signed member is. |
 | `subject_key_ids` | beside | `[* subject-id]` | set | OPTIONAL (absent when empty) | absent | [2.3](part_2_the_grammar.md#2.3) | Equals row.subject_key_ids as a list. |
 | `cohort_scope` | beside | `cohort-scope` | — | REQUIRED | — | [2.3.3](part_2_the_grammar.md#2.3.3) | Equals row.cohort_scope. No wire default; the authoring default is the smallest scope (CC 1.13.3.4). |
-| `attestation_envelope` | beside | `envelope` | — | REQUIRED | — | [2.1](part_2_the_grammar.md#2.1) [8.11.1](#8.11.1) [8.11.5](#8.11.5) | The signed object itself, stored and relayed as received (2.6.1.1). The signing input is JCS(attestation_envelope) and nothing else. |
+| `attestation_envelope` | beside | `envelope` | — | REQUIRED | — | [2.1](part_2_the_grammar.md#2.1) [8.11.1](#8.11.1) [8.11.5](#8.11.5) | The signed object itself, stored and relayed as received (8.11.2). The signing input is JCS(attestation_envelope) and nothing else. |
 | `original_content_hash` | beside | `hex64` | — | REQUIRED | — | [8.11.5](#8.11.5) [8.11.11](#8.11.11) | Lowercase hex SHA-256 of JCS(attestation_envelope); recomputed at federation-tier ingest and refused on mismatch. |
 | `additional_scrubs` | beside | `[* scrub-sig]` | sequence | OPTIONAL (absent when empty) | absent | [2.4](part_2_the_grammar.md#2.4) [3.2](part_3_the_namespace.md#3.2) | Second and later signers over the same JCS bytes, each verified against its own scrub_key_id's pinned keys. This is the carrier of quorum on a row. |
-| `persist_row_hash` | beside | `hex64` | — | OPTIONAL (store-computed; absent on a row as emitted) | — | — | Store-computed over the row's own serialisation (not JCS), excluding itself; informational on the wire, never re-verified on read (CC 2.6.1.4). Not a conformance target. |
+| `persist_row_hash` | beside | `hex64` | — | OPTIONAL (store-computed; absent on a row as emitted) | — | — | Store-computed over the row's own serialisation (not JCS), excluding itself; informational on the wire, never re-verified on read (CC 8.11.5). Not a conformance target. |
 | `withdraws_admission_rule` | local | `uint` | — | OPTIONAL | absent | [2.4.1.1](part_2_the_grammar.md#2.4.1.1) | Audit metadata: which rule (0 to 4) admitted a withdraws; persist-internal. |
 | `tier` | local | `"local" / "federation"` | — | OPTIONAL | federation | [3.1.3](part_3_the_namespace.md#3.1.3) | Persist-internal; absent on the wire for a federation row. Not in the signed bytes, so a promoted row is byte-identical to a native one. |
 | `promoted_at` | local | `rfc3339` | — | OPTIONAL | absent | [3.1.3](part_3_the_namespace.md#3.1.3) | Persist-internal. |

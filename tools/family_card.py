@@ -40,7 +40,7 @@ def card(fam, fm, tr, rx):
         u = (f"{t['undo'].get('via')}" if t["undo"]["value"] else "none")
         out.append(f"| {t['verb']} | {roles.replace('|', chr(92) + '|')} | {ptxt} | {w} | {c} | {u} |")
     cnt = r["count"]
-    out += ["", f"Count: `{cnt['value']}`" + (" (" + ", ".join(sorted({a['cc_ref'] for a in cnt['arms']})) + ")" if cnt.get("arms") else "")]
+    out += ["", (f"Count: `{cnt['value']}`" if cnt['value'] is not None else "Count: open") + (" (" + ", ".join(sorted({a['cc_ref'] for a in cnt['arms']})) + ")" if cnt.get("arms") else "")]
     au, ss = r.get("authorship", {}), r.get("second_signers", {})
     if au and au.get("source") != "generic":   # authored with no row of its own is the default and is not printed
         out += ["", "Authorship: " + (f"`{au['value']}`" if au.get("value") else "open") + refs(au)]

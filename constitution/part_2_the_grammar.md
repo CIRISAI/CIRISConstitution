@@ -159,7 +159,7 @@ A CEG-Conforming implementation cannot interoperate without pinning two things: 
 
 **Why the tag is mandatory and bare-hex is rejected**: a directory MAY still hold a `federation_keys.key_id` of the older form `hex(sha256(ed25519_pubkey))` — a **lowercase 64-char hex string**. A `key_id` is otherwise the `<label>-<fingerprint>` form of [CC 2.6.8](#2.6.8), which contains `-` and base32 letters and is therefore format-distinguishable from a bare hash by construction. The tag stays mandatory because such older ids exist and because a subject reference MUST never depend on a consumer's guess about which form it is reading. A bare canonical-hash (also lowercase 64-char hex) would be **format-indistinguishable** from a key_id. A "base64 key_id vs hex canonical-hash" disambiguation heuristic FAILS because Registry key_ids are themselves hex fingerprints, not base64 pubkeys. The tag is therefore load-bearing, not cosmetic. The CC 2.6.3 hex rule governs the `{hex}` segment only; the `canonical:{hashalg}:` prefix is a tagged-union discriminator outside CC 2.6.3's scope and is exempt from the "no separators" rule.
 
-**Scope of the fingerprint check:** the check is the MUST of [CC 2.6.8](#2.6.8). A consumer verifies a `key_id`'s fingerprint suffix against the public key it obtains **at registration and at pairing** — the proof-of-possession door — for fedIDs and roster keys ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)). A held key registered under an older or otherwise non-matching id is not re-keyed or refused by a migration (the record is history), it simply cannot be re-registered or introduced at pairing under that id. The bundle-pinned anchors (`ciris-canonical-1`, `humanity-accord*`) and family ids are not fingerprint-suffixed and are verified by the genesis bundle pin ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)), not by this rule. The fingerprint rule is separate from the roster-id *form* rule of 3.3.6.4 ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)). A `device-<hex>-<fp>` id passes the fingerprint check and is refused by the roster door for its form, on the roster door's own schedule.
+**Scope of the fingerprint check:** the check is the MUST of [CC 2.6.8](#2.6.8). A consumer verifies a `key_id`'s fingerprint suffix against the public key it obtains **at registration and at pairing** — the proof-of-possession door — for fedIDs and roster keys ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)). A held key registered under an older or otherwise non-matching id is not re-keyed or refused by a migration (the record is history), it simply cannot be re-registered or introduced at pairing under that id. The bundle-pinned anchors (`ciris-canonical-1`, `humanity-accord*`) and family ids are not fingerprint-suffixed and are verified by the genesis bundle pin ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)), not by this rule. The fingerprint rule is separate from the roster-id *form* rule of [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4). A `device-<hex>-<fp>` id passes the fingerprint check and is refused by the roster door for its form, on the roster door's own schedule.
 
 **Preimage convention — `{platform}:{entity_kind}:{id}`**. The string hashed to produce `{hex}` MUST be:
 
@@ -571,7 +571,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
-| — | `protected` | statement | `bstr .cbor statement-protected` | always | [2.6.1.1](#2.6.1.1) [2.6.1.2](#2.6.1.2) | The protected header as bytes, in deterministic encoding and with exactly its five members; the signature covers them. |
+| — | `protected` | statement | `bstr .cbor statement-protected` | always | [2.6.1.1](#2.6.1.1) [2.6.1.2](#2.6.1.2) | The protected header as bytes, in deterministic encoding and with exactly its seven members; the signature covers them. |
 | — | `unprotected` | statement | `unprotected-header` | always | [2.6.1.1](#2.6.1.1) | Never signed; a rule never reads it. |
 | — | `payload` | statement | `bstr .cbor attestation-envelope` | always | [2.6.1.1](#2.6.1.1) [2.6.1.2](#2.6.1.2) | The payload as bytes, in deterministic encoding; a payload that is not the deterministic re-encoding of the value it decodes to is refused. Never nil. |
 | `scrub_signature_classical`, `scrub_signature_pqc` | `signature` | statement | `composite-signature` | always | [2.6.1.7](#2.6.1.7) | The composite ML-DSA-65 with Ed25519 signature, 3373 bytes; neither half verifies alone. |
@@ -742,11 +742,11 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
-| — | `salt` | object | `bstr .size 16` | always | [2.6.1.10](#2.6.1.10) | Sixteen random bytes. |
-| — | `value` | object | `ceg-value` | always | [2.6.1.10](#2.6.1.10) | The blinded member's or element's value. |
+| — | `salt` | object | `bstr .size 16` | always | [2.6.1.10](#2.6.1.10) | Sixteen random bytes; a blinded map member is disclosed as [salt, value, key]. |
+| — | `value` | object | `ceg-value` | always | [2.6.1.10](#2.6.1.10) | The blinded member's value. |
 | — | `key` | object | `tstr` | always | [2.6.1.10](#2.6.1.10) | The blinded member's name; the digest is SHA-256 over the disclosure's bytes as sd_claims carries them. |
-| — | `salt` | object | `bstr .size 16` | always | [2.6.1.10](#2.6.1.10) | Sixteen random bytes. |
-| — | `value` | object | `ceg-value` | always | [2.6.1.10](#2.6.1.10) | The blinded member's or element's value. |
+| — | `salt` | object | `bstr .size 16` | always | [2.6.1.10](#2.6.1.10) | Sixteen random bytes; a blinded array element is disclosed as [salt, value]. |
+| — | `value` | object | `ceg-value` | always | [2.6.1.10](#2.6.1.10) | The blinded element's value. |
 
 **Logical names with no member of their own**
 
@@ -1048,7 +1048,7 @@ This entry says which clock every stated instant refers to, and how far that ins
 | A cosigned roster event | none | A cosigned roster event is counted over the members at the roster head it names, and its signed instant decides no one's standing ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). |
 | Rows not judged on a chain (traces, scores on the base) | not bound by `W` | The future bound of the first line is unchanged. |
 
-**The admission freshness window `W` (normative).** `W` is the window of the fourth line of the table. Every row whose admission walks a `delegates_to` chain — a key wrap (`key_grant:*`), a consent row, a licence (`licensure:*`), a deferral response, the epoch-axis membership check — is judged at its signed `asserted_at` at the node that receives it. That instant is signer-chosen, so it is bounded. `W` is the participation-window baseline, one "until everyone has heard" constant ([CC 4.2.6](part_4_composition_governance.md#4.2.6)). A row refused `asserted_at_stale` is well-formed, not malformed, and it is not admitted-as-stale. The remedy is to re-sign. A signer back from a week offline is present and can.
+**The admission freshness window `W` (normative).** `W` is the window of the fifth line of the table. Every row whose admission walks a `delegates_to` chain — a key wrap (`key_grant:*`), a consent row, a licence (`licensure:*`), a deferral response, the epoch-axis membership check — is judged at its signed `asserted_at` at the node that receives it. That instant is signer-chosen, so it is bounded. `W` is the participation-window baseline, one "until everyone has heard" constant ([CC 4.2.6](part_4_composition_governance.md#4.2.6)). A row refused `asserted_at_stale` is well-formed, not malformed, and it is not admitted-as-stale. The remedy is to re-sign. A signer back from a week offline is present and can.
 
 **Why the window exists.** Without the bound a delegate whose chain was withdrawn could sign a row dated inside its old live window and have it admit. With it, a withdrawn delegate keeps at most `W` of backdatable authority at a node that holds the withdrawal. That is exactly the honest divergence at a node that does not hold it. A withdrawal takes full effect at each node within `W` of that node holding it, no worse than replication already is.
 

@@ -37,7 +37,7 @@
 
 ## If you hold a root
 
-- Your key is hardware-attested post-quantum hardware; your name is public; every fire, lift and roster change is a signed public row under it (CC 4.2.2; CC 4.2.6). *[works today]*
+- Your key is post-quantum and hardware-attested; your name is public; every fire, lift and roster change is a signed public row under it (CC 4.2.2; CC 4.2.6). *[works today]*
 - One of you can pause every agent under the root, in an emergency; a lone pause dies in 24 hours; confirming or lifting takes a majority; replacing a holder takes more than half of the standing roster, never of whoever is present (CC 4.2.6; `formal/accord_halt`, `formal/accord_roster`). *[works today; measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped]*
 - Your powers are a closed list; the pause keeps state and reads nothing else (CC 4.2.1). *[works today]*
 
