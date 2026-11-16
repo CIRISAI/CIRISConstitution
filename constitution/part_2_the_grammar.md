@@ -17,7 +17,7 @@ The members fall into three groups: those every row carries, those any row may c
 | Member | Meaning |
 |---|---|
 | `attesting_key_id` | The attester's `federation_keys.key_id`. A substrate field. |
-| `attested_key_id` | The subject's `federation_keys.key_id`. A substrate field. |
+| `attested_key_id` | The subject's `federation_keys.key_id`. A substrate field. At a targeted scope it names the row's producer, as stated below. |
 | `dimension` | REQUIRED. The canonical namespace prefix and scoped leaf. The admitting substrate resolves it through the namespace of [CC 3.1](part_3_the_namespace.md#3.1) on all five row types and refuses a row that fails the gate ([CC 2.4](#2.4), [CC 3.1.7](part_3_the_namespace.md#3.1.7)). |
 | `score` | REQUIRED on `scores`. A scalar in [-1, +1]. The sign is polarity and the magnitude is strength. The per-dimension table of [CC 3.1](part_3_the_namespace.md#3.1) names each dimension's polarity, and [CC 3.1.7](part_3_the_namespace.md#3.1.7) R4 holds the closed classes. |
 | `confidence` | REQUIRED on `scores`. The attester's own confidence in the score, in [0, 1]. High magnitude with low confidence says "I believe this strongly but I might be wrong". Low magnitude with high confidence says "I am sure the truth is near neutral". |
@@ -450,7 +450,7 @@ attestation_envelope: {
   "score": <integer ∈ [-10^6, 10^6], CC 2.6.1.5>,
   "confidence": <integer ∈ [0, 10^6], CC 2.6.1.5>,
   "context": "<free-form scoping detail>",
-  "evidence_refs": ["<URI or hash referencing backing evidence>",...],
+  "evidence_refs": [<content hash of backing evidence, bytes>,...],
   "valid_until": <instant, CC 2.6.2, optional>,
   "epistemic_mode": "<direct | crypto | hearsay | derivative | appeal>", // optional; default 'direct'
   "witness_relation": "<self | external | derived>", // optional; default 'external'

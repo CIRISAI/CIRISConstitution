@@ -938,7 +938,7 @@ p3	166	3.1.3	family	withdraw	lifecycle	group	is	states		group:roster is withdraw
 p3	167	3.1.3	family	row_shape	body	key	is	states		key:record has attesting_key_id equal to attested_key_id equal to the key and carries both pubkeys, identity_type and roles.	table
 p3	167	3.1.3	kernel	admission_order	none	key	is	exception		key:record is admitted by proof of possession against the keys it carries, the one exception to resolving the attester through a held row.	table
 p3	167	3.1.3	family	supersede	lifecycle	key	is	states		A key rebind or renewal is a supersedes of key:record by the key itself; rotation is the next key's record cosigned by the old key.	table
-p3	167	3.1.3	family	cosign	cosign_rule	key	is	states	2.4	An anchor scrub, a root conferral or an accord co-scrub (infra:attest, conferred roles) on a key record is a cosignature under 2.4.	table
+p3	167	3.1.3	family	cosign	cosign_rule	key	is	states	2.4	An anchor scrub or an accord co-scrub (infra:attest, conferred roles) on a key record is a cosignature under 2.4; a root conferral is the genesis bundle's count.	table
 p3	167	3.1.3	kernel	admission_order	none	*	is	applies	2.7.3	Every row other than key:record is admitted only once its signer's key:record is held; otherwise the refusal is retryable.	table
 p3	168	3.1.3	family	signer	signer_rule	identity	is	states	3.3.6	identity:occurrence is signed by the identity or a live occurrence of it (signer_acts_for).	table
 p3	169	3.1.3	family	supersede	monotone_field	key	is	states	2.4.1.1	key:revocation names the revoked key by sha256 and revoked_after only ever lowers across versions.	table
@@ -2898,7 +2898,7 @@ p4	1294	4.4.3.36	kernel	minor_floor	formula	age_assurance	is	states		age_assuran
 p4	1294	4.4.3.36	kernel	minor_floor	none	age_assurance	SHOULD	states		A consumer should accept the strongest assurance the user has provided	
 p4	1294	4.4.3.36	kernel	settlement	none	slashing,age_assurance	MUST_NOT	states	3.1.9.2	The substrate must not issue slashing on age-assurance misdeclaration alone; moderation:age_assurance_misdeclaration is the adjudication path	
 p4	1296	4.4.3.36	kernel	trust_fold	evidence_screen	external_content	MUST	states	4.4.3.33	The distributor Layer 1 rule applies regardless of vote accumulation; only the operator's own trust set admits a distributor; the default root cannot exempt its own content	
-p4	1300	4.4.3.37	kernel	trust_fold	formula	cert_validity,transparency_log,attestation	is	states	4.4.3.32	Trust-Fresh is cert_validity plus transparency_log:inclusion plus registry_consensus or license_validity: fresh, logged, verified at L3 or above	
+p4	1300	4.4.3.37	kernel	trust_fold	formula	cert_validity,transparency_log,attestation	is	states	4.4.3.32	Trust-Fresh is cert_validity plus transparency_log:inclusion plus registry_consensus or license_validity: fresh, logged, verified at L3 or L4	
 p4	1304	4.4.3.37	kernel	conformance	none		SHOULD	states		Consumer libraries should expose Trust-Fresh as a named one-call helper; it is not a wire primitive	
 p4	1308	4.4.3.38	kernel	trust_fold	none	attestation	is	states		Under one-hop transitive trust a consumer trusts an attestation whose attesting_key_id has been vouched for by its pinned trust set	
 p4	1312	4.4.3.39	kernel	trust_fold	formula	attestation	is	states		Under weighted graph trust the consumer propagates transitive trust weighted by bootstrap distance with confidence decay per hop	
@@ -3921,12 +3921,12 @@ p5	893	5.4.6	mechanism	transport	none		is	states		The direct-link contact exchan
 p5	895	5.4.6	mechanism	key_plane	none		MUST	states		For any future multi-hop amendment, rotation clocks are global, never group-event-driven.	restates 890; inside an informative block
 p6	11	6.1	kernel	audience	replication		is	restates	6.1.5	An item its owner marks durable is held by a chosen number of nodes in its own cohort, chunk by chunk, and repaired when that number falls	
 p6	11	6.1	mechanism	media	none		MUST_NOT	restates	5.3.3.2,5.3.3.6	Nodes and relays never encode or decode stored content; they hold and forward sealed chunks whole; the ChunkLayer stack is stored per layer	
-p6	13	6.1	kernel	other:inventory	none		MUST	states	6.1.1,6.1.5	Each node measures what it holds (per scope and plane: count and hybrid-signed Merkle root) and how deeply (holders, own chunk share, gap to target)	
+p6	13	6.1	kernel	other:inventory	none		MUST	states	6.1.1,6.1.5	Each node measures what it holds (per scope and plane: count and composite-signed Merkle root) and how deeply (holders, own chunk share, gap to target)	
 p6	13	6.1	kernel	freshness	none		MUST_NOT	restates	3.1.3.3	A node must not read an absent or lapsed claim as none; anything unclaimed within a claim's liveness window is unknown, never zero	
 p6	13	6.1	kernel	other:inventory	formula		is	states		Every inventory instrument is a pure fold over signed inputs, integer and permutation-invariant; disagreement is detected by comparing witness roots, never argued from counts	
 p6	13	6.1	kernel	census	none	census	is	states	6.1.9	What the mesh as a whole holds is learned only through the census, never by reading another node's inventory	
 p6	13	6.1	kernel	census	none	mesh_config	is	states	6.1.5.1,4.5.13	Measurement never enlarges what a node does: the census reaches node behaviour only through the mesh-config plane, which relieves and never expands; the base is a denominator	
-p6	17	6.1.1	family	row_shape	body	wholeness_witness	is	states		A wholeness_witness row is a peer's hybrid-signed Merkle root over a scoped projection of the claims it holds, used to detect divergence	
+p6	17	6.1.1	family	row_shape	body	wholeness_witness	is	states		A wholeness_witness row is a peer's composite-signed Merkle root over a scoped projection of the claims it holds, used to detect divergence	
 p6	20	6.1.1	family	row_shape	none	wholeness_witness	MUST	states	5.3.1	The namespace is wholeness_witness:, never bare witness:	
 p6	20	6.1.1	family	transparency_log	none	wholeness_witness	MUST_NOT	states	5.3.1.1,5.3.3.8	A wholeness witness gives no append-only, consistency or anti-equivocation guarantee and must not substitute for the 5.3.1.1 log or the per-stream STH	
 p6	21	6.1.1	family	row_shape	body	wholeness_witness	MUST	states		WW-1: the root covers only the namespaces in claim_namespaces; a peer need not witness everything it holds; coverage is per-namespace opt-in	
@@ -3939,7 +3939,7 @@ p6	27	6.1.1	mechanism	wire	none	wholeness_witness	MUST	states	8.11.3	Merkle leaf
 p6	28	6.1.1	mechanism	wire	none	wholeness_witness	is	states		Merkle scheme: leaf = SHA-256(leaf_bytes), node = SHA-256(left,right), odd-node duplication, empty sentinel b"WW-v1-empty"; no RFC 6962 leaf/node prefix	
 p6	28	6.1.1	mechanism	wire	none	wholeness_witness	MUST	states	8.11.3	The leaf list is deduplicated as well as sorted; a list with a repeated leaf is refused before hashing	
 p6	28	6.1.1	kernel	admission_order	none		is	states	6.1.2.4	A repeated id in sources is refused at descent and in the aggregate builder (federation_malformed_row, aggregate_source_duplicate); source_count and n_eff count distinct ids	
-p6	28	6.1.1	mechanism	signature	none	wholeness_witness	MUST	states	6.1.2.2	Every wholeness witness and member_commitment root is mandatorily hybrid-signed; no consumer relies on an unsigned root	
+p6	28	6.1.1	mechanism	signature	none	wholeness_witness	MUST	states	6.1.2.2	Every wholeness witness and member_commitment root is mandatorily composite-signed; no consumer relies on an unsigned root	
 p6	28	6.1.1	mechanism	wire	none		MUST	states	6.1.2.2	member_commitment is verified by recomputation from the full source-id list, never by partial inclusion proofs	
 p6	28	6.1.1	mechanism	wire	none		MUST	states		Any future use relying on an unsigned root or partial inclusion proofs must first adopt the RFC 6962 prefix and lone-node promotion and re-cut vectors	
 p6	28	6.1.1	mechanism	wire	none		MUST_NOT	states	5.3.1	The wholeness-witness Merkle scheme and the 5.3.1 RFC 6962 log are distinct constructions and must not be cross-verified; changing the scheme is a vector-invalidating wire change	

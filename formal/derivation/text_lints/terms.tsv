@@ -14,6 +14,6 @@ p3	3.2	1225	A stalled root is **valid but non-admitting**, and *non-admitting* m
 p3	3.2	1227	It is never by the members, and never by the remaining founders lowering M (entrenchment, [CC 4.5.1.2](part_4_composition_governance.md#4.5.1.2)).	founder
 p3	3.2	1227	The founders' count cannot admit the row that would restore it.	founder
 p3	3.2	1227	So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat.	founder
-p3	3.2	1229	The conferral is `trust:confers:v1` under a co-scrub reaching that family's `consensus_protocol`, the same act that seated the original founders.	founder
+p3	3.2	1229	The conferral is a co-scrub reaching that family's `consensus_protocol`, the same act that seated the original founders.	founder
 p3	3.2	1281	A mechanized model of this machine, checked for (i)–(viii) over bounded founder sets and instant orderings, is the standing-verdict model, pinned by the register as `CLM-standing-verdict`.	founder
 p3	3.3.4	1534	An active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key.	founder

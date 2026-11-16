@@ -67,7 +67,7 @@ Self-judgement alone is insufficient; these standing bodies keep oversight exter
 * Deferral Deliberation Councils for meta-review of WBD quality.
 * Regular external audits; results published with redactions as needed.
 
-**Scale of the operational duties (normative).** A cadence or count below binds at the scale its row names. Below that scale the duty is recommended and not owed. An autonomy tier is that of [CC 7.5.3.1](#7.5.3.1) and a Stewardship Tier that of [CC 7.3.3](#7.3.3). A user count is of monthly active users.
+**Scale of the operational duties (normative).** A cadence or count below binds at the scale its row names. Below that scale the duty is recommended and not owed. A row marked never owed binds at no scale: it states where a steward's chosen and recorded conduct applies ([CC 7.5.5](#7.5.5)). An autonomy tier is that of [CC 7.5.3.1](#7.5.3.1) and a Stewardship Tier that of [CC 7.3.3](#7.3.3). A user count is of monthly active users.
 
 | Duty | Stated at | Binds at | Period, and when it starts |
 |---|---|---|---|
