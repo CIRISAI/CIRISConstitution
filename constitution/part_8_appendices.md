@@ -1662,7 +1662,7 @@ Authorship: `leaf=lifecycle:{kind} => counted ; authored` (CC 3.4.1)
 Fold:
 - `weight=rate(hardware_class); by=reader` (CC 4.2.2)
 - `reads=own&cites(hardware_custody:{platform}); weight=rate(hardware_class); by=reader` (CC 4.2.2.1)
-- `key=attested_key_id; pick=max(version); absent=from(trust:{job}:{version})` (CC 4.2.6)
+- `key=attested_key_id; pick=chain(prev); absent=from(trust:{job}:{version})` (CC 4.2.6)
 
 Body: `accord_root`
 

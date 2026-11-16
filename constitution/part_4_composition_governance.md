@@ -148,7 +148,7 @@ The kind is the row's family, so the payload carries no `invocation_kind`. The e
 
 One holder's signature is the row's one statement, verified against the holders of the bundle in force. A cosigned row is a counted row: one statement for each holder, over one payload ([CC 2.6.1.9](part_2_the_grammar.md#2.6.1.9)).
 
-**The first drill (normative).** Within 7 days of the genesis bundle's publication, each holder signs and publishes an `accord:invoke:drill`, so the fire path is rehearsed on every holder's key as the mesh begins ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)).
+**The first drill (normative).** Within 7 days of the genesis bundle's publication, each holder signs and publishes an `accord:invoke:drill`, so the fire path is rehearsed on every holder's key as the mesh begins ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). A missing drill row is visible to every reader, and its breach is public, with no automatic consequence.
 
 The substrate MUST reject duplicate `invocation_id` values within the `valid_until` window (per-kind unique).
 
