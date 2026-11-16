@@ -1,7 +1,7 @@
 {
  "_meta": {
   "cc_version": "1.0-rc20",
-  "family_model_sha256": "950721970c2801b33216a1cdf552c7e3ba44575656929fcf170bd4b94380157a",
+  "family_model_sha256": "cf36502bd9997c1a6b1286ae7d2768ea3d3c3a986530764671c84bdd4942bbf7",
   "generator": "tools/cc_family_select.py",
   "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown",
   "keys": {

@@ -20,10 +20,11 @@ section number across the repository from that map, and refuses to run on a tree
                          every number that exists only on the old side is reported wherever it appears
   --evidence-rows        write manifests/section_map/<repository>.tsv: each row of a pinned implementer's
                          evidence manifest (constitution/vendor/evidence/) that cites a renumbered section,
-                         with its line, its claim id, the old number and this edition's (the earlier re-cut's
-                         map, formal/derivation/section_map_rc19.tsv, then the map, as tools/check_claims.py
-                         reads them); with --check, compare and write nothing (exit 1 when a file is stale),
-                         after a deliberate break it must catch
+                         with its line, its claim id, the old number and this edition's (read in one step by
+                         the generation evidence_pins.tsv cc_numbering names, GENERATIONS below, as
+                         tools/check_claims.py reads it); with --check, compare and write nothing (exit 1 when
+                         a file is stale), after a deliberate break it must catch, and after the slug cases
+                         (SLUG_CASES) land and a planted double step is caught
 
 What it rewrites: the numbered headings of constitution/part_*.md (number, level, a title the map
 renames); every token equal to a renumbered section in every text file in scope (CC references and
@@ -60,6 +61,7 @@ MAX_DEPTH = 4
 
 EXCLUDE_PREFIX = ("constitution/vendor/", "volumes/", ".git/")
 EXCLUDE_FILE = {"CHANGELOG.md", "formal/derivation/section_map.tsv", "formal/derivation/section_map_rc19.tsv",
+                "formal/derivation/section_map_close.tsv", "formal/derivation/section_map_rewrites_rc19.tsv",
                 "formal/derivation/section_map_rewrites.tsv", "tools/recut_sections.py"}
 TEXT_EXT = (".md", ".tsv", ".json", ".py", ".lean", ".tla", ".cfg", ".kx", ".txt", ".yaml", ".yml", ".cddl",
             ".sh", ".xml", ".csv", ".toml", ".rs", ".als", ".smt2", ".dfy")
@@ -255,19 +257,59 @@ def read_rows(path):
     return list(csv.DictReader(lines, delimiter="\t", quoting=csv.QUOTE_NONE))
 
 
-def chain(rows, numbering):
-    """old -> this edition's number for a manifest pinned at `numbering` (evidence_pins.tsv cc_numbering): blank,
-    before the earlier re-cut (its map, then this one); 'recut', at 1.0-rc19 (this map); 'moved', this edition's."""
-    earlier = {r["old_number"]: r["new_number"] for r in read_rows(EARLIER_MAP)} if os.path.exists(EARLIER_MAP) else {}
-    this = {r["old_number"]: r["new_number"] for r in rows if r["old_number"] != "—"}
-    if numbering == "moved":
+CLOSE_MAP = os.path.join(ROOT, "formal", "derivation", "section_map_close.tsv")
+# evidence_pins.tsv cc_numbering: the generation of section numbers a pinned manifest cites, and the map that
+# reads it. Each generation is read in ONE step, through the slug: its own map gives the slug of a number, and
+# this edition's map (formal/derivation/section_map.tsv) gives that slug's number. No map is applied after another.
+GENERATIONS = {
+    "": EARLIER_MAP,          # before the 1.0-rc19 re-cut: old_number of section_map_rc19.tsv
+    "recut": None,            # 1.0-rc19: old_number of section_map.tsv
+    "moved": CLOSE_MAP,       # 1.0-rc20 before Part 1's gap closed: old_number of section_map_close.tsv
+    "rc20": "identity",       # 1.0-rc20 as it stands
+}
+
+
+def generation_map(rows, numbering):
+    """number of generation `numbering` -> this edition's number, by slug, in one step (rows: this edition's map)."""
+    if numbering not in GENERATIONS:
+        raise SystemExit(f"recut: cc_numbering {numbering!r} is not one of {sorted(GENERATIONS)}")
+    final = {r["new_slug"]: r["new_number"] for r in rows}
+    src = GENERATIONS[numbering]
+    if src == "identity":
         return {}
-    keys = set(this) if numbering == "recut" else set(earlier) | set(this)
-    out = {}
-    for k in keys:
-        mid = k if numbering == "recut" else earlier.get(k, k)
-        out[k] = this.get(mid, mid)
-    return out
+    gen = rows if src is None else (read_rows(src) if os.path.exists(src) else [])
+    return {r["old_number"]: final[r["old_slug"]] for r in gen if r["old_number"] != "—" and r["old_slug"] in final}
+
+
+def chain(rows, numbering):
+    return generation_map(rows, numbering)
+
+
+SLUG_CASES = [            # (generation, number cited, the slug it must land on): the double-step trap
+    ("recut", "1.14.3", "iv-weaving"), ("recut", "1.15.2", "integrity-operationalising"),
+    ("recut", "1.16.1", "a-2.conclusion"), ("moved", "1.15.2", "integrity-operationalising"),
+    ("moved", "1.16.1", "a-2.conclusion"), ("", "1.15.2", "integrity-operationalising"),
+    ("", "2.6.1.7", "signed-object"),
+]
+
+
+def slug_cases(rows, resolve):
+    """The cases whose citation does not land on its slug's heading in the Parts, under `resolve`."""
+    at = {s["num"]: s["slug"] for s in parse_parts()}
+    return [(g, n, want, resolve(g, n)) for g, n, want in SLUG_CASES if at.get(resolve(g, n)) != want]
+
+
+def slug_test(rows):
+    """Every case lands on its slug in one step; and a planted double step (the generation's map, then the 1.0-rc19
+    map after it) is caught. Returns the lines to print and whether both hold."""
+    maps = {g: generation_map(rows, g) for g in GENERATIONS}
+    one = lambda g, n: maps[g].get(n, n)
+    twice = lambda g, n: maps["recut"].get(one(g, n), one(g, n)) if g != "recut" else maps["moved"].get(one(g, n), one(g, n))
+    miss, planted = slug_cases(rows, one), slug_cases(rows, twice)
+    out = [f"  slug case missed: {g} {n} -> {got}, not `{w}`" for g, n, w, got in miss]
+    out.append(f"slug cases: {len(SLUG_CASES) - len(miss)} of {len(SLUG_CASES)} land on their slug; planted double "
+               f"step caught: {'yes' if planted else 'no'} ({len(planted)} case(s) misplaced)")
+    return out, not miss and bool(planted)
 
 
 def evidence_rows(rows):
@@ -285,8 +327,8 @@ def evidence_rows(rows):
         lines = open(os.path.join(EVIDENCE_DIR, name), encoding="utf-8").read().split("\n")
         body = [f"# {repo}: rows of its vendored evidence manifest that cite a renumbered section; line = line in "
                 f"that file at the pinned commit; new_decimal = the number in this edition. Generated by "
-                f"tools/recut_sections.py --evidence-rows from formal/derivation/section_map_rc19.tsv and "
-                f"formal/derivation/section_map.tsv.",
+                f"tools/recut_sections.py --evidence-rows from formal/derivation/section_map.tsv and the map of the "
+                f"manifest's numbering generation (evidence_pins.tsv cc_numbering).",
                 "line\tclaim_id\told_decimal\tnew_decimal\tother_cells_moved"]
         header = True
         for i, l in enumerate(lines, 1):
@@ -322,6 +364,8 @@ def evidence_rows_run(check):
             r["new_number"] = r["new_number"] + ".9"
             caught = evidence_rows(planted) != want
             break
+    lines, slugs_ok = slug_test(rows)
+    print("\n".join(lines))
     stale = []
     for repo, text in want.items():
         path = os.path.join(EVIDENCE_OUT, repo + ".tsv")
@@ -339,7 +383,7 @@ def evidence_rows_run(check):
           f"({len(moved)} sections renumbered); deliberate break caught: {'yes' if caught else 'no'}"
           + (f"; stale: {', '.join(stale)}" if stale and check else f"; written: {', '.join(stale)}" if stale else "")
           + (f"; no manifest pinned for: {', '.join(extra)}" if extra else ""))
-    return 1 if (not caught or extra or (check and stale)) else 0
+    return 1 if (not caught or not slugs_ok or extra or (check and stale)) else 0
 
 
 def write_map(rows):
@@ -912,12 +956,17 @@ def anchor_errors(path, text, nums_by_file):
     return n, errs
 
 
-def drift(before, after, change):
-    """Old numbers that appear in `after` more often than `before`, mapped, gives: left on the old side."""
+def drift(before, after, change, path=None):
+    """Old numbers that appear in `after` more often than `before`, mapped, gives: left on the old side. In a file
+    that is not data, a two-level bare number is expected to stand (the rewrite leaves it and lists it)."""
     want, have = {}, {}
-    for m in TOKEN.finditer(before):
-        k = change.get(m.group(1), m.group(1))
-        want[k] = want.get(k, 0) + 1
+    for line in before.split("\n"):
+        for m in TOKEN.finditer(line):
+            tok = m.group(1)
+            keep = (path is not None and tok.count(".") < 2 and not is_data(path)
+                    and classify(line, m.start(1), m.end(1)) == "bare")
+            k = tok if keep else change.get(tok, tok)
+            want[k] = want.get(k, 0) + 1
     for m in TOKEN.finditer(after):
         have[m.group(1)] = have.get(m.group(1), 0) + 1
     return {o: have[o] - want.get(o, 0) for o in change if have.get(o, 0) > want.get(o, 0)}
@@ -937,16 +986,23 @@ def head_text(path):
         return None
 
 
-def head_is_before(rows):
-    """True when git HEAD's Parts carry the old numbers (the re-cut is applied but not committed)."""
-    moving = {r["old_slug"]: r["old_number"] for r in rows if r["old_number"] != r["new_number"]}
+def head_moving(rows):
+    """{old: new} for the rows whose section git HEAD's Parts still number on the old side (the re-cut applied but
+    not committed). A row HEAD already numbers on the new side (a section an earlier edition moved, when the map
+    spans editions) is not part of this re-cut."""
+    want = {r["old_slug"]: r for r in rows if r["old_number"] not in (r["new_number"], "—")}
+    out = {}
     for f in part_files():
-        t = head_text(rel(f)) or ""
-        for line in t.split("\n"):
+        for line in (head_text(rel(f)) or "").split("\n"):
             m = HEAD.match(line)
-            if m and m.group(3) in moving:
-                return m.group(2) == moving[m.group(3)]
-    return False
+            if m and m.group(3) in want and m.group(2) == want[m.group(3)]["old_number"]:
+                out[m.group(2)] = want[m.group(3)]["new_number"]
+    return out
+
+
+def head_is_before(rows):
+    """True when git HEAD's Parts carry the old numbers of some row (the re-cut is applied but not committed)."""
+    return bool(head_moving(rows))
 
 
 def selftest():
@@ -966,13 +1022,17 @@ def selftest():
         miss.append("a number left on the old side was not seen")
     if drift("CC 2.6.1.7", "CC 2.6.1.8", change):
         miss.append("a clean rewrite was reported as drift")
+    if drift("about 1.15 MB", "about 1.15 MB", {"1.15": "1.14"}, "x.md"):
+        miss.append("a two-level bare number the rewrite leaves was reported as drift")
+    if not drift("CC 1.15", "CC 1.15", {"1.15": "1.14"}, "x.md"):
+        miss.append("a two-level CC reference left on the old side was not seen")
     if not anchor_errors("constitution/part_4_x.md", "[a](#9.9.9)", {"constitution/part_4_x.md": {"4.1"}})[1]:
         miss.append("a dangling anchor was not caught")
     if quote_found("abc", ["4.1"], {"4.1": "xyz", "4.2": "abc"}):
         miss.append("a quote outside its span was found")
     for m in miss:
         print("  self-test missed: " + m)
-    print(f"recut verify: self-test {6 - len(miss) if len(miss) <= 6 else 0} of 6 planted breaks caught")
+    print(f"recut verify: self-test {8 - len(miss) if len(miss) <= 8 else 0} of 8 planted breaks caught")
     return miss
 
 
@@ -1007,7 +1067,9 @@ def verify(rows):
     for path in files:
         if not path.endswith(TEXT_EXT) or path in ("formal/derivation/section_map.tsv", "tools/recut_sections.py",
                                                     "formal/derivation/section_map_rewrites.tsv",
-                                                    "formal/derivation/section_map_rc19.tsv"):
+                                                    "formal/derivation/section_map_rc19.tsv",
+                                                    "formal/derivation/section_map_close.tsv",
+                                                    "formal/derivation/section_map_rewrites_rc19.tsv"):
             continue
         try:
             text = open(os.path.join(ROOT, path), encoding="utf-8").read()
@@ -1041,7 +1103,7 @@ def verify(rows):
     print(f"recut verify: {nq} quotes checked")
     # against git HEAD taken before --apply: every renumbered number in a file, generated or not, moved
     if head_is_before(rows):
-        change = {r["old_number"]: r["new_number"] for r in rows if r["old_number"] != r["new_number"]}
+        change = head_moving(rows)
         tracked = subprocess.check_output(["git", "ls-files"], cwd=ROOT, text=True).split("\n")
         gen = [f for f in tracked if any(f == g or (g.endswith("/") and f.startswith(g)) for g in GENERATED)]
         nd = ng = nf = 0
@@ -1064,7 +1126,7 @@ def verify(rows):
             before = head_text(path)
             if before is None:
                 continue
-            d = drift(before, open(os.path.join(ROOT, path), encoding="utf-8").read(), change)
+            d = drift(before, open(os.path.join(ROOT, path), encoding="utf-8").read(), change, path)
             for o, n in sorted(d.items()):
                 n -= exact.get(path, {}).get(o, 0)
                 if n <= 0:

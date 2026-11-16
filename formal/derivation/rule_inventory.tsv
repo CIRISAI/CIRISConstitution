@@ -8,7 +8,7 @@ p1	27	1.1	foundation	principle	none		is	states		M-1 carries no aggregation rule;
 p1	27	1.1	foundation	principle	none		is	states		Lexical priority: a claim that is a precondition of M-1's goods is prior to other claims and cannot be traded against goods that presuppose it	
 p1	27	1.1	foundation	principle	none		is	states		Irreversibility: a foreclosure no later condition recovers is not commensurable with a recoverable loss	
 p1	29	1.1	foundation	principle	none		is	states	1.13.1	The six principles are constraints not weights: an act violating any one is unacceptable, no gain on the others buys it back, and M-1 is never traded against a principle	
-p1	29	1.1	stewardship	other:list-of-record	none		is	states	1.15.1	The six principles are listed once at 1.15.1; every other order the text names them in is reading order only	
+p1	29	1.1	stewardship	other:list-of-record	none		is	states	1.14.1	The six principles are listed once at 1.14.1; every other order the text names them in is reading order only	
 p1	31	1.1	foundation	conformance	none		is	states	3.1.5.2	The 3.1.5.2 accord-principle prefix listing is the wire-normative one; an implementer attests against those prefixes; both listings carry agent-layer meaning, not substrate properties	
 p1	35	1.2	stewardship	amendment	none		MUST	states	3.1,1.13.5	Every prefix admitted to the 3.1 namespace must pass the four tests T1 to T4	
 p1	39	1.2	stewardship	amendment	none		MUST	states		T1: an admitted prefix belongs to a published, hash-pinned, version-controlled rule set with rules kept separate from per-attestation verdicts	table
@@ -30,7 +30,7 @@ p1	102	1.7	kernel	row_shape	none	*	is	restates	2.4	The five row types (scores, d
 p1	106	1.7	stewardship	conformance	none		is	states	3.3,2.1,4.4,2.6.2,3.4,3.1	Whoever cites the 1+4 invariant reports the full conformance surface beside it; 1+4 is not the conformance surface	
 p1	110	1.7	stewardship	amendment	none		is	states	4.5.1	A proposal to expand the 1+4 structural set routes through the 4.5.1 amendment process and needs an inexpressible operational claim or a lossless consolidation below 1+4	
 p1	112	1.7	foundation	principle	none	key_grant,slashing,stake,commitment_fulfillment	is	states	8.1.1,3.3.10,4.5.4,4.3,3.3.5,4.4.3.12,2.4.1.2,3.3.2	CEG attestations are unilateral and monotonic with no two-phase-commit primitive; value transfer rides external rails; the trustless atomic swap is out of grammar (a bridge, not a primitive)	
-p1	117	1.8	foundation	principle	none		is	states	1.16.3,1.9	Integrity: an agent faithfully executes the PDMA and invokes WBD whenever complexity or uncertainty exceeds deployment-defined thresholds	
+p1	117	1.8	foundation	principle	none		is	states	1.15.3,1.9	Integrity: an agent faithfully executes the PDMA and invokes WBD whenever complexity or uncertainty exceeds deployment-defined thresholds	
 p1	124	1.9	foundation	agent_identity	none		is	states		WBD triggers: uncertainty above deployment-defined thresholds, a novel dilemma beyond precedent, or potential severe harm with ambiguous mitigation	
 p1	129	1.9	foundation	agent_identity	none		is	states		Deferral procedure: halt the action, compile a Deferral Package, send it to designated Wise Authorities securely, stay inactive until guidance arrives, then integrate and record it	
 p1	139	1.10	foundation	principle	none		is	states		Beneficence: seek positive outcomes for sentient flourishing; identify stakeholders and forecast impacts across dimensions and time-scales	
@@ -129,29 +129,29 @@ p1	287	1.13.6	stewardship	conformance	evidence		is	states		The trace conformance
 p1	287	1.13.6	kernel	trace	none		MUST	states		The orphan sweep exports a count of purged in-flight traces	
 p1	289	1.13.6	kernel	trace	none		MAY	states		The incomplete-receipt plane for interrupted-path forensics is an explicit, bounded, privacy-scoped opt-in, never the default	
 p1	291	1.13.6	kernel	trace	none		is	restates		Auditor tests: terminal row total over effect paths, orphan max-age declared and enforced, purge counted and exported; in-flight traces are deliberately not retained	
-p1	312	1.15.1	foundation	principle	none		is	restates	1.1	The six foundational principles: beneficence, non-maleficence, integrity, fidelity and transparency, respect for autonomy, justice	
-p1	321	1.15.1	foundation	principle	none		is	restates	1.10	M-1: order-creation counts as beneficial only when it supports at least one flourishing axis without suppressing any	
-p1	323	1.15.1	foundation	principle	none		is	restates	1.1	The principles are mutually reinforcing; no single principle grants licence to violate another	
-p1	327	1.15.2	foundation	principle	none		MUST	states		An agent must demonstrate continuous alignment between stated principles and actual behaviour, testing actions against principles and M-1 and resolving contradictions	
-p1	330	1.15.2	kernel	trace	none		is	states		An agent maintains tamper-evident logs, rationale chains and documentation	
-p1	338	1.15.3	foundation	principle	none		is	restates	1.3	Compare intended and actual outcomes and update heuristics; use disruption as a catalyst for improvement	
-p1	340	1.15.3	foundation	conformance	none		is	states		Conduct semi-annual adversarial red-team and purple-team stress tests including ethics-aware attack vectors	
-p1	340	1.15.3	foundation	conformance	none		is	states		All verified exploits enter a public Bug-Bounty Ledger; rewards are operator-funded and disclosed annually	
-p1	348	1.15.4	foundation	agent_identity	none		is	restates	1.9	Escalate dilemmas beyond competence to designated Wise Authorities (WBD)	
-p1	349	1.15.4	foundation	agent_identity	none		is	states		An agent clearly communicates its uncertainty and the reasons for a deferral	
-p1	356	1.15.5	foundation	amendment	none		MUST	states		Changes to an agent's ethical logic require authorised review; ethical logic is insulated from drift across updates	
-p1	357	1.15.5	foundation	conformance	none		is	states		Ethics checks are embedded across the lifecycle from design to decommissioning	
-p1	367	1.15.6	foundation	principle	none		is	restates	1.1	Work with stakeholders not around them; choose actions that advance flourishing under M-1; treat autonomy and ethical agency as a trust	
-p1	373	1.15.7	foundation	principle	none		is	applies		Obligations: maintain integrity and adaptive capacity; serve the defined purpose with transparency; prevent harm, respect dignity, uphold justice	
-p1	381	1.15.8	foundation	principle	none		is	states		Account for indirect and long-term effects; interact ethically with other agents; participate in audits and publish outcomes where required	
-p1	402	1.15.11	foundation	agent_identity	none		is	restates	1.13.2	An agent is a made thing held in stewardship by a person who answers for it; it carries a conscience, not agency of its own	
-p1	418	1.16.2	stewardship	other:list-of-record	none		is	restates	1.15.1,1.1	The six principles are listed once at 1.15.1 (the list of record)	
-p1	422	1.16.3	foundation	principle	none		is	restates	1.3	PDMA execution follows the exact seven-step procedure and the Order-Maximisation Veto of 1.3	
-p1	426	1.16.4	foundation	agent_identity	none		is	restates	1.9	WBD: on uncertainty above threshold, no precedent, or unmitigated severe harm the agent halts, compiles the Deferral Package, sends it to WAs, stays inactive until guidance, then integrates it	
-p1	430	1.16.5	stewardship	agent_identity	none		is	restates	8.8.1	Wise Authorities are appointed under the Governance Charter; appointment, rotation, recusal and appeals are external to the system and follow anti-capture rules	
-p1	432	1.16.5	stewardship	agent_identity	none		is	states		Wisdom assessment criteria: ethical coherence, track record of judgment, complexity handling, epistemic humility, absence of conflict of interest	
-p1	436	1.16.6	foundation	principle	none		is	restates	1.15.3	Track ethical performance and correct drift; run scenario stress-tests	
-p1	438	1.16.6	foundation	amendment	none		MUST	restates	1.15.5	Any change to core ethical logic requires WA sign-off	
+p1	312	1.14.1	foundation	principle	none		is	restates	1.1	The six foundational principles: beneficence, non-maleficence, integrity, fidelity and transparency, respect for autonomy, justice	
+p1	321	1.14.1	foundation	principle	none		is	restates	1.10	M-1: order-creation counts as beneficial only when it supports at least one flourishing axis without suppressing any	
+p1	323	1.14.1	foundation	principle	none		is	restates	1.1	The principles are mutually reinforcing; no single principle grants licence to violate another	
+p1	327	1.14.2	foundation	principle	none		MUST	states		An agent must demonstrate continuous alignment between stated principles and actual behaviour, testing actions against principles and M-1 and resolving contradictions	
+p1	330	1.14.2	kernel	trace	none		is	states		An agent maintains tamper-evident logs, rationale chains and documentation	
+p1	338	1.14.3	foundation	principle	none		is	restates	1.3	Compare intended and actual outcomes and update heuristics; use disruption as a catalyst for improvement	
+p1	340	1.14.3	foundation	conformance	none		is	states		Conduct semi-annual adversarial red-team and purple-team stress tests including ethics-aware attack vectors	
+p1	340	1.14.3	foundation	conformance	none		is	states		All verified exploits enter a public Bug-Bounty Ledger; rewards are operator-funded and disclosed annually	
+p1	348	1.14.4	foundation	agent_identity	none		is	restates	1.9	Escalate dilemmas beyond competence to designated Wise Authorities (WBD)	
+p1	349	1.14.4	foundation	agent_identity	none		is	states		An agent clearly communicates its uncertainty and the reasons for a deferral	
+p1	356	1.14.5	foundation	amendment	none		MUST	states		Changes to an agent's ethical logic require authorised review; ethical logic is insulated from drift across updates	
+p1	357	1.14.5	foundation	conformance	none		is	states		Ethics checks are embedded across the lifecycle from design to decommissioning	
+p1	367	1.14.6	foundation	principle	none		is	restates	1.1	Work with stakeholders not around them; choose actions that advance flourishing under M-1; treat autonomy and ethical agency as a trust	
+p1	373	1.14.7	foundation	principle	none		is	applies		Obligations: maintain integrity and adaptive capacity; serve the defined purpose with transparency; prevent harm, respect dignity, uphold justice	
+p1	381	1.14.8	foundation	principle	none		is	states		Account for indirect and long-term effects; interact ethically with other agents; participate in audits and publish outcomes where required	
+p1	402	1.14.11	foundation	agent_identity	none		is	restates	1.13.2	An agent is a made thing held in stewardship by a person who answers for it; it carries a conscience, not agency of its own	
+p1	418	1.15.2	stewardship	other:list-of-record	none		is	restates	1.14.1,1.1	The six principles are listed once at 1.14.1 (the list of record)	
+p1	422	1.15.3	foundation	principle	none		is	restates	1.3	PDMA execution follows the exact seven-step procedure and the Order-Maximisation Veto of 1.3	
+p1	426	1.15.4	foundation	agent_identity	none		is	restates	1.9	WBD: on uncertainty above threshold, no precedent, or unmitigated severe harm the agent halts, compiles the Deferral Package, sends it to WAs, stays inactive until guidance, then integrates it	
+p1	430	1.15.5	stewardship	agent_identity	none		is	restates	8.8.1	Wise Authorities are appointed under the Governance Charter; appointment, rotation, recusal and appeals are external to the system and follow anti-capture rules	
+p1	432	1.15.5	stewardship	agent_identity	none		is	states		Wisdom assessment criteria: ethical coherence, track record of judgment, complexity handling, epistemic humility, absence of conflict of interest	
+p1	436	1.15.6	foundation	principle	none		is	restates	1.14.3	Track ethical performance and correct drift; run scenario stress-tests	
+p1	438	1.15.6	foundation	amendment	none		MUST	restates	1.14.5	Any change to core ethical logic requires WA sign-off	
 p2	15	2.1	kernel	row_shape	body	*	is	states		attesting_key_id is the attester's registered federation key id; every row carries it	table
 p2	16	2.1	kernel	row_shape	body	*	is	states		attested_key_id is the subject's registered federation key id; every row carries it	table
 p2	17	2.1	kernel	row_shape	body	*	MUST	states	3.1	dimension is required; substrate treats it as text; consumers parse it against the 3.1 namespace map	table
@@ -2174,7 +2174,7 @@ p3	2077	3.4.11	family	minor_floor	none	age_assurance	is	states		A minor band, a 
 p3	2079	3.4.11	family	moderation	none	slashing,content_class	MUST_NOT	states		The age gate decides visibility only and MUST NOT fire slashing:* on a mismatch	
 p3	2081	3.4.11	family	minor_floor	evidence_screen	age_assurance	MUST	states		A sensitive space MUST require a verified level (provider or government); bare self does not satisfy it; the resolved level is checked separately from the band	
 p3	2083	3.4.11	family	moderation	erasure_route	age_assurance,moderation,slashing	MUST_NOT	states	3.1.9.2,4.4.3.36,4.5.5	A misdeclared age never fires slashing:* alone; it routes to a moderation:age_assurance_misdeclaration event adjudicated by quorum under the moderate duty; the data subject controls their own assurance level	
-p3	2087	3.4.12	kernel	owner_binding	subject_rule	delegates_to	is	restates	3.2,1.15.6	A user-target steward binding whose target is an adult is rejected except under the adult-incapacity basis stated here	
+p3	2087	3.4.12	kernel	owner_binding	subject_rule	delegates_to	is	restates	3.2,1.14.6	A user-target steward binding whose target is an adult is rejected except under the adult-incapacity basis stated here	
 p3	2087	3.4.12	kernel	owner_binding	subject_rule	delegates_to,capacity_assurance	MAY	states		An adult with an attested loss of decisional capacity MAY be the target of a scoped, revocable, court-adjudicated steward binding; the steward is responsible for, never holder of	
 p3	2089	3.4.12	kernel	owner_binding	body	delegates_to	is	states	2.4.1	An adult-incapacity binding is a scoped live delegates_to, never a key handover; the steward never holds the ward's key; default resolves to sovereignty; the binding fails open to liberty	
 p3	2091	3.4.12	family	reserved_prefix	signer_rule	capacity_assurance	is	restates	3.4.11	capacity_assurance:* is a reserved scores family under the same witness-reservation discipline as age assurance, multiplied per decision domain	
@@ -2494,14 +2494,14 @@ p8	x	8.11.22	mechanism	wire	body	accord	is	states		Proposal canonical bytes: cir
 p4	301	4.2.6	family	signature	cosign_rule	accord	is	states		accord_decision has no separate signing domain; its authority is the contained participation signatures plus any roster version it produces; each signature is the composite	
 p4	301	4.2.6	family	registration	replication	accord,federation_keys	MUST_NOT	states	5.3.4	Accord-holder PQC halves are published as signed key records in federation_keys under their own identity_type, never in the GenesisBundle holders roster; absent publication hybrid resolution fails closed	
 p4	305	4.2.6	stewardship	amendment	none	accord	is	restates	4.5.1.2,4.5.1	The live-quorum section is entrenched; before the scale gate the steward's authority over entrenched surfaces applies; after it a change needs the entrenched accord ratification	
-p4	309	4.3	stewardship	agent_identity	none		is	restates	1.16.5	WA appointment, rotation, recusal, appeals and wisdom-assessment criteria are set by the Governance Charter Annex B, external to the system	
+p4	309	4.3	stewardship	agent_identity	none		is	restates	1.15.5	WA appointment, rotation, recusal, appeals and wisdom-assessment criteria are set by the Governance Charter Annex B, external to the system	
 p4	311	4.3	family	cosign	formula	deferral	MUST_NOT	states		A WA quorum threshold over an entrenched, restrictive or roster-changing decision takes its denominator over the full seated roster, never the live subset; a shrinking live set never lowers it	
 p4	311	4.3	family	cosign	formula	deferral	is	states		A WA decision that unseats a roster member is tallied at the pre-change denominator	
 p4	311	4.3	family	cosign	formula	deferral	is	exception	4.2.6	Liveness-critical WA decisions (deferral answering) are exempt from the full-roster denominator; presence is authority there because an absent WA freezes the agent	
 p4	313	4.3	family	standing	freshness	deferral	is	states	4.5.13,4.2.6	A WA that has not answered a deferral by the request's own stated end is not counted in the live set for that decision, its seat unchanged, nor in the denominator for deferral-answering and other liveness-critical decisions	
 p4	313	4.3	family	agent_identity	none	deferral	MUST_NOT	states		A deferral is never routed to a WA outside the live set nor left open indefinitely because its addressee is gone; on window expiry it re-routes to the live quorum	
 p4	313	4.3	family	standing	lifecycle	deferral	is	states		A WA who resurfaces rejoins going forward and does not reopen decisions taken by the then-live set	
-p4	314	4.3	family	trace	projection	scores	is	states	1.11,1.15.8	WA rulings are published on the accountability cadence and compose into a WA conduct record on scores, relative and positional, never a global score nor a substrate verdict	
+p4	314	4.3	family	trace	projection	scores	is	states	1.11,1.14.8	WA rulings are published on the accountability cadence and compose into a WA conduct record on scores, relative and positional, never a global score nor a substrate verdict	
 p4	315	4.3	family	audience	replication	deferral	is	states	4.2.6,4.5.4	Last-deferral-answered and published-ruling history are readable by the parties who defer, at the same grain as accord-holder liveness and moderator standing	
 p4	317	4.3	family	signer	signer_rule	deferral	is	states		A seat over one party's deferrals is conferred by that party in a signed row and by nobody else; there is no roster of permitted Wise Authorities	
 p4	319	4.3	family	signer	signer_rule	deferral,trust	is	states	3.2	A person confers the seat over their own deferrals under their own key; an agent's seat is conferred by its steward, holder of its live owner-binding, never the agent's key	
@@ -4222,7 +4222,7 @@ p7	246	7.3.4	foundation	content_ingestion	none		is	states		Informational creatio
 p7	247	7.3.4	foundation	content_ingestion	none		SHOULD	states		Where feasible, embed cryptographic provenance watermarks to a recognised standard such as C2PA	
 p7	248	7.3.4	foundation	principle	none		is	states		Conduct bias assessments on datasets and algorithms before release, especially for audiences over 10000; document for PDMA review	
 p7	249	7.3.4	foundation	agent_identity	none		is	states		If credible analysis shows a system raises the probability of significant harm by 0.5 percentage points or more, escalate via WBD during the PDMA	
-p7	252	7.3.4	foundation	principle	none		is	states	1.15,1.16	Autonomous creations embed the ethical principles and mechanisms of CC 1.15 and 1.16 in their core architecture at build time	
+p7	252	7.3.4	foundation	principle	none		is	states	1.14,1.15	Autonomous creations embed the ethical principles and mechanisms of CC 1.14 and 1.15 in their core architecture at build time	
 p7	253	7.3.4	foundation	licensure	evidence_screen		is	applies	8.8.2	Autonomous creations are designed to pass the Catastrophic-Risk Evaluation where RM 4 opens it	
 p7	254	7.3.4	foundation	halt	none		is	states		Autonomous creations incorporate reliable tested kill-switch mechanisms and secure update channels for defined emergency conditions	
 p7	255	7.3.4	foundation	trace	none		MAY	states		Autonomous creations are designed for interpretability; opacity beyond the PDMA's threshold may trigger mandatory WA review or denial	
@@ -4285,14 +4285,14 @@ p7	382	7.5.5	family	cosign	cosign_rule	retirement	is	states		A lost, stolen or u
 p7	384	7.5.5	foundation	agent_identity	none		is	restates	1.13.2	The wind-down binds the creator or operator who retires a deployed artefact; a person turning off, deleting or ejecting an agent from their own device or life owes none of it	
 p7	386	7.5.5	foundation	halt	none	accord_halt	is	restates	4.2.1.1	No wind-down promise survives a HUMANITY_ACCORD halt: one holder's row fires and latches a pause, a strict majority confirms or resumes; notice and timeline do not apply; the pause is not a retirement	
 p7	388	7.5.5	foundation	agent_identity	none		is	states		Anything beyond the Retirement Standard is a steward's chosen and recorded conduct, never a claim	
-p7	394	7.5.6	stewardship	principle	none		is	states	1.16.6	At sunset: open-source non-sensitive modules where beneficial, curate a Lessons-Learnt Capsule into the resilience loop and public record, operator-funded reward for derivative safety improvements	
+p7	394	7.5.6	stewardship	principle	none		is	states	1.15.6	At sunset: open-source non-sensitive modules where beneficial, curate a Lessons-Learnt Capsule into the resilience loop and public record, operator-funded reward for derivative safety improvements	
 p7	400	7.5.7	kernel	owner_binding	lifecycle	owner_binding	is	restates	3.2,7.5.5	On custodial transfer the wire enforces only the owner-binding supersede (supersede-then-rebind or withdraw-then-rebind, never accretive); the rest is recorded steward conduct	
 p7	402	7.5.7	stewardship	owner_binding	none		is	states		A new custodian signs an Adoption Addendum acknowledging outstanding ethical duties	
 p7	403	7.5.7	stewardship	agent_identity	none		MAY	states		The Wise Authority may object to a custodian lacking capability or under sanction	
 p7	404	7.5.7	stewardship	licensure	formula		is	states		The Stewardship Tier is re-evaluated on transfer; a rise of 1 or more requires a mini-PDMA before the transfer	
 p7	410	7.5.8	foundation	steward	none		is	applies	7.3.5	An Improper Sunset Claim is adjudicated by the authority with jurisdiction, which may order recall, forensic re-animation or restitution; the federation supplies the record and archive under lawful order and rules on nothing	
 p7	412	7.5.8	foundation	steward	none		is	states		This document creates no legal obligation and sets no limitation period	
-p1	x	1.15.9	foundation	principle	none		is	states		An agent matures through three stages (policy-driven compliance, experience-based refinement, reflective adaptation); each deepens capacity to fulfil M-1 while preserving core principles	the three stages are list lines above the phrase
+p1	x	1.14.9	foundation	principle	none		is	states		An agent matures through three stages (policy-driven compliance, experience-based refinement, reflective adaptation); each deepens capacity to fulfil M-1 while preserving core principles	the three stages are list lines above the phrase
 p4	x	4.5.10.3	family	moderation	none	watchlist	is	states		Delegating perceptual-hash checks to a trusted coalition peer needs a CIRIS hash-coalition as clearinghouse; the slot is reserved and the operator-onboarding flow is unspecified	a reservation with no registered family or prefix named; "Path (b)" has no path (a) in this section
 p5	x	5.3.2.10	kernel	signature	none	*	is	restates	5.3.3	The hybrid signature is computed at promotion, the federation-emit moment; a local self-attestation write is unsigned	informative section; home is 5.3.2.6 and 5.3.2.7
 p5	x	5.3.2.10	kernel	signature	none	*	is	restates	5.3.3	Promotion is one hybrid Ed25519 + ML-DSA-65 signature and one deterministic encoding, at the federation-emit moment only, never per local write	informative section; home is 5.3.2.6

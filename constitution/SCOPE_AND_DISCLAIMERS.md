@@ -17,7 +17,7 @@ the observed law-structure is Selection or Intention is returned by no function 
 since the formalisation stipulates that both generators present identical observables). This
 constitution therefore takes no position on that question and confers no standing on any party
 claiming to have settled it. That is distinct from the operational uncertainty of
-[CC 1.15.4](part_1_foundation.md), which concerns being wrong on a particular call and is answered by
+[CC 1.14.4](part_1_foundation.md), which concerns being wrong on a particular call and is answered by
 deferral to a wiser authority: the generator is not a question a wiser authority could answer.
 
 **No warranty.** This is a free and open work, in active use, provided **as is**, without warranty

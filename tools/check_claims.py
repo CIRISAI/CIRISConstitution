@@ -149,29 +149,16 @@ def load_prose():
 
 # --- manifests ---------------------------------------------------------------
 
-def _recut():
-    """old -> new section number from formal/derivation/section_map_rc19.tsv (a manifest pinned before the re-cut cites old numbers)."""
-    p = os.path.join(ROOT, "formal", "derivation", "section_map_rc19.tsv")
-    if not os.path.exists(p):
-        return {}
-    rows = csv.DictReader((l for l in open(p, encoding="utf-8") if not l.startswith("#")), delimiter="\t")
-    return {r["old_number"]: r["new_number"] for r in rows if r["old_number"] != r["new_number"]}
+def _generations():
+    """{cc_numbering: number -> this edition's number}: one map per generation of section numbers a pinned manifest
+    cites, each read in one step through the slug (tools/recut_sections.py GENERATIONS); never one after another."""
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    import recut_sections as R
+    rows = R.read_map()
+    return {g: R.generation_map(rows, g) for g in R.GENERATIONS}
 
 
-RECUT = _recut()
-
-
-def _moves():
-    """1.0-rc19 number -> this edition's (formal/derivation/section_map.tsv), applied after the re-cut; a section new
-    in this edition has no 1.0-rc19 number."""
-    p = os.path.join(ROOT, "formal", "derivation", "section_map.tsv")
-    if not os.path.exists(p):
-        return {}
-    rows = csv.DictReader((l for l in open(p, encoding="utf-8") if not l.startswith("#")), delimiter="\t")
-    return {r["old_number"]: r["new_number"] for r in rows if r["old_number"] != "—" and r["old_number"] != r["new_number"]}
-
-
-MOVES = _moves()
+GENERATIONS = _generations()
 
 
 def load_manifests():
@@ -194,8 +181,10 @@ def load_manifests():
             dec = (r.get("decimal_id") or r.get("cc_decimal_id") or "").strip()
             if not dec or dec == "—":            # non-section row (e.g. h3ere StepPoint)
                 continue
-            dec = RECUT.get(dec, dec) if row.get("cc_numbering", "") not in ("recut", "moved") else dec
-            dec = MOVES.get(dec, dec) if row.get("cc_numbering", "") != "moved" else dec
+            gen = (row.get("cc_numbering") or "").strip()
+            if gen not in GENERATIONS:
+                raise SystemExit(f"evidence_pins.tsv: {repo} cc_numbering {gen!r} is not one of {sorted(GENERATIONS)}")
+            dec = GENERATIONS[gen].get(dec, dec)
             is_backed = spec["backed"](r)
             if is_backed:
                 backed.add(dec)

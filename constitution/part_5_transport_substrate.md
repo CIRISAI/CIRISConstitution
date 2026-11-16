@@ -609,6 +609,8 @@ continuation = "CTKX" ‖ 0x02 ‖ 0x01 ‖ bytes
 
 **Three safeguards.** A first sealed frame that is not a valid `CTKC` closes the link. Until `CTKC` verifies, the responder serves only the first-contact plane, even when the handshake is mutual. A promotion whose binding names a different static from the commitment of message 1 is refused. Message 2 is 1,154 bytes at first contact and 2,274 bytes when mutual. The known answers of this wire are the verifier's, published at its tag ([CC 2.6.5](part_2_the_grammar.md#2.6.5)): three handshakes, one promotion, two framing cases and 38 refusals.
 
+The layout of a sealed frame under these keys waits on its owner's submission.
+
 **E1, in full.** The two-layer rule, in numbered sentences:
 
 1. Transit-key is a **hop-by-hop transport wrap UNDER the E2E epoch DEK** (two independent crypto layers). It MUST NOT replace the cascade — a relay never sees plaintext. *Relay* in E1 means a transport node forwarding Link frames. A **member relay**, a member forwarding a call's chunks over the member relay tree ([CC 6.1.6](part_6_the_coherence_mathematics.md#6.1.6)), is a different object with its own name. Transit-key is for path-confidentiality; epoch-DEK is for end-to-end content confidentiality.

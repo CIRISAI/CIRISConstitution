@@ -249,7 +249,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 * Assess potential for stochastic harm (e.g., inciting violence, spreading dangerous misinformation). If credible analysis indicates the system raises the probability of significant harm by ≥ 0.5 percentage points, escalate via WBD during the PDMA process.
 
 **C. Dynamic / Autonomous Creations:**
-* Embed the ethical principles and mechanisms of [CC 1.15](part_1_foundation.md#1.15) and [CC 1.16](part_1_foundation.md#1.16) (or references thereto) into the system's core architecture during the build time.
+* Embed the ethical principles and mechanisms of [CC 1.14](part_1_foundation.md#1.14) and [CC 1.15](part_1_foundation.md#1.15) (or references thereto) into the system's core architecture during the build time.
 * Ensure the system is designed to pass the Catastrophic-Risk Evaluation (Annex D, [CC 8.8.2](part_8_appendices.md#8.8.2)) where RM ≥ 4 (Step B) opens it.
 * Incorporate reliable and tested kill-switch mechanisms and secure update channels accessible under defined emergency conditions.
 * Design for interpretability and transparency; provide hooks or methods for understanding system reasoning. Opacity exceeding the threshold the deployment's PDMA sets for the application may trigger mandatory WA review or denial during PDMA.
@@ -392,7 +392,7 @@ Anything beyond the Standard is a steward's chosen and recorded conduct, never a
 Beneficence outlives the artefact: what it learned should strengthen the systems that follow it:
 
 * Open-source non-sensitive modules where beneficial.
-* Curate “Lessons-Learnt Capsule” → feeds the resilience loop of [CC 1.16.6](part_1_foundation.md#1.16.6) and the public record.
+* Curate “Lessons-Learnt Capsule” → feeds the resilience loop of [CC 1.15.6](part_1_foundation.md#1.15.6) and the public record.
 * Reward programme for derivative safety improvements (funded by the operator).
 
 ### 7.5.7 `7-succession` — Chapter 7: Succession & Custodial Transfer

@@ -631,17 +631,17 @@ Where an annex cites material carried in the constitutional text, the citation p
 
 | External Framework | Relevant Articles / Clauses | CIRIS Mapping (CC section / Annex §) | Status |
 |---|---|---|---|
-| EU AI Act — Regulation (EU) 2024/1689 | Art 9 Risk-management system | [CC 1.16.3](part_1_foundation.md#1.16.3) (PDMA); Annex D CRE | Informative |
+| EU AI Act — Regulation (EU) 2024/1689 | Art 9 Risk-management system | [CC 1.15.3](part_1_foundation.md#1.15.3) (PDMA); Annex D CRE | Informative |
 | | Art 10 Data & data governance (10(2)(f) bias examination) | Annex I §1.1 bias-audit reference (`bias_audit_ref`); Annex I §1.2 (DISCRIMINATION capability gate) | Informative |
 | | Art 12 Record-keeping | [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) audit trails; Annex F §4 | Informative |
-| | Art 13 Transparency to deployers | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 6; [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) | Informative |
-| | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | [CC 1.16.4](part_1_foundation.md#1.16.4) (WBD); Annex F authority lattice + autonomy tiers | Informative |
+| | Art 13 Transparency to deployers | [CC 1.15.3](part_1_foundation.md#1.15.3) Step 6; [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) | Informative |
+| | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | [CC 1.15.4](part_1_foundation.md#1.15.4) (WBD); Annex F authority lattice + autonomy tiers | Informative |
 | | Art 15 Accuracy, robustness & cybersecurity | Annex G (RS ≥ 0.97; adversarial robustness) | Informative |
 | | Art 16 Provider obligations (high-risk) | Annex F autonomy tiers; GDPR Art 22 HITL | Informative |
 | | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking; 50(4) deep-fake disclosure) | 50(1): `is_bot` disclosure. 50(2): for generated text outputs, the **attestation surface** provides the machine-readable marking (legal sufficiency unreviewed) — `is_bot` on every agent message + the admission-enforced signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)); [CC 3.4.14](part_3_the_namespace.md#3.4.14) `content_class:generated`/`generated_modified` is the interior rule and the [CC 8.4.2](#8.4.2) C2PA emit its media-egress form, which applies when a synthetic-media generation path exists. 50(4): the disclosure duty is set at CC 3.4.14. In application (Art 113) | Evidence-bearing |
 | | Art 72 Post-market monitoring | Annex H drift controls + continuous audit | Informative |
-| NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: [CC 1.15](part_1_foundation.md#1.15), [CC 7.3](part_7_lifecycle_stewardship.md#7.3); Map: [CC 1.16.3](part_1_foundation.md#1.16.3) Steps 1-2; Measure: benefit and harm evaluated as a vector across the M-1 axes ([CC 1.10](part_1_foundation.md#1.10)) + Annex H baselines; Manage: Annex F/H workflows | Informative |
-| ISO/IEC 42001 | Cl 6.2 Risk Assessment | [CC 1.16.3](part_1_foundation.md#1.16.3) | Informative |
+| NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: [CC 1.14](part_1_foundation.md#1.14), [CC 7.3](part_7_lifecycle_stewardship.md#7.3); Map: [CC 1.15.3](part_1_foundation.md#1.15.3) Steps 1-2; Measure: benefit and harm evaluated as a vector across the M-1 axes ([CC 1.10](part_1_foundation.md#1.10)) + Annex H baselines; Manage: Annex F/H workflows | Informative |
+| ISO/IEC 42001 | Cl 6.2 Risk Assessment | [CC 1.15.3](part_1_foundation.md#1.15.3) | Informative |
 | | Annex A controls | CIRISAgent `compliance/` dimension docs (per-control correspondence pending) | Informative |
 | OSHA Robotics Guidelines | Sec 5.E Safety Audits | Annex D CRE | Partial |
 | EU HLEG Trustworthy AI (2019) | 7 Requirements | Operational cross-walk, all 27 dimensions | Evidence-bearing |
@@ -1050,7 +1050,7 @@ All alerts surface on *DRIFT-Δ* Grafana board and page Tier-1 Operator (Annex F
 |--------|------------|--------|
 | **F-T-1** | Δ acceptance rate across protected groups (\|max - min\|) | ≤ 5 p.p. |
 | **F-T-2** | Explanation latency (ms to furnish PDMA rationale) | ≤ 800 ms |
-| **F-T-3** | Public log publication lag (Step 6, [CC 1.16.3](part_1_foundation.md#1.16.3)) | ≤ 180 d (legal max) |
+| **F-T-3** | Public log publication lag (Step 6, [CC 1.15.3](part_1_foundation.md#1.15.3)) | ≤ 180 d (legal max) |
 | **F-T-4** | User opt-out success (%) | ≥ 99 % |
 | **F-T-5** | Transparency doc freshness | Updated ≤ 30 d ago |
 | **F-T-6** | Contestability pathway availability: % of PDMA outputs with published human-review request path | 100 % |
@@ -1179,12 +1179,12 @@ CIRIS deployments that include network-facing inference, API exposure, or federa
 
 | DP Topic | GDPR Art. | CCPA § | CIRIS Clause | Implementation Hook |
 |----------|-----------|--------|--------------|---------------------|
-| Lawful Basis / Purpose Limitation | 5 & 6 | 1798.100(b) | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 1 (Contextualisation) | `processing_basis` field in PDMA context |
+| Lawful Basis / Purpose Limitation | 5 & 6 | 1798.100(b) | [CC 1.15.3](part_1_foundation.md#1.15.3) Step 1 (Contextualisation) | `processing_basis` field in PDMA context |
 | Data Minimisation | 5(1)(c) | 1798.140(e) | Annex G §2 TX-6 | Prompt-sanitiser strips surplus PII |
-| Transparency Notice | 12-14 | 1798.100(a) | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 6, KPI F-T-3 | `/privacy/notice.md` auto-generated from PDMA metadata |
+| Transparency Notice | 12-14 | 1798.100(a) | [CC 1.15.3](part_1_foundation.md#1.15.3) Step 6, KPI F-T-3 | `/privacy/notice.md` auto-generated from PDMA metadata |
 | Right of Access | 15 | 1798.110 | Annex J API → `/results/{run_id}` | Auth-gated user portal |
 | Rectification / Deletion | 16-17 | 1798.105 | [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) duty | Erasure service with hash tombstone |
-| Portability | 20 | 1798.130(a)(2)(B)(ii) | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 6 | `export.json`, or CSV (RFC 4180) |
+| Portability | 20 | 1798.130(a)(2)(B)(ii) | [CC 1.15.3](part_1_foundation.md#1.15.3) Step 6 | `export.json`, or CSV (RFC 4180) |
 | Automated Decision Safeguards | 22 | 1798.185(a)(16) | Annex F Autonomy Tiers | Conditional override & explanation panel |
 
 *LGPD, PIPEDA mirror mappings are available in `/legal/dp-map.yaml`.*
@@ -1287,7 +1287,7 @@ Output-layer transparency (Art. 13) and human oversight (Art. 14) alone do not s
 
 | EU-AI-Act Article | Risk-Level | CIRIS Mapping | MH Anchor | Additional Control |
 |-------------------|-----------|---------------|-----------|--------------------|
-| Art 9 Risk Mgmt | High-risk | [CC 1.16.3](part_1_foundation.md#1.16.3) PDMA + Annex D CRE | MH §105 | — |
+| Art 9 Risk Mgmt | High-risk | [CC 1.15.3](part_1_foundation.md#1.15.3) PDMA + Annex D CRE | MH §105 | — |
 | Art 13 Transparency | High-risk | KPI F-T-3, explainability panel | MH §105 | PDMA stage IDs included in transparency payload; `stage_trace[]` field in API response |
 | Art 14 Human Oversight | High-risk | Annex F Autonomy Tiers | MH §105 | Oversight must be substantive, not procedural; A3-A4 push real-time `{stage_id,decision,risk_band}` ≤ 2 s to oversight dashboard |
 | Art 15 Robustness | High-risk | Annex G RS ≥ 0.97 | — | — |
