@@ -1,0 +1,25 @@
+property	P1 an earlier-form row counts iff it is in the ceremony row's past, in every arrival order	holds	inner_names=caught by_instant=caught by_arrival=caught
+property	P2 a key is live in this form iff it has a key record of this form, and no row of another key makes it live or ends it	holds	ceremony_carries_keys=caught named_makes_live=caught ignore_earlier_revocation=caught third_party_ends=caught
+property	P3 a holder that never re-registers has no standing after and loses nothing it held in the past	holds	silence_retires=caught by_instant=caught drop_earlier_after_cut=caught
+property	P4 no single device yields a halt	holds	one_half_verifies=caught earlier_halt_after=caught
+property	P5 a seat has at most one transit key in force, the one the holders' count authorised	holds	seat_alone_td=caught one_holder_rebind=caught rebind_outside_past=caught pick_one=caught
+property	P6 two ceremony rows are a fork: tips to a reader with no acknowledgement, the other void to one that pinned	holds	fork_union=caught pinned_ignored=caught
+property	P7 the accord's count is unbroken across the cutover: same persons, same count, never fewer	holds	count_keys=caught roster_shrinks=caught
+property	P8 an agent has a steward at every point across the cutover	holds	no_continuity=caught act_without_steward=caught
+property	P9 the result does not depend on the order in which a node receives the ceremony's rows	holds	by_arrival=caught fork_first=caught
+finding	F1 an earlier row that a carried earlier row names, and no carried root holds, is outside the past	outside
+finding	F2 a halt sealed in the earlier form and published after the ceremony row	refused
+finding	F3 an earlier row concurrent with the ceremony row, at an upgraded node	counts before the ceremony row is held and not after
+finding	F4 a seat whose earlier-form re-bind the ceremony neither names nor carries, with no row in the bundle	no transit key
+finding	F5 the bundle's transit row names another key than the re-bind	no transit key
+finding	F6 a holder with two keys of this form for one earlier key	no voice
+finding	F7 the ceremony row with one holder who never re-registers	all: not signed; majority: signed
+finding	F8 an agent whose steward never re-registers	keeps its steward of record; may act: True
+finding	F9 an agent whose steward's trust edge is neither carried nor signed again	may not act
+finding	F10 a key revoked in the earlier form and recorded again in this form	not live
+finding	F11 a holder carries over the same halves when the earlier key held both on one device	one device yields a halt
+finding	F13 an owner's revocation of the agent key it owns, read by the liveness sentence	the key stays live
+finding	F14 an agent whose earlier owner-binding the ceremony does not carry	no steward from the ceremony row until its binding of this form
+finding	F15 a halt of the earlier form fired after the acknowledgement, at a node that latched it	its row stops counting at the ceremony row
+finding	F12 a node not upgraded and an upgraded node holding the same rows	differ
+count	worlds 71, arrival orders per world and reader 16, readers 3	4622 answers computed
