@@ -513,7 +513,7 @@ The cascade is **mandatory, not opt-in** — the tier name *is* the guarantee; a
 - blob provenance,
 - the transparency logs.
 
-The only plaintext bodies at community scope are an authorized `infrastructure` community's and a `public` room's, decided by the community record and never by the writer; Commons scopes are plaintext by tier.
+The only plaintext bodies at community scope are an authorized `infrastructure` community's and a `public` room's, decided by the community record and never by the writer; Commons scopes are plaintext by tier. A node gives a community the `infrastructure` treatment only when its record is a conformant `infrastructure` record and the community is rooted in that node's own trust ([CC 3.2](part_3_the_namespace.md#3.2)). No key's `identity_type` authorises it, and no one root is its only source ([CC 4.2.1](#4.2.1)).
 
 **Holder-inspectability principle (normative).** A node never holds bytes it does not know what they are: either
 

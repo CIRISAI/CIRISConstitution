@@ -118,7 +118,7 @@ membership:{stage}	@cohort_subkind=infrastructure: over=founders@named/person	CC
 membership:{stage}	@cohort_subkind=infrastructure: over=founders@named/person; reads=own&direct	CC 3.2	counting in `consensus_protocol` **only where the member's role is one the protocol counts**
 identity:occurrence	over=live@named/key	CC 3.3.6.4	- Both thresholds are counted over the roster the proposal names.
 membership:{stage}	reads=own&direct	CC 3.3.9	A delegated holder never stands in for the `consensus_protocol` on a roster or config change (roster events stay cosigned under the protocol), and a keyless
-membership:{stage}	reads=own&direct	CC 6.1.8	- **N1 (trust ≠ membership)** — a successful chain walk yields **trust+serve standing only** ([CC 3.2](part_3_the_namespace.md#3.2) TRUST≠MEMBERSHIP). Admission to any **non-`infrastructure`** community remains gated, at
+membership:{stage}	reads=own&direct	CC 6.1.8	- **N1 (trust ≠ membership)** — a successful chain walk yields **trust+serve standing only** ([CC 3.2](part_3_the_namespace.md#3.2) TRUST≠MEMBERSHIP). Admission to any community remains gated, at
 membership:{stage}	@group_kind=affiliation: over=deciding_seats@named/person	CC 4.4.3.12	Members of an affiliation hold no governance vote unless its charter grants one.
 wa_adjudication:{state}	over=seated@named/person	CC 3.1.9.4	WA-quorum-emitted with the **denominator over the full seated roster, never the live subset** (CC 4.3)
 moderation:{allegation_type}	over=present@named/person	CC 4.5.13	Presence asserts (a member signs a fresh proof-of-presence + vote over the proposal nonce, entering the live set `L`). A silent member is not in

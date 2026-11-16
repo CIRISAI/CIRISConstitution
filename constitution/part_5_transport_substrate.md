@@ -609,7 +609,31 @@ continuation = "CTKX" ‖ 0x02 ‖ 0x01 ‖ bytes
 
 **Three safeguards.** A first sealed frame that is not a valid `CTKC` closes the link. Until `CTKC` verifies, the responder serves only the first-contact plane, even when the handshake is mutual. A promotion whose binding names a different static from the commitment of message 1 is refused. Message 2 is 1,154 bytes at first contact and 2,274 bytes when mutual. The known answers of this wire are the verifier's, published at its tag ([CC 2.6.5](part_2_the_grammar.md#2.6.5)): three handshakes, one promotion, two framing cases and 38 refusals.
 
-The layout of a sealed frame under these keys waits on its owner's submission.
+**The per-frame seal (normative).** Every frame after the handshake travels under this seal, keyed by message 2 or by the promotion:
+
+```
+frame = 0x02 ‖ phase u8 ‖ counter u64_be ‖ AES-256-GCM(k, nonce, aad, pt) ‖ tag[16]
+k     = HKDF-SHA256(ikm = k_dir(phase), salt = link_id[16], info = "CIRIS-E1-LINK-SEAL-V2")
+nonce = lane u8 ‖ 0x000000 ‖ counter u64_be
+aad   = 0x02 ‖ lane u8 ‖ phase u8 ‖ link_id[16]
+```
+
+`k_dir(phase)` is `k_i2r` or `k_r2i` for the frame's direction, from the keys of the phase the frame names. Phase 0 holds the keys of message 2. Phase 1 holds the keys of the promotion, and a link is promoted at most once.
+
+**Lanes and counters.** The lanes are Channel 1, Resource 2, Request 3, Response 4 and Datagram 5. Each lane keeps its own counter, and the counter continues across the phase change. The phase changes the key and the lane and counter make the nonce, so no key and nonce pair repeats.
+
+**Switching.** A sender switches every lane to phase 1 once it has sent or received the promotion's confirmation. A receiver keeps phase 0's keys on a lane until a phase-1 frame opens there, or until the handshake budget expires.
+
+**The receiver's classification.** The receiver reads the clear phase byte before it opens a frame:
+
+- a phase-0 frame on a lane whose phase 0 is retired is dropped and counted as `seal_stale_phase`, and the link stays open, because such a frame is late, not forged;
+- a phase of 2 or more (`seal_unknown_phase`), or a phase-1 frame before the promotion (`seal_phase_before_promotion`), closes the link;
+- a frame of a held phase that fails to open (`seal_open_failed`) closes the link;
+- a frame of version 0x01 (`seal_v1_refused`) closes the link.
+
+**The replay window.** Each lane has a window of 128 counters, shared by both phases. The AEAD opens a frame first. A frame that opens but repeats a counter, or is 128 or more behind the lane's highest, is dropped and counted, and the link stays open. A frame that does not open never moves the window.
+
+The known answers of this seal are the verifier's, published at its tag ([CC 2.6.5](part_2_the_grammar.md#2.6.5)): 25 scripted receiver sequences.
 
 **E1, in full.** The two-layer rule, in numbered sentences:
 
