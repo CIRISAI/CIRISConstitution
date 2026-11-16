@@ -87,7 +87,7 @@ Announcements of any other priority signed by accord-holder keys are rejected at
 
 **Wire-isolated AND scope-isolated.** Federation-side authority cannot sign `AccordCarrier`. Humanity-accord authority signs nothing outside this enumeration. It signs no verdict on an agent's conduct, so no holder signs `accord:human_dignity` ([CC 3.4.1](part_3_the_namespace.md#3.4.1)).
 
-**Root conferral is in scope.** The enumeration admits an accord co-scrub by a strict majority of the standing accord roster over a `canonical,node` registration envelope bearing `roles: ["infra:serve"]`, the ceremony that mints a **portable trust root** ([CC 4.4.3.34](#4.4.3.34)). Read without it, the clause forbids the accord from blessing the very primitive that creates a root.
+**Root conferral is in scope.** The enumeration admits an accord co-scrub by a strict majority of the standing accord roster over the key record of a key whose `identity_type` is {`node`}, bearing `roles: ["infra:serve"]`, the ceremony that mints a **portable trust root** ([CC 4.4.3.34](#4.4.3.34)). That co-scrub is the key's canonical standing: a conferral counted by the accord's holders, carried as their statements over the key record's payload and counted at the roster head it names. Canonical is no identity type. The earlier form's `canonical,node` envelope is [CC 8.11.27](part_8_appendices.md#8.11.27). Read without it, the clause forbids the accord from blessing the very primitive that creates a root.
 
 **Scope isolation still does its real work.** Accord authority cannot reach the consent or licensure planes. Scope isolation does **not** isolate the amendment plane: [CC 4.5.1](#4.5.1) step 5, the steward's authority before the scale gate, and the [CC 4.5.1.2](#4.5.1.2) entrenched ratification all name accord-holders. That reach is stated here rather than denied. Per the [CC 1](part_1_foundation.md) reading rule it is a **default** of this instance (escaped by naming your own occupants), not a privilege requiring declaration.
 
@@ -703,7 +703,7 @@ For a Contribution C with delivery_mode = push AND cohort_scope = community:
 
 The community is admitted under the standard Policy M consensus_protocol
 options (founder_only / unanimous / majority / quorum:M/N / weighted /
-custom) per CC 4.4.3.6. Subscription-specific admission semantics —
+open:self_admit, the six kinds and no other) per CC 4.4.3.6. Subscription-specific admission semantics —
 producer_gated (publisher approves each member) vs open (anyone can
 join) — ride the consensus_protocol choice:
 

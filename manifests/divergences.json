@@ -11,22 +11,22 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 88,
+  "total": 90,
   "by_status": {
-   "runnable": 72,
+   "runnable": 74,
    "stated": 12,
    "wording-only": 4
   },
   "by_implementer": {
    "agent": 1,
    "edge": 2,
-   "persist": 81,
+   "persist": 83,
    "tooling": 4
   },
   "by_kind": {
    "audience": 4,
-   "cosign": 6,
-   "count": 3,
+   "cosign": 7,
+   "count": 4,
    "door": 19,
    "fold": 9,
    "freshness": 1,
@@ -6811,11 +6811,11 @@
     "quote": "For accountable streams, \"published\" means **witness-cosigned**"
    },
    "shipped": {
-    "value": "no signed member says a stream is accountable",
-    "source": "CC 8.10 card guard (text_conflicts C433)",
+    "value": "no reader of the binding's signed profile",
+    "source": "CC 8.10 card guard (text_conflicts C433); the implementer's answer for the edition",
     "census_cell": null
    },
-   "reason": "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
+   "reason": "the guard reads the binding's signed `profile` (CC 5.3.3.5); the shipped store reads no such member, and the kernel's rows carry no binding",
    "gap": "wire"
   },
   {
@@ -6835,11 +6835,11 @@
     "quote": "For accountable streams, \"published\" means **witness-cosigned**"
    },
    "shipped": {
-    "value": "no signed member says a stream is accountable",
-    "source": "CC 8.10 card guard (text_conflicts C433)",
+    "value": "a binding with no profile member at the shipped release",
+    "source": "CC 8.10 card guard (text_conflicts C433); the implementer's answer for the edition",
     "census_cell": null
    },
-   "reason": "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
+   "reason": "the guard reads the binding's signed `profile` (CC 5.3.3.5); the binding the edge ships carries no such member, so no shipped rule reads one",
    "gap": "wire"
   },
   {
@@ -6865,7 +6865,7 @@
     "source": "CC 5.3.3.10 E1 rules 3, 4 and 12 describe the shipped exchange; the edge and the verification library ship it",
     "census_cell": null
    },
-   "reason": "the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake, and the wire waits on the implementer's submission",
+   "reason": "the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake",
    "gap": "wire"
   },
   {
@@ -7266,6 +7266,293 @@
       ],
       "at": 3,
       "leaf": "widening"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the removal is in the act's causal past and carries the later signed instant"
+  },
+  {
+   "id": "persist/licensure:{authority_id}/cosign_rule[short of the count]",
+   "implementer": "persist",
+   "family": "licensure:{authority_id}",
+   "where": "cosign_rule[short of the count]",
+   "kind": "cosign",
+   "status": "runnable",
+   "sources": [
+    "CLM-licence-authority-quorum"
+   ],
+   "claims": [
+    "CLM-licence-authority-quorum"
+   ],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 2.4",
+    "quote": "a row short of its protocol by signatures alone is not refused; it waits",
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "short of the count, the row is admitted as testimony (LicensureIssuance::Testimony), not held as cosign:pending",
+    "source": "constitution/claims.tsv CLM-licence-authority-quorum (impl community_quorum_cosigned_at; the implementer's answer for the edition)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "ff2b4bec608c93bc3318309ef0f6ef7c33b8f4e1fd40de75ec3e32595173c92f",
+    "file_rows": [
+     "CLM-licence-authority-quorum"
+    ],
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "count:protocol@group"
+      ],
+      [
+       "any"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "licensure:{authority_id}",
+      "group": "g",
+      "head": [
+       "g"
+      ]
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "one member of three signs: the text holds the row waiting, the shipped store admits it as testimony"
+  },
+  {
+   "id": "persist/licensure:{authority_id}/cosign_rule[roster at the signed instant]",
+   "implementer": "persist",
+   "family": "licensure:{authority_id}",
+   "where": "cosign_rule[roster at the signed instant]",
+   "kind": "count",
+   "status": "runnable",
+   "sources": [
+    "CLM-licence-authority-quorum"
+   ],
+   "claims": [
+    "CLM-licence-authority-quorum"
+   ],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 2.4",
+    "quote": "judged on the *receiver's own* fold over the members at the roster head the row names",
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "the scrub set counted over the roster in force at the row's signed asserted_at (community_quorum_cosigned_at)",
+    "source": "constitution/claims.tsv CLM-licence-authority-quorum (impl community_quorum_cosigned_at; the implementer's answer for the edition)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "ff2b4bec608c93bc3318309ef0f6ef7c33b8f4e1fd40de75ec3e32595173c92f",
+    "file_rows": [
+     "CLM-licence-authority-quorum"
+    ],
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "count_at:protocol@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "u"
+      ],
+      "family": "licensure:{authority_id}",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3
      }
     ],
     "ask": {

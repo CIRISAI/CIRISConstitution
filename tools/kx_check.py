@@ -488,8 +488,8 @@ def run_counts():
                 for t in a["selector"].split(" & "):
                     k, vs = t.split("="); vals[k] |= set(vs.split("|"))
         agree = dis = 0
-        for lf, vb, at, gp, st in itertools.product(sorted(vals["leaf"]) + ["zz"], sorted(vals["verb"]) + ["attest"], R.KEYS, sorted(vals["group"]) + ["zz"], sorted(vals["seats"]) + ["zz"]):
-            s = {"id": "self", "fam": "f", "leafname": lf, "verb": vb, "attested": at, "val": {"group": gp, "seats": st}, "names": frozenset()}
+        for lf, vb, at, gp, st, ac in itertools.product(sorted(vals["leaf"]) + ["zz"], sorted(vals["verb"]) + ["attest"], R.KEYS, sorted(vals["group"]) + ["zz"], sorted(vals["seats"]) + ["zz"], sorted(vals["act"]) + ["zz"]):
+            s = {"id": "self", "fam": "f", "leafname": lf, "verb": vb, "attested": at, "val": {"group": gp, "seats": st, "act": ac}, "names": frozenset()}
             o = R.count_ref(arms, s); t = kx.Ev(PRELUDE, [s], s).run(e)
             agree += o == t; dis += o != t
         out.append({"grammar": "count", "family": fam, "kx": src, "flags": sorted(info.flags), "agree": agree, "disagree": dis, "status": "ok"})

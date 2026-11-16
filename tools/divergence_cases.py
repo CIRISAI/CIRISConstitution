@@ -445,15 +445,17 @@ def cases():
         "is judged at its signed `asserted_at`", "receipt future-skew <=5 min, us resolution (check_instant_binding); no W",
         "time", "judging at a signed instant bounded by W is neither of the kernel's two notions of time (a row's own end, "
         "a window with a landing); KERNEL.md 5 leaves such clocks without a meaning", census=("licensure:{authority_id}", "8_freshness")))
-    for impl in ("persist", "edge"):
+    for impl, sw, why in [
+        ("persist", "no reader of the binding's signed profile", "the guard reads the binding's signed `profile` (CC 5.3.3.5); the shipped store reads no such member, and the kernel's rows carry no binding"),
+        ("edge", "a binding with no profile member at the shipped release", "the guard reads the binding's signed `profile` (CC 5.3.3.5); the binding the edge ships carries no such member, so no shipped rule reads one"),
+    ]:
         E.append(stated(impl, "transparency_log:cosigned:{tree_size}", "guard[accountable stream]", "door", ["C433"], "CC 5.3.3.11",
-            'For accountable streams, "published" means **witness-cosigned**', "no signed member says a stream is accountable",
-            "wire", "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
-            shipped_source="CC 8.10 card guard (text_conflicts C433)"))
+            'For accountable streams, "published" means **witness-cosigned**', sw, "wire", why,
+            shipped_source="CC 8.10 card guard (text_conflicts C433); the implementer's answer for the edition"))
     E.append(stated("edge", "(link handshake)", "transit handshake", "door", ["CLM-transit-kem-handshake-planned"], "CC 5.3.3.10",
         "both statics are used and both ends are authenticated by the handshake itself",
         "one X25519 + ML-KEM-768 exchange per link that authenticates only the responder; the initiator's identity is a claim held to the link's signed identification, as in the verification library's transit_kex",
-        "wire", "the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake, and the wire waits on the implementer's submission",
+        "wire", "the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake",
         shipped_source="CC 5.3.3.10 E1 rules 3, 4 and 12 describe the shipped exchange; the edge and the verification library ship it"))
     E.append(stated("persist", "(occurrence revocation, cosign:signature)", "attestation_id form", "door", ["C443"], "CC 8.11.17",
         "sha256(domain ‖ JCS(object))", "attestation_id typed uuid in manifests/signed_object.cddl", "wire",
@@ -484,6 +486,25 @@ def cases():
         E.append(signer_entry("persist", f, srcs, cc, q, [["count:protocol@group"]], [["count_at:protocol@group"]], sw,
                               rows, "h", census=cen, kind="count", where=where, leaf=leaf))
         E[-1]["note"] = "the removal is in the act's causal past and carries the later signed instant"
+    # licensure as the implementer reads its release: counted under the authority's protocol, with two differences
+    lic = "licensure:{authority_id}"
+    lic_src = "constitution/claims.tsv CLM-licence-authority-quorum (impl community_quorum_cosigned_at; the implementer's answer for the edition)"
+    E.append(signer_entry("persist", lic, ["CLM-licence-authority-quorum"], "CC 2.4",
+        "a row short of its protocol by signatures alone is not refused; it waits",
+        [["count:protocol@group"]], [["count:protocol@group"], ["any"]],
+        "short of the count, the row is admitted as testimony (LicensureIssuance::Testimony), not held as cosign:pending",
+        group() + [fam("h", "A", lic, ("g",), group="g", head=("g",))], "h", census=None, kind="cosign",
+        where="cosign_rule[short of the count]"))
+    E[-1]["shipped_source"] = lic_src
+    E[-1]["note"] = "one member of three signs: the text holds the row waiting, the shipped store admits it as testimony"
+    E.append(signer_entry("persist", lic, ["CLM-licence-authority-quorum"], "CC 2.4",
+        "judged on the *receiver's own* fold over the members at the roster head the row names",
+        [["count:protocol@group"]], [["count_at:protocol@group"]],
+        "the scrub set counted over the roster in force at the row's signed asserted_at (community_quorum_cosigned_at)",
+        removed_later(lambda kw: fam("h", "A", lic, ("u",), group="g", head=("u",), cosigners=("C",), at=3, **kw)), "h",
+        census=None, kind="count", where="cosign_rule[roster at the signed instant]"))
+    E[-1]["shipped_source"] = lic_src
+    E[-1]["note"] = "the removal is in the act's causal past and carries the later signed instant"
     E.append(lifecycle_entry("persist", "group:roster", ["CLM-cosigned-rows"], "CC 2.4.1.1",
         "counted over the members at the roster head the withdrawal names",
         [["count:protocol@group"]], [["count_at:protocol@group"]],

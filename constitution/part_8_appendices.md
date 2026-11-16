@@ -1,6 +1,6 @@
 # Part 8 — Appendices
 
-**Decimal range** `8.x` · **88 sections** · **page budget 6pp** · [← master index](../README.md)
+**Decimal range** `8.x` · **90 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Case studies, glossaries, conformance vectors, interop, and the dual-ID table of contents.
 
@@ -2584,7 +2584,7 @@ Count: `None`
 
 Authorship: `counted` (CC 3.1.3)
 
-Second signers: `listed_member` by `gap` (CC 3.1.3.2)
+Second signers: `listed_member` by `members` (CC 3.1.3.2)
 
 Guard:
 - attest: `each(subject) when(type(key,node)) not founder(key,object) else exclude+community_consensus_protocol_violation` (CC 3.2)
@@ -2737,12 +2737,14 @@ Body: `alt_text` (text only), `format` (text only)
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | self | selfAct | true (always) | true (always) | none |
+| attest | self | cosigned `accord_majority` | true (always) | true (always) | none |
 | supersede | author | selfAct | false | false | supersede |
 
-Count: `none`
+Count: `act=group => accord_majority@accord ; none` (CC 3.1.3, CC 4.2.1)
 
-Second signers: `predecessor_key` by `gap` (CC 3.1.3); `anchor` by `gap` (CC 3.1.3)
+Authorship: `act=group => counted ; authored` (CC 3.1.3)
+
+Second signers: `predecessor_key` by `target` (CC 3.1.3)
 
 Guard:
 - attest: `when(verb=attest|replace,has=valid_until) not type(signer,user) else refuse(key_record_out_of_window)` (CC 2.4.1.1)
@@ -2820,8 +2822,6 @@ Body: `reference`, `scope`
 
 Count: `none`
 
-Second signers: `witness` by `gap` (CC 3.3.10.1)
-
 Change:
 - attest: `attest: reach=below_seq` (CC 3.1.3)
 
@@ -2843,13 +2843,13 @@ Body: `sequence`, `unit` (text only)
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | registered | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `none`
+Count: `act=group => cosigned_act@dimension_authority ; none` (CC 2.4, CC 2.4.1.3)
 
-Authorship: open (CC 2.4)
+Authorship: `act=group => counted ; authored` (CC 2.4)
 
 Fold:
 - `reads=own&signer:authority` (CC 2.4.1.3)
@@ -3276,7 +3276,7 @@ Count: `leaf=custodian_minted => custodian_replace ; none` (CC 7.5.5)
 
 Authorship: `leaf=custodian_minted => counted ; authored` (CC 7.5.5, CC 3.1.5)
 
-Second signers: `custodian` by `gap` when `leaf=retired|custodian_minted` (CC 7.5.5)
+Second signers: `custodian` by `custodian` when `leaf=retired|custodian_minted` (CC 7.5.5)
 
 Guard:
 - withdraw: `when(verb=withdraw,leaf=decided) no retirement:frozen@admitted[object=object] else exclude` (CC 7.5.5)
@@ -4037,7 +4037,7 @@ The onion hop key of [CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2) in the earlie
 
 ### 8.11.21 `earlier-sealed-descriptor` — The sealed descriptor of the earlier form (normative)
 
-The `sealed_descriptor` of [CC 3.3.13](part_3_the_namespace.md#3.3.13) in the earlier form is an AEAD seal under the room DEK over {name, format, codec?, parent?} as a JCS object, with the blob's `digest` as associated data.
+The `sealed_descriptor` of [CC 3.3.13](part_3_the_namespace.md#3.3.13) in the earlier form is an AEAD seal under the blob's content DEK over {name, format, codec?, parent?} as a JCS object, with the blob's `digest` as associated data.
 
 ### 8.11.22 `earlier-accord-roster` — The accord roster objects of the earlier form (normative)
 
@@ -4123,6 +4123,23 @@ canonical = sha256(
 ```
 
 Ed25519 over `canonical`; ML-DSA-65 over `canonical || ed25519_sig` (bound payload).
+
+### 8.11.27 `earlier-canonical-envelope` — The canonical key's envelope of the earlier form (normative)
+
+In the earlier form a canonical key's registration envelope carries `"identity_type": "canonical,node"` with `roles: ["infra:serve"]`, and the accord's co-scrub over that envelope is the conferral ([CC 4.2.1](part_4_composition_governance.md#4.2.1)). Such an object verifies as it was signed. Its `canonical` member names that conferral and is no identity type: the key's type is `node` ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)).
+
+### 8.11.28 `earlier-transit-pair` — The transit pair of the earlier form (normative)
+
+The transit key of [CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2) in the earlier form is a pair, each half raw in the standard base64 of [CC 8.11.3](#8.11.3), and JCS sorts its keys:
+
+```
+"transit_kex_pubkeys": {
+  "ml_kem_768_base64": "<base64 of exactly 1184 bytes>",
+  "x25519_base64":     "<base64 of exactly 32 bytes>"
+}
+```
+
+A `transport:canonical_rebind` row of the earlier form may carry both this pair and `transit_xwing_pubkey` ([CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2)).
 
 ## 8.12 `parable` — The parable — Genesis of Ethical Agency (informative)
 

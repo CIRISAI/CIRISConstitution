@@ -453,6 +453,8 @@ old_number	old_anchor	old_slug	new_number	new_anchor	new_slug	title	moved	note
 —	—	earlier-bundle-fingerprint	8.11.24	#8.11.24	earlier-bundle-fingerprint	The genesis bundle fingerprint of the earlier form (normative)	no	new in 1.0-rc20
 —	—	earlier-identity-type	8.11.25	#8.11.25	earlier-identity-type	The identity_type set in the canonical bytes of the earlier form (normative)	no	new in 1.0-rc20
 —	—	earlier-sth-cosign	8.11.26	#8.11.26	earlier-sth-cosign	The provenance log's tree-head cosignature of the earlier form (normative)	no	new in 1.0-rc20
+—	—	earlier-canonical-envelope	8.11.27	#8.11.27	earlier-canonical-envelope	The canonical key's envelope of the earlier form (normative)	no	new in 1.0-rc20
+—	—	earlier-transit-pair	8.11.28	#8.11.28	earlier-transit-pair	The transit pair of the earlier form (normative)	no	new in 1.0-rc20
 —	—	parable	8.12	#8.12	parable	The parable — Genesis of Ethical Agency (informative)	no	new in 1.0-rc20
 1.14	#1.14	i-quiet	8.12.1	#8.12.1	i-quiet	I. The Quiet Threshold	yes	the parable, from the foreword to the back matter
 1.14.1	#1.14.1	ii-first	8.12.2	#8.12.2	ii-first	II. The First Leaning	yes	the parable, from the foreword to the back matter

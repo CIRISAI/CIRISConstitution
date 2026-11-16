@@ -109,7 +109,7 @@ image:*	nothing shown	0	0	-	-	B002	10	-
 integrity:{aspect}	nothing shown	0	0	-	-	B001	17	-
 judge_model:verdict:{model_id}	nothing shown	0	0	-	-	B086	1	-
 justice:{aspect}	nothing shown	0	0	-	-	B001	17	-
-key:record	read by a rule	1	1	guard change react expiry	-	B087	1	membership:{stage}.guard
+key:record	read by a rule	1	1	count guard change react expiry	-	B087	1	membership:{stage}.guard
 key:revocation	read by a rule	1	0	fold change	-	B088	1	key:record.reaction
 key_boundary:{scope}	nothing shown	0	0	-	-	B012	2	-
 key_grant:{axis}	read by a rule	2	3	fold guard react	archive_release:{basis} identity:occurrence retirement:{state}	B089	1	group:roster.change membership:{stage}.reaction
@@ -117,7 +117,7 @@ lawful_order:release	nothing shown	0	0	-	-	B090	1	-
 ledger:checkpoint:{unit}:{version}	acts of its own	0	0	fold change	-	B091	1	-
 ledger:head:{unit}:{version}	nothing shown	0	0	-	-	B014	2	-
 ledger:promotion:{version}	nothing shown	0	0	-	-	B014	2	-
-licensure:{authority_id}	read by a rule	1	0	fold react	reference	B092	1	group:roster.change
+licensure:{authority_id}	read by a rule	1	0	fold count react	reference	B092	1	group:roster.change
 lineage_witness:{stage}	nothing shown	0	0	-	-	B093	1	-
 locality:decision:{scale}	acts of its own	0	0	fold	-	B094	1	-
 manifold_conformity:{cohort}	acts of its own	0	0	fold	-	B009	2	-

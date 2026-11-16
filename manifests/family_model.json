@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "28123153fecbeaee95976aff4da76255e7491feb0b1be7168b28601bd04c2822",
+  "registry_sha256": "65804f3409c803dd6fe0ed2fb92ad291f0cfb2c4d4ce2c8078f579c1df4220c9",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -230,28 +230,28 @@
     "gap": 0
    },
    "count": {
-    "cc-table": 16,
+    "cc-table": 18,
     "code-v61": 0,
-    "generic": 164,
+    "generic": 162,
     "prose": 0,
     "mixed": 0,
     "gap": 4
    },
    "authorship": {
-    "cc-table": 18,
+    "cc-table": 20,
     "code-v61": 0,
-    "generic": 165,
+    "generic": 164,
     "prose": 0,
     "mixed": 0,
-    "gap": 1
+    "gap": 0
    },
    "second_signers": {
-    "cc-table": 4,
+    "cc-table": 7,
     "code-v61": 0,
-    "generic": 176,
+    "generic": 177,
     "prose": 0,
     "mixed": 0,
-    "gap": 4
+    "gap": 0
    },
    "derived": {
     "cc-table": 3,
@@ -757,16 +757,16 @@
   "authorship": {
    "source": "formal/derivation/authorship_text.tsv",
    "families": {
-    "authored": 170,
+    "authored": 169,
     "counted": 3,
-    "mixed": 10,
-    "gap": 1
+    "mixed": 12,
+    "gap": 0
    },
    "second_signers": {
-    "families_with_roles": 8,
-    "families_author_only": 176,
-    "roles": 12,
-    "roles_without_member": 5
+    "families_with_roles": 7,
+    "families_author_only": 177,
+    "roles": 10,
+    "roles_without_member": 0
    },
    "reading": "authorship gives each family's rows as authored (one party authors; the payload carries author) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)"
   },
@@ -39186,14 +39186,13 @@
     "value": [
      {
       "role": "listed_member",
-      "member": "gap",
+      "member": "members",
       "cc_ref": [
        "CC 3.1.3.2"
       ]
      }
     ],
-    "source": "gap",
-    "note": "a member reading gap: the text names the role and not the payload member that names its party"
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -43908,6 +43907,7 @@
     "value": [
      "state",
      "stands",
+     "tally",
      "may",
      "owed"
     ],
@@ -43935,6 +43935,13 @@
       "answers": [
        "state",
        "owed"
+      ]
+     },
+     {
+      "grammar": "count",
+      "cell": "formal/derivation/count_text.tsv#key:record",
+      "answers": [
+       "tally"
       ]
      },
      {
@@ -43984,34 +43991,56 @@
     "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "value": "act=group => accord_majority@accord ; none",
+    "arms": [
+     {
+      "when": "act=group",
+      "doors": "accord_majority@accord",
+      "cc_ref": "CC 4.2.1"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.1.3"
+     }
+    ],
+    "source": "cc-table"
    },
    "authorship": {
-    "value": "authored",
-    "source": "generic",
-    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
-   },
-   "second_signers": {
-    "value": [
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
      {
-      "role": "predecessor_key",
-      "member": "gap",
+      "when": "act=group",
+      "value": "counted",
       "cc_ref": [
        "CC 3.1.3"
       ]
      },
      {
-      "role": "anchor",
-      "member": "gap",
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 2.6.1.3"
+      ],
+      "rule": "default"
+     }
+    ],
+    "cc_ref": [
+     "CC 3.1.3"
+    ]
+   },
+   "second_signers": {
+    "value": [
+     {
+      "role": "predecessor_key",
+      "member": "target",
       "cc_ref": [
        "CC 3.1.3"
       ]
      }
     ],
-    "source": "gap",
-    "note": "a member reading gap: the text names the role and not the payload member that names its party"
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -46101,17 +46130,9 @@
     "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
    },
    "second_signers": {
-    "value": [
-     {
-      "role": "witness",
-      "member": "gap",
-      "cc_ref": [
-       "CC 3.3.10.1"
-      ]
-     }
-    ],
-    "source": "gap",
-    "note": "a member reading gap: the text names the role and not the payload member that names its party"
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
    },
    "blind": {
     "value": [
@@ -47251,6 +47272,7 @@
     "value": [
      "state",
      "stands",
+     "tally",
      "owed"
     ],
     "source": "cc-table",
@@ -47319,6 +47341,13 @@
       "answers": [
        "state",
        "owed"
+      ]
+     },
+     {
+      "grammar": "count",
+      "cell": "formal/derivation/count_text.tsv#licensure:{authority_id}",
+      "answers": [
+       "tally"
       ]
      }
     ]
@@ -47409,17 +47438,44 @@
     ]
    },
    "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "value": "act=group => cosigned_act@dimension_authority ; none",
+    "arms": [
+     {
+      "when": "act=group",
+      "doors": "cosigned_act@dimension_authority",
+      "cc_ref": "CC 2.4.1.3"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 2.4"
+     }
+    ],
+    "source": "cc-table"
    },
    "authorship": {
-    "value": null,
-    "source": "gap",
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "act=group",
+      "value": "counted",
+      "cc_ref": [
+       "CC 2.4"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 2.6.1.3"
+      ],
+      "rule": "default"
+     }
+    ],
     "cc_ref": [
      "CC 2.4"
-    ],
-    "note": "the text gives both readings and no selector key names the case: for `licensure:{community_key_id}` ([CC 2.4.1.3](#2.4.1.3)) — the authority community named in the dimension"
+    ]
    },
    "second_signers": {
     "value": [],
@@ -61563,15 +61619,14 @@
     "value": [
      {
       "role": "custodian",
-      "member": "gap",
+      "member": "custodian",
       "when": "leaf=retired|custodian_minted",
       "cc_ref": [
        "CC 7.5.5"
       ]
      }
     ],
-    "source": "gap",
-    "note": "a member reading gap: the text names the role and not the payload member that names its party"
+    "source": "cc-table"
    },
    "blind": {
     "value": [],

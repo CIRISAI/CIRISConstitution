@@ -1028,7 +1028,7 @@ def count_ref(arms, s):
         if a["selector"] != "*":
             for t in a["selector"].split(" & "):
                 k, vs = t.split("="); vs = vs.split("|")
-                v = {"leaf": s.get("leafname"), "verb": s.get("verb"), "identity": typeof(s.get("attested")), "group": getf(s, ["group"]), "seats": getf(s, ["seats"])}[k]
+                v = {"leaf": s.get("leafname"), "verb": s.get("verb"), "identity": typeof(s.get("attested")), "group": getf(s, ["group"]), "seats": getf(s, ["seats"]), "act": getf(s, ["act"])}[k]
                 ok = ok and v in vs
         if ok:
             md = re.fullmatch(r"(none|shut)|([a-z_]+)(?:@([a-z_]+))?(?:!(confers|result))?", a["doors"])

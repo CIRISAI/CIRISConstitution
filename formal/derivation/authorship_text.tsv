@@ -37,7 +37,8 @@ ballot:moderator_acceptance	authorship	*	authored	CC 4.5.13	**The winner accepts
 content_class:{class}	authorship	*	authored	CC 3.3.12	a member of a room signs it against a row at the room's scope
 collection:{kind}	authorship	act=group	counted	CC 3.1.3.4	a row that is the cohort's act is counted
 trust:{job}:{version}	authorship	act=group	counted	CC 3.4.5	A row that is a keyless family root's act, its roster reaching its `consensus_protocol`, is counted
-licensure:{authority_id}	authorship	*	gap	CC 2.4	for `licensure:{community_key_id}` ([CC 2.4.1.3](#2.4.1.3)) — the authority community named in the dimension
+licensure:{authority_id}	authorship	act=group	counted	CC 2.4	A `licensure:{authority_id}` row that is the authority community's act under that protocol is counted
+key:record	authorship	act=group	counted	CC 3.1.3	so a record that is the anchors' act is counted
 self:delegates_to	second_signers	*	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
 self:delegates_to	second_signers	*	delegate_owner=owner_of_sub	CC 4.4.3.19	signed by the owner the owner-binding of the row's `sub` names
 self:delegates_to:agent_occurrence	second_signers	*	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
@@ -46,8 +47,6 @@ trust:{job}:{version}	second_signers	leaf=confers	delegate=sub	CC 2.6.1.9	a seco
 trust:{job}:{version}	second_signers	leaf=confers	delegate_owner=owner_of_sub	CC 4.4.3.19	signed by the owner the owner-binding of the row's `sub` names
 ownership:{relation}:{target_kind}:{version}	second_signers	*	bound_node=sub	CC 3.2	So an owner-binding counts toward ownership only when the node's own key cosigned it
 ownership:{relation}:{target_kind}:{version}	second_signers	*	bound_node=sub	CC 3.4.5	`attesting_key_id` MUST be the live owner of `attested_key_id`
-key:record	second_signers	*	predecessor_key=gap	CC 3.1.3	rotation is the next key's record cosigned by the old key
-key:record	second_signers	*	anchor=gap	CC 3.1.3	An anchor scrub, a root conferral or an accord co-scrub (`infra:attest`, conferred roles) is a cosignature
-retirement:{state}	second_signers	leaf=retired|custodian_minted	custodian=gap	CC 7.5.5	holds custody only with its own consent: its signature on that row, or a row of its own that names it
-group:roster	second_signers	*	listed_member=gap	CC 3.1.3.2	A founding record seats a listed member iff that member **signed** the record
-ledger:checkpoint:{unit}:{version}	second_signers	*	witness=gap	CC 3.3.10.1	A co-witnessed balance snapshot at sequence N supersedes the detail below it
+key:record	second_signers	*	predecessor_key=target	CC 3.1.3	The next key's record names the old key's `key:record` row in `refs` as its `target`, the row it supersedes, and the issuer of that row is the second signer.
+retirement:{state}	second_signers	leaf=retired|custodian_minted	custodian=custodian	CC 7.5.5	holds custody only with its own consent: its signature on that row, or a row of its own that names it
+group:roster	second_signers	*	listed_member=members	CC 3.1.3.2	The record lists its members in `members`, each by its `key_id`, read as an identity.

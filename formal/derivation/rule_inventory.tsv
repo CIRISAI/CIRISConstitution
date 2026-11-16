@@ -4372,3 +4372,27 @@ p2	x	2.7.8	kernel	roster_fold	none		is	states		A reader's voiding of acts that n
 p3	x	3.4.7.1	mechanism	wire	none	*	MUST	states	2.6.1.2	Where identity_type enters signed bytes the set MUST be encoded as a 2.6.1.2 set: sorted by the bytewise order of its elements' encodings, without duplicates	
 p2	x	2.6.3	mechanism	wire	none	*	is	states		Bytes in a signed text preimage or an HTTP member are hex under the text-identifier rule: lowercase, unpadded, byte-length-exact	
 p2	x	2.6.3	mechanism	wire	none	*	MUST	states		An instant in signed text or an HTTP member is canonical RFC 3339 YYYY-MM-DDTHH:MM:SS.sssZ; producers emit it and a verifier refuses any other form	
+p5	x	5.3.3.5	mechanism	wire	none	live_stream	MUST	states	2.6.1.7	StreamKeyBinding is version 0x02: v1's six members, then codec_map, replaces, end, final_seq, kind, framing and profile, then signature (u16 length 3373 and the composite)	
+p5	x	5.3.3.5	mechanism	signature	none	live_stream	is	states	2.6.1.7	The binding's signing bytes are ciris-edge:av-stream-key:v2 || body, the body being every member before signature; one composite signature by the publisher's federation key	
+p5	x	5.3.3.5	mechanism	media	none	live_stream	is	states	5.3.3.11	profile is a u8, 0 best-effort and 1 accountable, any other value refused; end and final_seq are the only signed leave	
+p5	x	5.3.3.10	mechanism	wire	none		is	states	2.6.1.12	The link handshake is two messages under transit_xwing_hkdf_sha256: an ephemeral, an encapsulation and the sealed identity; then encapsulations and the responder's confirmation, keys from a transcript hash bound to link_id	
+p5	x	5.3.3.10	mechanism	transport	none		MUST	states		The responder holds the initiator authenticated from the first sealed frame that opens under the session keys, its CTKC key confirmation; any other first frame closes the link	
+p5	x	5.3.3.10	mechanism	transport	none		is	states		Three safeguards: only the first-contact plane until CTKC verifies; CTKX 0x01 and the earlier suite refused by name; no store read before id_ct opens, decapsulation behind the rates	
+p5	x	5.3.3.11	mechanism	transparency_log	none	live_stream	is	states	5.3.3.5	A stream is accountable when its binding's signed profile is 1; the witness-cosign guard reads that member	
+p3	x	3.3.6.2	mechanism	transport	body	identity	is	states	3.3.6.1	A relaying node carries one transit key transit_xwing_pubkey: exactly 1216 bytes, the X-Wing public key pk_M || pk_X	
+p3	x	3.3.6.2	mechanism	transport	body	identity	is	states	3.1.3	A seated serve node's new transit key moves by transport:canonical_rebind, counted by the accord's holders, before the handshake changes; a binding of this form carries transit_xwing_pubkey only	
+p3	x	3.3.6.2	mechanism	wire	body	identity	is	states	2.6.1.2	onion_hop_xwing_pubkey is one byte string of exactly 1216 bytes, the X-Wing public key pk_M || pk_X	
+p3	x	3.3.6.2	family	admission_order	body	identity	is	states		The hop key's reuse refusals read its halves, bytes 0..1184 and 1184..1216	
+p4	x	4.2.1	stewardship	accord	none	accord	is	states	4.4.3.34	A canonical key's identity_type is {node}; its canonical standing is the accord's co-scrub over its key record, a conferral counted by the accord's holders	
+p3	x	3.4.7.1	mechanism	registration	none	*	is	states	4.2.1	A conferral is not an identity_type label: a canonical key's set is {node}	
+p3	x	3.4.7.1	mechanism	registration	none	*	is	states	2.7	substrate_persist is a key type that confers no authority; nothing is admitted on its strength	
+p5	x	5.4.6	mechanism	wire	none		is	states	3.3.6.2	The onion packet is onion_xwing06_hkdf_sha3_256_aes256gcm_lioness_shake256: 15,296 bytes, 6 slots of 1184 then an 8192-byte LIONESS body; keys by HKDF-SHA3-256 under /hdr, /stream, /lioness	
+p5	x	5.4.6	mechanism	transport	none		is	states		An onion packet travels as CONP || packet in the shaped link's constant-size frames; a CONP frame on an unshaped link is refused	
+p8	x	8.11.27	mechanism	wire	none	key:record	is	states	4.2.1	The earlier form's canonical,node envelope verifies as signed; its canonical member names the accord's conferral and is no identity type	
+p8	x	8.11.28	mechanism	wire	none	transport:canonical_rebind	MAY	states	3.3.6.2	The earlier form's transit pair transit_kex_pubkeys; a re-bind row of the earlier form may carry it and transit_xwing_pubkey	
+p3	x	3.1.3	family	row_shape	body	key:record	is	states	2.6.1.3	A rotation names the old key's key:record row in refs as target; its issuer is the second signer	
+p3	x	3.1.3	family	row_shape	body	key:record	is	states	2.6.1.9	An anchor's voice is a further statement over the same payload, counted over the accord roster at the head the record names	
+p3	x	3.3.10.1	family	row_shape	body	ledger:checkpoint:{unit}:{version}	is	states	2.6.1.3	A checkpoint's witness is no second signer: the checkpoint names its witness-chain entries in refs under also ack	
+p7	x	7.5.5	family	row_shape	body	retirement:{state}	is	states		A retired or custodian_minted row names its custodian in custodian, an identity reference	
+p3	x	3.1.3.2	kernel	roster_fold	body	group:roster	is	states		A founding record lists its members in members, each by key_id, read as an identity	
+p3	x	3.3.4	family	cosign	cosign_rule	family	is	states	4.5.13	ConsensusProtocol is a closed vocabulary of six kinds: the five of the table and open:self_admit	

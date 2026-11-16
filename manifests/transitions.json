@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "3c64403a56b0da0138433041af972ee552ead95d5f129f1f5fad26df6a8d1caf",
+  "source_sha256": "950721970c2801b33216a1cdf552c7e3ba44575656929fcf170bd4b94380157a",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -12996,10 +12996,26 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "accord_majority"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.3",
+       "CC 4.2.1"
+      ],
+      "count": "act=group => accord_majority@accord ; none",
+      "cases": [
+       {
+        "when": "act=group",
+        "policy": "cosigned",
+        "rows": [
+         "accord_majority"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -13718,10 +13734,26 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "cosigned_act"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 2.4",
+       "CC 2.4.1.3"
+      ],
+      "count": "act=group => cosigned_act@dimension_authority ; none",
+      "cases": [
+       {
+        "when": "act=group",
+        "policy": "cosigned",
+        "rows": [
+         "cosigned_act"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -13772,7 +13804,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "selfAct",
+      "policy": "cosigned",
       "source": "derived"
      },
      "confirm": {

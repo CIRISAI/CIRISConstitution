@@ -281,7 +281,7 @@ judge_model:verdict:{model_id}	recant	admitted	recanted	author	selfAct	false	att
 justice:{aspect}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 justice:{aspect}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 justice:{aspect}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
-key:record	attest	none	admitted	self	selfAct	true	none		true	derived	derived	derived
+key:record	attest	none	admitted	self	cosigned	true	none		true	derived	cc-table	derived
 key:record	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
 key:revocation	attest	none	admitted	member,owner,self	selfAct	true	none		true	cc-table	derived	derived
 key:revocation	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
@@ -295,8 +295,8 @@ ledger:head:{unit}:{version}	attest	none	admitted	self	selfAct	true	withdraw	sel
 ledger:head:{unit}:{version}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 ledger:promotion:{version}	attest	none	admitted	self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 ledger:promotion:{version}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-licensure:{authority_id}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
-licensure:{authority_id}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
+licensure:{authority_id}	attest	none	admitted	registered	cosigned	true	withdraw	selfAct	true	derived	cc-table	derived
+licensure:{authority_id}	withdraw	admitted	withdrawn	author	selfAct	false	attest	cosigned	false	code-v61	code-v61	derived
 licensure:{authority_id}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 lineage_witness:{stage}	attest	none	admitted	founder,owner	selfAct	true	withdraw	selfAct	true	derived	cc-table	derived
 lineage_witness:{stage}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived

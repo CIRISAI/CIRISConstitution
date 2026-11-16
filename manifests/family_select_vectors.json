@@ -1,7 +1,7 @@
 {
  "_meta": {
   "cc_version": "1.0-rc20",
-  "family_model_sha256": "3c64403a56b0da0138433041af972ee552ead95d5f129f1f5fad26df6a8d1caf",
+  "family_model_sha256": "950721970c2801b33216a1cdf552c7e3ba44575656929fcf170bd4b94380157a",
   "generator": "tools/cc_family_select.py",
   "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown",
   "keys": {
@@ -14,11 +14,11 @@
   },
   "counts": {
    "false_beats_unknown": 7,
-   "holds": 59,
+   "holds": 67,
    "no_arm": 2,
-   "not_holds": 44,
+   "not_holds": 52,
    "order": 2,
-   "unknown": 32,
+   "unknown": 36,
    "unknown_after_decider": 8,
    "wildcard": 3
   }
@@ -630,6 +630,278 @@
     "identity": [
      "user"
     ]
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "accord_majority@accord",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "key:record",
+   "cell": "count",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "accord_majority@accord",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "key:record",
+   "cell": "authorship",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "cosigned_act@dimension_authority",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "count",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "cosigned_act@dimension_authority",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "cell": "authorship",
+   "dimension": "licensure:id1:v1",
+   "matcher_family": "licensure:{authority_id}",
+   "leaf": "id1",
+   "ctx": {
+    "act": "group"
    },
    "expect": "counted",
    "decided_by": 0,
@@ -1287,7 +1559,7 @@
    "expect": [
     {
      "role": "custodian",
-     "member": "gap"
+     "member": "custodian"
     }
    ],
    "kind": "holds",

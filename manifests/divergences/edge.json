@@ -19,14 +19,14 @@
   {
    "id": "edge/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
    "status": "stated",
-   "reason": "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
+   "reason": "the guard reads the binding's signed `profile` (CC 5.3.3.5); the binding the edge ships carries no such member, so no shipped rule reads one",
    "cc_ref": "CC 5.3.3.11",
    "quote": "For accountable streams, \"published\" means **witness-cosigned**"
   },
   {
    "id": "edge/(link handshake)/transit handshake",
    "status": "stated",
-   "reason": "the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake, and the wire waits on the implementer's submission",
+   "reason": "the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake",
    "cc_ref": "CC 5.3.3.10",
    "quote": "both statics are used and both ends are authenticated by the handshake itself"
   }

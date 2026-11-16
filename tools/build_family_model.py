@@ -29,7 +29,7 @@ FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
 FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
 COUNT_SOURCES = ("subject_group", "signer_group", "dimension_authority", "accord", "trust_root", "self", "conferrer")
 COUNT_KEYS = ("leaf", "verb", "identity", "group", "seats", "act")
-COUNT_ARM_KEYS = COUNT_KEYS[:5]   # a count arm reads no `act`: its KX (tools/kx_translate.py) has no such key
+COUNT_ARM_KEYS = COUNT_KEYS   # a count arm reads `act` as the row member self.act (tools/kx_translate.py COUNT_KEYS)
 COUNT_OPEN_MAX = 4   # families with a cosign cell that is not none and no typed count; the number only falls
 REG = os.path.join(ROOT, "manifests/namespace_registry.json")
 OUT = os.path.join(ROOT, "manifests/family_model.json")
@@ -539,8 +539,8 @@ def conferral_columns(fams, reg):
 
 AUTHORSHIP_TEXT = os.path.join(ROOT, "formal/derivation/authorship_text.tsv")
 AUTHORSHIP_VALUES = ("authored", "counted", "gap")
-AUTHORSHIP_GAP_MAX = 1   # families whose authorship the text gives both ways with no selector to tell them; the number only falls
-SECOND_SIGNERS_GAP_MAX = 5   # roles whose payload member the text does not name; the number only falls
+AUTHORSHIP_GAP_MAX = 0   # families whose authorship the text gives both ways with no selector to tell them; the number only falls
+SECOND_SIGNERS_GAP_MAX = 0   # roles whose payload member the text does not name; the number only falls
 SELECTOR_VALUE = r"[a-z_:{}]+(?:\|[a-z_:{}]+)*"
 ACT_VALUES = ("group", "own")   # the `act` key: the act of a roster under its consensus_protocol (CC 2.6.1.9), or one signer's own row
 
