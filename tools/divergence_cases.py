@@ -546,7 +546,7 @@ def cases():
     # ---- a check that reads another row: the shipped door refuses, the text concludes nothing ------------------------
     refusals = [
         ("self:delegates_to", ["CLM-self-edge-not-cycle"], "CC 4.1.1",
-         "the cycle-closing emission concludes nothing, and a walk visits a cycle once", [["acyclic"]],
+         "a row that closes a cycle MUST NOT be refused or discounted for it", [["acyclic"]],
          [fam("e1", "A", "self:delegates_to", (), delegate="B"), fam("e2", "B", "self:delegates_to", ("e1",), delegate="A")],
          "e2", None, "the cycle-closing delegates_to refused at admission (check_delegation_cycle_admission)",
          "constitution/claims.tsv CLM-self-edge-not-cycle (impl check_delegation_cycle_admission; the summary before 6e90792: still refused)"),
@@ -580,6 +580,8 @@ def cases():
                               where="admission refusal"))
         E[-1]["shipped_param"]["refuse"] = ["gate_fails"]
         if src: E[-1]["shipped_source"] = src
+        if f == "self:delegates_to":   # the text reads no cycle: the closing row concludes, the shipped door refuses it
+            E[-1]["text_param"]["gate"] = E[-1]["text_value"] = [["any"]]
     E.append(wording("persist", "(tombstoned record)", "purge_tombstoned", ["CLM-purge-whole-or-not"], "CC 4.5.3",
         "A node does not hold a tombstoned record again and never serves it", "a tombstoned record is refused at every admission door and never served",
         "not holding the bytes again and refusing them at the door have one outward effect; the reason reported is purge_tombstoned in both",

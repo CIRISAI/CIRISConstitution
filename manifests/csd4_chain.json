@@ -3,10 +3,10 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "7ae4a6e2be0562e20d292da802478b3a04dcc62b477ddc33477f7625ae50abe4",
-   "invariants_sha256": "e0261d6e7c50af300bca07bc26591efa27bed4bc09fe680cc3e81dd37d41c518",
+   "invariants_sha256": "4cd4275e73a66f2d1b93ecb654e3dbb8ee22b1ae929e1e837c62061c8f01ef84",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "35161002356b2a7fc02a3e27946ceefe3af4149ddc47706bcac4c3aea7b87426",
+   "claims_sha256": "a6a5a8df4a8ab2a660bb55f36591931ae6a48e183d86e023ed9671b389c60e84",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "c0ba23bb21254c5cc02cab80b2c30c40987cc8f1e25b0855643ee111d5843246"
+  "chain_sha256": "f6d88488bc3d60cdaf496120e3f58d62ac82846573e2e0ebf497a99a06362a40"
  },
  "chain": [
   {
@@ -21969,7 +21969,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -22120,20 +22120,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -22422,7 +22427,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -22573,20 +22578,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -39771,7 +39781,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -39922,20 +39932,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -40128,7 +40143,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -40279,20 +40294,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -40525,7 +40545,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -40676,20 +40696,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -47554,7 +47579,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -47705,20 +47730,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -48005,7 +48035,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -48156,20 +48186,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -48456,7 +48491,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -48607,20 +48642,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -49427,7 +49467,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -49578,20 +49618,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -49855,7 +49900,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -50006,20 +50051,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },
@@ -50306,7 +50356,7 @@
      "symbol": "I8",
      "kind": "enumerated (every reachable state)",
      "claim_id": "CLM-anti-pattern-delegation",
-     "verdict": "0 violations; I10 dye test fails by design"
+     "verdict": "0 violations; plants --plant-revisit and --plant-refuse-cycle fail by design"
     },
     {
      "inv_id": "AT.I9",
@@ -50457,20 +50507,25 @@
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_delegation_cycle_admission"
-       ]
-      },
-      {
        "kind": "test",
        "repo": "CIRISConstitution",
        "path": "formal/authority_tree/authority_tree.py",
        "symbols": [
         "I8"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/causal_kernel/witnesses.py",
+       "symbols": [
+        "t1_ans"
+       ]
+      },
+      {
+       "kind": "lean",
+       "repo": "@formal/trust_set/TrustSet.lean#reaches_mono_budget,verdict_is_the_capped_walk",
+       "object": ""
       }
      ]
     },

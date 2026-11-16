@@ -1,6 +1,6 @@
 # The Reader's Policies
 
-**What this is.** How a consumer decides whom to trust: the anti-patterns of 4.1, with the depth cap and cycle rejection a consumer MUST apply and the weight cap it SHOULD; and the composition and delegation policies of 4.4, Policies A to M and the aggregation rules.
+**What this is.** How a consumer decides whom to trust: the anti-patterns of 4.1, with the depth cap and the walk that visits a cycle once, which a consumer MUST apply, and the weight cap it SHOULD; and the composition and delegation policies of 4.4, Policies A to M and the aggregation rules.
 
 **Whom it binds.** Every CEG-Conforming Consumer that composes rows into a verdict, and every reader who wants to know what a score about them will be turned into. A consumer may add policies of its own; it may not skip the ones marked normative.
 

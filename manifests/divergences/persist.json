@@ -4820,13 +4820,13 @@
      "target": "e2"
     }
    },
-   "expect_kernel": "concludes nothing",
+   "expect_kernel": "admitted",
    "expect_shipped": "refused",
    "kernel_parameter": {
     "family": "self:delegates_to",
     "gate": [
      [
-      "acyclic"
+      "any"
      ]
     ]
    }

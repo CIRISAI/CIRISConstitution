@@ -35,7 +35,15 @@ makes normative:
   I7  sub-delegation   a key issues an onward delegation only under a link that
                        carries `sub_delegation`, and the onward link carries
                        `sub_delegation` only if its parent does
-  I8  no cycle         the live delegation graph is acyclic (CC 4.1.1)
+  I8  cycle visited once
+                       no link is refused for closing a cycle; every walk from
+                       every key terminates and passes no key twice; a walk that
+                       may revisit keys holds nothing the once-walk does not; and
+                       a key reaches the same keys with or without the links into
+                       it, which close every cycle through it (CC 4.1.1, CC 2.7.5).
+                       A cycle adds no reach. Plants: `--plant-revisit` (the walk
+                       passes a key twice) and `--plant-refuse-cycle` (the door
+                       refuses the closing link) MUST each exit 2 with I8.
   I9  determinism      the authority a key holds is a function of the live rows,
                        not of the order they arrived in (the same set of rows
                        reached by different histories yields the same verdicts)
@@ -48,7 +56,8 @@ makes normative:
 
 "Closes" means: the reachable state space is finite, every state is examined,
 every invariant holds in every state, and the resolver terminates in every
-state (I2 and I8 together bound every walk).
+state (I2 and I8 together bound every walk: the cap bounds its length, and a
+walk that passes no key twice cannot go round a cycle).
 
 What a leaf IS in this model, and why. The first cut stored a licence as a
 (authority, subject, issuer) row and a grant as (asset, recipient, issuer), rows
@@ -68,6 +77,8 @@ small to reach.
 
 Run:  python3 formal/authority_tree/authority_tree.py        # CI runs this
       python3 formal/authority_tree/authority_tree.py --no-term-rule   # must exit 2 with I10
+      python3 formal/authority_tree/authority_tree.py --plant-revisit  # must exit 2 with I8
+      python3 formal/authority_tree/authority_tree.py --plant-refuse-cycle   # must exit 2 with I8
 Exit 0 iff every invariant holds in every reachable state of every universe.
 
 Measured on 2026-10-08 (the shape above, `ulimit -v 2500000`, 27 s):
@@ -93,6 +104,9 @@ from typing import FrozenSet, Iterable, Optional, Tuple
 DEPTH_CAP = 5  # CC 4.1.1
 MAX_TERM = 2   # the 365-day ceiling (CC 4.4.3.12), in model ticks; the term is a charter parameter
 TERM_RULE = "--no-term-rule" not in sys.argv   # the door's term check; off only for the dye test
+# The two I8 plants: a walk that passes a key twice, and a door that refuses the link closing a cycle.
+PLANT_REVISIT = "--plant-revisit" in sys.argv
+PLANT_REFUSE_CYCLE = "--plant-refuse-cycle" in sys.argv
 # Terms offered at the door: 0 is perpetual (refused under the rule), 3 is past the ceiling (refused).
 TERMS_OFFERED = (0, 1, 2, 3)
 
@@ -143,22 +157,23 @@ class State:
 # CC 2.4.1.3 names.
 
 
-def chains(state: State, root: str, key: str) -> Iterable[Tuple[Tuple[Link, ...], FrozenSet[str]]]:
+def chains(state: State, root: str, key: Optional[str]) -> Iterable[Tuple[Tuple[Link, ...], FrozenSet[str]]]:
     """Every chain of one or more live links from `root` to `key`, with the
     effective scope (the intersection along it). `root == key` yields nothing:
-    a key's authority over itself is not a delegation."""
+    a key's authority over itself is not a delegation. `key=None` yields every
+    chain from `root`. A chain passes no key twice, so a cycle is visited once."""
     stack = [(root, (), frozenset(SCOPES), frozenset([root]))]
     while stack:
         node, chain, scope, seen = stack.pop()
         if len(chain) >= DEPTH_CAP:
             continue
         for link in state.links:
-            if link.src != node or link.dst in seen:
+            if link.src != node or (link.dst in seen and not PLANT_REVISIT):
                 continue
             eff = scope & link.scope
             if not eff:
                 continue
-            if link.dst == key:
+            if key is None or link.dst == key:
                 yield (chain + (link,), eff)
             # A chain continues past a key only under a link that carries
             # sub_delegation (CC 4.4.3.19). Deeper links without it are dead.
@@ -174,6 +189,34 @@ def paths(state: State, root: str, key: str) -> Iterable[Tuple[int, FrozenSet[st
         yield (len(chain), eff)
 
 
+def revisiting(state: State, root: str) -> FrozenSet[Tuple[str, str]]:
+    """The (key, scope) pairs held from `root` by a walk that MAY pass a key
+    again, bounded only by the cap. I8 compares it with the once-walk: going
+    round a cycle confers nothing (the model's form of `reaches_mono_budget`)."""
+    out = set()
+    stack = [(root, 0, frozenset(SCOPES))]
+    while stack:
+        node, depth, scope = stack.pop()
+        if depth >= DEPTH_CAP:
+            continue
+        for link in state.links:
+            if link.src != node:
+                continue
+            eff = scope & link.scope
+            if not eff:
+                continue
+            if link.dst != root:
+                out.update((link.dst, s) for s in eff)
+            if SUB in eff:
+                stack.append((link.dst, depth + 1, eff))
+    return frozenset(out)
+
+
+def reach(state: State, root: str) -> FrozenSet[Tuple[str, str]]:
+    """The (key, scope) pairs held from `root` by the once-walk."""
+    return frozenset((k, s) for chain, eff in chains(state, root, None) for k in [chain[-1].dst] for s in eff)
+
+
 def holds(state: State, root: str, key: str, scope: str) -> bool:
     """Does `key` hold `scope` from `root`, through live links only?"""
     return any(scope in eff for _, eff in paths(state, root, key))
@@ -187,24 +230,33 @@ def holds(state: State, root: str, key: str, scope: str) -> bool:
 # properties under test.
 
 
-def delegate(state: State, root: str, src: str, dst: str, scope: FrozenSet[str], term: int = 1) -> Optional[State]:
-    if src == dst:
-        return None
-    # I10 at the door: a scope-bearing link carries a term within the ceiling; a
-    # perpetual link or one past the ceiling is refused (CC 4.4.3.12).
+def rule_admits(state: State, root: str, src: str, dst: str, scope: FrozenSet[str], term: int = 1) -> bool:
+    """The door as the rule states it. Nothing in it reads a cycle: a link that
+    closes one is admitted, and the walk visits the cycle once (I8)."""
+    if src == dst:   # a self-edge is the charter form, outside this graph
+        return False
     if TERM_RULE and (term < 1 or term > MAX_TERM):
-        return None
+        return False
     if Link(src, dst, scope, term) in state.links:
-        return None
-    # I8: no cycle. A link whose destination already reaches its source would
-    # close one.
-    if any(True for _ in chains(state, dst, src)):
-        return None
-    # I7 + I1 at the door: the issuer holds every scope it hands on, and holds
-    # sub_delegation, from the root, within the cap.
-    if src != root and not any(
+        return False
+    return src == root or any(
         SUB in eff and scope <= eff and d < DEPTH_CAP for d, eff in paths(state, root, src)
-    ):
+    )
+
+
+def closes_cycle(state: State, src: str, dst: str) -> bool:
+    return any(True for _ in chains(state, dst, src))
+
+
+def delegate(state: State, root: str, src: str, dst: str, scope: FrozenSet[str], term: int = 1) -> Optional[State]:
+    # I10 at the door (a scope-bearing link carries a term within the ceiling,
+    # CC 4.4.3.12), I7 + I1 (the issuer holds every scope it hands on, and holds
+    # sub_delegation, from the root, within the cap): all in `rule_admits`.
+    if not rule_admits(state, root, src, dst, scope, term):
+        return None
+    # No cycle check: a link that closes a cycle is admitted (I8). The plant
+    # refuses it, and I8's comparison with `rule_admits` catches the plant.
+    if PLANT_REFUSE_CYCLE and closes_cycle(state, src, dst):
         return None
     return State(state.links | {Link(src, dst, scope, term)}, state.licensees, state.grantees)
 
@@ -249,9 +301,24 @@ def check(state: State, root: str, keys: Tuple[str, ...], asset: str) -> None:
         if link.scope and (link.term < 1 or link.term > MAX_TERM):
             raise Violation(f"I10 term {link.term} on a live link (ceiling {MAX_TERM}): {link}")
     for k in keys:
-        # I8: no live chain leads from a key back to itself.
-        if any(True for _ in chains(state, k, k)):
-            raise Violation(f"I8 cycle through {k}: {state}")
+        # I8: the walk from k terminates within the bound on simple chains,
+        # passes no key twice, holds what a revisiting walk holds, and reaches
+        # the same keys without the links into k (which close every cycle through k).
+        n = 0
+        for chain, _ in chains(state, k, None):
+            n += 1
+            visited = [k] + [l.dst for l in chain]
+            if len(set(visited)) != len(visited):
+                raise Violation(f"I8 walk from {k} passes a key twice: {chain}")
+            if n > SIMPLE_CHAIN_BOUND[len(keys)]:
+                raise Violation(f"I8 walk from {k} exceeds the bound on simple chains: {state}")
+        once = reach(state, k)
+        if revisiting(state, k) != once:
+            raise Violation(f"I8 a cycle added reach from {k}: {state}")
+        opened = State(frozenset(l for l in state.links if l.dst != k), state.licensees, state.grantees)
+        if reach(opened, k) != once:
+            raise Violation(f"I8 the links closing a cycle at {k} changed its reach: {state}")
+    for k in keys:
         for chain, eff in chains(state, root, k):
             # I2: the cap.
             if len(chain) > DEPTH_CAP:
@@ -288,6 +355,21 @@ def check(state: State, root: str, keys: Tuple[str, ...], asset: str) -> None:
     # A licence or a grant never appears for a key no action issued it to.
 
 
+def _simple_chain_bound(n: int) -> int:
+    """Simple chains from one key over n keys within the cap, counted by
+    destinations as ordered picks of distinct keys (links of one pair counted
+    by the scope sets and terms they may carry)."""
+    per_pair = len(SCOPE_SETS) * len(TERMS_OFFERED)
+    total, ways = 0, 1
+    for d in range(1, min(DEPTH_CAP, n - 1) + 1):
+        ways *= (n - d) * per_pair
+        total += ways
+    return total
+
+
+SIMPLE_CHAIN_BOUND = {n: _simple_chain_bound(n) for n in range(1, 2 * DEPTH_CAP + 4)}
+
+
 def authority_snapshot(state: State, root: str, keys: Tuple[str, ...]) -> FrozenSet[Tuple[str, str]]:
     """Which (key, scope) pairs hold from the root. The thing I3 and I9 compare."""
     return frozenset((k, s) for k in keys for s in SCOPES if holds(state, root, k, s))
@@ -320,6 +402,7 @@ def enumerate_universe(
     admissions = 0
     max_depth_seen = 0
     cascades_checked = 0
+    cycle_closing = 0
 
     while queue:
         state = queue.popleft()
@@ -334,10 +417,16 @@ def enumerate_universe(
                 for dst in keys:
                     for scope in scope_sets:
                         for term in TERMS_OFFERED:
+                            if not rule_admits(state, root, src, dst, scope, term):
+                                refusals += 1
+                                continue
                             nxt = delegate(state, root, src, dst, scope, term)
                             if nxt is None:
-                                refusals += 1
+                                # I8 at the door: refused only where the rule refuses.
+                                raise Violation(f"I8 the door refused a link the rule admits ({src}->{dst}, closes a cycle): {state}")
                             else:
+                                if closes_cycle(state, src, dst):
+                                    cycle_closing += 1
                                 successors.append(nxt)
         for link in state.links:
             before = authority_snapshot(state, root, keys)
@@ -394,6 +483,7 @@ def enumerate_universe(
         "refusals": refusals,
         "issuances": admissions,
         "withdrawals_checked": cascades_checked,
+        "cycle_closing_admitted": cycle_closing,
         "distinct_issuer_leaf_pairs_admitted": {k: len(v) for k, v in leaves_admitted.items()},
     }
 
@@ -482,6 +572,7 @@ def main() -> int:
         and d["links_refused_past_cap"] > 0
         and max(d["links_admitted_per_depth"]) == DEPTH_CAP
         and results[0]["max_delegation_depth"] <= DEPTH_CAP
+        and all(r["cycle_closing_admitted"] > 0 for r in results[:-1])
     )
     print("CLOSED" if ok else "OPEN")
     return 0 if ok else 1

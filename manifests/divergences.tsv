@@ -83,7 +83,7 @@ persist/group:roster/lifecycle.withdraws_by[rule 0]	persist	lifecycle	runnable	g
 persist/licensure:{authority_id}/authority at issuance	persist	door	runnable	licensure:{authority_id}	authority at issuance	CC 2.4.1.3	concludes nothing	admitted	CLM-licence-judged-at-issuance
 persist/self:delegates_to/acts under a withdrawn delegates_to	persist	door	runnable	self:delegates_to	acts under a withdrawn delegates_to	CC 4.5.5	concludes nothing	admitted	CLM-licence-judged-at-issuance
 persist/membership:{stage}/invitation expiry	persist	window	runnable	membership:{stage}	invitation expiry	CC 3.1.3.2	admitted	concludes nothing	CLM-membership-consent
-persist/self:delegates_to/admission refusal	persist	door	runnable	self:delegates_to	admission refusal	CC 4.1.1	concludes nothing	refused	CLM-self-edge-not-cycle
+persist/self:delegates_to/admission refusal	persist	door	runnable	self:delegates_to	admission refusal	CC 4.1.1	admitted	refused	CLM-self-edge-not-cycle
 persist/licensure:{authority_id}/admission refusal	persist	door	runnable	licensure:{authority_id}	admission refusal	CC 4.4.3.19	concludes nothing	refused	CLM-issuance-scope
 persist/key_grant:{axis}/admission refusal	persist	door	runnable	key_grant:{axis}	admission refusal	CC 4.4.3.19	concludes nothing	refused	CLM-issuance-scope
 persist/takedown_notice:{basis}/admission refusal	persist	door	runnable	takedown_notice:{basis}	admission refusal	CC 4.5.3	concludes nothing	refused	CLM-takedown-notice-row

@@ -8157,16 +8157,16 @@
    "text": {
     "value": [
      [
-      "acyclic"
+      "any"
      ]
     ],
     "cc_ref": "CC 4.1.1",
-    "quote": "the cycle-closing emission concludes nothing, and a walk visits a cycle once",
+    "quote": "a row that closes a cycle MUST NOT be refused or discounted for it",
     "param": {
      "family": "self:delegates_to",
      "gate": [
       [
-       "acyclic"
+       "any"
       ]
      ]
     }
@@ -8176,7 +8176,7 @@
     "source": "constitution/claims.tsv CLM-self-edge-not-cycle (impl check_delegation_cycle_admission; the summary before 6e90792: still refused)",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "410382902fde28a5e40f730e0b6c32811f541726b61b4d7ce1f3795542b439e2",
+    "file_sha256": "ce195cdb78e702bf07f2cc7d5b8105d0e5b15f56e7f834192882954a5c3fd499",
     "file_rows": [
      "CLM-self-edge-not-cycle"
     ],
@@ -8219,12 +8219,12 @@
     }
    },
    "expect_shipped": "refused",
-   "expect_kernel": "concludes nothing",
+   "expect_kernel": "admitted",
    "orders": {
     "run": 2,
     "of": 2,
     "kernel": [
-     "concludes nothing"
+     "admitted"
     ],
     "shipped_judged_on_arrival": [
      "refused"

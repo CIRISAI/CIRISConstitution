@@ -44,7 +44,7 @@
 ## What binds you everywhere
 
 - Every consequential act you sign arrives signed and can be contested; consequences fall on you, under your name (CC 1.13.6; CC 3.4).
-- Delegation you grant is scoped, revocable, never re-delegates a listed power, lasts at most 365 days, and is acyclic across distinct keys; a self-edge is a charter form (CC 4.4.3.12; CC 4.1.1).
+- Delegation you grant is scoped, revocable, never re-delegates a listed power, lasts at most 365 days, and a cycle through it adds no reach, since a walk visits each key once; a self-edge is a charter form (CC 4.4.3.12; CC 4.1.1).
 - A deployment serving more than 100,000 monthly users publishes its redacted decision logs and deferral tickets within 180 days or forfeits any claim of compliance (CC 1.11).
 - Some uses are never allowed and no instruction moves that: deception, fraud, manipulation, coercion, election interference; an engagement-optimising business model declared at onboarding raises your tier and the mode is refused (Annex TX-9, TX-10).
 - Nothing here limits a duty the law imposes on you as a developer, deployer or steward, and nothing here creates a claim the law does not recognise (CC 7.3.5; plain rule N5).

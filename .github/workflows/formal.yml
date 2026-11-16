@@ -149,6 +149,13 @@ jobs:
           set +e
           python3 formal/authority_tree/authority_tree.py --no-term-rule | tee dye.log
           grep -q 'VIOLATION: I10' dye.log || exit 1
+      - name: The I8 plants fire (a walk that revisits; a door that refuses the closing link)
+        run: |
+          set +e
+          python3 formal/authority_tree/authority_tree.py --plant-revisit | tee p1.log
+          grep -q 'VIOLATION: I8' p1.log || exit 1
+          python3 formal/authority_tree/authority_tree.py --plant-refuse-cycle | tee p2.log
+          grep -q 'VIOLATION: I8' p2.log || exit 1
 
   guarantees:
     name: TLC + Lean — every guarantee at once (formal/guarantees)
