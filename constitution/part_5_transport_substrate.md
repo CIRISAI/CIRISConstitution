@@ -607,7 +607,7 @@ start        = "CTKX" ‖ 0x02 ‖ 0x00 ‖ total_len u32 ‖ bytes
 continuation = "CTKX" ‖ 0x02 ‖ 0x01 ‖ bytes
 ```
 
-**Three safeguards.** Until `CTKC` verifies, the responder serves only the first-contact plane, so a replayed message 1 yields no frame that opens. `CTKX` version `0x01` and the suite `transit_x25519_mlkem768_hkdf_sha256` are each refused by name, and nothing falls back to them. No store read happens before `id_ct` opens, and decapsulation runs behind the receiver rates above and a node-wide bucket. The known answers of this wire are still the verifier's to publish, at its next tag ([CC 2.6.1.12](part_2_the_grammar.md#2.6.1.12)).
+**Three safeguards.** A first sealed frame that is not a valid `CTKC` closes the link. Until `CTKC` verifies, the responder serves only the first-contact plane, even when the handshake is mutual. A promotion whose binding names a different static from the commitment of message 1 is refused. Message 2 is 1,154 bytes at first contact and 2,274 bytes when mutual. The known answers of this wire are the verifier's, published at its tag ([CC 2.6.5](part_2_the_grammar.md#2.6.5)): three handshakes, one promotion, two framing cases and 38 refusals.
 
 **E1, in full.** The two-layer rule, in numbered sentences:
 

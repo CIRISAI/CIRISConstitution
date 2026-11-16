@@ -232,9 +232,21 @@ Per-class recommended trust-multipliers: `HSM_FIPS_140_3_L3` = 1.0; `Apple_Secur
 | `placeholder_pending_provisioning` | none — no key yet |
 | `software_hsm_development` | `software_only` |
 
+Both fields describe the custody of the key's classical (Ed25519) half; where its ML-DSA-65 half is held is `pq_custody` ([CC 4.2.2.1](#4.2.2.1)).
+
 #### 4.2.2.1 `hardware-class-hardware` — Hardware-class claim, and the attestation chain that corroborates it
 
-The `hardware_class` string is self-asserted by the holder; `hardware_class` is not a directory column — it rides inside the key's `attestation_evidence`. What corroborates it is the **evidence variant**, not the string. The per-platform attestation chains are evidence-established ([CC 8.3.1](part_8_appendices.md#8.3.1) **R5** — Android Key Attestation, Apple App Attest, YubiKey PIV, TPM EK). A verifier admits a class only when the chain for that mechanism verifies and the attested key is the record's own key (a lifted attestation replayed under another key is refused). Consumer policy therefore keys on the **verified mechanism** (`hardware_custody:{platform}`, the `HardwareType` the chain proves) and reads `hardware_class` as the holder's certified-class claim over it; where no chain verifies, the class is unattested and the multiplier is 0.0.
+`hardware_class` describes the custody of the classical (Ed25519) half of a composite key, and the attestation chain below attests that half only. The `hardware_class` string is self-asserted by the holder; `hardware_class` is not a directory column — it rides inside the key's `attestation_evidence`. What corroborates it is the **evidence variant**, not the string. The per-platform attestation chains are evidence-established ([CC 8.3.1](part_8_appendices.md#8.3.1) **R5** — Android Key Attestation, Apple App Attest, YubiKey PIV, TPM EK). A verifier admits a class only when the chain for that mechanism verifies and the attested key is the Ed25519 half of the record's composite key (a lifted attestation replayed under another key is refused). Consumer policy therefore keys on the **verified mechanism** (`hardware_custody:{platform}`, the `HardwareType` the chain proves) and reads `hardware_class` as the holder's certified-class claim over it; where no chain verifies, the class is unattested and the multiplier is 0.0.
+
+**Custody of the ML-DSA-65 half (normative).** A key record that asserts a `hardware_class` also states where its ML-DSA-65 half is held, in one member of the same `attestation_evidence`, `pq_custody`. Its vocabulary is closed:
+
+| `pq_custody` | Where the ML-DSA-65 half is held | Recommended trust multiplier |
+|---|---|---|
+| `same_element` | in the element that holds the classical half | the class's own |
+| `removable_offline` | on removable media kept offline and apart from the token | the class's own |
+| `software_wrapped` | in software on the device, wrapped by the device keystore | the lesser of the class's and 0.8 |
+
+A record that asserts a class and omits `pq_custody` is read at multiplier 0.0, as an unlisted class is. A record that carries any other value is malformed and refused `key_record_bad_pq_custody`. `pq_custody` is self-asserted, as `hardware_class` is. No attestation chain covers it, so nothing corroborates it beyond the holder's statement, and consumer policy weighs it accordingly.
 
 ### 4.2.3 `accord-holder` — The accord-holder triple
 
@@ -250,7 +262,7 @@ This entry says who holds the accord seats, what kind of key a holder holds, how
 | 2 | Eric Kudzin | 1 / strict majority / strict majority |
 | 3 | Haley Bradley | 1 / strict majority / strict majority |
 
-**Whose key a holder's key is.** Each holder is a person. `A1`, `B1` and `C1` name the three holders' composite keys ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)), one per person. Each is a `federation_keys` row whose `identity_type` contains `accord_holder` ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)). A holder's key is that person's own: it has no owner, and it accepts and un-trusts a root as that person ([CC 3.2](part_3_the_namespace.md#3.2) T3).
+**Whose key a holder's key is.** Each holder is a person. `A1`, `B1` and `C1` name the three holders' composite keys ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)), one per person. Each is a `federation_keys` row whose `identity_type` contains `accord_holder` ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)). A holder's key is that person's own: it has no owner, and it accepts and un-trusts a root as that person ([CC 3.2](part_3_the_namespace.md#3.2) T3). A holder's key MUST hold its ML-DSA-65 half `removable_offline`, on media separate from the token that holds its classical half, so that no one device yields a halt signature ([CC 4.2.2.1](#4.2.2.1)).
 
 **How a seat changes.** A seat is added or vacated only by roster change on the public record under the standing-majority rule. The slot stays as specified; the count is an instance parameter. "Permanent" means *no automatic decay*, not *unchangeable*. Finding and vetting a replacement holder runs this instance's out-of-band replacement process; seating one is the roster change above. That process is likewise **this instance's** replacement process and not a constitutional requirement. Another instantiation supplies its own, and CC constrains only that some out-of-band route exist. This triple is the **seed** of a growable M-of-N roster ([CC 4.2.6](#4.2.6)). How the quorum is computed — and how the kill-switch stays operable — as holders are added, lost to decimation, and regained is specified in [CC 4.2.6](#4.2.6).
 
