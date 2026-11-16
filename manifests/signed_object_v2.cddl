@@ -9,7 +9,7 @@
 ; Every top-level rule, so a generator exercises them all.
 ceg-anything = ceg-statement / ceg-object-statement / second-consent / row-id-input / row-id
              / statement-id-input / statement-id / object-id-input / ceg-key / key-record-members
-             / revocation-snapshot / ceg-genesis-bundle / seat-commitment-input
+             / revocation-snapshot / ceg-genesis-bundle / recovery-commitment-input / seat-commitment-input
              / hpke-info / ceg-typ
 
 ; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
@@ -197,8 +197,22 @@ key-record-members = {
   "identity_type": [+ tstr],       ; a set
   "asserted_at": ms-time,
   ? "valid_until": ms-time,
+  ? "attestation_evidence": attestation-evidence,
   * tstr => ceg-value,
 }
+; The custody of the key's Ed25519 half (CC 4.2.2, CC 4.2.2.1). `chain` is X.509 DER, leaf first: a sequence,
+; required where the class's mechanism has a chain (Apple_Secure_Enclave, YubiKey_5_FIPS, TPM_2_0), refused
+; key_record_bad_attestation_evidence otherwise. Where a holder is seated, the reader verifies it to the
+; mechanism's attestation root and binds the attested key to the record's Ed25519 half.
+attestation-evidence = {
+  "hardware_class": tstr,
+  ? "pq_custody": "same_element" / "removable_offline" / "software_wrapped",
+  ? "chain": [+ bstr],
+}
+
+; A recovery commitment (CC 3.2 T3, CC 4.2.6): [-16, SHA-256 over the deterministic encoding of this array].
+; `keys` is a set of composite keys, sorted by encoding; a holder's recovery commitment has one element.
+recovery-commitment-input = ["CEG-recovery/2", keys: [+ ceg-key]]
 
 ; The signed objects that are not rows, each its own typ, closed: a verifier refuses any other typ.
 ; No cty; the payload is .cbor the rule its typ names, in the deterministic encoding.
@@ -216,7 +230,8 @@ object-protected = {
 }
 object-claims = {
   1: identity-ref,                 ; iss
-  ? 6: uint,                       ; iat where the object states an instant; a revocation snapshot carries none
+  ? 6: uint,                       ; iat where the object states an instant; a revocation snapshot carries none,
+                                   ; a genesis bundle floor(asserted_at / 1000)
   -70003: 2,
 }
 object-typ = "ceg-genesis-bundle/2" / "ceg-revocation-snapshot/2" / "ceg-boot-manifest/2"
@@ -247,10 +262,38 @@ revoked-entry = [key: kid, revocation: row-ref, trusted_through: [* row-ref]]   
 ; form is the ceremony row of CC 2.6.1.12: a fresh genesis with no prev, a signed object that is not
 ; a row. refs.prev names a later bundle's predecessor. `version` is a sequence from 1, never ranked:
 ; prev's version + 1 where the bundle has a prev, a consistency check only.
+; A counted object: one statement per holder over one payload, with no "author", so its object id
+; takes null. The map is closed. It NAMES rows and never copies them: every row it seats stands in
+; refs.also "cites" by row-ref (each holder's and each seat's key:record, each seat's transport_destination
+; binding). The bundle's own count is the canonical conferral of every seat in serve_nodes (CC 4.2.1);
+; each statement carries iat, floor(asserted_at / 1000).
+; Checked in prose, not here: version is 1 iff refs has no prev; holders, serve_nodes and witnesses are
+; pairwise disjoint;
+; the keys of recovery_commitments are exactly holders; scope holds infra:attest and infra:serve; the
+; three witness members are present together or not at all, and witness_quorum is
+; floor(|witnesses| / 2) + 1; each statement's iat is floor(asserted_at / 1000).
 ceg-genesis-bundle = {
-  ? "refs": refs,
-  "version": uint,
-  * tstr => ceg-value,
+  "refs": genesis-refs,
+  "version": 1..4294967295,
+  "asserted_at": ms-time,
+  "family_key_id": tstr,           ; the accord's name, as its rows carry it; a name, never an anchor (CC 5.3.4)
+  "holders": [+ identity-ref],     ; a set: the accord's roster, the voices this bundle seats
+  "serve_nodes": [+ identity-ref], ; a set: the seated serve nodes
+  "charter": genesis-charter,
+}
+genesis-refs = {
+  ? "prev": row-ref,               ; the predecessor bundle's object id; absent on the first
+  "also": { "cites": row-ref-set },; every row the bundle names: a set
+}
+; The accord's charter (CC 2.1, CC 3.2 T3 and T6, CC 4.2.6): the parameters no row carries.
+genesis-charter = {
+  "recovery_commitments": { + identity-ref => hash-digest },   ; one entry per holder, keyed by its identity-ref
+  "scope": [+ tstr],               ; a set; holds infra:attest and infra:serve (CC 3.2 Rooted)
+  ? "halt_fuse_secs": 1..4294967295,       ; absent means 86400 (CC 4.2.1.1)
+  ? "attach_window_secs": 1..4294967295,   ; absent: attachable by an out-of-band anchor only (CC 3.2 T4a)
+  ? "witness_cadence_secs": 1..4294967295, ; witnessed mode: the three witness members together
+  ? "witness_quorum": 2..4294967295,       ; absence is witnessed mode off; 0 is never written
+  ? "witnesses": [+ identity-ref],         ; a set; each one's key:record stands in refs.also "cites"
 }
 
 ; Room keys. The seat commitment of a private room: SHA-256 over the deterministic encoding of this

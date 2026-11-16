@@ -27,6 +27,8 @@ The CIRIS Constitution is one document with one version line. Each release below
 - An agent member needs its steward-binding in every community; only a node member of an `infrastructure` community is exempt, its owner tested at its serve seat (6.1.8). A node gives a community the `infrastructure` treatment only on a conformant record rooted in its own trust (4.4.3.4).
 - Part 1 keeps no unused number: 1.15 and 1.16 are 1.14 and 1.15, with their subsections, and nothing else moves. The section map gives each earlier number its place in one step.
 - Waiting on implementers' submissions: the verifier's vectors for the genesis bundle, the revocation snapshot and the other signed objects; the forward bytes of the objects whose earlier forms stand in the annex; the census's forward members; the sealed descriptor's encoding, the seat commitment's room member and the room-key forms; and an assigned identifier for the composite, which is private-use until then.
+- The genesis bundle's payload is stated (2.6.1.11): it names every key record and seat binding it seats by row id, and carries only the roster, the seats and the accord's charter. Its own count is the seats' canonical conferral (4.2.1). The first bundle is signed by every holder; a later one by a strict majority of its predecessor's.
+- A reader's anchor is its own: a release's default anchor is the holders' thumbprints, and the bundle's object id after signing (5.3.4). A key record's `attestation_evidence` carries the class, `pq_custody` and the attestation chain, checked where a holder is seated (4.2.2.1); the recovery commitment's bytes are stated (3.2).
 
 ## 1.0-rc19 (released 2026-11-14, tag v1.0-rc19)
 

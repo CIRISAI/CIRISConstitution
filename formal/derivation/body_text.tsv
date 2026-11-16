@@ -315,7 +315,7 @@ takedown_notice:{basis}	perceptual_hash	unstated	optional	no	CC 3.3.2	**The fiel
 takedown_notice:{basis}	subject_kind	"takedown_notice"	unstated	no	CC 3.1.1	**A takedown notice as a row** (shape and bases at [CC 3.3.2](#3.3.2)): the `scores` row whose envelope is the `takedown_notice` payload, `subject_kind: takedown_notice`, so that
 trace:{form}:{version}	run_kind	"production" / "prod-personal" / "prod-managed" / "qa" / "battery" / "mock"	required	no	CC 3.1.5	**Every trace names its run, and its shape is pinned (normative).** A signed `trace:*` envelope carries **`run_kind`** in the signed bytes, closed vocabulary `production
 trust:{job}:{version}	pre_rotation_commitment	hex64 presence=optional leaf=trust:charter	unstated	yes	CC 8.11.9	Pre-rotation commitment on a charter.
-trust:{job}:{version}	recovery_commitments	unstated	unstated	yes	CC 4.2.6	That member is an object `{holder_key_id: commitment}`, one entry per holder.
+trust:{job}:{version}	recovery_commitments	unstated	unstated	yes	CC 4.2.6	That member is a map from each holder's identity reference to its commitment, one entry per holder.
 video:*	captions	unstated	required	no	CC 3.3.13	Source struct carries codec, duration, resolution, mandatory `captions` reference, AI-generation disclosure, license info.
 video:*	derived_from	unstated	unstated	no	CC 5.1	The recording is the after-the-fact `video` blob with `derived_from: stream_id`
 video:*	duration	unstated	unstated	no	CC 3.3.13	Source struct carries codec, duration, resolution, mandatory `captions` reference, AI-generation disclosure, license info.

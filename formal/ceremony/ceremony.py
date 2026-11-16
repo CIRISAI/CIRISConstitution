@@ -13,10 +13,11 @@ Rows (dicts of causal_kernel.row) carry `form`: "e1" for the earlier JSON form (
 
     rec      a key record. `key`, `typ`, `vf`, `vu`; `as_` names the person an earlier key belonged to, read only by
              planted breaks that carry something across.
-    bundle2  a `ceg-genesis-bundle/2` with no `prev`: a genesis. `roster` is its holders' keys, `voices` the statements.
+    bundle2  a `ceg-genesis-bundle/2` with no `prev`: a genesis. `roster` is its holders' keys, `serve` its seats'
+             keys, `voices` the statements. Its count is the seats' canonical conferral (CC 4.2.1).
     rebind   `transport:canonical_rebind` for `seat`, carrying `xw`, counted by the holders.
     td       a seat's `transport_destination` carrying `xw`; the genesis names the seats' bindings.
-    confer   a counted act of the holders (the canonical conferral, or any other counted act).
+    confer   any other counted act of the holders.
     resume   `accord:lifecycle:active`, counted, naming a halt.
     ob       an owner-binding, `owner` over `target`, with both voices (the target's cosignature, CC 3.2).
     edge     a trust acceptance edge to the accord, by a person.
@@ -203,6 +204,20 @@ def answers(rows, reader, now=5, first=None):
         vals = sorted({r["xw"] for r in top})
         seats[s] = vals[0] if len(vals) == 1 or ("pick_one" in MUT and vals) else None
 
+    # canonical standing: the seats every genesis in force lists, by the bundle's own count; it rides no record, so
+    # it survives the seat's renewals, and nothing else confers it
+    if cut:
+        ss = [frozenset(fwd[c].get("serve", ())) for c in cut]
+        canonical = frozenset.union(*ss) if "fork_union" in MUT else frozenset.intersection(*ss)
+    else:
+        canonical = frozenset()
+    if "canonical_ends_with_record" in MUT:
+        canonical = frozenset(s for s in canonical if any(
+            by[n]["kind"] == "rec" and by[n]["key"] == s and by[n]["vf"] <= now < (INF if by[n]["vu"] is None else by[n]["vu"])
+            for c in cut for n in fwd[c]["names"] if n in by))
+    if "canonical_self_claimed" in MUT and cut:
+        canonical |= frozenset(r["key"] for r in fwd.values() if r["kind"] == "rec" and r["typ"] == "node" and live(r["key"]))
+
     agents = sorted({r["key"] for r in fwd.values() if r["kind"] == "rec" and r["typ"] == "agent"})
 
     def edge_of(p):
@@ -244,6 +259,7 @@ def answers(rows, reader, now=5, first=None):
         "roster": R,
         "counted": frozenset(i for i, r in A.items() if r["kind"] in COUNTED and counted(r)),
         "seats": tuple(sorted(seats.items())),
+        "canonical": canonical,
         "steward": tuple((a, owner_of(a)) for a in agents),
         "may_act": tuple((a, may_act(a)) for a in agents),
         "members": members(),

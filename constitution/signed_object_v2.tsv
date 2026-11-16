@@ -62,6 +62,10 @@ key_record	key-record-members	"key"	-	payload	ceg-key	always	2.6.1.7	The composi
 key_record	key-record-members	"identity_type"	identity_type	payload	[+ tstr]	always	2.6.1.7 2.4.1.1	A set of roles; user or accord_holder never with node or agent.
 key_record	key-record-members	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 key_record	key-record-members	"valid_until"	valid_until	payload	ms-time	as the key's end rule states	2.6.1.7	Absent where the set contains user or accord_holder; required where it contains node or agent, unless a room key of a private room; a set mixing the two groups is refused. At most key_record_max_secs after asserted_at.
+key_record	key-record-members	"attestation_evidence"	-	payload	attestation-evidence	where the record asserts a hardware class	4.2.2 4.2.2.1	The custody of the key's Ed25519 half and where its ML-DSA-65 half is held.
+key_record	attestation-evidence	"hardware_class"	-	payload	tstr	always	4.2.2	A class of the CC 4.2.2 table; an unlisted class is read at multiplier 0.0.
+key_record	attestation-evidence	"pq_custody"	-	payload	"same_element" / "removable_offline" / "software_wrapped"	where the record asserts a class	4.2.2.1	Absent: read at multiplier 0.0; any other value is refused key_record_bad_pq_custody.
+key_record	attestation-evidence	"chain"	-	payload	[+ bstr]	where the class's mechanism has a chain	4.2.2.1 2.6.1.2	X.509 DER, leaf first: a sequence; verified to the mechanism's attestation root where a holder is seated.
 object	ceg-object-statement	protected	-	statement	bstr .cbor object-protected	always	2.6.1.11	The protected header of a signed object that is not a row, in deterministic encoding.
 object	ceg-object-statement	unprotected	-	statement	unprotected-header	always	2.6.1.11	Never signed; a rule never reads it.
 object	ceg-object-statement	payload	-	statement	bstr	always	2.6.1.11	The deterministic encoding of the rule its typ names.
@@ -71,7 +75,7 @@ object	object-protected	4	-	header:protected	kid	always	2.6.1.7	kid: the signer'
 object	object-protected	15	-	header:protected	object-claims	always	2.6.1.11	The CWT claims.
 object	object-protected	16	-	header:protected	object-typ	always	2.6.1.11	typ: one of the closed list.
 object	object-claims	1	-	header:cwt	identity-ref	always	2.6.1.11	iss.
-object	object-claims	6	-	header:cwt	uint	where the object states an instant	2.6.1.11	iat; a revocation snapshot carries none.
+object	object-claims	6	-	header:cwt	uint	where the object states an instant	2.6.1.11	iat; a revocation snapshot carries none, and a genesis bundle MUST carry floor(asserted_at / 1000).
 object	object-claims	-70003	-	header:cwt	2	always	2.6.1.11	edition: the constant 2.
 object	object-id-input	typ	-	derived	object-typ	always	2.6.1.11	The object's typ.
 object	object-id-input	author	-	derived	identity-ref / null	always	2.6.1.11	The payload's author, or null where it has none.
@@ -83,8 +87,24 @@ snapshot	revocation-snapshot	"revoked"	-	object	[* revoked-entry]	always	2.6.1.1
 snapshot	revoked-entry	key	-	object	kid	always	2.6.1.11	The revoked key's thumbprint, the same bytes as its kid.
 snapshot	revoked-entry	revocation	-	object	row-ref	always	2.6.1.11	The revocation row.
 snapshot	revoked-entry	trusted_through	-	object	[* row-ref]	always	2.6.1.11 2.6.1.2	The last rows of the revoked key held good: a set.
-genesis	ceg-genesis-bundle	"refs"	-	object	refs	on every genesis bundle that has a predecessor	2.6.1.11	prev; the first bundle, the ceremony row, has none.
-genesis	ceg-genesis-bundle	"version"	-	object	uint	always	2.6.1.11	A sequence from 1: prev's version plus one where the bundle has a prev, a consistency check only.
+genesis	ceg-genesis-bundle	"refs"	-	object	genesis-refs	always	2.6.1.11 5.3.4	Every row the bundle names, and prev on a bundle after the first.
+genesis	ceg-genesis-bundle	"version"	-	object	1..4294967295	always	2.6.1.11	A sequence from 1: prev's version plus one where the bundle has a prev, a consistency check only.
+genesis	ceg-genesis-bundle	"asserted_at"	-	object	ms-time	always	2.6.2 2.6.1.11	POSIX milliseconds; each statement's iat is floor(asserted_at / 1000), and a disagreement is refused.
+genesis	ceg-genesis-bundle	"family_key_id"	-	object	tstr	always	5.3.4 4.2.3	The accord's name as its rows carry it; a name, never an anchor.
+genesis	ceg-genesis-bundle	"holders"	-	object	[+ identity-ref]	always	4.2.3 5.3.4 2.6.1.2	The accord's roster: a set; each holder's key record stands in refs.
+genesis	ceg-genesis-bundle	"serve_nodes"	-	object	[+ identity-ref]	always	5.3.4 3.3.6.2 2.6.1.2	The seated serve nodes: a set, disjoint from holders; each seat's key record and binding stand in refs; the bundle's count is each seat's canonical conferral.
+genesis	ceg-genesis-bundle	"charter"	-	object	genesis-charter	always	2.1 4.2.6	The accord's parameters, which no row carries.
+genesis	genesis-refs	"prev"	-	object	row-ref	on every bundle after the first	2.6.1.11	The predecessor bundle's object id.
+genesis	genesis-refs	"also"	-	object	map	always	2.6.1.3	The one role cites, and no other.
+genesis	genesis-refs	"also"."cites"	-	object	row-ref-set	always	2.6.1.3 2.6.1.2	Every row the bundle names: each holder's and each seat's key record, each witness's, and each seat's binding; a set.
+genesis	genesis-charter	"recovery_commitments"	-	object	{ + identity-ref => hash-digest }	always	4.2.6 3.2	One entry per holder, keyed by its identity reference; each the commitment over that holder's one recovery key.
+genesis	genesis-charter	"scope"	-	object	[+ tstr]	always	3.2 2.6.1.2	A set; it holds infra:attest and infra:serve.
+genesis	genesis-charter	"halt_fuse_secs"	-	object	1..4294967295	where the charter states a fuse	4.2.1.1 2.1	Absent means 86400.
+genesis	genesis-charter	"attach_window_secs"	-	object	1..4294967295	where the charter states a window	3.2 5.3.4	Absent: attachable through an out-of-band anchor only.
+genesis	genesis-charter	"witness_cadence_secs"	-	object	1..4294967295	where witnessed mode is on	3.2 2.1	Present with witness_quorum and witnesses, or none of the three.
+genesis	genesis-charter	"witness_quorum"	-	object	2..4294967295	where witnessed mode is on	3.2 2.1	floor(|witnesses| / 2) + 1; absence is witnessed mode off, and 0 is never written.
+genesis	genesis-charter	"witnesses"	-	object	[+ identity-ref]	where witnessed mode is on	3.2 2.1 2.6.1.2	The witness directory: a set, disjoint from holders and serve_nodes; each witness's key record stands in refs.
+genesis	recovery-commitment-input	keys	-	derived	[+ ceg-key]	always	3.2 4.2.6 2.6.1.2	The committed composite keys, a set; one for a holder's recovery commitment. The commitment is [-16, SHA-256] over the array.
 room	seat-commitment-input	room	-	derived	tstr	always	2.6.1.11	The room's id as its rows carry it.
 room	seat-commitment-input	room_key	-	derived	kid	always	2.6.1.11	The room key's thumbprint.
 room	seat-commitment-input	person	-	derived	identity-ref	always	2.6.1.11	The person's identity reference.

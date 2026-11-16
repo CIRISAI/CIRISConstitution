@@ -5,7 +5,7 @@ formal/causal_kernel).
 
 A small world: an earlier mesh (three holders' earlier keys, an earlier genesis, a community, an agent's earlier
 owner-binding, an earlier trust edge, an earlier re-bind, an earlier sealed halt, earlier votes), and then a mesh of
-this form signed anew: the holders' key records, the seats' records and bindings, the conferrals, the pre-signed
+this form signed anew: the holders' key records, the seats' records and bindings, the pre-signed
 halts, the genesis, and every person's, node's and agent's record, binding, edge and community after it. Worlds vary
 who signs the genesis, a second genesis, the re-binds, the seats' own bindings, the agent's binding and edge,
 revocations, and when the pre-signed halts are sealed. Three readers read each world (upgraded with no pin, upgraded
@@ -40,7 +40,8 @@ UP, PIN, OLD = ({"upgraded": True}, {"upgraded": True, "pin": "G"}, {"upgraded":
 READERS = (("up", UP), ("pin", PIN), ("old", OLD))
 
 DEFAULT = dict(gen_voices=HOLD, fork=False, rebind=None, seat_td=False, ob2=True, edge=True, owner_rev=False,
-               third_rev=False, revoke_holders=(), halts="before", acts=(), names_earlier=False, custody="separate")
+               third_rev=False, revoke_holders=(), halts="before", acts=(), names_earlier=False, custody="separate",
+               renew=False, extra_node=False)
 
 
 def world(**o):
@@ -63,19 +64,19 @@ def world(**o):
 
     # this form: before the genesis
     F = [rec("F" + h, h, "accord_holder") for h in HOLD]
-    F += [rec("FN1", "N1", "node", vf=0, vu=10), rec("FN2", "N2", "node", vf=0, vu=10)]
+    F += [rec("FN1", "N1", "node", vf=0, vu=4 if o["renew"] else 10), rec("FN2", "N2", "node", vf=0, vu=10)]
     F += [row("TD1", "td", "N1", ("FN1",), seat="n1", xw="xw1"), row("TD2", "td", "N2", ("FN2",), seat="n2", xw="xw2")]
-    F += [row("CF1", "confer", "A", ("FN1", "FA", "FB", "FC"), voices=HOLD),
-          row("CF2", "confer", "A", ("FN2", "FA", "FB", "FC"), voices=HOLD)]
     halts = [row("PH" + h, "halt", h, ("F" + h,), halves=frozenset({"ed", "pq"}), sealed=True) for h in HOLD]
     gnames = tuple(r["id"] for r in F)
-    G = row("G", "bundle2", "A", gnames, version=1, prev=None, roster=HOLD, voices=tuple(o["gen_voices"]))
+    # the bundle's own count is the seats' canonical conferral: a seat is canonical by its place in `serve`
+    G = row("G", "bundle2", "A", gnames, version=1, prev=None, roster=HOLD, serve=("N1", "N2"),
+            voices=tuple(o["gen_voices"]))
     pre = F + (halts if o["halts"] == "before" else []) + [G]
     fork = []
     if o["fork"]:
         fork.append(row("TD1b", "td", "N1", ("FN1",), seat="n1", xw="xw1b"))
         fork.append(row("Gb", "bundle2", "A", tuple(n for n in gnames if n not in ("TD1", "TD2")) + ("TD1b",), version=1, prev=None,
-                        roster=HOLD, voices=HOLD))
+                        roster=HOLD, serve=("N1",), voices=HOLD))
 
     # after the genesis: everyone signs anew
     after = [] if o["halts"] == "before" else list(halts)
@@ -86,6 +87,10 @@ def world(**o):
     if o["ob2"]:
         after.append(row("OB2", "ob", "U2", ("FU2", "FAG"), owner="U2", target="AG", voices=("U2", "AG")))
     after.append(rec("FX", "X", "node", vf=0, vu=3))                    # a key whose own record ended before now
+    if o["renew"]:
+        after.append(rec("FN1r", "N1", "node", vf=3, vu=10))            # a seat's renewed record, after the genesis
+    if o["extra_node"]:
+        after.append(rec("FN3", "N3", "node", vf=0, vu=10))             # a node the bundle does not seat
     after.append(row("WX", "post", "A", ("FX", "FA")))                  # another key's row naming that record
     after.append(row("CN", "roster", "U1", ("FU1", "FU2"), voices=("U1", "U2"), members=("U1", "U2")))
     if o["owner_rev"]:
@@ -127,6 +132,8 @@ def world(**o):
     if o["rebind"] == "concurrent":
         xw["n1"] = None
     x["xw"] = xw if x["gen_valid"] else {"n1": None, "n2": None}
+    # canonical standing: the seats every genesis in force lists; a fork leaves what both list
+    x["canonical"] = frozenset() if not x["gen_valid"] else frozenset({"N1"} if o["fork"] else {"N1", "N2"})
     x["steward"] = "U2" if o["ob2"] else None
     x["may_act"] = bool(o["ob2"] and o["edge"] and not o["owner_rev"])
     x["members"] = frozenset({"U1", "U2"})
@@ -258,15 +265,18 @@ def worlds_p5():
     for rb, st in itertools.product((None, "fwd2", "fwd1", "concurrent"), (False, True)):
         yield dict(rebind=rb, seat_td=st)
     yield dict(fork=True)
+    yield dict(renew=True, extra_node=True)
+    yield dict(gen_voices=("A", "B"))
 
 
 def p5(o, orders):
-    """A seat has one transit key from the genesis, the one its binding there carries, moved only by a re-bind the
-    holders' count signs; two counted keys leave none until a row names both."""
+    """A seat is canonical by its place in the genesis in force, whose count is the conferral, through its own
+    record's renewals; it has one transit key from the genesis, the one its binding there carries, moved only by a
+    re-bind the holders' count signs; two counted keys leave none until a row names both."""
     rows, x, o = world(**o)
     for order in orders(rows):
         a = run(rows, UP, order)
-        if dict(a["seats"]) != x["xw"]:
+        if dict(a["seats"]) != x["xw"] or a["canonical"] != x["canonical"]:
             return False
     return True
 
@@ -307,6 +317,8 @@ def p7(o, orders):
     for order in orders(rows):
         a, b = run(rows, UP, order), run(rows, PIN, order)
         if a["cut"] != ("G", "Gb") or a["void"] != () or dict(a["seats"]) != {"n1": None, "n2": None}:
+            return False
+        if a["canonical"] != frozenset({"N1"}) or b["canonical"] != frozenset({"N1", "N2"}):
             return False
         if b["cut"] != ("G",) or b["void"] != ("Gb",) or dict(b["seats"]) != {"n1": "xw1", "n2": "xw2"}:
             return False
@@ -362,8 +374,9 @@ PROPS = [
     ("P3", "the accord's count holds from the genesis, which every holder signs", p3, worlds_p3,
      ("genesis_majority", "roster_shrinks", "earlier_votes")),
     ("P4", "no single device yields a halt", p4, worlds_p4, ("one_half_verifies", "earlier_halt")),
-    ("P5", "a seat has one transit key from the genesis, moved only by the holders' count", p5, worlds_p5,
-     ("seat_alone_td", "one_holder_rebind", "pick_one", "earlier_rebind")),
+    ("P5", "a seat is canonical by the genesis's count and has one transit key from it, moved only by the holders' count",
+     p5, worlds_p5, ("seat_alone_td", "one_holder_rebind", "pick_one", "earlier_rebind", "canonical_self_claimed",
+                     "canonical_ends_with_record")),
     ("P6", "an agent has no standing until its steward-binding of this form exists", p6, worlds_p6,
      ("earlier_binding", "act_without_steward", "earlier_roster")),
     ("P7", "two geneses are a fork: tips to a reader with no pin, the other void to one that pinned", p7, worlds_p7,
