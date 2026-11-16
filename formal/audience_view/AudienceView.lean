@@ -353,37 +353,141 @@ theorem carriage_not_closed : ¬ Closed (view w0 9) (admit reply) := by
   have := h.never_splits [] [old] (by decide)
   exact absurd this (by decide)
 
-/-! The kernel keeps a row only after the rows it names (a row waits for what it names). On the
-states that rule allows, the joiner's view is closed under the reply. Bounded: the states are
-every causal set of the rows below holding `old`, before and after the reply. -/
+/-! ### Carriage under the waiting rule, in general
+
+The list view above records the order in which rows are held, which the kernel says carries no
+information (the only order is what rows name). So on causal states the list view is still not
+closed: two arrival orders of the same rows look alike to the joiner until the reply interleaves
+the row it carries (`list_view_shows_arrival_order`). The reader's view is the set of rows it is
+served: `Seen`, the same audience rule with carriage, read without order. Under the waiting rule
+that set is closed under admitting any row, for every world, reader and causal state
+(`carriage_closed_under_wait`). -/
 
 def beside : Row := ⟨3, 1, 1, 6, [], [], [], true, 1⟩      -- a row 9 reaches on its own
-def hiddenR : Row := ⟨4, 1, 1, 4, [], [], [], true, 2⟩     -- a row before 9 joined, named by nothing
-def aside : Row := ⟨5, 3, 1, 4, [], [], [1], true, 3⟩      -- names `old` before 9 joined
 
-def subsetsOf : List Row → List (List Row)
-  | [] => [[]]
-  | x :: xs => (subsetsOf xs).map (x :: ·) ++ subsetsOf xs
-
-/-- the causal states holding `old`: `old` is the oldest row; `aside` only with `old` -/
-def waitStates : List Mesh :=
-  let before := (subsetsOf [beside, hiddenR, aside]).map (· ++ [old])
-  before ++ before.map (reply :: ·)
-
-def admitOnce (x : Row) (m : Mesh) : Mesh := if x ∈ m then m else x :: m
-
-theorem waitStates_step : ∀ m ∈ waitStates, admitOnce reply m ∈ waitStates := by decide
-
-theorem carriage_closed_bounded : closedOn waitStates (view w0 9) (admitOnce reply) = true := by
+/-- **(c) FINDING.** The list view is not closed even on causal states: `[beside, old]` and
+    `[old, beside]` show the joiner `[beside]` alike, and the reply sends them apart. -/
+theorem list_view_shows_arrival_order :
+    view w0 9 [beside, old] = view w0 9 [old, beside] ∧
+      view w0 9 (admit reply [beside, old]) ≠ view w0 9 (admit reply [old, beside]) := by
   decide
 
-/-- **(c) CLOSED WITH THE WAIT (bounded).** On the causal states, the joiner's next view is a
-    function of its view and the reply. -/
-theorem carriage_closed_with_wait :
-    Closed (fun s : {m // m ∈ waitStates} => view w0 9 s.val)
-      (fun s => ⟨admitOnce reply s.val, waitStates_step s.val s.property⟩) :=
-  closed_of_closedOn waitStates (view w0 9) (admitOnce reply) waitStates_step
-    carriage_closed_bounded
+/-- **THE READER'S VIEW, without order:** the rows held that reach the reader, by their own
+    audience or carried by a held row the reader is served (CC 5.2) -/
+inductive Seen (w : World) (k : Key) (m : Mesh) : Row → Prop
+  | own {x : Row} : x ∈ m → reaches w x k = true → Seen w k m x
+  | carried {x y : Row} : x ∈ m → y ∈ m → carries w y x = true → Seen w k m y → Seen w k m x
+
+/-- a causal state: every row held is the row `U` gives its id (an id is a hash of the row), and
+    what it names is held -/
+def Causal (U : RowId → Row) (m : Mesh) : Prop :=
+  (∀ x ∈ m, U x.id = x) ∧ ∀ x ∈ m, ∀ n ∈ x.names, U n ∈ m
+
+/-- the rows a row carries its audience to, through the rows of `U` -/
+inductive Anc (w : World) (U : RowId → Row) (y : Row) : Row → Prop
+  | step {n : RowId} : n ∈ y.names → carries w y (U n) = true → Anc w U y (U n)
+  | trans {z : Row} {n : RowId} : Anc w U y z → n ∈ z.names → carries w z (U n) = true →
+      Anc w U y (U n)
+
+/-- the states on which the mesh may admit `y` under the waiting rule: causal, holding what `y`
+    names, and with no held row naming `y` (a row naming `y` waits for it) -/
+def WaitState (U : RowId → Row) (y : Row) (m : Mesh) : Prop :=
+  Causal U m ∧ (∀ n ∈ y.names, U n ∈ m) ∧ ∀ z ∈ m, y.id ∉ z.names
+
+/-- how the served set moves when `y` is admitted: a function of the set and `y` alone -/
+def seenStep (w : World) (k : Key) (U : RowId → Row) (y : Row) (p : Row → Prop) : Row → Prop :=
+  fun x => p x ∨ (reaches w y k = true ∧ (x = y ∨ Anc w U y x))
+
+theorem carries_names {w : World} {y x : Row} (h : carries w y x = true) : x.id ∈ y.names := by
+  simp only [carries, Bool.and_eq_true, decide_eq_true_eq] at h
+  exact h.1.1.1
+
+theorem seen_mono {w : World} {k : Key} {m : Mesh} (y : Row) {x : Row} (h : Seen w k m x) :
+    Seen w k (y :: m) x := by
+  induction h with
+  | own hx hr => exact .own (List.mem_cons_of_mem y hx) hr
+  | carried hx hz hc _ ih =>
+    exact .carried (List.mem_cons_of_mem y hx) (List.mem_cons_of_mem y hz) hc ih
+
+theorem anc_seen {w : World} {k : Key} {U : RowId → Row} {y : Row} {m : Mesh}
+    (hm : WaitState U y m) (hy : reaches w y k = true) {x : Row} (h : Anc w U y x) :
+    x ∈ m ∧ Seen w k (y :: m) x := by
+  induction h with
+  | step hn hc =>
+    have hin := hm.2.1 _ hn
+    exact ⟨hin, .carried (List.mem_cons_of_mem y hin) (List.mem_cons_self y m) hc
+      (.own (List.mem_cons_self y m) hy)⟩
+  | trans _ hn hc ih =>
+    have hin := hm.1.2 _ ih.1 _ hn
+    exact ⟨hin, .carried (List.mem_cons_of_mem y hin) (List.mem_cons_of_mem y ih.1) hc ih.2⟩
+
+theorem seen_admit {w : World} {k : Key} {U : RowId → Row} {y : Row} {m : Mesh}
+    (hself : y.id ∉ y.names) (hm : WaitState U y m) (x : Row) :
+    Seen w k (y :: m) x ↔ seenStep w k U y (Seen w k m) x := by
+  constructor
+  · intro h
+    induction h with
+    | own hx hr =>
+      rcases List.mem_cons.mp hx with rfl | hx'
+      · exact Or.inr ⟨hr, Or.inl rfl⟩
+      · exact Or.inl (.own hx' hr)
+    | @carried x z hx hz hc _ ih =>
+      have hxid := carries_names hc
+      -- x is never `y`: `y` names not itself, and no held row names it
+      have hxm : x ∈ m := by
+        rcases List.mem_cons.mp hx with rfl | hx'
+        · rcases List.mem_cons.mp hz with rfl | hz'
+          · exact absurd hxid hself
+          · exact absurd hxid (hm.2.2 _ hz')
+        · exact hx'
+      have hUx : U x.id = x := hm.1.1 x hxm
+      rcases ih with hs | ⟨hr, hzy | hanc⟩
+      · -- z is served before: if z ∈ m, so is x; z = y with y served before
+        rcases List.mem_cons.mp hz with rfl | hz'
+        · -- z = y, and y was served from m: y ∈ m
+          have hzm : z ∈ m := by cases hs <;> assumption
+          exact Or.inl (.carried hxm hzm hc hs)
+        · exact Or.inl (.carried hxm hz' hc hs)
+      · subst hzy
+        refine Or.inr ⟨hr, Or.inr ?_⟩
+        rw [← hUx]; exact .step hxid (by rw [hUx]; exact hc)
+      · refine Or.inr ⟨hr, Or.inr ?_⟩
+        rw [← hUx]; exact .trans hanc hxid (by rw [hUx]; exact hc)
+  · intro h
+    rcases h with hs | ⟨hr, rfl | hanc⟩
+    · exact seen_mono y hs
+    · exact .own (List.mem_cons_self _ m) hr
+    · exact (anc_seen hm hr hanc).2
+
+theorem waitState_admit {U : RowId → Row} {y : Row} (hyU : U y.id = y)
+    (hself : y.id ∉ y.names) {m : Mesh} (hm : WaitState U y m) : WaitState U y (admit y m) := by
+  refine ⟨⟨?_, ?_⟩, ?_, ?_⟩
+  · intro x hx
+    rcases List.mem_cons.mp hx with rfl | hx'
+    · exact hyU
+    · exact hm.1.1 x hx'
+  · intro x hx n hn
+    rcases List.mem_cons.mp hx with rfl | hx'
+    · exact List.mem_cons_of_mem _ (hm.2.1 n hn)
+    · exact List.mem_cons_of_mem _ (hm.1.2 x hx' n hn)
+  · intro n hn; exact List.mem_cons_of_mem _ (hm.2.1 n hn)
+  · intro z hz
+    rcases List.mem_cons.mp hz with rfl | hz'
+    · exact hself
+    · exact hm.2.2 z hz'
+
+/-- **(c) CLOSED UNDER THE WAITING RULE, in general.** For every world, reader, row `y` and
+    `U` naming each id's row: on the states where `y` may be admitted (what it names is held, nothing held
+    names it), the reader's served set after admitting `y` is a function of the set before and
+    of `y`. A reply's carriage tells a joiner nothing beyond the reply and what it already held. -/
+theorem carriage_closed_under_wait (w : World) (k : Key) (U : RowId → Row) (y : Row)
+    (hyU : U y.id = y) (hself : y.id ∉ y.names) :
+    Closed (fun s : {m // WaitState U y m} => Seen w k s.val)
+      (fun s => ⟨admit y s.val, waitState_admit hyU hself s.property⟩) := by
+  refine ⟨seenStep w k U y, ?_⟩
+  funext s
+  funext x
+  exact propext (seen_admit hself s.property x)
 
 /-! ## Part 3. The private room (CC 3.1.3.2)
 
@@ -615,8 +719,8 @@ def servedLiteral (bound : Key → Bool) : Item → Bool
 def strangerViewLiteral (held : List Item) : List Item :=
   held.filter (servedLiteral (hasBinding held))
 
-/-- **FINDING (composition).** Read alone, the served-set sentence would serve a stranger the
-    occurrence an unannounced identity placed with a contact, once the identity announces. -/
+/-- **THE TWIN.** The served set without "federation-scope" (CC 5.4.6) would serve a stranger
+    the occurrence an unannounced identity placed with a contact, once the identity announces. -/
 theorem literal_reading_serves_sealed_occurrence (s n : Key) :
     Item.occurrence s false ∈ strangerViewLiteral [.fedBinding s n, .occurrence s false] := by
   simp [strangerViewLiteral, servedLiteral, servedBy, hasBinding, bindsSubject]
@@ -652,7 +756,8 @@ theorem stranger_held_private (i : Item) (hi : ∀ s, bindsSubject s i = false)
 
 /-- **(c) FINDING: NOT CLOSED UNDER A BINDING.** Coming to hold a subject's binding is not closed:
     federation-scope testimony held before the binding is served after it, so the stranger's next
-    view depends on what it could not see. -/
+    view depends on what it could not see. What a node holds at federation scope is public
+    (CC 5.2), so this discloses nothing (CC 5.4.6). -/
 theorem stranger_not_closed_binding (s n : Key) :
     ¬ Closed strangerView (hold (.fedBinding s n)) := by
   intro h
@@ -674,7 +779,8 @@ end AudienceView
 #print axioms AudienceView.party_decisions_decided
 #print axioms AudienceView.reply_carries_to_joiner
 #print axioms AudienceView.carriage_not_closed
-#print axioms AudienceView.carriage_closed_with_wait
+#print axioms AudienceView.list_view_shows_arrival_order
+#print axioms AudienceView.carriage_closed_under_wait
 #print axioms AudienceView.standing_reads_rows
 #print axioms AudienceView.member_decides_membership
 #print axioms AudienceView.member_decides_who_said
