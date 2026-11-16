@@ -65,7 +65,6 @@ OBJECTS = [
     ("object", "A signed object that is not a row, and its object id"),
     ("snapshot", "The revocation snapshot (typ `ceg-revocation-snapshot/2`)"),
     ("genesis", "The genesis bundle (typ `ceg-genesis-bundle/2`)"),
-    ("cutover", "The cutover proof"),
     ("room", "The seat commitment of a room key"),
     ("disclosure", "A disclosure of a blinded member"),
     ("logical", "Logical names with no member of their own"),
@@ -313,7 +312,7 @@ def statement(payload, sig=3373, iss=ISS, cty=CTY, rtype="scores", family="custo
 def sample_statement():
     """A counted row, an authored row, and an erasable row with a disclosure presented: schema samples."""
     digest = [-16, bytes(32)]
-    refs = {"head": [2, digest], "further_heads": sorted([[2, [-16, bytes([1]) * 32]], [1, [-16, bytes([2]) * 32]]], key=cde)}
+    refs = {"head": [2, digest], "further_heads": sorted([[2, [-16, bytes([1]) * 32]], [2, [-16, bytes([2]) * 32]]], key=cde)}
     payload = {"refs": refs, "asserted_at": 1763078400000, "score": -250000, "confidence": 1000000,
                "body": {"note": "schema sample"}}
     disclosure = cde([bytes(16), "schema sample", "note"])

@@ -3587,7 +3587,7 @@ Fold:
 
 ## 8.11 `earlier-signed-object` — The earlier signed object (JSON and JCS)
 
-**Standing of this form (normative).** This section states the earlier signed object: one JSON object, signed over its JCS image by the bound-hybrid pair of [CC 8.11.12](#8.11.12). Rows signed under this form verify as themselves for ever, and none of their bytes move. Until the ceremony row of this edition, a node that writes the earlier form conforms to this edition, and a node of the long-term-support line conforms to that line's text. After it, an object in the earlier form is accepted only in the ceremony row's past. The cutover is that past, never a log position or an instant ([CC 2.6.1.12](part_2_the_grammar.md#2.6.1.12)). The signed object every node writes after the ceremony is the one of [CC 2.6.1](part_2_the_grammar.md#2.6.1).
+**Standing of this form (informative).** This section states the earlier signed object: one JSON object, signed over its JCS image by the bound-hybrid pair of [CC 8.11.12](#8.11.12). It is the form of the earlier mesh, and no node of this edition reads it ([CC 2.6.1.12](part_2_the_grammar.md#2.6.1.12)). A node of the long-term-support line conforms to that line's text. Every node of this edition reads and writes the signed object of [CC 2.6.1](part_2_the_grammar.md#2.6.1).
 
 ### 8.11.1 `envelope-canonicalization` — Envelope canonicalization — JCS + the omit-vs-materialize rule
 
@@ -4150,8 +4150,6 @@ The transit key of [CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2) in the earlier 
   "x25519_base64":     "<base64 of exactly 32 bytes>"
 }
 ```
-
-A `transport:canonical_rebind` row of the earlier form may carry both this pair and `transit_xwing_pubkey` ([CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2)).
 
 ## 8.12 `parable` — The parable — Genesis of Ethical Agency (informative)
 

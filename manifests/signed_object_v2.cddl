@@ -3,13 +3,13 @@
 ; with CBOR Common Deterministic Encoding (draft-ietf-cbor-cde-13, updating RFC 8949). The members
 ; table of CC 2.6.1 is generated from constitution/signed_object_v2.tsv, and
 ; tools/build_cc_signed_object_v2.py checks that the table and this file name the same members.
-; The earlier JSON object is CC 8.11. The known-answer vectors are the verifier's; this file mints none.
+; The earlier JSON object is CC 8.11, read by no node of this edition. The known-answer vectors are the verifier's; this file mints none.
 ; Every constant the text of CC 2.6 fixes is pinned here, so a validator admits one encoding only.
 
 ; Every top-level rule, so a generator exercises them all.
 ceg-anything = ceg-statement / ceg-object-statement / second-consent / row-id-input / row-id
              / statement-id-input / statement-id / object-id-input / ceg-key / key-record-members
-             / revocation-snapshot / ceg-genesis-bundle / cutover-proof / seat-commitment-input
+             / revocation-snapshot / ceg-genesis-bundle / seat-commitment-input
              / hpke-info / ceg-typ
 
 ; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
@@ -88,7 +88,6 @@ attestation-envelope = {
   ? "refs": refs,                  ; EVERY row this row names, by row-ref
   ? "dimension": tstr,             ; the full scored dimension (leaf and :vN); it resolves to cty's family, refused otherwise
   ? "evidence_refs": [+ hash-digest],   ; the blobs the row cites, by content hash: a sequence, bytes never hex
-  ? "carried": hash-digest,        ; on an acknowledgement the ceremony names: the RFC 9162 root over the earlier-form names it carries
   ? "seat_commitment": hash-digest,; on a seat row of a private room: the commitment the binding opens (seat-commitment-input)
   ? "score": fixed6-score,         ; integers, never floats (see fixed6)
   ? "confidence": fixed6-unit,
@@ -141,12 +140,10 @@ row-id = hash-digest
 
 hash-digest = [ alg: -16, digest: bstr .size 32 ]   ; SHA-256 only in this edition: one name per row
 
-; A reference to a signed object of either form. Edition 2: the row id above, or the object id
-; (below) of a signed object that is not a row. The earlier form (CC 8.11): the earlier-form name,
-; SHA-256 of the message of the object's Ed25519 half (the canonical bytes both halves bind, never
-; those bytes followed by the Ed25519 signature), by a per-family rule; for a genesis bundle,
-; SHA-256 of its 32-byte authorization_digest. Never an attestation_id.
-row-ref = [ edition: 1 / 2, id: hash-digest ]
+; A reference to a signed object of this form: the row id above, or the object id (below) of a
+; signed object that is not a row. No row of this form names an object of the earlier form (CC 8.11,
+; CC 2.6.1.12), so the edition is the constant 2. Never an attestation_id.
+row-ref = [ edition: 2, id: hash-digest ]
 row-ref-set = [+ row-ref]          ; a set: sorted by the bytewise order of each element's encoding, no duplicate
 
 ; Every member that names a row. A verifier gathers the named set from `refs` alone, without knowing
@@ -163,7 +160,7 @@ refs-members = {
   ? "trusted_through": row-ref-set,; on a key revocation: the last rows of the revoked key held good
   ? "also": { + also-role => row-ref-set },   ; any other named row, under a role of the closed registry
 }
-; The also roles, closed: "ack" names an acknowledgement (a revocation snapshot's, a genesis bundle's);
+; The also roles, closed: "ack" names an acknowledgement (a revocation snapshot's);
 ; "cites" names the row a row cites, as a build attestation names its manifest contribution. Any other
 ; role is a later registration.
 also-role = "ack" / "cites"
@@ -247,27 +244,14 @@ revocation-snapshot = {
 revoked-entry = [key: kid, revocation: row-ref, trusted_through: [* row-ref]]   ; a tuple; its trusted_through a set
 
 ; The genesis bundle (typ "ceg-genesis-bundle/2"), the GenesisBundle of CC 5.3.4. The first of this
-; form is the ceremony row of CC 2.6.1.12, a signed object that is not a row. refs.prev names its
-; predecessor (for the first, the earlier-form bundle, by SHA-256 of its authorization_digest);
-; refs.also "ack" names the acknowledgement of each scope it carries over. `version` is a sequence
-; from 1, never ranked: prev's version + 1 where prev is of this form, a consistency check only.
+; form is the ceremony row of CC 2.6.1.12: a fresh genesis with no prev, a signed object that is not
+; a row. refs.prev names a later bundle's predecessor. `version` is a sequence from 1, never ranked:
+; prev's version + 1 where the bundle has a prev, a consistency check only.
 ceg-genesis-bundle = {
   ? "refs": refs,
   "version": uint,
   * tstr => ceg-value,
 }
-
-; The cutover proof: an earlier-form object is accepted iff it lies in the past of the edition's
-; ceremony row, by a chain of names; no instant and no log position is compared. links[0] is the
-; ceremony's statement bytes, named `ceremony`; each later bstr link is a statement of this form
-; named in the refs of the link before it; the last link may be the Ed25519-half message of an
-; earlier-form object, or an inclusion in a carried root. A sequence, ceremony first.
-cutover-proof = [ ceremony: row-ref, links: [+ link] ]
-link = bstr / inclusion
-; An RFC 9162 inclusion proof of a leaf CDE(row-ref) in the `carried` root of the link before it.
-; The leaves are the earlier-form names carried, sorted by their encoding and without duplicate:
-; leaf_index is a position in that set, never a log position or an instant.
-inclusion = [ "carried", tree_size: uint, leaf_index: uint, path: [* bstr .size 32] ]
 
 ; Room keys. The seat commitment of a private room: SHA-256 over the deterministic encoding of this
 ; array, carried as "seat_commitment" on the seat row and opened by the binding. `room` is the room's
@@ -282,8 +266,7 @@ hpke-info = "CEG-binding/2" / "CEG-invitation/2"
 ; Verification has three answers, returned by a verifier and never on the wire: Valid; Invalid(reason);
 ; Waiting{missing key refs}. Invalid under a held key is final. A structural fault is Invalid whatever
 ; keys are held. A statement whose key record is Waiting is Waiting, naming the deepest missing key; a
-; key record Invalid makes the statement Invalid. An earlier-form hybrid key held in part is Waiting on
-; the missing half. Waiting is never counted.
+; key record Invalid makes the statement Invalid. A key held in part is Waiting on the missing half. Waiting is never counted.
 
 ; Receipts over the provenance log and each stream's log are COSE Receipts (RFC 9942) with
 ; vds = 1 (RFC9162_SHA256); each witness issues its own receipt over the same root, with its

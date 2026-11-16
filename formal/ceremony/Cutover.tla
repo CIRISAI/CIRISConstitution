@@ -1,135 +1,116 @@
 ------------------------------ MODULE Cutover ------------------------------
-(* The edition-2 cutover where order matters (CC 2.6.1.12, CC 2.4.1.1, CC 4.2.1.1).
+(* The genesis of this edition, a clean mesh (CC 2.6.1.12, CC 2.4.1.1, CC 4.2.1.1, CC 5.3.4), where order matters.
 
-   The world signs rows in any order the rules allow: the holders' key records of this form, a user's record
-   of this form, the acknowledgement of the carried scope, an earlier-form row signed late, the ceremony row,
-   one halt (of the earlier form, fired in the window, or of this form), and the statements of its resumption.
-   Two upgraded nodes receive the signed rows in any order, one at a time; a node offline through the ceremony
-   is a node that receives the ceremony row late. Each node keeps the state an implementation keeps, updated
-   one arrival at a time: the earlier rows it accepts, the keys it holds live, its halt latch.
+   Nothing carries. The world signs, in any order the rules allow: the holders' key records of this form (one
+   delivery, "RH"), each holder's pre-signed halt of this form (sealed, "PH"), the genesis ("G", which names RH and is
+   published only once the halts are sealed), a user's record of this form after it ("Ru"), the resumption's
+   statements of this form ("R1", "R2"), and, from the earlier mesh, a late row ("L"), an earlier sealed halt ("HE") and
+   an earlier resumption statement ("R2e"). A holder may publish its sealed halt at any time after the genesis. Two
+   upgraded nodes receive the signed and published rows one at a time, in any order; one of them receives nothing
+   until the genesis is signed. Each node keeps an implementation's state, updated one arrival at a time.
 
    The truth each state is checked against is a function of the rows a node holds:
-     an earlier row counts iff the node does not hold the ceremony row, or the row is in its past (P1);
+     no earlier-form row counts for anything (P1);
      a key is live iff the node holds its record of this form (P2);
-     a resumption counts on a strict majority of holders whose statements count (P7);
-     two nodes holding the same rows agree (P9).
+     a resumption counts on a strict majority of holders whose statements of this form count (P7);
+     two nodes holding the same rows agree (P9);
+     a halt of this form is available from the first moment after the genesis, and the earlier halt never latches.
 
    Planted breaks are constants; each twin configuration turns one on and must fail on its invariant. *)
 EXTENDS Naturals, FiniteSets
 
-CONSTANTS Nodes, Late, HaltKind,  \* HaltKind: "E", one halt of the earlier form fired in the window, or "F", of this form     \* Late: the node offline through the ceremony; it receives nothing until the ceremony row is signed
-          NoRecheck,          \* P9 plant: on the ceremony row, the earlier rows already accepted are not read again
-          ByInstant,          \* P1 plant: an earlier row signed before the ceremony row in wall time counts
-          CeremonyCarries,    \* P2 plant: the ceremony row makes a key live that has no record of this form
-          EarlierAfterCut,    \* P7 plant: an earlier-form statement outside the past counts toward a resumption
-          CutWithoutRecords,  \* halt plant: the ceremony row is kept without the holders' records it names
-          CutClears,          \* halt plant: the ceremony row clears a latch whose halt it no longer honours
-          ResumeNeedsHonoured \* the text's gap: a resumption counts only for a halt the node still honours
+CONSTANTS Nodes, Late,      \* Late: a node that receives nothing until the genesis is signed
+          AcceptEarlier,    \* P1 plant: an earlier-form row is accepted
+          ArrivalEarlier,   \* P9 plant: an earlier-form row that arrives before the genesis is kept as accepted
+          CeremonyCarries,  \* P2 plant: the genesis makes a key live that has no record of this form
+          EarlierVotes,     \* P7 plant: an earlier-form statement counts toward a resumption
+          PublishUngated,   \* halt plant: the genesis is signed before the holders' halts are sealed
+          CutWithoutRecords,\* halt plant: the genesis is kept without the holders' records it names
+          EarlierHalt       \* halt plant: an earlier-form halt latches
 
 Holders == {"h1", "h2", "h3"}
 Keys    == Holders \cup {"u"}
-\* the three holders sign their key records of this form together, as one delivery ("RH"); a user's record is "Ru"
 RecOf   == [k \in Keys |-> IF k = "u" THEN "Ru" ELSE "RH"]
-HRecs   == {"RH"}
-Earlier == {"P0", "L", "HE", "R2e"}       \* P0 carried; L late; HE an earlier-form halt; R2e an earlier-form resumption statement
-Forward == HRecs \cup {"Ru", "CR", "HF", "R1", "R2"}
+Earlier == {"L", "HE", "R2e"}
+Forward == {"RH", "Ru", "G", "PH", "R1", "R2"}
 M       == Cardinality(Holders) \div 2 + 1
 
-VARIABLES signed, ack, past, beforeCR, fired, held, acc, live, latched, resumed, clearedBy, countedWith
-vars == <<signed, ack, past, beforeCR, fired, held, acc, live, latched, resumed, clearedBy, countedWith>>
+VARIABLES signed, published, held, acc, live, latched, resumed, countedWith
+vars == <<signed, published, held, acc, live, latched, resumed, countedWith>>
 
 \* ---- the door: what a node keeps of what it holds --------------------------------------------------------
-Kept(H) == H \ ( (IF HRecs \subseteq H \/ CutWithoutRecords THEN {} ELSE {"CR"})
-               \cup (IF "RH" \in H THEN {} ELSE {"HF", "R1", "R2"}) )
-Cut(H) == "CR" \in Kept(H)
+Kept(H) == (H \ Earlier) \ ( (IF "RH" \in H \/ CutWithoutRecords THEN {} ELSE {"G"})
+                             \cup (IF "RH" \in H THEN {} ELSE {"PH", "R1", "R2"}) )
+Gen(H)  == "G" \in Kept(H)
 
 \* ---- the truth, a function of the rows held ---------------------------------------------------------------
-TrueAcc(H)  == IF Cut(H) THEN Kept(H) \cap Earlier \cap past ELSE Kept(H) \cap Earlier
 TrueLive(H) == {k \in Keys : RecOf[k] \in H}
-Valid(H, A) == (IF "R1" \in Kept(H) THEN {"h1"} ELSE {}) \cup (IF "R2" \in Kept(H) THEN {"h2"} ELSE {})
-               \cup (IF "R2e" \in A THEN {"h2"} ELSE {})
-Honoured(H, A) == ("HE" \in fired /\ "HE" \in A) \/ ("HF" \in fired /\ "HF" \in Kept(H))
+Valid(H)    == (IF "R1" \in Kept(H) /\ Gen(H) THEN {"h1"} ELSE {}) \cup (IF "R2" \in Kept(H) /\ Gen(H) THEN {"h2"} ELSE {})
+Honoured(H) == "PH" \in Kept(H) /\ Gen(H)
 
-Init == /\ signed = {"P0"} /\ ack = FALSE /\ past = {} /\ beforeCR = {} /\ fired = {}
-        /\ held = [n \in Nodes |-> {"P0"}] /\ acc = [n \in Nodes |-> {"P0"}] /\ live = [n \in Nodes |-> {}]
-        /\ latched = [n \in Nodes |-> FALSE] /\ resumed = [n \in Nodes |-> FALSE]
-        /\ clearedBy = [n \in Nodes |-> "none"] /\ countedWith = [n \in Nodes |-> {}]
+Init == /\ signed = {} /\ published = {}
+        /\ held = [n \in Nodes |-> {}] /\ acc = [n \in Nodes |-> {}] /\ live = [n \in Nodes |-> {}]
+        /\ latched = [n \in Nodes |-> "none"] /\ resumed = [n \in Nodes |-> FALSE]
+        /\ countedWith = [n \in Nodes |-> {}]
 
-Quiet == UNCHANGED <<held, acc, live, latched, resumed, clearedBy, countedWith>>
+Quiet == UNCHANGED <<held, acc, live, latched, resumed, countedWith>>
+Sign(r) == /\ r \notin signed /\ signed' = signed \cup {r}
+           /\ published' = IF r = "PH" THEN published ELSE published \cup {r}   \* a pre-signed halt stays sealed
+           /\ Quiet
 
 \* ---- the world signs -----------------------------------------------------------------------------------
-SignRec(k) == /\ RecOf[k] \notin signed /\ (k \in Holders => k = "h1") /\ signed' = signed \cup {RecOf[k]}
-              /\ (k = "u" => "CR" \in signed)                \* a user carries its key over after the ceremony
-              /\ UNCHANGED <<ack, past, beforeCR, fired>> /\ Quiet
-Ack == /\ ~ack /\ ack' = TRUE /\ past' = signed \cap Earlier
-       /\ UNCHANGED <<signed, beforeCR, fired>> /\ Quiet
-SignLate == /\ ack /\ "L" \notin signed /\ signed' = signed \cup {"L"}
-            /\ UNCHANGED <<ack, past, beforeCR, fired>> /\ Quiet
-SignCR == /\ ack /\ HRecs \subseteq signed /\ "CR" \notin signed
-          /\ signed' = signed \cup {"CR"} /\ beforeCR' = signed \cap Earlier
-          /\ UNCHANGED <<ack, past, fired>> /\ Quiet
-FireEarlier == /\ HaltKind = "E" /\ fired = {} /\ ack /\ "CR" \notin signed    \* fired in the window, on a node of the earlier form
-               /\ fired' = {"HE"} /\ signed' = signed \cup {"HE"}
-               /\ UNCHANGED <<ack, past, beforeCR>> /\ Quiet
-FireForward == /\ HaltKind = "F" /\ fired = {} /\ "RH" \in signed /\ fired' = {"HF"} /\ signed' = signed \cup {"HF"}
-               /\ UNCHANGED <<ack, past, beforeCR>> /\ Quiet
-SignResume(r) == /\ fired /= {} /\ r \notin signed
-                 /\ (r \in {"R1", "R2"} => "RH" \in signed)
-                 /\ signed' = signed \cup {r}
-                 /\ UNCHANGED <<ack, past, beforeCR, fired>> /\ Quiet
+SignRH   == Sign("RH")
+SignPH   == "RH" \in signed /\ Sign("PH")
+SignG    == /\ "RH" \in signed /\ ("PH" \in signed \/ PublishUngated) /\ Sign("G")
+SignRu   == "G" \in signed /\ Sign("Ru")
+SignR(r) == /\ r \in {"R1", "R2"} /\ "G" \in signed /\ Sign(r)
+SignEarlier(r) == r \in Earlier /\ Sign(r)                                   \* the earlier mesh goes on, apart
+PublishPH == /\ "PH" \in signed /\ "G" \in signed /\ "PH" \notin published
+             /\ published' = published \cup {"PH"} /\ UNCHANGED signed /\ Quiet
 
 \* ---- a node receives one row, and updates its state as an implementation does ------------------------
-Ok(e) == e \in past \/ (ByInstant /\ e \in beforeCR)
-
 Deliver(n, r) ==
   LET H  == held[n]
       H2 == H \cup {r}
       NK == Kept(H2) \ Kept(H)
-      cut == Cut(H2)
-      old == IF "CR" \in NK /\ NoRecheck THEN acc[n] ELSE {e \in acc[n] : ~cut \/ Ok(e)}
-      A2 == old \cup {e \in NK \cap Earlier : ~cut \/ Ok(e)}
-      L2 == live[n] \cup {k \in Keys : RecOf[k] \in NK} \cup (IF CeremonyCarries /\ "CR" \in NK THEN {"u"} ELSE {})
-      hon == Honoured(H2, A2)
-      lat1 == latched[n] \/ (hon /\ ~resumed[n])
-      drop == CutClears /\ "CR" \in NK /\ lat1 /\ ~hon
-      implValid == Valid(H2, A2) \cup (IF EarlierAfterCut /\ "R2e" \in Kept(H2) THEN {"h2"} ELSE {})
-      counts == Cardinality(implValid) >= M /\ (hon \/ ~ResumeNeedsHonoured)
-      lat2 == IF drop THEN FALSE ELSE lat1
-  IN /\ r \in signed /\ r \notin H /\ (n = Late => "CR" \in signed)
+      newE == IF r \in Earlier /\ (AcceptEarlier \/ (ArrivalEarlier /\ ~Gen(H2))) THEN {r} ELSE {}
+      A2 == acc[n] \cup newE
+      L2 == live[n] \cup {k \in Keys : RecOf[k] \in NK} \cup (IF CeremonyCarries /\ "G" \in NK THEN {"u"} ELSE {})
+      halt == IF Honoured(H2) THEN "PH" ELSE IF EarlierHalt /\ "HE" \in H2 THEN "HE" ELSE "none"
+      lat1 == IF latched[n] = "none" /\ ~resumed[n] THEN halt ELSE latched[n]
+      implValid == Valid(H2) \cup (IF EarlierVotes /\ "R2e" \in H2 THEN {"h2"} ELSE {})
+      counts == lat1 /= "none" /\ Cardinality(implValid) >= M
+  IN /\ r \in published /\ r \notin H /\ (n = Late => "G" \in signed)
      /\ held' = [held EXCEPT ![n] = H2]
      /\ acc' = [acc EXCEPT ![n] = A2]
      /\ live' = [live EXCEPT ![n] = L2]
-     /\ IF counts /\ lat2
-           THEN /\ latched' = [latched EXCEPT ![n] = FALSE] /\ resumed' = [resumed EXCEPT ![n] = TRUE]
-                /\ clearedBy' = [clearedBy EXCEPT ![n] = "resume"]
-                /\ countedWith' = [countedWith EXCEPT ![n] = Valid(H2, TrueAcc(H2))]
-           ELSE /\ latched' = [latched EXCEPT ![n] = lat2] /\ UNCHANGED <<resumed, countedWith>>
-                /\ clearedBy' = [clearedBy EXCEPT ![n] = IF drop THEN "other" ELSE clearedBy[n]]
-     /\ UNCHANGED <<signed, ack, past, beforeCR, fired>>
+     /\ IF counts
+           THEN /\ latched' = [latched EXCEPT ![n] = "none"] /\ resumed' = [resumed EXCEPT ![n] = TRUE]
+                /\ countedWith' = [countedWith EXCEPT ![n] = Valid(H2)]
+           ELSE /\ latched' = [latched EXCEPT ![n] = lat1] /\ UNCHANGED <<resumed, countedWith>>
+     /\ UNCHANGED <<signed, published>>
 
-Next == \/ \E k \in Keys : SignRec(k)
-        \/ Ack \/ SignLate \/ SignCR \/ FireEarlier \/ FireForward
-        \/ \E r \in {"R1", "R2", "R2e"} : SignResume(r)
+Next == \/ SignRH \/ SignPH \/ SignG \/ SignRu \/ PublishPH
+        \/ \E r \in {"R1", "R2"} : SignR(r)
+        \/ \E r \in Earlier : SignEarlier(r)
         \/ \E n \in Nodes, r \in Earlier \cup Forward : Deliver(n, r)
 
 Spec == Init /\ [][Next]_vars
 
 \* ---- invariants --------------------------------------------------------------------------------------------
-TypeOK == /\ signed \subseteq Earlier \cup Forward /\ \A n \in Nodes : held[n] \subseteq signed
-\* P1: an earlier row counts iff the node does not hold the ceremony row, or the row is in its past
-Inv_P1 == \A n \in Nodes : acc[n] = TrueAcc(held[n])
+TypeOK == \A n \in Nodes : held[n] \subseteq published /\ published \subseteq signed
+\* P1: no earlier-form row counts for anything
+Inv_P1 == \A n \in Nodes : acc[n] = {}
 \* P2: a key is live in this form iff the node holds its record of this form
 Inv_P2 == \A n \in Nodes : live[n] = TrueLive(held[n])
-\* P7: a resumption counted at a node was counted on a strict majority of holders whose statements counted then
+\* P7: a resumption counted at a node was counted on a strict majority of holders' statements of this form
 Inv_P7 == \A n \in Nodes : resumed[n] => Cardinality(countedWith[n]) >= M
 \* P9: two nodes that hold the same rows give the same answers, whatever the order they received them in
 Inv_P9 == \A n, m \in Nodes : held[n] = held[m] => acc[n] = acc[m] /\ live[n] = live[m]
-\* the halt: a node that holds the ceremony row holds the holders' keys of this form, so a holder's halt is honoured there
-Inv_HaltPathOpen == \A n \in Nodes : Cut(held[n]) => "RH" \in held[n]
-\* the halt: a latch ends only by a counted resumption (CC 4.2.1.3)
-Inv_LatchOnlyByResume == \A n \in Nodes : clearedBy[n] /= "other"
-\* the halt: a node holding a strict majority's resumption of its latched halt is not left latched
-Inv_NoStranded == \A n \in Nodes : (latched[n] /\ Cardinality(Valid(held[n], TrueAcc(held[n]))) >= M) => FALSE
-\* a finding, not a property: a resumption counted on an earlier-form statement keeps its count
-Inv_ResumeStable == \A n \in Nodes : resumed[n] => Cardinality(Valid(held[n], TrueAcc(held[n]))) >= M
+\* the halt: from the first moment after the genesis, every holder has a sealed halt of this form
+Inv_HaltAvailable == "G" \in signed => "PH" \in signed
+\* the halt: a node that holds the genesis holds the holders' records, so a holder's halt is honoured there
+Inv_HaltPathOpen == \A n \in Nodes : Gen(held[n]) => "RH" \in held[n]
+\* the halt: no earlier-form halt ever latches a node of this form
+Inv_NoEarlierLatch == \A n \in Nodes : latched[n] /= "HE"
 =============================================================================

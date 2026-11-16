@@ -398,7 +398,7 @@ jobs:
         run: lean PolicyCorridor.lean
 
   cutover:
-    name: TLC — the edition's cutover (formal/ceremony)
+    name: TLC — the edition's genesis (formal/ceremony)
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -408,7 +408,7 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: The cutover closes; each twin fails its own invariant
+      - name: The genesis closes; each twin fails its own invariant
         run: bash formal/ceremony/run_tlc.sh "$PWD/tla2tools.jar" "$RUNNER_TEMP/cutover"
       - name: The ceremony's worlds (nine properties, every planted break caught)
         run: python3 -I formal/ceremony/check_ceremony.py

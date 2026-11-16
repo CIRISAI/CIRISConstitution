@@ -21,7 +21,6 @@ payload	attestation-envelope	"author"	attesting_key_id	payload	identity-ref	iff 
 payload	attestation-envelope	"refs"	references_attestation_id	payload	refs	iff the row names a row	2.6.1.3	Every row this row names, and the only member that names a row; never empty.
 payload	attestation-envelope	"dimension"	dimension	payload	tstr	where the family scores a dimension	2.6.1.1	The full scored dimension, leaf and version; it resolves to the family id of label -70002, and is refused otherwise.
 payload	attestation-envelope	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	where the row cites a blob	2.6.1.6 2.6.1.2	The blobs the row cites, by content hash: a sequence, bytes never hex.
-payload	attestation-envelope	"carried"	-	payload	hash-digest	on an acknowledgement of a scope the ceremony carries over	2.6.1.12	The RFC 9162 root over the earlier-form names the scope carries.
 payload	attestation-envelope	"seat_commitment"	-	payload	hash-digest	on the seat row of a room key of a private room	2.6.1.11	The commitment to the seat's person, which the binding opens.
 payload	attestation-envelope	"score"	score	payload	fixed6-score	where the family carries a score	2.6.1.5	fixed6 in [-10^6, 10^6]; an indeterminate result has none.
 payload	attestation-envelope	"confidence"	confidence	payload	fixed6-unit	where the family carries a confidence	2.6.1.5	fixed6 in [0, 10^6].
@@ -52,8 +51,8 @@ row_id	row-id-input	author	attesting_key_id	derived	identity-ref / null	always	2
 row_id	row-id-input	payload	-	derived	bstr .cbor attestation-envelope	always	2.6.1.3	The payload bytes as signed, entered as a byte string, never as the decoded map.
 row_id	hash-digest	alg	-	derived	-16	always	2.6.1.3	-16, SHA-256: one name per row.
 row_id	hash-digest	digest	-	derived	bstr .size 32	always	2.6.1.3	Thirty-two bytes.
-row_id	row-ref	edition	-	derived	1 / 2	always	2.6.1.3 2.6.1.12	2 for a signed object of this form, 1 for one of the earlier form.
-row_id	row-ref	id	attestation_id	derived	hash-digest	always	2.6.1.3 2.6.1.12	The row id or object id; for the earlier form, the SHA-256 of the message of its Ed25519 half, by a per-family rule.
+row_id	row-ref	edition	-	derived	2	always	2.6.1.3	The constant 2: a row-ref names a signed object of this form, never one of the earlier form.
+row_id	row-ref	id	attestation_id	derived	hash-digest	always	2.6.1.3	The row id, or the object id of a signed object that is not a row.
 statement_id	statement-id-input	protected	-	derived	bstr	always	2.6.1.3	The protected header bytes as signed.
 statement_id	statement-id-input	payload	-	derived	bstr	always	2.6.1.3	The payload bytes as signed; the statement id names one voice, the row id names the row.
 key	ceg-key	1	-	object	7	always	2.6.1.7	kty 7, AKP.
@@ -84,13 +83,8 @@ snapshot	revocation-snapshot	"revoked"	-	object	[* revoked-entry]	always	2.6.1.1
 snapshot	revoked-entry	key	-	object	kid	always	2.6.1.11	The revoked key's thumbprint, the same bytes as its kid.
 snapshot	revoked-entry	revocation	-	object	row-ref	always	2.6.1.11	The revocation row.
 snapshot	revoked-entry	trusted_through	-	object	[* row-ref]	always	2.6.1.11 2.6.1.2	The last rows of the revoked key held good: a set.
-genesis	ceg-genesis-bundle	"refs"	-	object	refs	on every genesis bundle that has a predecessor	2.6.1.11	prev, and under also ack the acknowledgement of each scope carried over.
-genesis	ceg-genesis-bundle	"version"	-	object	uint	always	2.6.1.11	A sequence from 1: prev's version plus one where prev is of this form, a consistency check only.
-cutover	cutover-proof	ceremony	-	object	row-ref	always	2.6.1.12	The name of the ceremony row.
-cutover	cutover-proof	links	-	object	[+ link]	always	2.6.1.12	A sequence, the ceremony's statement first, each later link named by the one before.
-cutover	inclusion	tree_size	-	object	uint	always	2.6.1.12	The size of the carried set.
-cutover	inclusion	leaf_index	-	object	uint	always	2.6.1.12	A position in the sorted carried set, never a log position or an instant.
-cutover	inclusion	path	-	object	[* bstr .size 32]	always	2.6.1.12	The RFC 9162 inclusion path.
+genesis	ceg-genesis-bundle	"refs"	-	object	refs	on every genesis bundle that has a predecessor	2.6.1.11	prev; the first bundle, the ceremony row, has none.
+genesis	ceg-genesis-bundle	"version"	-	object	uint	always	2.6.1.11	A sequence from 1: prev's version plus one where the bundle has a prev, a consistency check only.
 room	seat-commitment-input	room	-	derived	tstr	always	2.6.1.11	The room's id as its rows carry it.
 room	seat-commitment-input	room_key	-	derived	kid	always	2.6.1.11	The room key's thumbprint.
 room	seat-commitment-input	person	-	derived	identity-ref	always	2.6.1.11	The person's identity reference.
@@ -106,6 +100,6 @@ logical	-	label -70001	attestation_type	none	-	-	2.6.1.1	One of the five.
 logical	-	sub	attested_key_id	none	-	-	2.6.1.1	-
 logical	-	a member of refs	references_attestation_id	none	-	-	2.6.1.3	Under the label the family's role gives it.
 logical	-	a further statement over the same payload	additional_scrubs	none	-	-	2.6.1.9	Each voice is its own statement, found by the row id.
-logical	-	none	original_content_hash	none	-	-	2.6.1.12	An earlier-form row is named by the SHA-256 of the message of its Ed25519 half.
+logical	-	none	original_content_hash	none	-	-	2.6.1.3	The earlier form's content hash; no row of this form names an earlier-form row.
 logical	-	none	row	none	-	-	2.6.1.1	The protected header carries type, family and kid; the CWT claims carry iss and sub.
 logical	-	body.note	context	none	-	-	2.6.1.10	Bounded; no free text outside it.

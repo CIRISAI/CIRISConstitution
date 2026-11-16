@@ -379,7 +379,7 @@ An affiliation withdraws no statement about itself, whatever the statement. Its 
 
 **Who may revoke a key (normative).** Three may revoke a key, and no other. The key revokes itself. Its owner revokes it under the owner-binding ([CC 3.2](part_3_the_namespace.md#3.2)). The roster that seats it revokes it by its count: the eviction door of a self roster ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)), and for a room key the room's removal ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). A key is its owner's, so ending it without the owner is a cut, and a cut takes standing ([CC 2.7.7](#2.7.7)). A revocation signed by any other key revokes nothing.
 
-**A key's own end (normative).** A `key:record`'s `identity_type` is a set of roles ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)). A set that holds `user` or `accord_holder` together with `node` or `agent` is malformed and refused, since a key is a person's or a machine's, never both. A `key:record` whose `identity_type` contains `user` or `accord_holder` MUST NOT state `valid_until`, since no person loses their self to a clock. Any other `key:record` whose `identity_type` contains `node` or `agent` MUST state `valid_until`, unless it is a room key of a private room ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). A pseudonym's key record ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)) MAY state `valid_until` and need not, since it is neither a self nor a node or agent. A role outside both groups, such as a steward, a witness or a pipeline, takes no end rule of its own. The bound is read from the record alone. `valid_until` MUST NOT be before the record's `asserted_at`, nor more than `key_record_max_secs` after it. A record that breaks the bound, or omits or carries `valid_until` against this paragraph, is refused `key_record_out_of_window`. A statement of this form is signed by a composite key, and that key is live only by a `key:record` of this form ([CC 2.6.1.12](#2.6.1.12)). A key record of the earlier form ([CC 8.11](part_8_appendices.md#8.11)) gives its key standing only for rows in the ceremony row's past. Its holder carries the key over by signing a record of this form, so the ceremony ends no key and gives no other key a power over it. A key is live at an instant when one of its records covers that instant and the key has not revoked itself by then ([CC 2.7.5](#2.7.5)). It has ended when every one of its records has ended. No row of another key enters that reading, so no third party ends a key and no third party revives one.
+**A key's own end (normative).** A `key:record`'s `identity_type` is a set of roles ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)). A set that holds `user` or `accord_holder` together with `node` or `agent` is malformed and refused, since a key is a person's or a machine's, never both. A `key:record` whose `identity_type` contains `user` or `accord_holder` MUST NOT state `valid_until`, since no person loses their self to a clock. Any other `key:record` whose `identity_type` contains `node` or `agent` MUST state `valid_until`, unless it is a room key of a private room ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). A pseudonym's key record ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)) MAY state `valid_until` and need not, since it is neither a self nor a node or agent. A role outside both groups, such as a steward, a witness or a pipeline, takes no end rule of its own. The bound is read from the record alone. `valid_until` MUST NOT be before the record's `asserted_at`, nor more than `key_record_max_secs` after it. A record that breaks the bound, or omits or carries `valid_until` against this paragraph, is refused `key_record_out_of_window`. A statement of this form is signed by a composite key, and that key is live only by a `key:record` of this form. A key record of the earlier form ([CC 8.11](part_8_appendices.md#8.11)) gives standing to nothing ([CC 2.6.1.12](#2.6.1.12)). Each key's own holder signs its record of this form, so the genesis ends no key and gives no key a power over another. A key is live at an instant when one of its records covers that instant and no revocation by one of the three revokers above has taken effect by then ([CC 2.7.5](#2.7.5)). It has ended when every one of its records has ended. No other row enters that reading, so no third party ends a key and no third party revives one.
 
 A key renews by signing a further record that `supersedes` its own earlier record. Renewals that do not name each other all count, and the key lives to the greatest end they state. A renewal MAY be signed after the end of the record it supersedes, and it then revives the key at every node that holds it. A rotation is a record of another key that names the old key's record. It carries the old key's signature, made at an instant inside that record. A rotation hands on what the old key may hand on, and never extends the old key. Two rotations of one key, neither naming the other, hand on nothing until a rotation names both ([CC 2.7.7](#2.7.7)). An owner settles such a pair for a key it owns by revoking one. A key with no owner stays contested.
 
@@ -501,7 +501,7 @@ This rule closes the canonical-bytes ambiguity. A row carries optional members w
 
 **The hazard is structural.** Suppose a producer omits an optional member, relying on its [CC 2.1](#2.1) default, and a relay re-encodes the row with the default written in. The bytes then differ and the signature fails. So every party — producer, substrate, relay and consumer — makes one choice: preserve what the producer signed, exactly ([CC 2.6.1.2](#2.6.1.2)).
 
-**The object (normative).** A row's signed object is a CBOR payload ([RFC-8949]) in the deterministic encoding, signed with COSE ([RFC-9052]). Each voice of a row signs it as one `COSE_Sign1`. The form follows the transparency architecture of [RFC-9943], with COSE receipts ([RFC-9942]) and ML-DSA in COSE ([RFC-9964]). The statement, its encoding, its name, its members and its signature are [CC 2.6.1.1](#2.6.1.1) to [CC 2.6.1.11](#2.6.1.11). The earlier JSON object is [CC 8.11](part_8_appendices.md#8.11), and [CC 2.6.1.12](#2.6.1.12) says where it is still accepted.
+**The object (normative).** A row's signed object is a CBOR payload ([RFC-8949]) in the deterministic encoding, signed with COSE ([RFC-9052]). Each voice of a row signs it as one `COSE_Sign1`. The form follows the transparency architecture of [RFC-9943], with COSE receipts ([RFC-9942]) and ML-DSA in COSE ([RFC-9964]). The statement, its encoding, its name, its members and its signature are [CC 2.6.1.1](#2.6.1.1) to [CC 2.6.1.11](#2.6.1.11). The earlier JSON object is [CC 8.11](part_8_appendices.md#8.11), and no node of this edition reads it ([CC 2.6.1.12](#2.6.1.12)).
 
 #### 2.6.1.1 `statement` — The statement (normative)
 
@@ -535,7 +535,7 @@ The protected header is in the deterministic encoding too. It carries exactly th
 
 **Relays.** A substrate, relay or consumer that stores or forwards a statement MUST forward the octets it received. It never strips an emitted default and never writes in an omitted one. Unknown members are kept the same way ([CC 2.1.1](#2.1.1)).
 
-**Sets and sequences.** An array whose positions the schema names is a **tuple**, and its order is its definition. An array of one element type is a set or a sequence, as its definition states; where no definition says, it is a set. The sequences are the redacted-key arrays of [CC 2.6.1.10](#2.6.1.10), `evidence_refs`, a cutover proof's links and inclusion path ([CC 2.6.1.12](#2.6.1.12)), and the `aspects[]` of a `transport_destination` ([CC 4.4.3.20](part_4_composition_governance.md#4.4.3.20)). Those aspects, in order, are part of the name its destination hash is derived from ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)). A set is sorted by the bytewise order of its elements' deterministic encodings and holds no duplicate. A verifier refuses any other with `federation_set_semantics_unsorted`, naming the member, and never re-sorts it. A sequence keeps its authored order, as `evidence_refs` does.
+**Sets and sequences.** An array whose positions the schema names is a **tuple**, and its order is its definition. An array of one element type is a set or a sequence, as its definition states; where no definition says, it is a set. The sequences are the redacted-key arrays of [CC 2.6.1.10](#2.6.1.10), `evidence_refs`, and the `aspects[]` of a `transport_destination` ([CC 4.4.3.20](part_4_composition_governance.md#4.4.3.20)). Those aspects, in order, are part of the name its destination hash is derived from ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)). A set is sorted by the bytewise order of its elements' deterministic encodings and holds no duplicate. A verifier refuses any other with `federation_set_semantics_unsorted`, naming the member, and never re-sorts it. A sequence keeps its authored order, as `evidence_refs` does.
 
 **Bytes and text.** A byte member is a CBOR byte string; hex and base64 do not stand in the payload for bytes. `subject_key_ids` is the one two-form member. An element naming a registered key carries that key's identity reference ([CC 2.6.1.1](#2.6.1.1)). An element naming a canonical-hash subject, as an un-enrolled subject is named, is the tagged text `canonical:{hashalg}:{hex}` that [CC 2.3.2.1](#2.3.2.1) requires. An implementer who strips the tag produces other bytes and a signature that silently fails.
 
@@ -553,9 +553,9 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 
 **The author.** A family is authored or counted, as its family model states ([CC 3.1](part_3_the_namespace.md#3.1)). Its `authorship` cell says which, and its `second_signers` cell names each role below with the payload member that names its party. An authored family's payload carries `author`, the `iss` of the one who authors the row, and the row id reads it from the payload. A counted family's author is null. A statement whose `iss` is not the payload's `author` is accepted only in a role its family names, such as a delegate or a bound node. Its `iss` MUST then be the party that role names in the payload, or the CWT `sub` where that party is the attested key, as a delegate is. Any other `iss` is Invalid ([CC 2.6.1.8](#2.6.1.8)).
 
-**What a row names.** Every row a row names stands in one payload member, `refs`, by row id. That covers the head a count is over (`head`, and `further_heads`), a predecessor (`prev`), the target of a withdrawal or a supersession, and every other row the row cites, such as `also` and `trusted_through`. A holder reads the named set from `refs` alone, without knowing the family. The roles of `also` are a closed registry of two. `ack` names an acknowledgement, as a revocation snapshot and a genesis bundle do ([CC 2.6.1.11](#2.6.1.11)). `cites` names a row the row cites, as a build attestation names its manifest contribution ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)). Any other role is a later registration. Every array inside `refs` is a set ([CC 2.6.1.2](#2.6.1.2)) and is refused otherwise. An empty `refs` is refused: absence is its one encoding.
+**What a row names.** Every row a row names stands in one payload member, `refs`, by row id. That covers the head a count is over (`head`, and `further_heads`), a predecessor (`prev`), the target of a withdrawal or a supersession, and every other row the row cites, such as `also` and `trusted_through`. A holder reads the named set from `refs` alone, without knowing the family. The roles of `also` are a closed registry of two. `ack` names an acknowledgement, as a revocation snapshot does ([CC 2.6.1.11](#2.6.1.11)). `cites` names a row the row cites, as a build attestation names its manifest contribution ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)). Any other role is a later registration. Every array inside `refs` is a set ([CC 2.6.1.2](#2.6.1.2)) and is refused otherwise. An empty `refs` is refused: absence is its one encoding.
 
-**Naming a row of the earlier form.** A row names an earlier-form object by the SHA-256 of the message of its Ed25519 half. That message is the canonical bytes both halves bind, never those bytes followed by the Ed25519 signature ([CC 8.11.12](part_8_appendices.md#8.11.12)). A rule per family says which bytes those are. A build-manifest contribution's are its envelope's canonical bytes, so its name is the earlier form's `original_content_hash`. A key record's are its `registration_envelope`'s, so every signature over one record gives one name. An accord invocation's include its domain prefix. The holders of a genesis bundle sign its 32-byte `authorization_digest`, so its name is the SHA-256 of that digest, never its `bundle_fingerprint` ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). `original_content_hash` is not a member of this form ([CC 8.11](part_8_appendices.md#8.11)).
+**No row names the earlier form.** A `row-ref` names a signed object of this form, and no row of this form names an object of the earlier form ([CC 2.6.1.12](#2.6.1.12)). `original_content_hash` is not a member of this form ([CC 8.11](part_8_appendices.md#8.11)).
 
 #### 2.6.1.4 `signed-object-members` — Members, placement and types (normative)
 
@@ -613,7 +613,6 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `references_attestation_id` | `"refs"` | payload | `refs` | iff the row names a row | [2.6.1.3](#2.6.1.3) | Every row this row names, and the only member that names a row; never empty. |
 | `dimension` | `"dimension"` | payload | `tstr` | where the family scores a dimension | [2.6.1.1](#2.6.1.1) | The full scored dimension, leaf and version; it resolves to the family id of label -70002, and is refused otherwise. |
 | `evidence_refs` | `"evidence_refs"` | payload | `[+ hash-digest]` | where the row cites a blob | [2.6.1.6](#2.6.1.6) [2.6.1.2](#2.6.1.2) | The blobs the row cites, by content hash: a sequence, bytes never hex. |
-| — | `"carried"` | payload | `hash-digest` | on an acknowledgement of a scope the ceremony carries over | [2.6.1.12](#2.6.1.12) | The RFC 9162 root over the earlier-form names the scope carries. |
 | — | `"seat_commitment"` | payload | `hash-digest` | on the seat row of a room key of a private room | [2.6.1.11](#2.6.1.11) | The commitment to the seat's person, which the binding opens. |
 | `score` | `"score"` | payload | `fixed6-score` | where the family carries a score | [2.6.1.5](#2.6.1.5) | fixed6 in [-10^6, 10^6]; an indeterminate result has none. |
 | `confidence` | `"confidence"` | payload | `fixed6-unit` | where the family carries a confidence | [2.6.1.5](#2.6.1.5) | fixed6 in [0, 10^6]. |
@@ -654,8 +653,8 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `payload` | derived | `bstr .cbor attestation-envelope` | always | [2.6.1.3](#2.6.1.3) | The payload bytes as signed, entered as a byte string, never as the decoded map. |
 | — | `alg` | derived | `-16` | always | [2.6.1.3](#2.6.1.3) | -16, SHA-256: one name per row. |
 | — | `digest` | derived | `bstr .size 32` | always | [2.6.1.3](#2.6.1.3) | Thirty-two bytes. |
-| — | `edition` | derived | `1 / 2` | always | [2.6.1.3](#2.6.1.3) [2.6.1.12](#2.6.1.12) | 2 for a signed object of this form, 1 for one of the earlier form. |
-| `attestation_id` | `id` | derived | `hash-digest` | always | [2.6.1.3](#2.6.1.3) [2.6.1.12](#2.6.1.12) | The row id or object id; for the earlier form, the SHA-256 of the message of its Ed25519 half, by a per-family rule. |
+| — | `edition` | derived | `2` | always | [2.6.1.3](#2.6.1.3) | The constant 2: a row-ref names a signed object of this form, never one of the earlier form. |
+| `attestation_id` | `id` | derived | `hash-digest` | always | [2.6.1.3](#2.6.1.3) | The row id, or the object id of a signed object that is not a row. |
 
 **The statement id**
 
@@ -716,18 +715,8 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
-| — | `"refs"` | object | `refs` | on every genesis bundle that has a predecessor | [2.6.1.11](#2.6.1.11) | prev, and under also ack the acknowledgement of each scope carried over. |
-| — | `"version"` | object | `uint` | always | [2.6.1.11](#2.6.1.11) | A sequence from 1: prev's version plus one where prev is of this form, a consistency check only. |
-
-**The cutover proof**
-
-| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
-|---|---|---|---|---|---|---|
-| — | `ceremony` | object | `row-ref` | always | [2.6.1.12](#2.6.1.12) | The name of the ceremony row. |
-| — | `links` | object | `[+ link]` | always | [2.6.1.12](#2.6.1.12) | A sequence, the ceremony's statement first, each later link named by the one before. |
-| — | `tree_size` | object | `uint` | always | [2.6.1.12](#2.6.1.12) | The size of the carried set. |
-| — | `leaf_index` | object | `uint` | always | [2.6.1.12](#2.6.1.12) | A position in the sorted carried set, never a log position or an instant. |
-| — | `path` | object | `[* bstr .size 32]` | always | [2.6.1.12](#2.6.1.12) | The RFC 9162 inclusion path. |
+| — | `"refs"` | object | `refs` | on every genesis bundle that has a predecessor | [2.6.1.11](#2.6.1.11) | prev; the first bundle, the ceremony row, has none. |
+| — | `"version"` | object | `uint` | always | [2.6.1.11](#2.6.1.11) | A sequence from 1: prev's version plus one where the bundle has a prev, a consistency check only. |
 
 **The seat commitment of a room key**
 
@@ -758,7 +747,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `attested_key_id` | sub | none | — | - | [2.6.1.1](#2.6.1.1) | — |
 | `references_attestation_id` | a member of refs | none | — | - | [2.6.1.3](#2.6.1.3) | Under the label the family's role gives it. |
 | `additional_scrubs` | a further statement over the same payload | none | — | - | [2.6.1.9](#2.6.1.9) | Each voice is its own statement, found by the row id. |
-| `original_content_hash` | none | none | — | - | [2.6.1.12](#2.6.1.12) | An earlier-form row is named by the SHA-256 of the message of its Ed25519 half. |
+| `original_content_hash` | none | none | — | - | [2.6.1.3](#2.6.1.3) | The earlier form's content hash; no row of this form names an earlier-form row. |
 | `row` | none | none | — | - | [2.6.1.1](#2.6.1.1) | The protected header carries type, family and kid; the CWT claims carry iss and sub. |
 | `context` | body.note | none | — | - | [2.6.1.10](#2.6.1.10) | Bounded; no free text outside it. |
 
@@ -788,9 +777,9 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | the row's signature halves and `scrub_signature_classical`, `scrub_signature_pqc` | the statement's `signature`, one composite signature ([CC 2.6.1.7](#2.6.1.7)) |
 | `pubkey_ed25519_base64`, `pubkey_ml_dsa_65_base64` | the composite key's `pub` (COSE key label -1), one byte string ([CC 2.6.1.7](#2.6.1.7)) |
 | `key_id` | the composite key's thumbprint ([CC 2.6.1.7](#2.6.1.7), [CC 2.6.8](#2.6.8)) |
-| `original_content_hash` | none: the row id commits to the payload, and an earlier-form row is named as [CC 2.6.1.3](#2.6.1.3) states |
+| `original_content_hash` | none: the row id commits to the payload, and no row names an earlier-form row ([CC 2.6.1.3](#2.6.1.3)) |
 | `attestation_envelope` | the payload ([CC 2.6.1.2](#2.6.1.2)); the earlier form's object is [CC 8.11.9](part_8_appendices.md#8.11.9) |
-| `registration_envelope` | none: a key record is the payload of a `key:record` row ([CC 2.6.1.7](#2.6.1.7)); an earlier-form record is named through it as [CC 2.6.1.3](#2.6.1.3) states |
+| `registration_envelope` | none: a key record is the payload of a `key:record` row ([CC 2.6.1.7](#2.6.1.7)) |
 
 #### 2.6.1.5 `numbers` — Numbers (normative)
 
@@ -812,7 +801,7 @@ Above the cap the row carries the manifest, not the bytes. The payload moves to 
 
 A statement's signature is the composite ML-DSA-65 with Ed25519 of [composite-sig], exactly, at the revision [CC 2.6.5](#2.6.5) pins. Both halves sign one message representative: the prefix `CompositeAlgorithmSignatures2025`, the label `COMPSIG-MLDSA65-Ed25519-SHA512`, a zero byte for the empty context, and the SHA-512 of the message. ML-DSA-65 signs it with the label bytes as its FIPS 204 context string, never the empty one, and Ed25519 signs it as it is. The representative binds both halves, so neither half verifies alone. Its encoding is the ML-DSA-65 signature followed by the Ed25519 signature, 3373 bytes. Its algorithm identifier is `-70100`, private-use until one is assigned; only the identifier changes then. ML-DSA-65 alone is COSE algorithm -49 ([RFC-9964]).
 
-A key is one composite COSE key of key type AKP (kty 7). Its `pub` is the ML-DSA-65 public key followed by the Ed25519 public key, 1984 bytes. Its `kid` is its 32-byte thumbprint ([RFC-9679]) under the composite's identifier, fixed for the key's life. A key's displayed identity, its `key_id` and its FedCode, is that thumbprint from the ceremony row of this edition ([CC 2.6.8](#2.6.8)). FedCode v1 to v3 still decode the keys from before it.
+A key is one composite COSE key of key type AKP (kty 7). Its `pub` is the ML-DSA-65 public key followed by the Ed25519 public key, 1984 bytes. Its `kid` is its 32-byte thumbprint ([RFC-9679]) under the composite's identifier, fixed for the key's life. A key's displayed identity, its `key_id` and its FedCode, is that thumbprint ([CC 2.6.8](#2.6.8)). FedCode v1 to v3 belong to the earlier mesh.
 
 `iss` is the identity reference of the signer's genesis key ([CC 2.6.1.1](#2.6.1.1)), so the issuer stays the same when the signing key rotates. A key record is a row of the family `key:record` ([CC 2.4.1.1](#2.4.1.1)), renewed by a `supersedes` and named by a rotation. Its payload carries `key`, `identity_type`, `asserted_at` and, where its end rule requires, `valid_until`, with `exp` derived from it.
 
@@ -824,7 +813,7 @@ Verifying a statement gives one of three answers: **Valid**, **Invalid** with a 
 
 - A bad signature under a held key is Invalid, and that answer is final. A structural fault is Invalid whatever keys are held.
 - A statement whose key record is Waiting is Waiting, naming the deepest missing key. A statement whose key record is Invalid is Invalid.
-- An earlier-form hybrid key held in part, its Ed25519 key held and its ML-DSA-65 key known only by its FedCode commitment, is Waiting on the missing half. A key never verifies on one half.
+- A key held in part, one half held and the other known only by a commitment to it, is Waiting on the missing half. A key never verifies on one half.
 - Waiting never becomes Valid by default and is never counted. A waiting statement is held inert until the key it names is held ([CC 2.7.2](#2.7.2)).
 
 ```
@@ -857,7 +846,7 @@ A failure at steps 1 to 5, 7 or 8 is Invalid. Step 6 alone answers Waiting.
 
 A counted row is several statements over one payload, one for each voice, found by the row id. The head the row is counted over stands in `refs.head`, inside what every voice signs. Further tips stand in `refs.further_heads`, a set. One acknowledgement names one head. A fold counts the statements by person, as it counts votes ([CC 4.5.13](part_4_composition_governance.md#4.5.13)).
 
-The second consent of a scoped `delegates_to` ([CC 2.4.1.2](#2.4.1.2)) is a second statement over the same payload, signed by the delegate, the row's `sub`. From the first row of this form, a scoped delegation seats only with that statement. A delegation of the earlier form keeps its standing.
+The second consent of a scoped `delegates_to` ([CC 2.4.1.2](#2.4.1.2)) is a second statement over the same payload, signed by the delegate, the row's `sub`. A scoped delegation seats only with that statement.
 
 #### 2.6.1.10 `erasable` — Erasability and the redaction constraints (normative)
 
@@ -882,7 +871,7 @@ The second consent of a scoped `delegates_to` ([CC 2.4.1.2](#2.4.1.2)) is a seco
 
 **The object id.** A signed object that is not a row is named by its object id: SHA-256 over the deterministic encoding of `["CEG-object/2", typ, author, payload]`, written as a row id is ([CC 2.6.1.3](#2.6.1.3)). `author` is the payload's `author`, or null where it has none. A `row-ref` of this form names the object by that digest. Like a row id, it is the same for every voice of a counted object.
 
-**The genesis bundle** ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)) carries its predecessor as `prev` in `refs`. Under the `also` role `ack` it names the acknowledgement of each scope it carries over ([CC 2.6.1.12](#2.6.1.12)). Its `version` is a sequence from 1 and is never ranked. Where `prev` is of this form, `version` is one greater than prev's, checked as a consistency check. The first bundle of this form has `version` 1, and its `prev` names the earlier-form bundle ([CC 2.6.1.3](#2.6.1.3)). This first bundle is the ceremony row of [CC 2.6.1.12](#2.6.1.12): a signed object, not a row. A verifier follows `prev` to the head and reports a fork as a fork. With no state of its own it holds the tips, waiting.
+**The genesis bundle** ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)) carries its predecessor as `prev` in `refs`. Its `version` is a sequence from 1 and is never ranked. Where a bundle has a `prev`, its `version` is one greater than prev's, checked as a consistency check. The first bundle of this form has `version` 1 and no `prev`: it is a fresh genesis, the ceremony row of [CC 2.6.1.12](#2.6.1.12), and a signed object, not a row. A verifier follows `prev` to the head and reports a fork as a fork. With no state of its own it holds the tips, waiting. Two first bundles are a fork of the genesis: a reader that holds the pin of one holds the other void, and a reader with neither holds both as tips ([CC 2.7.8](#2.7.8)).
 
 **The revocation snapshot** is a set of revoked keys, with no winner across issuers, and it carries no instant. Its payload names its signer as `author`, so its object id is one signer's. Each snapshot carries `seq`, an unsigned integer greater than its predecessor's, beside `refs.prev`, so one signer orders its own snapshots. Under the `also` role `ack` it names its acknowledgement of the head of the revocation scope. Each revoked entry is a tuple: the revoked key's thumbprint, its revocation and the rows it held good. The snapshot names its `refs` and, in each entry, the revocation and the rows held good. A snapshot whose `seq` is not greater is refused. Two snapshots of one signer with one `seq` and different content are contested, and neither counts.
 
@@ -896,23 +885,13 @@ There is no transparency service and no registrar, since a trust decides what a 
 
 #### 2.6.1.12 `earlier-form` — The earlier form and the cutover (normative)
 
-The earlier signed object is [CC 8.11](part_8_appendices.md#8.11): a JSON object signed over its JCS image. Every row signed under it verifies as itself for ever, and none of its bytes move. The ceremony of this edition re-signs the genesis once ([CC 2.6.4](#2.6.4)), and its row is the **ceremony row**.
+The earlier signed object is [CC 8.11](part_8_appendices.md#8.11): a JSON object signed over its JCS image, the form of the earlier mesh. This edition begins a new mesh with a fresh genesis of this form ([CC 2.6.4](#2.6.4)), signed by every holder ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)), and its genesis bundle is the **ceremony row**.
 
-Until the ceremony row of this edition, a node that writes the earlier form conforms to this edition, and a node of the long-term-support line conforms to that line's text. After it, an object in the earlier form is accepted only in the ceremony row's past. Key records are carried over by their holders, each signing a `key:record` of this form ([CC 2.4.1.1](#2.4.1.1)), never by the ceremony.
+Nothing of the earlier mesh comes across. No row of this form names an object of the earlier form, and no object of the earlier form gives standing to anything in this mesh. Every key record, binding, roster, edge, consent, grant, recovery commitment and pre-signed halt is signed anew in this form ([CC 2.4.1.1](#2.4.1.1), [CC 5.3.4](part_5_transport_substrate.md#5.3.4)). A node of the long-term-support line conforms to that line's text.
 
-The cutover is the causal past of the ceremony row: the rows it names, and the rows they name, by a chain of names. It is never a log position and never an instant a signer chose ([CC 2.7.2](#2.7.2)). An object outside that past cannot be told from a downgrade, so the earlier form is never offered in place of this one. Receipts and custody acknowledgements signed by others keep their earlier form, under the same rule.
+A node of this form reads and writes this form only. It refuses an object of the earlier form, so the earlier form is never offered in place of this one and no downgrade is possible. The earlier mesh and this one share no rows, and a node that has not upgraded stays in the earlier mesh.
 
-A node of this form reads both objects and writes this one. A verifier that cannot reach the rows of the ceremony's past accepts this form only.
-
-**The cutover proof.** Each scope the ceremony carries over is acknowledged by a row the ceremony names, whose family is an open encoding (below). That acknowledgement carries `carried`: the [RFC-9162] root over the earlier-form names of the scope, each leaf the deterministic encoding of a `row-ref`, sorted and without duplicate. A node that lacks part of the store is shown an object's place in the ceremony's past by a cutover proof: the ceremony's name and a sequence of links.
-
-- The first link is the ceremony's statement bytes, and its name MUST equal the ceremony's.
-- Each later link is a statement of this form named in the `refs` of the link before it.
-- The last link may be the Ed25519-half message of an earlier-form object named by the link before it, or an inclusion of its name in that link's `carried` root.
-
-An earlier-form object names nothing by digest, so a chain enters the earlier form only at its last hop. A verifier recomputes each name and verifies each signature, and a link under a key it does not hold is Waiting, never Valid. A leaf's index is a position in a sorted set, never a log position or an instant. A node holding the store reads the past itself and needs no proof.
-
-The known-answer vectors of this object are the verifier's: the row id, the earlier-form name of each family, the refusals of non-deterministic encodings, the order of the sets in `refs`, a counted row as several statements, and the three answers.
+The known-answer vectors of this object are the verifier's: the row id, the refusals of non-deterministic encodings, the order of the sets in `refs`, a counted row as several statements, and the three answers.
 
 The verifier publishes seven files of them ([edition-2-vectors]). The composite signature's is checked against the examples of [composite-sig]. The row statements hold five valid statements and 40 refusals, with 17 key records, the custody cases of [CC 4.2.2.1](part_4_composition_governance.md#4.2.2.1) among them, references and earlier-form names. The substrate file holds one composite signature for each preimage. The recovery file holds the five refusals of an accord holder's recovery ([CC 4.2.6](part_4_composition_governance.md#4.2.6)). The stream key binding file holds its two bindings ([CC 5.3.3.5](part_5_transport_substrate.md#5.3.3.5)). The link handshake file holds three handshakes, one promotion, two framing cases and 38 refusals ([CC 5.3.3.10](part_5_transport_substrate.md#5.3.3.10)). The link seal file holds 25 scripted receiver sequences of the per-frame seal ([CC 5.3.3.10](part_5_transport_substrate.md#5.3.3.10)). The vectors of the other signed objects, the genesis bundle and the revocation snapshot among them, are still the verifier's to publish.
 
@@ -925,7 +904,6 @@ The verifier publishes seven files of them ([edition-2-vectors]). The composite 
 | The family of the agent text manifest statement | [CC 2.6.1.11](#2.6.1.11), [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | agent |
 | The member that carries a seat commitment's `room` | [CC 2.6.1.11](#2.6.1.11) | edge |
 | The derivation label of a room binding's seed | [CC 2.6.1.11](#2.6.1.11) | store |
-| The family of a carried scope's acknowledgement | [CC 2.6.1.12](#2.6.1.12) | verifier |
 | The signing bytes of a skill import manifest | [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | agent |
 | A locale manifest's leaf | [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | agent |
 | The preimage of a steward purge's selection digest | [CC 3.3.2](part_3_the_namespace.md#3.3.2) | store |
@@ -955,7 +933,7 @@ CEG follows **SemVer 2.0.0** with these mapping rules:
 - **MINOR (0.X.0)** — wire-compatible additions: new prefix in [CC 3.1](part_3_the_namespace.md#3.1), new envelope field with documented default, new composition policy in [CC 4.4](part_4_composition_governance.md#4.4), new endpoint shape in [CC 5.3](part_5_transport_substrate.md#5.3), new optional conformance subsection. Existing Conforming Producers and Consumers continue to interoperate without modification.
 - **PATCH (0.0.X)** — clarifications, editorial fixes, additions to non-normative sections (open-vocabulary lists, glossaries [CC 8.1](part_8_appendices.md#8.1)), addition to [CC 8.3](part_8_appendices.md#8.3) acknowledged-gaps, fixes to non-normative examples in [CC 8.1](part_8_appendices.md#8.1).
 
-The wire surface is frozen at 1.0. Until 1.0 is cut this document is a release candidate. A release candidate ordinarily adds, clarifies and corrects under the MINOR and PATCH rules above and moves no signed byte. Where a candidate must move signed bytes before 1.0, it says so in its own text, keeps every row signed under the earlier form verifying as itself, and re-signs the genesis once. The CBOR and COSE signed object of [CC 2.6.1](#2.6.1) is such a move, and the earlier form is [CC 8.11](part_8_appendices.md#8.11). The MAJOR rule binds from 1.0: a MINOR may add an optional member, and a row signed before the addition verifies unchanged. From 1.0, a change that would alter the signed bytes of any conforming row is a new MAJOR, announced as such.
+The wire surface is frozen at 1.0. Until 1.0 is cut this document is a release candidate. A release candidate ordinarily adds, clarifies and corrects under the MINOR and PATCH rules above and moves no signed byte. Where a candidate must move signed bytes before 1.0, it says so in its own text, and begins a new mesh with a fresh genesis of the new form, in which nothing of the earlier one counts. The CBOR and COSE signed object of [CC 2.6.1](#2.6.1) is such a move, and the earlier form is [CC 8.11](part_8_appendices.md#8.11). The MAJOR rule binds from 1.0: a MINOR may add an optional member, and a row signed before the addition verifies unchanged. From 1.0, a change that would alter the signed bytes of any conforming row is a new MAJOR, announced as such.
 
 A **removal notice** is given by marking the affected element as scheduled for removal, naming the version that gives notice and a removal target (e.g., `removal: 2.0`). An element under notice MUST remain interoperable until the announced removal version. Removal is a MAJOR change per the rules above.
 
@@ -1075,7 +1053,7 @@ This entry says which clock every stated instant refers to, and how far that ins
 
 This entry sets the short code that stands for a federation identity, and the format of the `key_id` that the code renders. It gives the code's kinds, how a code resolves to nodes, the wire format, five constraints, the commitment to the PQC half of the key, and how a node given its owner's code comes to be owned.
 
-**The earlier form.** The `key_id` format below and FedCode v1 to v3 are the earlier form: they render and decode the keys from before the ceremony row ([CC 2.6.1.12](#2.6.1.12)). From that row a key's displayed identity is the composite key's thumbprint ([CC 2.6.1.7](#2.6.1.7)). The FedCode layout over the thumbprint is an open encoding, the verifier's ([CC 2.6.1.12](#2.6.1.12)).
+**The earlier form.** The `key_id` format below and FedCode v1 to v3 are the earlier form: they render and decode the keys of the earlier mesh ([CC 2.6.1.12](#2.6.1.12)). In this mesh a key's displayed identity is the composite key's thumbprint ([CC 2.6.1.7](#2.6.1.7)). The FedCode layout over the thumbprint is an open encoding, the verifier's ([CC 2.6.1.12](#2.6.1.12)).
 
 Federation `key_id`s are long opaque identifiers, unfit for a human to type or read aloud. **FedCode** is the **one** human-shareable shorthand: a compact, QR-able, checksummed render of a federation entity's identity for **bootstrap UX**. It is pinned here so **every implementation renders and parses the same code for the same key**. That is a cross-impl determinism requirement of the same class as [CC 2.6.3](#2.6.3) hex / [CC 2.6.1.2](#2.6.1.2) deterministic encoding. FedCode is a deterministic render of an existing `key_id`, **not** a new envelope field. It is additive on the frozen 1+4 surface. The `kind` byte is a payload discriminator of the same discipline as `subject_kind` riding the single `scores` shape ([CC 3.3.2](part_3_the_namespace.md#3.3.2)). Resolution is **DNS-free**. The reference implementation is the verifier; every other component decodes through it.
 
