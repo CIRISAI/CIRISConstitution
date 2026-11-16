@@ -124,9 +124,9 @@ canonical = sha256(
   "invocation_kind=" || ("constitutional" | "notify" | "drill") || "\n" ||
   "invocation_id=" || halt_id_or_notify_id_or_drill_id || "\n" ||
   "nonce=" || base64url(rand_32_bytes) || "\n" ||
-  "asserted_at=" || rfc3339_canonical || "\n" || // per CC 8.11.10
+  "asserted_at=" || rfc3339_canonical || "\n" || // per CC 2.6.3
   "valid_until=" || rfc3339_canonical || "\n" ||
-  "payload_sha256=" || sha256_hex_lowercase_of_payload // per CC 8.11.11)
+  "payload_sha256=" || sha256_hex_lowercase_of_payload // per CC 2.6.3)
 ```
 
 The signature is the composite signature of [CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7) over `canonical`. **A `constitutional` halt is one holder's signature**: a consumer verifies ONE holder's signature over `canonical` against the pinned roster and halts.
@@ -178,9 +178,9 @@ canonical = sha256(
   "invocation_id=" || resumption_id || "\n" ||
   "resumes_halt_id=" || prior_constitutional_invocation_id || "\n" ||
   "nonce=" || base64url(rand_32_bytes) || "\n" ||
-  "asserted_at=" || rfc3339_canonical || "\n" ||        // per CC 8.11.10
+  "asserted_at=" || rfc3339_canonical || "\n" ||        // per CC 2.6.3
   "valid_until=" || rfc3339_canonical || "\n" ||
-  "payload_sha256=" || sha256_hex_lowercase_of_payload) // per CC 8.11.11
+  "payload_sha256=" || sha256_hex_lowercase_of_payload) // per CC 2.6.3
 ```
 
 **`resumes_halt_id` is mandatory and binds the resumption to the one halt it ends.** A resumption authorizes ending a *single named* `constitutional` halt, not resumption-in-general. So a stockpiled or replayed `lifecycle:active` cannot silently un-halt a *later*, unrelated kill. The signature is worthless against any halt but the one it names. The substrate MUST NOT count a `lifecycle:active` whose `resumes_halt_id` does not match the currently-active CONSTITUTIONAL halt, and MUST reject a duplicate `invocation_id` within the `valid_until` window. A resumption proof is verifiable **offline** against the node's own pinned roster and MAY be presented by any out-of-band means. The halt latch clears on local verification and does not require replication reach. The proof binds to the pinned roster, so no replication reach is needed. A halted agent is not acting while its node goes on serving and replicating, and recoverability is a local act, which is what makes the false-fire-is-recoverable argument checkable. A **confirmed** halt carries no TTL: expiry would convert the brake into a wait-out for the halted party, and its one exit is the named resumption above ([CC 4.2.1.1](#4.2.1.1)).

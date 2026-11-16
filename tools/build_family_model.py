@@ -28,7 +28,8 @@ CELL_CITES = os.path.join(ROOT, "formal/derivation/cell_cites.tsv")
 FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
 FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
 COUNT_SOURCES = ("subject_group", "signer_group", "dimension_authority", "accord", "trust_root", "self", "conferrer")
-COUNT_KEYS = ("leaf", "verb", "identity", "group", "seats")
+COUNT_KEYS = ("leaf", "verb", "identity", "group", "seats", "act")
+COUNT_ARM_KEYS = COUNT_KEYS[:5]   # a count arm reads no `act`: its KX (tools/kx_translate.py) has no such key
 COUNT_OPEN_MAX = 4   # families with a cosign cell that is not none and no typed count; the number only falls
 REG = os.path.join(ROOT, "manifests/namespace_registry.json")
 OUT = os.path.join(ROOT, "manifests/family_model.json")
@@ -59,7 +60,7 @@ COLUMNS = OrderedDict([
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
     ("count", "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)"),
-    ("authorship", "authored | counted | arms `selector => authored|counted` joined by ` ; `, on the count column's selector keys, the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)"),
+    ("authorship", "authored | counted | arms `selector => authored|counted` joined by ` ; `, on the count column's selector keys and `act` (group: the row is signed as the act of a roster under its consensus_protocol, by several statements over one payload, CC 2.6.1.9; own: one signer's own row; caller-supplied), the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)"),
     ("second_signers", "[{role, member, when?, cc_ref}]: each role besides the author whose statement over the same payload the row accepts; member is the payload member that names the party, `sub` where the party is the attested key, `owner_of_sub` where it is the owner the owner-binding of the attested key names, or `gap` where the text names none; [] means only the author signs (formal/derivation/authorship_text.tsv)"),
     ("derived", "projection_id | none (the row must equal the named projection's rebuild; formal/derivation/confers_text.tsv)"),
     ("read_by", "the named answers that read the family's rows (state, stands, tally, may, audience, missing, owed, window), from the KX of its rule cells (tools/kx_translate.py over tools/kx_prelude.kx); `by` names each cell. A family with no cell of its own takes the default reading (state, stands) of the default fold and change: rule default, stated once and checked for none of the families it covers"),
@@ -538,9 +539,10 @@ def conferral_columns(fams, reg):
 
 AUTHORSHIP_TEXT = os.path.join(ROOT, "formal/derivation/authorship_text.tsv")
 AUTHORSHIP_VALUES = ("authored", "counted", "gap")
-AUTHORSHIP_GAP_MAX = 3   # families whose authorship the text gives both ways with no selector to tell them; the number only falls
+AUTHORSHIP_GAP_MAX = 1   # families whose authorship the text gives both ways with no selector to tell them; the number only falls
 SECOND_SIGNERS_GAP_MAX = 5   # roles whose payload member the text does not name; the number only falls
 SELECTOR_VALUE = r"[a-z_:{}]+(?:\|[a-z_:{}]+)*"
+ACT_VALUES = ("group", "own")   # the `act` key: the act of a roster under its consensus_protocol (CC 2.6.1.9), or one signer's own row
 
 
 def authorship_cells(stmts, rows, members, span=None):
@@ -563,6 +565,7 @@ def authorship_cells(stmts, rows, members, span=None):
             for t in sel.split(" & "):
                 mt = re.fullmatch(r"([a-z]+)=(%s)" % SELECTOR_VALUE, t)
                 if not mt or mt.group(1) not in COUNT_KEYS: errs.append(f"{where}: {t!r} is not a test on one of {', '.join(COUNT_KEYS)}")
+                elif mt.group(1) == "act" and not set(mt.group(2).split("|")) <= set(ACT_VALUES): errs.append(f"{where}: {t!r}: an act is one of {', '.join(ACT_VALUES)}")
         sp = span(s.get("cc_ref"))
         if sp is None or not s.get("quote") or s["quote"] not in sp: errs.append(f"{where}: the quoted words do not stand in {s.get('cc_ref')}"); continue
         if s["column"] == "authorship" and s.get("value") not in AUTHORSHIP_VALUES:
@@ -632,12 +635,13 @@ def authorship_cells(stmts, rows, members, span=None):
 
 def authorship_self_test():
     """The breaks the authorship check must catch, run every time: a misquote, an unknown selector key, a counted arm on a
-    family whose count is none, a family with a count and no row, a gap beside another arm, and a member the text never names."""
+    family whose count is none, a family with a count and no row, a gap beside another arm, a member the text never names, and an
+    `act` value outside group and own."""
     rows = [OrderedDict([("family", "a"), ("count", {"value": "none", "source": "generic"})]),
             OrderedDict([("family", "b"), ("count", {"value": "x@self", "source": "cc-table"})])]
     span = lambda ref: "the words stand here" if ref == "CC 1" else None
     ok = dict(family="b", column="authorship", selector="*", value="counted", cc_ref="CC 1", quote="words stand")
-    breaks = [("misquote", [dict(ok, quote="not here")]), ("selector key", [dict(ok, selector="kind=x")]),
+    breaks = [("misquote", [dict(ok, quote="not here")]), ("selector key", [dict(ok, selector="kind=x")]), ("act value", [dict(ok, selector="act=club")]),
               ("counted with no count", [dict(ok, family="a")]), ("count with no row", []),
               ("gap beside an arm", [dict(ok, value="gap"), dict(ok, selector="leaf=y", value="counted")]),
               ("unnamed member", [ok, dict(ok, column="second_signers", value="delegate=nobody")])]
@@ -871,8 +875,8 @@ def main():
                 if sel != "*":
                     for t in sel.split(" & "):
                         mt = re.fullmatch(r"([a-z]+)=([a-z_]+(?:\|[a-z_]+)*)", t)
-                        if not mt or mt.group(1) not in COUNT_KEYS:
-                            print(f"{where}: {t!r} is not a test on one of {', '.join(COUNT_KEYS)}"); return 1
+                        if not mt or mt.group(1) not in COUNT_ARM_KEYS:
+                            print(f"{where}: {t!r} is not a test on one of {', '.join(COUNT_ARM_KEYS)}"); return 1
                 elif i != len(arms) - 1:
                     print(f"{where}: an arm for every row is the last arm"); return 1
                 md = re.fullmatch(r"(none|shut)|([a-z_]+)(?:@([a-z_]+))?(?:!(confers|result))?", a["doors"])

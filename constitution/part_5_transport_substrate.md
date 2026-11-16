@@ -704,7 +704,7 @@ All CEG endpoints return:
 
 - **Content-Type**: `application/json` (`Accept: application/json` honored; other types respond `406 Not Acceptable`)
 - **CEG-API-Version header**: `CEG-Version: <current spec major.minor>` on every response (this document's version); clients SHOULD echo `CEG-Accept-Version: <pinned-version>` on request, naming the version they were built against. Per [CC 2.6.4](part_2_the_grammar.md#2.6.4) SemVer policy, MAJOR mismatch is a wire-incompat reject; MINOR mismatch is compatible (clients MAY warn).
-- **Time-Source header**: `X-CEG-Server-Time: <rfc3339_canonical>` per [CC 8.11.10](part_8_appendices.md#8.11.10) for client clock-skew bounds
+- **Time-Source header**: `X-CEG-Server-Time: <rfc3339_canonical>` per [CC 2.6.3](part_2_the_grammar.md#2.6.3) for client clock-skew bounds
 - **Pagination** (where applicable): `?cursor=` + `?limit=` query params; response includes `next_cursor` (null if exhausted) and `total_estimate` (server's best estimate, may be approximate)
 
 #### 5.3.6.1 `envelope-error` — Error envelope

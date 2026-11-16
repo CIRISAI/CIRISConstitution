@@ -428,7 +428,7 @@ p2	381	2.4.1.1	kernel	expiry	none	key:record	MUST NOT	states	3.3.6.4	A key recor
 p2	381	2.4.1.1	kernel	expiry	none	key:record	MUST	states	3.1.3.2	Any other key record whose identity_type contains node or agent MUST state valid_until, unless it is a room key of a private room	
 p2	381	2.4.1.1	kernel	expiry	none	key:record	MAY	states	5.4.6	A pseudonym's key record MAY state valid_until and need not: it is neither a self nor a node or agent	
 p2	381	2.4.1.1	kernel	expiry	freshness	key:record	MUST	states	2.6.7	The bound reads the record alone: valid_until not before asserted_at and at most key_record_max_secs after it; otherwise refused key_record_out_of_window	
-p2	381	2.4.1.1	kernel	expiry	none	key:record	is	states		The requirement binds records asserted at or after key_record_end_required_from; an earlier record that states no end stays endless	
+p2	381	2.4.1.1	kernel	expiry	none	key:record	is	states	2.6.1.12	A key is live in this form only by a key:record of this form; an earlier-form key record gives standing only for rows in the ceremony row's past, and its holder carries the key over	
 p2	381	2.4.1.1	kernel	expiry	none	key:record	is	restates	2.7.5	A key is live while one of its own records covers the instant and it has not revoked itself; no row of another key ends or revives it	
 p2	383	2.4.1.1	kernel	supersede	none	key:record	MAY	states		A key renews by a further record superseding its own; renewals all count to the greatest end; a renewal after the end revives the key	
 p2	383	2.4.1.1	kernel	supersede	none	key:record	is	applies	2.7.7	A rotation is another key's record naming the old key's record and carrying its signature; two rotations naming neither hand on nothing	
@@ -2372,7 +2372,7 @@ p4	77	4.2.1	kernel	halt	freshness	accord	MUST	states		A node resolves halt reach
 p4	77	4.2.1	family	accord	none	accord	is	states		The accord's powers are exactly those enumerated, pre-committed over edges already held; never act-then-ratify	
 p4	77	4.2.1	stewardship	amendment	window	accord	is	states	4.2.6	A change widening accord reach takes effect only after a published severance window of 72 h during which any bound node may cut its edge; widening waits, firing does not	
 p4	81	4.2.1.1	mechanism	wire	body	accord	is	states		Every accord:invoke row carries a holder's signature, inside the row, over canonical bytes that include the invocation kind discriminator and a per-invocation nonce, preventing cross-kind replay	
-p4	83	4.2.1.1	mechanism	wire	body	accord	is	states	8.11.10,8.11.11	Accord invoke canonical bytes: sha256 over label ciris.accord_invoke.v2, invocation_kind, invocation_id, nonce, asserted_at, valid_until, payload_sha256 as newline-joined fields	
+p4	83	4.2.1.1	mechanism	wire	body	accord	is	states	2.6.3	Accord invoke canonical bytes: sha256 over label ciris.accord_invoke.v2, invocation_kind, invocation_id, nonce, asserted_at, valid_until, payload_sha256 as newline-joined fields	
 p4	93	4.2.1.1	mechanism	signature	none	accord	is	restates	2.6.1.7	Accord invocations carry the composite signature of 2.6.1.7 over canonical	
 p4	93	4.2.1.1	family	cosign	cosign_rule	accord	is	states		A constitutional halt is one holder's signature; a consumer verifies one holder's signature over the canonical bytes against the pinned roster and halts	
 p4	95	4.2.1.1	family	halt	none	accord	is	states		A halt is one self-contained row signed by any holder with a holder-minted nonce; it fires on receipt at every node holding a live acceptance edge	
@@ -2412,7 +2412,7 @@ p4	132	4.2.1.3	family	cosign	cosign_rule	accord	is	restates	2.4	lifecycle:active
 p4	132	4.2.1.3	family	row_shape	body	accord	is	states	4.2.1.1	lifecycle:confirmed rides the lifecycle domain with invocation_kind lifecycle:confirmed and confirms_halt_id in place of resumes_halt_id	
 p4	132	4.2.1.3	family	freshness	freshness	accord	is	states		A confirmation after the fuse has lapsed confirms nothing; a fresh halt is fired instead	
 p4	132	4.2.1.3	mechanism	wire	body	accord	is	states		Lifecycle rows sign a separate canonical-bytes domain from accord:invoke; invoke's invocation_kind stays closed to constitutional, notify, drill so an invoke can never replay as a resumption nor the reverse	
-p4	134	4.2.1.3	mechanism	wire	body	accord	is	states	8.11.10,8.11.11	Lifecycle canonical bytes: sha256 over label ciris.accord_lifecycle.v1, invocation_kind, invocation_id, resumes_halt_id, nonce, asserted_at, valid_until, payload_sha256	
+p4	134	4.2.1.3	mechanism	wire	body	accord	is	states	2.6.3	Lifecycle canonical bytes: sha256 over label ciris.accord_lifecycle.v1, invocation_kind, invocation_id, resumes_halt_id, nonce, asserted_at, valid_until, payload_sha256	
 p4	146	4.2.1.3	family	row_shape	body	accord	MUST	states		resumes_halt_id is mandatory and binds a resumption to the single named halt it ends; the signature is worthless against any other halt	
 p4	146	4.2.1.3	family	admission_order	body	accord	MUST	states		The substrate does not count a lifecycle:active whose resumes_halt_id does not match the currently active constitutional halt	
 p4	146	4.2.1.3	family	admission_order	freshness	accord	MUST	applies		The substrate refuses a duplicate lifecycle invocation_id within the valid_until window	
@@ -3679,7 +3679,7 @@ p5	606	5.3.6	mechanism	endpoint	none		is	states		All CEG endpoints return applic
 p5	607	5.3.6	mechanism	endpoint	none		is	states		Every CEG response carries CEG-Version: <spec major.minor>.	
 p5	607	5.3.6	mechanism	endpoint	none		SHOULD	states		Clients echo CEG-Accept-Version naming the version they were built against.	
 p5	607	5.3.6	mechanism	conformance	none		is	restates	2.6.4	MAJOR version mismatch is a wire-incompatible reject; MINOR mismatch is compatible and clients MAY warn.	
-p5	608	5.3.6	mechanism	endpoint	none		is	states	8.11.10	Every CEG response carries X-CEG-Server-Time in rfc3339_canonical for client clock-skew bounds.	
+p5	608	5.3.6	mechanism	endpoint	none		is	states	2.6.3	Every CEG response carries X-CEG-Server-Time in rfc3339_canonical for client clock-skew bounds.	
 p5	609	5.3.6	mechanism	endpoint	none		is	states		Paginated endpoints take ?cursor= and ?limit= and return next_cursor (null when exhausted) and total_estimate.	
 p5	613	5.3.6.1	mechanism	endpoint	none		MUST	states		All error responses conform to the error envelope: code, http_status, message, request_id, details.	
 p5	629	5.3.6.1	mechanism	endpoint	none		is	states		400 MALFORMED_REQUEST: invalid JSON, missing required field, bad field type.	table
@@ -4370,3 +4370,5 @@ p2	x	2.6.1.7	kernel	signature	none	*	is	states		ML-DSA-65 signs the composite's 
 p3	x	3.3.4	family	roster_fold	none	family	is	applies	2.7.8	For a node that has acknowledged a head, a sibling of that head is void too, since it names an older head outside that head's past	
 p2	x	2.7.8	kernel	roster_fold	none		is	states		A reader's voiding of acts that name an older head is its own and binds nobody else	
 p3	x	3.4.7.1	mechanism	wire	none	*	MUST	states	2.6.1.2	Where identity_type enters signed bytes the set MUST be encoded as a 2.6.1.2 set: sorted by the bytewise order of its elements' encodings, without duplicates	
+p2	x	2.6.3	mechanism	wire	none	*	is	states		Bytes in a signed text preimage or an HTTP member are hex under the text-identifier rule: lowercase, unpadded, byte-length-exact	
+p2	x	2.6.3	mechanism	wire	none	*	MUST	states		An instant in signed text or an HTTP member is canonical RFC 3339 YYYY-MM-DDTHH:MM:SS.sssZ; producers emit it and a verifier refuses any other form	

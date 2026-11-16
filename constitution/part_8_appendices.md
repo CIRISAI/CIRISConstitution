@@ -2146,7 +2146,7 @@ Fold:
 
 Count: `None`
 
-Authorship: open (CC 3.1.3.4)
+Authorship: `act=group => counted ; authored` (CC 3.1.3.4)
 
 Change:
 - supersede: `replace: cascade=file:{version}/under:stand` (CC 3.1.3.4)
@@ -2372,8 +2372,8 @@ Guard:
 - attest: `when(leaf=pending) (one *@named[id=ref:*] as E else void & owner(E.signer,signer) else exclude)` (CC 3.1.3)
 
 Fold:
-- `key=quorum_key,attesting_key_id; pick=union` (CC 3.1.3)
-- `key=quorum_key,attesting_key_id; pick=union; by=node` (CC 3.3.4)
+- `key=event_row_id,attesting_key_id; pick=union` (CC 3.1.3)
+- `key=event_row_id,attesting_key_id; pick=union; by=node` (CC 3.3.4)
 
 In time:
 - [pending] clock `hold` = `group.hold_window_secs` (CC 3.1.3, CC 3.3.4)
@@ -3481,7 +3481,7 @@ Guard:
 
 Count: `None`
 
-Authorship: open (CC 3.4.5)
+Authorship: `act=group => counted ; authored` (CC 3.4.5)
 
 Second signers: `delegate` by `sub` when `leaf=confers` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` when `leaf=confers` (CC 4.4.3.19)
 

@@ -51,6 +51,7 @@ election_id	value	identifier; read by equality only
 entrenched	value
 ephemeral	value
 epoch	value	a counter
+event_row_id	digest	the row id of the event a cosign row collects for (CC 2.6.1.3)
 expertise_multiplier	value
 expires_at	signed_instant	an instant its signer states
 grade	value
@@ -72,7 +73,6 @@ period	value
 person	key	a person (fedID)
 present	value
 proposal_id	value	identifier; read by equality only
-quorum_key	key	a key id (the digest of a key: ordering by it is ordering by a digest)
 quorum_weight	value	a count of cosigners
 recovery_commitments	set	commitments to recovery keys
 references_attestation_id	digest	the digest of the row referenced

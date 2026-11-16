@@ -27,6 +27,10 @@ written as selector arms. This file reads them by ONE rule:
                 from the group's record, not from the row.
       seats     the number of deciding seats of that group at the head the row names
                 (CC 4.4.3.12); the token `one` is 1. CALLER-SUPPLIED, an integer.
+      act       how the row is signed: `group` when it is the act of a roster under its
+                consensus_protocol, several statements over one payload (CC 2.6.1.9), `own` when
+                it is one signer's own row. CALLER-SUPPLIED: it is read from the statements the
+                row carries and the roster they are counted over, not from the payload.
   * a test on a key the caller did not supply answers UNKNOWN. An arm is false when any test is
     false, else unknown when any test is unknown, else it holds (a conjunction with one false
     term is false whatever the others read). An unknown arm before the deciding arm makes the
@@ -59,10 +63,11 @@ REGISTRY = os.path.join(ROOT, "manifests", "namespace_registry.json")
 VECTORS = os.path.join(ROOT, "manifests", "family_select_vectors.json")
 EXTRACT = os.path.join(ROOT, "manifests", "family_authorship.json")
 
-KEYS = ("leaf", "verb", "identity", "group", "seats")
-CALLER_KEYS = ("verb", "identity", "group", "seats")
+KEYS = ("leaf", "verb", "identity", "group", "seats", "act")
+CALLER_KEYS = ("verb", "identity", "group", "seats", "act")
 SEATS_TOKENS = {"one": 1}
 GROUP_VALUES = ("family", "community", "affiliations")
+ACT_VALUES = ("group", "own")
 CELLS = ("count", "authorship", "second_signers")
 UNKNOWN = "unknown"
 TEST = re.compile(r"([a-z]+)=([a-z_:{}]+(?:\|[a-z_:{}]+)*)")
@@ -89,6 +94,8 @@ def parse_selector(sel):
             raise ValueError("seats=%s: a seat count token is one of %s" % (m.group(2), ", ".join(SEATS_TOKENS)))
         if key == "group" and any(v not in GROUP_VALUES for v in values):
             raise ValueError("group=%s: a group is one of %s" % (m.group(2), ", ".join(GROUP_VALUES)))
+        if key == "act" and any(v not in ACT_VALUES for v in values):
+            raise ValueError("act=%s: an act is one of %s" % (m.group(2), ", ".join(ACT_VALUES)))
         out.append((key, values))
     return out
 
@@ -207,7 +214,7 @@ def row_context(registry, family_id, dimension, ctx):
 
 def resolve(family_model, family_id, dimension, ctx, registry=None):
     """{count, authorship, second_signers} for a row of `family_id` on `dimension` (None: leaf unknown),
-    with the caller-supplied keys in `ctx` (verb, identity, group, seats; an absent key is unknown)."""
+    with the caller-supplied keys in `ctx` (verb, identity, group, seats, act; an absent key is unknown)."""
     registry = registry or Registry(load(REGISTRY))
     row = next((r for r in family_model["rows"] if r["family"] == family_id), None)
     if row is None:
@@ -288,6 +295,8 @@ def key_candidates(key, arms):
         return list(dict.fromkeys(named + [g for g in GROUP_VALUES if g not in named]))
     if key == "seats":
         return [1, 2]
+    if key == "act":
+        return list(dict.fromkeys(named + [a for a in ACT_VALUES if a not in named]))
     if key == "verb":
         return list(dict.fromkeys(named + ["attest", "authorize", "replace", "withdraw", "recant"]))
     raise KeyError(key)
@@ -450,7 +459,7 @@ def vectors_doc(model, registry, model_sha):
             ("family_model_sha256", model_sha),
             ("generator", "tools/cc_family_select.py"),
             ("contract", "every consumer replays these against its own evaluator: for each vector, bind the leaf of "
-                         "`dimension` under `family` (null: the leaf is unknown), take verb, identity, group and seats from "
+                         "`dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from "
                          "`ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, "
                          "authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every "
                          "arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, "
@@ -461,6 +470,7 @@ def vectors_doc(model, registry, model_sha):
                 ("identity", "caller-supplied: the identity_type set of the identity the row concerns; holds when it contains a value"),
                 ("group", "caller-supplied: the cohort_scope of the group the row is about (family, community, affiliations)"),
                 ("seats", "caller-supplied: the group's deciding-seat count at the head the row names; `one` is 1"),
+                ("act", "caller-supplied: group when the row is the act of a roster under its consensus_protocol, several statements over one payload (CC 2.6.1.9); own when it is one signer's own row"),
             ])),
             ("counts", OrderedDict(sorted({k: sum(1 for v in vs if v["kind"] == k) for k in {v["kind"] for v in vs}}.items()))),
         ])),
@@ -607,7 +617,7 @@ def self_test():
             caught += 1
         else:
             problems.append("the vectors do not catch a broken evaluator: " + name)
-    for name, sel in (("an unknown key", "kind=x"), ("a seat token", "seats=two"), ("a group kind", "group=club")):
+    for name, sel in (("an unknown key", "kind=x"), ("a seat token", "seats=two"), ("a group kind", "group=club"), ("an act kind", "act=club")):
         try:
             parse_selector(sel)
             problems.append("the parser admits " + name)
@@ -618,7 +628,7 @@ def self_test():
         problems.append("the extract does not carry the model's hash")
     else:
         caught += 1
-    return problems, OrderedDict([("vectors", len(vectors)), ("breaks", "%d/%d" % (caught, len(breaks) + 4))])
+    return problems, OrderedDict([("vectors", len(vectors)), ("breaks", "%d/%d" % (caught, len(breaks) + 5))])
 
 
 def main(argv):

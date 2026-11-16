@@ -27,7 +27,7 @@
    "governance": "policy_row | none",
    "fold": "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)",
    "count": "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)",
-   "authorship": "authored | counted | arms `selector => authored|counted` joined by ` ; `, on the count column's selector keys, the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)",
+   "authorship": "authored | counted | arms `selector => authored|counted` joined by ` ; `, on the count column's selector keys and `act` (group: the row is signed as the act of a roster under its consensus_protocol, by several statements over one payload, CC 2.6.1.9; own: one signer's own row; caller-supplied), the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)",
    "second_signers": "[{role, member, when?, cc_ref}]: each role besides the author whose statement over the same payload the row accepts; member is the payload member that names the party, `sub` where the party is the attested key, `owner_of_sub` where it is the owner the owner-binding of the attested key names, or `gap` where the text names none; [] means only the author signs (formal/derivation/authorship_text.tsv)",
    "derived": "projection_id | none (the row must equal the named projection's rebuild; formal/derivation/confers_text.tsv)",
    "read_by": "the named answers that read the family's rows (state, stands, tally, may, audience, missing, owed, window), from the KX of its rule cells (tools/kx_translate.py over tools/kx_prelude.kx); `by` names each cell. A family with no cell of its own takes the default reading (state, stands) of the default fold and change: rule default, stated once and checked for none of the families it covers",
@@ -238,12 +238,12 @@
     "gap": 4
    },
    "authorship": {
-    "cc-table": 16,
+    "cc-table": 18,
     "code-v61": 0,
     "generic": 165,
     "prose": 0,
     "mixed": 0,
-    "gap": 3
+    "gap": 1
    },
    "second_signers": {
     "cc-table": 4,
@@ -759,8 +759,8 @@
    "families": {
     "authored": 170,
     "counted": 3,
-    "mixed": 8,
-    "gap": 3
+    "mixed": 10,
+    "gap": 1
    },
    "second_signers": {
     "families_with_roles": 8,
@@ -18832,12 +18832,28 @@
     "cosign_rule": "CC group_consensus_protocol for amendments; not built"
    },
    "authorship": {
-    "value": null,
-    "source": "gap",
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "act=group",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.1.3.4"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 2.6.1.3"
+      ],
+      "rule": "default"
+     }
+    ],
     "cc_ref": [
      "CC 3.1.3.4"
-    ],
-    "note": "the text gives both readings and no selector key names the case: an amendment (rename, move) is its author's, or the cohort's under its `consensus_protocol` where the cohort's rules say so"
+    ]
    },
    "second_signers": {
     "value": [],
@@ -27427,13 +27443,13 @@
    "fold": {
     "value": [
      {
-      "fold": "key=quorum_key,attesting_key_id; pick=union",
+      "fold": "key=event_row_id,attesting_key_id; pick=union",
       "cc_ref": [
        "CC 3.1.3"
       ]
      },
      {
-      "fold": "key=quorum_key,attesting_key_id; pick=union; by=node",
+      "fold": "key=event_row_id,attesting_key_id; pick=union; by=node",
       "cc_ref": [
        "CC 3.3.4"
       ]
@@ -69327,12 +69343,28 @@
     "cosign_rule": "family charter witness quorum (check_charter_witness_quorum)"
    },
    "authorship": {
-    "value": null,
-    "source": "gap",
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "act=group",
+      "value": "counted",
+      "cc_ref": [
+       "CC 3.4.5"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 2.6.1.3"
+      ],
+      "rule": "default"
+     }
+    ],
     "cc_ref": [
      "CC 3.4.5"
-    ],
-    "note": "the text gives both readings and no selector key names the case: whose scrub set is the family's own roster reaching its `consensus_protocol`"
+    ]
    },
    "second_signers": {
     "value": [

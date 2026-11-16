@@ -1,5 +1,5 @@
 # How a family's act is counted: arms in order, the first whose selector holds deciding. Applied by tools/build_family_model.py as the `count` cell.
-# selector: `*` (every row of the family) or tests joined by " & ", each key=value|value. Keys: leaf, verb, identity, group, seats.
+# selector: `*` (every row of the family) or tests joined by " & ", each key=value|value. Keys: leaf, verb, identity, group, seats, act.
 # doors: none (one signature carries the row) | shut | ROW[@source][!confers|!result], ROW a row of constitution/governance_policy.tsv.
 # source (whose roster the row is read against): subject_group | signer_group | dimension_authority | accord | trust_root | self | conferrer.
 # The quote must stand verbatim in the cited section. A family whose cosign cell reads none and has no row here counts `none`.
