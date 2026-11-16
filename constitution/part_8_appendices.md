@@ -2641,15 +2641,15 @@ In time:
 - on close(expiry): read withdrawn (CC 4.4.3.12)
 - [ephemeral] expiry required `valid_until` (CC 5.3.3.2)
 - [ephemeral] on fold(no_member): read withdrawn (CC 5.3.3.2)
-- clock `W` = `admission_freshness_window_secs` (CC 4.2.6, CC 4.4.3.18)
-- on close(W) unless fold(policy_met): read lapsed (CC 4.2.6, CC 4.4.3.18)
+- @community clock `W` = `admission_freshness_window_secs` (CC 3.3.4)
+- @community on close(W) unless fold(policy_met): read lapsed (CC 3.3.4)
 - on refused(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
 - clock `cover` = `charter.witness_cadence_secs` (CC 3.2)
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
 - on fold(founder_quorum_restored): emit `hard_case:community_liveness_restored` by origin_door (CC 3.2)
-- landing of `W`: by holder as `group:roster`; a late answer does not count (CC 4.2.6)
-- while `W` is open: binds nobody until it lands (CC 4.2.6)
+- @community landing of `W`: by member as `group:roster`; a late answer does not count (CC 3.3.4)
+- @community while `W` is open: binds nobody until it lands (CC 3.3.4)
 
 **`hardware_custody:{platform}`** — Circumstances, thing
 

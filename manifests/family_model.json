@@ -38976,14 +38976,14 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.2.6)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 3.3.4)",
       "answers": [
        "window"
       ]
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.4.3.18)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 3.3.4)",
       "answers": [
        "window"
       ]
@@ -39004,7 +39004,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.2.6)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 3.3.4)",
       "answers": [
        "state",
        "stands",
@@ -39013,7 +39013,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.2.6)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 3.3.4)",
       "answers": [
        "state",
        "stands",
@@ -39026,10 +39026,10 @@
     "value": {
      "relation": "seat",
      "binds": "body+holder",
-     "roster": "community|accord|infra",
+     "roster": "community|infra",
      "holders": "fixed by the charter",
      "consent": "same_row (each holder signs the record)",
-     "door": "accord_roster_change"
+     "door": "community_remove[unanimous]|community_remove[majority]|community_remove[quorum]"
     },
     "source": "cc-table",
     "cc_ref": [
@@ -39042,7 +39042,7 @@
      "roster": "quote:CC 3.1.3.2 \"A founding record seats a listed member iff that member **signed** the record\"",
      "holders": "quote:CC 3.4.7 \"The accord's holders are fixed by the accord's charter\"",
      "consent": "quote:CC 3.1.3.2 \"A founding record seats a listed member iff that member **signed** the record\"",
-     "door": "row:formal/causal_kernel/doors.tsv#accord_roster_change"
+     "door": "row:formal/causal_kernel/doors.tsv#community_remove[majority]"
     },
     "cells_from": [
      "formal/derivation/confers_text.tsv",

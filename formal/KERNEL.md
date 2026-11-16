@@ -302,9 +302,9 @@ decider closes an agent's objection window at retirement by the `decided` row, w
 agent's own landing closes nothing. Where the text has
 each node read the close on its own clock, the cell says `local` and nothing is signed: the moderation window,
 a harm report, a person's own roster and the halt's fuse (CC 4.5.13, CC 3.3.6.4). A late answer is closed for
-the fuse, an invitation and the accord's roster change, and counts for an election and a takedown. Seven doors state whether the opening row is in force while its window is open: the halt and a takedown's
-withhold are, from each node's own receipt; a moderation action, a harm report, an invitation, a device's
-addition and the accord's roster change are not. **run**: the **state** answer gives each while no landing
+the fuse and an invitation, and counts for an election and a takedown. Six doors state whether the opening row is in force while its window is open: the halt and a takedown's
+withhold are, from each node's own receipt; a moderation action, a harm report, an invitation and a device's
+addition are not. **run**: the **state** answer gives each while no landing
 stands, and a cell read the other way is caught at every door. The invitation counts the invitee's yes by the
 policy row's `target_voice` cell, and a room of one admits nobody on its founder's proposal alone. A removal, a
 cosigned act and an adjudication read their count from the protocol the group's founding row declares.

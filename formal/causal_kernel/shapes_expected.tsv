@@ -188,8 +188,6 @@ door accord_halt@node+late_closed	72 worlds, 2 properties hold	breaks: one holde
 door accord_halt@node+late_closed	plant: its mutation (check_door.MUTATION)	caught
 door accord_majority	36 worlds, 1 properties hold	holds
 door accord_majority	plant: its mutation (check_door.MUTATION)	caught
-door accord_roster_change	72 worlds, 1 properties hold	holds
-door accord_roster_change	plant: its mutation (check_door.MUTATION)	caught
 door affiliation_member_action	12 worlds, 2 properties hold	holds
 door affiliation_member_action	plant: its mutation (check_door.MUTATION)	caught
 door archive_release	4 worlds, 2 properties hold	holds
@@ -198,6 +196,10 @@ door community_invite	600 worlds, 4 properties hold	holds
 door community_invite	plant: its mutation (check_door.MUTATION)	caught
 door community_remove[majority]	72 worlds, 4 properties hold	holds
 door community_remove[majority]	plant: its mutation (check_door.MUTATION)	caught
+door community_remove[quorum]	72 worlds, 4 properties hold	holds
+door community_remove[quorum]	plant: its mutation (check_door.MUTATION)	caught
+door community_remove[unanimous]	72 worlds, 4 properties hold	holds
+door community_remove[unanimous]	plant: its mutation (check_door.MUTATION)	caught
 door cosigned_act	72 worlds, 3 properties hold	holds
 door cosigned_act	plant: its mutation (check_door.MUTATION)	caught
 door custodian_replace	12 worlds, 2 properties hold	holds

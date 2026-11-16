@@ -138,8 +138,7 @@ TEXT_OPEN = {"accord_halt": ("in_force", "CC 4.2.1.1: it fires on receipt"), "mo
              "harm_report": ("pending", "CC 4.5.13: each node reads the removal from the closed window"),
              "takedown_withhold": ("in_force", "CC 4.5.3: every holder withholds from its own receipt"),
              "invitation": ("pending", "CC 3.1.3.2: the widening is the only door that adds anyone"),
-             "self_roster_add": ("pending", "CC 3.3.6.4: an addition is a proposal"),
-             "accord_roster_change": ("pending", "CC 4.2.6: until W has closed the named holder remains")}
+             "self_roster_add": ("pending", "CC 3.3.6.4: an addition is a proposal")}
 
 
 def text_open(name):
@@ -357,9 +356,6 @@ def props(name):
     if name == "deletion_sla":
         P.append(("a breach whose past or recount holds the producer's deletion does not stand", "CC 3.3.1 D1-D2",
                   lambda w, o: None if not tally(w, "deleted") else o != "breached"))
-    if name == "accord_roster_change":
-        P.append(("a change carries only on a strict majority of the standing roster; a presumed-dead holder's yes is counted", "CC 4.2.6",
-                  lambda w, o: None if o != "landed" else 2 * len(tally(w, "yes") | {w["op"]}) > n))
     if name == "harm_report":
         P.append(("a moderator's keep is not overridden", "CC 4.5.13", lambda w, o: None if not tally(w, "keep", {"MOD"}) else o != "removed"))
     if name == "takedown_withhold":
@@ -443,7 +439,6 @@ MUTATION = {
     "cosigned_act": ("one_voice", "every threshold read as one voice"),
     "accord_majority": ("one_voice", "every threshold read as one voice"),
     "deletion_sla": ("void", "the landing voids concurrent answers"),
-    "accord_roster_change": ("one_voice", "every threshold read as one voice"),
     "harm_report": ("void", "the landing voids concurrent answers"),
     "takedown_withhold": ("concluder_holder", "a member lands another holder's destruction"),
     "retirement_objection": ("void", "the landing voids concurrent answers"),
@@ -460,7 +455,7 @@ MUTATION2 = {"retirement_objection": ("concluder_target", "the agent closes its 
              "moderator_election": ("tie_by_position", "a tie for weakest broken by where an option is listed"),
              "community_invite": ("target_voice_ignored", "the row's target_voice cell not read: the invitee's yes is no voice")}
 for _d in ("accord_halt@holder", "accord_halt@node", "accord_halt@node+late_closed", "moderation_action", "harm_report", "takedown_withhold",
-           "invitation", "self_roster_add", "accord_roster_change"):
+           "invitation", "self_roster_add"):
     MUTATION2[_d] = ("force_flipped", "the while cell read the other way: in force for pending, pending for in force")
 for _d in ("community_remove[unanimous]", "community_remove[majority]", "community_remove[quorum]", "cosigned_act", "wa_adjudication"):
     MUTATION2[_d] = ("protocol_misread", "the founding row's declared protocol read as another")
