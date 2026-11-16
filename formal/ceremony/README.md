@@ -30,10 +30,10 @@ how the world was made, never by the model.
 | P7 | two geneses are a fork: tips to a reader with no pin, the other void to one that pinned | the union of tips; a pin ignored |
 | P8 | a halt of this form is available from the first moment after the genesis | the genesis published before the halts are sealed |
 | P9 | the result does not depend on the order a node receives the rows | arrival decides; the first genesis to arrive wins |
-| P10 | a roster change is a later bundle, counted at a strict majority of the predecessor's holders and by each holder it adds or re-commits | a change on a minority; an added holder unsigned; a re-commitment unsigned |
+| P10 | a roster change is a later bundle, counted at a strict majority of the predecessor's holders and by each holder it adds or re-commits; two later bundles on one predecessor are a fork, read on what both name | a change on a minority; an added holder unsigned; a re-commitment unsigned; the union of a fork's tips |
 | P11 | a recovery is the recovery key's statement alone and changes only its own seat; a spent commitment never returns, and a recovery key never becomes a seat's key | any key recovers; a recovery changes a second seat; a spent commitment returns; a spent key recovers; a recovery key seated |
 
-All eleven hold, and all 34 planted breaks are caught: 54 worlds, 16 arrival orders each, under a second.
+All eleven hold, and all 35 planted breaks are caught: 55 worlds, 16 arrival orders each, under a second.
 
 **The interleavings** (`Cutover.tla`, run by `run_tlc.sh` under TLC v1.7.4). The world signs in any order the rules
 allow: the holders' records, their sealed halts, the genesis (published only once the halts exist), a user's record,
@@ -44,8 +44,7 @@ at 1,250,135 distinct states under `Inv_P1`, `Inv_P2`, `Inv_P7`, `Inv_P9`, `Inv_
 `CeremonyCarries` (P2), `EarlierVotes` (P7), `PublishUngated`, `CutWithoutRecords` and `EarlierHalt`. The run takes
 under a minute on two workers.
 
-**What it does not model.** Bytes and encodings; the link itself; windows and the fuse (`formal/accord_halt`); a fork
-of later bundles; more than one community, one agent and two seats. The later bundles run in Python only: the TLA+
+**What it does not model.** Bytes and encodings; the link itself; windows and the fuse (`formal/accord_halt`); more than one community, one agent and two seats. The later bundles run in Python only: the TLA+
 spec stops at the genesis (`formal/accord_roster/AccordBundle.tla` checks the lineage's interleavings). Arrival orders are sampled in Python; the TLA+ spec covers every interleaving of its smaller world.
 
     python3 -I formal/ceremony/check_ceremony.py           # compare with ceremony_expected.tsv

@@ -106,12 +106,15 @@ genesis	genesis-charter	"witness_quorum"	-	object	2..4294967295	where witnessed 
 genesis	genesis-charter	"witnesses"	-	object	[+ identity-ref]	where witnessed mode is on	3.2 2.1 2.6.1.2	The witness directory: a set, disjoint from holders and serve_nodes; each witness's key record stands in refs.
 genesis	recovery-commitment-input	keys	-	derived	[+ ceg-key]	always	3.2 4.2.6 2.6.1.2	The committed composite keys, a set; one for a holder's recovery commitment. The commitment is [-16, SHA-256] over the array.
 accord	accord-invocation	"author"	attesting_key_id	payload	identity-ref	always	4.2.1.1 2.6.1.3	The holder who signs: the statement's iss. One holder's statement is the halt.
+accord	accord-invocation	"accord_root"	-	payload	tstr	always	4.2.1.1 2.1	The accord's family_key_id; it picks the bundle in force the row is verified against.
 accord	accord-invocation	"invocation_id"	-	payload	tstr	always	4.2.1.1	The id of the halt, the notify or the drill; duplicates within valid_until are refused per kind.
 accord	accord-invocation	"nonce"	-	payload	bstr .size 32	always	4.2.1.1	Minted by the holder; single-use within valid_until.
 accord	accord-invocation	"asserted_at"	asserted_at	payload	ms-time	always	4.2.1.1 2.6.2	POSIX milliseconds.
 accord	accord-invocation	"valid_until"	valid_until	payload	ms-time	always	4.2.1.1 2.6.2	Bounds the reuse of the nonce, never the reach of a halt.
+accord	accord-invocation	"payload_digest"	-	payload	hash-digest	on a notify	4.2.1.1	SHA-256 over the notify's message, a separate object held as bytes.
 accord	accord-lifecycle	"refs"	references_attestation_id	payload	accord-lifecycle-refs	always	4.2.1.3 2.6.1.9	The halt the row confirms or ends, and the bundle it is counted over.
 accord	accord-lifecycle	"dimension"	dimension	payload	tstr	always	4.2.1.3	Names the kind, confirmed or active, so the two kinds are two payloads and two row ids.
+accord	accord-lifecycle	"accord_root"	-	payload	tstr	always	4.2.1.3 2.1	The accord's family_key_id.
 accord	accord-lifecycle	"invocation_id"	-	payload	tstr	always	4.2.1.3	The lifecycle row's own id.
 accord	accord-lifecycle	"nonce"	-	payload	bstr .size 32	always	4.2.1.3	Thirty-two random bytes.
 accord	accord-lifecycle	"asserted_at"	asserted_at	payload	ms-time	always	4.2.1.3 2.6.2	POSIX milliseconds.

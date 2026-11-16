@@ -52,6 +52,7 @@ LATER = {
     "addD_unsigned": ("G2", "G", dict(K0, D="D"), dict(C0, D="RD"), ("A", "B"), ("D",)),
     "removeC_minority": ("G2", "G", {"A": "A", "B": "B"}, {"A": "RA", "B": "RB"}, ("A",), ()),
     "removeC": ("G2", "G", {"A": "A", "B": "B"}, {"A": "RA", "B": "RB"}, ("A", "B"), ()),
+    "removeC_fork": ("G2b", "G", {"A": "A", "B": "B"}, {"A": "RA", "B": "RB"}, ("A", "B"), ()),
     "recommitB_unsigned": ("G2", "G", K0, dict(C0, B="RB2"), ("A", "C"), ()),
     "recommitB": ("G2", "G", K0, dict(C0, B="RB2"), ("A", "B"), ()),
     "recover": ("GR", "G", dict(K0, A="A2"), dict(C0, A="RA2"), ("RA",), ("A2",)),
@@ -170,7 +171,7 @@ def world(**o):
     x["live_holders"] = set(HOLD) - rev
     # the lineage: which later bundles count, and the roster at its head, from how the world was made
     ROSTERS = {"addD": ({"G2"}, "ABCD"), "addD_unsigned": (set(), "ABC"), "removeC_minority": (set(), "ABC"),
-               "removeC": ({"G2"}, "AB"), "recommitB_unsigned": (set(), "ABC"), "recommitB": ({"G2"}, "ABC"),
+               "removeC": ({"G2"}, "AB"), "removeC_fork": ({"G2", "G2b"}, "AB"), "recommitB_unsigned": (set(), "ABC"), "recommitB": ({"G2"}, "ABC"),
                "recover": ({"GR"}, ("A2", "B", "C")), "recover_by_signing_key": (set(), "ABC"),
                "recover_other_seat": (set(), "ABC"), "recover_same_commitment": (set(), "ABC"),
                "recover_to_reckey": (set(), "ABC")}
@@ -422,6 +423,7 @@ def worlds_p10():
     for n in ("addD", "addD_unsigned", "removeC_minority", "removeC", "recommitB_unsigned", "recommitB"):
         yield dict(later=(n,))
     yield dict(later=("recover", "addD_after_recover"))
+    yield dict(later=("addD", "removeC_fork"))          # a fork of later bundles: tips, and what both name
 
 
 def p10(o, orders):
@@ -476,7 +478,7 @@ PROPS = [
     ("P9", "the result does not depend on the order in which a node receives the rows", p9, worlds_p9,
      ("by_arrival", "fork_first")),
     ("P10", "a roster change is a later bundle, counted at a strict majority of the predecessor's holders and by each "
-     "holder it adds or re-commits", p10, worlds_p10, ("change_minority", "added_unsigned", "recommit_unsigned")),
+     "holder it adds or re-commits", p10, worlds_p10, ("change_minority", "added_unsigned", "recommit_unsigned", "fork_union")),
     ("P11", "a recovery is the recovery key's statement alone and changes only its own seat; a spent commitment never "
      "returns, and a recovery key never becomes a seat's key", p11, worlds_p11,
      ("recovery_any_key", "recovery_other_seat", "spent_returns", "spent_key_recovers", "reckey_as_seat")),

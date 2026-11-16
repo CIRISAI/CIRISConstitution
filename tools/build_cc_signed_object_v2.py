@@ -395,16 +395,18 @@ def key_record_samples():
 
 def accord_samples():
     """(valid, broken) for the accord's invocation and lifecycle payloads (CC 4.2.1.1, CC 4.2.1.3)."""
-    inv = {"author": ISS, "invocation_id": "halt-1", "nonce": bytes(32), "asserted_at": 1763078400000,
+    inv = {"author": ISS, "accord_root": "humanity-accord", "invocation_id": "halt-1", "nonce": bytes(32), "asserted_at": 1763078400000,
            "valid_until": 1763164800000}
     ref = lambda n: [2, [-16, bytes([n]) * 32]]
-    life = {"refs": {"head": ref(1), "target": ref(2)}, "dimension": "accord:lifecycle:active",
+    life = {"refs": {"head": ref(1), "target": ref(2)}, "dimension": "accord:lifecycle:active", "accord_root": "humanity-accord",
             "invocation_id": "resume-1", "nonce": bytes(32), "asserted_at": 1763078400000, "valid_until": 1763164800000}
     return [("accord-invocation", cde(inv), [
                 ("an invocation carrying invocation_kind", cde(dict(inv, invocation_kind="constitutional"))),
                 ("an invocation with a nonce of 31 bytes", cde(dict(inv, nonce=bytes(31)))),
                 ("an invocation with no author", cde({k: v for k, v in inv.items() if k != "author"})),
                 ("an invocation carrying the earlier payload_sha256", cde(dict(inv, payload_sha256="00" * 32))),
+                ("an invocation with no accord_root", cde({k: v for k, v in inv.items() if k != "accord_root"})),
+                ("a notify's payload_digest in hex", cde(dict(inv, payload_digest="00" * 32))),
                 ("an invocation with valid_until as text", cde(dict(inv, valid_until="2026-11-15T00:00:00.000Z")))]),
             ("accord-lifecycle", cde(life), [
                 ("a lifecycle row with an author", cde(dict(life, author=ISS))),
@@ -454,7 +456,7 @@ def is_set(xs):
 def read_bundle(payload, statements, rows, anchor, prev=None):
     """CC 2.6.1.11 over one bundle, structure only (no signature is computed here), in the order of verification.
     `statements` are the voices as (voice, iat), each taken as verified: a holder's identity reference, or
-    ("recovery", key) for a recovery key's statement. `rows` maps a cited row id to (family, author, extra).
+    ("recovery", iss, key) for a recovery key's statement (iss the holder, key the recovery key). `rows` maps a cited row id to (family, author, extra).
     `prev` is None for a first bundle or a prev not held, "not_valid" for a prev held and not Valid, or the
     predecessor's Valid placement. Returns ("Valid", placement), ("Invalid", detail) with the token
     genesis_bundle_malformed, ("Waiting", ids) or ("nothing", token)."""
@@ -492,6 +494,7 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
         if (kind == "thumbprints" and set(value) != H) or (kind == "object_id" and value != object_id(GENESIS_TYP, cde(P))):
             return "nothing", "genesis_bundle_not_anchored"
     # 4. the named rows
+    rvoices = [v for v in voices if not isinstance(v, str)]          # ("recovery", iss, recovery key)
     cites = P["refs"]["also"]["cites"]
     missing = [c for c in cites if c[1][1] not in rows]
     if missing:
@@ -499,7 +502,10 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
     place = {}
     for c in cites:
         fam, author, extra = rows[c[1][1]]
-        if fam == "key:record" and author in H | S | W:
+        if (fam == "key:record" and later and ("recovery_key", author) not in place
+                and any(v[1] == author and v[2] == extra.get("key") for v in rvoices)):
+            slot = ("recovery_key", author)          # the recovery key's own record, named for self-containment
+        elif fam == "key:record" and author in H | S | W:
             slot = ("record", author)
         elif fam == "identity:occurrence" and author in S:
             slot = ("binding", author)
@@ -518,15 +524,27 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
         _, binding = place[("binding", seat)]
         if rec.get("valid_until", 0) <= P["asserted_at"] or binding.get("cites") != rec_ref:
             return "nothing", "genesis_bundle_row_invalid"
-    # 5. the custody gate
-    for h in H:
-        ev = place[("record", h)][1]
-        if not ev.get("chain_verifies") or ev.get("pq_custody") != "removable_offline":
-            return "nothing", "genesis_holder_custody"
     keys = {h: place[("record", h)][1].get("key") for h in H}
     coms = dict(P["charter"]["recovery_commitments"])
     spent = set(prev["spent"]) if later else set()
     ever = set(prev["ever"]) if later else set()
+    recovery = later and len(voices) == 1 and len(rvoices) == 1
+    if recovery:
+        # the end of step 4: a recovery's Invalid rules, once its records are placed
+        PH, h, rk = set(prev["holders"]), rvoices[0][1], rvoices[0][2]
+        changed = {x for x in H | PH if keys.get(x) != prev["keys"].get(x) or coms.get(x) != prev["coms"].get(x)}
+        if (changed - {h} or H != PH or S != set(prev["seats"])
+                or {k: v for k, v in P["charter"].items() if k != "recovery_commitments"} != prev["charter_rest"]):
+            return "Invalid", "recovery_changes_other_seat"
+        if keys.get(h) == rk or cde(recovery_commitment(keys.get(h))) in ever:
+            return "Invalid", "recovery_key_is_signing_key"
+        if keys.get(h) == prev["keys"].get(h):
+            return "Invalid", "recovery_reuses_signing_key"
+    # 5. the custody gate
+    for x in H:
+        ev = place[("record", x)][1]
+        if not ev.get("chain_verifies") or ev.get("pq_custody") != "removable_offline":
+            return "nothing", "genesis_holder_custody"
     # 6. the count, or a recovery's one statement
     if not later:
         if not H <= {v for v in voices if isinstance(v, str)}:
@@ -534,25 +552,17 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
     else:
         PH = set(prev["holders"])
         if any(cde(x) in spent for x in coms.values()):
-            return "nothing", "genesis_bundle_commitment_spent"       # a spent commitment never returns
-        recs = [v for v in voices if not isinstance(v, str)]
-        if len(voices) == 1 and recs:
-            rk = recs[0][1]
-            mine = [h for h in PH if prev["coms"][h] == recovery_commitment(rk)]
-            changed = {h for h in H | PH if keys.get(h) != prev["keys"].get(h) or coms.get(h) != prev["coms"].get(h)}
-            if (len(mine) != 1 or changed != set(mine) or H != PH or S != set(prev["seats"])
-                    or {k: v for k, v in P["charter"].items() if k != "recovery_commitments"} != prev["charter_rest"]):
-                return "nothing", "genesis_bundle_recovery_refused"
-            h = mine[0]
-            if keys[h] in (prev["keys"][h], rk) or cde(recovery_commitment(keys[h])) in ever:
-                return "nothing", "genesis_bundle_recovery_refused"
-            if coms[h] == prev["coms"][h] or coms[h] == recovery_commitment(rk):
-                return "nothing", "genesis_bundle_recovery_refused"
+            return "nothing", "genesis_bundle_count_unmet:recovery_commitment_spent"   # never returns
+        if recovery:
+            if cde(recovery_commitment(rk)) in spent or coms[h] == prev["coms"].get(h):
+                return "nothing", "genesis_bundle_count_unmet:recovery_commitment_spent"
+            if ("recovery_key", h) not in place or prev["coms"].get(h) != recovery_commitment(rk):
+                return "nothing", "genesis_bundle_count_unmet:recovery_commitment_mismatch"
             spent.add(cde(prev["coms"][h]))
         else:
             yes = {v for v in voices if isinstance(v, str)}
             added = H - PH
-            recom = {h for h in H & PH if coms[h] != prev["coms"][h]}
+            recom = {x for x in H & PH if coms[x] != prev["coms"][x]}
             if len(yes & PH) * 2 <= len(PH) or not (added | recom) <= yes:
                 return "nothing", "genesis_bundle_count_unmet"
     ever |= {cde(x) for x in coms.values()}
@@ -580,6 +590,7 @@ def reader_samples():
     # A's rotated record (key 7) and the record of a key that is A's recovery key (key 50)
     rows[bytes([0x17]) * 32] = ("key:record", H[0], {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(7)})
     rows[bytes([0x18]) * 32] = ("key:record", H[0], {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(50)})
+    rows[bytes([0x1A]) * 32] = ("key:record", H[0], {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(50)})
     base = [0x10, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31]
     cites_of = lambda ids: sorted((rid(n) for n in ids), key=cde)
     rc = lambda n: recovery_commitment(key(n))
@@ -605,8 +616,9 @@ def reader_samples():
     later = lambda cites=base, coms=coms0, holders=H, **ch: payload(cites, coms, holders, version=2,
                                                                      refs={"prev": gid, "also": {"cites": cites_of(cites)}}, **ch)
     addD = later(base + [0x13], {**coms0, D: rc(53)}, H + [D])
-    rec = later([0x17, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60)})
-    rec_v = [(("recovery", key(50)), 1763078400)]
+    REC = [0x17, 0x18, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31]     # A's new record and its recovery key's record
+    rec = later(REC, {**coms0, H[0]: rc(60)})
+    rec_v = [(("recovery", H[0], key(50)), 1763078400)]
     breaks = [
         ("a missing holder signature", (good, voices[:2], rows, anchor), ("nothing", "genesis_bundle_count_unmet")),
         ("an iat not floor(asserted_at / 1000), refused alone", (good, voices[:2] + [(H[2], 1763078401)], rows, anchor),
@@ -634,14 +646,20 @@ def reader_samples():
          ("Invalid", "family_key_id_changed")),
         ("an added holder who did not sign", (addD, voices, rows, anchor, g_place), ("nothing", "genesis_bundle_count_unmet")),
         ("a change on a minority", (addD, voices[:1] + [(D, 1763078400)], rows, anchor, g_place), ("nothing", "genesis_bundle_count_unmet")),
-        ("a recovery under the holder's signing key", (rec, [(("recovery", key(0)), 1763078400)], rows, anchor, g_place),
-         ("nothing", "genesis_bundle_recovery_refused")),
-        ("a recovery that also re-commits another holder", (later([0x17, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60), H[1]: rc(61)}),
-                                                             rec_v, rows, anchor, g_place), ("nothing", "genesis_bundle_recovery_refused")),
-        ("a recovery seating its own recovery key", (later([0x18, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60)}),
-                                                     rec_v, rows, anchor, g_place), ("nothing", "genesis_bundle_recovery_refused")),
-        ("a recovery keeping the spent commitment", (later([0x17, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], coms0), rec_v, rows, anchor, g_place),
-         ("nothing", "genesis_bundle_recovery_refused")),
+        ("a recovery under the holder's signing key", (later([0x17, 0x10, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60)}),
+                                                       [(("recovery", H[0], key(0)), 1763078400)], rows, anchor, g_place),
+         ("nothing", "genesis_bundle_count_unmet:recovery_commitment_mismatch")),
+        ("a recovery keeping its signing key", (later([0x10, 0x18, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60)}),
+                                                rec_v, rows, anchor, g_place), ("Invalid", "recovery_reuses_signing_key")),
+        ("a recovery that also re-commits another holder", (later(REC, {**coms0, H[0]: rc(60), H[1]: rc(61)}),
+                                                             rec_v, rows, anchor, g_place), ("Invalid", "recovery_changes_other_seat")),
+        ("a recovery seating its own recovery key", (later([0x18, 0x1A, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60)}),
+                                                     rec_v, rows, anchor, g_place), ("Invalid", "recovery_key_is_signing_key")),
+        ("a recovery keeping the spent commitment", (later(REC, coms0), rec_v, rows, anchor, g_place),
+         ("nothing", "genesis_bundle_count_unmet:recovery_commitment_spent")),
+        ("a recovery whose recovery key's record is not named", (later([0x17, 0x11, 0x12, 0x20, 0x21, 0x30, 0x31], {**coms0, H[0]: rc(60)}),
+                                                                 rec_v, rows, anchor, g_place),
+         ("nothing", "genesis_bundle_count_unmet:recovery_commitment_mismatch")),
     ]
     later_ok = [("a roster change adding a holder, signed by a majority and the added holder",
                  (addD, voices[:2] + [(D, 1763078400)], rows, anchor, g_place)),
@@ -677,17 +695,19 @@ def reader_checks():
         h0 = next(h for h in p1["holders"] if p1["keys"][h] != gp["keys"][h])
         key = lambda n: {1: 7, 3: -70100, -1: bytes([n]) * 1984}
         rows2[bytes([0x19]) * 32] = ("key:record", h0, {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(8)})
-        cites = [c for c in rec["refs"]["also"]["cites"] if c[1][1] != bytes([0x17]) * 32] + [[2, [-16, bytes([0x19]) * 32]]]
+        rows2[bytes([0x1B]) * 32] = ("key:record", h0, {"key": key(60)})
+        cites = [c for c in rec["refs"]["also"]["cites"] if c[1][1] not in (bytes([0x17]) * 32, bytes([0x18]) * 32)]
+        cites += [[2, [-16, bytes([0x19]) * 32]], [2, [-16, bytes([0x1B]) * 32]]]
         cites = sorted(cites, key=cde)
         nxt = lambda com: dict(rec, version=3, refs={"prev": object_id(GENESIS_TYP, cde(rec)), "also": {"cites": cites}},
                                charter=dict(rec["charter"], recovery_commitments={**rec["charter"]["recovery_commitments"], h0: com}))
-        v2 = [(("recovery", key(60)), 1763078400)]
+        v2 = [(("recovery", h0, key(60)), 1763078400)]
         a_ret, o_ret = read_bundle(nxt(recovery_commitment(key(50))), v2, rows2, anchor, p1)
         a_new, _ = read_bundle(nxt(recovery_commitment(key(70))), v2, rows2, anchor, p1)
-        a_old, _ = read_bundle(nxt(recovery_commitment(key(70))), [(("recovery", key(50)), 1763078400)], rows2, anchor, p1)
-        if (a_ret, o_ret) != ("nothing", "genesis_bundle_commitment_spent"):
+        a_old, o_old = read_bundle(nxt(recovery_commitment(key(70))), [(("recovery", h0, key(50)), 1763078400)], rows2, anchor, p1)
+        if (a_ret, o_ret) != ("nothing", "genesis_bundle_count_unmet:recovery_commitment_spent"):
             bad.append(f"deliberate break not caught: a second recovery naming the spent commitment gives {a_ret}")
-        elif a_old == "Valid":
+        elif a_old == "Valid" or o_old == "genesis_bundle_count_unmet":
             bad.append("deliberate break not caught: a second recovery under the spent recovery key is Valid")
         elif a_new != "Valid":
             bad.append(f"reference reader: a second recovery with a fresh commitment gives {a_new}")

@@ -13,7 +13,7 @@ asked_shaped_link_idle_secs	600 s (ten minutes) after the last real frame, cover
 shaped_file_max_bytes	64 KiB (65,536 bytes) by the file's whole size; more than that never crosses a shaped link	5.4.3	formal/vendor/edge/TRANSPORT_TIERS_MODEL.md	C078
 entrenchment_quorum	strict majority of the standing accord roster; never lower, before or after the scale gate	4.5.1.2	formal/accord_roster/AccordRoster.lean	C089
 unanimous_removal_denominator	every member other than the target, and those signers a strict majority of the roster	3.1.3.2	formal/membership/Membership.tla, constitution/governance_policy.tsv, tools/build_governance_policy.py	C109
-admission_freshness_window_secs	W = 259,200 s (72 h), fixed; an accord roster change's `window_until` starts at W and reaches at most 604,800 s (7 d)	2.6.7	formal/consent/Consent.tla, tools/build_governance_policy.py, manifests/governance_policy.json	C121
+admission_freshness_window_secs	W = 259,200 s (72 h), fixed	2.6.7	formal/consent/Consent.tla, tools/build_governance_policy.py, manifests/governance_policy.json	C121
 community_floor_voices	2 voices for any change to who is in a room; min(2, roster size) for the moderator election	constitution/governance_policy.tsv	tools/build_governance_policy.py, manifests/governance_policy.json, formal/two_path/PolicyCorridor.lean	C138
 phone_relay_default	relays while charging on an unmetered network, reports no capacity otherwise; default, the owner MAY override either way	5.4.6	formal/transport_tiers/Tiers.lean	C143
 onion_layer_floor	3 relays dealt to each of the three layers; separately, 3 answering relays per layer for liveness	5.4.6	formal/onion_layers/OnionLayers.tla, formal/onion_layers/OnionLayersCount.lean	C144
@@ -38,7 +38,7 @@ withhold_window_dsa16	14 days, counted on each holder from the instant it execut
 withhold_window_osa	14 days, counted on each holder from the instant it executes the tombstone	4.5.3		
 withhold_window_community_standards	30 days, counted on each holder from the instant it executes the tombstone	4.5.3		
 accord_heartbeat_max_secs	at most 90 days between refreshes of the heartbeat's `valid_until`	3.4.1	manifests/reactions.json	
-accord_roster_window_max_secs	604,800 s (7 d): the most an accord roster change's `window_until` reaches, under a declared severe-degradation state	4.2.6	manifests/reactions.json	
+accord_roster_window_max_secs	604,800 s (7 d): unused by the accord, whose roster changes are counted bundles with no window; read only by the group:roster reaction and the kernel door that still carry it	4.2.6	manifests/reactions.json, formal/causal_kernel/door.py	
 consent_temporary_ttl_secs	14 days from `asserted_at` for a temporary grant that states no `valid_until`	4.4.3.31	manifests/reactions.json	
 epoch_key_retention_secs	30 days: the rotate-forward window after which holders delete past-epoch keys (the default mode)	3.2	manifests/reactions.json	
 key_record_max_secs	31,536,000 s (365 × 86,400): `valid_until − asserted_at` of a `node` or `agent` key record never exceeds it	2.4.1.1	manifests/reactions.json	

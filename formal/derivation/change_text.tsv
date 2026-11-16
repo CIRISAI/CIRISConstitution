@@ -19,7 +19,7 @@ group:roster	replace[subkind:infrastructure]: field=consensus_protocol:no_weaker
 group:roster	replace: field=members:shrink	CC 3.3.4	rides the widening plane of [CC 3.1.3.2](#3.1.3.2), never a supersede
 group:roster	replace: field=members:shrink	CC 3.3.4	A `family` Contribution that supersedes the current one may change metadata or drop members and never adds one.
 group:roster	replace: link=chained:prev_head_digest	CC 4.4.3.21	prev_head_digest names is held; a later signed instant that does not
-group:roster	replace[recovery]: by=committed_key	CC 3.1.3	A holder's recovery version ([CC 4.2.6](part_4_composition_governance.md#4.2.6)) is the one single-signer version.
+group:roster	replace[recovery]: by=committed_key	CC 3.1.3	A holder's recovery, a later genesis bundle under the recovery key alone ([CC 4.2.6](part_4_composition_governance.md#4.2.6)), is the one single-signer version.
 group:roster	attest: field=members:grow_signed	CC 3.1.3.2	A founding record seats a listed member iff that member **signed** the record, as its authority or a co-signer. A family record carries `additional_scrubs` as
 group:roster	replace[entrenched]: field=consensus_protocol:frozen	CC 3.3.4	It is locked at family creation. Changes ride the protocol's own rules (meta-amendment shape parallel to [CC 4.5.1.2](part_4_composition_governance.md#4.5.1.2)) UNLESS `consensus_protocol_entrenched == true`, in which case
 group:roster	replace: by=cosigned, field=consensus_protocol:any	CC 3.3.4	changes the `consensus_protocol` field is admitted ONLY IF:

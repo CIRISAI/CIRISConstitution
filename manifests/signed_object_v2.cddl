@@ -267,6 +267,10 @@ revoked-entry = [key: kid, revocation: row-ref, trusted_through: [* row-ref]]   
 ; refs.also "cites" by row-ref (each holder's and each seat's key:record, each seat's transport_destination
 ; binding). The bundle's own count is the canonical conferral of every seat in serve_nodes (CC 4.2.1);
 ; each statement carries iat, floor(asserted_at / 1000).
+;  A recovery (CC 2.6.1.11) is a later bundle with ONE statement: iss the holder's identity reference, kid the
+;  recovery key's thumbprint; it counts only where prev's recovery_commitments[iss] equals the commitment over the
+;  recovery key (constant time). refs.also "cites" names the recovery key's key:record and the holder's new
+;  signing-key record; recovery_commitments[iss] is the next commitment.
 ; Checked in prose, not here: version is 1 iff refs has no prev; holders, serve_nodes and witnesses are
 ; pairwise disjoint;
 ; the keys of recovery_commitments are exactly holders; scope holds infra:attest and infra:serve; the
@@ -303,10 +307,12 @@ genesis-charter = {
 ; row's type and family separate the kinds, so the payload carries no invocation_kind. The map is closed.
 accord-invocation = {
   "author": identity-ref,          ; the holder who signs: the statement's iss
+  "accord_root": tstr,             ; the accord's family_key_id: picks the bundle in force the row is verified against
   "invocation_id": tstr,           ; the id of the halt, the notify or the drill
   "nonce": bstr .size 32,          ; minted by the holder; single-use within valid_until
   "asserted_at": ms-time,
   "valid_until": ms-time,          ; bounds the reuse of the nonce, never the reach of a halt
+  ? "payload_digest": hash-digest, ; a notify only: SHA-256 over its message, a separate object held as bytes
 }
 ; A lifecycle row (family accord:lifecycle, over its kind) is counted (CC 2.6.1.9): one statement per
 ; holder over one payload, with no author. Its dimension names its kind, confirmed or active; refs.target
@@ -314,6 +320,7 @@ accord-invocation = {
 accord-lifecycle = {
   "refs": accord-lifecycle-refs,
   "dimension": tstr,
+  "accord_root": tstr,
   "invocation_id": tstr,
   "nonce": bstr .size 32,
   "asserted_at": ms-time,
