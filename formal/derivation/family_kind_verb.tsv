@@ -185,3 +185,4 @@ ballot:moderator_acceptance	registry	Structure	THING	attest	M	the winner's accep
 cosign:{state}	persist	Process	THING	attest,withdraw	M	collection of cosignatures for an event short of its protocol; lapses at the hold window or resolves into the event	no	pre:any
 location_proof:{version}	persist	Circumstances	THING	attest,withdraw	M	the subject's own rough-location declaration, ended by its signer's withdraws	no	—
 trust:blessing	persist	Rules	THING	attest,withdraw	M	a conferring roster's counted conferral of roles on a key record; withdrawn only by a cosigned withdraws	no	pre:Identity
+admission:unit	persist	Rules	THING	attest,withdraw	M	a person's, or a counted group's, admission of one unit digest to execute with named capabilities until an instant; renewal is a later row	no	—

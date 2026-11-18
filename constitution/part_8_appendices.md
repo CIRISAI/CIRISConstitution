@@ -1646,7 +1646,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 120 of 186 families.
+A family with no card states none of these beyond the default row. Cards: 121 of 187 families.
 
 **`accord:*`** — Rules, thing
 
@@ -1755,6 +1755,17 @@ In time:
 - [confirmed] landing of `fuse`: each node for itself, nothing signed; a late answer does not count (CC 4.2.1.1, CC 4.2.1.3)
 
 Body: `accord_root`, `invocation_id`, `nonce`, `dimension`, `target`
+
+**`admission:unit`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | author, member | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, member | selfAct | false | false | attest |
+
+Count: `act=group => cosigned_act@subject_group ; none` (CC 3.1.3)
+
+Authorship: `act=group => counted ; authored` (CC 3.1.3)
 
 **`age_assurance:{level}:{band}:{version}`** — Facts, account
 
@@ -2439,7 +2450,7 @@ Fold:
 - `over=seated@named/person` (CC 4.3)
 - `over=present@named/person` (CC 4.3)
 
-Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `room`, `refs`, `asserted_at`
+Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `room`, `call_fingerprint`, `refs`, `asserted_at`
 
 **`delivery_receipt:{stream_id}`** — Facts, account
 

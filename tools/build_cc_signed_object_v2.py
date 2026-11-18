@@ -87,6 +87,7 @@ OBJECTS = [
     ("receipt", "A delivery receipt: the payload of a `delivery_receipt:{stream_id}` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
     ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
+    ("admission", "An admission of a unit: the members of an `admission:unit` row"),
     ("deferral", "A deferral response: the members this form names of a `deferral:response:{outcome}` row"),
     ("deferral_request", "A deferral request: the members this form names of a `deferral:request` row"),
     ("rebind", "A canonical re-bind: the payload of a `transport:canonical_rebind` row"),
@@ -554,6 +555,9 @@ def family_payloads():
                 "reticulum_x25519_pubkey": bytes(32), "reticulum_ed25519_pubkey": bytes([1]) * 32, "app_name": "ciris",
                 "aspects": ["node", "transit"], "destination_hash": bytes(16)},
             "transit_xwing_pubkey": bytes([2]) * 1216, "onion_hop_xwing_pubkey": bytes([3]) * 1216, "asserted_at": t}),
+        "admission-unit": ("admission:unit", {
+            "author": iref(0), "unit": dig, "capabilities": ["read", "compute"], "cohort_scope": "self", "asserted_at": t,
+            "valid_until": t + 86400000}),
         "delivery-receipt": ("delivery_receipt:.stream_id", {
             "author": iref(1), "dimension": "delivery_receipt:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
             "chunk_root": dig, "asserted_at": t}),
@@ -614,6 +618,11 @@ def family_payload_samples():
         ("canonical-rebind", "transport:canonical_rebind payload", cde(P["canonical-rebind"]), [
             ("a re-bind naming no bundle", D("canonical-rebind", "refs")),
             ("a re-bind with a transit key of 1184 bytes", W("canonical-rebind", transit_xwing_pubkey=bytes(1184)))]),
+        ("admission-unit", "admission:unit payload", cde(P["admission-unit"]), [
+            ("a unit digest in hex", W("admission-unit", unit="ab" * 32)),
+            ("a capability outside the closed set", W("admission-unit", capabilities=["compute", "shell"])),
+            ("an admission with no capability", W("admission-unit", capabilities=[])),
+            ("an admission with no lease end", D("admission-unit", "valid_until"))]),
         ("delivery-receipt", "delivery_receipt:{stream_id} payload", cde(P["delivery-receipt"]), [
             ("a receipt with no chunk index", D("delivery-receipt", "k")),
             ("a chunk root as bare bytes", W("delivery-receipt", chunk_root=bytes(32)))]),
@@ -660,6 +669,60 @@ def family_payload_rule(root, p, family=None):
     if root == "group-roster" and (p.get("version") == 1) != ("head" not in p.get("refs", {})):
         return PAYLOAD_INVALID
     return None
+
+
+UNIT_LEASE_MAX_MS = 86400 * 1000                         # unit_lease_max_secs (CC 2.7.11)
+CAPS = ("compute", "read", "net_send", "submit", "sign", "store_write", "actuate")
+EFFECTS = ("net_send", "submit", "sign", "store_write", "actuate")
+
+
+def admission_unit_rule(p):
+    """The static checks of an admission:unit payload (CC 2.7.11, CC 2.6.1.8 step 5): None, or its token."""
+    if ("author" in p) == ("head" in p.get("refs", {})):
+        return "admission_unit_malformed"
+    caps = p.get("capabilities", [])
+    if not caps or any(c not in CAPS for c in caps):
+        return "admission_capability_unknown"
+    if not p["asserted_at"] < p["valid_until"] <= p["asserted_at"] + UNIT_LEASE_MAX_MS:
+        return "admission_lease_out_of_window"
+    if "author" in p and any(c in EFFECTS for c in caps) and p.get("cohort_scope") != "self":
+        return "admission_owner_row_not_self"               # an owner-alone row admits only on its author's own hosts
+    return None
+
+
+def admission_samples():
+    """[(what, payload, expected)]: an authored and a counted row that pass, and one refusal per token.
+    The answers that read other rows (the issuer's standing, a count not met, a head not held, which waits) are the
+    host's and are run by formal/admission."""
+    base = family_payloads()["admission-unit"][1]
+    t = base["asserted_at"]
+    counted = dict(_without(base, "author"), capabilities=["compute", "net_send"], refs={"head": _ref(8)})
+    return [
+        ("one person admits a unit that reads and computes, for a day", base, None),
+        ("a group counts an effect over its head", counted, None),
+        ("an author and a head both", dict(counted, author=iref(0)), "admission_unit_malformed"),
+        ("neither an author nor a head", _without(base, "author"), "admission_unit_malformed"),
+        ("a capability outside the seven", dict(base, capabilities=["compute", "shell"]), "admission_capability_unknown"),
+        ("a lease of a day and a millisecond", dict(base, valid_until=t + UNIT_LEASE_MAX_MS + 1), "admission_lease_out_of_window"),
+        ("a lease that ends as it opens", dict(base, valid_until=t), "admission_lease_out_of_window"),
+        ("the owner's own row names an effect at self scope: it admits only on the owner's own hosts", dict(base, capabilities=["compute", "net_send"], cohort_scope="self"), None),
+        ("a counted row at federation scope: a registry's admission for every host that accepts it", dict(counted, cohort_scope="federation"), None),
+        ("one person's row names an effect at federation scope", dict(base, capabilities=["compute", "net_send"], cohort_scope="federation"), "admission_owner_row_not_self"),
+    ]
+
+
+def admission_checks():
+    """(line, problems): every sample gives its expected answer; a planted rule that drops the lease's bound must be
+    caught by at least one sample."""
+    S, bad = admission_samples(), []
+    for what, p, want in S:
+        if admission_unit_rule(p) != want:
+            bad.append(f"admission sample: {what}: {admission_unit_rule(p)} where {want} was expected")
+    planted = lambda p: None if admission_unit_rule(p) == "admission_lease_out_of_window" else admission_unit_rule(p)
+    if all(planted(p) == want for _, p, want in S):
+        bad.append("deliberate break not caught: a lease with no bound passed every admission sample")
+    return (f"admission:unit: {sum(w is None for *_, w in S)} samples pass, "
+            f"{sum(w is not None for *_, w in S)} refused, each with its token; the planted break is caught"), bad
 
 
 def family_payload_rule_checks():
@@ -728,7 +791,7 @@ def family_cddl_checks(text, ftext):
 
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
 FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "receipt",
-                  "occurrence", "amendment", "deferral", "deferral_request", "rebind")
+                  "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
@@ -745,9 +808,13 @@ FAMILY_RULE_HEAD = {
     "canonical-rebind": "transport:canonical_rebind (CC 3.1.3, CC 3.3.6.2): counted by a strict majority of the holders of the bundle in force; sub is the seated node.",
     "identity-amendment": "identity_amendment (CC 3.1.5): authored by the agent's occurrence key; sub is the agent's identity.",
     "deferral-response": "deferral:response:{outcome} (CC 3.1.9.3, CC 4.3): the members this form names; the response's further members are the store's.",
+    "admission-unit": "admission:unit (CC 2.7.11, CC 3.1.3): authored by one person, or counted over refs.head with no author; one person's row naming an effect admits only on that person's own host; sub is the unit's digest as canonical:sha256:{hex}.",
 }
 FAMILY_CLOSED = {"roster-member", "encryption-pubkeys"}            # every other family rule keeps a member it does not name (CC 2.1.1)
-FAMILY_EXTRA = {"takedown-notice": [         # rules a member's type names, stated with the rule that uses them
+FAMILY_EXTRA = {"admission-unit": [
+    "; The capabilities of CC 2.7.11: a closed set; the last five are effects.",
+    'capability = "compute" / "read" / "net_send" / "submit" / "sign" / "store_write" / "actuate"'],
+    "takedown-notice": [         # rules a member's type names, stated with the rule that uses them
     "; The legal bases of CC 3.3.2, by their wire strings: a closed set.",
     'legal-basis = "dmca512" / "dsa_article16" / "tvec_terrorist" / "ncmec_csam" / "gifct_cip"',
     '            / "community_standards" / "perceptual_hash_csam" / "osa_illegal_content"',
@@ -1543,6 +1610,9 @@ def main(argv):
     pline, pbad = family_payload_rule_checks()
     lines.append(pline)
     bad += pbad
+    aline, abad = admission_checks()
+    lines.append(aline)
+    bad += abad
     sline, sbad = second_row_checks()
     lines.append(sline)
     bad += sbad

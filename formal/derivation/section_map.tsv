@@ -101,6 +101,7 @@ old_number	old_anchor	old_slug	new_number	new_anchor	new_slug	title	moved	note
 2.7.8	#2.7.8	kernel-roster	2.7.8	#2.7.8	kernel-roster	The roster is the one ledger	no	
 2.7.9	#2.7.9	kernel-limits	2.7.9	#2.7.9	kernel-limits	What the kernel does not give	no	
 2.7.10	#2.7.10	kernel-checkpoint	2.7.10	#2.7.10	kernel-checkpoint	Checkpoint and purge	no	
+—	—	kernel-admission	2.7.11	#2.7.11	kernel-admission	Admission: what an agent is, what a node runs, what an agent does	no	new in 1.0-rc21
 3.1	#3.1	namespace	3.1	#3.1	namespace	The dimension namespace	no	
 3.1.1	#3.1.1	registry	3.1.1	#3.1.1	registry	CIRISRegistry — identity / build / license / partner	no	
 3.1.2	#3.1.2	attestation	3.1.2	#3.1.2	attestation	CIRISVerify — attestation ladder, provenance, transparency	no	

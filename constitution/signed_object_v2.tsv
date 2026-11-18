@@ -222,13 +222,20 @@ occurrence	encryption-pubkeys	"x25519"	x25519_base64	payload	bstr .size 32	alway
 occurrence	encryption-pubkeys	"ml_kem_768"	ml_kem_768_base64	payload	bstr .size 1184	always	3.3.6.1	The ML-KEM-768 public key.
 amendment	identity-amendment	"author"	attesting_key_id	payload	identity-ref	always	3.1.5	The agent's occurrence key's identity.
 amendment	identity-amendment	"amendment_digest"	amendment_digest	payload	hash-digest	always	3.1.5 2.1	The SHA-256 of the applied amendment; it equals the approving response's.
-amendment	identity-amendment	"refs"	authorized_by	payload	refs	always	3.1.5 2.6.1.3	The approving deferral:response:approved row, under the also role cites.
+amendment	identity-amendment	"refs"	authorized_by	payload	refs	always	3.1.5 2.6.1.3	The approving deferral:response:approved row, under the also role cites; the amendment it follows in refs.prev, absent on the base template (CC 2.7.11).
 amendment	identity-amendment	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+admission	admission-unit	"author"	attesting_key_id	payload	identity-ref	where the row is one person's	2.7.11 3.1.3	The one person who admits; absent on a counted row, whose voices are its statements. Naming an effect, it admits only on the author's own host.
+admission	admission-unit	"unit"	unit	payload	hash-digest	always	2.7.11	SHA-256 over the unit's bytes as the host loads them, or over its manifest; equals the CWT sub's digest.
+admission	admission-unit	"capabilities"	capabilities	payload	[+ capability]	always	2.7.11 2.6.1.2	A set from the closed seven; the last five are effects.
+admission	admission-unit	"refs"	head	payload	refs	where the row is counted	2.7.11 2.6.1.9	The roster head the count is over, in refs.head.
+admission	admission-unit	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2 2.7.11	The lease opens.
+admission	admission-unit	"valid_until"	valid_until	payload	ms-time	always	2.6.2 2.7.11	The lease closes: later than asserted_at, by at most unit_lease_max_secs.
 deferral	deferral-response	"author"	attesting_key_id	payload	identity-ref	always	3.1.9.3 4.3	The seated Wise Authority who answers.
 deferral	deferral-response	"dimension"	dimension	payload	tstr	always	3.1.9.3	deferral:response:approved:v1 or deferral:response:rejected:v1.
 deferral	deferral-response	"amendment_digest"	amendment_digest	payload	hash-digest	on an approval that authorises an identity amendment	3.1.5 2.1	The digest of the amendment approved.
 deferral	deferral-response	"deferral_id"	deferral_id	payload	tstr	where the request carries one	3.1.9.3	The request's own correlation id, copied from it.
 deferral	deferral-response	"room"	-	payload	tstr	where the deferral belongs to a room	3.1.9.3 2.6.1.12	The room the deferral is routed in, copied from the request; the room id's encoding is open.
+deferral	deferral-response	"call_fingerprint"	call_fingerprint	payload	hash-digest	on an approval of a call	2.7.11 4.3	The fingerprint of the call approved; a dispatch resting on it executes only that call.
 deferral	deferral-response	"refs"	references_attestation_id	payload	refs	always	3.1.9.3 2.6.1.3	The request answered, under answers.
 deferral	deferral-response	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 deferral_request	deferral-request	"author"	attesting_key_id	payload	identity-ref	always	3.1.9.3 4.3	The deferring party: an agent's occurrence key, or a person's own key.

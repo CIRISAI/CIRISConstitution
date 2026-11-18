@@ -1,10 +1,10 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "ecd1b58ac05a0f3486f2f1a0de5e2a456fe7fbc62c15157b439a24c458096a20",
+  "transitions_sha256": "338369de909baf28e80e105ff28f6b567fc6107db5e9b6bcb62fb6785ca9d316",
   "policy_sha256": "32cfcb6c9503fecf6f1827075342bc438ebe721360253f936c680f4d1944247a",
-  "steps": 109,
-  "rows": 76,
+  "steps": 111,
+  "rows": 77,
   "errors": []
  },
  "steps": [
@@ -2901,6 +2901,54 @@
     "verb": "attest",
     "signer": "alice",
     "object": "bless:ci"
+   }
+  },
+  {
+   "n": 110,
+   "note": "Erin, no member of the reviewing group, tries to add her voice to its admission of a unit: refused",
+   "actor": "erin",
+   "standing": [
+    "registered"
+   ],
+   "view": {
+    "object": "unit:1",
+    "family": "admission:unit",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 111,
+   "note": "Bob admits a unit that only computes, for one day, under his own key",
+   "actor": "bob",
+   "standing": [
+    "author"
+   ],
+   "view": {
+    "object": "unit:2",
+    "family": "admission:unit",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row77",
+    "family": "admission:unit",
+    "verb": "attest",
+    "signer": "bob",
+    "object": "unit:2"
    }
   }
  ]

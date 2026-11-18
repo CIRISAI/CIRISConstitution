@@ -3,10 +3,10 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "7ae4a6e2be0562e20d292da802478b3a04dcc62b477ddc33477f7625ae50abe4",
-   "invariants_sha256": "6365a16e9291ac77c7a131e3b7d1a0638f6261e7f5aef5b129614106a02b829b",
+   "invariants_sha256": "c9990b9e4eb82a7f848d4e320182eab767e79f6c9db59129697c045398f43733",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "5cdfdb0b57c32ab7ac64a52905b41c64ee77ef95750fa8940b4714cae1956610",
+   "claims_sha256": "9e8c232b14306a9c51edcae2b3e9ac5b1f11d97daf1289a25497b6def433cf1c",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -29,17 +29,17 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 233,
-   "claims": 607,
+   "invariants": 247,
+   "claims": 613,
    "entries": 20,
-   "refusal_tokens": 105
+   "refusal_tokens": 106
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "9f18a327b6aa5a5f9bcc05f52a5028725cb2e049dd0ccc3fecf78c69022b126c"
+  "chain_sha256": "a4f037334eeed80ce1cdec3a76b6c056b0a41bc6aee68047b8482c21bea461e4"
  },
  "chain": [
   {
@@ -4584,6 +4584,15 @@
      "verdict": "proved"
     },
     {
+     "inv_id": "AD.dispatch",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_DispatchOnlyReviewed",
+     "kind": "safety",
+     "claim_id": "CLM-admission-action",
+     "verdict": "holds; its planted breaks are caught"
+    },
+    {
      "inv_id": "AH.subs",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -4699,6 +4708,15 @@
      "kind": "safety",
      "claim_id": "CLM-halt-one-row",
      "verdict": "closes; discard twin fails"
+    },
+    {
+     "inv_id": "AD.halt",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_HaltStopsEffects",
+     "kind": "safety",
+     "claim_id": "CLM-admission-halt",
+     "verdict": "holds; its planted breaks are caught"
     },
     {
      "inv_id": "AH.nowin",
@@ -4961,6 +4979,22 @@
      ]
     },
     {
+     "claim_id": "CLM-admission-action",
+     "cc_ref": "2.7.11",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_DispatchOnlyReviewed"
+       ]
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-halt-one-row",
      "cc_ref": "4.2.1.1",
      "status": "established",
@@ -5192,6 +5226,22 @@
        "path": "src/accord.rs",
        "symbols": [
         "ingest_message"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-admission-halt",
+     "cc_ref": "4.2.1.1",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_HaltStopsEffects"
        ]
       }
      ]
@@ -5899,6 +5949,15 @@
      "verdict": "closes; discard twin fails"
     },
     {
+     "inv_id": "AD.halt",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_HaltStopsEffects",
+     "kind": "safety",
+     "claim_id": "CLM-admission-halt",
+     "verdict": "holds; its planted breaks are caught"
+    },
+    {
      "inv_id": "AH.nowin",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -6276,6 +6335,22 @@
        "path": "src/accord.rs",
        "symbols": [
         "ingest_message"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-admission-halt",
+     "cc_ref": "4.2.1.1",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_HaltStopsEffects"
        ]
       }
      ]
@@ -45840,6 +45915,15 @@
      "kind": "theorem",
      "claim_id": "CLM-universality-written-once",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AD.dispatch",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_DispatchOnlyReviewed",
+     "kind": "safety",
+     "claim_id": "CLM-admission-action",
+     "verdict": "holds; its planted breaks are caught"
     }
    ],
    "claims": [
@@ -45962,6 +46046,22 @@
        "path": "formal/guarantees/Guarantees.lean",
        "symbols": [
         "revocable"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-admission-action",
+     "cc_ref": "2.7.11",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_DispatchOnlyReviewed"
        ]
       }
      ]
@@ -46243,6 +46343,22 @@
         "floor_scales_with_size",
         "strict_in_corridor",
         "lax_outside"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-admission-halt",
+     "cc_ref": "4.2.1.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_HaltStopsEffects"
        ]
       }
      ]
@@ -47341,9 +47457,44 @@
      "kind": "safety",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AD.profile",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_ProfileDigestMatches",
+     "kind": "safety",
+     "claim_id": "CLM-admission-profile",
+     "verdict": "holds; its planted breaks are caught"
+    },
+    {
+     "inv_id": "AD.one",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_OneAdmission",
+     "kind": "safety",
+     "claim_id": "CLM-admission-profile",
+     "verdict": "holds; its planted breaks are caught"
     }
    ],
    "claims": [
+    {
+     "claim_id": "CLM-admission-profile",
+     "cc_ref": "3.1.5",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_ProfileDigestMatches",
+        "Inv_OneAdmission"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-trace-family",
      "cc_ref": "3.1.5",
@@ -53874,6 +54025,9 @@
   },
   "bundle_fingerprint": {
    "8.11.24": "bold"
+  },
+  "call_argument_unrepresentable": {
+   "2.7.11": "after_refusal"
   },
   "canonical_binding": {
    "2.3.2.2": "bold"

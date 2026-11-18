@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc21",
-    "registry_sha256": "5911618185ac92580e264d347edea2ec27158fcc328867009fc4831fbdb15244",
+    "registry_sha256": "6f9e75da32c27d07332579a30aab068eadfab5944d7c05f9c20408b6a9a9ff7f",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -323,6 +323,42 @@
       "family": "activity_tier:{period}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "admission:unit:v1",
+      "family": "admission:unit",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "admission:unit:V1",
+      "family": "admission:unit",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "admission:unit:v1:v2",
+      "family": "admission:unit",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "admission:unit:v1beta",
+      "family": "admission:unit",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Admission:unit:v1",
+      "family": "admission:unit",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "admission:unit",
+      "family": "admission:unit",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
       "dimension": "age_assurance:provider:minor:v1",
@@ -8160,7 +8196,7 @@
       "why": "points are points, never intervals"
     },
     {
-      "family": "benchmark:he300:{category}:{version}",
+      "family": "admission:unit",
       "score": 0.0,
       "admissible": false,
       "class": "positive-only",

@@ -9,6 +9,15 @@ accord:invoke:drill:{drill_id}	subject_rule	accord_named	{"attested_party": ["Ta
 accord:invoke:notify:{notify_id}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle:{kind}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
+admission:unit	placement	unbuilt	null
+admission:unit	subject_rule	unbuilt	null
+admission:unit	cosign_rule	unbuilt	null
+admission:unit	freshness	unbuilt	null
+admission:unit	lifecycle	unbuilt	null
+admission:unit	replication	unbuilt	null
+admission:unit	projection	unbuilt	null
+admission:unit	erasure_route	unbuilt	null
+admission:unit	governance	unbuilt	null
 age_assurance:{level}:{band}:{version}	subject_rule	verdict_not_yours	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "not_subject (attester != attested)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 archive_release:{basis}	placement	unbuilt	"none (held shut: never stored)"
 archive_release:{basis}	subject_rule	unbuilt	"none (held shut)"

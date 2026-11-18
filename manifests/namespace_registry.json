@@ -225,7 +225,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 186,
+    "n_families": 187,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
@@ -233,7 +233,7 @@
       "cirisbench": 1,
       "lens": 9,
       "node": 50,
-      "persist": 36,
+      "persist": 37,
       "registry": 20,
       "transport-delivery": 7
     },
@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "5911618185ac92580e264d347edea2ec27158fcc328867009fc4831fbdb15244",
+    "registry_sha256": "6f9e75da32c27d07332579a30aab068eadfab5944d7c05f9c20408b6a9a9ff7f",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "771ea9fcf0f4d4c915e91c8fe229be63dc494ed6c8959292774dd7596115637e"
+    "source_sha256": "1c9a6e9484283f35e6e3e67c5a995dcd3eb3a775116bd84f5476e1bc00125156"
   },
   "families": [
     {
@@ -533,6 +533,29 @@
         {
           "class": "vocab",
           "segment": "{period}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "That a unit may execute, with named capabilities, until an instant (CC 2.7.11).",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "admission:unit",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "admission"
+        },
+        {
+          "class": "literal",
+          "segment": "unit"
         }
       ]
     },

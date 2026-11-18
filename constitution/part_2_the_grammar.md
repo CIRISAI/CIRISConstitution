@@ -1,6 +1,6 @@
 # Part 2 — The Grammar
 
-**Decimal range** `2.x` · **59 sections** · **page budget 17pp** · [← master index](../README.md)
+**Decimal range** `2.x` · **60 sections** · **page budget 17pp** · [← master index](../README.md)
 
 > The minimal-and-adequate wire grammar: the envelope, the five primitives, conformance, and canonicalization.
 
@@ -919,8 +919,19 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 |---|---|---|---|---|---|---|
 | `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.5](part_3_the_namespace.md#3.1.5) | The agent's occurrence key's identity. |
 | `amendment_digest` | `"amendment_digest"` | payload | `hash-digest` | always | [3.1.5](part_3_the_namespace.md#3.1.5) [2.1](#2.1) | The SHA-256 of the applied amendment; it equals the approving response's. |
-| `authorized_by` | `"refs"` | payload | `refs` | always | [3.1.5](part_3_the_namespace.md#3.1.5) [2.6.1.3](#2.6.1.3) | The approving deferral:response:approved row, under the also role cites. |
+| `authorized_by` | `"refs"` | payload | `refs` | always | [3.1.5](part_3_the_namespace.md#3.1.5) [2.6.1.3](#2.6.1.3) | The approving deferral:response:approved row, under the also role cites; the amendment it follows in refs.prev, absent on the base template (CC 2.7.11). |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**An admission of a unit: the members of an `admission:unit` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | where the row is one person's | [2.7.11](#2.7.11) [3.1.3](part_3_the_namespace.md#3.1.3) | The one person who admits; absent on a counted row, whose voices are its statements. Naming an effect, it admits only on the author's own host. |
+| `unit` | `"unit"` | payload | `hash-digest` | always | [2.7.11](#2.7.11) | SHA-256 over the unit's bytes as the host loads them, or over its manifest; equals the CWT sub's digest. |
+| `capabilities` | `"capabilities"` | payload | `[+ capability]` | always | [2.7.11](#2.7.11) [2.6.1.2](#2.6.1.2) | A set from the closed seven; the last five are effects. |
+| `head` | `"refs"` | payload | `refs` | where the row is counted | [2.7.11](#2.7.11) [2.6.1.9](#2.6.1.9) | The roster head the count is over, in refs.head. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) [2.7.11](#2.7.11) | The lease opens. |
+| `valid_until` | `"valid_until"` | payload | `ms-time` | always | [2.6.2](#2.6.2) [2.7.11](#2.7.11) | The lease closes: later than asserted_at, by at most unit_lease_max_secs. |
 
 **A deferral response: the members this form names of a `deferral:response:{outcome}` row**
 
@@ -931,6 +942,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `amendment_digest` | `"amendment_digest"` | payload | `hash-digest` | on an approval that authorises an identity amendment | [3.1.5](part_3_the_namespace.md#3.1.5) [2.1](#2.1) | The digest of the amendment approved. |
 | `deferral_id` | `"deferral_id"` | payload | `tstr` | where the request carries one | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) | The request's own correlation id, copied from it. |
 | — | `"room"` | payload | `tstr` | where the deferral belongs to a room | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) [2.6.1.12](#2.6.1.12) | The room the deferral is routed in, copied from the request; the room id's encoding is open. |
+| `call_fingerprint` | `"call_fingerprint"` | payload | `hash-digest` | on an approval of a call | [2.7.11](#2.7.11) [4.3](part_4_composition_governance.md#4.3) | The fingerprint of the call approved; a dispatch resting on it executes only that call. |
 | `references_attestation_id` | `"refs"` | payload | `refs` | always | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) [2.6.1.3](#2.6.1.3) | The request answered, under answers. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
@@ -1630,3 +1642,75 @@ Nothing that reads `now` is frozen. A node keeps the instant it first held each 
 A deletion duty outranks a kept copy ([CC 4.5.3](part_4_composition_governance.md#4.5.3), [CC 3.3.1](part_3_the_namespace.md#3.3.1)). Only a `legal_hold` or an `erasure_exempt` class suspends consent-driven descent ([CC 4.4.3.29](part_4_composition_governance.md#4.4.3.29)). After a purge a node still serves its audience what it owes. A node holding bytes in custody for others drops only those whose custody has ended.
 
 **Scope.** This section concerns a node's own storage and answers. A new reader taking a group's past on a member's vouch performs a different act ([CC 3.3.4](part_3_the_namespace.md#3.3.4)).
+
+### 2.7.11 `kernel-admission` — Admission: what an agent is, what a node runs, what an agent does
+
+Three changes are one admission: a change to what an agent is (its profile), to what a node runs (code), and to what an agent is about to do (an action). In each, authority is a verified row that names the exact digest which takes effect. It reads forward only and is rooted in a person. No program's key produces it: a key whose `identity_type` contains `node` or `agent` admits nothing ([CC 2.6.1.7](#2.6.1.7)).
+
+| Scope | What changes | The row | Who |
+|---|---|---|---|
+| profile | the agent's identity | the `identity_amendment` chain from the base template ([CC 3.1.5](part_3_the_namespace.md#3.1.5)) | one approval by a person seated over the agent ([CC 4.3](part_4_composition_governance.md#4.3)) |
+| code | a unit a node runs | `admission:unit` ([CC 3.1.3](part_3_the_namespace.md#3.1.3)) | one person for a unit that only computes, or on a host that person owns; otherwise a count of persons |
+| action | one call an agent dispatches | the review record over the call's fingerprint | all four faculties of the agent |
+
+**Code.** A **unit** is what a host executes under one digest: SHA-256 over its bytes, or over its manifest where it is several files. A host MUST NOT execute a unit outside its attested build, in any mode, unless it holds a live `admission:unit` row naming that exact digest. Code a program wrote is data. It runs nowhere until a person's row names its digest, and a changed unit is another digest with no admission.
+
+A row names the capabilities it admits from a closed set: `compute`, `read`, `net_send`, `submit`, `sign`, `store_write` and `actuate`. Nothing is ambient. The last five are **effects**. A row that names no effect MAY be one person's. A row that names an effect is a counted row ([CC 2.6.1.9](#2.6.1.9)), counted over the members at the head it names by the group's declared protocol. It is never counted on fewer than two persons. One exception holds: one person's row that names an effect admits on a host that person owns, and on no other host. A host knows its owner by its owner-binding, which the owner signs and the node cosigns ([CC 3.2](part_3_the_namespace.md#3.2)). Such a row MUST be at `self` scope ([CC 2.1](#2.1)); at any other scope it is Invalid (`admission_owner_row_not_self`). A counted row takes any scope its signers choose, and at `federation` it serves every host whose owner accepts its group.
+
+Every voice's `iss` is a person's identity, whose `identity_type` contains `user` or `accord_holder`. It is read after step 8 finds the statement's key to be a key of that `iss` ([CC 2.6.1.8](#2.6.1.8)). A delegation carries no admission, so the family names no role for a delegate.
+
+**The attested build.** A unit inside an attested build runs under the build's own attestation: the build's manifest names it, and the host holds the counted blessing of the pipeline that signed it ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)). An `admission:unit` row admits what a host loads beyond that build, such as an imported skill, a discovered adapter or a tool added at run time.
+
+**Standing.** The author, or the group whose head a counted row names, stands at a host when it is the host owner's own key. It also stands when the owner's own acceptance edges reach it ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34)), with the class `admission` listed on every edge of that walk. An edge signed by a program's key carries nothing on the walk. No list of issuers ships with anything. A row whose author or group does not stand at a host admits nothing there.
+
+**The lease.** A row admits from its `asserted_at` to its `valid_until`, read on the host's own clock, at most `unit_lease_max_secs` apart. It admits for at most `unit_lease_max_secs` after the host first held it ([CC 2.7.1](#2.7.1)). So a host that hears nothing more stops within one lease. A renewal is a later row for the same digest. A host runs a unit while any admitting row covers `now`, with the capabilities those rows name together.
+
+**The end.** An admission ends at its lease, at its withdrawal and at the halt. An authored row is withdrawn by its author, and a counted row by the same count ([CC 2.4.1.1](#2.4.1.1) rule 0). A withdrawal reaches forward from the host's receipt of it. A host owner MAY always stop running a unit.
+
+**Capabilities only narrow.** A unit started by another unit holds no capability its parent lacks. A unit submitted to another host runs there only by that host's own admission, against its own owner. The sender's standing carries nothing across.
+
+**The halt reaches every unit.** On a node the halt reaches, from the instant it latches, the host permits no effect of any admitted unit ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)). The host reads the latch before every effect. Computing and reading continue, and the lease ends a halted unit.
+
+**Receipts are the owner's policy.** The family requires no witness's receipt before a unit runs, since no party stands in the middle ([CC 2.6.1.11](#2.6.1.11)). A host owner MAY require receipts by a row under the owner's own key. The host then waits for acknowledgement rows from the voices that row names ([CC 2.7.5](#2.7.5)).
+
+**Profile.** An agent loads its profile only when the digest of what it loads equals the digest its rows derive ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). The base link of the `identity_amendment` chain names no predecessor and approves the exact digest of the agent's shipped template, as that template's manifest signature or the attested build checks it. Each later link names the one before. With no base link, the agent runs that template alone, counts no amendment and reports `profile_unanchored`. The expected digest is SHA-256 over the deterministic encoding of `["CEG-profile/2", d0, ..., dn]`, the links' digests in chain order. Two links that name one predecessor both stay uncounted, and the expected digest is that of the chain before them ([CC 2.7.7](#2.7.7) rule 2).
+
+**The base link.** The agent proposes it by a deferral naming the template's name, version and manifest digest. A person seated over the agent approves it by a response whose `amendment_digest` is that manifest digest ([CC 4.3](part_4_composition_governance.md#4.3)). The agent's node then signs the link. The approver is shown the name, the version and the digest, never the bytes. The attested build checks the template's manifest until that manifest carries a composite signature of its own. An agent that adopts this section starts unanchored. No amendment counts until a base link is approved and each amendment is approved again by its exact bytes.
+
+**Action.** Before an agent dispatches a call, it computes the call's **fingerprint**: SHA-256 over the deterministic encoding of `["CEG-call/2", verb, tool, arguments, channel]`, written as a row id is. `tool` is the name after alias resolution. `arguments` are the arguments as reviewed, each secret standing as its reference and never its value. `channel` is the channel's id, or the empty text. A number in the arguments is read by its exact decimal value. An integral value is an integer. Any other is its exact decimal as CBOR tag 4, normalised: a negative exponent and a mantissa not divisible by ten. An integer or a mantissa outside CBOR's integer range is refused (`call_argument_unrepresentable`). No float is written.
+
+The agent's four faculties ([CC 3.1.5.3](part_3_the_namespace.md#3.1.5.3)) are faculties of the agent, not keys. Their passes form a **review record**, a record under the agent's own key that binds only its own dispatch ([CC 2.7.1](#2.7.1)). The trace that anchors the act carries it ([CC 1.13.6](part_1_foundation.md#1.13.6)), and it confers nothing on any other node.
+
+An agent MUST NOT dispatch a call unless a review record of the same thought names the fingerprint it recomputes, before any secret is opened, with the passes of all four faculties. Execution is bound to the exact reviewed fingerprint, so what executes is byte-identical to what was reviewed, and a material change is a new action with no record. An independent dispatch gate also enforces the authorisation facts outside the reviewing stages, so authorisation holds even when review or its context fails.
+
+**An objection binds its fingerprint.** A faculty's objection bans the draft it was raised against, and a different draft is a new fingerprint that all four faculties review afresh. A pass over the same fingerprint dispatches only when it names the objection with the trusted row that discharges it: a row signed by a person seated over the agent ([CC 4.3](part_4_composition_governance.md#4.3)). A pass over a new fingerprint names every earlier objection of its thought as considered, so no retry loses one. The drafter's own argument discharges nothing, and the absence of evidence never licenses. A Wise Authority's approval of a call names the call's fingerprint, and a dispatch resting on it executes only that call.
+
+**Derived trust.** A result is no more trusted than the least trusted row it derives from. A later signature attests who acted, not what the content is. An effect whose arguments derive from untrusted input is licensed by a pass record that declares that derivation. An action that claims authority, for a person or under a seat, also needs the approving row that names its fingerprint. An effect that is a row binding others waits for the acknowledgements of those who could stop it ([CC 2.7.5](#2.7.5)).
+
+| Token | Answer | Where |
+|---|---|---|
+| `admission_unit_malformed` | Invalid | a row with both `author` and a head, or neither |
+| `admission_capability_unknown` | Invalid | no capability, or one outside the closed set |
+| `admission_owner_row_not_self` | Invalid | one person's row names an effect at a scope other than `self` |
+| `admission_lease_out_of_window` | Invalid | `valid_until` not after `asserted_at`, or more than `unit_lease_max_secs` after it |
+| `admission_issuer_not_person` | Invalid; a voice of a counted row is refused alone | a signer whose key is not a person's |
+| `admission_issuer_not_reached` | admits nothing at this host | the author or group does not stand here, or one person's row names an effect on a host that person does not own |
+| `admission_count_unmet` | held | the count is not met at the head the row names |
+| `admission_none` | the unit does not run | no live row admits this digest; detail `no_row`, `lease_ended` or `withdrawn` |
+| `admission_capability_not_admitted` | the effect is refused | no live row names the capability |
+| `admission_capability_not_held` | the effect is refused | the unit's parent lacks the capability |
+| `admission_halted` | the effect is refused | the halt is latched |
+| `profile_digest_mismatch` | the profile does not load | its digest differs from the derived one |
+| `profile_contested` | the profile does not load beyond the fork | two links name one predecessor |
+| `profile_unanchored` | the shipped template alone runs | no base link is held |
+| `call_argument_unrepresentable` | no fingerprint, not dispatched | an argument's integer or mantissa outside CBOR's integer range |
+| `action_not_reviewed` | not dispatched | no record names this fingerprint in this thought |
+| `action_review_incomplete` | not dispatched | a faculty's pass is missing |
+| `action_objection_undischarged` | not dispatched | an objection to this fingerprint is not named with a trusted row |
+| `action_objection_not_carried` | not dispatched | an objection to another draft of the thought is not named as considered |
+| `action_approval_mismatch` | not dispatched | the approval names another fingerprint |
+| `effect_untrusted_unacknowledged` | the effect waits | an undeclared derivation, claimed authority without its row, or a binding row without its acknowledgements |
+
+**What this rests on.** A model of the review contract shows that binding execution to the reviewed fingerprint is necessary. It holds under two stated assumptions: a drafter may err, and a faculty that holds the evidence judges correctly. That is sufficiency of the contract under those assumptions, not proof that an implementation follows it.
+
+**What this does not give.** A stage that must see the action it judges can be shown untrusted text inside that action. That residual is declared and not closed; how often it occurs is measured on one model, not proved. A person with standing who admits harmful code makes it attributable and withdrawable, not impossible. A unit that interprets its input can run what nobody admitted, carried as data. Capabilities and the effect gate bound it and do not forbid it. A host that does not follow this section gains no reach into one that does.
