@@ -2,6 +2,10 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
+## 1.0-rc21 (open)
+
+- Opened 2026-11-18 from the rc20 release. The edition states the forward payloads, families and refusals that the first builds to rc20 asked for, and completes the verification order.
+
 ## 1.0-rc20 (released 2026-11-16, tag v1.0-rc20)
 
 - Cut 2026-11-16, released as guidance. The edition of the forward form: the signed object is deterministic CBOR under COSE with one composite signature, the mesh begins with a fresh genesis and carries nothing over, and the accord's roster changes, recoveries and halts are rows and bundles of that form. The register holds 387 established rows, 47 normative and 172 staged; the namespace registry has 186 families; sixteen machine-checked models carry 232 properties, and the full formal run passed on the frozen tree (436b5bc). The edition-2 vectors are CIRISVerify's at the tag v23.2.0 (fc7fb02), whose readers of the genesis bundle agree with this text's reference reader on all 60 cases it models; the kernel is CIRISKernel `kernel-v0.2.0`. Implementers pin this edition as they ship the forward form.
