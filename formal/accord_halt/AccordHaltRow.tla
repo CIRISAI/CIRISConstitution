@@ -3,14 +3,16 @@
 
    A halt is an ordinary row with ONE statement: its holder's composite signature over the row's
    payload, verified against the holders of the bundle in force at the node. A key that is not among
-   them (a stranger, or a holder a later bundle removed) yields no halt. The lifecycle rows,
+   them (a stranger, or a holder a later bundle removed) yields no halt while it is not among them. Its
+   row is never discarded: a reader cannot tell a stranger from a holder seated by a bundle it does not
+   hold yet, so the row waits, and it latches once a bundle in force seats its signer. The lifecycle rows,
    `confirmed` and `active`, are counted rows: several statements over one payload, each naming the
    halt it confirms or ends by row id in `refs.target`, counted at a strict majority of the holders of
    the bundle in force. A statement naming another halt counts for that halt only. The fuse is the
    charter's `halt_fuse_secs` of the bundle in force (`Fuse` ticks here), counted from receipt.
 
-   One node; three holders h1, h2, h3 at the genesis, and a later bundle that removes h3; a stranger
-   x. At most two halt rows exist, by any key. Every key may sign lifecycle statements naming any halt
+   One node; three holders h1, h2, h3 at the genesis, a later bundle that removes h3, and a later bundle
+   that seats a new holder h4, whose halt can arrive before that bundle does; a stranger x. At most two halt rows exist, by any key. Every key may sign lifecycle statements naming any halt
    row that exists, so a stockpiled statement naming an earlier halt is in the world. At most four
    lifecycle statements exist (enough for a confirmation and a resumption), which bounds the state.
 
@@ -19,9 +21,10 @@ EXTENDS Naturals, FiniteSets
 
 CONSTANTS Fuse,
           CountStranger,   \* a halt is counted from a statement by a key not among the bundle's holders
-          AnyTarget        \* a lifecycle statement counts whatever halt it names
+          AnyTarget,       \* a lifecycle statement counts whatever halt it names
+          DiscardStranger  \* the refusal reading: a halt by a key not in the roster held is discarded
 
-Keys    == {"h1", "h2", "h3", "x"}
+Keys    == {"h1", "h2", "h3", "h4", "x"}
 Genesis == {"h1", "h2", "h3"}
 Ids     == {1, 2}
 
@@ -32,12 +35,13 @@ VARIABLES inForce,   \* the holders of the bundle in force at the node
           confirmed,
           clock,     \* ticks since the latch, on the node's own clock
           stmts,     \* lifecycle statements: <<signer, kind, the halt named in refs.target>>
-          counted    \* the statements the last confirmation or resumption counted, and the halt it ended
-vars == <<inForce, signerOf, latched, atLatch, confirmed, clock, stmts, counted>>
+          counted,   \* the statements the last confirmation or resumption counted, and the halt it ended
+          dropped    \* the halt rows the node discarded (only the refusal reading does)
+vars == <<inForce, signerOf, latched, atLatch, confirmed, clock, stmts, counted, dropped>>
 
 Init == /\ inForce = Genesis /\ signerOf = [i \in Ids |-> "none"] /\ latched = 0
         /\ atLatch = [by |-> "none", holders |-> {}] /\ confirmed = FALSE /\ clock = 0
-        /\ stmts = {} /\ counted = [kind |-> "none", halt |-> 0, voices |-> {}]
+        /\ stmts = {} /\ counted = [kind |-> "none", halt |-> 0, voices |-> {}] /\ dropped = {}
 
 Majority(S) == Cardinality(S) * 2 > Cardinality(inForce)
 \* the voices a lifecycle count reads for halt h: holders of the bundle in force naming h
@@ -47,41 +51,49 @@ Resumed(h) == Majority(Voices("active", h))
 \* any key signs a halt row; it is sealed or published at once (the reach model is AccordHaltReach)
 Sign(k, i) == /\ signerOf[i] = "none" /\ (i = 1 \/ signerOf[1] # "none")
               /\ signerOf' = [signerOf EXCEPT ![i] = k]
-              /\ UNCHANGED <<inForce, latched, atLatch, confirmed, clock, stmts, counted>>
+              /\ UNCHANGED <<inForce, latched, atLatch, confirmed, clock, stmts, counted, dropped>>
 
 \* the node holds halt row i: one statement, verified against the holders of the bundle in force
-Receive(i) == /\ signerOf[i] # "none" /\ latched = 0 /\ ~Resumed(i)
+Receive(i) == /\ signerOf[i] # "none" /\ latched = 0 /\ ~Resumed(i) /\ i \notin dropped
               /\ signerOf[i] \in inForce \/ CountStranger
               /\ latched' = i /\ atLatch' = [by |-> signerOf[i], holders |-> inForce]
               /\ confirmed' = FALSE /\ clock' = 0
-              /\ UNCHANGED <<inForce, signerOf, stmts, counted>>
+              /\ UNCHANGED <<inForce, signerOf, stmts, counted, dropped>>
 
 \* a lifecycle statement over the payload naming halt t
 State(k, kind, t) == /\ signerOf[t] # "none" /\ <<k, kind, t>> \notin stmts /\ Cardinality(stmts) < 4
                      /\ stmts' = stmts \cup {<<k, kind, t>>}
-                     /\ UNCHANGED <<inForce, signerOf, latched, atLatch, confirmed, clock, counted>>
+                     /\ UNCHANGED <<inForce, signerOf, latched, atLatch, confirmed, clock, counted, dropped>>
 
 Confirm == /\ latched # 0 /\ ~confirmed /\ clock < Fuse /\ Majority(Voices("confirmed", latched))
            /\ confirmed' = TRUE
            /\ counted' = [kind |-> "confirmed", halt |-> latched, voices |-> Voices("confirmed", latched)]
-           /\ UNCHANGED <<inForce, signerOf, latched, atLatch, clock, stmts>>
+           /\ UNCHANGED <<inForce, signerOf, latched, atLatch, clock, stmts, dropped>>
 Resume == /\ latched # 0 /\ Resumed(latched)
           /\ counted' = [kind |-> "active", halt |-> latched, voices |-> Voices("active", latched)]
           /\ latched' = 0 /\ confirmed' = FALSE /\ clock' = 0
-          /\ UNCHANGED <<inForce, signerOf, atLatch, stmts>>
+          /\ UNCHANGED <<inForce, signerOf, atLatch, stmts, dropped>>
 Tick == /\ latched # 0 /\ ~confirmed /\ clock < Fuse /\ clock' = clock + 1
-        /\ UNCHANGED <<inForce, signerOf, latched, atLatch, confirmed, stmts, counted>>
+        /\ UNCHANGED <<inForce, signerOf, latched, atLatch, confirmed, stmts, counted, dropped>>
 Lapse == /\ latched # 0 /\ ~confirmed /\ clock = Fuse
          /\ latched' = 0 /\ clock' = 0
-         /\ UNCHANGED <<inForce, signerOf, atLatch, confirmed, stmts, counted>>
+         /\ UNCHANGED <<inForce, signerOf, atLatch, confirmed, stmts, counted, dropped>>
 \* a later bundle, counted, removes h3 (AccordBundle checks the count)
 RemoveH3 == /\ "h3" \in inForce /\ inForce' = inForce \ {"h3"}
-            /\ UNCHANGED <<signerOf, latched, atLatch, confirmed, clock, stmts, counted>>
+            /\ UNCHANGED <<signerOf, latched, atLatch, confirmed, clock, stmts, counted, dropped>>
+\* a later bundle, counted, seats a new holder h4 (AccordBundle checks the count)
+SeatH4 == /\ "h4" \notin inForce /\ inForce' = inForce \cup {"h4"}
+          /\ UNCHANGED <<signerOf, latched, atLatch, confirmed, clock, stmts, counted, dropped>>
+\* the refusal reading only: a halt by a key not in the roster the node holds is discarded
+Discard(i) == /\ DiscardStranger /\ signerOf[i] # "none" /\ signerOf[i] \notin inForce /\ i \notin dropped
+              /\ dropped' = dropped \cup {i}
+              /\ UNCHANGED <<inForce, signerOf, latched, atLatch, confirmed, clock, stmts, counted>>
 
 Next == \/ \E k \in Keys, i \in Ids : Sign(k, i)
         \/ \E i \in Ids : Receive(i)
         \/ \E k \in Keys, kind \in {"confirmed", "active"}, t \in Ids : State(k, kind, t)
-        \/ Confirm \/ Resume \/ Tick \/ Lapse \/ RemoveH3
+        \/ \E i \in Ids : Discard(i)
+        \/ Confirm \/ Resume \/ Tick \/ Lapse \/ RemoveH3 \/ SeatH4
 Spec == Init /\ [][Next]_vars
 
 (* ---- invariants ---------------------------------------------------------------------------- *)
@@ -91,8 +103,13 @@ Inv_HaltFromHolder == latched # 0 => atLatch.by \in atLatch.holders
 Inv_LifecycleNamesHalt == \A k \in counted.voices : <<k, counted.kind, counted.halt>> \in stmts
 \* W3 A lone halt lapses at the charter's fuse.
 Inv_LoneBounded == (latched # 0 /\ ~confirmed) => clock <= Fuse
+\* W4 A held halt by a holder of the bundle in force can always latch while the node is not latched and the
+\*    halt is not resumed: a halt that arrived before the bundle seating its signer waits, and the wait resolves.
+Inv_HolderHaltLatchable == \A i \in Ids : (signerOf[i] \in inForce /\ latched = 0 /\ ~Resumed(i)) => ENABLED Receive(i)
 
 \* Witnesses, each checked to FAIL: a confirmation is counted; a halt is resumed after the roster change.
 NeverConfirmed == counted.kind # "confirmed"
 NeverResumedAfterRemoval == ~(counted.kind = "active" /\ "h3" \notin inForce)
+\* ... and the new holder's halt latches.
+NeverLatchedOnH4 == ~(latched # 0 /\ atLatch.by = "h4")
 =============================================================================

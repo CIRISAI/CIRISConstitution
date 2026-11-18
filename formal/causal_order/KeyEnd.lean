@@ -2,7 +2,7 @@
   KeyEnd.lean — a key's own end, read from its records and now
 
   A key record states `vu` (its `valid_until`); `vf` is the record's own signed instant. Its bound is
-  self-contained: `vf ≤ vu` and `vu - vf ≤ C`, read from the record alone. A key is LIVE at `now` when some record of it, within the bound,
+  self-contained: `vf < vu` and `vu - vf ≤ C`, read from the record alone (it covers `vf ≤ t < vu`). A key is LIVE at `now` when some record of it, within the bound,
   covers `now`. A key has ENDED at `now` when every record of it within the bound ends by `now`.
 
   Proved here, over a list of records (the rows a node holds, in any order):
@@ -34,7 +34,7 @@ structure Rec where
   vu : Nat
 deriving DecidableEq
 
-def boundOk (C : Nat) (r : Rec) : Bool := decide (r.vf ≤ r.vu) && decide (r.vu - r.vf ≤ C)
+def boundOk (C : Nat) (r : Rec) : Bool := decide (r.vf < r.vu) && decide (r.vu - r.vf ≤ C)
 
 def covers (now : Nat) (r : Rec) : Bool := decide (r.vf ≤ now) && decide (now < r.vu)
 

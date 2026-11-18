@@ -27,12 +27,26 @@ of_iss	a successor two rotations on	valid
 of_iss	an unrelated key whose own record is of another identity	invalid
 of_iss	an unrelated key whose record claims A with no rotation	invalid
 of_iss	a key rotated from another identity	invalid
-of_iss	a record naming A's record with no statement by A	invalid
-of_iss	a rotation lacking the predecessor's statement	not kept
+of_iss	a record of B superseding A's record (a renewal across keys, no rotation)	invalid
+of_iss	a rotation lacking the predecessor's statement	waiting
 of_iss	a rotation signed after the old record's end	invalid
 of_iss	a rotation signed before the old key's own revoked_after	valid
 of_iss	a rotation signed at or after the old key's own revoked_after	revoked
 of_iss	the owner's revocation of the old key cuts no chain	valid
+of_iss	a rotation without the new key's own statement	waiting
+of_iss	a rotation made at the old record's valid_until (outside it: covered is asserted_at <= t < valid_until)	invalid
+of_iss	a rotation made just inside the old record	valid
+of_iss	a rotation whose predecessor's voice is a separate statement: it waits for it, then counts	valid
+of_iss	a person's second device bound by a live admitted occurrence	valid
+of_iss	an occurrence the roster door evicted	evicted
+of_iss	an occurrence signed by a key that is no key of A	invalid
+of_iss	an occurrence the roster door did not admit	invalid
+of_iss	a statement at the occurrence's end (outside it)	invalid
+of_iss	an agent key bound under a person's identity	invalid
+of_iss	an occurrence without the bound key's own voice waits	waiting
+of_iss	two rival rotations of A: neither successor counts	contested
+of_iss	two rival rotations settled by a rotation naming both	valid
+of_iss	a rival that names no record of A covering its instant blocks nothing	valid
 of_iss	a key a counted bundle seats for A (a recovery, no rotation record)	valid
 of_iss	a key only a bundle not counted seats for A	invalid
 of_iss	a key seated by a bundle a later counted bundle no longer seats it in	seat ended
@@ -45,6 +59,14 @@ of_iss_plant	a reader that refuses a legitimate successor (kid must be the genes
 of_iss_plant	a reader that keeps a link signed after its predecessor's own revoked_after	caught
 of_iss_plant	a reader that accepts a key seated only by a bundle not counted	caught
 of_iss_plant	a reader that keeps a key a later counted bundle no longer seats	caught
+of_iss_plant	a reader that lets a rotation with a rival hand on	caught
+of_iss_plant	a reader that lets an uncovered or invalid rival block a rotation	caught
+of_iss_plant	a reader that reads a record's valid_until as covered	caught
+of_iss_plant	a reader that skips way (d), so a person's second device is refused	caught
+of_iss_plant	a reader that accepts an occurrence whatever its signer	caught
+of_iss_plant	a reader that keeps an evicted occurrence	caught
+of_iss_plant	a reader that accepts an agent key bound under a person's identity	caught
+of_iss_plant	a reader that admits an occurrence without the bound key's own voice	caught
 wording	rule: an end is required by the record's own identity type	the door reads the row alone
 wording	as worded: required unless an owner-binding at federation scope is held	two seats with the same record differ: the door reads another row
 class	node key	required

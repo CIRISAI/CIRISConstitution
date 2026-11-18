@@ -418,9 +418,12 @@ def accord_samples():
                 ("a lifecycle row naming an earlier-form halt", cde(dict(life, refs={"head": ref(1), "target": [1, [-16, bytes(32)]]})))])]
 
 
-def accord_rule(p):
-    """The accord payload's rule the CDDL cannot state (CC 4.2.1.1): valid_until is later than asserted_at."""
-    return "valid_until_not_after_asserted_at" if p["valid_until"] <= p["asserted_at"] else None
+def end_rule(p):
+    """The rule the CDDL cannot state, for every payload that states valid_until (CC 2.6.2, step 4 of CC 2.6.1.8): it
+    is later than asserted_at, since a record covers asserted_at <= t < valid_until and an equal one covers nothing."""
+    if "valid_until" in p and p["valid_until"] <= p["asserted_at"]:
+        return "valid_until_not_after_asserted_at"
+    return None
 
 
 def family_ids():
@@ -447,9 +450,12 @@ def family_checks():
     if NM.match_family(man, "accord:lifecycle:active")[2] is None:
         bad.append("deliberate break not caught: a lifecycle dimension with no version segment matched")
     ok = {"author": ISS, "asserted_at": 1763078400000, "valid_until": 1763164800000}
-    if accord_rule(ok) is not None or accord_rule(dict(ok, valid_until=ok["asserted_at"])) != "valid_until_not_after_asserted_at":
-        bad.append("deliberate break not caught: a valid_until equal to asserted_at")
-    return "sample families are registry family ids; the lifecycle dimension matches; valid_until not after asserted_at is refused", bad
+    node_rec = {"key": {1: 7}, "identity_type": ["node"], "asserted_at": 1763078400000, "valid_until": 1794614400000}
+    for what, good in (("an invocation", ok), ("a node key record", node_rec)):
+        if end_rule(good) is not None or end_rule(dict(good, valid_until=good["asserted_at"])) != "valid_until_not_after_asserted_at":
+            bad.append(f"deliberate break not caught: {what} whose valid_until equals its asserted_at")
+    return ("sample families are registry family ids; the lifecycle dimension matches; a valid_until not after "
+            "asserted_at is refused, for an invocation and for a key record"), bad
 
 
 def binding_samples():
@@ -738,15 +744,18 @@ def iref_of(t):
 KEY_BREAK = set()   # deliberate breaks of the reader, switched on by key_iss_checks
 
 
-def read_kid_of_iss(kid, iss, records, lineage=None):
+def read_kid_of_iss(kid, iss, records, lineage=None, occs=()):
     """Step 8 of CC 2.6.1.8 for one statement: ("Valid", None), ("Waiting", row id) or ("Invalid", "kid_not_of_iss"),
     with the detail "kid_not_of_iss:rotation_after_revocation" where a link fails only by its predecessor's own
     revoked_after. records: row id -> {"key", "iss", "target" (the predecessor's record, a rotation), "supersedes" (the
     key's own earlier record, a renewal), "voices" (the keys that signed it), "in_span" (the predecessor's statement
     is made inside the predecessor's record), "after_revocation" (it is made at or after the predecessor's own
     revoked_after, CC 2.4.1.1)}. lineage: None (no accord lineage held), ("not held", object id) where the bundle in
-    force is not held, or ("held", seats, counted) for the bundle in force. With no record of kid held, step 6 has
-    already answered Waiting."""
+    force is not held, or ("held", seats, counted) for the bundle in force. occs: the identity:occurrence rows of iss the
+    reader holds, each {"id", "okey", "own_voice", "admitted", "signer_of_iss", "covers" (the statement's instant,
+    half-open), "evicted", "machine_under_person"}. A rotation record missing a voice waits on that record ("voice:"),
+    since a counted row gains voices without changing its row id. With no record of kid held, step 6 has already
+    answered Waiting."""
     if iref_of(kid) == iss or "any_key" in KEY_BREAK:
         return "Valid", None                          # (a) kid is the thumbprint inside iss
     if "genesis_only" in KEY_BREAK:
@@ -757,6 +766,14 @@ def read_kid_of_iss(kid, iss, records, lineage=None):
             return "Valid", None
     elif lineage:
         waiting = lineage[1]                          # the bundle in force is not held: Waiting on it
+    for o in occs if "skip_occurrence" not in KEY_BREAK else ():   # (d) a live occurrence of iss binds kid
+        if o["okey"] != kid:
+            continue
+        if not o["own_voice"]:
+            waiting = waiting or "voice:" + o["id"]   # the bound key's own voice is not held: Waiting on it
+        elif (o["admitted"] and (o["signer_of_iss"] or "occ_any_signer" in KEY_BREAK) and o["covers"]
+              and not o["evicted"] and (not o["machine_under_person"] or "occ_agent_as_person" in KEY_BREAK)):
+            return "Valid", None
     mine = [rid for rid, r in records.items() if r["key"] == kid]
     if not mine:
         return "Waiting", waiting or kid              # step 6: the key record is not held
@@ -780,9 +797,14 @@ def read_kid_of_iss(kid, iss, records, lineage=None):
                 waiting = waiting or nxt              # a link not held: Waiting on that row
                 break
             p = records[nxt]
-            if r.get("target") and (p["key"] not in r["voices"] and "no_predecessor_statement" not in KEY_BREAK
-                                    or not r.get("in_span", True)):
-                break                                 # no statement by the predecessor key, or one outside its record
+            if r.get("target") and not r.get("in_span", True):
+                break                                 # the predecessor's statement lies outside its record: fixed by bytes
+            if r.get("target") and ((p["key"] not in r["voices"] and "no_predecessor_statement" not in KEY_BREAK)
+                                    or r["key"] not in r["voices"]):
+                waiting = waiting or "voice:" + rid   # a voice is not held: the record waits for it
+                break
+            if r.get("target") and not handed_on(rid, records):
+                break                                 # a rival rotation of the same predecessor: nothing is handed on
             if r.get("target") and r.get("after_revocation"):
                 revoked = True                        # made at or after the predecessor's own revoked_after
                 break
@@ -794,8 +816,21 @@ def read_kid_of_iss(kid, iss, records, lineage=None):
     return "Invalid", "kid_not_of_iss:rotation_after_revocation" if revoked else "kid_not_of_iss"
 
 
+def handed_on(rid, records):
+    """A rotation hands on only where the frontier of its predecessor's rotations names its key alone (CC 2.4.1.1).
+    A rival counts only where it names a record of the predecessor covering its own instant ("in_span") and carries
+    the predecessor's statement; a rotation that "names" others has them in its past."""
+    if "rivals_ignored" in KEY_BREAK:
+        return True
+    old = records[records[rid]["target"]]["key"]
+    rots = {i: x for i, x in records.items() if x.get("target") in records and records[x["target"]]["key"] == old
+            and (old in x["voices"] or "no_predecessor_statement" in KEY_BREAK) and (x.get("in_span", True) or "uncovered_rival" in KEY_BREAK)}
+    named = {n for x in rots.values() for n in x.get("names", ())}
+    return {x["key"] for i, x in rots.items() if i not in named} == {records[rid]["key"]}
+
+
 def key_iss_samples():
-    """(name, kid, iss, records, answer): the samples of step 8, with the answer the text gives."""
+    """(name, kid, iss, records, answer, lineage, occurrences): the samples of step 8, with the answer the text gives."""
     gA, kB, kC, gE = thumb(1), thumb(2), thumb(3), thumb(9)
     A = iref_of(gA)
     pA = {"key": gA, "iss": A, "voices": {gA}}
@@ -803,7 +838,8 @@ def key_iss_samples():
     rB = {"key": kB, "iss": A, "supersedes": "qB", "voices": {kB}}
     qC = {"key": kC, "iss": A, "target": "qB", "voices": {kC, kB}}
     pE = {"key": gE, "iss": iref_of(gE), "voices": {gE}}
-    kR = thumb(4)
+    kR, kT = thumb(4), thumb(6)
+    qT = {"key": kT, "iss": A, "target": "pA", "voices": {kT, gA}}
     pR = {"key": kR, "iss": A, "voices": {kR}}        # a recovery key's record: no rotation record, no old key
     valid = [
         ("the genesis key signing as itself, no record held", gA, A, {}),
@@ -823,11 +859,14 @@ def key_iss_samples():
         ("a record claiming iss with no rotation", gE, A, {"pA": pA, "xE": {"key": gE, "iss": A, "voices": {gE}}},
          ("Invalid", "kid_not_of_iss")),
         ("a rotation record without the predecessor's statement", kB, A, {"pA": pA, "qB": dict(qB, voices={kB})},
-         ("Invalid", "kid_not_of_iss")),
+         ("Waiting", "voice:qB")),
         ("a rotation record whose predecessor's statement is outside its record", kB, A, {"pA": pA, "qB": dict(qB, in_span=False)},
          ("Invalid", "kid_not_of_iss")),
         ("a rotation record signed after the predecessor's own revoked_after", kB, A, {"pA": pA, "qB": dict(qB, after_revocation=True)},
          ("Invalid", "kid_not_of_iss:rotation_after_revocation")),
+        ("a rotation record without the new key's own statement", kB, A, {"pA": pA, "qB": dict(qB, voices={gA})},
+         ("Waiting", "voice:qB")),
+        ("two rival rotations of one predecessor", kB, A, {"pA": pA, "qB": qB, "qT": qT}, ("Invalid", "kid_not_of_iss")),
         ("a key only a bundle not counted seats", kR, A, {"pR": pR}, ("Invalid", "kid_not_of_iss"), ("held", {A: kR}, False)),
         ("a key a superseded bundle seated, the bundle in force seating another", kR, A, {"pR": pR}, ("Invalid", "kid_not_of_iss"),
          ("held", {A: thumb(5)}, True)),
@@ -835,22 +874,44 @@ def key_iss_samples():
         ("a key rotated from another identity", kC, A, {"pE": pE, "qC": {"key": kC, "iss": iref_of(gE), "target": "pE", "voices": {kC, gE}}},
          ("Invalid", "kid_not_of_iss")),
     ]
+    valid += [("two rivals settled by a rotation naming both", kB, A,
+               {"pA": pA, "qB": qB, "qT": qT, "dB": dict(qB, names=("qB", "qT"))}),
+              ("a rival naming no record of the predecessor that covers its instant blocks nothing", kB, A,
+               {"pA": pA, "qB": qB, "qT": dict(qT, in_span=False)})]
     valid.append(("a recovered key the bundle in force seats for iss", kR, A, {"pR": pR}, ("held", {A: kR}, True)))
     out = [(n, k, i, r, ("Valid", None), None) for n, k, i, r in valid[:-1]] + [valid[-1][:4] + (("Valid", None), valid[-1][4])]
-    return out + [o if len(o) == 6 else o + (None,) for o in other]
+    out = [o + ((),) for o in out] + [(o if len(o) == 6 else o + (None,)) + ((),) for o in other]
+    kD, kG = thumb(7), thumb(8)
+    pD = {"key": kD, "iss": A, "voices": {kD}}
+    oD = {"id": "oD", "okey": kD, "own_voice": True, "admitted": True, "signer_of_iss": True, "covers": True,
+          "evicted": False, "machine_under_person": False}
+    inv = ("Invalid", "kid_not_of_iss")
+    out += [
+        ("a person's second device bound by a live admitted occurrence", kD, A, {"pD": pD}, ("Valid", None), None, (oD,)),
+        ("an occurrence the roster door evicted", kD, A, {"pD": pD}, inv, None, (dict(oD, evicted=True),)),
+        ("an occurrence signed by a key that is no key of iss", kD, A, {"pD": pD}, inv, None, (dict(oD, signer_of_iss=False),)),
+        ("an occurrence the roster door did not admit", kD, A, {"pD": pD}, inv, None, (dict(oD, admitted=False),)),
+        ("a statement at or after the occurrence's end", kD, A, {"pD": pD}, inv, None, (dict(oD, covers=False),)),
+        ("an agent key bound under a person's identity", kG, A, {"pG": {"key": kG, "iss": A, "voices": {kG}}}, inv, None,
+         (dict(oD, okey=kG, machine_under_person=True),)),
+        ("an occurrence without the bound key's own voice", kD, A, {"pD": pD}, ("Waiting", "voice:oD"), None,
+         (dict(oD, own_voice=False),)),
+    ]
+    return out
 
 
 def key_iss_checks():
     """(line, problems): every sample gives the answer the text gives."""
     bad = []
-    for name, kid, iss, recs, want, lin in key_iss_samples():
-        got = read_kid_of_iss(kid, iss, recs, lin)
+    for name, kid, iss, recs, want, lin, occs in key_iss_samples():
+        got = read_kid_of_iss(kid, iss, recs, lin, occs)
         if got != want:
             bad.append(f"reference key reader: {name} gives {got}, the text gives {want}")
     caught = 0
-    for brk in ("any_key", "any_identity", "no_predecessor_statement", "genesis_only", "uncounted_bundle"):
+    for brk in ("any_key", "any_identity", "no_predecessor_statement", "genesis_only", "uncounted_bundle",
+                "rivals_ignored", "uncovered_rival", "skip_occurrence", "occ_any_signer", "occ_agent_as_person"):
         KEY_BREAK.add(brk)
-        if any(read_kid_of_iss(k, i, r, lin) != w for _, k, i, r, w, lin in key_iss_samples()):
+        if any(read_kid_of_iss(k, i, r, lin, oc) != w for _, k, i, r, w, lin, oc in key_iss_samples()):
             caught += 1
         else:
             bad.append(f"deliberate break not caught: the key reader with {brk}")

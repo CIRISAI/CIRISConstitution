@@ -46,13 +46,15 @@ when the row is published is bound when the row reaches it, if it holds an edge 
 **The halt as a row (`AccordHaltRow.tla`, CC 4.2.1.1, CC 4.2.1.3).** A halt is an ordinary row with one
 statement, its holder's signature over the row's payload, verified against the holders of the bundle in force at the
 node. The lifecycle rows are counted rows, each statement naming the halt it confirms or ends by row id in
-`refs.target`. The fuse is the charter's `halt_fuse_secs`. One node, three holders and a later bundle that removes one,
-a stranger key, two halt rows by any key, and lifecycle statements by any key naming any halt row that exists, so a
+`refs.target`. The fuse is the charter's `halt_fuse_secs`. One node, three holders, a later bundle that removes one
+and a later bundle that seats a new holder h4 (whose halt can arrive first), a stranger key, two halt rows by any key, and lifecycle statements by any key naming any halt row that exists, so a
 stockpiled statement naming an earlier halt is in the world.
 
 | Config | Result |
 |---|---|
-| `AccordHaltRow.cfg` | closes at 838,014 distinct states: a halt latches only on a holder's statement (`Inv_HaltFromHolder`); a confirmation or resumption counts only statements naming that halt (`Inv_LifecycleNamesHalt`); a lone halt lapses at the fuse (`Inv_LoneBounded`) |
+| `AccordHaltRow.cfg` | closes at 8,186,704 distinct states: a halt latches only on a holder's statement (`Inv_HaltFromHolder`); a confirmation or resumption counts only statements naming that halt (`Inv_LifecycleNamesHalt`); a lone halt lapses at the fuse (`Inv_LoneBounded`); a held halt by a holder of the bundle in force can always latch, so a halt that arrived before the bundle seating its signer waits and then latches (`Inv_HolderHaltLatchable`) |
+| `AccordHaltRow_discard.cfg` | `Inv_HolderHaltLatchable` violated: the refusal reading discards h4's halt, which arrived before the bundle seating h4, and never latches it |
+| `AccordHaltRow_reach_h4.cfg` | witness, violated as required: the new holder's halt latches |
 | `AccordHaltRow_stranger.cfg` | `Inv_HaltFromHolder` violated: a halt counted from a key not among the bundle's holders |
 | `AccordHaltRow_anytarget.cfg` | `Inv_LifecycleNamesHalt` violated: a statement naming another halt counted for this one |
 | `AccordHaltRow_reach_confirm.cfg`, `AccordHaltRow_reach_removed.cfg` | witnesses, each violated as required: a confirmation lands, and a halt is resumed after the roster change |

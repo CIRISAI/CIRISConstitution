@@ -118,6 +118,10 @@ jobs:
           grep -q 'Invariant Inv_HaltFromHolder is violated' r1.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h10" -deadlock -config AccordHaltRow_anytarget.cfg AccordHaltRow.tla | tee r2.log
           grep -q 'Invariant Inv_LifecycleNamesHalt is violated' r2.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h11" -deadlock -config AccordHaltRow_discard.cfg AccordHaltRow.tla | tee r3.log
+          grep -q 'Inv_HolderHaltLatchable is violated' r3.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h12" -deadlock -config AccordHaltRow_reach_h4.cfg AccordHaltRow.tla | tee r4.log
+          grep -q 'NeverLatchedOnH4 is violated' r4.log || exit 1
       - name: The members' lift of a moderator's act closes; a count over later joiners is shown to fail
         working-directory: formal/moderation_lift
         run: |

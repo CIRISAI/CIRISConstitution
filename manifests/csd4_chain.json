@@ -3,7 +3,7 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "7ae4a6e2be0562e20d292da802478b3a04dcc62b477ddc33477f7625ae50abe4",
-   "invariants_sha256": "36226602dc89d20b030d99ada25a07a5d8fb912cf39aa1aa5e26bd906fac601c",
+   "invariants_sha256": "6365a16e9291ac77c7a131e3b7d1a0638f6261e7f5aef5b129614106a02b829b",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
    "claims_sha256": "c8ce991424bcef987ad88c95a7640167cb0f4b852bdf955a64ced49bb07c2367",
@@ -29,17 +29,17 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 232,
+   "invariants": 233,
    "claims": 607,
    "entries": 20,
-   "refusal_tokens": 110
+   "refusal_tokens": 109
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "9e7e8bf0588c7f655ebfd9a0b947e73560868164dfd906114d83765887e44b3b"
+  "chain_sha256": "c80133d3449d864c3377c8ba4d8da450a2bf53b58c7751b333850b88722c4593"
  },
  "chain": [
   {
@@ -4692,6 +4692,15 @@
      "verdict": "closes; stranger twin fails"
     },
     {
+     "inv_id": "AW.wait",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HolderHaltLatchable",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; discard twin fails"
+    },
+    {
      "inv_id": "AH.nowin",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -5468,6 +5477,15 @@
      "kind": "safety",
      "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AW.wait",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HolderHaltLatchable",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; discard twin fails"
     }
    ],
    "claims": [
@@ -5870,6 +5888,15 @@
      "kind": "safety",
      "claim_id": "CLM-halt-one-row",
      "verdict": "closes; stranger twin fails"
+    },
+    {
+     "inv_id": "AW.wait",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HolderHaltLatchable",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; discard twin fails"
     },
     {
      "inv_id": "AH.nowin",
@@ -54038,9 +54065,6 @@
   },
   "namespace_vocab_value_unregistered": {
    "3.1.7": "bold"
-  },
-  "not_a_holder": {
-   "4.2.1.1": "after_refusal"
   },
   "onion_hop_ml_kem_768_reuse": {
    "3.3.6.2": "after_refusal"
