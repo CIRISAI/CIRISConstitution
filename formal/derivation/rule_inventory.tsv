@@ -4444,3 +4444,5 @@ p2	x	2.6.1.3	kernel	cosign	none	*	is	states	2.6.1.9	The act a family model's sel
 p4	x	4.2.1.1	family	admission_order	none	accord	is	states		The store's refusal of a duplicate invocation_id or nonce within valid_until has the token accord_invocation_replayed	
 p4	x	4.2.1.1	family	signature	signer_rule	accord	is	states		A statement whose key is no holder's key in the bundle in force is refused not_a_holder; one whose iss is not the holder whose key signed is refused iss_not_holder	
 p4	x	4.2.1.1	family	halt	none	accord	is	applies	2.7.3	A halt whose bundle the node does not hold waits for it and is never refused, since a missed halt is the one unrecoverable failure	
+p2	x	2.6.1.7	kernel	key_plane	none	*	is	states	2.6.1.11	A key the bundle in force of a held accord lineage seats for iss is a key of iss (a recovery or a rotation by bundle); Waiting where that bundle is not held; the seat ends at the first later bundle in force that does not seat it	
+p2	x	2.6.1.7	kernel	key_plane	none	*	is	states	2.4.1.1	A link that fails only by its predecessor's own revoked_after gives kid_not_of_iss with the detail rotation_after_revocation	

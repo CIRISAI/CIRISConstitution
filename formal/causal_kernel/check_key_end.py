@@ -42,7 +42,7 @@ def limit():
 limit()
 import key_end as KE  # noqa: E402
 
-rec, att, edge, revoke, unbind = KE.rec, KE.att, KE.edge, KE.revoke, KE.unbind
+rec, att, edge, revoke, unbind, bundle = KE.rec, KE.att, KE.edge, KE.revoke, KE.unbind, KE.bundle
 KEYS = ("A", "B", "C", "D", "X")
 PARTIES = ("X",)
 SUBJECTS = ("X",)
@@ -344,21 +344,38 @@ ISS_SCENARIOS = [
      "iss_ignores_revoked_after"),
     ("the owner's revocation of the old key cuts no chain", [pX, gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
                                                             unbind("o", "X", "A", 3, "binding")], ("B", 5, "qB"), ["pA", "qB"], "valid", None),
+    ("a key a counted bundle seats for A (a recovery, no rotation record)", [gA, rec("pR", "R", 0, 10, iss="A"),
+                                                                              bundle("b1", {"A": "R"})],
+     ("R", 5, "pR", "b1"), ["b1"], "valid", None),
+    ("a key only a bundle not counted seats for A", [gA, rec("pR", "R", 0, 10, iss="A"), bundle("b1", {"A": "R"}, counted=False)],
+     ("R", 5, "pR", "b1"), ["b1"], "invalid", "iss_bundle_uncounted"),
+    ("a key seated by a bundle a later counted bundle no longer seats it in", [gA, rec("pR", "R", 0, 10, iss="A"), bundle("b1", {"A": "R"}),
+                                                                               bundle("b2", {"A": "S"}, prev="b1")],
+     ("R", 5, "pR", "b1"), ["b1"], "seat ended", "iss_bundle_superseded"),
+    ("the key a later counted bundle seats for A", [gA, rec("pS", "S", 0, 10, iss="A"), bundle("b1", {"A": "R"}),
+                                                    bundle("b2", {"A": "S"}, prev="b1")],
+     ("S", 5, "pS", "b2"), ["b1", "b2"], "valid", None),
+    ("a key seated by a bundle whose later bundle is not counted", [gA, rec("pR", "R", 0, 10, iss="A"), bundle("b1", {"A": "R"}),
+                                                                    bundle("b2", {"A": "S"}, prev="b1", counted=False)],
+     ("R", 5, "pR", "b1"), ["b1"], "valid", None),
 ]
 
 
 def iss_answer(S):
-    """valid / invalid / revoked / waiting / not kept, for the statement s."""
+    """valid / invalid / revoked / seat ended / waiting / not kept, for the statement s."""
     if "s" not in S.by:
         return None
     if not S.C.get("s"):
         return "invalid"
-    return "valid" if KE.of_iss_now(S, "s") else "revoked"
+    if KE.of_iss_now(S, "s"):
+        return "valid"
+    links = KE.iss_chain(S.by["s"], {q["id"]: q for q in S.Cs}) or []
+    return "seat ended" if links and links[0]["kind"] == "bun" else "revoked"
 
 
 def iss_world(rows, st):
-    signer, at, cover = st
-    return rows + [att("s", signer, at, cover, iss="A")]
+    signer, at, cover = st[:3]
+    return rows + [att("s", signer, at, cover, iss="A", names=st[3:])]
 
 
 def iss_run(sc):
@@ -391,7 +408,9 @@ def iss_section():
               ("iss_other_identity", "a reader that accepts a record of another identity"),
               ("iss_unsigned_link", "a reader that accepts a chain whose rotation lacks the predecessor's statement"),
               ("iss_genesis_only", "a reader that refuses a legitimate successor (kid must be the genesis key)"),
-              ("iss_ignores_revoked_after", "a reader that keeps a link signed after its predecessor's own revoked_after")]
+              ("iss_ignores_revoked_after", "a reader that keeps a link signed after its predecessor's own revoked_after"),
+              ("iss_bundle_uncounted", "a reader that accepts a key seated only by a bundle not counted"),
+              ("iss_bundle_superseded", "a reader that keeps a key a later counted bundle no longer seats")]
     pl = []
     for plant, what in plants:
         KE.MUT.add(plant)

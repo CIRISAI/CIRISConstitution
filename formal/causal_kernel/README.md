@@ -134,10 +134,13 @@ order of up to seven rows, and the store's steady state from stated rates. Nothi
 holds an ended key's private half can revive it, and that is recorded as conceded. K-ISS: a statement counts as
 the `iss` it states only if its key is `iss`'s genesis key or reached from it by rotations, each carrying its
 predecessor's statement made inside the predecessor's record; a renewal does not move the chain, and a link its
-predecessor signed at or after its own `revoked_after` does not stand. Sixteen scenarios run in every arrival order
-with each chain row withheld in turn (it waits), against verdicts written by hand, and five plants are caught: any
-held key accepted, a record of another identity accepted, a rotation without the predecessor's statement accepted,
-a rotated successor refused, and a link after the predecessor's own revocation kept.
+predecessor signed at or after its own `revoked_after` does not stand. A key a counted genesis bundle seats for `iss`
+counts too (a recovery), until a later counted bundle no longer seats it; whether a bundle is counted is the accord
+model's answer, taken as given. Twenty-one scenarios run in every arrival order with each chain row withheld in turn
+(it waits), against verdicts written by hand, and seven plants are caught: any held key accepted, a record of
+another identity accepted, a rotation without the predecessor's statement accepted, a rotated successor refused, a
+link after the predecessor's own revocation kept, a key seated only by a bundle not counted accepted, and a seat a
+later counted bundle ended kept.
 
 **Checkpoint and purge** (`purge.py`, `check_purge.py`, `purge_expected.tsv`). Answers are indexed by head: whether an
 act counts at the head it names, and whether it is still in force at a later head. A node signs a checkpoint under

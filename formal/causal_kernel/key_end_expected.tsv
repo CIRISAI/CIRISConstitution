@@ -33,11 +33,18 @@ of_iss	a rotation signed after the old record's end	invalid
 of_iss	a rotation signed before the old key's own revoked_after	valid
 of_iss	a rotation signed at or after the old key's own revoked_after	revoked
 of_iss	the owner's revocation of the old key cuts no chain	valid
+of_iss	a key a counted bundle seats for A (a recovery, no rotation record)	valid
+of_iss	a key only a bundle not counted seats for A	invalid
+of_iss	a key seated by a bundle a later counted bundle no longer seats it in	seat ended
+of_iss	the key a later counted bundle seats for A	valid
+of_iss	a key seated by a bundle whose later bundle is not counted	valid
 of_iss_plant	a reader that accepts any held key	caught
 of_iss_plant	a reader that accepts a record of another identity	caught
 of_iss_plant	a reader that accepts a chain whose rotation lacks the predecessor's statement	caught
 of_iss_plant	a reader that refuses a legitimate successor (kid must be the genesis key)	caught
 of_iss_plant	a reader that keeps a link signed after its predecessor's own revoked_after	caught
+of_iss_plant	a reader that accepts a key seated only by a bundle not counted	caught
+of_iss_plant	a reader that keeps a key a later counted bundle no longer seats	caught
 wording	rule: an end is required by the record's own identity type	the door reads the row alone
 wording	as worded: required unless an owner-binding at federation scope is held	two seats with the same record differ: the door reads another row
 class	node key	required

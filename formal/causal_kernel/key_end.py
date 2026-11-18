@@ -33,6 +33,10 @@ statement's and that reaches `iss`'s genesis key through rotations, each naming 
 the predecessor's signature made inside that record (OF_ISS below). A renewal on the way does not move the chain. A
 link not held waits, as every named row does. Derived over that, of_iss_now drops a chain one of whose links its
 predecessor signed at or after its own revoked_after (CC 2.4.1.1), and no other voice's revocation cuts a chain.
+A third way: a counted bundle of an accord lineage seats a key for `iss` (a recovery, or a rotation by bundle). The
+statement names the bundle it relies on beside its key's record, and waits for it. Whether the bundle is counted is the accord model's answer,
+taken here as a member of the row. Derived over that, the seat ends when a later counted bundle of the lineage,
+naming it, no longer seats that key for `iss`.
 
 A row LAPSES at now when its signer's key has ended and no row that has not lapsed has it in its past. A seat
 serves and keeps exactly the rows that have not lapsed (RETAINED), which is route.py's closure with the seeds
@@ -70,6 +74,12 @@ def att(id, signer, at, cover, about=None, names=(), iss=None):
 
 def edge(id, signer, to, at, cover, names=()):
     return CK.row(id, "edge", signer, (cover,) + tuple(names), at=at, cover=cover, to=to, iss=signer)
+
+
+def bundle(id, seats, counted=True, prev=None):
+    """A genesis bundle of an accord lineage: `seats` maps an identity to the key it seats; `counted` is the accord
+    model's answer for its count; `prev` names its predecessor bundle."""
+    return CK.row(id, "bun", "accord", (prev,) if prev else (), seats=dict(seats), counted=counted, prev=prev)
 
 
 def revoke(id, key, ra):
@@ -121,6 +131,9 @@ def iss_chain(r, by):
         return []                                     # (a) kid is the thumbprint inside iss
     if "iss_genesis_only" in MUT:                     # PLANT (over-strict): only the genesis key, so rotation breaks
         return None
+    for b in (by[n] for n in r["names"] if n in by and by[n]["kind"] == "bun"):   # (c) a bundle seats this key for iss
+        if (b["counted"] or "iss_bundle_uncounted" in MUT) and b["seats"].get(iss) == k:
+            return [b]
     c = by.get(r["cover"])
     if c is None or c["kind"] != "rec" or c["key"] != k:
         return None
@@ -156,9 +169,19 @@ def of_iss_now(S, rid):
     links = iss_chain(r, {q["id"]: q for q in S.Cs})
     if links is None:
         return False
+    if links and links[0]["kind"] == "bun":
+        return "iss_bundle_superseded" in MUT or bundle_in_force_seats(S, links[0], r["iss"], r["signer"])
     if "iss_ignores_revoked_after" in MUT:            # PLANT: a link signed after its predecessor's revocation stands
         return True
     return all(l["at_old"] < rev_bound(S, l["succ_of"]) for l in links)
+
+
+def bundle_in_force_seats(S, b, iss, k):
+    """The bundles in force on b's lineage are the counted bundles that have b in their past (or b itself) and that no
+    counted bundle names; the seat stands while every one of them seats k for iss."""
+    later = [q for q in S.Cs if q["kind"] == "bun" and q["counted"] and (q["id"] == b["id"] or b["id"] in S.anc[q["id"]])]
+    tips = [q for q in later if not any(q["id"] in S.anc[x["id"]] for x in later)]
+    return bool(tips) and all(q["seats"].get(iss) == k for q in tips)
 
 
 # ---- concluded: the row against its past ---------------------------------------------------------------
