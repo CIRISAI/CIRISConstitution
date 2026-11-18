@@ -169,9 +169,11 @@ is false if any test is false, else unknown if any is; an unknown arm before the
 answer unknown. `--write-vectors` writes `manifests/family_select_vectors.json` (every arm held and
 not held, the unknown, order and `{name}` cases) and `manifests/family_authorship.json` (the two
 signer cells and the model's SHA-256, for a consumer that vendors them); the gate replays the
-vectors, runs four broken evaluators and two broken author checks they must catch, and checks both files current.
+vectors, runs four broken evaluators, two broken author checks and one broken voice check they must catch, and checks both files current.
 An `authorship` answer of `subject` carries `admits` in its vectors: true when the statement's `iss` is its `sub`,
 false when another key signed, unknown when either is absent.
+A `voice_refused` vector offers a roster member's statement on a row whose `act` is `own`: no role names it, so `admits`
+is false; a third break, an evaluator that accepts any voice, must be caught.
 
 `placement_text.tsv` states where a row goes when its family states no placement of its own.
 Its one `default` row gives the placements a family's rows may take and the sentence that leaves

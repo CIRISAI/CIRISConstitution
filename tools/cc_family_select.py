@@ -182,6 +182,14 @@ def author_admits(value, ctx):
     return ctx["iss"] == ctx["sub"]
 
 
+def voice_admits(roles, voice):
+    """Whether a statement offered in the role `voice` is accepted besides the author's: True when the second_signers
+    answer names that role, False when it does not, UNKNOWN when the answer is unknown."""
+    if roles == UNKNOWN:
+        return UNKNOWN
+    return any(r["role"] == voice for r in roles)
+
+
 def cell_answer(cell, name, ctx):
     """(answer, decided_by) for one cell of a family row."""
     if cell.get("source") == "gap" and name != "second_signers":
@@ -472,6 +480,29 @@ def generate_vectors(model, registry):
             v = add(fam, "authorship", hit[0], ctx, why, kind)
             v["admits"] = author_admits(v["expect"], ctx)
 
+    # a family whose row is a roster's act or carries a roster's count when act=group (counted, or authored and cosigned):
+    # on its own form (act=own) a roster member's voice is in no role the row names, and is refused
+    for fam, row in rows.items():
+        arms = row["authorship"].get("arms") or []
+        cnt = row["count"].get("arms") or []
+        if not any("group" in dict(parse_selector(a["when"])).get("act", []) for a in arms + cnt):
+            continue
+        both = arms + [OrderedDict([("when", a["when"]), ("value", arm_value(a))]) for a in cnt]
+        own = next(((d, c) for d, c in contexts(registry, fam, both)
+                    if c.get("act") == "own" and cell_answer(row["authorship"], "authorship", row_context(registry, fam, d, c))[0] == "authored"
+                    and cell_answer(row["count"], "count", row_context(registry, fam, d, c))[0] not in (UNKNOWN, None)), None)
+        if own is None:
+            raise ValueError("%s authorship: no authored row with act=own the vectors can build" % fam)
+        for key in [k for k in own[1] if k != "act"]:   # supply no more than the reading needs: no group means no community_id
+            c2 = OrderedDict((k, v) for k, v in own[1].items() if k != key)
+            f2 = row_context(registry, fam, own[0], c2)
+            if (cell_answer(row["authorship"], "authorship", f2)[0] == "authored" and cell_answer(row["count"], "count", f2)[0] not in (UNKNOWN, None)
+                    and second_signers(row["second_signers"].get("value") or [], f2) != UNKNOWN):
+                own = (own[0], c2)
+        v = add(fam, "second_signers", own[0], own[1], "act=own: the row is its author's own, so a roster member's statement is in no role it names and is refused", "voice_refused")
+        v["voice"] = "roster_member"
+        v["admits"] = voice_admits(v["expect"], v["voice"])
+
     # the `{name}` wildcard in a leaf value: one segment, any value, never two and never none
     for fam, cell, arms in selector_cells(model):
         for a in arms:
@@ -504,7 +535,8 @@ def vectors_doc(model, registry, model_sha):
                          "arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, "
                          "else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. "
                          "Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` "
-                         "equals ctx `sub`, false when it differs, `unknown` when either is absent"),
+                         "equals ctx `sub`, false when it differs, `unknown` when either is absent. A vector with `voice` offers a "
+                         "statement in that role over the row: `admits` is true only when the second_signers answer names the role"),
             ("keys", OrderedDict([
                 ("leaf", "bound from the dimension: the family's non-literal segment values joined by ':', version tail stripped; `{name}` in a value matches one segment"),
                 ("verb", "caller-supplied: one of attest, authorize, replace, withdraw, recant"),
@@ -562,7 +594,7 @@ def built():
 
 # ---- the gate ------------------------------------------------------------------------
 
-def replay(model, registry, vectors, ev=None, adm=None):
+def replay(model, registry, vectors, ev=None, adm=None, vadm=None):
     """The vectors that an evaluator `ev(arms, ctx) -> (answer, decided_by)` answers otherwise."""
     rows = {r["family"]: r for r in model["rows"]}
     bad = []
@@ -575,7 +607,9 @@ def replay(model, registry, vectors, ev=None, adm=None):
             got, dec = ev(cell["arms"], full) if cell.get("arms") else cell_answer(cell, v["cell"], full)
         if got != v["expect"] or (v["cell"] != "second_signers" and dec != v.get("decided_by")):
             bad.append(v)
-        elif "admits" in v and (adm or author_admits)(got, v["ctx"]) != v["admits"]:
+        elif "voice" in v and (vadm or voice_admits)(got, v["voice"]) != v["admits"]:
+            bad.append(v)
+        elif "admits" in v and "voice" not in v and (adm or author_admits)(got, v["ctx"]) != v["admits"]:
             bad.append(v)
     return bad
 
@@ -630,6 +664,10 @@ def _adm_any_iss(value, ctx):
     return (ctx.get("iss") is not None) if value == "subject" else None
 
 
+def _voice_any(roles, voice):
+    return True
+
+
 def self_test():
     model, registry, sha = built()
     problems = []
@@ -658,7 +696,7 @@ def self_test():
                 problems.append("%s %s arm %d (%s): no vector it holds for" % (fam, cell, i, a["when"]))
             if a["when"] != "*" and not neg:
                 problems.append("%s %s arm %d (%s): no vector it does not hold for" % (fam, cell, i, a["when"]))
-    for k in ("unknown", "order", "wildcard", "false_beats_unknown", "subject_holds", "subject_refused"):
+    for k in ("unknown", "order", "wildcard", "false_beats_unknown", "subject_holds", "subject_refused", "voice_refused"):
         if not any(v["kind"] == k for v in vectors):
             problems.append("no %s vector" % k)
     # the deliberate breaks the vectors must catch, run every time
@@ -675,6 +713,10 @@ def self_test():
             caught += 1
         else:
             problems.append("the vectors do not catch a broken author check: " + name)
+    if replay(model, registry, vectors, vadm=_voice_any):
+        caught += 1
+    else:
+        problems.append("the vectors do not catch a broken voice check: any voice accepted")
     for name, sel in (("an unknown key", "kind=x"), ("a seat token", "seats=two"), ("a group kind", "group=club"), ("an act kind", "act=club")):
         try:
             parse_selector(sel)
@@ -686,7 +728,7 @@ def self_test():
         problems.append("the extract does not carry the model's hash")
     else:
         caught += 1
-    return problems, OrderedDict([("vectors", len(vectors)), ("breaks", "%d/%d" % (caught, len(breaks) + 7))])
+    return problems, OrderedDict([("vectors", len(vectors)), ("breaks", "%d/%d" % (caught, len(breaks) + 8))])
 
 
 def main(argv):

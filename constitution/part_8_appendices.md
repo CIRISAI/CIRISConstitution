@@ -3096,9 +3096,11 @@ Body: `witness_relation`
 |---|---|---|---|---|---|
 | withdraw | author, subject | selfAct | false | false | authorize |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
-| authorize | owner | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| authorize | owner | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
 
-Count: `none`
+Count: `act=group & group=affiliations => cosigned_act@subject_group ; none` (CC 3.2)
+
+Authorship: `authored` (CC 3.2)
 
 Second signers: `bound_node` by `sub` (CC 3.2, CC 3.4.5)
 
@@ -3346,11 +3348,13 @@ Body: `author`, `dimension`, `revoked_at`, `effective_at`, `revoked_after`, `ref
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| authorize | self | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
 
-Count: `none`
+Count: `act=group => cosigned_act@signer_group ; none` (CC 3.1.3, CC 4.4.3.12)
 
-Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` (CC 4.4.3.19)
+Authorship: `act=group => counted ; authored` (CC 4.4.3.12)
+
+Second signers: `delegate` by `sub` when `act=own` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` when `act=own` (CC 4.4.3.19)
 
 Fold:
 - `by=none` (CC 3.1.3)

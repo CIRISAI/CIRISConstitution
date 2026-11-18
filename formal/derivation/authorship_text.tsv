@@ -40,8 +40,8 @@ collection:{kind}	authorship	act=group	counted	CC 3.1.3.4	a row that is the coho
 trust:{job}:{version}	authorship	act=group	counted	CC 3.4.5	A row that is a keyless family root's act, its roster reaching its `consensus_protocol`, is counted
 licensure:{authority_id}	authorship	act=group	counted	CC 2.4	A `licensure:{authority_id}` row that is the authority community's act under that protocol is counted
 key:record	authorship	act=group	counted	CC 3.1.3	so a record that is the anchors' act is counted
-self:delegates_to	second_signers	*	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
-self:delegates_to	second_signers	*	delegate_owner=owner_of_sub	CC 4.4.3.19	signed by the owner the owner-binding of the row's `sub` names
+self:delegates_to	second_signers	act=own	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
+self:delegates_to	second_signers	act=own	delegate_owner=owner_of_sub	CC 4.4.3.19	signed by the owner the owner-binding of the row's `sub` names
 self:delegates_to:agent_occurrence	second_signers	*	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
 self:delegates_to:agent_occurrence	second_signers	*	delegate_owner=owner_of_sub	CC 4.4.3.19	signed by the owner the owner-binding of the row's `sub` names
 trust:{job}:{version}	second_signers	leaf=confers	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
@@ -53,3 +53,5 @@ retirement:{state}	second_signers	leaf=retired|custodian_minted	custodian=custod
 group:roster	second_signers	*	listed_member=members	CC 3.1.3.2	The record lists its members in `members`, each by its `key_id`, read as an identity.
 location_proof:{version}	authorship	*	subject	CC 4.5.9	is emitted **only** by the subject themselves
 trust:blessing	authorship	*	counted	CC 3.1.3	cosigned under the root's conferring family's `consensus_protocol`
+self:delegates_to	authorship	act=group	counted	CC 4.4.3.12	Appointment is the body's signature under its protocol together with the appointee's own `membership:acceptance`
+ownership:{relation}:{target_kind}:{version}	authorship	*	authored	CC 3.2	the signature is the claim of ownership

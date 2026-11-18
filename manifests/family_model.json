@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "131b62dd9e4a16a2bfeac525e50a1371d358b04995686e51d45f8016d43db4ea",
+  "registry_sha256": "aa2b9604e23c738162a03a6811ecca17b6e065a3d4e736aaf127e1a34faed564",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -230,17 +230,17 @@
     "gap": 0
    },
    "count": {
-    "cc-table": 20,
+    "cc-table": 22,
     "code-v61": 0,
-    "generic": 162,
+    "generic": 160,
     "prose": 0,
     "mixed": 0,
     "gap": 4
    },
    "authorship": {
-    "cc-table": 22,
+    "cc-table": 24,
     "code-v61": 0,
-    "generic": 164,
+    "generic": 162,
     "prose": 0,
     "mixed": 0,
     "gap": 0
@@ -757,10 +757,10 @@
   "authorship": {
    "source": "formal/derivation/authorship_text.tsv",
    "families": {
-    "authored": 169,
+    "authored": 168,
     "subject": 1,
     "counted": 4,
-    "mixed": 12,
+    "mixed": 13,
     "gap": 0
    },
    "second_signers": {
@@ -54930,6 +54930,7 @@
     "value": [
      "state",
      "stands",
+     "tally",
      "may"
     ],
     "source": "cc-table",
@@ -54964,6 +54965,13 @@
       "cell": "formal/derivation/fold_text.tsv#ownership:{relation}:{target_kind}:{version} (CC 3.2)",
       "answers": [
        "state"
+      ]
+     },
+     {
+      "grammar": "count",
+      "cell": "formal/derivation/count_text.tsv#ownership:{relation}:{target_kind}:{version}",
+      "answers": [
+       "tally"
       ]
      }
     ]
@@ -55032,14 +55040,36 @@
     "source": "cc-table"
    },
    "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "value": "act=group & group=affiliations => cosigned_act@subject_group ; none",
+    "arms": [
+     {
+      "when": "act=group & group=affiliations",
+      "doors": "cosigned_act@subject_group",
+      "cc_ref": "CC 3.2"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.2"
+     }
+    ],
+    "source": "cc-table"
    },
    "authorship": {
     "value": "authored",
-    "source": "generic",
-    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 3.2"
+    ]
    },
    "second_signers": {
     "value": [
@@ -63901,11 +63931,20 @@
    "read_by": {
     "value": [
      "state",
-     "stands"
+     "stands",
+     "tally"
     ],
     "source": "cc-table",
     "rule": "cells",
-    "by": []
+    "by": [
+     {
+      "grammar": "count",
+      "cell": "formal/derivation/count_text.tsv#self:delegates_to",
+      "answers": [
+       "tally"
+      ]
+     }
+    ]
    },
    "confers": {
     "value": "nothing",
@@ -63932,20 +63971,51 @@
     "source": "cc-table"
    },
    "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "value": "act=group => cosigned_act@signer_group ; none",
+    "arms": [
+     {
+      "when": "act=group",
+      "doors": "cosigned_act@signer_group",
+      "cc_ref": "CC 4.4.3.12"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.1.3"
+     }
+    ],
+    "source": "cc-table"
    },
    "authorship": {
-    "value": "authored",
-    "source": "generic",
-    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "act=group",
+      "value": "counted",
+      "cc_ref": [
+       "CC 4.4.3.12"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 2.6.1.3"
+      ],
+      "rule": "default"
+     }
+    ],
+    "cc_ref": [
+     "CC 4.4.3.12"
+    ]
    },
    "second_signers": {
     "value": [
      {
       "role": "delegate",
       "member": "sub",
+      "when": "act=own",
       "cc_ref": [
        "CC 2.6.1.9"
       ]
@@ -63953,6 +64023,7 @@
      {
       "role": "delegate_owner",
       "member": "owner_of_sub",
+      "when": "act=own",
       "cc_ref": [
        "CC 4.4.3.19"
       ]
