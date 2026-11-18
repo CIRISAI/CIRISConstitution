@@ -75,9 +75,12 @@ cwt-claims = {
 identity-ref = tstr .regexp "urn:ietf:params:oauth:ckt:sha-256:[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]"
 
 ; No float, no null, no undefined, no tag anywhere a family member can reach.
-; The one exception is SD-CWT's redaction: simple(59) as a map key and tag 60 for an array element.
-ceg-value = int / tstr / bstr / bool / [* (ceg-value / redacted-element)]
+; The exceptions are SD-CWT's redaction (simple(59) as a map key, tag 60 for an array element) and a body's tag-4 decimal.
+ceg-value = int / tstr / bstr / bool / body-decimal / [* (ceg-value / redacted-element)]
           / { ? redacted_claim_keys => [+ bstr .size 32], * (tstr / int) => ceg-value }
+; A non-integral number in a free-form body (CC 2.6.1.2): tag 4, [exponent, mantissa], in CBOR's integer range.
+; Normalisation (a mantissa not divisible by 10) is checked in prose; an integral number is a plain integer.
+body-decimal = #6.4([exponent: nint, mantissa: int])
 redacted_claim_keys = #7.59
 redacted-element = #6.60(bstr .size 32)
 

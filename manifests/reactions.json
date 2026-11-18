@@ -1133,7 +1133,7 @@
    "kind": "react",
    "on": [
     {
-     "event": "refused",
+     "event": "inert",
      "of": "self"
     }
    ],

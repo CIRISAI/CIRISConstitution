@@ -32,14 +32,14 @@
    "invariants": 247,
    "claims": 613,
    "entries": 20,
-   "refusal_tokens": 106
+   "refusal_tokens": 100
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "a4f037334eeed80ce1cdec3a76b6c056b0a41bc6aee68047b8482c21bea461e4"
+  "chain_sha256": "115143a5af583e011693da94114773f563d9816d342807614f5aeee67f0bf849"
  },
  "chain": [
   {
@@ -53968,9 +53968,6 @@
    "2.4.1.1": "after_refusal",
    "2.6.1.7": "after_refusal"
   },
-  "accord_invocation_replayed": {
-   "4.2.1.1": "after_refusal"
-  },
   "accountable_root": {
    "4.5.5": "bold"
   },
@@ -54011,14 +54008,14 @@
   "axiomatic_intent": {
    "4.5.1.1": "bold"
   },
-  "ballot_tally_duplicate_period": {
-   "3.1.3": "after_refusal"
-  },
   "ballot_tally_mass_total_mismatch": {
    "3.1.3": "after_refusal"
   },
   "ballot_tally_partials_mismatch": {
    "3.1.3": "after_refusal"
+  },
+  "body_number_unrepresentable": {
+   "2.6.1.2": "after_refusal"
   },
   "breach_notification": {
    "4.4.3.12": "bold"
@@ -54035,9 +54032,6 @@
   "census_composite_below_k": {
    "6.1.9": "after_refusal"
   },
-  "census_partial_period_closed": {
-   "3.1.3": "after_refusal"
-  },
   "census_return_recipient_not_seat": {
    "3.1.3": "after_refusal",
    "6.1.9": "after_refusal"
@@ -54053,12 +54047,6 @@
   },
   "data_subject_access_grant": {
    "4.4.3.12": "bold"
-  },
-  "deferral_response_unlicensed": {
-   "3.1.9.3": "after_refusal"
-  },
-  "deferral_response_unseated": {
-   "3.1.9.3": "after_refusal"
   },
   "delegation_term_required": {
    "2.4.1": "after_refusal",
@@ -54092,7 +54080,6 @@
    "6.1.9": "after_refusal"
   },
   "federation_community_consensus_protocol_violation": {
-   "4.4.3.6": "after_refusal",
    "4.5.13": "after_refusal"
   },
   "federation_malformed_row": {
@@ -54147,9 +54134,6 @@
   },
   "kat_split_and_seed_forms_agree": {
    "5.4.6": "after_refusal"
-  },
-  "key_grant": {
-   "2.4.1.3": "after_refusal"
   },
   "key_record_bad_attestation_evidence": {
    "4.2.2.1": "after_refusal"
@@ -54231,9 +54215,6 @@
   },
   "purge_selection_count_mismatch": {
    "3.3.2": "after_refusal"
-  },
-  "purge_unauthorised": {
-   "2.4.1.1": "after_refusal"
   },
   "retention_policy": {
    "4.4.3.12": "bold"

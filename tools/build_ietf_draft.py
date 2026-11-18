@@ -22,7 +22,7 @@ revision replaces the outputs of the one before (git history keeps them).
 Run:  python3 tools/build_ietf_draft.py [--rev 01] [--idnits]
       python3 tools/build_ietf_draft.py --check   (CI; writes nothing)
 --check parses both CDDL files and runs the samples against each, then compares what the build
-would write with the committed files: ietf/signed_object.cddl always, and the .xml and .txt of the
+would write from manifests/signed_object_v2.ietf-01.cddl (the CDDL as -01 published it) with the committed files: ietf/signed_object.cddl always, and the .xml and .txt of the
 draft when kramdown-rfc and xml2rfc are installed (a line says so when they are not). A
 difference exits 1: run the build and commit ietf/. The draft's date is the source's `date:`
 line, so a build on any day compares equal; set it when the draft is revised.
@@ -37,6 +37,9 @@ IETF = os.path.join(ROOT, "ietf")
 SRC = os.path.join(IETF, "draft-moore-scitt-ciris-ceg.md")
 CDDL_IN = os.path.join(ROOT, "manifests", "signed_object_v2.cddl")
 CDDL_OUT = os.path.join(IETF, "signed_object.cddl")
+# The CDDL as draft -01 published it: --check compares the draft against this frozen copy, so the manifest may move
+# ahead of the published draft. Revision -02 re-syncs the draft to the current manifest and retires the copy.
+CDDL_PUBLISHED = os.path.join(ROOT, "manifests", "signed_object_v2.ietf-01.cddl")
 REV = "01"  # the one revision the tree holds
 BREAK = ("composite-alg = -70100", "composite-alg = -70199")  # the deliberate break
 WIDTH = 69  # artwork is indented three columns in the text rendering
@@ -212,7 +215,8 @@ def differs(generated, path):
 
 def check(rev):
     stale = []
-    wrapped = wrapped_cddl()
+    published = open(CDDL_PUBLISHED, encoding="utf-8").read()
+    wrapped = wrapped_cddl(published)
     with tempfile.TemporaryDirectory() as d:
         tmp = os.path.join(d, "signed_object.cddl")
         open(tmp, "w", encoding="utf-8").write(wrapped)
@@ -221,9 +225,9 @@ def check(rev):
     check_cddl(CDDL_IN)
     print("manifests/signed_object_v2.cddl parses; the same samples validate and the same breaks are refused")
     # the deliberate break: the same source with its algorithm identifier altered must not compare equal
-    src = open(CDDL_IN, encoding="utf-8").read()
+    src = published
     if src.count(BREAK[0]) != 1:
-        sys.exit(f"build_ietf_draft: {BREAK[0]!r} is not in manifests/signed_object_v2.cddl once, for the deliberate break")
+        sys.exit(f"build_ietf_draft: {BREAK[0]!r} is not in {os.path.relpath(CDDL_PUBLISHED, ROOT)} once, for the deliberate break")
     if differs(wrapped_cddl(src.replace(*BREAK)), CDDL_OUT) is None:
         sys.exit("build_ietf_draft: the deliberate break (an altered algorithm identifier) was not caught")
     print("deliberate break caught: an altered algorithm identifier makes ietf/signed_object.cddl stale")

@@ -42,7 +42,7 @@ results from one set (`formal/derivation/order/witnesses.tsv`).
 
 | Layer | Reads | Property |
 |---|---|---|
-| **kept** | the row alone, and whether the rows it names are kept | the least set closed under the door; the same in every arrival order; a row waits for what it names and is never refused for another row |
+| **kept** | the row alone, its signer's key plane, and whether the rows it names are kept | the least set closed under the door; the same in every arrival order; a row waits for what it names and is never refused for another row |
 | **concluded** | the row against its ancestors | one solution, negation and counts allowed; final once the row is kept, for a rule that reads no row concurrent with it |
 | **derived** | conclusions over a set of rows | a function of the kept set, the node's key and, in one place, now |
 
@@ -100,7 +100,7 @@ Every rule cell is written in these.
 | Operator | What it does |
 |---|---|
 | select | rows matching a pattern on their fields |
-| group and reduce | the least, the greatest, the one distinct value, the count of distinct values, or the sum; a tie between two different rows is refused, never broken by position |
+| group and reduce | the least, the greatest, the one distinct value, the count of distinct values, or the sum; a tie between two different rows concludes nothing for that group, never broken by position |
 | interval | whether a value lies between an opening and a closing |
 | table cell | the value a typed table gives for a key |
 | bounded repeat | a step applied until nothing changes |
@@ -232,7 +232,7 @@ through the default fold, a default checked for none of the 83 that take it, and
 answer. A row that must equal its own recomputation is stated for three families (CC 6.1.9) and for no other.
 
 **may.** The door, the control a person is offered and the gate on serving a row are one answer
-(`manifests/transitions.json` states it so). A refusal is a named missing row. **run** (`formal/screen`): a
+(`manifests/transitions.json` states it so). Where it is no, the row concludes nothing and the answer names the missing row. **run** (`formal/screen`): a
 screen is a function of the rows a node holds, the viewer's key and now. It offers exactly what the door
 admits, and confirms exactly what widens at the scope signed or has no way back. It never draws a fact the node
 did not send as sent, and it draws a row that waits as waiting, with what it waits on. Six properties hold over

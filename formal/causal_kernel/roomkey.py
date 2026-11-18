@@ -58,7 +58,7 @@ LIMITS = (
     ("run", "a member cooperating live with an outsider (the outsider supplies the challenge) can prove what it sees"),
     ("stated", "a member's word is always possible: what is removed is the proof"),
     ("run", "one signed row by the person outside the room tying the room key to themself makes that person's history in the room provable"),
-    ("run", "a room already signed under identity keys stays provable, and declaring it private afterwards is refused"),
+    ("run", "a room already signed under identity keys stays provable, and declaring it private afterwards concludes nothing"),
     ("run", "a removed member keeps the bindings it was given"),
     ("run", "custody claims and delivery still reach a node: a claim under a room key names no person, and the network that "
             "carries the bytes sees which nodes receive them unless delivery goes by the anonymous tier (the network is outside this model)"),
@@ -886,7 +886,7 @@ def seated_by(r, declarations=()):
 
 
 def admissible_seat(r, seat_row, declarations=()):
-    """A seat row of a private room carries a commitment; one without it is refused. A public room asks for none."""
+    """A seat row of a private room carries a commitment; one without it concludes nothing. A public room asks for none."""
     return seated_by(r, declarations) == "identity keys" or str(seat_row.get("commit", "")).startswith("h:")
 
 
@@ -918,7 +918,7 @@ def declaration():
                   naive(founding("community", "public"), ("private",)) == "private" and membership(founding("community", "public"), ("private",)) == "public"))
     c = commit(ROOM, "rk:q", "A", "n1")
     priv, pub = founding("community", "private"), founding("community")
-    facts.append(("a seat row of a private room without a commitment is refused; with one it is taken; a public room asks for none; "
+    facts.append(("a seat row of a private room without a commitment concludes nothing; with one it is taken; a public room asks for none; "
                   "once the room is public the same row is taken",
                   not admissible_seat(priv, {"signer": "rk:q"}) and admissible_seat(priv, {"signer": "rk:q", "commit": c})
                   and admissible_seat(pub, {"signer": "id:A"}) and admissible_seat(priv, {"signer": "id:A"}, ("public",))))

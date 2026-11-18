@@ -523,7 +523,7 @@ def family_payloads():
             "joined_at": t, "effective_at": t, "refs": {"head": _ref(1), "also": {"cites": [_ref(3)]}}, "asserted_at": t}),
         "occurrence-revocation": ("identity:occurrence_revocation", {
             "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "revoked_at": t, "effective_at": t,
-            "asserted_at": t}),
+            "refs": {"head": _ref(10)}, "asserted_at": t}),
         "entity-revocation": ("revocation:.entity_type:.reason", {
             "author": iref(0), "dimension": "revocation:agent:compromised:v1", "revoked_at": t, "effective_at": t,
             "asserted_at": t}),
@@ -541,14 +541,15 @@ def family_payloads():
         "identity-occurrence": ("identity:occurrence", {
             "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "device_class": "phone",
             "encryption_pubkeys": {"x25519": bytes([5]) * 32, "ml_kem_768": bytes([6]) * 1184},
-            "build_manifest_hash": dig, "refs": {"also": {"cites": [_ref(4)]}}, "asserted_at": t, "valid_until": t + 1}),
+            "build_manifest_hash": dig, "refs": {"head": _ref(10), "further_heads": [_ref(11)], "also": {"cites": [_ref(4)]}},
+            "asserted_at": t, "valid_until": t + 1}),
         "identity-amendment": ("identity_amendment", {
             "author": iref(3), "amendment_digest": dig, "refs": {"also": {"cites": [_ref(5)]}}, "asserted_at": t}),
         "deferral-response": ("deferral:response:.outcome", {
             "author": iref(1), "dimension": "deferral:response:approved:v1", "amendment_digest": dig,
-            "deferral_id": "d-17", "room": "room-1", "refs": {"answers": _ref(6)}, "asserted_at": t}),
+            "deferral_id": "d-17", "refs": {"answers": _ref(6)}, "asserted_at": t}),
         "deferral-request": ("deferral:request", {
-            "author": iref(3), "deferral_id": "d-17", "reason_digest": dig, "room": "room-1", "asserted_at": t,
+            "author": iref(3), "deferral_id": "d-17", "reason_digest": dig, "asserted_at": t,
             "valid_until": t + 86400000}),
         "canonical-rebind": ("transport:canonical_rebind", {
             "refs": {"head": _ref(9)}, "transport_destination": {
@@ -586,7 +587,9 @@ def family_payload_samples():
             ("a reason in free text", W("membership-change", reason="spam"))]),
         ("occurrence-revocation", "identity:occurrence_revocation payload", cde(P["occurrence-revocation"]), [
             ("a revocation with no occurrence_key_id", D("occurrence-revocation", "occurrence_key_id")),
-            ("an effective_at as text", W("occurrence-revocation", effective_at="2026-11-14T00:00:00Z"))]),
+            ("an effective_at as text", W("occurrence-revocation", effective_at="2026-11-14T00:00:00Z")),
+            ("a revocation naming no self-roster head", D("occurrence-revocation", "refs")),
+            ("a revocation whose refs name tips but no head", W("occurrence-revocation", refs={"further_heads": [_ref(11)]}))]),
         ("entity-revocation", "revocation:{entity_type}:{reason} payload", cde(P["entity-revocation"]), [
             ("an entity revocation with no author", D("entity-revocation", "author")),
             ("an entity revocation with revoked_at as text", W("entity-revocation", revoked_at="2026-11-14T00:00:00Z"))]),
@@ -605,16 +608,21 @@ def family_payload_samples():
             ("an occurrence of an unlisted device class", W("identity-occurrence", device_class="tablet")),
             ("an ML-KEM-768 key of 1183 bytes", W("identity-occurrence", encryption_pubkeys={"x25519": bytes(32), "ml_kem_768": bytes(1183)})),
             ("a build manifest hash in hex", W("identity-occurrence", build_manifest_hash="00" * 32)),
-            ("an occurrence with no device_class", D("identity-occurrence", "device_class"))]),
+            ("an occurrence with no device_class", D("identity-occurrence", "device_class")),
+            ("an occurrence naming no self-roster head", W("identity-occurrence", refs={"also": {"cites": [_ref(4)]}})),
+            ("an occurrence whose refs carry a role a self-roster row does not", W("identity-occurrence", refs={"head": _ref(10), "answers": _ref(12)}))]),
         ("identity-amendment", "identity_amendment payload", cde(P["identity-amendment"]), [
             ("an amendment digest in hex, the earlier form", W("identity-amendment", amendment_digest="cd" * 32)),
             ("an amendment naming no approval", D("identity-amendment", "refs"))]),
         ("deferral-response", "deferral:response:{outcome} payload", cde(P["deferral-response"]), [
             ("an approval's amendment digest in hex", W("deferral-response", amendment_digest="cd" * 32)),
-            ("a response naming no request", D("deferral-response", "refs"))]),
+            ("a response naming no request", D("deferral-response", "refs")),
+            ("a response with no deferral_id", D("deferral-response", "deferral_id"))]),
         ("deferral-request", "deferral:request payload", cde(P["deferral-request"]), [
             ("a reason digest in hex", W("deferral-request", reason_digest="ab" * 32)),
-            ("a request with no end", D("deferral-request", "valid_until"))]),
+            ("a request with no end", D("deferral-request", "valid_until")),
+            ("a request with no reason_digest", D("deferral-request", "reason_digest")),
+            ("a request with no deferral_id", D("deferral-request", "deferral_id"))]),
         ("canonical-rebind", "transport:canonical_rebind payload", cde(P["canonical-rebind"]), [
             ("a re-bind naming no bundle", D("canonical-rebind", "refs")),
             ("a re-bind with a transit key of 1184 bytes", W("canonical-rebind", transit_xwing_pubkey=bytes(1184)))]),
@@ -623,6 +631,9 @@ def family_payload_samples():
             ("a capability outside the closed set", W("admission-unit", capabilities=["compute", "shell"])),
             ("an admission with no capability", W("admission-unit", capabilities=[])),
             ("an admission with no lease end", D("admission-unit", "valid_until"))]),
+        ("body-decimal", "body decimal 0.5", cde(Tag(4, [-1, 5])), [
+            ("a decimal with a non-negative exponent", cde(Tag(4, [0, 5]))),
+            ("a decimal of three members", cde(Tag(4, [-1, 5, 0])))]),
         ("delivery-receipt", "delivery_receipt:{stream_id} payload", cde(P["delivery-receipt"]), [
             ("a receipt with no chunk index", D("delivery-receipt", "k")),
             ("a chunk root as bare bytes", W("delivery-receipt", chunk_root=bytes(32)))]),
@@ -664,6 +675,8 @@ def family_payload_rule(root, p, family=None):
     if root == "takedown-notice":
         if _segment(dim, 1) != p.get("legal_basis") or (p.get("legal_basis") == "steward_purge" and "author" in p):
             return PAYLOAD_INVALID
+    if root == "deferral-response" and "reason_digest" in p:
+        return PAYLOAD_INVALID                            # the reason is the request's; a response carries none
     if root == "canonical-rebind" and "head" not in p.get("refs", {}):
         return PAYLOAD_INVALID                            # counted over the bundle in force, named in refs.head
     if root == "group-roster" and (p.get("version") == 1) != ("head" not in p.get("refs", {})):
@@ -744,6 +757,7 @@ def family_payload_rule_checks():
         ("group-roster", dict(P["group-roster"][1], version=1), None),
         ("membership-change", P["membership-change"][1], "cosign:.state"),
         ("canonical-rebind", dict(P["canonical-rebind"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+        ("deferral-response", dict(P["deferral-response"][1], reason_digest=[-16, bytes([7]) * 32]), None),
     ]
     caught = 0
     for root, p, fam in breaks:
@@ -796,7 +810,8 @@ FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
     "membership-change": "membership:{stage}, the stages widening and removal: counted, with no author; sub is the member.",
-    "occurrence-revocation": "identity:occurrence_revocation: authored by the revoker, or counted over a user self's live roster.",
+    "occurrence-revocation": "identity:occurrence_revocation: authored by the revoker, or counted over a user self's roster at the head refs names.",
+    "self-roster-refs": "The refs of a self-roster row (CC 3.3.6.4): the head it stands on, required; a closed map.",
     "entity-revocation": "revocation:{entity_type}:{reason}: authored by the revoker; sub is the revoked entity.",
     "takedown-notice": "takedown_notice:{basis}: authored, or counted on a steward purge; sub is the claimant.",
     "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
@@ -810,7 +825,7 @@ FAMILY_RULE_HEAD = {
     "deferral-response": "deferral:response:{outcome} (CC 3.1.9.3, CC 4.3): the members this form names; the response's further members are the store's.",
     "admission-unit": "admission:unit (CC 2.7.11, CC 3.1.3): authored by one person, or counted over refs.head with no author; one person's row naming an effect admits only on that person's own host; sub is the unit's digest as canonical:sha256:{hex}.",
 }
-FAMILY_CLOSED = {"roster-member", "encryption-pubkeys"}            # every other family rule keeps a member it does not name (CC 2.1.1)
+FAMILY_CLOSED = {"roster-member", "encryption-pubkeys", "self-roster-refs"}            # every other family rule keeps a member it does not name (CC 2.1.1)
 FAMILY_EXTRA = {"admission-unit": [
     "; The capabilities of CC 2.7.11: a closed set; the last five are effects.",
     'capability = "compute" / "read" / "net_send" / "submit" / "sign" / "store_write" / "actuate"'],
@@ -850,6 +865,59 @@ def family_cddl_text(rows):
         if rule in FAMILY_EXTRA:
             out += FAMILY_EXTRA[rule]
     return "\n".join(out) + "\n"
+
+
+# ---------------------------------------------------------------- decimal fractions in free-form bodies (CC 2.6.1.2)
+NUMBER_UNREPRESENTABLE = "body_number_unrepresentable"
+CBOR_INT = (-(1 << 64), (1 << 64) - 1)       # CBOR's integer range, uint or nint
+
+
+def decimal_rule(v):
+    """None for a body value whose every number is a plain integer or a normalised tag 4; "schema" for a second encoding
+    (a float, a tag-4 value with a non-negative exponent or a mantissa divisible by 10), refused at step 3;
+    body_number_unrepresentable for a mantissa outside CBOR's integer range."""
+    if isinstance(v, float):
+        return "schema"
+    if isinstance(v, Tag) and v.tag == 4:
+        if not (isinstance(v.value, list) and len(v.value) == 2 and all(isinstance(x, int) and not isinstance(x, bool) for x in v.value)):
+            return "schema"
+        e, m = v.value
+        if not CBOR_INT[0] <= m <= CBOR_INT[1]:
+            return NUMBER_UNREPRESENTABLE
+        if e >= 0 or m % 10 == 0:
+            return "schema"
+        return None
+    if isinstance(v, list):
+        return next((r for r in map(decimal_rule, v) if r), None)
+    if isinstance(v, dict):
+        return next((r for r in map(decimal_rule, v.values()) if r), None)
+    return None
+
+
+def decimal_checks():
+    """(line, problems): 0.5 and -1.25 pass as tag 4, 2 as a plain integer; 2.0 as tag 4, 0.50 as [-2, 50], a float and a
+    mantissa past 64 bits are refused."""
+    bad = []
+    cases = [("0.5 as 4([-1, 5])", {"detail": {"ratio": Tag(4, [-1, 5])}}, None),
+             ("-1.25 as 4([-2, -125])", {"detail": [Tag(4, [-2, -125])]}, None),
+             ("2 as a plain integer", {"detail": {"count": 2}}, None),
+             ("2.0 as 4([-1, 20])", {"detail": {"count": Tag(4, [-1, 20])}}, "schema"),
+             ("0.50 as 4([-2, 50]), not normalised", {"detail": {"ratio": Tag(4, [-2, 50])}}, "schema"),
+             ("5 as 4([0, 5]), a non-negative exponent", {"detail": {"ratio": Tag(4, [0, 5])}}, "schema"),
+             ("a float", {"detail": {"ratio": 0.5}}, "schema"),
+             ("a mantissa of 2^64", {"detail": {"ratio": Tag(4, [-1, 1 << 64])}}, NUMBER_UNREPRESENTABLE),
+             ("a mantissa of -2^64 - 1", {"detail": {"ratio": Tag(4, [-1, -(1 << 64) - 1])}}, NUMBER_UNREPRESENTABLE)]
+    for why, body, want in cases:
+        if decimal_rule(body) != want:
+            bad.append(f"decimal rule: {why} gives {decimal_rule(body)}, the text gives {want}")
+    for why, body, _ in cases[:3]:
+        try:
+            cde(body)
+        except Exception as e:                        # the deterministic encoder must carry tag 4
+            bad.append(f"decimal sample {why} does not encode: {e}")
+    n_ok = sum(1 for c in cases if c[2] is None)
+    return (f"decimal fractions in bodies: {n_ok} pass, {len(cases) - n_ok} refused (a second encoding at step 3, "
+            f"or {NUMBER_UNREPRESENTABLE})"), bad
 
 
 # ---------------------------------------------------------------- two rules that read a second row (CC 3.1.5, CC 3.3.6)
@@ -1616,6 +1684,9 @@ def main(argv):
     sline, sbad = second_row_checks()
     lines.append(sline)
     bad += sbad
+    dline, dbad = decimal_checks()
+    lines.append(dline)
+    bad += dbad
     sys.path.insert(0, HERE)
     fline, fbad = family_checks()
     lines.append(fline)

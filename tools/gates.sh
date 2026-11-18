@@ -69,6 +69,7 @@ run bash formal/causal_order/build.sh
 run bash formal/audience_view/build.sh
 run python3 -B tools/kx_check.py --check
 run python3 -I formal/roster_fork/fork_check.py --check
+run python3 -I formal/self_roster/heads.py --check
 run python3 tools/ui_closure.py --check
 run python3 tools/check_termination.py
 run python3 tools/kernel_closure.py --check

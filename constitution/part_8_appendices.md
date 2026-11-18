@@ -2436,7 +2436,7 @@ In time:
 - landing of `expiry`: each node for itself, nothing signed (CC 4.3)
 - expiry required `valid_until` (CC 4.3)
 
-Body: `author`, `deferral_id`, `reason_digest`, `room`, `refs`, `asserted_at`, `valid_until`, `domain`
+Body: `author`, `deferral_id`, `reason_digest`, `refs`, `asserted_at`, `valid_until`, `domain`
 
 **`deferral:response:{outcome}`** — Rules, thing
 
@@ -2450,7 +2450,7 @@ Fold:
 - `over=seated@named/person` (CC 4.3)
 - `over=present@named/person` (CC 4.3)
 
-Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `room`, `call_fingerprint`, `refs`, `asserted_at`
+Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `call_fingerprint`, `refs`, `asserted_at`
 
 **`delivery_receipt:{stream_id}`** — Facts, account
 
@@ -2658,7 +2658,7 @@ In time:
 - [ephemeral] on fold(no_member): read withdrawn (CC 5.3.3.2)
 - @community clock `W` = `admission_freshness_window_secs` (CC 3.3.4)
 - @community on close(W) unless fold(policy_met): read lapsed (CC 3.3.4)
-- on refused(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
+- on inert(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
 - clock `cover` = `charter.witness_cadence_secs` (CC 3.2)
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
@@ -2740,7 +2740,7 @@ Change:
 - attest: `attest[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.22)
 - attest: `attest[scope:self]: key=stop_wrap` (CC 4.4.3.22)
 
-Body: `author`, `identity_key_id`, `occurrence_key_id`, `revoked_at`, `effective_at`, `witness_set`, `reason`, `asserted_at`
+Body: `author`, `identity_key_id`, `occurrence_key_id`, `revoked_at`, `effective_at`, `witness_set`, `reason`, `refs`, `asserted_at`
 
 **`identity_amendment`** — Identity, thing
 

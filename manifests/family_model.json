@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "e6a422b77ac928e223da973bb074fccc9bd1b58b196593438e8e761df4b80ab5",
+  "registry_sha256": "c6a478d65b8d7040311f989941b7d747de756abf4718ce3bdf7f459bfce41f49",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -297,7 +297,7 @@
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
    "cells_cited": 325,
-   "citations": 499,
+   "citations": 498,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "placement": {
@@ -1127,7 +1127,7 @@
      "why": "A withdrawal cannot make a device forget a key it holds, so a withdrawal of a wrap is refused. Access ends by changing the key for what is written afterwards.",
      "basis": "text",
      "cc_ref": "CC 3.3.2",
-     "quote": "a `withdraws` or `recants` naming a `key_grant` row is refused; once shared, always shared at the wire layer, and forward secrecy is by rotation",
+     "quote": "a `withdraws` or `recants` naming a `key_grant` row concludes nothing; once shared, always shared at the wire layer, and forward secrecy is by rotation",
      "cells": 1
     },
     {
@@ -6582,7 +6582,7 @@
      "value": "none (held shut)",
      "source": "code-v61"
     },
-    "qualifier": "refused from any other key",
+    "qualifier": "concludes nothing from any other key",
     "cites": [
      {
       "cc_ref": "CC 3.1.5",
@@ -23676,7 +23676,7 @@
     "sources": {
      "scope": "cell:manifests/family_model.json#consent:partnership_accept.fold",
      "conferrer": "quote:CC 4.4.3.19 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\"",
-     "consent": "quote:CC 4.4.3.19 \"the user emits `consent:partnership_grant` and the agent occurrence emits `consent:partnership_accept` under one `bilateral_pair_id`\"",
+     "consent": "quote:CC 4.4.3.19 \"the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`\"",
      "ends": "quote:CC 4.4.3.19 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\""
     },
     "cells_from": [
@@ -24168,7 +24168,7 @@
     "sources": {
      "scope": "cell:manifests/family_model.json#consent:partnership_grant.fold",
      "conferrer": "quote:CC 4.4.3.19 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\"",
-     "consent": "quote:CC 4.4.3.19 \"the user emits `consent:partnership_grant` and the agent occurrence emits `consent:partnership_accept` under one `bilateral_pair_id`\"",
+     "consent": "quote:CC 4.4.3.19 \"the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`\"",
      "ends": "quote:CC 4.4.3.19 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\""
     },
     "cells_from": [
@@ -29084,24 +29084,16 @@
       {
        "member": "deferral_id",
        "type": "tstr",
-       "presence": "optional",
-       "when": "where the deferring party keeps one",
+       "presence": "required",
+       "when": "always",
        "in_cddl": true,
        "cc_ref": "CC 3.1.9.3"
       },
       {
        "member": "reason_digest",
        "type": "hash-digest",
-       "presence": "optional",
-       "when": "where the request digests its reason",
-       "in_cddl": true,
-       "cc_ref": "CC 3.1.9.3"
-      },
-      {
-       "member": "room",
-       "type": "tstr",
-       "presence": "optional",
-       "when": "where the deferral belongs to a room",
+       "presence": "required",
+       "when": "always",
        "in_cddl": true,
        "cc_ref": "CC 3.1.9.3"
       },
@@ -29547,16 +29539,8 @@
       {
        "member": "deferral_id",
        "type": "tstr",
-       "presence": "optional",
-       "when": "where the request carries one",
-       "in_cddl": true,
-       "cc_ref": "CC 3.1.9.3"
-      },
-      {
-       "member": "room",
-       "type": "tstr",
-       "presence": "optional",
-       "when": "where the deferral belongs to a room",
+       "presence": "required",
+       "when": "always",
        "in_cddl": true,
        "cc_ref": "CC 3.1.9.3"
       },
@@ -41432,11 +41416,11 @@
       },
       {
        "member": "refs",
-       "type": "refs",
-       "presence": "optional",
-       "when": "where the occurrence names a row",
+       "type": "self-roster-refs",
+       "presence": "required",
+       "when": "always",
        "in_cddl": true,
-       "cc_ref": "CC 3.3.6"
+       "cc_ref": "CC 3.3.6.4"
       },
       {
        "member": "asserted_at",
@@ -41514,10 +41498,6 @@
      },
      {
       "cc_ref": "CC 3.3.6.2",
-      "reading": "fills"
-     },
-     {
-      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      },
      {
@@ -41994,6 +41974,14 @@
        "when": "where the revocation carries a reason",
        "in_cddl": true,
        "cc_ref": "CC 2.6.1.10"
+      },
+      {
+       "member": "refs",
+       "type": "self-roster-refs",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.3.6.4"
       },
       {
        "member": "asserted_at",

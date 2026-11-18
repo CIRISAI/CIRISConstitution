@@ -389,7 +389,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A withdrawal cannot make a device forget a key it holds, so a withdrawal of a wrap is refused. Access ends by changing the key for what is written afterwards.
 
-**Text.** CC 3.3.2: "a `withdraws` or `recants` naming a `key_grant` row is refused; once shared, always shared at the wire layer, and forward secrecy is by rotation"
+**Text.** CC 3.3.2: "a `withdraws` or `recants` naming a `key_grant` row concludes nothing; once shared, always shared at the wire layer, and forward secrecy is by rotation"
 
 | column | families |
 |---|---|

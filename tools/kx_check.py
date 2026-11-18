@@ -287,7 +287,7 @@ def reaction_sets(c, clauses, rnd, n, called=()):
         s = {"id": "self", "fam": R.fill(c["family"], rnd), "verb": "attest", "signer": rnd.choice(R.KEYS), "attested": rnd.choice(R.KEYS), "subject": rnd.choice(R.KEYS),
              "object": rnd.choice(R.OBJS), "asserted_at": rnd.randint(0, 3), "leafname": rnd.choice(leaves + ["zz"]) if leaves else "zz",
              "val": {m: rnd.choice([None, rnd.randint(0, 6)]) for m in members}, "leaf": {}, "ref": {}, "names": frozenset()}
-        s["val"]["state"] = rnd.choice(["purged", "sealed", "matched", "refused", None])
+        s["val"]["state"] = rnd.choice(["purged", "sealed", "matched", "inert", None])
         s["val"]["scope"] = rnd.choice(["self", "family", "affiliations", "community"])
         if rows and rnd.random() < .4:
             t0 = rnd.choice(rows)

@@ -5199,9 +5199,9 @@
   {
    "id": "persist/(tombstoned record)/purge_tombstoned",
    "status": "wording-only",
-   "reason": "not holding the bytes again and refusing them at the door have one outward effect; the reason reported is purge_tombstoned in both",
+   "reason": "not keeping the bytes while the tombstone stands and refusing them at the door have one outward effect until a reversal; the reason reported is purge_tombstoned in both",
    "cc_ref": "CC 4.5.3",
-   "quote": "A node does not hold a tombstoned record again and never serves it"
+   "quote": "While a tombstone stands, a node does not keep the record's bytes and never serves them"
   }
  ]
 }

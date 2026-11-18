@@ -54,15 +54,16 @@ membership-change = {
   * tstr => ceg-value,
 }
 
-; identity:occurrence_revocation: authored by the revoker, or counted over a user self's live roster.
+; identity:occurrence_revocation: authored by the revoker, or counted over a user self's roster at the head refs names.
 occurrence-revocation = {
-  ? "author": identity-ref,                 ; The revoker; a user self's revocation is counted over its live roster and carries none. (unless the occurrence is of a user self)
+  ? "author": identity-ref,                 ; The revoker; a user self's revocation is counted over its roster at the head refs names and carries none. (unless the occurrence is of a user self)
   "identity_key_id": identity-ref,          ; The identity whose occurrence is revoked.
   "occurrence_key_id": identity-ref,        ; The occurrence revoked, equal to the CWT sub.
   "revoked_at": ms-time,                    ; POSIX milliseconds.
   "effective_at": ms-time,                  ; POSIX milliseconds; may be later than asserted_at.
   ? "witness_set": [* identity-ref],        ; A set. (where the revocation names its witnesses)
   ? "reason": uint,                         ; A code from the closed registry. (where the revocation carries a reason)
+  "refs": self-roster-refs,                 ; The self-roster head the revocation is counted over, and a merge's further tips.
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }
@@ -153,7 +154,7 @@ identity-occurrence = {
   ? "transport_destination": transport-destination, ; The RNS members of the binding's table. (where the occurrence binds an address)
   ? "encryption_pubkeys": encryption-pubkeys, ; The content-KEM keys. (where the occurrence is a wrap target)
   ? "build_manifest_hash": hash-digest,     ; The hash of the pipeline-signed manifest. (where the occurrence names its build)
-  ? "refs": refs,                           ; The build manifest's provenance row, and a seat's key record, under the also role cites. (where the occurrence names a row)
+  "refs": self-roster-refs,                 ; The self-roster head the signer stood on; a merge's further tips; and the rows the occurrence cites.
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   ? "valid_until": ms-time,                 ; Later than asserted_at (CC 2.6.2). (where the occurrence states its own end)
   * tstr => ceg-value,
@@ -163,6 +164,14 @@ identity-occurrence = {
 encryption-pubkeys = {
   "x25519": bstr .size 32,                  ; A fresh content-KEM key, never the signing or the transport key.
   "ml_kem_768": bstr .size 1184,            ; The ML-KEM-768 public key.
+}
+
+; The refs of a self-roster row (CC 3.3.6.4): the head it stands on, required; a closed map.
+self-roster-refs = {
+  "head": row-ref,                          ; The last landed self-roster row the signer stood on, a bind or an eviction; the first bind names the genesis key's own record.
+  ? "further_heads": row-ref-set,           ; The other tips the row merges, as a roster version names them: a set. (where the row merges tips)
+  ? "target": row-ref,                      ; The occurrence this one supersedes. (on a supersession)
+  ? "also": { + also-role => row-ref-set }, ; The build manifest's provenance row, and a seat's key record, under the role cites. (where the row names another row)
 }
 
 ; identity_amendment (CC 3.1.5): authored by the agent's occurrence key; sub is the agent's identity.
@@ -192,8 +201,7 @@ deferral-response = {
   "author": identity-ref,                   ; The seated Wise Authority who answers.
   "dimension": tstr,                        ; deferral:response:approved:v1 or deferral:response:rejected:v1.
   ? "amendment_digest": hash-digest,        ; The digest of the amendment approved. (on an approval that authorises an identity amendment)
-  ? "deferral_id": tstr,                    ; The request's own correlation id, copied from it. (where the request carries one)
-  ? "room": tstr,                           ; The room the deferral is routed in, copied from the request; the room id's encoding is open. (where the deferral belongs to a room)
+  "deferral_id": tstr,                      ; The request's own correlation id, copied from it.
   ? "call_fingerprint": hash-digest,        ; The fingerprint of the call approved; a dispatch resting on it executes only that call. (on an approval of a call)
   "refs": refs,                             ; The request answered, under answers.
   "asserted_at": ms-time,                   ; POSIX milliseconds.
@@ -203,9 +211,8 @@ deferral-response = {
 ; deferral:request (CC 3.1.9.3, CC 4.3): authored by the deferring party; the request's further members are the store's.
 deferral-request = {
   "author": identity-ref,                   ; The deferring party: an agent's occurrence key, or a person's own key.
-  ? "deferral_id": tstr,                    ; The deferring party's own correlation id. (where the deferring party keeps one)
-  ? "reason_digest": hash-digest,           ; The SHA-256 of the reason, which travels as bytes beside the row. (where the request digests its reason)
-  ? "room": tstr,                           ; The room that routes the deferral and its answer; the room id's encoding is open. (where the deferral belongs to a room)
+  "deferral_id": tstr,                      ; The deferring party's own correlation id.
+  "reason_digest": hash-digest,             ; The SHA-256 of the reason, which travels as bytes beside the row; a response carries none.
   ? "refs": refs,                           ; The request it was handed, under answers. (where the request sends a handed case up)
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   "valid_until": ms-time,                   ; The request's own end, after which it re-routes.

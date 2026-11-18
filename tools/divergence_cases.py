@@ -134,7 +134,7 @@ def cases():
         [U, SEAT.offer("rt", "Rt", "Rt", "root", "@", "self"),
          fam("e", "U", "evidence:{suite}:{kind}:{cell}:{prefix}", ("ku", "rt"), root="Rt")], "e"))
     E.append(signer_entry("persist", "slashing:{outcome}", ["C447", "C458"], "CC 4.5.5",
-        "A duty action (`takedown_notice`, `moderation:*`, `reconsideration:*`, `slashing:*`, `quarantine:*`) is admitted **iff** one holds **positively**",
+        "A duty action (`takedown_notice`, `moderation:*`, `reconsideration:*`, `slashing:*`, `quarantine:*`) counts **iff** one holds **positively**",
         [["seat:slash@group"]], [["registered"]], "any_registered x none x {}",
         community() + [U, fam("s", "U", "slashing:{outcome}", ("g", "ku"), group="g")], "s"))
     E.append(signer_entry("persist", "consent:state:{stance}", ["C449", "C497"], "CC 3.4.5",
@@ -248,7 +248,7 @@ def cases():
     # ---- cosign / count: a group's act takes the group's count ----------------------------------------------------
     for impl, f, srcs, cc, q, sw, cen, where in [
         ("persist", "goal:{scale}", ["C469", "C508"], "CC 3.1.9.7",
-         "A member votes for the Goal by cosigning it, and the row is admitted only when its full scrub set meets the group's protocol over the members at the head the row names",
+         "A member votes for the Goal by cosigning it, and the row counts only when its full scrub set meets the group's protocol over the members at the head the row names",
          "none", ("goal:{scale}", COSIGN[0]), "cosign_rule"),
         ("persist", "mesh_config:{key}", ["C509"], "CC 4.2.1",
          "**Durable** settings are earned by **quorum, never by having been exercised**.", "none",
@@ -583,7 +583,7 @@ def cases():
         if f == "self:delegates_to":   # the text reads no cycle: the closing row concludes, the shipped door refuses it
             E[-1]["text_param"]["gate"] = E[-1]["text_value"] = [["any"]]
     E.append(wording("persist", "(tombstoned record)", "purge_tombstoned", ["CLM-purge-whole-or-not"], "CC 4.5.3",
-        "A node does not hold a tombstoned record again and never serves it", "a tombstoned record is refused at every admission door and never served",
-        "not holding the bytes again and refusing them at the door have one outward effect; the reason reported is purge_tombstoned in both",
+        "While a tombstone stands, a node does not keep the record's bytes and never serves them", "a tombstoned record is refused at every admission door and never served",
+        "not keeping the bytes while the tombstone stands and refusing them at the door have one outward effect until a reversal; the reason reported is purge_tombstoned in both",
         shipped_source="constitution/claims.tsv CLM-purge-whole-or-not (impl refuse_if_tombstoned_attestation; the summary before 6e90792)"))
     return E

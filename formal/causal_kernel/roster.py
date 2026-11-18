@@ -23,7 +23,7 @@ the kernel's mechanism, unchanged. What this file adds is the PARAMETERS, and th
     margin     T7: a count admits only while at least need+margin keys hold the counted seat (0 = no margin)
     recovery   the accord: a version signed by a holder's committed recovery key alone, changing only that seat
     body       infra: a conferring body that may sign one founder-adding widening while the roster is stalled
-    witnessed  T6: a witnessed lineage refuses a rival head that is not witnessed (a reader-side parameter)
+    witnessed  T6: a reader holding a witnessed head holds a rival that is not witnessed void (a reader-side parameter)
 
 Instances are built from manifests/governance_policy.json by `instances()`.
 """

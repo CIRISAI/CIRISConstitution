@@ -19,18 +19,18 @@ accord:invoke:constitutional:{halt_id}	authorship	*	authored	CC 3.4.1	pre-signab
 membership:{stage}	authorship	leaf=widening|removal	counted	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
 membership:{stage}	authorship	*	authored	CC 3.1.3.2	The first three are single-signer (below)
 membership:{stage}	authorship	*	authored	CC 3.1.3.2	a resignation is signed by the leaving member
-identity:occurrence_revocation	authorship	identity=user	counted	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's current live roster**
+identity:occurrence_revocation	authorship	identity=user	counted	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's roster at the head it names**
 identity:occurrence_revocation	authorship	*	authored	CC 3.1.3	for an occurrence of a `node` or `agent` identity, which is single-signer in any case
 identity:occurrence	authorship	*	authored	CC 3.3.6.4	An addition or an eviction is a proposal signed by a live roster key; one open proposal per proposer.
 retirement:{state}	authorship	leaf=custodian_minted	counted	CC 7.5.5	one cosigned `retirement:custodian_minted:v1` row
 retirement:{state}	authorship	*	authored	CC 3.1.5	Self-emitted up to `retired` (attester = the agent key)
 takedown_notice:{basis}	authorship	leaf=steward_purge	counted	CC 2.4.1.1	authorised by a cosigned `takedown_notice` under the trust root's `consensus_protocol` with basis `steward_purge`
-takedown_notice:{basis}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	is admitted only when countersigned by a key outside the deciding seat
-takedown_notice:{basis}	authorship	*	authored	CC 4.4.3.19	A moderation action above is admitted **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
-quarantine:{state}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	is admitted only when countersigned by a key outside the deciding seat
-quarantine:{state}	authorship	*	authored	CC 4.4.3.19	A moderation action above is admitted **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
-slashing:{outcome}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	is admitted only when countersigned by a key outside the deciding seat
-slashing:{outcome}	authorship	*	authored	CC 4.4.3.19	A moderation action above is admitted **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
+takedown_notice:{basis}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the deciding seat
+takedown_notice:{basis}	authorship	*	authored	CC 4.4.3.19	A moderation action above counts **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
+quarantine:{state}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the deciding seat
+quarantine:{state}	authorship	*	authored	CC 4.4.3.19	A moderation action above counts **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
+slashing:{outcome}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the deciding seat
+slashing:{outcome}	authorship	*	authored	CC 4.4.3.19	A moderation action above counts **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
 wa_adjudication:{state}	authorship	leaf=abandonment|seizure|successor	counted	CC 4.3	A finding of the designated body is one row cosigned under that body's declared protocol
 wa_adjudication:{state}	authorship	*	authored	CC 3.1.9.4	`petition` is the petitioner's own row
 ballot:moderator	authorship	*	authored	CC 4.5.13	There is **one ballot per person** however many keys they hold

@@ -755,7 +755,7 @@ def check_infra(spec, inst):
         m = run(spec, W4, i4, orders=False)
     res.append(result(inst, "T7 recovery: the conferring body's one widening", src, verdict_of(base, param="body (a second conferrer, active only while stalled)"),
                       base, "the body may widen at any time", m))
-    # I5 T6: a witnessed lineage refuses a rival that is not witnessed; an ordinary room's tips wait
+    # I5 T6: a reader holding a witnessed head holds a rival that is not witnessed void; an ordinary room's tips wait
     v1 = RS.add(spec, "v1", ("I",), "J", ("f1", "f2"), names=("aj",))
     v2 = RS.remove(spec, "v2", ("I",), "f1", ("f2", "f3"))
     rows = [g, aj, v1] + v2

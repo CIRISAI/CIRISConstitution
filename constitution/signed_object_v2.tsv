@@ -37,6 +37,8 @@ payload	attestation-envelope	redacted_claim_keys	-	payload	[+ bstr .size 32]	whe
 payload	attestation-envelope	"body"	-	payload	body	where the family carries a body	2.6.1.10	The family's body.
 payload	body	"note"	context	payload:body	tstr .size (0..2048)	where the row carries a note	2.6.1.10	At most 2,048 bytes; blinded first where the family's erasure route is a subject request or a purge.
 payload	body	redacted_claim_keys	-	payload:body	[+ bstr .size 32]	where a member of the body was minted blind	2.6.1.10	SD-CWT simple(59): the digests of the body's blinded members, body.note among them; a sequence.
+payload	body-decimal	exponent	-	payload:body	nint	always	2.6.1.2	A decimal fraction's exponent, negative: tag 4 in a free-form body.
+payload	body-decimal	mantissa	-	payload:body	int	always	2.6.1.2	In CBOR's integer range and not divisible by 10; a number outside it is body_number_unrepresentable.
 refs	refs-members	"head"	-	payload:refs	row-ref	on a counted row, and on a roster version	2.6.1.9	The roster head the row is counted over, inside what every voice signs.
 refs	refs-members	"further_heads"	-	payload:refs	row-ref-set	where a row names further tips	2.6.1.9 2.6.1.2	Further tips beside head: a set.
 refs	refs-members	"prev"	-	payload:refs	row-ref	where a signer's own series names its predecessor	2.6.1.11	The predecessor in a signer's own series.
@@ -152,13 +154,14 @@ membership	membership-change	"valid_until"	valid_until	payload	ms-time	on a time
 membership	membership-change	"reason"	reason	payload	uint	where the change carries a reason	2.6.1.10	A code from the closed registry; free text stands in body.note.
 membership	membership-change	"refs"	-	payload	refs	always	3.1.3.2 2.6.1.9	The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites.
 membership	membership-change	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
-occurrence_revocation	occurrence-revocation	"author"	attesting_key_id	payload	identity-ref	unless the occurrence is of a user self	3.1.3 3.3.6.4	The revoker; a user self's revocation is counted over its live roster and carries none.
+occurrence_revocation	occurrence-revocation	"author"	attesting_key_id	payload	identity-ref	unless the occurrence is of a user self	3.1.3 3.3.6.4	The revoker; a user self's revocation is counted over its roster at the head refs names and carries none.
 occurrence_revocation	occurrence-revocation	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6.4	The identity whose occurrence is revoked.
 occurrence_revocation	occurrence-revocation	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6.4	The occurrence revoked, equal to the CWT sub.
 occurrence_revocation	occurrence-revocation	"revoked_at"	-	payload	ms-time	always	3.3.6.4 2.6.2	POSIX milliseconds.
 occurrence_revocation	occurrence-revocation	"effective_at"	effective_at	payload	ms-time	always	3.3.6.4 2.6.2	POSIX milliseconds; may be later than asserted_at.
 occurrence_revocation	occurrence-revocation	"witness_set"	-	payload	[* identity-ref]	where the revocation names its witnesses	3.3.6.4 2.6.1.2	A set.
 occurrence_revocation	occurrence-revocation	"reason"	reason	payload	uint	where the revocation carries a reason	2.6.1.10	A code from the closed registry.
+occurrence_revocation	occurrence-revocation	"refs"	-	payload	self-roster-refs	always	3.3.6.4 2.6.1.3	The self-roster head the revocation is counted over, and a merge's further tips.
 occurrence_revocation	occurrence-revocation	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 revocation	entity-revocation	"author"	attesting_key_id	payload	identity-ref	always	3.1.1	The revoker.
 revocation	entity-revocation	"dimension"	dimension	payload	tstr	always	3.1.1	revocation:{entity_type}:{reason} with its version; the reason leaf is the coded reason.
@@ -215,11 +218,15 @@ occurrence	identity-occurrence	"hardware_attestation"	hardware_attestation	paylo
 occurrence	identity-occurrence	"transport_destination"	transport_destination	payload	transport-destination	where the occurrence binds an address	3.3.6.2 3.3.6.3	The RNS members of the binding's table.
 occurrence	identity-occurrence	"encryption_pubkeys"	encryption_pubkeys	payload	encryption-pubkeys	where the occurrence is a wrap target	3.3.6.1	The content-KEM keys.
 occurrence	identity-occurrence	"build_manifest_hash"	build_manifest_hash	payload	hash-digest	where the occurrence names its build	3.3.6 3.1.2	The hash of the pipeline-signed manifest.
-occurrence	identity-occurrence	"refs"	build_manifest_ref	payload	refs	where the occurrence names a row	3.3.6 2.6.1.3	The build manifest's provenance row, and a seat's key record, under the also role cites.
+occurrence	identity-occurrence	"refs"	build_manifest_ref	payload	self-roster-refs	always	3.3.6.4 2.6.1.3	The self-roster head the signer stood on; a merge's further tips; and the rows the occurrence cites.
 occurrence	identity-occurrence	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 occurrence	identity-occurrence	"valid_until"	valid_until	payload	ms-time	where the occurrence states its own end	3.3.6 2.6.2	Later than asserted_at (CC 2.6.2).
 occurrence	encryption-pubkeys	"x25519"	x25519_base64	payload	bstr .size 32	always	3.3.6.1	A fresh content-KEM key, never the signing or the transport key.
 occurrence	encryption-pubkeys	"ml_kem_768"	ml_kem_768_base64	payload	bstr .size 1184	always	3.3.6.1	The ML-KEM-768 public key.
+occurrence	self-roster-refs	"head"	-	payload:refs	row-ref	always	3.3.6.4 2.7.8	The last landed self-roster row the signer stood on, a bind or an eviction; the first bind names the genesis key's own record.
+occurrence	self-roster-refs	"further_heads"	-	payload:refs	row-ref-set	where the row merges tips	3.3.6.4 2.7.8 2.6.1.2	The other tips the row merges, as a roster version names them: a set.
+occurrence	self-roster-refs	"target"	-	payload:refs	row-ref	on a supersession	3.3.6.2 2.6.1.3	The occurrence this one supersedes.
+occurrence	self-roster-refs	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names another row	3.3.6 2.6.1.3	The build manifest's provenance row, and a seat's key record, under the role cites.
 amendment	identity-amendment	"author"	attesting_key_id	payload	identity-ref	always	3.1.5	The agent's occurrence key's identity.
 amendment	identity-amendment	"amendment_digest"	amendment_digest	payload	hash-digest	always	3.1.5 2.1	The SHA-256 of the applied amendment; it equals the approving response's.
 amendment	identity-amendment	"refs"	authorized_by	payload	refs	always	3.1.5 2.6.1.3	The approving deferral:response:approved row, under the also role cites; the amendment it follows in refs.prev, absent on the base template (CC 2.7.11).
@@ -233,15 +240,13 @@ admission	admission-unit	"valid_until"	valid_until	payload	ms-time	always	2.6.2 
 deferral	deferral-response	"author"	attesting_key_id	payload	identity-ref	always	3.1.9.3 4.3	The seated Wise Authority who answers.
 deferral	deferral-response	"dimension"	dimension	payload	tstr	always	3.1.9.3	deferral:response:approved:v1 or deferral:response:rejected:v1.
 deferral	deferral-response	"amendment_digest"	amendment_digest	payload	hash-digest	on an approval that authorises an identity amendment	3.1.5 2.1	The digest of the amendment approved.
-deferral	deferral-response	"deferral_id"	deferral_id	payload	tstr	where the request carries one	3.1.9.3	The request's own correlation id, copied from it.
-deferral	deferral-response	"room"	-	payload	tstr	where the deferral belongs to a room	3.1.9.3 2.6.1.12	The room the deferral is routed in, copied from the request; the room id's encoding is open.
+deferral	deferral-response	"deferral_id"	deferral_id	payload	tstr	always	3.1.9.3	The request's own correlation id, copied from it.
 deferral	deferral-response	"call_fingerprint"	call_fingerprint	payload	hash-digest	on an approval of a call	2.7.11 4.3	The fingerprint of the call approved; a dispatch resting on it executes only that call.
 deferral	deferral-response	"refs"	references_attestation_id	payload	refs	always	3.1.9.3 2.6.1.3	The request answered, under answers.
 deferral	deferral-response	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 deferral_request	deferral-request	"author"	attesting_key_id	payload	identity-ref	always	3.1.9.3 4.3	The deferring party: an agent's occurrence key, or a person's own key.
-deferral_request	deferral-request	"deferral_id"	deferral_id	payload	tstr	where the deferring party keeps one	3.1.9.3	The deferring party's own correlation id.
-deferral_request	deferral-request	"reason_digest"	reason_digest	payload	hash-digest	where the request digests its reason	3.1.9.3	The SHA-256 of the reason, which travels as bytes beside the row.
-deferral_request	deferral-request	"room"	-	payload	tstr	where the deferral belongs to a room	3.1.9.3 2.6.1.12	The room that routes the deferral and its answer; the room id's encoding is open.
+deferral_request	deferral-request	"deferral_id"	deferral_id	payload	tstr	always	3.1.9.3	The deferring party's own correlation id.
+deferral_request	deferral-request	"reason_digest"	reason_digest	payload	hash-digest	always	3.1.9.3	The SHA-256 of the reason, which travels as bytes beside the row; a response carries none.
 deferral_request	deferral-request	"refs"	references_attestation_id	payload	refs	where the request sends a handed case up	3.1.9.3 2.6.1.3	The request it was handed, under answers.
 deferral_request	deferral-request	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 deferral_request	deferral-request	"valid_until"	valid_until	payload	ms-time	always	3.1.9.3 4.3	The request's own end, after which it re-routes.

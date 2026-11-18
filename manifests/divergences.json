@@ -562,7 +562,7 @@
      ]
     ],
     "cc_ref": "CC 4.5.5",
-    "quote": "A duty action (`takedown_notice`, `moderation:*`, `reconsideration:*`, `slashing:*`, `quarantine:*`) is admitted **iff** one holds **positively**",
+    "quote": "A duty action (`takedown_notice`, `moderation:*`, `reconsideration:*`, `slashing:*`, `quarantine:*`) counts **iff** one holds **positively**",
     "param": {
      "family": "slashing:{outcome}",
      "gate": [
@@ -4320,7 +4320,7 @@
      ]
     ],
     "cc_ref": "CC 3.1.9.7",
-    "quote": "A member votes for the Goal by cosigning it, and the row is admitted only when its full scrub set meets the group's protocol over the members at the head the row names",
+    "quote": "A member votes for the Goal by cosigning it, and the row counts only when its full scrub set meets the group's protocol over the members at the head the row names",
     "param": {
      "family": "goal:{scale}",
      "gate": [
@@ -8772,14 +8772,14 @@
    "text": {
     "value": null,
     "cc_ref": "CC 4.5.3",
-    "quote": "A node does not hold a tombstoned record again and never serves it"
+    "quote": "While a tombstone stands, a node does not keep the record's bytes and never serves them"
    },
    "shipped": {
     "value": "a tombstoned record is refused at every admission door and never served",
     "source": "constitution/claims.tsv CLM-purge-whole-or-not (impl refuse_if_tombstoned_attestation; the summary before 6e90792)",
     "census_cell": null
    },
-   "reason": "not holding the bytes again and refusing them at the door have one outward effect; the reason reported is purge_tombstoned in both"
+   "reason": "not keeping the bytes while the tombstone stands and refusing them at the door have one outward effect until a reversal; the reason reported is purge_tombstoned in both"
   }
  ]
 }
