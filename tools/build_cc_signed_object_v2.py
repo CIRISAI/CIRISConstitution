@@ -484,8 +484,10 @@ def binding_samples():
     """(valid, broken) for the transport destination binding (CC 3.3.6.2)."""
     td = {"reticulum_x25519_pubkey": bytes(32), "reticulum_ed25519_pubkey": bytes([1]) * 32, "app_name": "ciris",
           "aspects": ["node", "transit"], "destination_hash": bytes(16)}
-    b = {"transport_destination": td, "transit_xwing_pubkey": bytes([2]) * 1216, "onion_hop_xwing_pubkey": bytes([3]) * 1216,
-         "refs": {"also": {"cites": [[2, [-16, bytes([4]) * 32]]]}}}
+    rec = [2, [-16, bytes([4]) * 32]]             # the seat's own key record: the head a first bind names, and its citation
+    b = {"author": iref(3), "identity_key_id": iref(3), "occurrence_key_id": iref(3), "device_class": "server",
+         "asserted_at": 1763078400000, "transport_destination": td, "transit_xwing_pubkey": bytes([2]) * 1216,
+         "onion_hop_xwing_pubkey": bytes([3]) * 1216, "refs": {"head": rec, "also": {"cites": [rec]}}}
     return cde(b), [
         ("a binding with no transport_destination", cde({k: v for k, v in b.items() if k != "transport_destination"})),
         ("a transit key of 1184 bytes", cde(dict(b, transit_xwing_pubkey=bytes(1184)))),
@@ -493,6 +495,17 @@ def binding_samples():
         ("a destination_hash in hex", cde(dict(b, transport_destination=dict(td, destination_hash="00" * 16)))),
         ("an opt-out marker of false", cde(dict(b, onion_relay={"opt_out": False}))),
     ]
+
+
+def _seat_binding_without_head():
+    """The binding sample with refs.head removed: refused alone, as identity:occurrence's rule requires a head."""
+    import copy
+    td = {"reticulum_x25519_pubkey": bytes(32), "reticulum_ed25519_pubkey": bytes([1]) * 32, "app_name": "ciris",
+          "aspects": ["node", "transit"], "destination_hash": bytes(16)}
+    rec = [2, [-16, bytes([4]) * 32]]
+    return {"author": iref(3), "identity_key_id": iref(3), "occurrence_key_id": iref(3), "device_class": "server",
+            "asserted_at": 1763078400000, "transport_destination": td, "transit_xwing_pubkey": bytes([2]) * 1216,
+            "onion_hop_xwing_pubkey": bytes([3]) * 1216, "refs": {"also": {"cites": [rec]}}}
 
 
 def recovery_samples():
@@ -604,6 +617,8 @@ def family_payload_samples():
             ("a grant under the v1 wrap", W("key-grant", wrap_algorithm="hpke_rfc9180_base_x25519_aes_gcm")),
             ("a wrapped key in base64", W("key-grant", wrapped_dek="AAAA")),
             ("a grant with no axis", D("key-grant", "axis"))]),
+        ("identity-occurrence", "a seat's binding as an identity:occurrence", binding_samples()[0], [
+            ("a seat binding without refs.head", cde(_seat_binding_without_head()))]),
         ("identity-occurrence", "identity:occurrence payload", cde(P["identity-occurrence"]), [
             ("an occurrence of an unlisted device class", W("identity-occurrence", device_class="tablet")),
             ("an ML-KEM-768 key of 1183 bytes", W("identity-occurrence", encryption_pubkeys={"x25519": bytes(32), "ml_kem_768": bytes(1183)})),
@@ -1057,7 +1072,7 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
             return "nothing", "genesis_bundle_row_unplaced"
         rec_ref, rec = place[("record", seat)]
         _, binding = place[("binding", seat)]
-        if rec.get("valid_until", 0) <= P["asserted_at"] or binding.get("cites") != rec_ref:
+        if rec.get("valid_until", 0) <= P["asserted_at"] or binding.get("cites") != rec_ref or binding.get("head") != rec_ref:
             return "nothing", "genesis_bundle_row_invalid"
         if (binding.get("identity_key_id"), binding.get("occurrence_key_id"), binding.get("device_class")) != (seat, seat, "server"):
             return "nothing", "genesis_bundle_row_invalid"     # the seat's binding is an identity:occurrence of the seat, a server
@@ -1139,7 +1154,7 @@ def reader_samples():
     for n, s_ in enumerate(S):
         rows[bytes([0x20 + n]) * 32] = ("key:record", s_, {"valid_until": 1794614400000})
         rows[bytes([0x30 + n]) * 32] = ("identity:occurrence", s_, {"xwing": ("transit-%d" % n, "onion-%d" % n),
-                                                                     "cites": rid(0x20 + n), "identity_key_id": s_,
+                                                                     "cites": rid(0x20 + n), "head": rid(0x20 + n), "identity_key_id": s_,
                                                                      "occurrence_key_id": s_, "device_class": "server"})
     # A's rotated record (key 7) and the record of a key that is A's recovery key (key 50)
     rows[bytes([0x17]) * 32] = ("key:record", H[0], {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(7)})
@@ -1196,6 +1211,10 @@ def reader_samples():
         ("a seat binding with no identity_key_id",
          (good, voices, {**rows, bytes([0x30]) * 32: ("identity:occurrence", S[0], {k: v for k, v in rows[bytes([0x30]) * 32][2].items()
                                                                                     if k != "identity_key_id"})}, anchor),
+         ("nothing", "genesis_bundle_row_invalid")),
+        ("a seat binding without refs.head",
+         (good, voices, {**rows, bytes([0x30]) * 32: ("identity:occurrence", S[0], {k: v for k, v in rows[bytes([0x30]) * 32][2].items()
+                                                                                    if k != "head"})}, anchor),
          ("nothing", "genesis_bundle_row_invalid")),
         ("a seat binding of device_class phone",
          (good, voices, {**rows, bytes([0x30]) * 32: ("identity:occurrence", S[0], dict(rows[bytes([0x30]) * 32][2], device_class="phone"))}, anchor),
