@@ -315,6 +315,15 @@ SEGMENT_PATTERNS = {
     "days": "^[0-9]+$",
     "tree_size": "^[0-9]+$",
 }
+# A placeholder that names a key carries the key's bare thumbprint (CC 3.1, CC 2.6.1.1): the 43 unpadded base64url
+# characters of its identity reference after urn:ietf:params:oauth:ckt:sha-256:, the last with zero trailing bits.
+# Keyed by family, never by name, so `{subject}` of credits: stays a value. truth_grounding:{subject} is not here:
+# its subject is not always a key (CC 3.4.9 writes truth_grounding:detection:correlated_action:{axis}).
+KEY_PATTERN = "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$"
+KEY_PLACEHOLDERS = {
+    "licensure:{authority_id}": "authority_id",
+    "moderation_track_record:{community_key_id}": "community_key_id",
+}
 # A placeholder whose documented values carry `:` — it spans one OR MORE segments,
 # each sub-segment obeying the placeholder's class. Keyed by family, never by name,
 # so `{kind}` is multi-segment on consent:scope alone.
@@ -517,6 +526,8 @@ def main():
                 pname = seg["segment"][1:-1]
                 if pname in SEGMENT_PATTERNS:
                     seg["pattern"] = SEGMENT_PATTERNS[pname]
+                if KEY_PLACEHOLDERS.get(prefix) == pname:
+                    seg["pattern"] = KEY_PATTERN
                 if MULTI_PLACEHOLDERS.get(prefix) == pname:
                     seg["multi"] = True
         for seg in rec["segments"]:               # R3 `external`: the standard travels with the segment

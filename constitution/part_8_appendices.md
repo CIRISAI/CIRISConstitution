@@ -1,6 +1,6 @@
 # Part 8 — Appendices
 
-**Decimal range** `8.x` · **91 sections** · **page budget 6pp** · [← master index](../README.md)
+**Decimal range** `8.x` · **92 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Case studies, glossaries, conformance vectors, interop, and the dual-ID table of contents.
 
@@ -2410,6 +2410,8 @@ In time:
 - [ack] expiry required `expires_at` eq `custody_report_ttl_secs` (CC 3.1.3.3, CC 5.3.2.1)
 - [ack] on close(expiry): read unknown (CC 3.1.3.3, CC 5.3.2.1)
 
+Body: `author`, `dimension`, `custody_state`, `evidence_refs`, `size`, `asserted_at`
+
 **`deferral:request`** — Process, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2423,7 +2425,7 @@ In time:
 - landing of `expiry`: each node for itself, nothing signed (CC 4.3)
 - expiry required `valid_until` (CC 4.3)
 
-Body: `domain`
+Body: `author`, `deferral_id`, `reason_digest`, `room`, `refs`, `asserted_at`, `valid_until`, `domain`
 
 **`deferral:response:{outcome}`** — Rules, thing
 
@@ -2437,6 +2439,8 @@ Fold:
 - `over=seated@named/person` (CC 4.3)
 - `over=present@named/person` (CC 4.3)
 
+Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `room`, `refs`, `asserted_at`
+
 **`delivery_receipt:{stream_id}`** — Facts, account
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2448,7 +2452,7 @@ Count: `none`
 Guard:
 - attest: `one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise` (CC 5.3.3.11)
 
-Body: `K` (text only), `chunk_root` (text only), `epoch` (text only), `stream_id` (text only), `subscriber_key_id` (text only)
+Body: `author`, `dimension`, `stream_id`, `epoch`, `k`, `chunk_root`, `asserted_at`
 
 **`detection:correlated_action:{axis}`** — Facts, account
 
@@ -2651,6 +2655,8 @@ In time:
 - @community landing of `W`: by member as `group:roster`; a late answer does not count (CC 3.3.4)
 - @community while `W` is open: binds nobody until it lands (CC 3.3.4)
 
+Body: `group_kind`, `group`, `name`, `version`, `members`, `founded_at`, `consensus_protocol`, `consensus_protocol_entrenched`, `cohort_subkind`, `cohort_subkind_payload`, `membership`, `dissolved_at`, `policy`, `refs`, `asserted_at`
+
 **`hardware_custody:{platform}`** — Circumstances, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2707,6 +2713,8 @@ In time:
 - landing of `window`: each node for itself, nothing signed (CC 3.3.6.4)
 - while `window` is open: binds nobody until it lands (CC 3.3.6.4)
 
+Body: `author`, `identity_key_id`, `occurrence_key_id`, `device_class`, `hardware_attestation`, `transport_destination`, `encryption_pubkeys`, `build_manifest_hash`, `refs`, `asserted_at`, `valid_until`
+
 **`identity:occurrence_revocation`** — Identity, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2721,6 +2729,8 @@ Change:
 - attest: `attest[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.22)
 - attest: `attest[scope:self]: key=stop_wrap` (CC 4.4.3.22)
 
+Body: `author`, `identity_key_id`, `occurrence_key_id`, `revoked_at`, `effective_at`, `witness_set`, `reason`, `asserted_at`
+
 **`identity_amendment`** — Identity, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2731,6 +2741,8 @@ Count: `none`
 
 Guard:
 - attest: `one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else exclude(identity_amendment_unauthorized)` (CC 3.1.5)
+
+Body: `author`, `amendment_digest`, `refs`, `asserted_at`
 
 **`image:*`** — Facts, account
 
@@ -2813,7 +2825,7 @@ In time:
 - on fold(no_wrap_target): emit `hard_case:recipient_excluded` by identity:substrate_persist (CC 4.4.3.16)
 - @community on admitted(membership:{stage}): emit `key_grant:epoch` by author (CC 4.4.3.16)
 
-Body: `at_rest_sha256` (text only), `attested_key_id`, `axis` (text only), `community_key_id` (text only), `content_sha256` (text only), `epoch` (text only), `minter_key_id` (text only), `owner_key_id` (text only), `recipient_key_id` (text only), `scope`, `stream_id` (text only), `wrap_algorithm` (text only), `wrapped_dek` (text only)
+Body: `author`, `dimension`, `axis`, `wrap_algorithm`, `wrapped_dek`, `at_rest_sha256`, `owner`, `community`, `minter`, `epoch`, `stream_id`, `asserted_at`
 
 **`lawful_order:release`** — Rules, thing
 
@@ -2975,7 +2987,7 @@ In time:
 - [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
 - [proposal] while `expiry` is open: binds nobody until it lands (CC 3.1.3.2)
 
-Body: `group_kind`, `role`, `proposal_hash`, `expires_at`
+Body: `dimension`, `group_kind`, `group`, `member`, `joined_at`, `removed_at`, `effective_at`, `role`, `witness_set`, `valid_until`, `reason`, `refs`, `asserted_at`, `proposal_hash`
 
 **`mesh_config:{key}`** — Rules, thing
 
@@ -3328,6 +3340,8 @@ Change:
 Fold:
 - `bound=raise_only(revision); pick=union` (CC 5.3.2.3)
 
+Body: `author`, `dimension`, `revoked_at`, `effective_at`, `revoked_after`, `refs`, `asserted_at`
+
 **`self:delegates_to`** — Identity, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -3452,7 +3466,7 @@ In time:
 - [OsaIllegalContent] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
 - [CommunityStandards] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
 
-Body: `asserted_at`, `claim_text` (text only), `claimant_key_id` (text only), `content_holder_key_ids` (text only), `content_sha256` (text only), `counter_notice_channel` (text only), `evidence_refs`, `expires_at`, `good_faith_statement` (text only), `jurisdiction` (text only), `legal_basis` (text only), `perceptual_hash` (text only), `subject_kind` (text only)
+Body: `author`, `dimension`, `legal_basis`, `claimant`, `content_sha256`, `content_holders`, `jurisdiction`, `good_faith_statement`, `claim_text`, `evidence_refs`, `perceptual_hash`, `counter_notice_channel`, `selection_counts`, `expires_at`, `asserted_at`
 
 **`topical_relation:{kind}`** — Identity, thing
 
@@ -3480,6 +3494,8 @@ Authorship: `counted` (CC 3.1.3)
 Change:
 - attest: `attest: by=cosigned, reach=other_attester, void=transport_rebind_without_holder_quorum` (CC 3.1.3)
 - attest: `attest: by=cosigned, reach=other_attester` (CC 3.1.3)
+
+Body: `refs`, `transport_destination`, `transit_xwing_pubkey`, `onion_hop_xwing_pubkey`, `asserted_at`
 
 **`transport:{kind}`** — Circumstances, thing
 
@@ -4203,6 +4219,24 @@ canonical = sha256(
   "valid_until=" || rfc3339_canonical || "\n" ||
   "payload_sha256=" || sha256_hex_lowercase_of_payload)
 ```
+
+### 8.11.30 `earlier-delivery-receipt` — The delivery receipt's signing bytes of the earlier form (normative)
+
+In the earlier form a `delivery_receipt:{stream_id}` row carries, inside the row, the subscriber's signature over the length-prefixed bytes below ([CC 5.3.3.11](part_5_transport_substrate.md#5.3.3.11)). The row's own signature covers its payload.
+
+```
+receipt_signing_bytes =
+    "ciris-delivery-receipt/v1"                       // domain separator: 25 ASCII bytes, no length prefix
+  ‖ u32_le(len(subscriber_key_id)) ‖ subscriber_key_id   // UTF-8
+  ‖ u32_le(len(stream_id))         ‖ stream_id           // UTF-8
+  ‖ epoch        (u64 LE)
+  ‖ chunk_root   ([u8; 32])
+  ‖ K            (u64 LE)
+```
+
+**Little-endian, in this layout alone (normative).** The receipt's two length prefixes, `epoch` and `K` are little-endian. The layout is a signature preimage, so its byte order is fixed as written. A producer MUST NOT carry it into any other construction.
+
+**Order and lengths (normative).** The signed order is the order written: `subscriber_key_id` precedes `stream_id`, even where a struct declares `stream_id` first. Each length-prefixed field MUST fit a `u32`; a longer field is refused, never clamped.
 
 ## 8.12 `parable` — The parable — Genesis of Ethical Agency (informative)
 

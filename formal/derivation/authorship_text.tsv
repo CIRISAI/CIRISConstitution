@@ -10,7 +10,7 @@
 # The quote must stand verbatim in the cited section.
 family	column	selector	value	cc_ref	quote
 group:roster	authorship	*	counted	CC 3.1.3	as a cosigned `scores` row
-transport:canonical_rebind	authorship	*	counted	CC 3.1.3	admitted at the accord charter's threshold
+transport:canonical_rebind	authorship	*	counted	CC 3.1.3	counted at a strict majority of the holders of the bundle in force
 accord:lifecycle:{kind}	authorship	*	counted	CC 3.4.1	a strict majority of the standing roster, one cosigned row naming the halt
 accord:lifecycle:{kind}	authorship	*	counted	CC 4.2.1.3	It is a counted row of a strict majority of the standing roster
 accord:*	authorship	leaf=lifecycle:{kind}	counted	CC 3.4.1	a strict majority of the standing roster, one cosigned row naming the halt

@@ -24,6 +24,18 @@ SCOPES = ("self", "family", "community", "affiliations", "species", "biosphere",
 COUNT_TEXT = os.path.join(ROOT, "formal/derivation/count_text.tsv")
 POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
 SIGNED_OBJECT = os.path.join(ROOT, "constitution/signed_object.tsv")
+SIGNED_OBJECT_V2 = os.path.join(ROOT, "constitution/signed_object_v2.tsv")
+# The families whose payload CC 2.6.1.4 states, by the schema rule that holds it (manifests/family_payloads_v2.cddl).
+FORWARD_PAYLOAD = OrderedDict([("group-roster", "group:roster"), ("membership-change", "membership:{stage}"),
+                               ("occurrence-revocation", "identity:occurrence_revocation"),
+                               ("entity-revocation", "revocation:{entity_type}:{reason}"),
+                               ("takedown-notice", "takedown_notice:{basis}"), ("custody-ack", "custody:{kind}"),
+                               ("key-grant", "key_grant:{axis}"), ("delivery-receipt", "delivery_receipt:{stream_id}"),
+                               ("identity-occurrence", "identity:occurrence"), ("identity-amendment", "identity_amendment"),
+                               ("deferral-response", "deferral:response:{outcome}"), ("deferral-request", "deferral:request"),
+                               ("canonical-rebind", "transport:canonical_rebind")])
+FORWARD_PARTIAL = {"deferral:response:{outcome}", "deferral:request", "transport:canonical_rebind"}   # the rule names some members; the cell's others stay
+FORWARD_LEAVES = {"membership:{stage}": ("widening", "removal")}   # the stages the rule states; the others keep their cell
 CELL_CITES = os.path.join(ROOT, "formal/derivation/cell_cites.tsv")
 FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
 FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
@@ -955,6 +967,34 @@ def main():
             r["body"] = {"value": OrderedDict([("members", mem)]), "source": "cc-table", "cc_ref": "CC 8.11.9",
                          "code": {"value": r["body"].get("value"), "source": "gap"},
                          "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"}
+    # The forward payload (CC 2.6.1.4): where the signed-object table of this form states a family's payload rule, that rule
+    # is the family's body, member for member, and the earlier form's cell gives way to it (a family whose rule covers
+    # some leaves only keeps its cell's members of the others). A cosign:{state} row has no payload of its own (CC 3.1.3).
+    fwd = OrderedDict()
+    for so in csv.DictReader(open(SIGNED_OBJECT_V2, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE):
+        fam = FORWARD_PAYLOAD.get(so["rule"])
+        if fam:
+            fwd.setdefault(fam, []).append(OrderedDict([
+                ("member", so["member"].strip('"')), ("type", so["type"]),
+                ("presence", "required" if so["required_when"] == "always" else "optional"),
+                ("when", so["required_when"]), ("in_cddl", True), ("cc_ref", "CC " + so["cc_ref"].split()[0])]))
+    if set(fwd) != set(FORWARD_PAYLOAD.values()):
+        print("signed_object_v2.tsv states no payload for: " + ", ".join(sorted(set(FORWARD_PAYLOAD.values()) - set(fwd)))); return 1
+    for r in rows:
+        if r["family"] in fwd:
+            leaves = FORWARD_LEAVES.get(r["family"])
+            old = r["body"].get("value") if isinstance(r["body"].get("value"), dict) else {}
+            named = {e["member"] for e in fwd[r["family"]]}
+            keep = [e for e in old.get("members", []) if (leaves and e.get("leaf") and e["leaf"].split(":")[1] not in leaves)
+                    or (r["family"] in FORWARD_PARTIAL and e.get("member") not in named)]
+            r["body"] = {"value": OrderedDict([("rule", next(k for k, v in FORWARD_PAYLOAD.items() if v == r["family"])),
+                                               ("members", fwd[r["family"]] + keep)]),
+                         "source": "cc-table", "cc_ref": "CC 2.6.1.4",
+                         "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4"
+                                 + (f"; stages {', '.join(leaves)}; the others keep the members the earlier cell gave" if leaves else "")}
+        elif r["family"] == "cosign:{state}":
+            r["body"] = {"value": "none: each state is a statement over the event's own payload, named by the event's row id",
+                         "source": "cc-table", "cc_ref": "CC 3.1.3"}
     # The sentences that state a closed cell: the cell gains the sections that say it, its value untouched.
     by_fam = {r["family"]: r for r in rows}
     cited = 0

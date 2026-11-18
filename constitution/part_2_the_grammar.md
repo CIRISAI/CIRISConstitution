@@ -78,7 +78,7 @@ The members fall into three groups: those every row carries, those any row may c
 | `occurrence_key_ids` | `observation:access_assumption:v1`, REQUIRED | A set: the occurrences whose rows the witness read. |
 | `window_from`, `window_to` | `observation:access_assumption:v1`, REQUIRED | Start and end of the observation window, each an instant of [CC 2.6.2](#2.6.2). |
 | `channel_classes` | `observation:access_assumption:v1`, REQUIRED | A set: the classes of channel through which the witness saw the subject, as the emitter names them. |
-| `amendment_digest` | `identity_amendment:v1`, REQUIRED | SHA-256 of the identity amendment as applied ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). |
+| `amendment_digest` | `identity_amendment:v1`, REQUIRED; `deferral:response:approved:v1`, where it authorises an amendment | SHA-256 of the identity amendment as applied ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). |
 | `authorized_by` | `identity_amendment:v1`, REQUIRED | The `attestation_id` of the `deferral:response:approved:v1` row that authorised the amendment. |
 
 **Three axes that do not depend on each other.** `cohort_scope`, with `family_id` or `community_id`, is the visibility axis. `subject_key_ids` is the revocability axis. `delivery_mode` is the delivery axis. Each is orthogonal to the other two ([CC 2.3.3](#2.3.3)). `cohort_scope` is the one member a placement-touching re-sign may narrow; it is never re-authored ([CC 8.11.9](part_8_appendices.md#8.11.9)).
@@ -301,7 +301,7 @@ A cosigned act is named by its row id ([CC 2.6.1.3](#2.6.1.3)), the digest of wh
 
 What this brings onto the base, each as a registered family in [CC 3.1.3](part_3_the_namespace.md#3.1.3):
 
-- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` as envelope members, [CC 3.1.3](part_3_the_namespace.md#3.1.3)),
+- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` in `refs`, [CC 3.1.3](part_3_the_namespace.md#3.1.3)),
 - **membership events** (`membership:widening:v1` / `removal:v1`, cosigned, and `resignation:v1`, signed by the leaving member alone ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)), beside the single-signer proposal, acceptance and decline), and
 - the **key plane**:
   - a key claim (`key:record:v1`, attester = the key, admitted by **proof of possession** against the keys it carries, the one stated exception to resolve-the-attester). Renewal is a `supersedes` by the same key and rotation a record of the next key cosigned by the old one, each bounded as [CC 2.4.1.1](#2.4.1.1) states; an anchor scrub or accord co-scrub is a cosignature),
@@ -529,7 +529,7 @@ A verifier MUST refuse a row whose `cty` carries parameters, or whose protected 
 
 **The family id.** The family label carries a family id, never a leaf. A family id is the family's registry prefix ([CC 3.1](part_3_the_namespace.md#3.1)) with each `{name}` segment written `.name` and each `*` written `.`, such as `key:record` or `provenance:build_manifest:.target`. A literal segment never begins with `.`, so no two prefixes share a family id. A row that scores a dimension carries it whole, leaf and version, in the payload member `dimension`. A verifier MUST refuse a `dimension` that does not resolve to the family id the header carries.
 
-**Identity references.** `iss` is the signer's stable identity reference: the COSE key thumbprint URI of [RFC-9679] (its section 5.7) for the signer's genesis key. It is `urn:ietf:params:oauth:ckt:sha-256:` followed by the unpadded base64url of the 32-byte thumbprint: 43 characters, the last with zero trailing bits. `author`, a key named by `sub` or by an element of `subject_key_ids`, and every role party ([CC 2.6.1.3](#2.6.1.3)) use this one spelling. A verifier MUST refuse any other.
+**Identity references.** `iss` is the signer's stable identity reference: the COSE key thumbprint URI of [RFC-9679] (its section 5.7) for the signer's genesis key. It is `urn:ietf:params:oauth:ckt:sha-256:` followed by the unpadded base64url of the 32-byte thumbprint: 43 characters, the last with zero trailing bits. `author`, a key named by `sub` or by an element of `subject_key_ids`, and every role party ([CC 2.6.1.3](#2.6.1.3)) use this one spelling. A verifier MUST refuse any other. A dimension segment that names a key carries the bare thumbprint, the reference less its prefix, since a dimension is colon-delimited ([CC 3.1.7](part_3_the_namespace.md#3.1.7)).
 
 `external_aad` is the empty byte string, and no party puts a domain prefix there. A statement's kind is its `typ`, and a row's type and family are its labels -70001 and -70002. The unprotected header is outside the signature. No rule reads it; a holder may add a receipt there, or present a disclosure there ([CC 2.6.1.10](#2.6.1.10), [CC 2.6.1.11](#2.6.1.11)).
 
@@ -571,7 +571,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 
 <!-- BEGIN GENERATED: signed_object_v2 -->
 
-*This table is rendered from one data file and checked member for member against [`manifests/signed_object_v2.cddl`](../manifests/signed_object_v2.cddl), the schema; the two never disagree.*
+*This table is rendered from one data file and checked member for member against [`manifests/signed_object_v2.cddl`](../manifests/signed_object_v2.cddl), the schema, with the payload rules of [`manifests/family_payloads_v2.cddl`](../manifests/family_payloads_v2.cddl); the two never disagree.*
 
 **Placement vocabulary.** `statement`: a position of the `COSE_Sign1` array. `header:protected`: the protected header, covered by the signature. `header:cwt`: a CWT claim inside the protected header. `header:unprotected`: never signed, and never read by a rule. `payload`: covered by the signature and by the row id. `payload:refs`: inside `refs`, the one member that names rows. `payload:body`: inside `body`. `derived`: computed by a verifier, never carried as such. `object`: a member of a signed object that is not a row. `none`: a logical name with no member of its own.
 
@@ -769,6 +769,193 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `"head"` | payload:refs | `row-ref` | always | [4.2.1.3](part_4_composition_governance.md#4.2.1.3) [2.6.1.9](#2.6.1.9) | The bundle in force the row is counted over, by its object id. |
 | — | `"target"` | payload:refs | `row-ref` | always | [4.2.1.3](part_4_composition_governance.md#4.2.1.3) | The halt row the lifecycle row confirms or ends; a statement counts for that halt only. |
 
+**The roster version: the payload of a `group:roster` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| — | `"group_kind"` | payload | `"family" / "community"` | always | [3.1.3](part_3_the_namespace.md#3.1.3) [3.2](part_3_the_namespace.md#3.2) | Which record the version is: a family's or a community's. |
+| `family_key_id`, `community_key_id` | `"group"` | payload | `identity-ref` | always | [3.1.3](part_3_the_namespace.md#3.1.3) [3.3.4](part_3_the_namespace.md#3.3.4) | The group's identity reference, equal to the CWT sub. |
+| `family_name`, `community_name` | `"name"` | payload | `tstr` | always | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) | Human-readable and not unique. |
+| — | `"version"` | payload | `uint` | always | [3.2](part_3_the_namespace.md#3.2) | The version's place in the lineage's chain; a consistency check, never ranked. |
+| `members` | `"members"` | payload | `[* roster-member]` | always | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.1.2](#2.6.1.2) | The roster at this version: a set. |
+| `founded_at` | `"founded_at"` | payload | `ms-time` | always | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `consensus_protocol` | `"consensus_protocol"` | payload | `tstr` | always | [3.3.4](part_3_the_namespace.md#3.3.4) | One of the closed vocabulary of CC 3.3.4. |
+| `consensus_protocol_entrenched` | `"consensus_protocol_entrenched"` | payload | `bool` | where the group entrenches its protocol | [3.3.4](part_3_the_namespace.md#3.3.4) | Absent reads false. |
+| `cohort_subkind` | `"cohort_subkind"` | payload | `tstr` | on a community's record | [3.2](part_3_the_namespace.md#3.2) | The community's subkind: open vocabulary. |
+| `cohort_subkind_payload` | `"cohort_subkind_payload"` | payload | `{ * tstr => ceg-value }` | where the subkind carries members of its own | [3.2](part_3_the_namespace.md#3.2) | The subkind's members, such as a geographic community's constraint. |
+| `membership` | `"membership"` | payload | `"private" / "public"` | where a community declares how its roster is seated | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | Absent reads public. |
+| — | `"dissolved_at"` | payload | `ms-time` | where the group is dissolved | [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| — | `"policy"` | payload | `{ * tstr => ceg-value }` | where the record carries the group's policy | [4.4.3.12](part_4_composition_governance.md#4.4.3.12) | The members the record declares at creation beyond those above. |
+| `prev_head_digest`, `charter_digest` | `"refs"` | payload | `refs` | on every version after the first | [3.2](part_3_the_namespace.md#3.2) [2.6.1.3](#2.6.1.3) | The predecessor version in refs.head, and the trust:charter:v1 row in force under the also role cites. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `key_id` | `"key"` | payload | `identity-ref` | always | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) | The member's identity, never an occurrence. |
+| `joined_at` | `"joined_at"` | payload | `ms-time` | always | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `role` | `"role"` | payload | `tstr` | where the record gives the member a role | [3.3.4](part_3_the_namespace.md#3.3.4) | founder or member; absent, never null. |
+
+**A membership change: the payload of a `membership:{stage}` row at the stages `widening` and `removal`**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | membership:widening:v1 or membership:removal:v1. |
+| `group_kind` | `"group_kind"` | payload | `"family" / "community"` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | Which group the change is to. |
+| `family_key_id`, `community_key_id` | `"group"` | payload | `identity-ref` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The group's identity reference. |
+| — | `"member"` | payload | `identity-ref` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The key seated or removed, equal to the CWT sub. |
+| `joined_at` | `"joined_at"` | payload | `ms-time` | on a widening | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| — | `"removed_at"` | payload | `ms-time` | on a removal | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `effective_at` | `"effective_at"` | payload | `ms-time` | always | [3.4.4](part_3_the_namespace.md#3.4.4) [2.6.2](#2.6.2) | The membership-change instant. |
+| `role` | `"role"` | payload | `tstr` | on a widening that assigns a role | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The same role the acceptance restates. |
+| — | `"witness_set"` | payload | `[* identity-ref]` | on a removal that names its witnesses | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) [2.6.1.2](#2.6.1.2) | The keys that vouch for the removal, never signatures: a set. |
+| `valid_until` | `"valid_until"` | payload | `ms-time` | on a time-boxed guest's widening | [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.2](#2.6.2) | The seat lapses at this instant. |
+| `reason` | `"reason"` | payload | `uint` | where the change carries a reason | [2.6.1.10](#2.6.1.10) | A code from the closed registry; free text stands in body.note. |
+| — | `"refs"` | payload | `refs` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) [2.6.1.9](#2.6.1.9) | The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**An occurrence revocation: the payload of an `identity:occurrence_revocation` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | unless the occurrence is of a user self | [3.1.3](part_3_the_namespace.md#3.1.3) [3.3.6.4](part_3_the_namespace.md#3.3.6.4) | The revoker; a user self's revocation is counted over its live roster and carries none. |
+| `identity_key_id` | `"identity_key_id"` | payload | `identity-ref` | always | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) | The identity whose occurrence is revoked. |
+| `occurrence_key_id` | `"occurrence_key_id"` | payload | `identity-ref` | always | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) | The occurrence revoked, equal to the CWT sub. |
+| — | `"revoked_at"` | payload | `ms-time` | always | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `effective_at` | `"effective_at"` | payload | `ms-time` | always | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) [2.6.2](#2.6.2) | POSIX milliseconds; may be later than asserted_at. |
+| — | `"witness_set"` | payload | `[* identity-ref]` | where the revocation names its witnesses | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) [2.6.1.2](#2.6.1.2) | A set. |
+| `reason` | `"reason"` | payload | `uint` | where the revocation carries a reason | [2.6.1.10](#2.6.1.10) | A code from the closed registry. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**An entity revocation: the payload of a `revocation:{entity_type}:{reason}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.1](part_3_the_namespace.md#3.1.1) | The revoker. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.1](part_3_the_namespace.md#3.1.1) | revocation:{entity_type}:{reason} with its version; the reason leaf is the coded reason. |
+| — | `"revoked_at"` | payload | `ms-time` | always | [3.1.1](part_3_the_namespace.md#3.1.1) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `effective_at` | `"effective_at"` | payload | `ms-time` | always | [3.1.1](part_3_the_namespace.md#3.1.1) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `revoked_after` | `"revoked_after"` | payload | `ms-time` | where the revocation bounds what it ends | [2.4.1.1](#2.4.1.1) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| — | `"refs"` | payload | `refs` | where the revoked entity is a row | [2.6.1.3](#2.6.1.3) | The revoked row under target. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**A takedown notice: the payload of a `takedown_notice:{basis}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | iff the notice is authored | [3.1.1](part_3_the_namespace.md#3.1.1) [3.3.2](part_3_the_namespace.md#3.3.2) | A steward purge is counted and carries none. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.1](part_3_the_namespace.md#3.1.1) | takedown_notice:{basis} with its version. |
+| `legal_basis` | `"legal_basis"` | payload | `legal-basis` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | The wire string of the closed set; the basis leaf names the same. |
+| `claimant_key_id` | `"claimant"` | payload | `identity-ref` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | The identity issuing the notice. |
+| `content_sha256` | `"content_sha256"` | payload | `hash-digest` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | SHA-256 of the content; on a steward purge, the selection digest. |
+| `content_holder_key_ids` | `"content_holders"` | payload | `[* identity-ref]` | always | [3.3.2](part_3_the_namespace.md#3.3.2) [2.6.1.2](#2.6.1.2) | Peers known to hold the bytes: a set. |
+| `jurisdiction` | `"jurisdiction"` | payload | `tstr` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | ISO 3166-1 alpha-2 with an optional subdivision. |
+| `good_faith_statement` | `"good_faith_statement"` | payload | `tstr` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | The claimant's good-faith assertion. |
+| `claim_text` | `"claim_text"` | payload | `tstr` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | The claim made. |
+| `evidence_refs` | `"evidence_refs"` | payload | `[+ hash-digest]` | where the notice cites backing material | [3.3.2](part_3_the_namespace.md#3.3.2) [2.6.1.2](#2.6.1.2) | The backing material by content hash: a sequence. |
+| `perceptual_hash` | `"perceptual_hash"` | payload | `ceg-value` | where the notice carries one | [3.3.2](part_3_the_namespace.md#3.3.2) | A perceptual hash such as PDQ. |
+| `counter_notice_channel` | `"counter_notice_channel"` | payload | `tstr` | where the notice names one | [3.3.2](part_3_the_namespace.md#3.3.2) | A URI where counter-notices may be filed. |
+| — | `"selection_counts"` | payload | `{ * tstr => ceg-value }` | on a steward purge that states its counts | [3.3.2](part_3_the_namespace.md#3.3.2) | The counts of the purge's selection by plane. |
+| `expires_at` | `"expires_at"` | payload | `ms-time` | where the notice states its own end | [3.3.2](part_3_the_namespace.md#3.3.2) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**A custody report: the payload of a `custody:{kind}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.3.3](part_3_the_namespace.md#3.1.3.3) | The device the report is about, equal to iss and the CWT sub. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.3.3](part_3_the_namespace.md#3.1.3.3) | custody:ack:v1. |
+| `custody_state` | `"custody_state"` | payload | `"here" / "none"` | always | [3.1.3.3](part_3_the_namespace.md#3.1.3.3) | Whether the device holds the blob. |
+| `evidence_refs` | `"evidence_refs"` | payload | `[hash-digest]` | always | [3.1.3.3](part_3_the_namespace.md#3.1.3.3) [2.6.1.6](#2.6.1.6) | The blob's address digest: exactly one. |
+| `size` | `"size"` | payload | `uint` | when custody_state is here | [3.1.3.3](part_3_the_namespace.md#3.1.3.3) | The blob's size in bytes. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [3.1.3.3](part_3_the_namespace.md#3.1.3.3) [2.6.2](#2.6.2) | The instant the report is live from, for 72 hours. |
+
+**A key grant: the payload of a `key_grant:{axis}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | The sealer. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | key_grant:{axis}:v1. |
+| `axis` | `"axis"` | payload | `"content" / "epoch" / "stream"` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | The same axis as the leaf. |
+| `wrap_algorithm` | `"wrap_algorithm"` | payload | `"x25519_mlkem768_aes256_gcm_hkdf_sha256"` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | The v2 wire string, mandatory for every wrapped key. |
+| `wrapped_dek` | `"wrapped_dek"` | payload | `bstr` | always | [3.3.2](part_3_the_namespace.md#3.3.2) [2.6.1.2](#2.6.1.2) | The wrapped data-encryption key, as bytes. |
+| `at_rest_sha256` | `"at_rest_sha256"` | payload | `hash-digest` | on the content axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The content's at-rest digest. |
+| `owner_key_id` | `"owner"` | payload | `identity-ref` | on the content and stream axes | [3.3.2](part_3_the_namespace.md#3.3.2) | The owner of the content or the stream. |
+| `community_key_id` | `"community"` | payload | `identity-ref` | on the epoch axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The community whose epoch key is wrapped. |
+| `minter_key_id` | `"minter"` | payload | `identity-ref` | on the epoch axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The epoch's minter. |
+| `epoch` | `"epoch"` | payload | `uint` | on the epoch and stream axes | [3.3.2](part_3_the_namespace.md#3.3.2) | The epoch index. |
+| `stream_id` | `"stream_id"` | payload | `tstr` | on the stream axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The stream. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**A delivery receipt: the payload of a `delivery_receipt:{stream_id}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The subscriber, equal to iss and the CWT sub. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.4.6](part_3_the_namespace.md#3.4.6) | delivery_receipt:{stream_id} with its version. |
+| `stream_id` | `"stream_id"` | payload | `tstr` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The same stream as the leaf. |
+| `epoch` | `"epoch"` | payload | `uint` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The key-rotation index. |
+| `K` | `"k"` | payload | `uint` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The chunk index acknowledged. |
+| `chunk_root` | `"chunk_root"` | payload | `hash-digest` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The published tree root the subscriber signs over. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**An occurrence: the payload of an `identity:occurrence` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.3.6](part_3_the_namespace.md#3.3.6) | A live roster key's identity: the identity named by identity_key_id. |
+| `identity_key_id` | `"identity_key_id"` | payload | `identity-ref` | always | [3.3.6](part_3_the_namespace.md#3.3.6) | The identity the occurrence speaks for: a person's, or an agent's own. |
+| `occurrence_key_id` | `"occurrence_key_id"` | payload | `identity-ref` | always | [3.3.6](part_3_the_namespace.md#3.3.6) | The participant's key, equal to the CWT sub; its own statement over the payload is the second voice. |
+| `device_class` | `"device_class"` | payload | `"phone" / "laptop" / "server" / "embedded" / "agent" / "service"` | always | [3.3.6](part_3_the_namespace.md#3.3.6) | A closed set; agent stands only under an agent's own identity. |
+| `hardware_attestation` | `"hardware_attestation"` | payload | `bstr` | where the occurrence carries one | [3.3.6](part_3_the_namespace.md#3.3.6) [2.6.1.2](#2.6.1.2) | The attestation blob, as bytes. |
+| `transport_destination` | `"transport_destination"` | payload | `transport-destination` | where the occurrence binds an address | [3.3.6.2](part_3_the_namespace.md#3.3.6.2) [3.3.6.3](part_3_the_namespace.md#3.3.6.3) | The RNS members of the binding's table. |
+| `encryption_pubkeys` | `"encryption_pubkeys"` | payload | `encryption-pubkeys` | where the occurrence is a wrap target | [3.3.6.1](part_3_the_namespace.md#3.3.6.1) | The content-KEM keys. |
+| `build_manifest_hash` | `"build_manifest_hash"` | payload | `hash-digest` | where the occurrence names its build | [3.3.6](part_3_the_namespace.md#3.3.6) [3.1.2](part_3_the_namespace.md#3.1.2) | The hash of the pipeline-signed manifest. |
+| `build_manifest_ref` | `"refs"` | payload | `refs` | where the occurrence names a row | [3.3.6](part_3_the_namespace.md#3.3.6) [2.6.1.3](#2.6.1.3) | The build manifest's provenance row, and a seat's key record, under the also role cites. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `valid_until` | `"valid_until"` | payload | `ms-time` | where the occurrence states its own end | [3.3.6](part_3_the_namespace.md#3.3.6) [2.6.2](#2.6.2) | Later than asserted_at (CC 2.6.2). |
+| `x25519_base64` | `"x25519"` | payload | `bstr .size 32` | always | [3.3.6.1](part_3_the_namespace.md#3.3.6.1) | A fresh content-KEM key, never the signing or the transport key. |
+| `ml_kem_768_base64` | `"ml_kem_768"` | payload | `bstr .size 1184` | always | [3.3.6.1](part_3_the_namespace.md#3.3.6.1) | The ML-KEM-768 public key. |
+
+**An identity amendment: the payload of an `identity_amendment` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.5](part_3_the_namespace.md#3.1.5) | The agent's occurrence key's identity. |
+| `amendment_digest` | `"amendment_digest"` | payload | `hash-digest` | always | [3.1.5](part_3_the_namespace.md#3.1.5) [2.1](#2.1) | The SHA-256 of the applied amendment; it equals the approving response's. |
+| `authorized_by` | `"refs"` | payload | `refs` | always | [3.1.5](part_3_the_namespace.md#3.1.5) [2.6.1.3](#2.6.1.3) | The approving deferral:response:approved row, under the also role cites. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**A deferral response: the members this form names of a `deferral:response:{outcome}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) [4.3](part_4_composition_governance.md#4.3) | The seated Wise Authority who answers. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) | deferral:response:approved:v1 or deferral:response:rejected:v1. |
+| `amendment_digest` | `"amendment_digest"` | payload | `hash-digest` | on an approval that authorises an identity amendment | [3.1.5](part_3_the_namespace.md#3.1.5) [2.1](#2.1) | The digest of the amendment approved. |
+| `deferral_id` | `"deferral_id"` | payload | `tstr` | where the request carries one | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) | The request's own correlation id, copied from it. |
+| — | `"room"` | payload | `tstr` | where the deferral belongs to a room | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) [2.6.1.12](#2.6.1.12) | The room the deferral is routed in, copied from the request; the room id's encoding is open. |
+| `references_attestation_id` | `"refs"` | payload | `refs` | always | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) [2.6.1.3](#2.6.1.3) | The request answered, under answers. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**A deferral request: the members this form names of a `deferral:request` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) [4.3](part_4_composition_governance.md#4.3) | The deferring party: an agent's occurrence key, or a person's own key. |
+| `deferral_id` | `"deferral_id"` | payload | `tstr` | where the deferring party keeps one | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) | The deferring party's own correlation id. |
+| `reason_digest` | `"reason_digest"` | payload | `hash-digest` | where the request digests its reason | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) | The SHA-256 of the reason, which travels as bytes beside the row. |
+| — | `"room"` | payload | `tstr` | where the deferral belongs to a room | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) [2.6.1.12](#2.6.1.12) | The room that routes the deferral and its answer; the room id's encoding is open. |
+| `references_attestation_id` | `"refs"` | payload | `refs` | where the request sends a handed case up | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) [2.6.1.3](#2.6.1.3) | The request it was handed, under answers. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `valid_until` | `"valid_until"` | payload | `ms-time` | always | [3.1.9.3](part_3_the_namespace.md#3.1.9.3) [4.3](part_4_composition_governance.md#4.3) | The request's own end, after which it re-routes. |
+
+**A canonical re-bind: the payload of a `transport:canonical_rebind` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| — | `"refs"` | payload | `refs` | always | [3.1.3](part_3_the_namespace.md#3.1.3) [2.6.1.11](#2.6.1.11) | The bundle in force the re-bind is counted over, in refs.head. |
+| `transport_destination` | `"transport_destination"` | payload | `transport-destination` | always | [3.1.3](part_3_the_namespace.md#3.1.3) [3.3.6.2](part_3_the_namespace.md#3.3.6.2) | The seated node's new destination. |
+| — | `"transit_xwing_pubkey"` | payload | `bstr .size 1216` | always | [3.3.6.2](part_3_the_namespace.md#3.3.6.2) | The seat's new transit key. |
+| — | `"onion_hop_xwing_pubkey"` | payload | `bstr .size 1216` | on a serve node | [3.3.6.2](part_3_the_namespace.md#3.3.6.2) | The seat's new onion hop key. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
 **The transport destination binding (`identity:occurrence`)**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
@@ -817,6 +1004,8 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `original_content_hash` | none | none | — | - | [2.6.1.3](#2.6.1.3) | The earlier form's content hash; no row of this form names an earlier-form row. |
 | `row` | none | none | — | - | [2.6.1.1](#2.6.1.1) | The protected header carries type, family and kid; the CWT claims carry iss and sub. |
 | `context` | body.note | none | — | - | [2.6.1.10](#2.6.1.10) | Bounded; no free text outside it. |
+| `cosignatures`, `quorum_signatures` | a co-signature of these families | none | — | - | [2.6.1.9](#2.6.1.9) | A further statement over the same payload, counted; never a payload member. |
+| `cosign:{state}` | a cosign:pending or cosign:signature row | none | — | - | [3.1.3](part_3_the_namespace.md#3.1.3) [2.6.1.9](#2.6.1.9) | A statement over the event's own payload, named by the event's row id; it carries no member of its own. |
 
 <!-- END GENERATED: signed_object_v2 -->
 
@@ -847,6 +1036,8 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `original_content_hash` | none: the row id commits to the payload, and no row names an earlier-form row ([CC 2.6.1.3](#2.6.1.3)) |
 | `attestation_envelope` | the payload ([CC 2.6.1.2](#2.6.1.2)); the earlier form's object is [CC 8.11.9](part_8_appendices.md#8.11.9) |
 | `registration_envelope` | none: a key record is the payload of a `key:record` row ([CC 2.6.1.7](#2.6.1.7)) |
+
+**A family's payload (normative).** A family's payload carries the members its record names, one to one, and embeds no signed object. What a record carried as a co-signature is a further statement over the same payload, a counted voice ([CC 2.6.1.9](#2.6.1.9)), never a member. The table above states the payloads of `group:roster`, `membership:{stage}` at its stages `widening` and `removal`, `identity:occurrence_revocation`, `revocation:{entity_type}:{reason}`, `takedown_notice:{basis}`, `custody:{kind}`, `key_grant:{axis}` and `delivery_receipt:{stream_id}`. A `cosign:{state}` row has no payload of its own: each state is a statement over the event's own payload ([CC 3.1.3](part_3_the_namespace.md#3.1.3)). A verifier refuses a payload that breaks its family's rule with `edition2_payload_invalid`, at step 3 of [CC 2.6.1.8](#2.6.1.8). Their schema is [`manifests/family_payloads_v2.cddl`](../manifests/family_payloads_v2.cddl), read together with [`manifests/signed_object_v2.cddl`](../manifests/signed_object_v2.cddl) as one schema.
 
 #### 2.6.1.5 `numbers` — Numbers (normative)
 
@@ -894,7 +1085,8 @@ On a statement received:
        labels present, an object's absent
     3. Check the payload against the schema: no float or null,
        the sets, the ranges, passed and total; dimension
-       resolving to the header's family
+       resolving to the header's family; the family's own
+       payload rule (edition2_payload_invalid)
     4. Check iat, nbf and exp against the payload, and that a
        valid_until is later than asserted_at (CC 2.6.2)
     5. Run the family's static checks, the key record's end
@@ -946,7 +1138,7 @@ The second consent of a scoped `delegates_to` ([CC 2.4.1.2](#2.4.1.2)) is a seco
 
 **The genesis bundle** ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)) carries its predecessor as `prev` in `refs`. Its `version` is a sequence from 1 and is never ranked. Where a bundle has a `prev`, its `version` is one greater than prev's, checked as a consistency check. The first bundle of this form has `version` 1 and no `prev`: it is a fresh genesis, the ceremony row of [CC 2.6.1.12](#2.6.1.12), and a signed object, not a row. A verifier follows `prev` to the head and reports a fork as a fork. With no state of its own it holds the tips, waiting. Two first bundles are a fork of the genesis: a reader that holds the pin of one holds the other void, and a reader with neither holds both as tips ([CC 2.7.8](#2.7.8)).
 
-**What a bundle carries and names.** A bundle's payload is a closed map of the members the table above lists, and carries no `author`, so its object id takes null. `holders` is the accord's roster and `serve_nodes` its seats, each a set of identity references. `charter` carries the accord's parameters, which no row carries ([CC 2.1](#2.1), [CC 4.2.6](part_4_composition_governance.md#4.2.6)). Every row the bundle seats stands in `refs.also` under `cites`, by row id, and is never copied into the payload. Those rows are the key record of each holder, seat and witness, and the `transport_destination` binding of each seat ([CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2)). A seat's canonical conferral is the bundle's own count: a key listed in `serve_nodes` of the bundle in force is canonical ([CC 4.2.1](part_4_composition_governance.md#4.2.1)). That standing rides no key record, so it survives the seat's renewals and moves only by a later bundle. `holders`, `serve_nodes` and `witnesses` are disjoint, so a reader places each named row by its family and its author alone. A bundle that names a row with no place, or two rows for one place, concludes nothing.
+**What a bundle carries and names.** A bundle's payload is a closed map of the members the table above lists, and carries no `author`, so its object id takes null. `holders` is the accord's roster and `serve_nodes` its seats, each a set of identity references. `charter` carries the accord's parameters, which no row carries ([CC 2.1](#2.1), [CC 4.2.6](part_4_composition_governance.md#4.2.6)). Every row the bundle seats stands in `refs.also` under `cites`, by row id, and is never copied into the payload. Those rows are the key record of each holder, seat and witness, and the `transport_destination` binding of each seat ([CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2)). Each is checked by its own family's payload rule, as it is alone. A seat's binding is an `identity:occurrence` whose `identity_key_id` and `occurrence_key_id` are the seat's identity reference, with `device_class` `server`. A seat's canonical conferral is the bundle's own count: a key listed in `serve_nodes` of the bundle in force is canonical ([CC 4.2.1](part_4_composition_governance.md#4.2.1)). That standing rides no key record, so it survives the seat's renewals and moves only by a later bundle. `holders`, `serve_nodes` and `witnesses` are disjoint, so a reader places each named row by its family and its author alone. A bundle that names a row with no place, or two rows for one place, concludes nothing.
 
 **How a bundle is counted.** A bundle is counted: one statement for each holder, over one payload. Each statement MUST carry `iat`, equal to `asserted_at` divided by 1000 and rounded down. The instant is the payload's, agreed before signing, so every holder's `iat` is the same whatever its clock reads ([CC 2.6.2](#2.6.2)). `iat` lies outside the object id, so a statement whose `iat` disagrees is Invalid on its own, and the bundle is counted on the statements that remain. The first bundle counts when every holder it lists has a valid statement over it, under the key its named key record holds. A later bundle counts when a strict majority of its predecessor's holders have valid statements over it, each under the key the predecessor names. Each holder it adds signs it too, as does each holder whose recovery commitment it changes ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). Each statement is that holder's proof of life and its yes ([CC 4.2.6](part_4_composition_governance.md#4.2.6)). A count not yet met concludes nothing, and the bundle is held.
 

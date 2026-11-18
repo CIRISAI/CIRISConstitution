@@ -398,7 +398,7 @@ identity:occurrence_revocation	lifecycle	fills	CC 3.1.3	Wire `identity:occurrenc
 identity:occurrence_revocation	projection	agree	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row
 identity:occurrence_revocation	projection	fills	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row
 identity_amendment	body	agree	CC 2.1	`identity_amendment:v1`, REQUIRED
-identity_amendment	body	agree	CC 3.1.5	Members: `amendment_digest` (lowercase hex SHA-256 of the applied amendment) and `authorized_by` (the `attestation_id` of the `deferral:response:approved:v1` row); `evidence_refs[]` → that response.
+identity_amendment	body	agree	CC 3.1.5	Members: `amendment_digest` (the SHA-256 of the applied amendment) and `authorized_by` (the `deferral:response:approved:v1` row, named in `refs`).
 identity_amendment	signer_rule	agree	CC 3.1.5	Attester = the agent's occurrence key, subject = the agent's identity key.
 identity_continuity:relational_anchor	signer_rule	agree	CC 3.1.3	The `system:*` dimensions here are substrate-self-reports — emittable only by the running substrate itself ([CC 3.4.3](#3.4.3)), which is what makes them honest: the substrate cannot be made to lie about its own
 image:*	signer_rule	agree	CC 3.1.9	None is reserved: all are open-vocabulary content claims under ordinary [CC 4.4](part_4_composition_governance.md#4.4) consumer policy.
@@ -613,8 +613,8 @@ trace:{form}:{version}	signer_rule	agree	CC 4.5.8.3	- **Reasoning-trace dimensio
 trace_summary:{kind}	signer_rule	agree	CC 3.1.5	Same self-emission rule; carries no claim the full trace does not.
 trace_summary:{kind}	signer_rule	agree	CC 3.4.5	**Pro-self** — `attesting_key_id` MUST be a member of `subject_key_ids`. Third-party emission on the namespace is REQUIRED to be refused.
 transparency_log:cosigned:{tree_size}	signer_rule	agree	CC 3.1.2	`transparency_log:cosigned:{tree_size}` | Witness cosignature on an STH (substrate-conformance path; see [CC 5.3.1](part_5_transport_substrate.md#5.3.1) endpoints). Witness-emitted, verify-recognized — the signer holds `infra:attest_assurance` ([CC 3.4.10](#3.4.10)). | signed
-transport:canonical_rebind	body	agree	CC 3.1.3	`SignedTransportDestination` under `transport_destination`.
-transport:canonical_rebind	signer_rule	agree	CC 3.1.3	**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself
+transport:canonical_rebind	body	agree	CC 3.1.3	It carries the node's new `transport_destination` and transit key in its payload.
+transport:canonical_rebind	signer_rule	agree	CC 3.1.3	**Yes — the accord holders, a strict majority of the bundle in force**; never a single holder, never the node itself
 transport:{kind}	signer_rule	agree	CC 3.1.4	Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md#3.4.3).
 trust:{job}:{version}	body	agree	CC 2.1	`trust:accepts:v1`, REQUIRED
 trust:{job}:{version}	body	agree	CC 8.11.9	T4a attach window.

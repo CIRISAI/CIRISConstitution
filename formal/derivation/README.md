@@ -53,9 +53,9 @@ pointing elsewhere is a row of its own, so the table counts repeats.
 The cut-candidates table gives `file`, `line_start`, `line_end`, `kind` (`rationale`,
 `restated_block`, `informative`, `example`, `duplicate_table`, `history`), `bytes` and a note.
 
-Headline numbers: 4,457 statements (Part 3 1,539, Part 4 955, Part 5 662, Part 2 532, Part 6 227,
-Part 8 229, Part 1 155, Part 7 158); by scope family 1,890, kernel 1,386, mechanism 757, foundation 218,
-stewardship 206; by role states 3,447, restates 697, applies 246, exception 66, reason 1. 206 cut-candidate
+Headline numbers: 4,464 statements (Part 3 1,541, Part 4 955, Part 5 659, Part 2 537, Part 6 227,
+Part 8 232, Part 1 155, Part 7 158); by scope family 1,892, kernel 1,391, mechanism 757, foundation 218,
+stewardship 206; by role states 3,454, restates 697, applies 246, exception 66, reason 1. 206 cut-candidate
 blocks, about 260 KB.
 
 Caveats: twelve readers each took one line range, so a rule stated in two ranges may carry two
@@ -110,7 +110,7 @@ ASEAN Guide on AI Governance and Ethics. The mapping lives outside this reposito
 | File | Rows | What a row is |
 |---|---|---|
 | `compliance_dimensions.tsv` | 27 | a dimension id, its stem and tier, which works attest it, the registry families that carry the stem, the Part 3 sections that define them |
-| `compliance_wire_forms.tsv` | 1,059 | one wire form a work's mapping cites, the number of mapped lines citing it, the registry family it resolves to, and the answer: `resolves`, `open` (open vocabulary no row claims) or the refusal token |
+| `compliance_wire_forms.tsv` | 1,059 | one wire form a work's mapping cites, the number of mapped lines citing it, the registry family it resolves to, the answer: `resolves`, `open` (open vocabulary no row claims) or the refusal token, and a note where a mapped form was corrected |
 
 `python3 tools/check_compliance_wire_forms.py` re-resolves every form against the generated
 registry and fails when a dimension loses its family or anchor, a cited section is no longer a

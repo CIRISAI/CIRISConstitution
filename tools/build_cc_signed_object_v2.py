@@ -4,6 +4,10 @@ CC (the CIRIS Constitution) — the signed object of CC 2.6.1 (CBOR and COSE), i
 
 Sources:
   manifests/signed_object_v2.cddl     the normative schema, hand-written (RFC 8610 CDDL over CBOR)
+  manifests/family_payloads_v2.cddl   OUTPUT: the payload rules of nine families (CC 2.6.1.4), emitted from this
+                                      table's rows over the rules of the schema and read with it; kept apart so
+                                      the Internet-Draft's copy of the schema (tools/build_ietf_draft.py) does
+                                      not carry them until the two merge in its next revision
   constitution/signed_object_v2.tsv   one row per member: the CDDL rule and key that holds it, its
                                       logical name (the member name the Parts use), placement, type,
                                       when it is required, and the CC section that states its rule.
@@ -37,6 +41,9 @@ Checks (every run, before writing):
   A reference reader of step 8 of CC 2.6.1.8 (a statement's key is a key of its iss, CC 2.6.1.7) runs over
   samples, each with the answer the text gives, and over deliberate breaks of the rotation record's shape
   (CC 3.1.3 `key:record`) that must each give their own answer.
+  The payloads of nine families (CC 2.6.1.4): one valid payload of each family rule validates and broken ones are
+  refused; the rules the CDDL cannot state (a member required on one stage, axis or state; a dimension leaf equal to
+  its member; a cosign:{state} row with a payload of its own) refuse edition2_payload_invalid, over deliberate breaks.
   --check   check, and compare the block with what the Part holds; write nothing (exit 1 when stale)
 
 stdlib only. Run:  python3 tools/build_cc_signed_object_v2.py [--check]
@@ -47,6 +54,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(ROOT, "constitution", "signed_object_v2.tsv")
 CDDL = os.path.join(ROOT, "manifests", "signed_object_v2.cddl")
+FAMILY_CDDL = os.path.join(ROOT, "manifests", "family_payloads_v2.cddl")
 NAME = "signed_object_v2"
 SLUG = "signed-object-members"
 BEGIN = f"<!-- BEGIN GENERATED: {NAME} -->"
@@ -69,6 +77,19 @@ OBJECTS = [
     ("snapshot", "The revocation snapshot (typ `ceg-revocation-snapshot/2`)"),
     ("genesis", "The genesis bundle (typ `ceg-genesis-bundle/2`)"),
     ("accord", "The accord's rows: an invocation and a lifecycle row"),
+    ("roster", "The roster version: the payload of a `group:roster` row"),
+    ("membership", "A membership change: the payload of a `membership:{stage}` row at the stages `widening` and `removal`"),
+    ("occurrence_revocation", "An occurrence revocation: the payload of an `identity:occurrence_revocation` row"),
+    ("revocation", "An entity revocation: the payload of a `revocation:{entity_type}:{reason}` row"),
+    ("takedown", "A takedown notice: the payload of a `takedown_notice:{basis}` row"),
+    ("custody", "A custody report: the payload of a `custody:{kind}` row"),
+    ("key_grant", "A key grant: the payload of a `key_grant:{axis}` row"),
+    ("receipt", "A delivery receipt: the payload of a `delivery_receipt:{stream_id}` row"),
+    ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
+    ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
+    ("deferral", "A deferral response: the members this form names of a `deferral:response:{outcome}` row"),
+    ("deferral_request", "A deferral request: the members this form names of a `deferral:request` row"),
+    ("rebind", "A canonical re-bind: the payload of a `transport:canonical_rebind` row"),
     ("binding", "The transport destination binding (`identity:occurrence`)"),
     ("room", "The seat commitment of a room key"),
     ("disclosure", "A disclosure of a blinded member"),
@@ -478,6 +499,342 @@ def recovery_samples():
     return cde(["CEG-recovery/2", [key]]), [("a commitment over no key", cde(["CEG-recovery/2", []]))]
 
 
+# ---------------------------------------------------------------- the payloads of nine families (CC 2.6.1.4)
+PAYLOAD_INVALID = "edition2_payload_invalid"
+
+
+def _ref(n):
+    return [2, [-16, bytes([n]) * 32]]
+
+
+def family_payloads():
+    """{root: (family id, valid payload)}: one valid payload of each family rule, placeholder ids and digests."""
+    t, dig = 1763078400000, [-16, bytes([7]) * 32]
+    members = sorted([{"key": iref(0), "joined_at": t, "role": "founder"}, {"key": iref(1), "joined_at": t}], key=cde)
+    return {
+        "group-roster": ("group:roster", {
+            "group_kind": "community", "group": iref(5), "name": "Austin", "version": 2, "members": members,
+            "founded_at": t, "consensus_protocol": "majority", "consensus_protocol_entrenched": False,
+            "cohort_subkind": "geographic", "membership": "public",
+            "refs": {"head": _ref(1), "also": {"cites": [_ref(2)]}}, "asserted_at": t}),
+        "membership-change": ("membership:.stage", {
+            "dimension": "membership:widening:v1", "group_kind": "family", "group": iref(5), "member": iref(2),
+            "joined_at": t, "effective_at": t, "refs": {"head": _ref(1), "also": {"cites": [_ref(3)]}}, "asserted_at": t}),
+        "occurrence-revocation": ("identity:occurrence_revocation", {
+            "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "revoked_at": t, "effective_at": t,
+            "asserted_at": t}),
+        "entity-revocation": ("revocation:.entity_type:.reason", {
+            "author": iref(0), "dimension": "revocation:agent:compromised:v1", "revoked_at": t, "effective_at": t,
+            "asserted_at": t}),
+        "takedown-notice": ("takedown_notice:.basis", {
+            "author": iref(0), "dimension": "takedown_notice:dmca512:v1", "legal_basis": "dmca512", "claimant": iref(0),
+            "content_sha256": dig, "content_holders": [iref(1)], "jurisdiction": "US", "good_faith_statement": "sample",
+            "claim_text": "sample", "evidence_refs": [dig], "asserted_at": t}),
+        "custody-ack": ("custody:.kind", {
+            "author": iref(1), "dimension": "custody:ack:v1", "custody_state": "here", "evidence_refs": [dig], "size": 4096,
+            "asserted_at": t}),
+        "key-grant": ("key_grant:.axis", {
+            "author": iref(0), "dimension": "key_grant:epoch:v1", "axis": "epoch",
+            "wrap_algorithm": "x25519_mlkem768_aes256_gcm_hkdf_sha256", "wrapped_dek": bytes(40), "community": iref(5),
+            "minter": iref(0), "epoch": 3, "asserted_at": t}),
+        "identity-occurrence": ("identity:occurrence", {
+            "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "device_class": "phone",
+            "encryption_pubkeys": {"x25519": bytes([5]) * 32, "ml_kem_768": bytes([6]) * 1184},
+            "build_manifest_hash": dig, "refs": {"also": {"cites": [_ref(4)]}}, "asserted_at": t, "valid_until": t + 1}),
+        "identity-amendment": ("identity_amendment", {
+            "author": iref(3), "amendment_digest": dig, "refs": {"also": {"cites": [_ref(5)]}}, "asserted_at": t}),
+        "deferral-response": ("deferral:response:.outcome", {
+            "author": iref(1), "dimension": "deferral:response:approved:v1", "amendment_digest": dig,
+            "deferral_id": "d-17", "room": "room-1", "refs": {"answers": _ref(6)}, "asserted_at": t}),
+        "deferral-request": ("deferral:request", {
+            "author": iref(3), "deferral_id": "d-17", "reason_digest": dig, "room": "room-1", "asserted_at": t,
+            "valid_until": t + 86400000}),
+        "canonical-rebind": ("transport:canonical_rebind", {
+            "refs": {"head": _ref(9)}, "transport_destination": {
+                "reticulum_x25519_pubkey": bytes(32), "reticulum_ed25519_pubkey": bytes([1]) * 32, "app_name": "ciris",
+                "aspects": ["node", "transit"], "destination_hash": bytes(16)},
+            "transit_xwing_pubkey": bytes([2]) * 1216, "onion_hop_xwing_pubkey": bytes([3]) * 1216, "asserted_at": t}),
+        "delivery-receipt": ("delivery_receipt:.stream_id", {
+            "author": iref(1), "dimension": "delivery_receipt:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
+            "chunk_root": dig, "asserted_at": t}),
+    }
+
+
+def _without(p, *keys):
+    return {k: v for k, v in p.items() if k not in keys}
+
+
+def family_payload_samples():
+    """[(root, what, valid bytes, [(why, broken bytes)])]: each broken payload one change away from the valid one,
+    refused by the schema."""
+    P = {k: v for k, (_, v) in family_payloads().items()}
+    W = lambda root, **c: cde(dict(P[root], **c))
+    D = lambda root, *k: cde(_without(P[root], *k))
+    return [
+        ("group-roster", "group:roster payload", cde(P["group-roster"]), [
+            ("a roster version with no members", D("group-roster", "members")),
+            ("a member named by a key id", W("group-roster", members=[{"key": "A1", "joined_at": 1763078400000}])),
+            ("an entrenchment written as text", W("group-roster", consensus_protocol_entrenched="true")),
+            ("a member's joined_at as text", W("group-roster", members=[{"key": iref(0), "joined_at": "2026-11-14T00:00:00Z"}]))]),
+        ("membership-change", "membership:{stage} payload", cde(P["membership-change"]), [
+            ("a widening with no refs", D("membership-change", "refs")),
+            ("a change to a group of another kind", W("membership-change", group_kind="room")),
+            ("a reason in free text", W("membership-change", reason="spam"))]),
+        ("occurrence-revocation", "identity:occurrence_revocation payload", cde(P["occurrence-revocation"]), [
+            ("a revocation with no occurrence_key_id", D("occurrence-revocation", "occurrence_key_id")),
+            ("an effective_at as text", W("occurrence-revocation", effective_at="2026-11-14T00:00:00Z"))]),
+        ("entity-revocation", "revocation:{entity_type}:{reason} payload", cde(P["entity-revocation"]), [
+            ("an entity revocation with no author", D("entity-revocation", "author")),
+            ("an entity revocation with revoked_at as text", W("entity-revocation", revoked_at="2026-11-14T00:00:00Z"))]),
+        ("takedown-notice", "takedown_notice:{basis} payload", cde(P["takedown-notice"]), [
+            ("a notice on an unlisted basis", W("takedown-notice", legal_basis="DMCA512")),
+            ("a content digest in hex", W("takedown-notice", content_sha256="00" * 32)),
+            ("a notice with no claimant", D("takedown-notice", "claimant"))]),
+        ("custody-ack", "custody:{kind} payload", cde(P["custody-ack"]), [
+            ("a report on two blobs", W("custody-ack", evidence_refs=[[-16, bytes([7]) * 32], [-16, bytes([8]) * 32]])),
+            ("a custody_state outside the two", W("custody-ack", custody_state="lost"))]),
+        ("key-grant", "key_grant:{axis} payload", cde(P["key-grant"]), [
+            ("a grant under the v1 wrap", W("key-grant", wrap_algorithm="hpke_rfc9180_base_x25519_aes_gcm")),
+            ("a wrapped key in base64", W("key-grant", wrapped_dek="AAAA")),
+            ("a grant with no axis", D("key-grant", "axis"))]),
+        ("identity-occurrence", "identity:occurrence payload", cde(P["identity-occurrence"]), [
+            ("an occurrence of an unlisted device class", W("identity-occurrence", device_class="tablet")),
+            ("an ML-KEM-768 key of 1183 bytes", W("identity-occurrence", encryption_pubkeys={"x25519": bytes(32), "ml_kem_768": bytes(1183)})),
+            ("a build manifest hash in hex", W("identity-occurrence", build_manifest_hash="00" * 32)),
+            ("an occurrence with no device_class", D("identity-occurrence", "device_class"))]),
+        ("identity-amendment", "identity_amendment payload", cde(P["identity-amendment"]), [
+            ("an amendment digest in hex, the earlier form", W("identity-amendment", amendment_digest="cd" * 32)),
+            ("an amendment naming no approval", D("identity-amendment", "refs"))]),
+        ("deferral-response", "deferral:response:{outcome} payload", cde(P["deferral-response"]), [
+            ("an approval's amendment digest in hex", W("deferral-response", amendment_digest="cd" * 32)),
+            ("a response naming no request", D("deferral-response", "refs"))]),
+        ("deferral-request", "deferral:request payload", cde(P["deferral-request"]), [
+            ("a reason digest in hex", W("deferral-request", reason_digest="ab" * 32)),
+            ("a request with no end", D("deferral-request", "valid_until"))]),
+        ("canonical-rebind", "transport:canonical_rebind payload", cde(P["canonical-rebind"]), [
+            ("a re-bind naming no bundle", D("canonical-rebind", "refs")),
+            ("a re-bind with a transit key of 1184 bytes", W("canonical-rebind", transit_xwing_pubkey=bytes(1184)))]),
+        ("delivery-receipt", "delivery_receipt:{stream_id} payload", cde(P["delivery-receipt"]), [
+            ("a receipt with no chunk index", D("delivery-receipt", "k")),
+            ("a chunk root as bare bytes", W("delivery-receipt", chunk_root=bytes(32)))]),
+    ]
+
+
+def _strip_none(p):
+    return {k: v for k, v in p.items() if v is not None}
+
+
+def _segment(dim, i):
+    s = dim.split(":")
+    return s[i] if len(s) > i else None
+
+
+def family_payload_rule(root, p, family=None):
+    """The rules of a family's payload the CDDL cannot state, checked in prose: None, or edition2_payload_invalid.
+    `family` is the statement's family label; a cosign:{state} family has no payload of its own (CC 3.1.3)."""
+    if family == "cosign:.state":
+        return PAYLOAD_INVALID                            # a pending or signature state is a statement over the event's own payload
+    dim = p.get("dimension", "")
+    if root == "membership-change":
+        stage = _segment(dim, 1)
+        if stage not in ("widening", "removal"):
+            return PAYLOAD_INVALID
+        if (stage == "widening") != ("joined_at" in p) or (stage == "removal") != ("removed_at" in p):
+            return PAYLOAD_INVALID
+        if "head" not in p.get("refs", {}):
+            return PAYLOAD_INVALID
+    if root == "custody-ack" and (p.get("custody_state") == "here") != ("size" in p):
+        return PAYLOAD_INVALID
+    if root == "key-grant":
+        need = {"content": ("at_rest_sha256", "owner"), "epoch": ("community", "minter", "epoch"),
+                "stream": ("stream_id", "epoch", "owner")}.get(p.get("axis"), ())
+        if _segment(dim, 1) != p.get("axis") or any(m not in p for m in need):
+            return PAYLOAD_INVALID
+    if root == "delivery-receipt" and _segment(dim, 1) != p.get("stream_id"):
+        return PAYLOAD_INVALID
+    if root == "takedown-notice":
+        if _segment(dim, 1) != p.get("legal_basis") or (p.get("legal_basis") == "steward_purge" and "author" in p):
+            return PAYLOAD_INVALID
+    if root == "canonical-rebind" and "head" not in p.get("refs", {}):
+        return PAYLOAD_INVALID                            # counted over the bundle in force, named in refs.head
+    if root == "group-roster" and (p.get("version") == 1) != ("head" not in p.get("refs", {})):
+        return PAYLOAD_INVALID
+    return None
+
+
+def family_payload_rule_checks():
+    """(line, problems): each valid payload passes its prose rules; each deliberate break is refused with the token."""
+    bad, P = [], family_payloads()
+    for root, (fam, p) in P.items():
+        if family_payload_rule(root, p, fam) is not None:
+            bad.append(f"{root} sample breaks its prose rule")
+    breaks = [
+        ("membership-change", dict(P["membership-change"][1], dimension="membership:proposal:v1"), None),
+        ("membership-change", _without(P["membership-change"][1], "joined_at"), None),
+        ("membership-change", dict(P["membership-change"][1], refs={"also": {"cites": [_ref(3)]}}), None),
+        ("custody-ack", _without(P["custody-ack"][1], "size"), None),
+        ("key-grant", _without(P["key-grant"][1], "minter"), None),
+        ("key-grant", dict(P["key-grant"][1], dimension="key_grant:content:v1"), None),
+        ("delivery-receipt", dict(P["delivery-receipt"][1], stream_id="s2"), None),
+        ("takedown-notice", dict(P["takedown-notice"][1], dimension="takedown_notice:steward_purge:v1",
+                                 legal_basis="steward_purge"), None),
+        ("group-roster", dict(P["group-roster"][1], version=1), None),
+        ("membership-change", P["membership-change"][1], "cosign:.state"),
+        ("canonical-rebind", dict(P["canonical-rebind"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+    ]
+    caught = 0
+    for root, p, fam in breaks:
+        if family_payload_rule(root, p, fam) == PAYLOAD_INVALID:
+            caught += 1
+        else:
+            bad.append(f"deliberate break not caught: a {root} payload the prose refuses passed")
+    return (f"family payload rules: {len(P)} samples pass; {caught} breaks refused {PAYLOAD_INVALID}, "
+            f"a cosign state carrying a payload of its own among them"), bad
+
+
+def family_cddl_checks(text, ftext):
+    """(lines, problems): the family payload rules (FAMILY_CDDL, over the rules of CDDL) parse, and one valid payload of
+    each validates and the broken ones are refused, with the `cddl` gem when present."""
+    tool = find_tool("cddl")
+    if not tool:
+        return [f"cddl not installed: {os.path.relpath(FAMILY_CDDL, ROOT)} is not parsed here"], []
+    lines, bad, ok_n, ref_n = [], [], 0, 0
+    both = text + "\n" + ftext
+    with tempfile.TemporaryDirectory() as d:
+        src, f = os.path.join(d, "both.cddl"), os.path.join(d, "sample.cbor")
+        open(src, "w", encoding="utf-8").write(both)
+        r = subprocess.run([tool, src, "generate"], capture_output=True, text=True)
+        if r.returncode:
+            return lines, [f"{os.path.relpath(FAMILY_CDDL, ROOT)} does not parse with the schema: {(r.stderr or r.stdout).strip()[:300]}"]
+        lines.append(f"{os.path.relpath(FAMILY_CDDL, ROOT)} parses with the schema")
+        for root, what, ok, broken in family_payload_samples():
+            rp = os.path.join(d, root + ".cddl")
+            open(rp, "w", encoding="utf-8").write(f"sample-root = {root}\n" + both)
+            open(f, "wb").write(ok)
+            r = subprocess.run([tool, rp, "validate", f], capture_output=True, text=True)
+            if r.returncode:
+                bad.append(f"{what} sample does not validate: {(r.stderr or r.stdout).strip()[:300]}")
+            else:
+                ok_n += 1
+            for why, blob in broken:
+                open(f, "wb").write(blob)
+                if subprocess.run([tool, rp, "validate", f], capture_output=True).returncode == 0:
+                    bad.append(f"deliberate break not caught: {why} validated")
+                else:
+                    ref_n += 1
+    lines.append(f"{ok_n} family payload samples validate, one per family rule; {ref_n} broken ones are refused")
+    return lines, bad
+
+
+# ---------------------------------------------------------------- the family payload schema, emitted from the table
+FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "receipt",
+                  "occurrence", "amendment", "deferral", "deferral_request", "rebind")
+FAMILY_RULE_HEAD = {
+    "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
+    "roster-member": "A member of a roster version: a closed map.",
+    "membership-change": "membership:{stage}, the stages widening and removal: counted, with no author; sub is the member.",
+    "occurrence-revocation": "identity:occurrence_revocation: authored by the revoker, or counted over a user self's live roster.",
+    "entity-revocation": "revocation:{entity_type}:{reason}: authored by the revoker; sub is the revoked entity.",
+    "takedown-notice": "takedown_notice:{basis}: authored, or counted on a steward purge; sub is the claimant.",
+    "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
+    "key-grant": "key_grant:{axis}: authored by the sealer; sub is the recipient.",
+    "delivery-receipt": "delivery_receipt:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
+    "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
+    "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",
+    "deferral-request": "deferral:request (CC 3.1.9.3, CC 4.3): authored by the deferring party; the request's further members are the store's.",
+    "canonical-rebind": "transport:canonical_rebind (CC 3.1.3, CC 3.3.6.2): counted by a strict majority of the holders of the bundle in force; sub is the seated node.",
+    "identity-amendment": "identity_amendment (CC 3.1.5): authored by the agent's occurrence key; sub is the agent's identity.",
+    "deferral-response": "deferral:response:{outcome} (CC 3.1.9.3, CC 4.3): the members this form names; the response's further members are the store's.",
+}
+FAMILY_CLOSED = {"roster-member", "encryption-pubkeys"}            # every other family rule keeps a member it does not name (CC 2.1.1)
+FAMILY_EXTRA = {"takedown-notice": [         # rules a member's type names, stated with the rule that uses them
+    "; The legal bases of CC 3.3.2, by their wire strings: a closed set.",
+    'legal-basis = "dmca512" / "dsa_article16" / "tvec_terrorist" / "ncmec_csam" / "gifct_cip"',
+    '            / "community_standards" / "perceptual_hash_csam" / "osa_illegal_content"',
+    '            / "avmsd_age_inappropriate" / "court_order" / "steward_purge"']}
+FAMILY_PREAMBLE = """; CC 2.6.1.4: the payload rules of the families it names, over the rules of manifests/signed_object_v2.cddl and read
+; with it. GENERATED by tools/build_cc_signed_object_v2.py from constitution/signed_object_v2.tsv; do not edit.
+; The two files are one schema; signed_object_v2.cddl stays as the Internet-Draft's -01 carries it.
+;
+; Each rule is the payload of an ordinary row, so its members are members of the row's attestation-envelope, as a
+; key record's are. Each carries the members its family names one to one and embeds no signed object. What a
+; family's record carried as a co-signature is a further statement over the same payload, a counted voice
+; (CC 2.6.1.9), never a member. A payload that breaks its family's rule is refused edition2_payload_invalid
+; (CC 2.6.1.8 step 3). A member required only on one stage, axis or state is optional here and checked in prose.
+; A cosign:{state} row has no payload of its own: each state is a statement over the event's own payload (CC 3.1.3)."""
+
+
+def family_cddl_text(rows):
+    """The text of FAMILY_CDDL, from the table's rows of the family objects, rule by rule in table order."""
+    rules = {}
+    for r in rows:
+        if r["object"] in FAMILY_OBJECTS:
+            rules.setdefault(r["rule"], []).append(r)
+    out = [FAMILY_PREAMBLE]
+    for rule, rs in rules.items():
+        out += ["", "; " + FAMILY_RULE_HEAD.get(rule, rule), rule + " = {"]
+        for r in rs:
+            entry = f'  {"" if r["required_when"] == "always" else "? "}{r["member"]}: {r["type"]},'
+            when = "" if r["required_when"] == "always" else f" ({r['required_when']})"
+            out.append(f"{entry:<43} ; {r['note']}{when}")
+        if rule not in FAMILY_CLOSED:
+            out.append("  * tstr => ceg-value,")
+        out.append("}")
+        if rule in FAMILY_EXTRA:
+            out += FAMILY_EXTRA[rule]
+    return "\n".join(out) + "\n"
+
+
+# ---------------------------------------------------------------- two rules that read a second row (CC 3.1.5, CC 3.3.6)
+AMENDMENT_MISMATCH = "amendment_digest_mismatch"
+OCCURRENCE_MIXED = "occurrence_mixes_person_and_machine"
+PERSON, MACHINE = {"user", "accord_holder"}, {"node", "agent"}
+
+
+def amendment_rule(amendment, response):
+    """CC 3.1.5: an identity_amendment concludes nothing unless its amendment_digest equals the one the approving
+    response carries; a response that carries none equals no digest. One token for both."""
+    return None if response.get("amendment_digest") == amendment["amendment_digest"] else AMENDMENT_MISMATCH
+
+
+def occurrence_rule(p, types):
+    """CC 3.3.6: an occurrence never places a machine's key under a person's identity, or a person's under a machine's;
+    device_class agent stands only under an agent's own identity. `types` maps an identity reference to the
+    identity_type set its held key record states."""
+    ident, occ = types.get(p["identity_key_id"], set()), types.get(p["occurrence_key_id"], set())
+    if (ident & PERSON and occ & MACHINE) or (ident & MACHINE and occ & PERSON):
+        return OCCURRENCE_MIXED
+    if p.get("device_class") == "agent" and "agent" not in ident:
+        return OCCURRENCE_MIXED
+    return None
+
+
+def second_row_checks():
+    """(line, problems): the amendment's digest against its approval, and the occurrence's person/machine rule."""
+    bad, P = [], family_payloads()
+    am, rs = P["identity-amendment"][1], P["deferral-response"][1]
+    cases = [("an amendment matching its approval", am, rs, None),
+             ("an amendment whose digest differs from its approval's",
+              dict(am, amendment_digest=[-16, bytes([8]) * 32]), rs, AMENDMENT_MISMATCH),
+             ("an amendment citing an approval that carries no digest", am, _without(rs, "amendment_digest"), AMENDMENT_MISMATCH)]
+    for why, a, r, want in cases:
+        if amendment_rule(a, r) != want:
+            bad.append(f"amendment rule: {why} gives {amendment_rule(a, r)}, the text gives {want}")
+    occ = P["identity-occurrence"][1]
+    user, phone, agent = iref(0), iref(3), iref(7)
+    types = {user: {"user"}, phone: {"user"}, agent: {"agent"}, iref(8): {"agent"}}
+    ocases = [("a person's phone under the person", occ, None),
+              ("an agent's key under a user identity", dict(occ, occurrence_key_id=agent, device_class="agent"), OCCURRENCE_MIXED),
+              ("device_class agent under a user identity", dict(occ, device_class="agent"), OCCURRENCE_MIXED),
+              ("an agent's own key under the agent's identity",
+               dict(occ, identity_key_id=iref(8), occurrence_key_id=agent, device_class="agent"), None)]
+    for why, p, want in ocases:
+        if occurrence_rule(p, types) != want:
+            bad.append(f"occurrence rule: {why} gives {occurrence_rule(p, types)}, the text gives {want}")
+    return (f"rules over a second row: {len(cases)} amendment cases ({AMENDMENT_MISMATCH} on a differing and on an absent digest), "
+            f"{len(ocases)} occurrence cases ({OCCURRENCE_MIXED} on an agent key or device_class agent under a person)"), bad
+
+
 # ---------------------------------------------------------------- the bundle's prose rules, as a reference reader
 GENESIS_TYP = "ceg-genesis-bundle/2"
 
@@ -567,6 +924,8 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
         _, binding = place[("binding", seat)]
         if rec.get("valid_until", 0) <= P["asserted_at"] or binding.get("cites") != rec_ref:
             return "nothing", "genesis_bundle_row_invalid"
+        if (binding.get("identity_key_id"), binding.get("occurrence_key_id"), binding.get("device_class")) != (seat, seat, "server"):
+            return "nothing", "genesis_bundle_row_invalid"     # the seat's binding is an identity:occurrence of the seat, a server
     keys = {h: place[("record", h)][1].get("key") for h in H}
     coms = dict(P["charter"]["recovery_commitments"])
     spent = set(prev["spent"]) if later else set()
@@ -645,7 +1004,8 @@ def reader_samples():
     for n, s_ in enumerate(S):
         rows[bytes([0x20 + n]) * 32] = ("key:record", s_, {"valid_until": 1794614400000})
         rows[bytes([0x30 + n]) * 32] = ("identity:occurrence", s_, {"xwing": ("transit-%d" % n, "onion-%d" % n),
-                                                                     "cites": rid(0x20 + n)})
+                                                                     "cites": rid(0x20 + n), "identity_key_id": s_,
+                                                                     "occurrence_key_id": s_, "device_class": "server"})
     # A's rotated record (key 7) and the record of a key that is A's recovery key (key 50)
     rows[bytes([0x17]) * 32] = ("key:record", H[0], {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(7)})
     rows[bytes([0x18]) * 32] = ("key:record", H[0], {"chain_verifies": True, "pq_custody": "removable_offline", "key": key(50)})
@@ -695,7 +1055,15 @@ def reader_samples():
                                       voices, rows, anchor), ("Invalid", "federation_set_semantics_unsorted")),
         ("a seat whose record ends before the bundle", (good, voices, short_seat, anchor), ("nothing", "genesis_bundle_row_invalid")),
         ("a seat whose binding does not name its record",
-         (good, voices, {**rows, bytes([0x30]) * 32: ("identity:occurrence", S[0], {"xwing": ("transit-0", "onion-0")})}, anchor),
+         (good, voices, {**rows, bytes([0x30]) * 32: ("identity:occurrence", S[0], {"xwing": ("transit-0", "onion-0"), "identity_key_id": S[0],
+                                                                                    "occurrence_key_id": S[0], "device_class": "server"})}, anchor),
+         ("nothing", "genesis_bundle_row_invalid")),
+        ("a seat binding with no identity_key_id",
+         (good, voices, {**rows, bytes([0x30]) * 32: ("identity:occurrence", S[0], {k: v for k, v in rows[bytes([0x30]) * 32][2].items()
+                                                                                    if k != "identity_key_id"})}, anchor),
+         ("nothing", "genesis_bundle_row_invalid")),
+        ("a seat binding of device_class phone",
+         (good, voices, {**rows, bytes([0x30]) * 32: ("identity:occurrence", S[0], dict(rows[bytes([0x30]) * 32][2], device_class="phone"))}, anchor),
          ("nothing", "genesis_bundle_row_invalid")),
         # later bundles
         ("a later bundle whose prev is not held", (addD, voices + [(D, 1763078400)], rows, anchor, None), ("Waiting", None)),
@@ -1074,8 +1442,8 @@ def member_cell(r):
 def build_block(rows, here):
     L = [""]
     L.append("*This table is rendered from one data file and checked member for member against "
-             "[`manifests/signed_object_v2.cddl`](../manifests/signed_object_v2.cddl), the schema; "
-             "the two never disagree.*")
+             "[`manifests/signed_object_v2.cddl`](../manifests/signed_object_v2.cddl), the schema, with the payload rules of "
+             "[`manifests/family_payloads_v2.cddl`](../manifests/family_payloads_v2.cddl); the two never disagree.*")
     L.append("")
     L.append("**Placement vocabulary.** `statement`: a position of the `COSE_Sign1` array. "
              "`header:protected`: the protected header, covered by the signature. "
@@ -1153,8 +1521,16 @@ def render(path, text, loc, rows):
 def main(argv):
     rows = load_rows()
     text = open(CDDL, encoding="utf-8").read()
-    bad = agreement_with_breaks(rows, text)
-    lines, cbad = cddl_checks(text)
+    ftext = family_cddl_text(rows)
+    fold = open(FAMILY_CDDL, encoding="utf-8").read() if os.path.exists(FAMILY_CDDL) else None
+    bad = agreement_with_breaks(rows, text + "\n" + ftext)
+    first = next(r for r in rows if r["object"] in FAMILY_OBJECTS)
+    if family_cddl_text([r for r in rows if r is not first]) == ftext:
+        bad.append("deliberate break not caught: a family row dropped leaves the emitted family schema unchanged")
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(2) as ex:        # the schema's samples and the families', side by side: two cddl processes at most
+        cfut, ffut = ex.submit(cddl_checks, text), ex.submit(family_cddl_checks, text, ftext)
+        (lines, cbad), (flines, fbad2) = cfut.result(), ffut.result()
     bad += cbad
     rline, rbad = reader_checks()
     lines.append(rline)
@@ -1162,6 +1538,14 @@ def main(argv):
     kline, kbad = key_iss_checks()
     lines.append(kline)
     bad += kbad
+    lines += flines
+    bad += fbad2
+    pline, pbad = family_payload_rule_checks()
+    lines.append(pline)
+    bad += pbad
+    sline, sbad = second_row_checks()
+    lines.append(sline)
+    bad += sbad
     sys.path.insert(0, HERE)
     fline, fbad = family_checks()
     lines.append(fline)
@@ -1183,7 +1567,12 @@ def main(argv):
     path, txt, loc = t
     out = render(path, txt, loc, rows)
     rel = os.path.relpath(path, ROOT)
+    frel = os.path.relpath(FAMILY_CDDL, ROOT)
     if "--check" in argv:
+        if fold != ftext:
+            print(f"{NAME}: {frel} is stale; run python3 tools/build_cc_signed_object_v2.py")
+            return 1
+        print(f"{NAME}: {frel} is current")
         if out != txt:
             print(f"{NAME}: {rel} is stale; run python3 tools/build_cc_signed_object_v2.py")
             return 1
@@ -1192,6 +1581,9 @@ def main(argv):
     if out != txt:
         open(path, "w", encoding="utf-8").write(out)
     print(f"{NAME}: {rel} {'updated' if out != txt else 'unchanged'} ({loc[2]})")
+    if fold != ftext:
+        open(FAMILY_CDDL, "w", encoding="utf-8").write(ftext)
+    print(f"{NAME}: {frel} {'written' if fold != ftext else 'unchanged'}")
     return 0
 
 

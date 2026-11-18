@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "4ad83caa00b33a4b7097f8fa655ced9d47cf56de6cb258b604a7744cb2abcca0",
+    "registry_sha256": "5911618185ac92580e264d347edea2ec27158fcc328867009fc4831fbdb15244",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "2f004b9749683563f8c36c463a2b0748e1b5fd0d8dd0ead9bee0078b7e9a7fc2"
+    "source_sha256": "ff3f0d93f0787ae4aa1abfb3b105e1653c6ef16382c88b7203207a51c69056de"
   },
   "families": [
     {
@@ -2744,7 +2744,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "A family's or community's roster version: the signed roster record at a version that CC 3.2 T6 makes the lineage head, as a cosigned scores row \u2014 attested_key_id the group, envelope carrying the fold (seats, roles, effective_ats, bounds), p",
+      "description": "A family's or community's roster version: the signed roster record at a version that CC 3.2 T6 makes the lineage head, as a cosigned scores row.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -3268,6 +3268,7 @@
         },
         {
           "class": "value",
+          "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
           "segment": "{authority_id}"
         }
       ]
@@ -3507,6 +3508,7 @@
         },
         {
           "class": "value",
+          "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
           "segment": "{community_key_id}"
         }
       ]

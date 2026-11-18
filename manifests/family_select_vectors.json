@@ -1,7 +1,7 @@
 {
  "_meta": {
   "cc_version": "1.0-rc21",
-  "family_model_sha256": "0860389dc2774393ff2e32d63d011c75e14c20ee8b34b3e2683168b886269b95",
+  "family_model_sha256": "f13e48ebd28600714e5f9283bc0f6df4fa0999be61538622633be0f57b40c9cb",
   "generator": "tools/cc_family_select.py",
   "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` equals ctx `sub`, false when it differs, `unknown` when either is absent",
   "keys": {
@@ -780,9 +780,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "count",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {
     "act": "group"
    },
@@ -794,9 +794,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "count",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {
     "act": "own"
    },
@@ -808,9 +808,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "count",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {},
    "expect": "unknown",
    "decided_by": "unknown",
@@ -820,9 +820,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "count",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {
     "act": "own"
    },
@@ -834,9 +834,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "count",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {
     "act": "group"
    },
@@ -848,9 +848,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "authorship",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {
     "act": "group"
    },
@@ -862,9 +862,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "authorship",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {
     "act": "own"
    },
@@ -876,9 +876,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "authorship",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {},
    "expect": "unknown",
    "decided_by": "unknown",
@@ -888,9 +888,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "authorship",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {
     "act": "own"
    },
@@ -902,9 +902,9 @@
   {
    "family": "licensure:{authority_id}",
    "cell": "authorship",
-   "dimension": "licensure:id1:v1",
+   "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
-   "leaf": "id1",
+   "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
    "ctx": {
     "act": "group"
    },

@@ -121,6 +121,128 @@ accord	accord-lifecycle	"asserted_at"	asserted_at	payload	ms-time	always	4.2.1.3
 accord	accord-lifecycle	"valid_until"	valid_until	payload	ms-time	always	4.2.1.3 2.6.2	POSIX milliseconds.
 accord	accord-lifecycle-refs	"head"	-	payload:refs	row-ref	always	4.2.1.3 2.6.1.9	The bundle in force the row is counted over, by its object id.
 accord	accord-lifecycle-refs	"target"	-	payload:refs	row-ref	always	4.2.1.3	The halt row the lifecycle row confirms or ends; a statement counts for that halt only.
+roster	group-roster	"group_kind"	-	payload	"family" / "community"	always	3.1.3 3.2	Which record the version is: a family's or a community's.
+roster	group-roster	"group"	family_key_id, community_key_id	payload	identity-ref	always	3.1.3 3.3.4	The group's identity reference, equal to the CWT sub.
+roster	group-roster	"name"	family_name, community_name	payload	tstr	always	3.2 3.3.4	Human-readable and not unique.
+roster	group-roster	"version"	-	payload	uint	always	3.2	The version's place in the lineage's chain; a consistency check, never ranked.
+roster	group-roster	"members"	members	payload	[* roster-member]	always	3.2 3.3.4 2.6.1.2	The roster at this version: a set.
+roster	group-roster	"founded_at"	founded_at	payload	ms-time	always	3.2 3.3.4 2.6.2	POSIX milliseconds.
+roster	group-roster	"consensus_protocol"	consensus_protocol	payload	tstr	always	3.3.4	One of the closed vocabulary of CC 3.3.4.
+roster	group-roster	"consensus_protocol_entrenched"	consensus_protocol_entrenched	payload	bool	where the group entrenches its protocol	3.3.4	Absent reads false.
+roster	group-roster	"cohort_subkind"	cohort_subkind	payload	tstr	on a community's record	3.2	The community's subkind: open vocabulary.
+roster	group-roster	"cohort_subkind_payload"	cohort_subkind_payload	payload	{ * tstr => ceg-value }	where the subkind carries members of its own	3.2	The subkind's members, such as a geographic community's constraint.
+roster	group-roster	"membership"	membership	payload	"private" / "public"	where a community declares how its roster is seated	3.1.3.2	Absent reads public.
+roster	group-roster	"dissolved_at"	-	payload	ms-time	where the group is dissolved	3.3.4 2.6.2	POSIX milliseconds.
+roster	group-roster	"policy"	-	payload	{ * tstr => ceg-value }	where the record carries the group's policy	4.4.3.12	The members the record declares at creation beyond those above.
+roster	group-roster	"refs"	prev_head_digest, charter_digest	payload	refs	on every version after the first	3.2 2.6.1.3	The predecessor version in refs.head, and the trust:charter:v1 row in force under the also role cites.
+roster	group-roster	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+roster	roster-member	"key"	key_id	payload	identity-ref	always	3.2 3.3.4	The member's identity, never an occurrence.
+roster	roster-member	"joined_at"	joined_at	payload	ms-time	always	3.2 3.3.4 2.6.2	POSIX milliseconds.
+roster	roster-member	"role"	role	payload	tstr	where the record gives the member a role	3.3.4	founder or member; absent, never null.
+membership	membership-change	"dimension"	dimension	payload	tstr	always	3.1.3.2	membership:widening:v1 or membership:removal:v1.
+membership	membership-change	"group_kind"	group_kind	payload	"family" / "community"	always	3.1.3.2	Which group the change is to.
+membership	membership-change	"group"	family_key_id, community_key_id	payload	identity-ref	always	3.1.3.2	The group's identity reference.
+membership	membership-change	"member"	-	payload	identity-ref	always	3.1.3.2	The key seated or removed, equal to the CWT sub.
+membership	membership-change	"joined_at"	joined_at	payload	ms-time	on a widening	3.1.3.2 2.6.2	POSIX milliseconds.
+membership	membership-change	"removed_at"	-	payload	ms-time	on a removal	3.1.3.2 2.6.2	POSIX milliseconds.
+membership	membership-change	"effective_at"	effective_at	payload	ms-time	always	3.4.4 2.6.2	The membership-change instant.
+membership	membership-change	"role"	role	payload	tstr	on a widening that assigns a role	3.1.3.2	The same role the acceptance restates.
+membership	membership-change	"witness_set"	-	payload	[* identity-ref]	on a removal that names its witnesses	3.1.3.2 2.6.1.2	The keys that vouch for the removal, never signatures: a set.
+membership	membership-change	"valid_until"	valid_until	payload	ms-time	on a time-boxed guest's widening	3.3.4 2.6.2	The seat lapses at this instant.
+membership	membership-change	"reason"	reason	payload	uint	where the change carries a reason	2.6.1.10	A code from the closed registry; free text stands in body.note.
+membership	membership-change	"refs"	-	payload	refs	always	3.1.3.2 2.6.1.9	The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites.
+membership	membership-change	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+occurrence_revocation	occurrence-revocation	"author"	attesting_key_id	payload	identity-ref	unless the occurrence is of a user self	3.1.3 3.3.6.4	The revoker; a user self's revocation is counted over its live roster and carries none.
+occurrence_revocation	occurrence-revocation	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6.4	The identity whose occurrence is revoked.
+occurrence_revocation	occurrence-revocation	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6.4	The occurrence revoked, equal to the CWT sub.
+occurrence_revocation	occurrence-revocation	"revoked_at"	-	payload	ms-time	always	3.3.6.4 2.6.2	POSIX milliseconds.
+occurrence_revocation	occurrence-revocation	"effective_at"	effective_at	payload	ms-time	always	3.3.6.4 2.6.2	POSIX milliseconds; may be later than asserted_at.
+occurrence_revocation	occurrence-revocation	"witness_set"	-	payload	[* identity-ref]	where the revocation names its witnesses	3.3.6.4 2.6.1.2	A set.
+occurrence_revocation	occurrence-revocation	"reason"	reason	payload	uint	where the revocation carries a reason	2.6.1.10	A code from the closed registry.
+occurrence_revocation	occurrence-revocation	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+revocation	entity-revocation	"author"	attesting_key_id	payload	identity-ref	always	3.1.1	The revoker.
+revocation	entity-revocation	"dimension"	dimension	payload	tstr	always	3.1.1	revocation:{entity_type}:{reason} with its version; the reason leaf is the coded reason.
+revocation	entity-revocation	"revoked_at"	-	payload	ms-time	always	3.1.1 2.6.2	POSIX milliseconds.
+revocation	entity-revocation	"effective_at"	effective_at	payload	ms-time	always	3.1.1 2.6.2	POSIX milliseconds.
+revocation	entity-revocation	"revoked_after"	revoked_after	payload	ms-time	where the revocation bounds what it ends	2.4.1.1 2.6.2	POSIX milliseconds.
+revocation	entity-revocation	"refs"	-	payload	refs	where the revoked entity is a row	2.6.1.3	The revoked row under target.
+revocation	entity-revocation	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+takedown	takedown-notice	"author"	attesting_key_id	payload	identity-ref	iff the notice is authored	3.1.1 3.3.2	A steward purge is counted and carries none.
+takedown	takedown-notice	"dimension"	dimension	payload	tstr	always	3.1.1	takedown_notice:{basis} with its version.
+takedown	takedown-notice	"legal_basis"	legal_basis	payload	legal-basis	always	3.3.2	The wire string of the closed set; the basis leaf names the same.
+takedown	takedown-notice	"claimant"	claimant_key_id	payload	identity-ref	always	3.3.2	The identity issuing the notice.
+takedown	takedown-notice	"content_sha256"	content_sha256	payload	hash-digest	always	3.3.2	SHA-256 of the content; on a steward purge, the selection digest.
+takedown	takedown-notice	"content_holders"	content_holder_key_ids	payload	[* identity-ref]	always	3.3.2 2.6.1.2	Peers known to hold the bytes: a set.
+takedown	takedown-notice	"jurisdiction"	jurisdiction	payload	tstr	always	3.3.2	ISO 3166-1 alpha-2 with an optional subdivision.
+takedown	takedown-notice	"good_faith_statement"	good_faith_statement	payload	tstr	always	3.3.2	The claimant's good-faith assertion.
+takedown	takedown-notice	"claim_text"	claim_text	payload	tstr	always	3.3.2	The claim made.
+takedown	takedown-notice	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	where the notice cites backing material	3.3.2 2.6.1.2	The backing material by content hash: a sequence.
+takedown	takedown-notice	"perceptual_hash"	perceptual_hash	payload	ceg-value	where the notice carries one	3.3.2	A perceptual hash such as PDQ.
+takedown	takedown-notice	"counter_notice_channel"	counter_notice_channel	payload	tstr	where the notice names one	3.3.2	A URI where counter-notices may be filed.
+takedown	takedown-notice	"selection_counts"	-	payload	{ * tstr => ceg-value }	on a steward purge that states its counts	3.3.2	The counts of the purge's selection by plane.
+takedown	takedown-notice	"expires_at"	expires_at	payload	ms-time	where the notice states its own end	3.3.2 2.6.2	POSIX milliseconds.
+takedown	takedown-notice	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+custody	custody-ack	"author"	attesting_key_id	payload	identity-ref	always	3.1.3.3	The device the report is about, equal to iss and the CWT sub.
+custody	custody-ack	"dimension"	dimension	payload	tstr	always	3.1.3.3	custody:ack:v1.
+custody	custody-ack	"custody_state"	custody_state	payload	"here" / "none"	always	3.1.3.3	Whether the device holds the blob.
+custody	custody-ack	"evidence_refs"	evidence_refs	payload	[hash-digest]	always	3.1.3.3 2.6.1.6	The blob's address digest: exactly one.
+custody	custody-ack	"size"	size	payload	uint	when custody_state is here	3.1.3.3	The blob's size in bytes.
+custody	custody-ack	"asserted_at"	asserted_at	payload	ms-time	always	3.1.3.3 2.6.2	The instant the report is live from, for 72 hours.
+key_grant	key-grant	"author"	attesting_key_id	payload	identity-ref	always	3.3.2	The sealer.
+key_grant	key-grant	"dimension"	dimension	payload	tstr	always	3.3.2	key_grant:{axis}:v1.
+key_grant	key-grant	"axis"	axis	payload	"content" / "epoch" / "stream"	always	3.3.2	The same axis as the leaf.
+key_grant	key-grant	"wrap_algorithm"	wrap_algorithm	payload	"x25519_mlkem768_aes256_gcm_hkdf_sha256"	always	3.3.2	The v2 wire string, mandatory for every wrapped key.
+key_grant	key-grant	"wrapped_dek"	wrapped_dek	payload	bstr	always	3.3.2 2.6.1.2	The wrapped data-encryption key, as bytes.
+key_grant	key-grant	"at_rest_sha256"	at_rest_sha256	payload	hash-digest	on the content axis	3.3.2	The content's at-rest digest.
+key_grant	key-grant	"owner"	owner_key_id	payload	identity-ref	on the content and stream axes	3.3.2	The owner of the content or the stream.
+key_grant	key-grant	"community"	community_key_id	payload	identity-ref	on the epoch axis	3.3.2	The community whose epoch key is wrapped.
+key_grant	key-grant	"minter"	minter_key_id	payload	identity-ref	on the epoch axis	3.3.2	The epoch's minter.
+key_grant	key-grant	"epoch"	epoch	payload	uint	on the epoch and stream axes	3.3.2	The epoch index.
+key_grant	key-grant	"stream_id"	stream_id	payload	tstr	on the stream axis	3.3.2	The stream.
+key_grant	key-grant	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+receipt	delivery-receipt	"author"	attesting_key_id	payload	identity-ref	always	5.3.3.11	The subscriber, equal to iss and the CWT sub.
+receipt	delivery-receipt	"dimension"	dimension	payload	tstr	always	3.4.6	delivery_receipt:{stream_id} with its version.
+receipt	delivery-receipt	"stream_id"	stream_id	payload	tstr	always	5.3.3.11	The same stream as the leaf.
+receipt	delivery-receipt	"epoch"	epoch	payload	uint	always	5.3.3.11	The key-rotation index.
+receipt	delivery-receipt	"k"	K	payload	uint	always	5.3.3.11	The chunk index acknowledged.
+receipt	delivery-receipt	"chunk_root"	chunk_root	payload	hash-digest	always	5.3.3.11	The published tree root the subscriber signs over.
+receipt	delivery-receipt	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+occurrence	identity-occurrence	"author"	attesting_key_id	payload	identity-ref	always	3.3.6	A live roster key's identity: the identity named by identity_key_id.
+occurrence	identity-occurrence	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6	The identity the occurrence speaks for: a person's, or an agent's own.
+occurrence	identity-occurrence	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6	The participant's key, equal to the CWT sub; its own statement over the payload is the second voice.
+occurrence	identity-occurrence	"device_class"	device_class	payload	"phone" / "laptop" / "server" / "embedded" / "agent" / "service"	always	3.3.6	A closed set; agent stands only under an agent's own identity.
+occurrence	identity-occurrence	"hardware_attestation"	hardware_attestation	payload	bstr	where the occurrence carries one	3.3.6 2.6.1.2	The attestation blob, as bytes.
+occurrence	identity-occurrence	"transport_destination"	transport_destination	payload	transport-destination	where the occurrence binds an address	3.3.6.2 3.3.6.3	The RNS members of the binding's table.
+occurrence	identity-occurrence	"encryption_pubkeys"	encryption_pubkeys	payload	encryption-pubkeys	where the occurrence is a wrap target	3.3.6.1	The content-KEM keys.
+occurrence	identity-occurrence	"build_manifest_hash"	build_manifest_hash	payload	hash-digest	where the occurrence names its build	3.3.6 3.1.2	The hash of the pipeline-signed manifest.
+occurrence	identity-occurrence	"refs"	build_manifest_ref	payload	refs	where the occurrence names a row	3.3.6 2.6.1.3	The build manifest's provenance row, and a seat's key record, under the also role cites.
+occurrence	identity-occurrence	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+occurrence	identity-occurrence	"valid_until"	valid_until	payload	ms-time	where the occurrence states its own end	3.3.6 2.6.2	Later than asserted_at (CC 2.6.2).
+occurrence	encryption-pubkeys	"x25519"	x25519_base64	payload	bstr .size 32	always	3.3.6.1	A fresh content-KEM key, never the signing or the transport key.
+occurrence	encryption-pubkeys	"ml_kem_768"	ml_kem_768_base64	payload	bstr .size 1184	always	3.3.6.1	The ML-KEM-768 public key.
+amendment	identity-amendment	"author"	attesting_key_id	payload	identity-ref	always	3.1.5	The agent's occurrence key's identity.
+amendment	identity-amendment	"amendment_digest"	amendment_digest	payload	hash-digest	always	3.1.5 2.1	The SHA-256 of the applied amendment; it equals the approving response's.
+amendment	identity-amendment	"refs"	authorized_by	payload	refs	always	3.1.5 2.6.1.3	The approving deferral:response:approved row, under the also role cites.
+amendment	identity-amendment	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+deferral	deferral-response	"author"	attesting_key_id	payload	identity-ref	always	3.1.9.3 4.3	The seated Wise Authority who answers.
+deferral	deferral-response	"dimension"	dimension	payload	tstr	always	3.1.9.3	deferral:response:approved:v1 or deferral:response:rejected:v1.
+deferral	deferral-response	"amendment_digest"	amendment_digest	payload	hash-digest	on an approval that authorises an identity amendment	3.1.5 2.1	The digest of the amendment approved.
+deferral	deferral-response	"deferral_id"	deferral_id	payload	tstr	where the request carries one	3.1.9.3	The request's own correlation id, copied from it.
+deferral	deferral-response	"room"	-	payload	tstr	where the deferral belongs to a room	3.1.9.3 2.6.1.12	The room the deferral is routed in, copied from the request; the room id's encoding is open.
+deferral	deferral-response	"refs"	references_attestation_id	payload	refs	always	3.1.9.3 2.6.1.3	The request answered, under answers.
+deferral	deferral-response	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+deferral_request	deferral-request	"author"	attesting_key_id	payload	identity-ref	always	3.1.9.3 4.3	The deferring party: an agent's occurrence key, or a person's own key.
+deferral_request	deferral-request	"deferral_id"	deferral_id	payload	tstr	where the deferring party keeps one	3.1.9.3	The deferring party's own correlation id.
+deferral_request	deferral-request	"reason_digest"	reason_digest	payload	hash-digest	where the request digests its reason	3.1.9.3	The SHA-256 of the reason, which travels as bytes beside the row.
+deferral_request	deferral-request	"room"	-	payload	tstr	where the deferral belongs to a room	3.1.9.3 2.6.1.12	The room that routes the deferral and its answer; the room id's encoding is open.
+deferral_request	deferral-request	"refs"	references_attestation_id	payload	refs	where the request sends a handed case up	3.1.9.3 2.6.1.3	The request it was handed, under answers.
+deferral_request	deferral-request	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+deferral_request	deferral-request	"valid_until"	valid_until	payload	ms-time	always	3.1.9.3 4.3	The request's own end, after which it re-routes.
+rebind	canonical-rebind	"refs"	-	payload	refs	always	3.1.3 2.6.1.11	The bundle in force the re-bind is counted over, in refs.head.
+rebind	canonical-rebind	"transport_destination"	transport_destination	payload	transport-destination	always	3.1.3 3.3.6.2	The seated node's new destination.
+rebind	canonical-rebind	"transit_xwing_pubkey"	-	payload	bstr .size 1216	always	3.3.6.2	The seat's new transit key.
+rebind	canonical-rebind	"onion_hop_xwing_pubkey"	-	payload	bstr .size 1216	on a serve node	3.3.6.2	The seat's new onion hop key.
+rebind	canonical-rebind	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 binding	transport-destination-binding	"transport_destination"	transport_destination	payload	transport-destination	always	3.3.6.2 3.3.6.3	The RNS members, from which destination_hash is recomputed.
 binding	transport-destination-binding	"transit_xwing_pubkey"	-	payload	bstr .size 1216	on a node that relays, and on every seat	3.3.6.2	At the payload's top level, beside transport_destination; a seat's is taken from the bundle or a counted re-bind.
 binding	transport-destination-binding	"onion_hop_xwing_pubkey"	-	payload	bstr .size 1216	on a node that relays, and on every serve node	3.3.6.2	At the payload's top level, beside transport_destination.
@@ -150,3 +272,5 @@ logical	-	a further statement over the same payload	additional_scrubs	none	-	-	2
 logical	-	none	original_content_hash	none	-	-	2.6.1.3	The earlier form's content hash; no row of this form names an earlier-form row.
 logical	-	none	row	none	-	-	2.6.1.1	The protected header carries type, family and kid; the CWT claims carry iss and sub.
 logical	-	body.note	context	none	-	-	2.6.1.10	Bounded; no free text outside it.
+logical	-	a co-signature of these families	cosignatures, quorum_signatures	none	-	-	2.6.1.9	A further statement over the same payload, counted; never a payload member.
+logical	-	a cosign:pending or cosign:signature row	cosign:{state}	none	-	-	3.1.3 2.6.1.9	A statement over the event's own payload, named by the event's row id; it carries no member of its own.

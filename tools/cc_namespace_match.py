@@ -416,6 +416,9 @@ def generate_polarity_vectors(manifest):
     return out
 
 
+SAMPLE_THUMBPRINT = "A" * 43     # 43 base64url characters, the last with zero trailing bits
+
+
 def instantiate(fam, with_version=True):
     """A class-conformant sample dimension for a family."""
     out = []
@@ -431,6 +434,8 @@ def instantiate(fam, with_version=True):
             out.append(tok + ":sub" if seg.get("multi") else tok)
         elif cls == "external":
             out.append(SAMPLE_EXTERNAL.get(name.strip("{}"), SAMPLE["external"]))
+        elif seg.get("pattern") and "{42}" in seg["pattern"]:
+            out.append(SAMPLE_THUMBPRINT)            # a key's bare thumbprint
         elif seg.get("pattern"):
             out.append("42" if "0-9" in seg["pattern"] and "a-f" not in seg["pattern"]
                        else ("abcdef0123456789" * 4) if "{64}" in seg["pattern"] else SAMPLE[cls])
@@ -523,6 +528,23 @@ def generate_vectors(manifest):
                 add(":".join(parts), prefix, rules.tokens["vocab_value_unregistered"],
                     "a value outside a closed enumeration is unregistered")
                 break
+    # a key-bearing placeholder: the bare thumbprint resolves (the sample above); the identity reference, or a
+    # thumbprint of the wrong length, in that place is malformed on the placeholder (CC 3.1, CC 2.6.1.1)
+    for prefix, fam in rules.families.items():
+        for i, seg in enumerate(fam["segments"]):
+            if "{42}" in (seg.get("pattern") or ""):
+                parts = instantiate(fam, with_version=prefix not in rules.exempt).split(":")
+                for value, why in (("urn:ietf:params:oauth:ckt:sha-256:" + SAMPLE_THUMBPRINT,
+                                    "a key's identity reference where the bare thumbprint stands spans further segments "
+                                    "and matches no family: it never resolves to the key's row"),
+                                   (SAMPLE_THUMBPRINT[:-1], "a thumbprint of 42 characters is malformed on the placeholder"),
+                                   (SAMPLE_THUMBPRINT[:-1] + "B", "a last character with non-zero trailing bits is malformed")):
+                    dim = ":".join(parts[:i] + [value] + parts[i + 1:])
+                    got, _, refusal = match_family(rules, dim)
+                    if value.startswith("urn:"):
+                        add(dim, got, refusal, why)
+                    else:
+                        add(dim, prefix, rules.tokens["case_malformed"], why)
     for stem in rules.reserved_stems:
         dim = stem + "zz_unminted_leaf:v1"
         got, _, refusal = match_family(rules, dim)

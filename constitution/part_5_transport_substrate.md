@@ -656,27 +656,13 @@ The known answers of this seal are the verifier's, published at its tag ([CC 2.6
 
 A `delivery_receipt:{stream_id}` Contribution is a subscriber's signed acknowledgement that they received chunk K under the named stream + epoch. **Best-effort default**; opt-in for **accountable** profiles (registry propagation, emergency). A stream is accountable when its binding's signed `profile` is 1 ([CC 5.3.3.5](#5.3.3.5)), and the witness-cosign guard below reads that member.
 
-**Canonical bytes** (domain-separated + length-prefixed, in its own length-prefixed layout; the row that carries the receipt is a statement of [CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1), but the receipt's signed-bytes inner payload follows the explicit-length-prefix shape below). The two encodings live at different layers. The row's payload is what the `scores` row's own signature covers, as for any row and as for the stream root of [CC 5.3.3.8](#5.3.3.8). The length-prefixed bytes below are the receipt payload the subscriber signs inside that row:
-
-```
-receipt_signing_bytes =
-    "ciris-delivery-receipt/v1"                       // domain separator: 25 ASCII bytes, no length prefix
-  ‖ u32_le(len(subscriber_key_id)) ‖ subscriber_key_id   // UTF-8
-  ‖ u32_le(len(stream_id))         ‖ stream_id           // UTF-8
-  ‖ epoch        (u64 LE)
-  ‖ chunk_root   ([u8; 32])
-  ‖ K            (u64 LE)
-```
-
-**Little-endian, in this layout alone (normative).** The receipt's two length prefixes, `epoch` and `K` are little-endian. This is one of the two little-endian layouts in this Part, the other being the stream-root signing bytes of [CC 5.3.3.8](#5.3.3.8). Each is a signature preimage, so its byte order is fixed as written, and a change would break every signature over it. Every other integer in this Part is big-endian, and a producer MUST NOT carry either layout's byte order into any other construction.
-
-**Order and lengths (normative).** The signed order is the order written: `subscriber_key_id` precedes `stream_id`, even where a struct declares `stream_id` first. Each length-prefixed field MUST fit a `u32`; a longer field is refused, never clamped. `received_at` is not signed: it is the receiving node's local note and no part of the preimage.
+**The payload (normative).** The receipt is the row's payload: `stream_id`, `epoch`, `k` and `chunk_root` ([CC 2.6.1.4](part_2_the_grammar.md#2.6.1.4)). The subscriber's own statement is its signature, and the row carries no inner signature and no length-prefixed preimage. `received_at` is not signed: it is the receiving node's local note and no part of the payload. The earlier form's signing bytes are [CC 8.11.30](part_8_appendices.md#8.11.30).
 
 Both `epoch` (key-rotation index — for per-epoch entitlement / billing) and `K`/`chunk_root` (chunk position + its committed root) are independent indices — both required (each names a distinct authorization scope).
 
 **Verify check is a JOIN, NOT a sig-check**:
 
-1. **Signature valid** over the canonical bytes (the subscriber's one composite signature, [CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)). Necessary but **not sufficient**.
+1. **Signature valid** over the payload (the subscriber's one composite signature, [CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)). Necessary but **not sufficient**.
 2. **`chunk_root` is a real published STH root** — MUST equal a `SignedTreeHead.root_hash` actually published for `log_id = "stream:<stream_id>"` ([CC 5.3.3.8](#5.3.3.8)) at `tree_size ≥ K`. A receipt over a root that no published head carries concludes nothing: it is kept and stays void until such a head is held, so a phantom or self-invented root never counts. For accountable streams, "published" means **witness-cosigned** (the CC 5.3.1 path), so the subscriber cannot collude with the producer on a private root.
 3. *(Recommended for accountable)* **Inclusion proof** chunk K → `chunk_root`. Upgrades the receipt from "subscriber saw a root" to "subscriber saw a root that provably commits to chunk K".
 
