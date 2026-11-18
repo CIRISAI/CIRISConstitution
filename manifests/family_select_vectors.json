@@ -1,7 +1,7 @@
 {
  "_meta": {
   "cc_version": "1.0-rc21",
-  "family_model_sha256": "0f635ee125651092e32b2d1b427c791d749d4e4a2460e6154636a8c256edbf6b",
+  "family_model_sha256": "f880205f41a21378fbfe0cd9fdc4450fae7f1717115c864ff048a21dfed91f24",
   "generator": "tools/cc_family_select.py",
   "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` equals ctx `sub`, false when it differs, `unknown` when either is absent. A vector with `voice` offers a statement in that role over the row: `admits` is true only when the second_signers answer names the role",
   "keys": {
@@ -25,7 +25,8 @@
    "subject_unknown": 1,
    "unknown": 44,
    "unknown_after_decider": 8,
-   "voice_refused": 7,
+   "voice_admitted": 11,
+   "voice_refused": 15,
    "wildcard": 3
   }
  },
@@ -3108,6 +3109,390 @@
    "kind": "voice_refused",
    "why": "act=own: the row is its author's own, so a roster member's statement is in no role it names and is refused",
    "voice": "roster_member",
+   "admits": false
+  },
+  {
+   "family": "group:roster",
+   "cell": "second_signers",
+   "dimension": "group:roster:v1",
+   "matcher_family": "group:roster",
+   "leaf": "",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "listed_member",
+     "member": "members"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role listed_member is accepted besides the author's",
+   "voice": "listed_member",
+   "admits": true
+  },
+  {
+   "family": "group:roster",
+   "cell": "second_signers",
+   "dimension": "group:roster:v1",
+   "matcher_family": "group:roster",
+   "leaf": "",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "listed_member",
+     "member": "members"
+    }
+   ],
+   "kind": "voice_refused",
+   "why": "a statement by an unrelated key is in no role the row names, and is refused",
+   "voice": "unrelated_key",
+   "admits": false
+  },
+  {
+   "family": "identity:occurrence",
+   "cell": "second_signers",
+   "dimension": "identity:occurrence:v1",
+   "matcher_family": "identity:occurrence",
+   "leaf": "",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "occurrence",
+     "member": "occurrence_key_id"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role occurrence is accepted besides the author's",
+   "voice": "occurrence",
+   "admits": true
+  },
+  {
+   "family": "identity:occurrence",
+   "cell": "second_signers",
+   "dimension": "identity:occurrence:v1",
+   "matcher_family": "identity:occurrence",
+   "leaf": "",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "occurrence",
+     "member": "occurrence_key_id"
+    }
+   ],
+   "kind": "voice_refused",
+   "why": "a statement by an unrelated key is in no role the row names, and is refused",
+   "voice": "unrelated_key",
+   "admits": false
+  },
+  {
+   "family": "key:record",
+   "cell": "second_signers",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "predecessor_key",
+     "member": "target"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role predecessor_key is accepted besides the author's",
+   "voice": "predecessor_key",
+   "admits": true
+  },
+  {
+   "family": "key:record",
+   "cell": "second_signers",
+   "dimension": "key:record:v1",
+   "matcher_family": "key:record",
+   "leaf": "",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "predecessor_key",
+     "member": "target"
+    }
+   ],
+   "kind": "voice_refused",
+   "why": "a statement by an unrelated key is in no role the row names, and is refused",
+   "voice": "unrelated_key",
+   "admits": false
+  },
+  {
+   "family": "ownership:{relation}:{target_kind}:{version}",
+   "cell": "second_signers",
+   "dimension": "ownership:sample:sample:v1",
+   "matcher_family": "ownership:{relation}:{target_kind}:{version}",
+   "leaf": "sample:sample",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "bound_node",
+     "member": "sub"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role bound_node is accepted besides the author's",
+   "voice": "bound_node",
+   "admits": true
+  },
+  {
+   "family": "ownership:{relation}:{target_kind}:{version}",
+   "cell": "second_signers",
+   "dimension": "ownership:sample:sample:v1",
+   "matcher_family": "ownership:{relation}:{target_kind}:{version}",
+   "leaf": "sample:sample",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "bound_node",
+     "member": "sub"
+    }
+   ],
+   "kind": "voice_refused",
+   "why": "a statement by an unrelated key is in no role the row names, and is refused",
+   "voice": "unrelated_key",
+   "admits": false
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "second_signers",
+   "dimension": "retirement:retired:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "retired",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "custodian",
+     "member": "custodian"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role custodian is accepted besides the author's",
+   "voice": "custodian",
+   "admits": true
+  },
+  {
+   "family": "retirement:{state}",
+   "cell": "second_signers",
+   "dimension": "retirement:retired:v1",
+   "matcher_family": "retirement:{state}",
+   "leaf": "retired",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "custodian",
+     "member": "custodian"
+    }
+   ],
+   "kind": "voice_refused",
+   "why": "a statement by an unrelated key is in no role the row names, and is refused",
+   "voice": "unrelated_key",
+   "admits": false
+  },
+  {
+   "family": "self:delegates_to",
+   "cell": "second_signers",
+   "dimension": "self:delegates_to:v1",
+   "matcher_family": "self:delegates_to",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role delegate is accepted besides the author's",
+   "voice": "delegate",
+   "admits": true
+  },
+  {
+   "family": "self:delegates_to",
+   "cell": "second_signers",
+   "dimension": "self:delegates_to:v1",
+   "matcher_family": "self:delegates_to",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role delegate_owner is accepted besides the author's",
+   "voice": "delegate_owner",
+   "admits": true
+  },
+  {
+   "family": "self:delegates_to",
+   "cell": "second_signers",
+   "dimension": "self:delegates_to:v1",
+   "matcher_family": "self:delegates_to",
+   "leaf": "",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "voice_refused",
+   "why": "a statement by an unrelated key is in no role the row names, and is refused",
+   "voice": "unrelated_key",
+   "admits": false
+  },
+  {
+   "family": "self:delegates_to:agent_occurrence",
+   "cell": "second_signers",
+   "dimension": "self:delegates_to:agent_occurrence:v1",
+   "matcher_family": "self:delegates_to:agent_occurrence",
+   "leaf": "",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role delegate is accepted besides the author's",
+   "voice": "delegate",
+   "admits": true
+  },
+  {
+   "family": "self:delegates_to:agent_occurrence",
+   "cell": "second_signers",
+   "dimension": "self:delegates_to:agent_occurrence:v1",
+   "matcher_family": "self:delegates_to:agent_occurrence",
+   "leaf": "",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role delegate_owner is accepted besides the author's",
+   "voice": "delegate_owner",
+   "admits": true
+  },
+  {
+   "family": "self:delegates_to:agent_occurrence",
+   "cell": "second_signers",
+   "dimension": "self:delegates_to:agent_occurrence:v1",
+   "matcher_family": "self:delegates_to:agent_occurrence",
+   "leaf": "",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "voice_refused",
+   "why": "a statement by an unrelated key is in no role the row names, and is refused",
+   "voice": "unrelated_key",
+   "admits": false
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "second_signers",
+   "dimension": "trust:confers:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "confers",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role delegate is accepted besides the author's",
+   "voice": "delegate",
+   "admits": true
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "second_signers",
+   "dimension": "trust:confers:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "confers",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "voice_admitted",
+   "why": "a statement in the role delegate_owner is accepted besides the author's",
+   "voice": "delegate_owner",
+   "admits": true
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "cell": "second_signers",
+   "dimension": "trust:confers:v1",
+   "matcher_family": "trust:{job}:{version}",
+   "leaf": "confers",
+   "ctx": {},
+   "expect": [
+    {
+     "role": "delegate",
+     "member": "sub"
+    },
+    {
+     "role": "delegate_owner",
+     "member": "owner_of_sub"
+    }
+   ],
+   "kind": "voice_refused",
+   "why": "a statement by an unrelated key is in no role the row names, and is refused",
+   "voice": "unrelated_key",
    "admits": false
   },
   {

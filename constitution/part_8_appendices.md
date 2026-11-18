@@ -2706,6 +2706,8 @@ Count: `identity=user => self_roster_add@self ; none` (CC 3.3.6.4)
 
 Authorship: `authored` (CC 3.3.6.4)
 
+Second signers: `occurrence` by `occurrence_key_id` (CC 3.3.6, CC 3.3.6.4)
+
 Change:
 - supersede: `replace: by=same_attester, reach=own_prior` (CC 4.4.3.23)
 - supersede: `replace[seat:serve]: after=transport:canonical_rebind, exclude=serve_transit_pair_rotation_before_rebind` (CC 3.1.3)

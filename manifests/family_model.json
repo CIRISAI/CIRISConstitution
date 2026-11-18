@@ -246,9 +246,9 @@
     "gap": 0
    },
    "second_signers": {
-    "cc-table": 7,
+    "cc-table": 8,
     "code-v61": 0,
-    "generic": 180,
+    "generic": 179,
     "prose": 0,
     "mixed": 0,
     "gap": 0
@@ -764,9 +764,9 @@
     "gap": 0
    },
    "second_signers": {
-    "families_with_roles": 7,
-    "families_author_only": 180,
-    "roles": 10,
+    "families_with_roles": 8,
+    "families_author_only": 179,
+    "roles": 11,
     "roles_without_member": 0
    },
    "reading": "authorship gives each family's rows as authored (one party authors; the payload carries author), subject (authored, and the author is the attested key: a statement whose iss is not the sub is refused) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)"
@@ -41766,9 +41766,17 @@
     ]
    },
    "second_signers": {
-    "value": [],
-    "source": "generic",
-    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+    "value": [
+     {
+      "role": "occurrence",
+      "member": "occurrence_key_id",
+      "cc_ref": [
+       "CC 3.3.6",
+       "CC 3.3.6.4"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [

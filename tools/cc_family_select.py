@@ -503,6 +503,26 @@ def generate_vectors(model, registry):
         v["voice"] = "roster_member"
         v["admits"] = voice_admits(v["expect"], v["voice"])
 
+    # every role a second_signers cell names: a statement offered in that role is accepted besides the author's, and one by
+    # an unrelated key, in no role, is refused
+    for fam, row in rows.items():
+        ents = row["second_signers"].get("value") or []
+        if not ents:
+            continue
+        sarms = [OrderedDict([("when", e.get("when", "*")), ("value", e["role"])]) for e in ents]
+        for role in dict.fromkeys(e["role"] for e in ents):
+            hit = next(((d, c) for d, c in contexts(registry, fam, sarms)
+                        if voice_admits(second_signers(ents, row_context(registry, fam, d, c)), role) is True), None)
+            if hit is None:
+                raise ValueError("%s second_signers: the role %s holds for no row the vectors can build" % (fam, role))
+            v = add(fam, "second_signers", hit[0], hit[1], "a statement in the role %s is accepted besides the author's" % role, "voice_admitted")
+            v["voice"] = role
+            v["admits"] = True
+        d, c = next(iter(contexts(registry, fam, sarms)))
+        v = add(fam, "second_signers", d, c, "a statement by an unrelated key is in no role the row names, and is refused", "voice_refused")
+        v["voice"] = "unrelated_key"
+        v["admits"] = voice_admits(v["expect"], "unrelated_key")
+
     # the `{name}` wildcard in a leaf value: one segment, any value, never two and never none
     for fam, cell, arms in selector_cells(model):
         for a in arms:
@@ -668,6 +688,10 @@ def _voice_any(roles, voice):
     return True
 
 
+def _voice_none(roles, voice):
+    return False
+
+
 def self_test():
     model, registry, sha = built()
     problems = []
@@ -696,7 +720,7 @@ def self_test():
                 problems.append("%s %s arm %d (%s): no vector it holds for" % (fam, cell, i, a["when"]))
             if a["when"] != "*" and not neg:
                 problems.append("%s %s arm %d (%s): no vector it does not hold for" % (fam, cell, i, a["when"]))
-    for k in ("unknown", "order", "wildcard", "false_beats_unknown", "subject_holds", "subject_refused", "voice_refused"):
+    for k in ("unknown", "order", "wildcard", "false_beats_unknown", "subject_holds", "subject_refused", "voice_refused", "voice_admitted"):
         if not any(v["kind"] == k for v in vectors):
             problems.append("no %s vector" % k)
     # the deliberate breaks the vectors must catch, run every time
@@ -713,10 +737,11 @@ def self_test():
             caught += 1
         else:
             problems.append("the vectors do not catch a broken author check: " + name)
-    if replay(model, registry, vectors, vadm=_voice_any):
-        caught += 1
-    else:
-        problems.append("the vectors do not catch a broken voice check: any voice accepted")
+    for name, vadm in (("any voice accepted", _voice_any), ("no voice accepted", _voice_none)):
+        if replay(model, registry, vectors, vadm=vadm):
+            caught += 1
+        else:
+            problems.append("the vectors do not catch a broken voice check: " + name)
     for name, sel in (("an unknown key", "kind=x"), ("a seat token", "seats=two"), ("a group kind", "group=club"), ("an act kind", "act=club")):
         try:
             parse_selector(sel)
@@ -728,7 +753,7 @@ def self_test():
         problems.append("the extract does not carry the model's hash")
     else:
         caught += 1
-    return problems, OrderedDict([("vectors", len(vectors)), ("breaks", "%d/%d" % (caught, len(breaks) + 8))])
+    return problems, OrderedDict([("vectors", len(vectors)), ("breaks", "%d/%d" % (caught, len(breaks) + 9))])
 
 
 def main(argv):
