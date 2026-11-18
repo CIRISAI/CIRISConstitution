@@ -95,9 +95,10 @@ def occ(id, signer, iss, okey, vf, vu, names=(), admitted=True, sigs=None):
                   sigs=frozenset(sigs if sigs is not None else {signer, okey}))
 
 
-def evict(id, signer, of):
-    """A landed withdraws against the occurrence `of` (the roster door's eviction)."""
-    return CK.row(id, "evict", signer, (of,), of=of)
+def evict(id, signer, of, names=()):
+    """The roster door's eviction of the occurrence `of`, signed by `signer`; `names` holds the signer's own record,
+    which the eviction waits for (CC 2.6.1.7 way (d))."""
+    return CK.row(id, "evict", signer, (of,) + tuple(names), of=of)
 
 
 def voice(id, signer, at, names):
@@ -228,7 +229,13 @@ def handed_on(S, l):
 
 
 def evicted(S, o):
-    return any(e["of"] == o["id"] for e in S.Cs if e["kind"] == "evict")
+    """An occurrence is evicted only by an eviction that has concluded and whose signer resolves to the occurrence's
+    identity: its genesis key, or a key whose concluded record is of that identity. An eviction the reader cannot
+    yet resolve waits and counts for nothing (CC 2.6.1.7 way (d))."""
+    if "iss_occ_unconcluded_eviction" in MUT:                 # PLANT: an eviction counts whoever signed it
+        return any(e["of"] == o["id"] for e in S.Cs if e["kind"] == "evict")
+    keys = {o["iss"]} | {r["key"] for r in S.Cs if r["kind"] == "rec" and r["iss"] == o["iss"]}
+    return any(e["of"] == o["id"] and e["signer"] in keys for e in S.Cs if e["kind"] == "evict")
 
 
 def bundle_in_force_seats(S, b, iss, k):

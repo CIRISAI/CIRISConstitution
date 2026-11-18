@@ -361,6 +361,14 @@ ISS_SCENARIOS = [
     ("an occurrence the roster door evicted", [gP, rec("pD", "D", 0, None, typ="user", iss="A"),
                                                occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD")), evict("xD", "A", "oD")],
      ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "evicted", "iss_occ_ignores_eviction"),
+    ("an eviction whose signer the reader cannot yet resolve: it waits and the occurrence stands",
+     [gP, rec("pD", "D", 0, None, typ="user", iss="A"), occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD")),
+      evict("xE", "E", "oD", names=("pE",))],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "valid", None),
+    ("an eviction by a key the reader cannot resolve as A's counts for nothing",
+     [gP, rec("pD", "D", 0, None, typ="user", iss="A"), occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD")),
+      evict("xE", "E", "oD")],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "valid", "iss_occ_unconcluded_eviction"),
     ("an occurrence signed by a key that is no key of A", [gP, rec("pE", "E", 0, None, typ="user"), rec("pD", "D", 0, None, typ="user", iss="A"),
                                                             occ("oD", "E", "A", "D", 0, 20, names=("pE", "pD", "pP"))],
      ("D", 5, "pD", "oD"), ["pE", "pD", "oD"], "invalid", "iss_occ_any_signer"),
@@ -463,6 +471,7 @@ def iss_section():
               ("iss_skip_occurrence", "a reader that skips way (d), so a person's second device is refused"),
               ("iss_occ_any_signer", "a reader that accepts an occurrence whatever its signer"),
               ("iss_occ_ignores_eviction", "a reader that keeps an evicted occurrence"),
+              ("iss_occ_unconcluded_eviction", "a reader that lets an eviction it cannot resolve evict"),
               ("iss_occ_agent_as_person", "a reader that accepts an agent key bound under a person's identity"),
               ("iss_occ_no_own_voice", "a reader that admits an occurrence without the bound key's own voice")]
     pl = []

@@ -26,6 +26,8 @@ Facts checked, each with a plant that must fail it:
             merge reads the thief's tip.
   revive    a merge never revives an evicted key: the eviction reached from any named head stands.
                                                               plant: the roster at heads as the union of each head's roster
+  unconcluded  an eviction that has not landed (its head not held, or its signers off the roster) evicts nothing.
+                                                              plant: a fold that counts every held eviction
   wait      a row naming a head not yet held waits, so the landed set is the same in every arrival order.
                                                               plant: a node that refuses a row whose head it lacks
   over all  every subset of the pool, every reader: no landed row is a sibling of an acknowledged row, no landed
@@ -96,7 +98,8 @@ class Reader:
 
     def _fold(self, ids):
         binds = {self.rows[i]["key"] for i in ids if i != GEN and self.rows[i]["kind"] == "bind" and self.landed(i)}
-        evicts = {self.rows[i]["key"] for i in ids if i != GEN and self.rows[i]["kind"] == "evict" and self.landed(i)}
+        evicts = {self.rows[i]["key"] for i in ids if i != GEN and i in self.rows and self.rows[i]["kind"] == "evict"
+                  and ("count_unlanded" in MUT or self.landed(i))}
         return ({"g"} | binds) - evicts
 
     def tips(self):
@@ -168,6 +171,21 @@ def facts():
     MUT.add("union_of_rosters"); pl = revive(); MUT.discard("union_of_rosters")
     out.append(("revive: a merge of a tip that evicted d2 and a tip that still lists it does not list d2",
                 ok, "the roster at heads as the union of each head's roster (the merge revives d2)", not pl))
+
+    def unlanded():
+        """An eviction naming a head the reader lacks, and one signed by a key not on the roster at its head, have not
+        landed; neither removes d1. A later row the reader resolves reads d1 as standing."""
+        miss = row("EX", "evict", "d1", "HX", {"g"})                  # names a head the reader does not hold
+        alien = row("EY", "evict", "d1", "B1", {"z", "g"})            # z is no key of the roster at B1
+        later = row("B5", "bind", "d5", "B1", {"g", "d1", "d5"}, further={"EX", "EY"})
+        rd = Reader([B1, miss, alien, later])
+        return (not rd.landed("EX") and not rd.landed("EY") and not rd.landed("B5") and "d1" in rd.roster()
+                and "d1" in rd._fold({GEN, "B1", "EX", "EY"}))
+
+    ok = unlanded()
+    MUT.add("count_unlanded"); pl = unlanded(); MUT.discard("count_unlanded")
+    out.append(("unconcluded: an eviction naming a head the reader lacks, or signed off the roster, has not landed and d1 stands",
+                ok, "a fold that counts every held eviction, landed or not", not pl))
 
     def wait(refuse):
         rows = [B1, B2, E2, S3, M]
