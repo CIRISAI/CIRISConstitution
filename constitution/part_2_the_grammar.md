@@ -381,7 +381,7 @@ An affiliation withdraws no statement about itself, whatever the statement. Its 
 
 **A key's own end (normative).** A `key:record`'s `identity_type` is a set of roles ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)). A set that holds `user` or `accord_holder` together with `node` or `agent` is malformed and refused, since a key is a person's or a machine's, never both. A `key:record` whose `identity_type` contains `user` or `accord_holder` MUST NOT state `valid_until`, since no person loses their self to a clock. Any other `key:record` whose `identity_type` contains `node` or `agent` MUST state `valid_until`, unless it is a room key of a private room ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). A pseudonym's key record ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)) MAY state `valid_until` and need not, since it is neither a self nor a node or agent. A role outside both groups, such as a steward, a witness or a pipeline, takes no end rule of its own. The bound is read from the record alone. `valid_until` MUST NOT be before the record's `asserted_at`, nor more than `key_record_max_secs` after it. A record that breaks the bound, or omits or carries `valid_until` against this paragraph, is refused `key_record_out_of_window`. A statement of this form is signed by a composite key, and that key is live only by a `key:record` of this form. A key record of the earlier form ([CC 8.11](part_8_appendices.md#8.11)) gives standing to nothing ([CC 2.6.1.12](#2.6.1.12)). Each key's own holder signs its record of this form, so the genesis ends no key and gives no key a power over another. A key is live at an instant when one of its records covers that instant and its own revocation has not taken effect by then ([CC 2.7.5](#2.7.5)). It has ended when every one of its records has ended. No other row enters that reading, so no third party ends a key and no third party revives one.
 
-A key renews by signing a further record that `supersedes` its own earlier record. Renewals that do not name each other all count, and the key lives to the greatest end they state. A renewal MAY be signed after the end of the record it supersedes, and it then revives the key at every node that holds it. A rotation is a record of another key that names the old key's record. It carries the old key's signature, made at an instant inside that record. A rotation hands on what the old key may hand on, and never extends the old key. Two rotations of one key, neither naming the other, hand on nothing until a rotation names both ([CC 2.7.7](#2.7.7)). The owner of the key settles the pair's ownership by binding one successor and revoking the other's binding; the hand-on stays empty until a rotation names both. A key with no owner stays contested.
+A key renews by signing a further record that `supersedes` its own earlier record. Renewals that do not name each other all count, and the key lives to the greatest end they state. A renewal MAY be signed after the end of the record it supersedes, and it then revives the key at every node that holds it. A rotation is a record of another key that names the old key's record, in the one shape of the `key:record` row of [CC 3.1.3](part_3_the_namespace.md#3.1.3). It carries the old key's signature, made at an instant inside that record. A rotation hands on what the old key may hand on, and never extends the old key. Two rotations of one key, neither naming the other, hand on nothing until a rotation names both ([CC 2.7.7](#2.7.7)). The owner of the key settles the pair's ownership by binding one successor and revoking the other's binding; the hand-on stays empty until a rotation names both. A key with no owner stays contested.
 
 A row lapses when its signer's key has ended and no row that has not lapsed names it, directly or through other rows ([CC 2.7.5](#2.7.5)). A revocation never lapses. A lapsed row MUST NOT count in any tally, score, walk of trust or other reading. Its own verdict is unchanged: a row signed while its key was live stays what it was. A row that has not lapsed counts as before, whatever its key's end. A node MAY stop serving a lapsed row and MAY drop it. A node MUST NOT stop serving or drop, for its key's end, a row that has not lapsed; [CC 2.7.10](#2.7.10) states when it MAY drop a row's bytes. It MUST NOT keep a digest by which to refuse a dropped row again. A row whose signed instant no held record of its key covers is retryable, as a row signed by a key not yet held is.
 
@@ -592,7 +592,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
-| `attesting_key_id` | `1` | header:cwt | `identity-ref` | always | [2.6.1.1](#2.6.1.1) [2.6.1.7](#2.6.1.7) | iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the room key's own. |
+| `attesting_key_id` | `1` | header:cwt | `identity-ref` | always | [2.6.1.1](#2.6.1.1) [2.6.1.7](#2.6.1.7) | iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the room key's own. kid's key is a key of it. |
 | `attested_key_id` | `2` | header:cwt | `tstr` | always | [2.6.1.1](#2.6.1.1) [2.6.1.3](#2.6.1.3) | sub: what the row is about; a key subject is an identity reference; the row id reads it. |
 | — | `6` | header:cwt | `uint` | always | [2.6.2](#2.6.2) | iat: floor(asserted_at / 1000); a disagreement is refused. |
 | — | `5` | header:cwt | `uint` | iff the payload carries valid_from | [2.6.2](#2.6.2) | nbf: floor(valid_from / 1000); a disagreement is refused. |
@@ -862,6 +862,8 @@ A key is one composite COSE key of key type AKP (kty 7). Its `pub` is the ML-DSA
 
 `iss` is the identity reference of the signer's genesis key ([CC 2.6.1.1](#2.6.1.1)), so the issuer stays the same when the signing key rotates. A key record is a row of the family `key:record` ([CC 2.4.1.1](#2.4.1.1)), renewed by a `supersedes` and named by a rotation. Its payload carries `key`, `identity_type`, `asserted_at` and, where its end rule requires, `valid_until`, with `exp` derived from it.
 
+**A statement's key MUST be a key of its `iss`** (step 8 of [CC 2.6.1.8](#2.6.1.8)). It is one where `kid` is the thumbprint inside `iss`: the genesis key, or a room key signing as itself. It is also one where the reader holds a record of that key whose own `iss` is the statement's, and that record reaches the genesis key's record through rotation records. A rotation record has the one shape of the `key:record` row of [CC 3.1.3](part_3_the_namespace.md#3.1.3). A renewal on the way, a `supersedes` by the key itself, leaves the chain where it was. A link stands where its predecessor's statement stands under [CC 2.4.1.1](#2.4.1.1): made inside the predecessor's record, and before the `revoked_after` of a revocation by that key itself. So a link made while its predecessor was live stands after that key has ended, and no other voice's revocation cuts a chain. Where no held record's chain reaches the genesis key's record and a link of one is not held, the statement answers Waiting on that row. Otherwise it is Invalid, `kid_not_of_iss`: each held record of the key is of another identity, or its chain does not reach. A reader that holds bare keys and no records can show the first case only. The statements of a genesis bundle and of the accord's rows bind their key to the holder by the bundle in force instead ([CC 2.6.1.11](#2.6.1.11), [CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)).
+
 `identity_type` is a set of roles ([CC 4.5.8](part_4_composition_governance.md#4.5.8)), and the key's end rule of [CC 2.4.1.1](#2.4.1.1) reads it as a set. A set that mixes `user` or `accord_holder` with `node` or `agent` is refused. A record whose set contains `user` or `accord_holder` carries no `valid_until`. One whose set contains `node` or `agent` carries one, unless it is a room key of a private room. A pseudonym's record MAY carry one, and a role outside both groups takes no end rule of its own. The bound is in milliseconds: `asserted_at` ≤ `valid_until` ≤ `asserted_at` + `key_record_max_secs` × 1000. A record that breaks the rule is refused `key_record_out_of_window`.
 
 #### 2.6.1.8 `verification-three` — Verification has three answers (normative)
@@ -888,16 +890,19 @@ On a statement received:
        among them
     6. Read kid; resolve the key record, or answer Waiting on it
     7. Verify the composite signature over the bytes received
-    8. Check iss against author, or against the party of a role
+    8. Check that kid's key is a key of iss (CC 2.6.1.7): Waiting
+       on a link of its rotation chain not held, or Invalid,
+       kid_not_of_iss
+    9. Check iss against author, or against the party of a role
        the family names (CC 2.6.1.3)
-    9. Valid:
+   10. Valid:
         a. apply the CC 2.1 defaults to absent members
            (interpretation time only)
         b. apply consumer policy (CC 4.4) to the result
-   10. Store or forward the statement as received
+   11. Store or forward the statement as received
 ```
 
-A failure at steps 1 to 5, 7 or 8 is Invalid. Step 6 alone answers Waiting.
+A failure at steps 1 to 5 or 7 to 9 is Invalid. Steps 6 and 8 alone answer Waiting.
 
 #### 2.6.1.9 `cosigned` — Counted rows and the second consent (normative)
 
@@ -1392,7 +1397,7 @@ The kernel does not settle these:
 - how a second consent travels, and from when a delegation without one stops seating;
 - the reach of a cosignature attached against a node's clock, unless it states its own end;
 - a meaning for a clock that times a window from a signed instant and judges it at receipt. The freshness window `W` and `CLOCK_SKEW_VIOLATION` ([CC 2.6.7](#2.6.7)), the bound on a key that has lost standing ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)) and the attach window ([CC 3.2](part_3_the_namespace.md#3.2) T4a) read one. So do a response bounded by `W` ([CC 4.3](part_4_composition_governance.md#4.3)), an objection counted within `W` ([CC 4.5.13](part_4_composition_governance.md#4.5.13)) and the instant of a reserved family's row ([CC 3.4.7](part_3_the_namespace.md#3.4.7)). The kernel gives each no meaning beyond one node's own reading;
-- `revoked_after`, which reads a revoked key's rows by their signed instants ([CC 2.4.1.1](#2.4.1.1), [CC 3.2](part_3_the_namespace.md#3.2) T6 to T8, [CC 5.3.2.3](part_5_transport_substrate.md#5.3.2.3)). The kernel gives that reading no meaning beyond one node's own;
+- `revoked_after`, which reads a revoked key's rows by their signed instants ([CC 2.4.1.1](#2.4.1.1), [CC 2.6.1.7](#2.6.1.7), [CC 3.2](part_3_the_namespace.md#3.2) T6 to T8, [CC 5.3.2.3](part_5_transport_substrate.md#5.3.2.3)). The kernel gives that reading no meaning beyond one node's own;
 - a seat, a licence or an owner read at a row's signed `asserted_at` where the row names no head ([CC 3.1.5](part_3_the_namespace.md#3.1.5), [CC 3.3.1](part_3_the_namespace.md#3.3.1), [CC 3.4.7](part_3_the_namespace.md#3.4.7), [CC 4.3](part_4_composition_governance.md#4.3)). The kernel gives that reading no meaning beyond one node's own;
 - the standing verdict of a trust root, which [CC 3.2](part_3_the_namespace.md#3.2) T6 to T8 index by a signed `effective_at`. The kernel gives it no meaning beyond one node's own reading;
 - a meaning for a rule cell that keeps a word the operators do not carry, or calls a fold no cell defines;

@@ -13,7 +13,8 @@ Rows (dicts of causal_kernel.row):
              names the old key's record, carries succ_of = the old key, and both signatures (sigs) and the old
              key's own instant at_old.
     att      an attestation by `signer` at its own instant `at`, naming the record it was signed under (`cover`),
-             optionally `about` a key and naming further rows.
+             optionally `about` a key and naming further rows. It states `iss`, the identity it signs as (by default
+             the signer's own key, a genesis key or a room key signing as itself).
     edge     a trust edge `signer -> to`, an att with `to`.
     revoke   the key's own revocation, `ra` = revoked_after (statements after it do not count; never withdrawn).
     unbind   another voice's revocation of the key: the owner's (`of` = "binding") or the seating roster's removal
@@ -26,6 +27,12 @@ Layers
 
 The only instants compared are one key's own: a row's `at` against the record it names (same signer); a rotation's at_old
 against the old key's record (signed by the old key). No two signers' instants are compared, and nothing is ranked by an instant or a digest.
+
+A statement counts as `iss` only if its key is `iss`'s genesis key, or the key of a record whose own `iss` is the
+statement's and that reaches `iss`'s genesis key through rotations, each naming its predecessor's record and carrying
+the predecessor's signature made inside that record (OF_ISS below). A renewal on the way does not move the chain. A
+link not held waits, as every named row does. Derived over that, of_iss_now drops a chain one of whose links its
+predecessor signed at or after its own revoked_after (CC 2.4.1.1), and no other voice's revocation cuts a chain.
 
 A row LAPSES at now when its signer's key has ended and no row that has not lapsed has it in its past. A seat
 serves and keeps exactly the rows that have not lapsed (RETAINED), which is route.py's closure with the seeds
@@ -49,17 +56,20 @@ MUT = set()                       # planted breaks, switched on by the check
 
 
 # ---- rows ------------------------------------------------------------------------------------------------
-def rec(id, key, vf, vu, names=(), typ="node", succ_of=None, at_old=None, sigs=None, room=False):
+def rec(id, key, vf, vu, names=(), typ="node", succ_of=None, at_old=None, sigs=None, room=False, iss=None):
+    """`iss`: the identity the record is of; a first record's is its own key, a rotation's its predecessor's."""
     return CK.row(id, "rec", key, names, key=key, vf=vf, vu=vu, typ=typ, succ_of=succ_of, at_old=at_old,
-                  sigs=frozenset(sigs if sigs is not None else ({key} | ({succ_of} if succ_of else set()))), room=room)
+                  sigs=frozenset(sigs if sigs is not None else ({key} | ({succ_of} if succ_of else set()))), room=room,
+                  iss=iss if iss is not None else (succ_of or key))
 
 
-def att(id, signer, at, cover, about=None, names=()):
-    return CK.row(id, "att", signer, (cover,) + tuple(names), at=at, cover=cover, about=about)
+def att(id, signer, at, cover, about=None, names=(), iss=None):
+    return CK.row(id, "att", signer, (cover,) + tuple(names), at=at, cover=cover, about=about,
+                  iss=iss if iss is not None else signer)
 
 
 def edge(id, signer, to, at, cover, names=()):
-    return CK.row(id, "edge", signer, (cover,) + tuple(names), at=at, cover=cover, to=to)
+    return CK.row(id, "edge", signer, (cover,) + tuple(names), at=at, cover=cover, to=to, iss=signer)
 
 
 def revoke(id, key, ra):
@@ -91,13 +101,64 @@ def WF(r):
         return False
     if vu - vf > CEIL and "no_ceiling" not in MUT:
         return False
-    if r["succ_of"] is not None and r["succ_of"] not in r["sigs"] and "rotation_one_sig" not in MUT:
+    if r["succ_of"] is not None and r["succ_of"] not in r["sigs"] and not MUT & {"rotation_one_sig", "iss_unsigned_link"}:
         return False           # a rotation carries the old key's signature beside the new key's possession
     return r["key"] in r["sigs"]
 
 
 def _end(r):
     return INF if r["vu"] is None else r["vu"]
+
+
+# ---- the key of `iss`: a statement's key against the identity it signs as ---------------------------------
+def iss_chain(r, by):
+    """The links from the record r's key resolves to (`cover`) back to `iss`'s genesis key, over the records in `by`;
+    [] when r's key is `iss` itself (a genesis key, or a room key signing as itself); None when no chain reaches it."""
+    iss, k = r["iss"], r["signer"]
+    if "iss_unchecked" in MUT:                        # PLANT: any held key signs as any iss
+        return []
+    if k == iss:
+        return []                                     # (a) kid is the thumbprint inside iss
+    if "iss_genesis_only" in MUT:                     # PLANT (over-strict): only the genesis key, so rotation breaks
+        return None
+    c = by.get(r["cover"])
+    if c is None or c["kind"] != "rec" or c["key"] != k:
+        return None
+    links = []
+    for _ in range(len(by) + 1):
+        if c["key"] == iss:
+            return links                              # reached iss's genesis key, through renewals or not
+        if c["iss"] != iss and "iss_other_identity" not in MUT:
+            return None                               # a record of another identity
+        named = [by[n] for n in c["names"] if n in by and by[n]["kind"] == "rec"]
+        if c["succ_of"] is None:
+            prev = [p for p in named if p["key"] == c["key"]]
+            if not prev:
+                return links if "iss_other_identity" in MUT else None   # PLANT: any first record ends a chain
+            c = prev[0]                               # a renewal: the same key's earlier record; the chain does not move
+            continue
+        if c["succ_of"] not in c["sigs"] and "iss_unsigned_link" not in MUT:
+            return None                               # the rotation carries no statement by its predecessor
+        prev = [p for p in named if p["key"] == c["succ_of"]]
+        if not prev:
+            return None
+        links.append(c)
+        c = prev[0]
+    return None
+
+
+def of_iss_now(S, rid):
+    """Derived: the statement counts as its iss given the revocations held. A link its predecessor signed at or after
+    that key's own revoked_after does not stand (CC 2.4.1.1); another voice's revocation cuts nothing."""
+    r = S.by[rid]
+    if not S.C.get(rid):
+        return False
+    links = iss_chain(r, {q["id"]: q for q in S.Cs})
+    if links is None:
+        return False
+    if "iss_ignores_revoked_after" in MUT:            # PLANT: a link signed after its predecessor's revocation stands
+        return True
+    return all(l["at_old"] < rev_bound(S, l["succ_of"]) for l in links)
 
 
 # ---- concluded: the row against its past ---------------------------------------------------------------
@@ -131,7 +192,7 @@ def RULE(r, P, past):
             return False
         if "conclude_reads_now" in MUT and CLOCK[0] >= _end(c):   # PLANT: conclusion reads now
             return False
-        return c["vf"] <= r["at"] <= _end(c)
+        return c["vf"] <= r["at"] <= _end(c) and iss_chain(r, by) is not None
     return True                                               # a revocation: the key's own, never withdrawn
 
 

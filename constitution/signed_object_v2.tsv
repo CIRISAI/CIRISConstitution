@@ -11,7 +11,7 @@ protected	statement-protected	-70002	-	header:protected	family-id	always	2.6.1.1
 protected	statement-protected	4	attesting_key_id	header:protected	kid	always	2.6.1.7	kid: the 32-byte thumbprint of the signer's composite key, fixed for the key's life.
 protected	statement-protected	15	-	header:protected	cwt-claims	always	2.6.1.1	The CWT claims.
 protected	statement-protected	16	-	header:protected	"ceg-row/2"	always	2.6.1.1 2.6.1.11	typ: ceg-row/2 for every row.
-cwt	cwt-claims	1	attesting_key_id	header:cwt	identity-ref	always	2.6.1.1 2.6.1.7	iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the room key's own.
+cwt	cwt-claims	1	attesting_key_id	header:cwt	identity-ref	always	2.6.1.1 2.6.1.7	iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the room key's own. kid's key is a key of it.
 cwt	cwt-claims	2	attested_key_id	header:cwt	tstr	always	2.6.1.1 2.6.1.3	sub: what the row is about; a key subject is an identity reference; the row id reads it.
 cwt	cwt-claims	6	-	header:cwt	uint	always	2.6.2	iat: floor(asserted_at / 1000); a disagreement is refused.
 cwt	cwt-claims	5	-	header:cwt	uint	iff the payload carries valid_from	2.6.2	nbf: floor(valid_from / 1000); a disagreement is refused.

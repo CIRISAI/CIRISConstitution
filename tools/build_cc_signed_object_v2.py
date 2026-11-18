@@ -34,6 +34,9 @@ Checks (every run, before writing):
   The CDDL parses (the `cddl` gem, as tools/build_ietf_draft.py runs it; a plain message when absent),
   and a sample statement in deterministic CBOR, built here, validates against it. The sample is a
   schema check only and is no known-answer vector: the vectors are the verifier's.
+  A reference reader of step 8 of CC 2.6.1.8 (a statement's key is a key of its iss, CC 2.6.1.7) runs over
+  samples, each with the answer the text gives, and over deliberate breaks of the rotation record's shape
+  (CC 3.1.3 `key:record`) that must each give their own answer.
   --check   check, and compare the block with what the Part holds; write nothing (exit 1 when stale)
 
 stdlib only. Run:  python3 tools/build_cc_signed_object_v2.py [--check]
@@ -717,6 +720,124 @@ def reader_samples():
     return (good, voices, rows, anchor), (cde(good), gid), breaks, later_ok
 
 
+# ---------------------------------------------------------------- step 8: the key of iss (CC 2.6.1.7)
+IREF = "urn:ietf:params:oauth:ckt:sha-256:"
+
+
+def thumb(n):
+    """A sample key's 32-byte thumbprint."""
+    return hashlib.sha256(b"sample key %d" % n).digest()
+
+
+def iref_of(t):
+    """The identity reference of the key with thumbprint t (CC 2.6.1.1): the thumbprint URI, base64url, no padding."""
+    import base64
+    return IREF + base64.urlsafe_b64encode(t).decode().rstrip("=")
+
+
+KEY_BREAK = set()   # deliberate breaks of the reader, switched on by key_iss_checks
+
+
+def read_kid_of_iss(kid, iss, records):
+    """Step 8 of CC 2.6.1.8 for one statement: ("Valid", None), ("Waiting", row id) or ("Invalid", "kid_not_of_iss").
+    records: row id -> {"key", "iss", "target" (the predecessor's record, a rotation), "supersedes" (the key's own
+    earlier record, a renewal), "voices" (the keys that signed it), "in_force" (the predecessor's statement is made
+    inside the predecessor's record and before its own revoked_after, CC 2.4.1.1)}. With no record of kid held, step 6
+    has already answered Waiting."""
+    if iref_of(kid) == iss or "any_key" in KEY_BREAK:
+        return "Valid", None                          # (a) kid is the thumbprint inside iss
+    if "genesis_only" in KEY_BREAK:
+        return "Invalid", "kid_not_of_iss"
+    mine = [rid for rid, r in records.items() if r["key"] == kid]
+    if not mine:
+        return "Waiting", kid                         # step 6: the key record is not held
+    waiting = None
+    for rid in mine:
+        r, seen = records[rid], set()
+        while True:
+            if iref_of(r["key"]) == iss:
+                return "Valid", None                  # (b) the chain reached iss's genesis key's record
+            if (r["iss"] != iss and "any_identity" not in KEY_BREAK) or rid in seen:
+                break                                 # a record of another identity
+            seen.add(rid)
+            if r.get("supersedes"):                   # a renewal: the chain does not move
+                nxt = r["supersedes"]
+            elif r.get("target"):                     # a rotation: the predecessor's record, and its statement
+                nxt = r["target"]
+            else:
+                if "any_identity" in KEY_BREAK:
+                    return "Valid", None
+                break                                 # a first record of a key that is not iss's genesis key
+            if nxt not in records:
+                waiting = waiting or nxt              # a link not held: Waiting on that row
+                break
+            p = records[nxt]
+            if r.get("target") and (p["key"] not in r["voices"] and "no_predecessor_statement" not in KEY_BREAK
+                                    or not r.get("in_force", True)):
+                break                                 # no statement by the predecessor key, or one that does not stand
+            if r.get("supersedes") and p["key"] != r["key"]:
+                break
+            rid, r = nxt, p
+    return ("Waiting", waiting) if waiting else ("Invalid", "kid_not_of_iss")
+
+
+def key_iss_samples():
+    """(name, kid, iss, records, answer): the samples of step 8, with the answer the text gives."""
+    gA, kB, kC, gE = thumb(1), thumb(2), thumb(3), thumb(9)
+    A = iref_of(gA)
+    pA = {"key": gA, "iss": A, "voices": {gA}}
+    qB = {"key": kB, "iss": A, "target": "pA", "voices": {kB, gA}}
+    rB = {"key": kB, "iss": A, "supersedes": "qB", "voices": {kB}}
+    qC = {"key": kC, "iss": A, "target": "qB", "voices": {kC, kB}}
+    pE = {"key": gE, "iss": iref_of(gE), "voices": {gE}}
+    valid = [
+        ("the genesis key signing as itself, no record held", gA, A, {}),
+        ("the genesis key signing as itself", gA, A, {"pA": pA}),
+        ("a successor reached by one rotation record", kB, A, {"pA": pA, "qB": qB}),
+        ("a successor under its own renewal", kB, A, {"pA": pA, "qB": qB, "rB": rB}),
+        ("a successor two rotations on", kC, A, {"pA": pA, "qB": qB, "qC": qC}),
+        ("a key with a record of another identity beside one that reaches", kB, A,
+         {"pA": pA, "qB": qB, "xB": {"key": kB, "iss": iref_of(gE), "voices": {kB}}}),
+    ]
+    other = [
+        ("an unrelated held key whose record names another identity", gE, A, {"pA": pA, "pE": pE}, ("Invalid", "kid_not_of_iss")),
+        ("a successor whose rotation record is not held", kB, A, {"pA": pA}, ("Waiting", kB)),
+        ("a rotation record whose predecessor's record is not held", kB, A, {"qB": qB}, ("Waiting", "pA")),
+        ("a record of another identity beside a chain that waits", kB, A,
+         {"qB": qB, "xB": {"key": kB, "iss": iref_of(gE), "voices": {kB}}}, ("Waiting", "pA")),
+        ("a record claiming iss with no rotation", gE, A, {"pA": pA, "xE": {"key": gE, "iss": A, "voices": {gE}}},
+         ("Invalid", "kid_not_of_iss")),
+        ("a rotation record without the predecessor's statement", kB, A, {"pA": pA, "qB": dict(qB, voices={kB})},
+         ("Invalid", "kid_not_of_iss")),
+        ("a rotation record whose predecessor's statement does not stand", kB, A, {"pA": pA, "qB": dict(qB, in_force=False)},
+         ("Invalid", "kid_not_of_iss")),
+        ("a key rotated from another identity", kC, A, {"pE": pE, "qC": {"key": kC, "iss": iref_of(gE), "target": "pE", "voices": {kC, gE}}},
+         ("Invalid", "kid_not_of_iss")),
+    ]
+    return [(n, k, i, r, ("Valid", None)) for n, k, i, r in valid] + other
+
+
+def key_iss_checks():
+    """(line, problems): every sample gives the answer the text gives."""
+    bad = []
+    for name, kid, iss, recs, want in key_iss_samples():
+        got = read_kid_of_iss(kid, iss, recs)
+        if got != want:
+            bad.append(f"reference key reader: {name} gives {got}, the text gives {want}")
+    caught = 0
+    for brk in ("any_key", "any_identity", "no_predecessor_statement", "genesis_only"):
+        KEY_BREAK.add(brk)
+        if any(read_kid_of_iss(k, i, r) != w for _, k, i, r, w in key_iss_samples()):
+            caught += 1
+        else:
+            bad.append(f"deliberate break not caught: the key reader with {brk}")
+        KEY_BREAK.discard(brk)
+    n = len(key_iss_samples())
+    nv = sum(1 for s in key_iss_samples() if s[4][0] == "Valid")
+    return (f"reference key reader (step 8): {nv} statements Valid, {n - nv} give their own answer "
+            f"(Waiting or kid_not_of_iss); {caught} broken readers caught"), bad
+
+
 def reader_checks():
     """(line, problems) for the reference reader: the valid bundle is Valid under both anchors with its placement, the
     valid later bundles are Valid, and each break gives its own answer."""
@@ -954,6 +1075,9 @@ def main(argv):
     rline, rbad = reader_checks()
     lines.append(rline)
     bad += rbad
+    kline, kbad = key_iss_checks()
+    lines.append(kline)
+    bad += kbad
     sys.path.insert(0, HERE)
     fline, fbad = family_checks()
     lines.append(fline)

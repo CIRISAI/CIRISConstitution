@@ -11,6 +11,9 @@ Five sections, each compared with key_end_expected.tsv:
                  time or back-dated, first held early or late, witnessed or not, under a reader that acknowledged the
                  end or not; for each candidate rule, a FUNCTION PAIR (same rows and now, different verdicts) and the
                  renewals it gets wrong (a back-dated one counted, one signed in time refused)
+    of iss       K-ISS: a statement counts as the identity `iss` it states only if its key is iss's genesis key or
+                 reached from it by rotations; scenarios of a chain of records, each with every link withheld in
+                 turn, read in every arrival order, against a verdict written by hand; five plants, each caught
     wording      the class condition read from the record versus from an owner-binding
     attacks      scenarios in attacks.py's pattern, every arrival order of up to seven rows; each fact must hold
     numbers      the steady state of a seat's store, from formulas over stated rates (not measured)
@@ -301,6 +304,104 @@ def time_section():
     return out
 
 
+# ---- of iss: a statement's key is a key of the identity it signs as ------------------------------------------
+# Each scenario: rows, the statement (its signer, its own instant, the record it names), the chain rows a reader must
+# hold, and the verdict written by hand: "valid" (counts as A), "invalid" (held, concludes nothing as A), "not kept"
+# (its key's record is refused at the door, so the statement is never held: Invalid at a verifier, never counted).
+gA = rec("pA", "A", 0, 10)
+ISS_SCENARIOS = [
+    ("the genesis key signing as itself", [gA], ("A", 5, "pA"), ["pA"], "valid", None),
+    ("the genesis key under its renewal", [gA, rec("rA", "A", 8, 18, names=("pA",))], ("A", 13, "rA"), ["pA", "rA"], "valid", None),
+    ("a successor reached by one rotation", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4)],
+     ("B", 5, "qB"), ["pA", "qB"], "valid", None),
+    ("a successor signing after the old key's end", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4)],
+     ("B", 13, "qB"), ["pA", "qB"], "valid", None),
+    ("a rotation made under the old key's renewal", [gA, rec("rA", "A", 8, 18, names=("pA",)),
+                                                    rec("qB", "B", 12, 20, names=("rA",), succ_of="A", at_old=12)],
+     ("B", 13, "qB"), ["pA", "rA", "qB"], "valid", None),
+    ("a successor under its own renewal (the chain does not move)", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                                    rec("rB", "B", 12, 20, names=("qB",), iss="A")],
+     ("B", 15, "rB"), ["pA", "qB", "rB"], "valid", None),
+    ("a successor two rotations on", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                      rec("qC", "C", 6, 16, names=("qB",), succ_of="B", at_old=6, iss="A")],
+     ("C", 7, "qC"), ["pA", "qB", "qC"], "valid", None),
+    ("an unrelated key whose own record is of another identity", [gA, rec("pE", "E", 0, 10)], ("E", 5, "pE"), ["pE"], "invalid",
+     "iss_other_identity"),
+    ("an unrelated key whose record claims A with no rotation", [gA, rec("xE", "E", 0, 10, iss="A")], ("E", 5, "xE"), ["xE"], "invalid",
+     "iss_unchecked"),
+    ("a key rotated from another identity", [gA, rec("pE", "E", 0, 10), rec("qC", "C", 4, 14, names=("pE",), succ_of="E", at_old=4)],
+     ("C", 5, "qC"), ["pE", "qC"], "invalid", "iss_other_identity"),
+    ("a record naming A's record with no statement by A", [gA, rec("tB", "B", 4, 14, names=("pA",), iss="A")],
+     ("B", 5, "tB"), ["pA", "tB"], "invalid", None),
+    ("a rotation lacking the predecessor's statement", [gA, rec("uB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4, sigs={"B"})],
+     ("B", 5, "uB"), ["pA", "uB"], "not kept", "iss_unsigned_link"),
+    ("a rotation signed after the old record's end", [gA, rec("lB", "B", 12, 20, names=("pA",), succ_of="A", at_old=12)],
+     ("B", 13, "lB"), ["pA", "lB"], "invalid", None),
+    ("a rotation signed before the old key's own revoked_after", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                                 revoke("v", "A", 9)], ("B", 5, "qB"), ["pA", "qB"], "valid", None),
+    ("a rotation signed at or after the old key's own revoked_after", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                                      revoke("v", "A", 3)], ("B", 5, "qB"), ["pA", "qB"], "revoked",
+     "iss_ignores_revoked_after"),
+    ("the owner's revocation of the old key cuts no chain", [pX, gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                            unbind("o", "X", "A", 3, "binding")], ("B", 5, "qB"), ["pA", "qB"], "valid", None),
+]
+
+
+def iss_answer(S):
+    """valid / invalid / revoked / waiting / not kept, for the statement s."""
+    if "s" not in S.by:
+        return None
+    if not S.C.get("s"):
+        return "invalid"
+    return "valid" if KE.of_iss_now(S, "s") else "revoked"
+
+
+def iss_world(rows, st):
+    signer, at, cover = st
+    return rows + [att("s", signer, at, cover, iss="A")]
+
+
+def iss_run(sc):
+    """(answers, problems): the full world in every arrival order, then each chain row withheld in turn."""
+    name, rows, st, chain, want, _ = sc
+    w = iss_world(rows, st)
+    bad = []
+    full, agree = every_order(w, iss_answer)
+    got = "not kept" if full is None else full
+    if got != want:
+        bad.append("%s: %s, written %s" % (name, got, want))
+    if not agree:
+        bad.append("%s: arrival orders disagree" % name)
+    for gone in chain:
+        part = [r for r in w if r["id"] != gone]
+        a, ag = every_order(part, iss_answer)
+        if a is not None or not ag:
+            bad.append("%s: with %s withheld the statement is %s, not waiting" % (name, gone, a))
+    return got, bad
+
+
+def iss_section():
+    """(lines, ok): each scenario's verdict with the rule, then each plant and the scenario that catches it."""
+    out, ok = [], True
+    for sc in ISS_SCENARIOS:
+        got, bad = iss_run(sc)
+        ok = ok and not bad
+        out.append((sc[0], got, "every arrival order agrees; each chain row withheld waits" if not bad else "; ".join(bad)))
+    plants = [("iss_unchecked", "a reader that accepts any held key"),
+              ("iss_other_identity", "a reader that accepts a record of another identity"),
+              ("iss_unsigned_link", "a reader that accepts a chain whose rotation lacks the predecessor's statement"),
+              ("iss_genesis_only", "a reader that refuses a legitimate successor (kid must be the genesis key)"),
+              ("iss_ignores_revoked_after", "a reader that keeps a link signed after its predecessor's own revoked_after")]
+    pl = []
+    for plant, what in plants:
+        KE.MUT.add(plant)
+        caught = [sc[0] for sc in ISS_SCENARIOS if iss_run(sc)[1]]
+        KE.MUT.discard(plant)
+        pl.append((plant, what, caught[0] if caught else None))
+        ok = ok and bool(caught)
+    return out, pl, ok
+
+
 # ---- the class condition: read from the record, or from an owner-binding --------------------------------------
 def wording_section():
     endless = rec("n", "N", 0, None, typ="node")
@@ -563,6 +664,15 @@ def main():
         say("  %s\n      %s\n      function pair: %s\n      a back-dated renewal counted: %s\n      a renewal signed in time refused: %s" % (label, fn, pair, forged, honest))
         lines.append("in_time\t%s\t%s\t%s\t%s" % (label, fn, "counts a back-dated renewal" if forged != "never" else "never counts a back-dated renewal",
                                                  "refuses one signed in time" if honest != "never" else "never refuses one signed in time"))
+    say("OF ISS (K-ISS): a statement counts as its iss only by a key of iss")
+    iss_out, iss_pl, iss_ok = iss_section()
+    for name, got, how in iss_out:
+        say("  %s: %s (%s)" % (name, got, how))
+        lines.append("of_iss\t%s\t%s" % (name, got))
+    for plant, what, by in iss_pl:
+        say("  plant %s (%s): %s" % (plant, what, "caught by " + by if by else "NOT CAUGHT"))
+        lines.append("of_iss_plant\t%s\t%s" % (what, "caught" if by else "not caught"))
+    ok = ok and iss_ok
     say("WORDING: which records must state an end")
     for label, got, verdict in wording_section():
         say("  %s: %s -> %s" % (label, got, verdict))

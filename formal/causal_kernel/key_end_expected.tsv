@@ -17,6 +17,27 @@ in_time	T3 witnessed: the renewal counts only if a row by another voice names it
 in_time	T3' witnessed by a voice the reader trusts	a function of the rows and now	counts a back-dated renewal	refuses one signed in time
 in_time	T4 named by the key's own next row	a function of the rows and now	counts a back-dated renewal	refuses one signed in time
 in_time	T5 the reader's own end: a renewal its acknowledgement of the end does not name is void for that reader	a function of the rows, the reader's own rows and now; two readers differ	never counts a back-dated renewal	refuses one signed in time
+of_iss	the genesis key signing as itself	valid
+of_iss	the genesis key under its renewal	valid
+of_iss	a successor reached by one rotation	valid
+of_iss	a successor signing after the old key's end	valid
+of_iss	a rotation made under the old key's renewal	valid
+of_iss	a successor under its own renewal (the chain does not move)	valid
+of_iss	a successor two rotations on	valid
+of_iss	an unrelated key whose own record is of another identity	invalid
+of_iss	an unrelated key whose record claims A with no rotation	invalid
+of_iss	a key rotated from another identity	invalid
+of_iss	a record naming A's record with no statement by A	invalid
+of_iss	a rotation lacking the predecessor's statement	not kept
+of_iss	a rotation signed after the old record's end	invalid
+of_iss	a rotation signed before the old key's own revoked_after	valid
+of_iss	a rotation signed at or after the old key's own revoked_after	revoked
+of_iss	the owner's revocation of the old key cuts no chain	valid
+of_iss_plant	a reader that accepts any held key	caught
+of_iss_plant	a reader that accepts a record of another identity	caught
+of_iss_plant	a reader that accepts a chain whose rotation lacks the predecessor's statement	caught
+of_iss_plant	a reader that refuses a legitimate successor (kid must be the genesis key)	caught
+of_iss_plant	a reader that keeps a link signed after its predecessor's own revoked_after	caught
 wording	rule: an end is required by the record's own identity type	the door reads the row alone
 wording	as worded: required unless an owner-binding at federation scope is held	two seats with the same record differ: the door reads another row
 class	node key	required

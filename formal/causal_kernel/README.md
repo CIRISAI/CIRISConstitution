@@ -131,7 +131,13 @@ twelve properties over 9,450 generated worlds at six instants in eight
 arrival orders each, with a plant per property that must be caught. It runs six candidate readings of "renewed
 in time", the class condition read from the record and from an owner-binding, twelve attacks in every arrival
 order of up to seven rows, and the store's steady state from stated rates. Nothing here is measured. Whoever
-holds an ended key's private half can revive it, and that is recorded as conceded.
+holds an ended key's private half can revive it, and that is recorded as conceded. K-ISS: a statement counts as
+the `iss` it states only if its key is `iss`'s genesis key or reached from it by rotations, each carrying its
+predecessor's statement made inside the predecessor's record; a renewal does not move the chain, and a link its
+predecessor signed at or after its own `revoked_after` does not stand. Sixteen scenarios run in every arrival order
+with each chain row withheld in turn (it waits), against verdicts written by hand, and five plants are caught: any
+held key accepted, a record of another identity accepted, a rotation without the predecessor's statement accepted,
+a rotated successor refused, and a link after the predecessor's own revocation kept.
 
 **Checkpoint and purge** (`purge.py`, `check_purge.py`, `purge_expected.tsv`). Answers are indexed by head: whether an
 act counts at the head it names, and whether it is still in force at a later head. A node signs a checkpoint under
