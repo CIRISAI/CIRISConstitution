@@ -709,7 +709,7 @@ def families : List FamilyRow := [f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f
 
 /-- Every family of the registry's classification fits its kind's profile, the carries firewall
 and the Record rule: one small theorem per family above (`fit0` ... ), generated with the data. -/
-theorem registry_fits : families.length = 184 := by rfl
+theorem registry_fits : families.length = 187 := by rfl
 
 /-- The one cell the registry fills that the first grid called a gap: Facts that carry. -/
 theorem facts_may_carry : allowed .facts .carries = true := rfl
