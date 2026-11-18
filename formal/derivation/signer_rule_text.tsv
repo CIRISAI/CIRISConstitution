@@ -59,3 +59,5 @@ retirement:{state}	seat_role(custodian) x none x {} ; the custodian the retired 
 retirement:{state}	seat_role(operator) | seat_role(wa) x none x {} ; one row cosigned by the operator holding the record and the Wise Authority	CC 7.5.5	custodian_replace
 trace_summary:{kind}	self x none x {} ; the attester is among the subjects	CC 3.4.5	
 transport:{kind}	seat_role(infra:attest) x none x {}	CC 3.4.3	
+location_proof:{version}	self x none x {} ; the subject, attesting_key_id is the subject	CC 4.5.9	
+trust:blessing	roster_member(at) x none x {} ; a voice of the conferring roster, counted under its consensus_protocol	CC 3.1.3	

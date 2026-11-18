@@ -183,3 +183,5 @@ transport:canonical_rebind	registry	Identity	THING	attest,replace	L	a holder quo
 ballot:moderator	registry	Structure	THING	attest,withdraw	M	a member's ranked ballot in a moderator election; the fold keeps the person's latest	no	pre:Identity
 ballot:moderator_acceptance	registry	Structure	THING	attest	M	the winner's acceptance binding the ballot set it was counted over	no	pre:Structure
 cosign:{state}	persist	Process	THING	attest,withdraw	M	collection of cosignatures for an event short of its protocol; lapses at the hold window or resolves into the event	no	pre:any
+location_proof:{version}	persist	Circumstances	THING	attest,withdraw	M	the subject's own rough-location declaration, ended by its signer's withdraws	no	—
+trust:blessing	persist	Rules	THING	attest,withdraw	M	a conferring roster's counted conferral of roles on a key record; withdrawn only by a cosigned withdraws	no	pre:Identity

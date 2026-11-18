@@ -395,6 +395,16 @@ A constitutional or framework claim can name its source-of-authority by emitting
 
 **Owner-binding is the single-valued purpose.** A `delegates_to(user → node/agent)` carrying `delegation_purpose: owner_binding` is the owner-binding, held to the single-owner invariant ([CC 3.2](part_3_the_namespace.md#3.2), *Who owns a key*). This is the **one** `delegation_purpose` that is single-valued — act-on-behalf, hierarchy ([CC 4.5.13](part_4_composition_governance.md#4.5.13)), and authority-source delegations remain **multi-parent** DAGs.
 
+**The family a `delegates_to` row names (normative).** A `delegates_to` row's family, its label -70002, is a registered family ([CC 2.6.1.3](#2.6.1.3)). What the row binds picks it:
+
+| What the row binds | Its family |
+|---|---|
+| a capability delegation, a moderator's seat, a steward-binding | `self:delegates_to` |
+| an owner-binding ([CC 3.2](part_3_the_namespace.md#3.2)) | `ownership:{relation}:{target_kind}:{version}` |
+| a guardianship, an incapacity binding | `self:delegates_to`, told apart by `delegation_purpose` |
+| an agent occurrence | `self:delegates_to:agent_occurrence` |
+| a trust edge | `trust:{job}:{version}`, its dimension `trust:accepts:v1` or `trust:confers:v1` |
+
 #### 2.4.1.3 `authority-triad` — Licensure, grant, delegation — three concepts, three wire discriminators (normative)
 
 `delegates_to` is one of three ways a key comes to hold something. The three are routinely conflated because only one of them has a structural primitive. Two of them run through different machinery: licence authority rides the [CC 3.2](part_3_the_namespace.md#3.2) founder-quorum machinery, and role authority rides the [CC 4.4.3.19](part_4_composition_governance.md#4.4.3.19) delegation scopes ([CC 3.3.9](part_3_the_namespace.md#3.3.9)). The triad is stated here, at the grammar.
@@ -551,7 +561,7 @@ Signatures, `kid`, `alg`, receipts and disclosures are outside the row id. So ev
 
 A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statement-id/2", protected, payload]`, written the same way. It names one voice, and the row id names the row.
 
-**The author.** A family is authored or counted, as its family model states ([CC 3.1](part_3_the_namespace.md#3.1)). Its `authorship` cell says which, and its `second_signers` cell names each role below with the payload member that names its party. An authored family's payload carries `author`, the `iss` of the one who authors the row, and the row id reads it from the payload. A counted family's author is null. A statement whose `iss` is not the payload's `author` is accepted only in a role its family names, such as a delegate or a bound node. Its `iss` MUST then be the party that role names in the payload, or the CWT `sub` where that party is the attested key, as a delegate is. Any other `iss` is Invalid ([CC 2.6.1.8](#2.6.1.8)).
+**The author.** A family is authored or counted, as its family model states ([CC 3.1](part_3_the_namespace.md#3.1)). Its `authorship` cell says which, and its `second_signers` cell names each role below with the payload member that names its party. An authored family's payload carries `author`, the `iss` of the one who authors the row, and the row id reads it from the payload. A counted family's author is null. Where the cell reads `subject`, the row is authored by the attested key: `author` MUST be the CWT `sub`, and a statement whose `iss` is another key is Invalid. A statement whose `iss` is not the payload's `author` is accepted only in a role its family names, such as a delegate or a bound node. Its `iss` MUST then be the party that role names in the payload, or the CWT `sub` where that party is the attested key, as a delegate is. Any other `iss` is Invalid ([CC 2.6.1.8](#2.6.1.8)). The `act` a family model's selector reads is never a payload member. A reader derives it from the statements the row carries: `own` for one statement by the author, `group` for several statements over one payload, counted over the roster they name ([CC 2.6.1.9](#2.6.1.9)).
 
 **What a row names.** Every row a row names stands in one payload member, `refs`, by row id. That covers the head a count is over (`head`, and `further_heads`), a predecessor (`prev`), the target of a withdrawal or a supersession, and every other row the row cites, such as `also` and `trusted_through`. A holder reads the named set from `refs` alone, without knowing the family. The roles of `also` are a closed registry of two. `ack` names an acknowledgement, as a revocation snapshot does ([CC 2.6.1.11](#2.6.1.11)). `cites` names a row the row cites, as a build attestation names its manifest contribution ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)). Any other role is a later registration. Every array inside `refs` is a set ([CC 2.6.1.2](#2.6.1.2)) and is refused otherwise. An empty `refs` is refused: absence is its one encoding.
 

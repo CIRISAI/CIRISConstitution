@@ -14,15 +14,15 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 | column | families |
 |---|---|
-| placement | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| subject_rule | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| cosign_rule | `ballot:moderator_acceptance` |
-| freshness | `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}` |
-| lifecycle | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| replication | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| projection | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| erasure_route | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| governance | `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}` |
+| placement | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| subject_rule | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| cosign_rule | `ballot:moderator_acceptance`, `location_proof:{version}`, `trust:blessing` |
+| freshness | `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `location_proof:{version}`, `trust:blessing` |
+| lifecycle | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| replication | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| projection | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| erasure_route | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| governance | `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `location_proof:{version}`, `trust:blessing` |
 
 ## The family is a key
 

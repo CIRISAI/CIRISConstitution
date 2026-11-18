@@ -10,7 +10,7 @@
 
 A federation needs a shared vocabulary before it can have a shared judgment. The dimension namespace is that vocabulary: the union of what every sibling component commits to, each family registered once under one owning component. CEG does not author the namespace top-down. It owns its own slice ([CC 3.1.1](#3.1.1)) and consumes everyone else's, so that justice — fair access to capability — and integrity — auditable claims — rest on names every participant agrees on. The family count is **generated, not asserted**. The namespace generator extracts every leaf family from this Part into [`manifests/namespace_registry.json`](../manifests/namespace_registry.json), whose `_meta` carries the totals, the per-component breakdown and the hash of the source it parsed. Read the count there, never from a number restated in prose. **Eight** owning components commit to their families in their own mission statements; the benchmark ([CC 3.1.10](part_3_the_namespace.md#3.1.10)) is catalogued without one and is the ninth.
 
-Each family's model states its `authorship`, authored or counted, and its `second_signers`: each role besides the author whose statement a row accepts, with the payload member naming that party ([CC 2.6.1.3](part_2_the_grammar.md#2.6.1.3)).
+Each family's model states its `authorship`, authored, `subject` (authored by the attested key) or counted, and its `second_signers`: each role besides the author whose statement a row accepts, with the payload member naming that party ([CC 2.6.1.3](part_2_the_grammar.md#2.6.1.3)).
 
 This section catalogs every prefix family, organized by owning component, each under the component that commits to the concept.
 

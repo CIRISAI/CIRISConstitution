@@ -60,7 +60,7 @@ COLUMNS = OrderedDict([
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
     ("count", "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)"),
-    ("authorship", "authored | counted | arms `selector => authored|counted` joined by ` ; `, on the count column's selector keys and `act` (group: the row is signed as the act of a roster under its consensus_protocol, by several statements over one payload, CC 2.6.1.9; own: one signer's own row; caller-supplied), the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)"),
+    ("authorship", "authored | subject (authored, and the author is the attested key: iss == sub, positive only) | counted | arms `selector => authored|subject|counted` joined by ` ; `, on the count column's selector keys and `act` (group: the row is signed as the act of a roster under its consensus_protocol, by several statements over one payload, CC 2.6.1.9; own: one signer's own row; caller-supplied), the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)"),
     ("second_signers", "[{role, member, when?, cc_ref}]: each role besides the author whose statement over the same payload the row accepts; member is the payload member that names the party, `sub` where the party is the attested key, `owner_of_sub` where it is the owner the owner-binding of the attested key names, or `gap` where the text names none; [] means only the author signs (formal/derivation/authorship_text.tsv)"),
     ("derived", "projection_id | none (the row must equal the named projection's rebuild; formal/derivation/confers_text.tsv)"),
     ("read_by", "the named answers that read the family's rows (state, stands, tally, may, audience, missing, owed, window), from the KX of its rule cells (tools/kx_translate.py over tools/kx_prelude.kx); `by` names each cell. A family with no cell of its own takes the default reading (state, stands) of the default fold and change: rule default, stated once and checked for none of the families it covers"),
@@ -538,7 +538,7 @@ def conferral_columns(fams, reg):
 
 
 AUTHORSHIP_TEXT = os.path.join(ROOT, "formal/derivation/authorship_text.tsv")
-AUTHORSHIP_VALUES = ("authored", "counted", "gap")
+AUTHORSHIP_VALUES = ("authored", "subject", "counted", "gap")   # subject: authored, and the author is the attested key (iss == sub)
 AUTHORSHIP_GAP_MAX = 0   # families whose authorship the text gives both ways with no selector to tell them; the number only falls
 SECOND_SIGNERS_GAP_MAX = 0   # roles whose payload member the text does not name; the number only falls
 SELECTOR_VALUE = r"[a-z_:{}]+(?:\|[a-z_:{}]+)*"
@@ -1012,7 +1012,7 @@ def main():
         print(f"authorship: {len(auth_gap)} families are open, more than {AUTHORSHIP_GAP_MAX}: " + ", ".join(auth_gap)); return 1
     if len(second_gap) > SECOND_SIGNERS_GAP_MAX:
         print(f"second_signers: {len(second_gap)} roles name no payload member, more than {SECOND_SIGNERS_GAP_MAX}: " + ", ".join(f"{f} {x}" for f, x in second_gap)); return 1
-    a_kind = Counter("gap" if c["source"] == "gap" else (c["value"] if c["value"] in ("authored", "counted") else "mixed") for c in auth.values())
+    a_kind = Counter("gap" if c["source"] == "gap" else (c["value"] if c["value"] in ("authored", "subject", "counted") else "mixed") for c in auth.values())
     # The default row: the value a family takes in each of these columns unless it states its own.
     # Pinned as data, and held to be the commonest value of its column, so a change of default is a
     # deliberate edit and never a drift. Each row lists the columns in which it departs.
@@ -1068,10 +1068,10 @@ def main():
                                   [("read_by_default", der_meta),
                                    ("reading", "rule default: the one stated default (confers: a claim or content confers nothing; read_by: the default fold and change, checked for none of the families it covers); shape: the family's consent parameters in formal/derivation/family_shapes.tsv; stated: a sentence for this family; class: every placeholder names no key by its registry class; cells: the family's own rule cells; gap: listed with what is missing")])),
         ("authorship", OrderedDict([("source", "formal/derivation/authorship_text.tsv"),
-                                    ("families", OrderedDict((k, a_kind.get(k, 0)) for k in ("authored", "counted", "mixed", "gap"))),
+                                    ("families", OrderedDict((k, a_kind.get(k, 0)) for k in ("authored", "subject", "counted", "mixed", "gap"))),
                                     ("second_signers", OrderedDict([("families_with_roles", sum(1 for c in second.values() if c["value"])), ("families_author_only", sum(1 for c in second.values() if not c["value"])),
                                                                     ("roles", sum(len(c["value"]) for c in second.values())), ("roles_without_member", len(second_gap))])),
-                                    ("reading", "authorship gives each family's rows as authored (one party authors; the payload carries author) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)")])),
+                                    ("reading", "authorship gives each family's rows as authored (one party authors; the payload carries author), subject (authored, and the author is the attested key: a statement whose iss is not the sub is refused) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)")])),
         ("default_row", OrderedDict([("columns", default), ("families_on_it", by_count.get(0, 0)),
                                      ("families_by_departures", OrderedDict((str(k), by_count[k]) for k in sorted(by_count))),
                                      ("reading", "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone")])),

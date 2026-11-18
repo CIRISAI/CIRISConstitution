@@ -1,23 +1,28 @@
 {
  "_meta": {
   "cc_version": "1.0-rc21",
-  "family_model_sha256": "93fbdcee4dceff1c85e4c7d08e4f308f0c54556a770d4136507606427276052c",
+  "family_model_sha256": "d349a6626873b3b9b495f1b466d57a836109ede5c7d1218ae33af76abb199545",
   "generator": "tools/cc_family_select.py",
-  "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown",
+  "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` equals ctx `sub`, false when it differs, `unknown` when either is absent",
   "keys": {
    "leaf": "bound from the dimension: the family's non-literal segment values joined by ':', version tail stripped; `{name}` in a value matches one segment",
    "verb": "caller-supplied: one of attest, authorize, replace, withdraw, recant",
    "identity": "caller-supplied: the identity_type set of the identity the row concerns; holds when it contains a value",
    "group": "caller-supplied: the cohort_scope of the group the row is about (family, community, affiliations)",
    "seats": "caller-supplied: the group's deciding-seat count at the head the row names; `one` is 1",
-   "act": "caller-supplied: group when the row is the act of a roster under its consensus_protocol, several statements over one payload (CC 2.6.1.9); own when it is one signer's own row"
+   "act": "caller-supplied, never a payload member: derived from the statements the row carries; group when the row is the act of a roster under its consensus_protocol, several statements over one payload (CC 2.6.1.9); own when it is one statement by the author",
+   "iss": "read from the statement: its CWT iss; compared with sub by the authorship value subject",
+   "sub": "read from the statement: its CWT sub, the attested key"
   },
   "counts": {
    "false_beats_unknown": 7,
-   "holds": 67,
+   "holds": 71,
    "no_arm": 2,
    "not_holds": 52,
    "order": 2,
+   "subject_holds": 1,
+   "subject_refused": 1,
+   "subject_unknown": 1,
    "unknown": 36,
    "unknown_after_decider": 8,
    "wildcard": 3
@@ -916,6 +921,30 @@
    "leaf": "proposal",
    "ctx": {},
    "expect": "none",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "location_proof:{version}",
+   "cell": "count",
+   "dimension": "location_proof:v1",
+   "matcher_family": "location_proof:{version}",
+   "leaf": "",
+   "ctx": {},
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "location_proof:{version}",
+   "cell": "authorship",
+   "dimension": "location_proof:v1",
+   "matcher_family": "location_proof:{version}",
+   "leaf": "",
+   "ctx": {},
+   "expect": "subject",
    "decided_by": 0,
    "kind": "holds",
    "why": "arm 0 (*) is the first that holds"
@@ -2196,6 +2225,30 @@
    "why": "arm 0 (*) is the first that holds"
   },
   {
+   "family": "trust:blessing",
+   "cell": "count",
+   "dimension": "trust:blessing:v1",
+   "matcher_family": "trust:blessing",
+   "leaf": "",
+   "ctx": {},
+   "expect": "cosigned_act@conferrer",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "trust:blessing",
+   "cell": "authorship",
+   "dimension": "trust:blessing:v1",
+   "matcher_family": "trust:blessing",
+   "leaf": "",
+   "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
    "family": "trust:{job}:{version}",
    "cell": "authorship",
    "dimension": "trust:sample:v1",
@@ -2406,6 +2459,53 @@
    "decided_by": 0,
    "kind": "not_holds",
    "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "location_proof:{version}",
+   "cell": "authorship",
+   "dimension": "location_proof:v1",
+   "matcher_family": "location_proof:{version}",
+   "leaf": "",
+   "ctx": {
+    "iss": "key_a",
+    "sub": "key_a"
+   },
+   "expect": "subject",
+   "decided_by": 0,
+   "kind": "subject_holds",
+   "why": "the statement's iss is the attested key (sub): the author is the subject",
+   "admits": true
+  },
+  {
+   "family": "location_proof:{version}",
+   "cell": "authorship",
+   "dimension": "location_proof:v1",
+   "matcher_family": "location_proof:{version}",
+   "leaf": "",
+   "ctx": {
+    "iss": "key_b",
+    "sub": "key_a"
+   },
+   "expect": "subject",
+   "decided_by": 0,
+   "kind": "subject_refused",
+   "why": "the statement's iss is another key than the attested key (sub): refused",
+   "admits": false
+  },
+  {
+   "family": "location_proof:{version}",
+   "cell": "authorship",
+   "dimension": "location_proof:v1",
+   "matcher_family": "location_proof:{version}",
+   "leaf": "",
+   "ctx": {
+    "sub": "key_a"
+   },
+   "expect": "subject",
+   "decided_by": 0,
+   "kind": "subject_unknown",
+   "why": "no iss is supplied, so whether the author is the subject is unknown",
+   "admits": "unknown"
   },
   {
    "family": "accord:*",

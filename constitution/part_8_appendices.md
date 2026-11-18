@@ -1646,7 +1646,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 118 of 184 families.
+A family with no card states none of these beyond the default row. Cards: 120 of 186 families.
 
 **`accord:*`** — Rules, thing
 
@@ -2896,6 +2896,17 @@ Count: `none`
 Fold:
 - `absent=refuse` (CC 4.4.3.2)
 
+**`location_proof:{version}`** — Circumstances, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `none` (CC 4.5.9)
+
+Authorship: `subject` (CC 4.5.9)
+
 **`manifold_conformity:{cohort}`** — Confidence, account
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -3482,6 +3493,17 @@ Count: `none`
 
 Guard:
 - supersede: `when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else exclude(serve_transit_pair_rotation_before_rebind)` (CC 3.1.3)
+
+**`trust:blessing`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | member | cosigned `cosigned_act` | false | false | attest |
+
+Count: `cosigned_act@conferrer` (CC 3.1.3)
+
+Authorship: `counted` (CC 3.1.3)
 
 **`trust:{job}:{version}`** — Rules, thing
 

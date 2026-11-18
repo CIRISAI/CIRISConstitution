@@ -1,10 +1,10 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "ad6dd1352c7996a6bebd3a4d8b132e2bd51863d212f110f4edd4f7fc574b99b8",
+  "transitions_sha256": "8ec43c33baf3fd3fbc6a1f1812677610dcc1f39ecdf6daf459c2d6c322a30ced",
   "policy_sha256": "32cfcb6c9503fecf6f1827075342bc438ebe721360253f936c680f4d1944247a",
-  "steps": 105,
-  "rows": 74,
+  "steps": 109,
+  "rows": 76,
   "errors": []
  },
  "steps": [
@@ -2805,6 +2805,102 @@
     "verb": "supersede",
     "signer": "alice",
     "object": "rebind:1"
+   }
+  },
+  {
+   "n": 106,
+   "note": "A stranger tries to publish Dave's rough location: refused, only the subject signs it",
+   "actor": "erin",
+   "standing": [],
+   "view": {
+    "object": "loc:dave",
+    "family": "location_proof:{version}",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 107,
+   "note": "Dave publishes his own rough location to join a geographic community: the subject's own row",
+   "actor": "dave",
+   "standing": [
+    "self"
+   ],
+   "view": {
+    "object": "loc:dave",
+    "family": "location_proof:{version}",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "dave"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row75",
+    "family": "location_proof:{version}",
+    "verb": "attest",
+    "signer": "dave",
+    "object": "loc:dave"
+   }
+  },
+  {
+   "n": 108,
+   "note": "Bob tries to bless his build pipeline's key: refused, a blessing is the conferring roster's act",
+   "actor": "bob",
+   "standing": [
+    "owner",
+    "registered"
+   ],
+   "view": {
+    "object": "bless:ci",
+    "family": "trust:blessing",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 109,
+   "note": "The accord holders bless the pipeline's key with infra:attest, counted at a strict majority of their roster",
+   "actor": "alice",
+   "standing": [
+    "holder",
+    "member"
+   ],
+   "view": {
+    "object": "bless:ci",
+    "family": "trust:blessing",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "alice"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row76",
+    "family": "trust:blessing",
+    "verb": "attest",
+    "signer": "alice",
+    "object": "bless:ci"
    }
   }
  ]

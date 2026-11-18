@@ -29,8 +29,14 @@ written as selector arms. This file reads them by ONE rule:
                 (CC 4.4.3.12); the token `one` is 1. CALLER-SUPPLIED, an integer.
       act       how the row is signed: `group` when it is the act of a roster under its
                 consensus_protocol, several statements over one payload (CC 2.6.1.9), `own` when
-                it is one signer's own row. CALLER-SUPPLIED: it is read from the statements the
-                row carries and the roster they are counted over, not from the payload.
+                it is one statement by the author. CALLER-SUPPLIED: it is never a payload member;
+                the reader derives it from the statements the row carries and the roster they are
+                counted over (CC 2.6.1.3).
+  * an `authorship` value is authored, subject, counted or gap. `subject` is an authored row whose
+    author is the attested key: it admits a statement only when its `iss` is the CWT `sub`
+    (CC 4.5.9: "attesting_key_id is the subject"). It is positive only: no value asks that `iss`
+    differ from `sub`. The two are read from the statement, not from a selector key: `iss` and
+    `sub` in the context, an absent one answering UNKNOWN;
   * a test on a key the caller did not supply answers UNKNOWN. An arm is false when any test is
     false, else unknown when any test is unknown, else it holds (a conjunction with one false
     term is false whatever the others read). An unknown arm before the deciding arm makes the
@@ -70,6 +76,7 @@ GROUP_VALUES = ("family", "community", "affiliations")
 ACT_VALUES = ("group", "own")
 CELLS = ("count", "authorship", "second_signers")
 UNKNOWN = "unknown"
+AUTHOR_KEYS = ("iss", "sub")   # read from the statement for an authorship value that compares them
 TEST = re.compile(r"([a-z]+)=([a-z_:{}]+(?:\|[a-z_:{}]+)*)")
 
 
@@ -165,6 +172,16 @@ def second_signers(entries, ctx):
     return out
 
 
+def author_admits(value, ctx):
+    """Whether an authorship value admits the statement in `ctx`: True, False or UNKNOWN; None when the value
+    compares nothing. `subject` holds when the statement's `iss` is the CWT `sub`."""
+    if value != "subject":
+        return None
+    if ctx.get("iss") is None or ctx.get("sub") is None:
+        return UNKNOWN
+    return ctx["iss"] == ctx["sub"]
+
+
 def cell_answer(cell, name, ctx):
     """(answer, decided_by) for one cell of a family row."""
     if cell.get("source") == "gap" and name != "second_signers":
@@ -220,7 +237,11 @@ def resolve(family_model, family_id, dimension, ctx, registry=None):
     if row is None:
         raise ValueError("%s is not a family of the model" % family_id)
     full = row_context(registry, family_id, dimension, ctx)
-    return OrderedDict((c, cell_answer(row[c], c, full)[0]) for c in CELLS)
+    out = OrderedDict((c, cell_answer(row[c], c, full)[0]) for c in CELLS)
+    admits = author_admits(out["authorship"], ctx)
+    if admits is not None:
+        out["author_admits"] = admits
+    return out
 
 
 # ---- the vectors -----------------------------------------------------------------
@@ -433,6 +454,24 @@ def generate_vectors(model, registry):
             if none:
                 add(fam, cell, none[0], none[1], "every arm reads false: the cell gives no answer for this row", "no_arm")
 
+    # an authorship value that compares iss with sub: the attested key's own statement holds, another key's is refused,
+    # and a statement with no iss is unknown
+    for fam, row in rows.items():
+        values = [a["value"] for a in row["authorship"].get("arms") or []] or [row["authorship"].get("value")]
+        if "subject" not in values:
+            continue
+        i = values.index("subject")
+        arms = row["authorship"].get("arms") or [OrderedDict([("when", "*"), ("value", "subject")])]
+        hit = next(((d, c) for d, c in contexts(registry, fam, arms) if decide(arms, row_context(registry, fam, d, c)) == i), None)
+        if hit is None:
+            raise ValueError("%s authorship: the subject arm decides for no row the vectors can build" % fam)
+        for iss, kind, why in (("key_a", "subject_holds", "the statement's iss is the attested key (sub): the author is the subject"),
+                               ("key_b", "subject_refused", "the statement's iss is another key than the attested key (sub): refused"),
+                               (None, "subject_unknown", "no iss is supplied, so whether the author is the subject is unknown")):
+            ctx = OrderedDict(list(hit[1].items()) + ([("iss", iss)] if iss else []) + [("sub", "key_a")])
+            v = add(fam, "authorship", hit[0], ctx, why, kind)
+            v["admits"] = author_admits(v["expect"], ctx)
+
     # the `{name}` wildcard in a leaf value: one segment, any value, never two and never none
     for fam, cell, arms in selector_cells(model):
         for a in arms:
@@ -463,14 +502,18 @@ def vectors_doc(model, registry, model_sha):
                          "`ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, "
                          "authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every "
                          "arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, "
-                         "else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown"),
+                         "else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. "
+                         "Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` "
+                         "equals ctx `sub`, false when it differs, `unknown` when either is absent"),
             ("keys", OrderedDict([
                 ("leaf", "bound from the dimension: the family's non-literal segment values joined by ':', version tail stripped; `{name}` in a value matches one segment"),
                 ("verb", "caller-supplied: one of attest, authorize, replace, withdraw, recant"),
                 ("identity", "caller-supplied: the identity_type set of the identity the row concerns; holds when it contains a value"),
                 ("group", "caller-supplied: the cohort_scope of the group the row is about (family, community, affiliations)"),
                 ("seats", "caller-supplied: the group's deciding-seat count at the head the row names; `one` is 1"),
-                ("act", "caller-supplied: group when the row is the act of a roster under its consensus_protocol, several statements over one payload (CC 2.6.1.9); own when it is one signer's own row"),
+                ("act", "caller-supplied, never a payload member: derived from the statements the row carries; group when the row is the act of a roster under its consensus_protocol, several statements over one payload (CC 2.6.1.9); own when it is one statement by the author"),
+                ("iss", "read from the statement: its CWT iss; compared with sub by the authorship value subject"),
+                ("sub", "read from the statement: its CWT sub, the attested key"),
             ])),
             ("counts", OrderedDict(sorted({k: sum(1 for v in vs if v["kind"] == k) for k in {v["kind"] for v in vs}}.items()))),
         ])),
@@ -519,7 +562,7 @@ def built():
 
 # ---- the gate ------------------------------------------------------------------------
 
-def replay(model, registry, vectors, ev=None):
+def replay(model, registry, vectors, ev=None, adm=None):
     """The vectors that an evaluator `ev(arms, ctx) -> (answer, decided_by)` answers otherwise."""
     rows = {r["family"]: r for r in model["rows"]}
     bad = []
@@ -531,6 +574,8 @@ def replay(model, registry, vectors, ev=None):
         else:
             got, dec = ev(cell["arms"], full) if cell.get("arms") else cell_answer(cell, v["cell"], full)
         if got != v["expect"] or (v["cell"] != "second_signers" and dec != v.get("decided_by")):
+            bad.append(v)
+        elif "admits" in v and (adm or author_admits)(got, v["ctx"]) != v["admits"]:
             bad.append(v)
     return bad
 
@@ -577,6 +622,14 @@ def _ev_any_unknown(arms, ctx):
     return None, None
 
 
+def _adm_ignores_iss(value, ctx):
+    return True if value == "subject" else None
+
+
+def _adm_any_iss(value, ctx):
+    return (ctx.get("iss") is not None) if value == "subject" else None
+
+
 def self_test():
     model, registry, sha = built()
     problems = []
@@ -605,7 +658,7 @@ def self_test():
                 problems.append("%s %s arm %d (%s): no vector it holds for" % (fam, cell, i, a["when"]))
             if a["when"] != "*" and not neg:
                 problems.append("%s %s arm %d (%s): no vector it does not hold for" % (fam, cell, i, a["when"]))
-    for k in ("unknown", "order", "wildcard", "false_beats_unknown"):
+    for k in ("unknown", "order", "wildcard", "false_beats_unknown", "subject_holds", "subject_refused"):
         if not any(v["kind"] == k for v in vectors):
             problems.append("no %s vector" % k)
     # the deliberate breaks the vectors must catch, run every time
@@ -617,6 +670,11 @@ def self_test():
             caught += 1
         else:
             problems.append("the vectors do not catch a broken evaluator: " + name)
+    for name, adm in (("the author's iss not compared with sub", _adm_ignores_iss), ("any iss taken as the subject's", _adm_any_iss)):
+        if replay(model, registry, vectors, adm=adm):
+            caught += 1
+        else:
+            problems.append("the vectors do not catch a broken author check: " + name)
     for name, sel in (("an unknown key", "kind=x"), ("a seat token", "seats=two"), ("a group kind", "group=club"), ("an act kind", "act=club")):
         try:
             parse_selector(sel)
@@ -628,7 +686,7 @@ def self_test():
         problems.append("the extract does not carry the model's hash")
     else:
         caught += 1
-    return problems, OrderedDict([("vectors", len(vectors)), ("breaks", "%d/%d" % (caught, len(breaks) + 5))])
+    return problems, OrderedDict([("vectors", len(vectors)), ("breaks", "%d/%d" % (caught, len(breaks) + 7))])
 
 
 def main(argv):

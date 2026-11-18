@@ -116,7 +116,7 @@ as written and have a replacement. Two are not covered and are recorded with the
 attached against the node's clock at first receipt, and a session held by the earliest claimed instant.
 
 **A shape for every family** (`check_shapes.py`, `claim.py`, `shapes_expected.tsv`, and the table
-`formal/derivation/family_shapes.tsv`). Each of the 184 families is run as an instance of its shape, with every
+`formal/derivation/family_shapes.tsv`). Each of the 186 families is run as an instance of its shape, with every
 parameter traced to a table cell or a quoted sentence and each quote checked against the section it cites.
 `claim.py` states a claim and content over the kernel's layers. The check also removes the shapes in three
 orders and records which survive. Three made-up families that fit no shape must be reported as not fitting.

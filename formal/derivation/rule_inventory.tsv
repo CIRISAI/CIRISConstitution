@@ -3113,7 +3113,7 @@ p4	1658	4.5.9.3	family	signer	signer_rule	location_proof	is	restates	4.5.9.1	A l
 p4	1659	4.5.9.3	family	trace	none	location_proof	is	states		The subject can prove what they claimed and withdrew, and when; the tombstone is the receipt and carries no cell	
 p4	1663	4.5.9.4	family	row_shape	body	location_proof	is	restates	2.6.6.1	location_proof resolution is at most 7	
 p4	1664	4.5.9.4	family	withdraw	lifecycle	location_proof	is	restates	2.4.1.1	Withdrawal of a location_proof is not retroactive	
-p4	1665	4.5.9.4	family	signer	signer_rule	location_proof	is	restates	3.3.3	A location_proof is signed by the subject only or a delegates_to proxy chain	
+p4	1665	4.5.9.4	family	signer	signer_rule	location_proof	is	restates	3.3.3	A location_proof is signed by the subject only	
 p4	1666	4.5.9.4	family	roster_fold	governance	community	is	restates	4.4.3.6	Geographic community admission composes by Policy M evaluate_subkind_admission	
 p4	1670	4.5.9.4	mechanism	wire	body	location_proof	is	states		The wire format uses H3 only; operators may use other geospatial systems internally	
 p4	1672	4.5.9.4	family	placement	body	community	MAY	states		Only location_proof is bounded to resolution 7; a community MAY scope its geographic_constraint at any resolution	
@@ -4438,3 +4438,9 @@ p2	x	2.6.1.7	kernel	key_plane	none	*	is	states	2.6.1.8	A statement's key is a ke
 p2	x	2.6.1.7	kernel	key_plane	none	*	is	states	2.4.1.1	A renewal leaves the chain where it was; a link stands where its predecessor's statement stands, inside the predecessor's record and before that key's own revoked_after; no other voice's revocation cuts a chain	
 p2	x	2.6.1.7	kernel	key_plane	none	*	is	states	2.6.1.8	Where no held record's chain reaches iss and a link of one is not held, Waiting on that row; otherwise Invalid kid_not_of_iss (each held record of another identity, or its chain does not reach)	
 p3	x	3.1.3	family	key_plane	body	key:record	is	states	2.6.1.7	A rotation record's one shape: refs target is the old key's record, the old key's statement over the same payload, and the record's iss is the old record's; any other shape answers kid_not_of_iss	
+p2	x	2.4.1.2	kernel	delegation	none	self,ownership,trust	is	states	2.6.1.3	A delegates_to row's family, label -70002, is the registered family of what it binds: self:delegates_to for a capability delegation, a moderator's seat, a steward, guardianship or incapacity binding; ownership for an owner binding; self:delegates_to:agent_occurrence for an agent occurrence; trust:{job}:{version} for a trust edge	table
+p2	x	2.6.1.3	kernel	signer	signer_rule	location_proof	MUST	states		Where a family's authorship cell reads subject, the row is authored by the attested key: author MUST be the CWT sub, and a statement whose iss is another key is Invalid	
+p2	x	2.6.1.3	kernel	cosign	none	*	is	states	2.6.1.9	The act a family model's selector reads is never a payload member; a reader derives it from the statements a row carries: own for one statement by the author, group for several statements over one payload counted over the roster they name	
+p4	x	4.2.1.1	family	admission_order	none	accord	is	states		The store's refusal of a duplicate invocation_id or nonce within valid_until has the token accord_invocation_replayed	
+p4	x	4.2.1.1	family	signature	signer_rule	accord	is	states		A statement whose key is no holder's key in the bundle in force is refused not_a_holder; one whose iss is not the holder whose key signed is refused iss_not_holder	
+p4	x	4.2.1.1	family	halt	none	accord	is	applies	2.7.3	A halt whose bundle the node does not hold waits for it and is never refused, since a missed halt is the one unrecoverable failure	

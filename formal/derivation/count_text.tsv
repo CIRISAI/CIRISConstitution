@@ -35,3 +35,5 @@ licensure:{authority_id}	act=group	cosigned_act@dimension_authority	CC 2.4.1.3	A
 licensure:{authority_id}	*	none	CC 2.4	and every other is authored
 key:record	act=group	accord_majority@accord	CC 4.2.1	The enumeration also admits a `trust:blessing:v1` row counted by a strict majority of the standing accord roster, whose payload names a CI pipeline's key record and carries `infra:attest` and nothing wider
 key:record	*	none	CC 3.1.3	Admitted by **proof of possession** against the keys it carries
+trust:blessing	*	cosigned_act@conferrer	CC 3.1.3	cosigned under the root's conferring family's `consensus_protocol`
+location_proof:{version}	*	none	CC 4.5.9	is emitted **only** by the subject themselves
