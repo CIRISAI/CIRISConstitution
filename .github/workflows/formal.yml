@@ -324,6 +324,7 @@ jobs:
           python3 ../deletion/deletion_model.py --check
           python3 ../owner_binding/owner_binding_model.py --check
           python3 ../key_plane/key_plane_model.py --check
+          python3 ../key_roles/key_roles_model.py --check
           python3 ../guardianship/guardianship_model.py --check
           python3 ../ranked_choice/ranked_choice_model.py --check
           python3 ../set_item/set_item_model.py --check

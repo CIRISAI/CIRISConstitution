@@ -1,0 +1,486 @@
+family	verb	from	to	leaf	signer_kind	rule	cc_ref	at	question
+accord:*	attest	none	admitted	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:42, P3:2478, P3:2543	
+accord:*	withdraw	admitted	withdrawn	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:42, P3:2478, P3:2543	
+accord:human_dignity	attest	none	admitted	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:41, P3:2478, P3:2543	
+accord:human_dignity	withdraw	admitted	withdrawn	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:41, P3:2478, P3:2543	
+accord:human_dignity	recant	admitted	recanted	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:41, P3:2478, P3:2543	
+accord:invoke:constitutional:{halt_id}	attest	none	admitted	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:36, P3:2478, P3:2543	
+accord:invoke:drill:{drill_id}	attest	none	admitted	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:38, P3:2478, P3:2543	
+accord:invoke:notify:{notify_id}	attest	none	admitted	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:37, P3:2478, P3:2543	
+accord:lifecycle	attest	none	admitted	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:39, P3:2478, P3:2543	
+accord:lifecycle	supersede	admitted	superseded	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:39, P3:2478, P3:2543	
+accord:lifecycle:{kind}	attest	none	admitted	*	holder	holder	CC 3.1.1 (registry); CC 3.4.1; CC 3.4.7.1	P3:40, P3:2478, P3:2543	
+activity_tier:{period}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.6 (registry); the family's row: a claim a machine may make	P3:700	
+activity_tier:{period}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.6 (registry); the family's row: a claim a machine may make	P3:700	
+admission:unit	attest	none	admitted	*	person	admission_unit	CC 3.1.3 (registry); CC 2.7.11 admission of code	P3:154, P2:1675	
+admission:unit	withdraw	admitted	withdrawn	*	person	admission_unit	CC 3.1.3 (registry); CC 2.7.11 admission of code	P3:154, P2:1675	
+age_assurance:{level}:{band}:{version}	attest	none	admitted	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:73, P3:2485	
+age_assurance:{level}:{band}:{version}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:73, P3:2485	
+age_assurance:{level}:{band}:{version}	supersede	admitted	superseded	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:73, P3:2485	
+age_self_declared:band:{band}:{version}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:74, P3:2585, P3:2613	
+age_self_declared:band:{band}:{version}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:74, P3:2585, P3:2613	
+age_self_declared:band:{band}:{version}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:74, P3:2585, P3:2613	
+age_self_declared:band:{band}:{version}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:74, P3:2585, P3:2613	
+agent_files:{kind}:{platform_or_target}	attest	none	admitted	*	person	agent_files	CC 3.1.1 (registry); CC 3.1.1 canonical-attester rule: steward keys, human-held	P3:30, P3:30	
+agent_files:{kind}:{platform_or_target}	withdraw	admitted	withdrawn	*	person	agent_files	CC 3.1.1 (registry); CC 3.1.1 canonical-attester rule: steward keys, human-held	P3:30, P3:30	
+agent_files:{kind}:{platform_or_target}	supersede	admitted	superseded	*	person	agent_files	CC 3.1.1 (registry); CC 3.1.1 canonical-attester rule: steward keys, human-held	P3:30, P3:30	
+approach:{goal_id}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:709, P3:2585, P3:2613	
+approach:{goal_id}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:709, P3:2585, P3:2613	
+approach:{goal_id}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:709, P3:2585, P3:2613	
+approach:{goal_id}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:709, P3:2585, P3:2613	
+archive_release:{basis}	attest	none	admitted	*	person	wa	CC 3.1.5 (registry); CC 4.3; CC 1.13.2 offices some humans hold	P3:400, P3:667, P1:197	
+attestation:agent_integrity	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:54	
+attestation:agent_integrity	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:54	
+attestation:hardware_rooted	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:51	
+attestation:hardware_rooted	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:51	
+attestation:license_validity	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:53	
+attestation:license_validity	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:53	
+attestation:registry_consensus	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:52	
+attestation:registry_consensus	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:52	
+attestation:self_verify	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:50	
+attestation:self_verify	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:50	
+audio:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:628, P3:2585, P3:2613	
+audio:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:628, P3:2585, P3:2613	
+audio:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:628, P3:2585, P3:2613	
+audio:*	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:628, P3:2585, P3:2613	
+audit_chain:hash_continuity	attest	none	admitted	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
+audit_chain:hash_continuity	withdraw	admitted	withdrawn	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
+autonomy:{aspect}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:433, P3:2585, P3:2613	
+autonomy:{aspect}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:433, P3:2585, P3:2613	
+autonomy:{aspect}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:433, P3:2585, P3:2613	
+ballot:moderator	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:189, P1:199, P4:2178	
+ballot:moderator	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:189, P1:199, P4:2178	
+ballot:moderator_acceptance	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:190, P1:199, P4:2178	
+ballot:tally:{poll_id}	attest	none	admitted	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:188, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
+ballot:tally:{poll_id}	withdraw	admitted	withdrawn	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:188, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
+benchmark:he300:{category}:{version}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.10 (registry); the family's row: a claim a machine may make	P3:725	
+benchmark:he300:{category}:{version}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.10 (registry); the family's row: a claim a machine may make	P3:725	
+benchmark:he300:{category}:{version}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.10 (registry); the family's row: a claim a machine may make	P3:725	
+beneficence:{aspect}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:428, P3:2585, P3:2613	
+beneficence:{aspect}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:428, P3:2585, P3:2613	
+beneficence:{aspect}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:428, P3:2585, P3:2613	
+blog:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:625, P3:2585, P3:2613	
+blog:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:625, P3:2585, P3:2613	
+blog:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:625, P3:2585, P3:2613	
+blog:*	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:625, P3:2585, P3:2613	
+bond_posted:{currency}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:27, P3:2585, P3:2613	
+bond_posted:{currency}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:27, P3:2585, P3:2613	
+build:registered:{target}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.1 (registry); the family's row: a claim a machine may make	P3:28	
+build:registered:{target}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.1 (registry); the family's row: a claim a machine may make	P3:28	
+build:registered:{target}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.1 (registry); the family's row: a claim a machine may make	P3:28	
+capacity:composite	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.1 (registry); the family's row: a claim a machine may make	P3:571	
+capacity:composite	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.1 (registry); the family's row: a claim a machine may make	P3:571	
+capacity:composite	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.1 (registry); the family's row: a claim a machine may make	P3:571	
+capacity:relay_delivery	attest	none	admitted	*	node	measure_node	CC 3.1.4 (registry); CC 3.1.4 a consuming node's measurement	P3:363, P3:363	
+capacity:relay_delivery	withdraw	admitted	withdrawn	*	node	measure_node	CC 3.1.4 (registry); CC 3.1.4 a consuming node's measurement	P3:363, P3:363	
+capacity:relay_delivery	supersede	admitted	superseded	*	node	measure_node	CC 3.1.4 (registry); CC 3.1.4 a consuming node's measurement	P3:363, P3:363	
+capacity:{factor}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.1 (registry); the family's row: a claim a machine may make	P3:570	
+capacity:{factor}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.1 (registry); the family's row: a claim a machine may make	P3:570	
+capacity:{factor}	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.1 (registry); the family's row: a claim a machine may make	P3:570	
+capacity_assurance:reversible_excluded:{domain}:{version}	attest	none	admitted	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:76, P3:2485	
+capacity_assurance:reversible_excluded:{domain}:{version}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:76, P3:2485	
+capacity_assurance:reversible_excluded:{domain}:{version}	supersede	admitted	superseded	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:76, P3:2485	
+capacity_assurance:reversible_pending:{domain}:{version}	attest	none	admitted	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:77, P3:2485	
+capacity_assurance:reversible_pending:{domain}:{version}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:77, P3:2485	
+capacity_assurance:reversible_pending:{domain}:{version}	supersede	admitted	superseded	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:77, P3:2485	
+capacity_assurance:{level}:{domain}:{band}:{version}	attest	none	admitted	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:75, P3:2485	
+capacity_assurance:{level}:{domain}:{band}:{version}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:75, P3:2485	
+capacity_assurance:{level}:{domain}:{band}:{version}	supersede	admitted	superseded	*	any-of(agent,node,person)	assessor	CC 3.1.2 (registry); CC 3.4.12, CC 3.4.13 reserved emitters	P3:75, P3:2485	
+census:composite:{class}	attest	none	admitted	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:184, P3:2487, P3:996	
+census:composite:{class}	withdraw	admitted	withdrawn	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:184, P3:2487, P3:996	
+census:composite:{class}	supersede	admitted	superseded	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:184, P3:2487, P3:996	
+census:expected_active	attest	none	admitted	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:187, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
+census:expected_active	withdraw	admitted	withdrawn	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:187, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
+census:expected_active	supersede	admitted	superseded	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:187, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
+census:member:partial	attest	none	admitted	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:186, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
+census:member:partial	withdraw	admitted	withdrawn	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:186, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
+census:member:share	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:185, P1:199, P4:2178	
+census:member:share	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:185, P1:199, P4:2178	
+census:partial:{class}	attest	none	admitted	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:183, P3:2487, P3:996	
+census:partial:{class}	withdraw	admitted	withdrawn	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:183, P3:2487, P3:996	
+census:partial:{class}	supersede	admitted	superseded	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:183, P3:2487, P3:996	
+census:share:{class}	attest	none	admitted	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:182, P3:2487, P3:996	
+census:share:{class}	withdraw	admitted	withdrawn	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:182, P3:2487, P3:996	
+cert_validity:{authority}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:63	
+cert_validity:{authority}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:63	
+chat:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:624, P3:2585, P3:2613	
+chat:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:624, P3:2585, P3:2613	
+chat:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:624, P3:2585, P3:2613	
+chat:*	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:624, P3:2585, P3:2613	
+coherence_standing:{cohort}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.3 (registry); the family's row: a claim a machine may make	P3:587	
+coherence_standing:{cohort}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.3 (registry); the family's row: a claim a machine may make	P3:587	
+coherence_standing:{cohort}	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.3 (registry); the family's row: a claim a machine may make	P3:587	
+collection:{kind}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.3.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:337, P3:2585, P3:2613	
+collection:{kind}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.3.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:337, P3:2585, P3:2613	
+collection:{kind}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.3.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:337, P3:2585, P3:2613	
+commitment_fulfillment:{prior_contribution_id}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:653, P3:2585, P3:2613	
+commitment_fulfillment:{prior_contribution_id}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:653, P3:2585, P3:2613	
+commitment_fulfillment:{prior_contribution_id}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:653, P3:2585, P3:2613	
+community:listing	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:34, P3:2585, P3:2613	
+community:listing	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:34, P3:2585, P3:2613	
+community:listing	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:34, P3:2585, P3:2613	
+config:{scope}	attest	none	admitted	*	any-of(node,person)	self_or_owner	CC 3.1.9 (registry); CC 3.1.9 config self-or-owner	P3:611, P3:2402	
+config:{scope}	withdraw	admitted	withdrawn	*	any-of(node,person)	self_or_owner	CC 3.1.9 (registry); CC 3.1.9 config self-or-owner	P3:611, P3:2402	
+config:{scope}	supersede	admitted	superseded	*	any-of(node,person)	self_or_owner	CC 3.1.9 (registry); CC 3.1.9 config self-or-owner	P3:611, P3:2402	
+conscience:coherence	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:coherence	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:coherence	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:entropy	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:entropy	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:entropy	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:epistemic_humility	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:epistemic_humility	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:epistemic_humility	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:optimization_veto	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:optimization_veto	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+conscience:optimization_veto	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+consent:community_trust	attest	none	admitted	*	person	consent_trust	CC 3.1.5 (registry); CC 3.3.1 consent:community_trust	P3:393, P3:1322	
+consent:community_trust	withdraw	admitted	withdrawn	*	person	consent_trust	CC 3.1.5 (registry); CC 3.3.1 consent:community_trust	P3:393, P3:1322	
+consent:decay:{stage}	attest	none	admitted	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:388, P3:383	
+consent:decay:{stage}	supersede	admitted	superseded	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:388, P3:383	
+consent:deletion_complete	attest	none	admitted	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:387, P3:383	
+consent:deletion_sla:{days}	attest	none	admitted	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:386, P3:383	
+consent:deletion_sla:{days}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:386, P3:383	
+consent:deletion_sla:{days}	supersede	admitted	superseded	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:386, P3:383	
+consent:partnership_accept	attest	none	admitted	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:390, P3:383	
+consent:partnership_accept	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:390, P3:383	
+consent:partnership_grant	attest	none	admitted	*	any-of(agent,person)	consent_subject	CC 3.1.5 (registry); CC 3.3.1 consent:state granted|revoked	P3:389, P3:1312	
+consent:partnership_grant	withdraw	admitted	withdrawn	*	any-of(agent,person)	consent_subject	CC 3.1.5 (registry); CC 3.3.1 consent:state granted|revoked	P3:389, P3:1312	
+consent:replication:{version}	attest	none	admitted	*	any-of(node,person)	consent_replication	CC 3.1.5 (registry); CC 3.3.7 directed node->peer grant	P3:392, P3:1321	
+consent:replication:{version}	withdraw	admitted	withdrawn	*	any-of(node,person)	consent_replication	CC 3.1.5 (registry); CC 3.3.7 directed node->peer grant	P3:392, P3:1321	
+consent:replication:{version}	supersede	admitted	superseded	*	any-of(node,person)	consent_replication	CC 3.1.5 (registry); CC 3.3.7 directed node->peer grant	P3:392, P3:1321	
+consent:scope:{kind}	attest	none	admitted	*	any-of(agent,person)	consent_subject	CC 3.1.5 (registry); CC 3.3.1 consent:state granted|revoked	P3:391, P3:1312	
+consent:state:{stance}	attest	none	admitted	*	by-leaf	consent_subject	CC 3.1.5 (registry); CC 3.3.1 consent:state granted|revoked	P3:384, P3:1312	
+consent:state:{stance}	withdraw	admitted	withdrawn	*	by-leaf	consent_subject	CC 3.1.5 (registry); CC 3.3.1 consent:state granted|revoked	P3:384, P3:1312	
+consent:state:{stance}	supersede	admitted	superseded	*	by-leaf	consent_subject	CC 3.1.5 (registry); CC 3.3.1 consent:state granted|revoked	P3:384, P3:1312	
+consent:stream:{kind}	attest	none	admitted	*	any-of(agent,person)	consent_subject	CC 3.1.5 (registry); CC 3.3.1 consent:state granted|revoked	P3:385, P3:1312	
+consent:stream:{kind}	withdraw	admitted	withdrawn	*	any-of(agent,person)	consent_subject	CC 3.1.5 (registry); CC 3.3.1 consent:state granted|revoked	P3:385, P3:1312	
+consent:stream:{kind}	supersede	admitted	superseded	*	any-of(agent,person)	consent_subject	CC 3.1.5 (registry); CC 3.3.1 consent:state granted|revoked	P3:385, P3:1312	
+consent:{kind}	attest	none	admitted	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:383, P3:383	
+consent:{kind}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:383, P3:383	
+consent:{kind}	supersede	admitted	superseded	*	any-of(agent,node,person)	consent_producer	CC 3.1.5 (registry); CC 3.3.1 producer-side leaves	P3:383, P3:383	
+content_class:{class}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:650, P3:2585, P3:2613	
+content_class:{class}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:650, P3:2585, P3:2613	
+content_rating:{scheme}:{rating}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:649, P3:2585, P3:2613	
+content_rating:{scheme}:{rating}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:649, P3:2585, P3:2613	
+content_rating:{scheme}:{rating}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:649, P3:2585, P3:2613	
+corpus_health:n_eff_measurable	attest	none	admitted	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
+corpus_health:n_eff_measurable	withdraw	admitted	withdrawn	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
+cosign:{state}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:148, P3:2585, P3:2613	
+cosign:{state}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:148, P3:2585, P3:2613	
+credits:{domain}:{language}:{subject}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.6 (registry); CC 3.4.7.3 Clause C, Clause E	P3:698, P3:2585, P3:2613	
+credits:{domain}:{language}:{subject}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.6 (registry); CC 3.4.7.3 Clause C, Clause E	P3:698, P3:2585, P3:2613	
+custody:{kind}	attest	none	admitted	*	open	custody	CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report	P3:307, P3:307	custody:ack is signed by 'the device the report is about' (P3:307); is that the node key or the device's roster key (CC 3.3.6.4 puts two keys on every device)?
+custody:{kind}	withdraw	admitted	withdrawn	*	open	custody	CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report	P3:307, P3:307	custody:ack is signed by 'the device the report is about' (P3:307); is that the node key or the device's roster key (CC 3.3.6.4 puts two keys on every device)?
+cw_class:{class}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:651, P3:2585, P3:2613	
+cw_class:{class}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:651, P3:2585, P3:2613	
+deferral:request	attest	none	admitted	*	any-of(agent,person)	deferral_request	CC 3.1.9.3 (registry); CC 1.9, CC 4.3	P3:666, P3:666	
+deferral:request	withdraw	admitted	withdrawn	*	any-of(agent,person)	deferral_request	CC 3.1.9.3 (registry); CC 1.9, CC 4.3	P3:666, P3:666	
+deferral:response:{outcome}	attest	none	admitted	*	any-of(agent,person)	deferral_response	CC 3.1.9.3 (registry); CC 4.3	P3:667, P3:667	
+delivery:{class}	attest	none	admitted	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P3:353	
+delivery:{class}	withdraw	admitted	withdrawn	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P3:353	
+delivery_receipt:{stream_id}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2469, P3:2585, P3:2613	
+detection:correlated_action:{axis}	attest	none	admitted	*	detector	detector	CC 3.1.8.4 (registry); CC 3.1.8 reserved emitters	P3:595, P3:2483	
+detection:correlated_action:{axis}	withdraw	admitted	withdrawn	*	detector	detector	CC 3.1.8.4 (registry); CC 3.1.8 reserved emitters	P3:595, P3:2483	
+detection:correlated_action:{axis}	recant	admitted	recanted	*	detector	detector	CC 3.1.8.4 (registry); CC 3.1.8 reserved emitters	P3:595, P3:2483	
+detection:distributive:access:{resource_type}	attest	none	admitted	*	detector	detector	CC 3.1.8.5 (registry); CC 3.1.8 reserved emitters	P3:601, P3:2483	
+detection:distributive:access:{resource_type}	withdraw	admitted	withdrawn	*	detector	detector	CC 3.1.8.5 (registry); CC 3.1.8 reserved emitters	P3:601, P3:2483	
+detection:distributive:access:{resource_type}	recant	admitted	recanted	*	detector	detector	CC 3.1.8.5 (registry); CC 3.1.8 reserved emitters	P3:601, P3:2483	
+detection:hash_chain_integrity	attest	none	admitted	*	detector	detector	CC 3.1.8.2 (registry); CC 3.1.8 reserved emitters	P3:2483	
+detection:hash_chain_integrity	withdraw	admitted	withdrawn	*	detector	detector	CC 3.1.8.2 (registry); CC 3.1.8 reserved emitters	P3:2483	
+detection:hash_chain_integrity	recant	admitted	recanted	*	detector	detector	CC 3.1.8.2 (registry); CC 3.1.8 reserved emitters	P3:2483	
+detection:intra_agent_consistency	attest	none	admitted	*	detector	detector	CC 3.1.8.2 (registry); CC 3.1.8 reserved emitters	P3:2483	
+detection:intra_agent_consistency	withdraw	admitted	withdrawn	*	detector	detector	CC 3.1.8.2 (registry); CC 3.1.8 reserved emitters	P3:2483	
+detection:intra_agent_consistency	recant	admitted	recanted	*	detector	detector	CC 3.1.8.2 (registry); CC 3.1.8 reserved emitters	P3:2483	
+detection:{detector}	attest	none	admitted	*	detector	detector	CC 3.1.8.2 (registry); CC 3.1.8 reserved emitters	P3:581, P3:2483	
+detection:{detector}	withdraw	admitted	withdrawn	*	detector	detector	CC 3.1.8.2 (registry); CC 3.1.8 reserved emitters	P3:581, P3:2483	
+detection:{detector}	recant	admitted	recanted	*	detector	detector	CC 3.1.8.2 (registry); CC 3.1.8 reserved emitters	P3:581, P3:2483	
+device:label	attest	none	admitted	*	person	device_label	CC 3.1.1 (registry); CC 3.1.1 device:label, signed by the owner	P3:32, P3:32	
+device:label	withdraw	admitted	withdrawn	*	person	device_label	CC 3.1.1 (registry); CC 3.1.1 device:label, signed by the owner	P3:32, P3:32	
+device:label	supersede	admitted	superseded	*	person	device_label	CC 3.1.1 (registry); CC 3.1.1 device:label, signed by the owner	P3:32, P3:32	
+dma:csdma:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:csdma:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:csdma:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:dsdma:{domain}:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:dsdma:{domain}:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:dsdma:{domain}:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:idma:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:idma:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:idma:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:pdma:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:pdma:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+dma:pdma:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:2585, P3:2613	
+duty:{kind}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:24, P3:2585, P3:2613	
+duty:{kind}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:24, P3:2585, P3:2613	
+duty:{kind}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:24, P3:2585, P3:2613	
+encyclopedia:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:623, P3:2585, P3:2613	
+encyclopedia:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:623, P3:2585, P3:2613	
+encyclopedia:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:623, P3:2585, P3:2613	
+encyclopedia:*	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:623, P3:2585, P3:2613	
+event:attendance	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:621, P3:2585, P3:2613	
+event:attendance	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:621, P3:2585, P3:2613	
+event:attendance	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:621, P3:2585, P3:2613	
+event:lifecycle:{state}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:619, P3:2585, P3:2613	
+event:lifecycle:{state}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:619, P3:2585, P3:2613	
+event:rsvp_count	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:620, P3:2585, P3:2613	
+event:rsvp_count	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:620, P3:2585, P3:2613	
+event:rsvp_count	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:620, P3:2585, P3:2613	
+evidence:{suite}:{kind}:{cell}:{prefix}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.5 (registry); CC 3.4.7.3 Clause C, Clause E	P3:454, P3:2585, P3:2613	
+evidence:{suite}:{kind}:{cell}:{prefix}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.5 (registry); CC 3.4.7.3 Clause C, Clause E	P3:454, P3:2585, P3:2613	
+evidence:{suite}:{kind}:{cell}:{prefix}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.5.5 (registry); CC 3.4.7.3 Clause C, Clause E	P3:454, P3:2585, P3:2613	
+expertise:{domain}:{language}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.6 (registry); CC 3.4.7.3 Clause C, Clause E	P3:699, P3:2585, P3:2613	
+expertise:{domain}:{language}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.6 (registry); CC 3.4.7.3 Clause C, Clause E	P3:699, P3:2585, P3:2613	
+expertise:{domain}:{language}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9.6 (registry); CC 3.4.7.3 Clause C, Clause E	P3:699, P3:2585, P3:2613	
+federation_directory:replication_lag	attest	none	admitted	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
+federation_directory:replication_lag	supersede	admitted	superseded	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
+fidelity:explainability_sla:{tier}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:432, P3:2585, P3:2613	
+fidelity:explainability_sla:{tier}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:432, P3:2585, P3:2613	
+fidelity:explainability_sla:{tier}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:432, P3:2585, P3:2613	
+fidelity:{aspect}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:431, P3:2585, P3:2613	
+fidelity:{aspect}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:431, P3:2585, P3:2613	
+fidelity:{aspect}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:431, P3:2585, P3:2613	
+file:{version}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.3.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:336, P3:2585, P3:2613	
+file:{version}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.3.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:336, P3:2585, P3:2613	
+file:{version}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.3.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:336, P3:2585, P3:2613	
+film:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:630, P3:2585, P3:2613	
+film:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:630, P3:2585, P3:2613	
+film:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:630, P3:2585, P3:2613	
+film:*	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:630, P3:2585, P3:2613	
+goal:{scale}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:708, P3:2585, P3:2613	
+goal:{scale}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:708, P3:2585, P3:2613	
+goal:{scale}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:708, P3:2585, P3:2613	
+goal:{scale}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:708, P3:2585, P3:2613	
+group:roster	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:141, P1:199, P4:2178	
+group:roster	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:141, P1:199, P4:2178	
+group:roster	supersede	admitted	superseded	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:141, P1:199, P4:2178	
+hard_case:{kind}	attest	none	admitted	*	node	node_hard_case	CC 3.1.9.4 (registry); CC 3.4.2, CC 3.4.4 reserved emitters	P3:675, P3:2482	
+hard_case:{kind}	withdraw	admitted	withdrawn	*	node	node_hard_case	CC 3.1.9.4 (registry); CC 3.4.2, CC 3.4.4 reserved emitters	P3:675, P3:2482	
+hardware_custody:{platform}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:64	
+hardware_custody:{platform}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:64	
+hardware_custody:{platform}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:64	
+health:liveness:{version}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.4 (registry); the family's row: a claim a machine may make	P3:679	
+health:liveness:{version}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.4 (registry); the family's row: a claim a machine may make	P3:679	
+health:liveness:{version}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.4 (registry); the family's row: a claim a machine may make	P3:679	
+identity:canonical_binding:{canonical_hash}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:65, P3:2585, P3:2613	
+identity:canonical_binding:{canonical_hash}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:65, P3:2585, P3:2613	
+identity:occurrence	attest	none	admitted	*	by-leaf	occurrence_door	CC 3.1.3 (registry); CC 3.3.6; CC 3.3.6.4	P3:144, P3:1815, P3:1984	
+identity:occurrence	withdraw	admitted	withdrawn	*	by-leaf	occurrence_door	CC 3.1.3 (registry); CC 3.3.6; CC 3.3.6.4	P3:144, P3:1815, P3:1984	
+identity:occurrence	supersede	admitted	superseded	*	by-leaf	occurrence_door	CC 3.1.3 (registry); CC 3.3.6; CC 3.3.6.4	P3:144, P3:1815, P3:1984	
+identity:occurrence_revocation	attest	none	admitted	*	any-of(agent,node,person)	occ_revocation	CC 3.1.3 (registry); CC 3.3.6.4; family card	P3:146, P8:2735	
+identity_amendment	attest	none	admitted	*	agent	identity_amendment	CC 3.1.5 (registry); CC 4.3; the agent's occurrence key	P3:395, P3:395	
+identity_continuity:relational_anchor	attest	none	admitted	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
+identity_continuity:relational_anchor	withdraw	admitted	withdrawn	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
+image:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:627, P3:2585, P3:2613	
+image:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:627, P3:2585, P3:2613	
+image:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:627, P3:2585, P3:2613	
+image:*	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:627, P3:2585, P3:2613	
+integrity:{aspect}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:430, P3:2585, P3:2613	
+integrity:{aspect}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:430, P3:2585, P3:2613	
+integrity:{aspect}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:430, P3:2585, P3:2613	
+judge_model:verdict:{model_id}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.4 (registry); the family's row: a claim a machine may make	P3:678	
+judge_model:verdict:{model_id}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.4 (registry); the family's row: a claim a machine may make	P3:678	
+judge_model:verdict:{model_id}	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.4 (registry); the family's row: a claim a machine may make	P3:678	
+justice:{aspect}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:434, P3:2585, P3:2613	
+justice:{aspect}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:434, P3:2585, P3:2613	
+justice:{aspect}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:434, P3:2585, P3:2613	
+key:record	attest	none	admitted	*	any-of(agent,node,person)	self_key	CC 3.1.3 (registry); CC 2.4.1.1 key claim by proof of possession	P3:143, P2:307, P3:143	
+key:record	supersede	admitted	superseded	*	any-of(agent,node,person)	self_key	CC 3.1.3 (registry); CC 2.4.1.1 key claim by proof of possession	P3:143, P2:307, P3:143	
+key:revocation	attest	none	admitted	*	any-of(agent,node,person)	revoker	CC 3.1.3 (registry); CC 2.4.1.1 who may revoke a key	P3:145, P2:380	
+key:revocation	supersede	admitted	superseded	*	any-of(agent,node,person)	revoker	CC 3.1.3 (registry); CC 2.4.1.1 who may revoke a key	P3:145, P2:380	
+key_boundary:{scope}	attest	none	admitted	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P8:50, P3:353	
+key_boundary:{scope}	withdraw	admitted	withdrawn	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P8:50, P3:353	
+key_grant:{axis}	attest	none	admitted	*	any-of(agent,node,person)	sealer	CC 3.1.3 (registry); CC 3.3.2; CC 5.2 the store wraps to occurrences	P3:160, P3:160, P5:150	
+lawful_order:release	attest	none	admitted	*	person	steward_person	CC 3.1.5 (registry); CC 7.3.5; CC 3.2	P3:401, P3:401, P3:970	
+ledger:checkpoint:{unit}:{version}	attest	none	admitted	*	any-of(agent,node)	steward_bound_owner	CC 3.1.3 (registry); CC 3.3.10.1 the ledger's single owner	P3:134, P3:133	
+ledger:checkpoint:{unit}:{version}	supersede	admitted	superseded	*	any-of(agent,node)	steward_bound_owner	CC 3.1.3 (registry); CC 3.3.10.1 the ledger's single owner	P3:134, P3:133	
+ledger:head:{unit}:{version}	attest	none	admitted	*	any-of(agent,node)	steward_bound_owner	CC 3.1.3 (registry); CC 3.3.10.1 the ledger's single owner	P3:133, P3:133	
+ledger:head:{unit}:{version}	supersede	admitted	superseded	*	any-of(agent,node)	steward_bound_owner	CC 3.1.3 (registry); CC 3.3.10.1 the ledger's single owner	P3:133, P3:133	
+ledger:promotion:{version}	attest	none	admitted	*	any-of(agent,node)	steward_bound_owner	CC 3.1.3 (registry); CC 3.3.10.1 the ledger's single owner	P3:135, P3:133	
+ledger:promotion:{version}	supersede	admitted	superseded	*	any-of(agent,node)	steward_bound_owner	CC 3.1.3 (registry); CC 3.3.10.1 the ledger's single owner	P3:135, P3:133	
+licensure:{authority_id}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.1 (registry); the family's row: a claim a machine may make	P3:23	
+licensure:{authority_id}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.1 (registry); the family's row: a claim a machine may make	P3:23	
+licensure:{authority_id}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.1 (registry); the family's row: a claim a machine may make	P3:23	
+lineage_witness:{stage}	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:176, P1:199, P4:2178	
+lineage_witness:{stage}	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:176, P1:199, P4:2178	
+locality:decision:{scale}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.5 (registry); CC 3.4.7.3 Clause C, Clause E	P3:692, P3:2585, P3:2613	
+location_proof:{version}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:161, P3:2585, P3:2613	
+location_proof:{version}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:161, P3:2585, P3:2613	
+manifold_conformity:{cohort}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.3 (registry); the family's row: a claim a machine may make	P3:587	
+manifold_conformity:{cohort}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.3 (registry); the family's row: a claim a machine may make	P3:587	
+manifold_conformity:{cohort}	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.8.3 (registry); the family's row: a claim a machine may make	P3:587	
+membership:{stage}	attest	none	admitted	*	by-leaf	membership	CC 3.1.3.2 (registry); CC 3.1.3.2; CC 3.3.4	P3:228, P3:228	
+membership:{stage}	withdraw	admitted	withdrawn	*	by-leaf	membership	CC 3.1.3.2 (registry); CC 3.1.3.2; CC 3.3.4	P3:228, P3:228	
+membership:{stage}	supersede	admitted	superseded	*	by-leaf	membership	CC 3.1.3.2 (registry); CC 3.1.3.2; CC 3.3.4	P3:228, P3:228	
+mesh_config:{key}	attest	none	admitted	*	person	steward_person	CC 3.1.9.2 (registry); CC 7.3.5; CC 3.2	P3:647, P3:401, P3:970	
+mesh_config:{key}	withdraw	admitted	withdrawn	*	person	steward_person	CC 3.1.9.2 (registry); CC 7.3.5; CC 3.2	P3:647, P3:401, P3:970	
+mesh_config:{key}	supersede	admitted	superseded	*	person	steward_person	CC 3.1.9.2 (registry); CC 7.3.5; CC 3.2	P3:647, P3:401, P3:970	
+method:{approach_id}:{substrate_rung}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:710, P3:2585, P3:2613	
+method:{approach_id}:{substrate_rung}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:710, P3:2585, P3:2613	
+method:{approach_id}:{substrate_rung}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:710, P3:2585, P3:2613	
+model_3d:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:631, P3:2585, P3:2613	
+model_3d:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:631, P3:2585, P3:2613	
+model_3d:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:631, P3:2585, P3:2613	
+model_3d:*	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:631, P3:2585, P3:2613	
+moderation:{allegation_type}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:643, P3:2585, P3:2613	
+moderation:{allegation_type}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:643, P3:2585, P3:2613	
+moderation:{allegation_type}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:643, P3:2585, P3:2613	
+moderation_track_record:{community_key_id}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.2 (registry); the family's row: a claim a machine may make	P3:654	
+moderation_track_record:{community_key_id}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.2 (registry); the family's row: a claim a machine may make	P3:654	
+moderation_track_record:{community_key_id}	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.2 (registry); the family's row: a claim a machine may make	P3:654	
+multilateral_participation:{forum}:{kind}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:29, P3:2585, P3:2613	
+multilateral_participation:{forum}:{kind}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:29, P3:2585, P3:2613	
+multilateral_participation:{forum}:{kind}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:29, P3:2585, P3:2613	
+need:{domain}:{kind}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:665, P3:2585, P3:2613	
+need:{domain}:{kind}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:665, P3:2585, P3:2613	
+need:{domain}:{kind}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:665, P3:2585, P3:2613	
+need:{domain}:{kind}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:665, P3:2585, P3:2613	
+news:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:622, P3:2585, P3:2613	
+news:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:622, P3:2585, P3:2613	
+news:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:622, P3:2585, P3:2613	
+news:*	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:622, P3:2585, P3:2613	
+non_maleficence:{aspect}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:429, P3:2585, P3:2613	
+non_maleficence:{aspect}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:429, P3:2585, P3:2613	
+objection:{state}	attest	none	admitted	*	person	vote	CC 3.1.9.2 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:645, P1:199, P4:2178	
+objection:{state}	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.9.2 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:645, P1:199, P4:2178	
+objection:{state}	supersede	admitted	superseded	*	person	vote	CC 3.1.9.2 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:645, P1:199, P4:2178	
+observation:access_assumption	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:681, P3:2585, P3:2613	
+observation:access_assumption	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:681, P3:2585, P3:2613	
+observation:reachability	attest	none	admitted	*	node	observer_node	CC 3.1.9.4 (registry); CC 3.1.9.4 first-person probe by the monitoring node	P3:680, P3:680	
+observation:reachability	supersede	admitted	superseded	*	node	observer_node	CC 3.1.9.4 (registry); CC 3.1.9.4 first-person probe by the monitoring node	P3:680, P3:680	
+ownership:{relation}:{target_kind}:{version}	withdraw	admitted	withdrawn	*	person	owner	CC 3.1.1 (registry); CC 3.3.6.4 authority of a roster key; CC 3.2 who owns a key	P3:31, P3:1963, P3:970	
+ownership:{relation}:{target_kind}:{version}	supersede	admitted	superseded	*	person	owner	CC 3.1.1 (registry); CC 3.3.6.4 authority of a roster key; CC 3.2 who owns a key	P3:31, P3:1963, P3:970	
+ownership:{relation}:{target_kind}:{version}	authorize	none	admitted	*	person	owner	CC 3.1.1 (registry); CC 3.3.6.4 authority of a roster key; CC 3.2 who owns a key	P3:31, P3:1963, P3:970	
+partner_role:{role}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:25, P3:2585, P3:2613	
+partner_role:{role}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:25, P3:2585, P3:2613	
+partner_role:{role}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:25, P3:2585, P3:2613	
+peer_reachability:{network}	attest	none	admitted	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P3:353	
+peer_reachability:{network}	withdraw	admitted	withdrawn	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P3:353	
+peer_reachability:{network}	supersede	admitted	superseded	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P3:353	
+preserve_request	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5 (registry); CC 3.4.7.3 Clause C, Clause E	P3:398, P3:2585, P3:2613	
+preserve_request	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5 (registry); CC 3.4.7.3 Clause C, Clause E	P3:398, P3:2585, P3:2613	
+preserve_response	attest	none	admitted	*	any-of(node,person)	machine_claim	CC 3.1.5 (registry); the family's row: a claim a machine may make	P3:399	
+progress_measure:{method_id}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:711, P3:2585, P3:2613	
+progress_measure:{method_id}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:711, P3:2585, P3:2613	
+progress_measure:{method_id}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E	P3:711, P3:2585, P3:2613	
+prohibited:{category}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.5.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:446, P3:2585, P3:2613	
+prohibited:{category}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.5.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:446, P3:2585, P3:2613	
+provenance:build_manifest:{target}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:56	
+provenance:build_manifest:{target}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:56	
+provenance:build_manifest:{target}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:56	
+provenance:build_manifest:{target}:locale:{lang_code}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:57	
+provenance:build_manifest:{target}:locale:{lang_code}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:57	
+provenance:skill_import:{source}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:58	
+provenance:skill_import:{source}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:58	
+provenance:slsa:{level}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:55	
+provenance:slsa:{level}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:55	
+quarantine:{state}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:646, P3:2585, P3:2613	
+quarantine:{state}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:646, P3:2585, P3:2613	
+quarantine:{state}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:646, P3:2585, P3:2613	
+ratchet:flag:coordinated_voting_cluster	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:coordinated_voting_cluster	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:coordinated_voting_cluster	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:counter_rii:{layer}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:counter_rii:{layer}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:counter_rii:{layer}	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:density_anomaly	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:density_anomaly	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:density_anomaly	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:expertise_attestation_anomaly	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:expertise_attestation_anomaly	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:expertise_attestation_anomaly	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:harassment_pattern	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:harassment_pattern	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:harassment_pattern	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:out_of_distribution_voting	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:out_of_distribution_voting	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+ratchet:flag:out_of_distribution_voting	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.6 (registry); the family's row: a claim a machine may make	P3:462	
+reconsideration:{grounds}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:652, P3:2585, P3:2613	
+reconsideration:{grounds}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:652, P3:2585, P3:2613	
+regime:{artifact}:{version}	attest	none	admitted	*	node	regime	CC 3.1.9.2 (registry); CC 3.1.9.2 substrate-steward-emitted	P3:648, P3:648	
+regime:{artifact}:{version}	supersede	admitted	superseded	*	node	regime	CC 3.1.9.2 (registry); CC 3.1.9.2 substrate-steward-emitted	P3:648, P3:648	
+rendezvous:route	attest	none	admitted	*	rendezvous	rendezvous	CC 3.1.4 (registry); CC 5.4.6 rendezvous key	P3:371, P3:371	
+rendezvous:route	supersede	admitted	superseded	*	rendezvous	rendezvous	CC 3.1.4 (registry); CC 5.4.6 rendezvous key	P3:371, P3:371	
+retirement:{state}	attest	none	admitted	*	any-of(agent,person)	retirement	CC 3.1.5 (registry); CC 7.5.5 the agent's own retirement row	P3:397, P3:397	
+retirement:{state}	withdraw	admitted	withdrawn	*	any-of(agent,person)	retirement	CC 3.1.5 (registry); CC 7.5.5 the agent's own retirement row	P3:397, P3:397	
+revocation:{entity_type}:{reason}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:26, P3:2585, P3:2613	
+revocation:{entity_type}:{reason}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:26, P3:2585, P3:2613	
+rollback_detected:{revision_field}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:62	
+seed_holder_voting_alignment:{cell}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.4 (registry); the family's row: a claim a machine may make	P3:677	
+seed_holder_voting_alignment:{cell}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.4 (registry); the family's row: a claim a machine may make	P3:677	
+self:delegates_to	authorize	none	admitted	*	person	owner	CC 3.1.3 (registry); CC 3.3.6.4 authority of a roster key; CC 3.2 who owns a key	P3:167, P3:1963, P3:970	
+self:delegates_to:agent_occurrence	authorize	none	admitted	*	person	delegation_agent	CC 3.1.3 (registry); CC 3.1.3; family card (second signer delegate)	P3:168, P3:168, P8:3375	
+session:{kind}	attest	none	admitted	*	any-of(agent,person)	occurrence_self	CC 3.1.3.1 (registry); CC 3.1.3.1 occurrence-self-report	P3:202, P3:202	
+session:{kind}	withdraw	admitted	withdrawn	*	any-of(agent,person)	occurrence_self	CC 3.1.3.1 (registry); CC 3.1.3.1 occurrence-self-report	P3:202, P3:202	
+session:{kind}	supersede	admitted	superseded	*	any-of(agent,person)	occurrence_self	CC 3.1.3.1 (registry); CC 3.1.3.1 occurrence-self-report	P3:202, P3:202	
+settlement:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:132, P3:2585, P3:2613	
+settlement:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:132, P3:2585, P3:2613	
+slashing:{outcome}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:644, P3:2585, P3:2613	
+slashing:{outcome}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:644, P3:2585, P3:2613	
+system:*	attest	none	admitted	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481, P3:2481	
+system:*	withdraw	admitted	withdrawn	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481, P3:2481	
+system:*	supersede	admitted	superseded	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481, P3:2481	
+takedown_notice:{basis}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:33, P3:2585, P3:2613	
+takedown_notice:{basis}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:33, P3:2585, P3:2613	
+testimonial_witness:{kind}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:664, P3:2585, P3:2613	
+testimonial_witness:{kind}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:664, P3:2585, P3:2613	
+testimonial_witness:{kind}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:664, P3:2585, P3:2613	
+topical_relation:{kind}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:626, P3:2585, P3:2613	
+topical_relation:{kind}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:626, P3:2585, P3:2613	
+trace:{form}:{version}	attest	none	admitted	*	agent	agent_own	CC 3.1.5 (registry); CC 3.1.5 pro-self trace; CC 3.3.6	P3:394, P3:2399, P3:1821	
+trace:{form}:{version}	withdraw	admitted	withdrawn	*	agent	agent_own	CC 3.1.5 (registry); CC 3.1.5 pro-self trace; CC 3.3.6	P3:394, P3:2399, P3:1821	
+trace_summary:{kind}	attest	none	admitted	*	agent	agent_own	CC 3.1.5 (registry); CC 3.1.5 pro-self trace; CC 3.3.6	P3:396, P3:2399, P3:1821	
+trace_summary:{kind}	withdraw	admitted	withdrawn	*	agent	agent_own	CC 3.1.5 (registry); CC 3.1.5 pro-self trace; CC 3.3.6	P3:396, P3:2399, P3:1821	
+transparency_log:consistency	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:60	
+transparency_log:consistency	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:60	
+transparency_log:cosigned:{tree_size}	attest	none	admitted	*	witness	witness	CC 3.1.2 (registry); CC 3.1.2 reserved emitters	P3:61, P3:2484	
+transparency_log:inclusion	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:59	
+transparency_log:inclusion	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.2 (registry); the family's row: a claim a machine may make	P3:59	
+transport:canonical_rebind	attest	none	admitted	*	holder	holder_rebind	CC 3.1.3 (registry); CC 3.4.1	P3:147, P3:2479	
+transport:canonical_rebind	supersede	admitted	superseded	*	holder	holder_rebind	CC 3.1.3 (registry); CC 3.4.1	P3:147, P3:2479	
+transport:{kind}	attest	none	admitted	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P3:353	
+transport:{kind}	withdraw	admitted	withdrawn	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P3:353	
+transport:{kind}	supersede	admitted	superseded	*	node	node_transport	CC 3.1.4 (registry); CC 3.1.4	P3:353	
+trust:blessing	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:142, P1:199, P4:2178	
+trust:blessing	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:142, P1:199, P4:2178	
+trust:{job}:{version}	withdraw	admitted	withdrawn	*	person	root_acceptance	CC 3.1.1 (registry); CC 3.2 acceptance is the owner's	P3:35, P3:1136	
+trust:{job}:{version}	supersede	admitted	superseded	*	person	root_acceptance	CC 3.1.1 (registry); CC 3.2 acceptance is the owner's	P3:35, P3:1136	
+trust:{job}:{version}	authorize	none	admitted	*	person	root_acceptance	CC 3.1.1 (registry); CC 3.2 acceptance is the owner's	P3:35, P3:1136	
+truth_grounding:{subject}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:661, P3:2585, P3:2613	
+truth_grounding:{subject}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:661, P3:2585, P3:2613	
+truth_grounding:{subject}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:661, P3:2585, P3:2613	
+video:*	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:629, P3:2585, P3:2613	
+video:*	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:629, P3:2585, P3:2613	
+video:*	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:629, P3:2585, P3:2613	
+video:*	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9 (registry); CC 3.4.7.3 Clause C, Clause E	P3:629, P3:2585, P3:2613	
+vote:{contribution_id}	attest	none	admitted	*	person	vote	CC 3.1.9.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:660, P1:199, P4:2178	
+vote:{contribution_id}	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.9.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:660, P1:199, P4:2178	
+vote:{contribution_id}	recant	admitted	recanted	*	person	vote	CC 3.1.9.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:660, P1:199, P4:2178	
+wa_adjudication:{state}	attest	none	admitted	*	person	wa	CC 3.1.9.4 (registry); CC 4.3; CC 1.13.2 offices some humans hold	P3:676, P3:667, P1:197	
+wa_adjudication:{state}	withdraw	admitted	withdrawn	*	person	wa	CC 3.1.9.4 (registry); CC 4.3; CC 1.13.2 offices some humans hold	P3:676, P3:667, P1:197	
+wa_adjudication:{state}	supersede	admitted	superseded	*	person	wa	CC 3.1.9.4 (registry); CC 4.3; CC 1.13.2 offices some humans hold	P3:676, P3:667, P1:197	
+watchlist:{id}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:682, P3:2585, P3:2613	
+watchlist:{id}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:682, P3:2585, P3:2613	
+watchlist:{id}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9.4 (registry); CC 3.4.7.3 Clause C, Clause E	P3:682, P3:2585, P3:2613	
+weighted_aggregate:{contribution_id}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.3 (registry); the family's row: a claim a machine may make	P3:662	
+weighted_aggregate:{contribution_id}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.3 (registry); the family's row: a claim a machine may make	P3:662	
+witness_diversity:{contribution_id}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.3 (registry); the family's row: a claim a machine may make	P3:663	
+witness_diversity:{contribution_id}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.3 (registry); the family's row: a claim a machine may make	P3:663	
+consent:state:{stance}	*	-	-	granted|revoked	any-of(agent,person)	consent_subject	CC 3.3.1 consent:state granted|revoked	P3:1312	
+consent:state:{stance}	*	-	-	expired	node	consent_expired	CC 3.3.1; CC 3.4.3	P3:1313, P3:2481	
+membership:{stage}	*	-	-	proposal	open	membership	CC 3.1.3.2; CC 3.3.4	P3:228	may an agent member issue membership:proposal (an invite)? The text says 'an active member' (P3:228); the invite counts are one voice a person (P4:2178).
+membership:{stage}	*	-	-	acceptance|decline|resignation	any-of(agent,person)	membership	CC 3.1.3.2; CC 3.3.4	P3:228	
+membership:{stage}	*	-	-	widening|removal	person	vote	CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P1:199, P4:2178	
+identity:occurrence	*	-	-	user	person	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815, P3:1984	
+identity:occurrence	*	-	-	agent	open	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815, P3:1984	who authors an agent's identity:occurrence: 'its owner authors it' (P3:1821) or 'a live roster key of the identity' (P3:1815), and an agent's identity has no person roster (#871)?
+identity:occurrence	*	-	-	node	node	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815, P3:1984	
+@crossing	sign	-	-	*	node	use	CC 3.1.3.4 the promoting author's node carries out the intent; CC 3.4.7.3 Clause E	P3:341, P3:2600	
+@device_join	sign	-	-	*	node	use	CC 3.2 an unowned node originates only a device-join request	P3:1033	
+@room_row	sign	-	-	*	room	use	CC 3.1.3.2 a private room seats voices of room keys	P3:281	
+@private_invitation	sign	-	-	*	unsigned	use	CC 3.1.3.2 a sealed invitation nobody signs	P3:285	
+@chunk_key	sign	-	-	*	ephemeral	use	CC 5 StreamKeyBinding chunk_key	P5:477	
+@content_kem	sign	-	-	*	kem	use	CC 3.3.6.1 key separation	P3:1833	
+@transit_pair	sign	-	-	*	kem	use	CC 3.3.6.2 the transit pair is separate from the signing key	P3:1847	
+@stream_key_binding	sign	-	-	*	open	use	CC 5 StreamKeyBinding	P5:477	StreamKeyBinding 'publisher's federation key' (P5:477): node, agent or person axis?
+@mls_leaf	sign	-	-	*	open	use	CC 5.1 MLS TreeKEM rekey	P5:61	MLS leaf credential and group state: keyed by the room member's key (room key in a private room, the member's own key otherwise)? Not in the text; inferred from P3:281 and P5:150 (R16).
+@mls_keypackage	sign	-	-	*	open	use	CC 3.3.6.2	P3:1891	who signs an MLS KeyPackage? The text says only that its init key is a cohort credential, never a hop key (P3:1891).
+@split_key_id	sign	-	-	*	open	use	CC 3.4.7.3 Clause F	P3:2615	at the split, which key keeps the configured key_id: the actor's or the fresh node's? Clause F says re-mint, forward-only (P3:2615); the text does not say which identifier is kept.
