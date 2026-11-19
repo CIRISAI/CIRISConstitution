@@ -22,7 +22,7 @@ Each statement is marked **text** (the Parts say it), **model** (the check in th
 | Edge | the composite on every producer; the mutual X-Wing handshake (`CTKX` 0x02) and seal frame 0x02, the earlier versions refused by name; a fresh X-Wing transit key per relaying node |
 | The server | the route serving the bundle of this form and its object id; the holders' thumbprints as the default anchor, the object id once published |
 | The agent | the composite holder signature on the halt; its own `key:record` of this form with `valid_until` |
-| The holders' custody | the Ed25519 half on a token, the ML-DSA-65 half `removable_offline` on separate media (CC 4.2.3). **model** (P4): then no one device yields a halt; **model** (F7): with both halves on the token one device does |
+| The holders' custody | the Ed25519 half on a token, the ML-DSA-65 half `removable_offline` on separate media (CC 4.2.3). **model** (P4): then no one device yields a halt; **model** (F7): with both halves on the token one device does. Each holder's attestation is exported fresh from that holder's own token, and the leaves name three distinct token serials (CC 4.2.3, `holder_device_shared`) |
 
 ## 2. Roles
 

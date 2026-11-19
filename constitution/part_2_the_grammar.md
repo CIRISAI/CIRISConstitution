@@ -1218,6 +1218,7 @@ Every other answer from step 3 on is Waiting or concludes nothing. The details o
 | `recovery_reuses_signing_key` | a recovery's new signing key is the holder's current key |
 | `recovery_changes_other_seat` | a recovery changes more than its holder's key-record citation and commitment |
 | `holder_key_retired` | a later bundle seats a holder at a key in its retired set, or at the key its in-force commitment commits to |
+| `holder_device_shared` | two holders the bundle seats name one device in their attestation leaves ([CC 4.2.3](part_4_composition_governance.md#4.2.3)) |
 | `genesis_bundle_schema` | any other fault against the bundle's schema |
 
 **The revocation snapshot** is a set of revoked keys, with no winner across issuers, and it carries no instant. Its payload names its signer as `author`, so its object id is one signer's. Each snapshot carries `seq`, an unsigned integer greater than its predecessor's, beside `refs.prev`, so one signer orders its own snapshots. Under the `also` role `ack` it names its acknowledgement of the head of the revocation scope. Each revoked entry is a tuple: the revoked key's thumbprint, its revocation and the rows it held good. The snapshot names its `refs` and, in each entry, the revocation and the rows held good. A snapshot whose `seq` is not greater than that of the `prev` it names concludes nothing. Two snapshots of one signer with one `seq` and different content are contested, and neither counts.
