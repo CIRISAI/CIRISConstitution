@@ -3,7 +3,7 @@ title: "Prompt Context Provenance for AI Agent Decision Traces"
 abbrev: "Agent Context Provenance"
 category: info
 submissiontype: IETF
-docname: draft-moore-scitt-agent-context-provenance-00
+docname: draft-moore-scitt-ciris-trace-context-00
 number:
 date: 2026-11-19
 v: 3

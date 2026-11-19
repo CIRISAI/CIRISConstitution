@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 """
-Build draft-moore-scitt-agent-context-provenance (the companion to draft-moore-scitt-ciris-ceg).
+Build a companion Internet-Draft of draft-moore-scitt-ciris-ceg:
 
-  ietf/draft-moore-scitt-agent-context-provenance.md   the kramdown-rfc source (edit this)
+  ietf/draft-moore-scitt-ciris-trace.md           the CIRIS agent trace (CompleteTrace)
+  ietf/draft-moore-scitt-ciris-trace-context.md   its LLM_CALL context manifest
+
+(each the kramdown-rfc source; edit these).
 
 Separate from tools/build_ietf_draft.py on purpose: that script's --check compares the CEG drafts byte for byte,
 and nothing here may change its output.
 
-Steps: stamp the revision into ietf/draft-moore-scitt-agent-context-provenance-NN.md, check that the manifest
-CDDL parses (`cddl ... generate`), then kramdown-rfc -> .xml and xml2rfc --v3 -> .txt and .html. Any xml2rfc
-warning fails the build.
+Steps: stamp the revision into ietf/<name>-NN.md, check that every ``~~~ cddl`` block parses
+(`cddl ... generate`), then kramdown-rfc -> .xml and xml2rfc --v3 -> .txt and .html. Any xml2rfc warning fails
+the build.
 
-Run:  python3 tools/build_ietf_agent_context.py [--rev 00]
+Run:  python3 tools/build_ietf_companion.py <name> [--rev 00]
+      e.g. python3 tools/build_ietf_companion.py draft-moore-scitt-ciris-trace-context
 Tools: kramdown-rfc and cddl (gem install --user-install kramdown-rfc cddl), xml2rfc (pip).
 """
 import argparse
@@ -23,8 +27,6 @@ import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IETF = os.path.join(ROOT, "ietf")
-NAME = "draft-moore-scitt-agent-context-provenance"
-SRC = os.path.join(IETF, f"{NAME}.md")
 
 
 def gem_path() -> str:
@@ -38,8 +40,11 @@ def run(cmd, **kw):
 
 def main() -> int:
     ap = argparse.ArgumentParser()
+    ap.add_argument("name", help="draft name without revision, e.g. draft-moore-scitt-ciris-trace-context")
     ap.add_argument("--rev", default="00")
-    rev = ap.parse_args().rev
+    args = ap.parse_args()
+    NAME, rev = args.name, args.rev
+    SRC = os.path.join(IETF, f"{NAME}.md")
     env = dict(os.environ, PATH=gem_path(), KRAMDOWN_REFCACHEDIR=os.path.join(IETF, ".refcache"))
     src = open(SRC, encoding="utf-8").read()
     doc = f"{NAME}-{rev}"
@@ -49,14 +54,18 @@ def main() -> int:
     with open(os.path.join(IETF, f"{doc}.md"), "w", encoding="utf-8") as f:
         f.write(stamped)
 
-    start = src.index("~~~ cddl") + len("~~~ cddl")
-    with tempfile.NamedTemporaryFile("w", suffix=".cddl", delete=False) as f:
-        f.write(src[start : src.index("~~~", start)])
-        cddl_path = f.name
-    try:
-        run(["cddl", cddl_path, "generate"], env=env)
-    finally:
-        os.unlink(cddl_path)
+    pos = 0
+    while (pos := src.find("~~~ cddl", pos)) != -1:
+        start = pos + len("~~~ cddl")
+        end = src.index("~~~", start)
+        with tempfile.NamedTemporaryFile("w", suffix=".cddl", delete=False) as f:
+            f.write(src[start:end])
+            cddl_path = f.name
+        try:
+            run(["cddl", cddl_path, "generate"], env=env)
+        finally:
+            os.unlink(cddl_path)
+        pos = end + 3
 
     xml = os.path.join(IETF, f"{doc}.xml")
     with open(xml, "w", encoding="utf-8") as out:
