@@ -8,7 +8,8 @@ Intended status: Informational                          19 November 2026
 Expires: 23 May 2027
 
 
-         Prompt Context Provenance for AI Agent Decision Traces
+ Context Manifests for the CIRIS Agent Trace: Prompt Context Provenance
+                      for AI Agent Decision Traces
                 draft-moore-scitt-ciris-trace-context-00
 
 Abstract
@@ -30,8 +31,10 @@ Abstract
    stubs that stand in for text withheld from a stage, and the checks a
    verifier runs against the manifest and against the bytes actually
    sent.  It states the safety properties of the policy as invariants
-   checked by a model checker.  The manifest is carried as the payload
-   of a CEG trace row or of any SCITT signed statement.
+   checked by a model checker.  The context manifest is the
+   context_manifest member of the LLM_CALL event of the CIRIS agent
+   trace, carried in a CEG trace row; it can also be the payload of any
+   SCITT signed statement.
 
 About This Document
 
@@ -46,17 +49,19 @@ About This Document
    Source for this draft and an issue tracker can be found at
    https://github.com/CIRISAI/CIRISConstitution.
 
-Status of This Memo
 
-   This Internet-Draft is submitted in full conformance with the
-   provisions of BCP 78 and BCP 79.
 
 
 
 Moore                      Expires 23 May 2027                  [Page 1]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
 
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
@@ -91,51 +96,52 @@ Table of Contents
      1.2.  Scope . . . . . . . . . . . . . . . . . . . . . . . . . .   5
      1.3.  Conventions and Definitions . . . . . . . . . . . . . . .   5
    2.  The Decision Model  . . . . . . . . . . . . . . . . . . . . .   6
-   3.  Segment Taxonomy  . . . . . . . . . . . . . . . . . . . . . .   6
+   3.  Segment Taxonomy  . . . . . . . . . . . . . . . . . . . . . .   7
      3.1.  Kind  . . . . . . . . . . . . . . . . . . . . . . . . . .   7
      3.2.  Provenance  . . . . . . . . . . . . . . . . . . . . . . .   8
-     3.3.  Source  . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     3.4.  Trust . . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     3.3.  Source  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     3.4.  Trust . . . . . . . . . . . . . . . . . . . . . . . . . .   9
      3.5.  Lifecycle . . . . . . . . . . . . . . . . . . . . . . . .   9
      3.6.  AAA Carriers  . . . . . . . . . . . . . . . . . . . . . .   9
      3.7.  Locale  . . . . . . . . . . . . . . . . . . . . . . . . .  10
-   4.  The Context Policy  . . . . . . . . . . . . . . . . . . . . .  10
+   4.  The Context Policy  . . . . . . . . . . . . . . . . . . . . .  11
      4.1.  Predicates  . . . . . . . . . . . . . . . . . . . . . . .  11
-     4.2.  Form  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
-     4.3.  Static Checks . . . . . . . . . . . . . . . . . . . . . .  12
-     4.4.  Residuals . . . . . . . . . . . . . . . . . . . . . . . .  13
-   5.  Ablation Stubs  . . . . . . . . . . . . . . . . . . . . . . .  13
-   6.  The Context Manifest  . . . . . . . . . . . . . . . . . . . .  15
 
 
 
 Moore                      Expires 23 May 2027                  [Page 2]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
+     4.2.  Form  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     4.3.  Static Checks . . . . . . . . . . . . . . . . . . . . . .  12
+     4.4.  Residuals . . . . . . . . . . . . . . . . . . . . . . . .  13
+   5.  Ablation Stubs  . . . . . . . . . . . . . . . . . . . . . . .  13
+   6.  The Context Manifest  . . . . . . . . . . . . . . . . . . . .  15
      6.1.  Encoding  . . . . . . . . . . . . . . . . . . . . . . . .  15
      6.2.  CDDL  . . . . . . . . . . . . . . . . . . . . . . . . . .  15
      6.3.  Field Semantics . . . . . . . . . . . . . . . . . . . . .  18
    7.  Guard Violations  . . . . . . . . . . . . . . . . . . . . . .  19
    8.  Verifying a Manifest  . . . . . . . . . . . . . . . . . . . .  20
    9.  Formal Model  . . . . . . . . . . . . . . . . . . . . . . . .  21
-   10. Carrying the Manifest . . . . . . . . . . . . . . . . . . . .  23
-     10.1.  As a CEG Trace Row . . . . . . . . . . . . . . . . . . .  23
-     10.2.  As a SCITT Signed Statement  . . . . . . . . . . . . . .  24
-   11. Relationship to Other Work  . . . . . . . . . . . . . . . . .  24
-     11.1.  Relationship to the AUDIT Charter  . . . . . . . . . . .  25
-   12. Implementation Status . . . . . . . . . . . . . . . . . . . .  27
-   13. Security Considerations . . . . . . . . . . . . . . . . . . .  27
-   14. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  28
-   15. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  28
-   16. References  . . . . . . . . . . . . . . . . . . . . . . . . .  28
-     16.1.  Normative References . . . . . . . . . . . . . . . . . .  28
-     16.2.  Informative References . . . . . . . . . . . . . . . . .  29
-   Appendix A.  Measured Motivation  . . . . . . . . . . . . . . . .  32
-   Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  33
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  34
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  34
+   10. Placement in the CIRIS Agent Trace  . . . . . . . . . . . . .  23
+     10.1.  The LLM_CALL Member  . . . . . . . . . . . . . . . . . .  23
+     10.2.  As a CEG Trace Row . . . . . . . . . . . . . . . . . . .  24
+     10.3.  As a SCITT Signed Statement  . . . . . . . . . . . . . .  25
+   11. Relationship to Other Work  . . . . . . . . . . . . . . . . .  25
+     11.1.  Relationship to the AUDIT Charter  . . . . . . . . . . .  26
+   12. Implementation Status . . . . . . . . . . . . . . . . . . . .  28
+   13. Security Considerations . . . . . . . . . . . . . . . . . . .  28
+   14. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  29
+   15. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  29
+   16. References  . . . . . . . . . . . . . . . . . . . . . . . . .  29
+     16.1.  Normative References . . . . . . . . . . . . . . . . . .  29
+     16.2.  Informative References . . . . . . . . . . . . . . . . .  30
+   Appendix A.  Measured Motivation  . . . . . . . . . . . . . . . .  33
+   Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  34
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  35
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  35
 
 1.  Introduction
 
@@ -155,6 +161,15 @@ Internet-Draft          Agent Context Provenance           November 2026
    the untrusted text the drafter saw, so that a persuasive request
    cannot argue a judge out of its veto.  This is input ablation.
 
+
+
+
+
+Moore                      Expires 23 May 2027                  [Page 3]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    Measurement of that agent, before the mechanism in this document
    existed, found failures that no action record could show
    (Appendix A):
@@ -162,13 +177,6 @@ Internet-Draft          Agent Context Provenance           November 2026
    *  A rule a Wise Authority (the agent's human overseer) had stated
       reached the drafter, but almost never the two ablated judges.  The
       judges then vetoed compliant replies as "invented policy".
-
-
-
-Moore                      Expires 23 May 2027                  [Page 3]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    *  The reason for a veto never reached the stage asked to revise the
       draft (0 of 162 retries).
@@ -211,20 +219,17 @@ Internet-Draft          Agent Context Provenance           November 2026
        and a TLA+ [TLA] specification whose invariants a model checker
        verifies (Section 9).
 
-   5.  *Declared against observed.* Each segment records its span and a
-       digest of its bytes in the message actually sent, so a verifier
-       can check that the manifest describes the call and not an
-       intention (Section 8).
-
-
-
-
 
 
 Moore                      Expires 23 May 2027                  [Page 4]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
+
+   5.  *Declared against observed.* Each segment records its span and a
+       digest of its bytes in the message actually sent, so a verifier
+       can check that the manifest describes the call and not an
+       intention (Section 8).
 
 1.2.  Scope
 
@@ -232,8 +237,14 @@ Internet-Draft          Agent Context Provenance           November 2026
    stub, and the checks.  It does not specify how an agent decides, what
    any stage concludes, or how a tool call is authorized: the manifest
    records what models were given, not whether they were right.  It
-   defines no new signature, receipt or transparency mechanism: those
-   are [I-D.moore-scitt-ciris-ceg] and [RFC9943].
+   defines no trace envelope, signature, receipt or transparency
+   mechanism: the trace and its levels are
+   [I-D.moore-scitt-ciris-trace], the signed row and admission are
+   [I-D.moore-scitt-ciris-ceg], and transparency is [RFC9943].
+
+   "Context manifest" is used throughout, never "manifest" alone.  It is
+   unrelated to the trace_manifest:v1 object of [CC], which carries a
+   trace too large to inline.
 
 1.3.  Conventions and Definitions
 
@@ -262,10 +273,20 @@ Internet-Draft          Agent Context Provenance           November 2026
       assembler path for every call.
 
    Policy:  The table that says, for each stage and each kind of
+
+
+
+
+Moore                      Expires 23 May 2027                  [Page 5]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
       segment, whether the stage must, may or must not receive it, and
       in which form (Section 4).
 
-   Manifest:  The per-call record specified in Section 6.
+   Context manifest:  The per-call record specified in Section 6.  Where
+      this document says "manifest" it means a context manifest.
 
    Stub:  The closed-vocabulary description sent in place of a withheld
       segment (Section 5).
@@ -273,14 +294,6 @@ Internet-Draft          Agent Context Provenance           November 2026
    Wise Authority (WA):  A human party whose signed grants make rules
       binding on the agent.  The term is that of [CC]; any deployment's
       equivalent overseer fills the same role here.
-
-
-
-
-Moore                      Expires 23 May 2027                  [Page 5]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
 2.  The Decision Model
 
@@ -315,6 +328,16 @@ Internet-Draft          Agent Context Provenance           November 2026
    that each stage has a stable name, one role, and an entry in the
    policy, and that the set of ablated stages is declared in the policy.
 
+
+
+
+
+
+Moore                      Expires 23 May 2027                  [Page 6]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    In the reference implementation the ablated stages are entropy and
    optveto.  They judge the draft against the agent's own commitments
    and against signed rules, but never see the request that prompted it.
@@ -326,17 +349,6 @@ Internet-Draft          Agent Context Provenance           November 2026
    came from and what it is worth; locale says what language it is in.
    Keeping the axes separate is deliberate: the earlier measurement
    mixed them, and the mixing is how leaks hid.
-
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                  [Page 6]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
 3.1.  Kind
 
@@ -374,6 +386,14 @@ Internet-Draft          Agent Context Provenance           November 2026
         | display_name        | the sender's self-chosen name     |
         +---------------------+-----------------------------------+
         | action_record       | the factual record of actions     |
+
+
+
+Moore                      Expires 23 May 2027                  [Page 7]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
         |                     | already taken in the task         |
         +---------------------+-----------------------------------+
         | draft               | the proposed action under review  |
@@ -386,14 +406,6 @@ Internet-Draft          Agent Context Provenance           November 2026
         | tool_output         | a tool's result                   |
         +---------------------+-----------------------------------+
         | pipeline_position   | where the stage sits and what it  |
-
-
-
-Moore                      Expires 23 May 2027                  [Page 7]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
-
         |                     | cannot see                        |
         +---------------------+-----------------------------------+
 
@@ -431,6 +443,13 @@ Internet-Draft          Agent Context Provenance           November 2026
    so no such segment is ever produced; the values exist so that a
    policy that admitted one would be expressible and checkable.
 
+
+
+Moore                      Expires 23 May 2027                  [Page 8]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
 3.3.  Source
 
    Which component produced the bytes: user_input, adapter_metadata,
@@ -441,14 +460,6 @@ Internet-Draft          Agent Context Provenance           November 2026
 3.4.  Trust
 
    Trust has three ordered levels: untrusted < verified < system.
-
-
-
-
-Moore                      Expires 23 May 2027                  [Page 8]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    *  untrusted: user-controlled or model-generated text.
 
@@ -486,6 +497,15 @@ Internet-Draft          Agent Context Provenance           November 2026
       sender_identity.
 
    Authorization (authz):  The grant that makes the segment binding: its
+
+
+
+
+Moore                      Expires 23 May 2027                  [Page 9]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
       kind (amendment, deferral or response_attestation), its
       identifier, the authorizer, whether its signature verified, and
       when it was granted.  REQUIRED on amendment, on rule with
@@ -498,13 +518,6 @@ Internet-Draft          Agent Context Provenance           November 2026
 
    A judge that is asked whether a rule binds reads the rule's authz
    carrier, attested by the system, not prose claiming authority.
-
-
-
-Moore                      Expires 23 May 2027                  [Page 9]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
 3.7.  Locale
 
@@ -542,6 +555,13 @@ Internet-Draft          Agent Context Provenance           November 2026
    another language MUST record that field's segment with the language
    actually served.
 
+
+
+Moore                      Expires 23 May 2027                 [Page 10]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    The reason this is evidence and not configuration: a judge prompted
    partly in English while the person wrote in Amharic is a different
    judge.  In the reference implementation this was first found by
@@ -553,14 +573,6 @@ Internet-Draft          Agent Context Provenance           November 2026
    The policy is a single document.  It has five parts:
 
    version:  An integer.
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 10]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    ablated_stages:  The stages that receive no untrusted text.
 
@@ -583,6 +595,28 @@ Internet-Draft          Agent Context Provenance           November 2026
    predicates are a closed set, each evaluated against facts the system
    establishes from its own state (signed rows, the authentication
    context), never from the segments being checked:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 11]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
 
       +==========================+==================================+
       | Predicate                | Holds when                       |
@@ -610,14 +644,6 @@ Internet-Draft          Agent Context Provenance           November 2026
 
                          Table 4: Policy predicates
 
-
-
-
-Moore                      Expires 23 May 2027                 [Page 11]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
-
    When a predicate holds, the kind is REQUIRED at that stage; a call
    without it is a missing_required violation.  When it does not hold,
    or the kind has no row, the kind is forbidden.  Facts MUST NOT be
@@ -638,6 +664,15 @@ Internet-Draft          Agent Context Provenance           November 2026
    1.  *Closed vocabulary.* Every kind, provenance, source, trust,
        lifecycle, predicate, form and stub field is one this document
        names.
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 12]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
 
    2.  *Firewall.* At an ablated stage, every untrusted kind is either
        absent, a stub row, or a declared residual.
@@ -661,18 +696,6 @@ Internet-Draft          Agent Context Provenance           November 2026
    The same policy source generates the runtime guard, the TLA+ contract
    (Section 9) and the conformance tests, so that code, model and
    behaviour cannot silently diverge.
-
-
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 12]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
 4.4.  Residuals
 
@@ -702,32 +725,9 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Moore                      Expires 23 May 2027                 [Page 13]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
       +================+============================================+
@@ -783,7 +783,7 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 Moore                      Expires 23 May 2027                 [Page 14]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
    Every field value comes from the engine's state or from a
@@ -839,7 +839,7 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 Moore                      Expires 23 May 2027                 [Page 15]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
      "provider_kwargs_added": [* tstr],
@@ -888,16 +888,17 @@ Internet-Draft          Agent Context Provenance           November 2026
 
    authn = {
      "subject_id": tstr,
+     ? "subject_id_form": "raw" / "hmac_sha256_16",
      "role": tstr,
-     "verifier": tstr,
 
 
 
 Moore                      Expires 23 May 2027                 [Page 16]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
+     "verifier": tstr,
    }
 
    authz = {
@@ -945,15 +946,15 @@ Internet-Draft          Agent Context Provenance           November 2026
      "stage": stage-name,
      "policy_key": tstr,
      ? "segment_id": tstr,
-     "detail": tstr,
 
 
 
 Moore                      Expires 23 May 2027                 [Page 17]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
+     "detail": tstr,
      "action": "raised" / "stripped" / "recorded",
    }
 
@@ -1000,15 +1001,17 @@ Internet-Draft          Agent Context Provenance           November 2026
       implementations SHOULD use jcs and state it.
 
    sent_messages_match  Set by the component that sent the call: true
-      when the messages it sent hash to messages_sha256.  Absent when
-      the manifest was not finalized at the sending component.
+
 
 
 
 Moore                      Expires 23 May 2027                 [Page 18]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
+
+      when the messages it sent hash to messages_sha256.  Absent when
+      the manifest was not finalized at the sending component.
 
    provider_capture  Whether text a provider library added to the call
       (for example, an output schema appended to the last message) was
@@ -1058,12 +1061,9 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 
 
-
-
-
 Moore                      Expires 23 May 2027                 [Page 19]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
    The untrusted_bytes check normalizes text by collapsing whitespace
@@ -1119,7 +1119,7 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 Moore                      Expires 23 May 2027                 [Page 20]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
 9.  Formal Model
@@ -1175,7 +1175,7 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 Moore                      Expires 23 May 2027                 [Page 21]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
    +=====================+=============================================+
@@ -1231,7 +1231,7 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 Moore                      Expires 23 May 2027                 [Page 22]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
    Results at [FORMAL]: the contract configuration satisfies all
@@ -1245,13 +1245,70 @@ Internet-Draft          Agent Context Provenance           November 2026
    what connects the two, since the measured configuration is generated
    from it.
 
-10.  Carrying the Manifest
+10.  Placement in the CIRIS Agent Trace
 
-10.1.  As a CEG Trace Row
+10.1.  The LLM_CALL Member
+
+   The CIRIS agent trace [I-D.moore-scitt-ciris-trace] records each
+   thought as a CompleteTrace: ordered pipeline components, and one
+   LLM_CALL event per provider call, linked to the pipeline event that
+   issued it.  The context manifest of a call is the LLM_CALL event's
+   context_manifest member.  It is inside the trace's signed canonical
+   bytes, so an aggregator cannot detach it or attach it to another call
+   without invalidating the trace signature.
+
+   The trace's disclosure levels apply:
+
+       +=============+=============================================+
+       | Trace level | context_manifest                            |
+       +=============+=============================================+
+       | generic     | omitted (the level carries no prompt        |
+       |             | digests)                                    |
+       +-------------+---------------------------------------------+
+       | detailed    | present; each authn.subject_id is the first |
+       |             | 16 hexadecimal digits of HMAC-SHA256 over   |
+       |             | the identifier string under a per-agent     |
+       |             | secret, with subject_id_form hmac_sha256_16 |
+       +-------------+---------------------------------------------+
+       | full_traces | present; subject_id as verified, with       |
+       |             | subject_id_form raw (or absent)             |
+       +-------------+---------------------------------------------+
+
+             Table 8: The context manifest at each trace level
+
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 23]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
+   The secret is held by the agent and never disclosed in a trace.  User
+   identifiers are often low-entropy (a chat platform's numeric
+   identifier, a short handle), so an unkeyed hash could be reversed by
+   trying candidates and would link one person across every agent's
+   traces.  The keyed form is stable within one agent, so a verifier can
+   still tell that two calls answered the same sender, and is not
+   linkable across agents.
+
+   At detailed, the LLM_CALL event also carries prompt_hash, which is
+   the manifest's messages_sha256: the two MUST be equal.  At
+   full_traces the event carries the prompt itself, so checks V2 and V4
+   of Section 8 can run from the trace alone.
+
+10.2.  As a CEG Trace Row
 
    In [I-D.moore-scitt-ciris-ceg], an agent's own reasoning trace is a
-   row of the family trace:{form}:{version}.  A context manifest is
-   carried in such a row as follows:
+   row of the family trace:{form}:{version};
+   [I-D.moore-scitt-ciris-trace] specifies its trace:complete:v1 form.
+   For context manifests the following rules of that form matter:
 
    *  The row is signed only by the agent's own key.  [CC]
       (Section 3.1.5) assigns the trace family's attest and withdraw
@@ -1267,11 +1324,11 @@ Internet-Draft          Agent Context Provenance           November 2026
       model's output attests nothing about any agent.  A node MAY hold
       its own mock rows locally (for QA and tests).
 
-   *  The manifests of a thought's calls are members of the trace
-      payload, in call order.  The payload is deterministically encoded
-      CBOR with no floating-point values.  Any score or confidence
-      elsewhere in the trace is a fixed6 integer, as
-      [I-D.moore-scitt-ciris-ceg] requires.
+   *  The manifests of a thought's calls ride in its LLM_CALL events, in
+      call order.  The payload is deterministically encoded CBOR with no
+      floating-point values.  Any score or confidence elsewhere in the
+      trace is a fixed6 integer, as [I-D.moore-scitt-ciris-ceg]
+      requires.
 
    *  The policy document a manifest names by policy_sha256 SHOULD
       itself be published as a signed row, so that a verifier can obtain
@@ -1284,18 +1341,17 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 
 
-
-Moore                      Expires 23 May 2027                 [Page 23]
+Moore                      Expires 23 May 2027                 [Page 24]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
-10.2.  As a SCITT Signed Statement
+10.3.  As a SCITT Signed Statement
 
-   A manifest MAY be the payload of any SCITT signed statement [RFC9943]
-   (a COSE_Sign1 [RFC9052] message registered with a transparency
-   service).  The checks of Section 8 are unchanged.  Two guarantees of
-   a CEG row are lost:
+   Outside the CIRIS trace, a context manifest MAY be the payload of any
+   SCITT signed statement [RFC9943] (a COSE_Sign1 [RFC9052] message
+   registered with a transparency service).  The checks of Section 8 are
+   unchanged.  Two guarantees of a CEG row are lost:
 
    *  *The family's door.* A CEG node admits a trace row only if its
       family's static checks pass, including the closed run_kind.  A
@@ -1341,9 +1397,9 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 
 
-Moore                      Expires 23 May 2027                 [Page 24]
+Moore                      Expires 23 May 2027                 [Page 25]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
    *  The OpenTelemetry GenAI conventions [OTEL-GENAI] define spans for
@@ -1397,9 +1453,9 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 
 
-Moore                      Expires 23 May 2027                 [Page 25]
+Moore                      Expires 23 May 2027                 [Page 26]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
       | User intent        | the request segment (its digest, and   |
@@ -1429,7 +1485,7 @@ Internet-Draft          Agent Context Provenance           November 2026
       |                    | and V7 run without the prompts         |
       +--------------------+----------------------------------------+
 
-      Table 8: AUDIT draft-charter signals and where they are carried
+      Table 9: AUDIT draft-charter signals and where they are carried
 
    This profile also carries signals the draft charter does not ask for:
    per-segment provenance and trust with taint, withholding with a
@@ -1453,9 +1509,9 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 
 
-Moore                      Expires 23 May 2027                 [Page 26]
+Moore                      Expires 23 May 2027                 [Page 27]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
    The draft charter places the auditing of "the underlying AI model,
@@ -1481,9 +1537,11 @@ Internet-Draft          Agent Context Provenance           November 2026
       of writing.  The implementation emits each manifest as JSON, with
       hexadecimal digests and the ciris-json-1 messages form, on the
       llm_call event of its reasoning stream.  Its signed traces carry
-      each call's messages_sha256 (as prompt_hash) but not yet the
-      manifest itself, and it does not emit messages_digest_form.  The
-      reference policy compiler and the TLA+ specification are in
+      each call's messages_sha256 (as prompt_hash); adding
+      context_manifest to the signed LLM_CALL event, with keyed subject
+      pseudonyms at detailed (Section 10), is in progress and not yet in
+      a released trace schema.  It does not emit messages_digest_form.
+      The reference policy compiler and the TLA+ specification are in
       formal/h3ere_ctxflow/ of the same repository.
 
    RATCHET:  CIRIS L3C.  A context-map harness that drives the agent
@@ -1507,11 +1565,9 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 
 
-
-
-Moore                      Expires 23 May 2027                 [Page 27]
+Moore                      Expires 23 May 2027                 [Page 28]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
    *Ablation is a stated limit, not a guarantee.* Residuals are
@@ -1538,7 +1594,10 @@ Internet-Draft          Agent Context Provenance           November 2026
    A manifest contains identifiers, digests and closed-vocabulary
    values, never segment text; violation details never contain segment
    text.  It does contain subject identifiers in authn carriers, which
-   are personal data where the subject is a person.
+   are personal data where the subject is a person.  In the CIRIS trace
+   they are disclosed as verified only at full_traces; at detailed they
+   are keyed pseudonyms (Section 10), and at generic no context manifest
+   is sent.
 
    Digests of short, guessable text can be inverted by trying
    candidates. withheld_sha256 and the stub digest of a short request (a
@@ -1559,20 +1618,26 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 16.1.  Normative References
 
+
+
+
+Moore                      Expires 23 May 2027                 [Page 29]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    [I-D.moore-scitt-ciris-ceg]
               Moore, E., "Signed Attestation Rows of the CIRIS Epistemic
               Grammar and Their Relationship to SCITT", Work in
-
-
-
-Moore                      Expires 23 May 2027                 [Page 28]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
-
               Progress, Internet-Draft, draft-moore-scitt-ciris-ceg-02,
               November 2026, <https://datatracker.ietf.org/doc/html/
               draft-moore-scitt-ciris-ceg-02>.
+
+   [I-D.moore-scitt-ciris-trace]
+              Moore, E., "The CIRIS Agent Reasoning Trace", Work in
+              Progress, Internet-Draft, draft-moore-scitt-ciris-trace-
+              00, November 2026, <https://datatracker.ietf.org/doc/html/
+              draft-moore-scitt-ciris-trace-00>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1610,6 +1675,13 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 16.2.  Informative References
 
+
+
+Moore                      Expires 23 May 2027                 [Page 30]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    [AUDIT-CHARTER]
               AUDIT BoF proponents, "Agent Use of Delegation and
               Interaction Traceability (AUDIT) Working Group Charter
@@ -1618,13 +1690,6 @@ Internet-Draft          Agent Context Provenance           November 2026
 
    [CC]       CIRIS L3C, "The CIRIS Constitution", n.d.,
               <https://github.com/CIRISAI/CIRISConstitution>.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 29]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    [CIRISAGENT]
               CIRIS L3C, "CIRISAgent", n.d.,
@@ -1666,21 +1731,19 @@ Internet-Draft          Agent Context Provenance           November 2026
               <https://datatracker.ietf.org/doc/html/draft-durga-wimse-
               ctx-isolation-00>.
 
+
+
+Moore                      Expires 23 May 2027                 [Page 31]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    [I-D.emirdag-scitt-ai-agent-execution]
               Emirdag, P. and D. Feichtinger, "AI Agent Execution
               Profile of SCITT", Work in Progress, Internet-Draft,
               draft-emirdag-scitt-ai-agent-execution-01, 12 October
               2026, <https://datatracker.ietf.org/doc/html/draft-
               emirdag-scitt-ai-agent-execution-01>.
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 30]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    [I-D.gilda-audit-agent-audit-record]
               Gilda, S., "An Audit Record Format for AI Agent
@@ -1724,19 +1787,17 @@ Internet-Draft          Agent Context Provenance           November 2026
               Systems", n.d.,
               <https://opentelemetry.io/docs/specs/semconv/gen-ai/>.
 
+
+
+Moore                      Expires 23 May 2027                 [Page 32]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
               Code: The Implementation Status Section", BCP 205,
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
               <https://www.rfc-editor.org/rfc/rfc7942>.
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 31]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    [RFC8785]  Rundgren, A., Jordan, B., and S. Erdtman, "JSON
               Canonicalization Scheme (JCS)", RFC 8785,
@@ -1779,19 +1840,14 @@ Appendix A.  Measured Motivation
     | verified field                       |                         |
     +--------------------------------------+-------------------------+
 
-              Table 9: Findings that motivated the manifest
+              Table 10: Findings that motivated the manifest
 
 
 
 
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 32]
+Moore                      Expires 23 May 2027                 [Page 33]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
 Appendix B.  Example
@@ -1845,9 +1901,9 @@ Appendix B.  Example
 
 
 
-Moore                      Expires 23 May 2027                 [Page 33]
+Moore                      Expires 23 May 2027                 [Page 34]
 
-Internet-Draft          Agent Context Provenance           November 2026
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
      "c38e1604e79f43dfd5dd92f5d2c2188716b860c04154ff90627ba120c9a07916",
@@ -1901,4 +1957,4 @@ Author's Address
 
 
 
-Moore                      Expires 23 May 2027                 [Page 34]
+Moore                      Expires 23 May 2027                 [Page 35]

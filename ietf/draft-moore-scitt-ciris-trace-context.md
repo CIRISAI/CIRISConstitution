@@ -1,6 +1,6 @@
 ---
-title: "Prompt Context Provenance for AI Agent Decision Traces"
-abbrev: "Agent Context Provenance"
+title: "Context Manifests for the CIRIS Agent Trace: Prompt Context Provenance for AI Agent Decision Traces"
+abbrev: "CIRIS Trace Context Manifest"
 category: info
 submissiontype: IETF
 docname: draft-moore-scitt-ciris-trace-context-latest
@@ -39,6 +39,13 @@ normative:
     date: 2026-11
     seriesinfo:
       Internet-Draft: draft-moore-scitt-ciris-ceg-02
+  I-D.moore-scitt-ciris-trace:
+    title: "The CIRIS Agent Reasoning Trace"
+    author:
+      - name: Eric Moore
+    date: 2026-11
+    seriesinfo:
+      Internet-Draft: draft-moore-scitt-ciris-trace-00
 
 informative:
   RFC7942:
@@ -107,8 +114,9 @@ stage may and must receive which kinds of segment, ablation stubs that
 stand in for text withheld from a stage, and the checks a verifier runs
 against the manifest and against the bytes actually sent.  It states
 the safety properties of the policy as invariants checked by a model
-checker.  The manifest is carried as the payload of a CEG trace row or
-of any SCITT signed statement.
+checker.  The context manifest is the `context_manifest` member of the
+LLM_CALL event of the CIRIS agent trace, carried in a CEG trace row; it
+can also be the payload of any SCITT signed statement.
 
 --- middle
 
@@ -189,8 +197,14 @@ This document specifies the manifest, the policy vocabulary, the stub,
 and the checks.  It does not specify how an agent decides, what any
 stage concludes, or how a tool call is authorized: the manifest
 records what models were given, not whether they were right.  It
-defines no new signature, receipt or transparency mechanism: those are
-{{I-D.moore-scitt-ciris-ceg}} and {{RFC9943}}.
+defines no trace envelope, signature, receipt or transparency
+mechanism: the trace and its levels are {{I-D.moore-scitt-ciris-trace}},
+the signed row and admission are {{I-D.moore-scitt-ciris-ceg}}, and
+transparency is {{RFC9943}}.
+
+"Context manifest" is used throughout, never "manifest" alone.  It is
+unrelated to the `trace_manifest:v1` object of {{CC}}, which carries a
+trace too large to inline.
 
 ## Conventions and Definitions
 
@@ -224,8 +238,9 @@ Policy:
   the stage must, may or must not receive it, and in which form
   ({{policy}}).
 
-Manifest:
-: The per-call record specified in {{manifest}}.
+Context manifest:
+: The per-call record specified in {{manifest}}.  Where this document
+  says "manifest" it means a context manifest.
 
 Stub:
 : The closed-vocabulary description sent in place of a withheld segment
@@ -648,6 +663,7 @@ source = "user_input" / "adapter_metadata" / "auth_context" /
 
 authn = {
   "subject_id": tstr,
+  ? "subject_id_form": "raw" / "hmac_sha256_16",
   "role": tstr,
   "verifier": tstr,
 }
@@ -876,13 +892,46 @@ abstraction, not proofs about the implementation; the manifest is what
 connects the two, since the measured configuration is generated from
 it.
 
-# Carrying the Manifest {#carrying}
+# Placement in the CIRIS Agent Trace {#carrying}
+
+## The LLM_CALL Member
+
+The CIRIS agent trace {{I-D.moore-scitt-ciris-trace}} records each
+thought as a `CompleteTrace`: ordered pipeline components, and one
+LLM_CALL event per provider call, linked to the pipeline event that
+issued it.  The context manifest of a call is the LLM_CALL event's
+`context_manifest` member.  It is inside the trace's signed canonical
+bytes, so an aggregator cannot detach it or attach it to another call
+without invalidating the trace signature.
+
+The trace's disclosure levels apply:
+
+| Trace level | `context_manifest` |
+|---|---|
+| `generic` | omitted (the level carries no prompt digests) |
+| `detailed` | present; each `authn.subject_id` is the first 16 hexadecimal digits of HMAC-SHA256 over the identifier string under a per-agent secret, with `subject_id_form` `hmac_sha256_16` |
+| `full_traces` | present; `subject_id` as verified, with `subject_id_form` `raw` (or absent) |
+{: title="The context manifest at each trace level"}
+
+The secret is held by the agent and never disclosed in a trace.  User
+identifiers are often low-entropy (a chat platform's numeric
+identifier, a short handle), so an unkeyed hash could be reversed by
+trying candidates and would link one person across every agent's
+traces.  The keyed form is stable within one agent, so a verifier can
+still tell that two calls answered the same sender, and is not linkable
+across agents.
+
+At `detailed`, the LLM_CALL event also carries `prompt_hash`, which is
+the manifest's `messages_sha256`: the two MUST be equal.  At
+`full_traces` the event carries the prompt itself, so checks V2 and V4
+of {{verify}} can run from the trace alone.
 
 ## As a CEG Trace Row
 
 In {{I-D.moore-scitt-ciris-ceg}}, an agent's own reasoning trace is a
-row of the family `trace:{form}:{version}`.  A context manifest is
-carried in such a row as follows:
+row of the family `trace:{form}:{version}`; {{I-D.moore-scitt-ciris-trace}}
+specifies its `trace:complete:v1` form.  For context manifests the
+following rules of that form matter:
 
 * The row is signed only by the agent's own key.  {{CC}} (Section
   3.1.5) assigns the trace family's attest and withdraw uses to the
@@ -898,8 +947,8 @@ carried in such a row as follows:
   `trace_run_kind_mock`: a mock model's output attests nothing about any
   agent.  A node MAY hold its own mock rows locally (for QA and tests).
 
-* The manifests of a thought's calls are members of the trace payload,
-  in call order.  The payload is deterministically encoded CBOR with no
+* The manifests of a thought's calls ride in its LLM_CALL events, in
+  call order.  The payload is deterministically encoded CBOR with no
   floating-point values.  Any score or confidence elsewhere in the
   trace is a fixed6 integer, as {{I-D.moore-scitt-ciris-ceg}} requires.
 
@@ -912,7 +961,8 @@ repeats none of them.
 
 ## As a SCITT Signed Statement
 
-A manifest MAY be the payload of any SCITT signed statement
+Outside the CIRIS trace, a context manifest MAY be the payload of any
+SCITT signed statement
 {{RFC9943}} (a COSE_Sign1 {{RFC9052}} message registered with a
 transparency service).  The checks of {{verify}} are unchanged.  Two
 guarantees of a CEG row are lost:
@@ -1037,8 +1087,10 @@ CIRISAgent:
   implementation emits each manifest as JSON, with hexadecimal digests
   and the `ciris-json-1` messages form, on the `llm_call` event of its
   reasoning stream.  Its signed traces carry each call's
-  `messages_sha256` (as `prompt_hash`) but not yet the manifest itself,
-  and it does not emit `messages_digest_form`.  The reference
+  `messages_sha256` (as `prompt_hash`); adding `context_manifest` to the
+  signed LLM_CALL event, with keyed subject pseudonyms at `detailed`
+  ({{carrying}}), is in progress and not yet in a released trace schema.
+  It does not emit `messages_digest_form`.  The reference
   policy compiler and the TLA+ specification are in
   `formal/h3ere_ctxflow/` of the same repository.
 
@@ -1084,7 +1136,10 @@ assembler can add text the policy never admitted.  The
 A manifest contains identifiers, digests and closed-vocabulary values,
 never segment text; violation details never contain segment text.  It
 does contain subject identifiers in `authn` carriers, which are
-personal data where the subject is a person.
+personal data where the subject is a person.  In the CIRIS trace they
+are disclosed as verified only at `full_traces`; at `detailed` they are
+keyed pseudonyms ({{carrying}}), and at `generic` no context manifest is
+sent.
 
 Digests of short, guessable text can be inverted by trying candidates.
 `withheld_sha256` and the stub digest of a short request (a size of
