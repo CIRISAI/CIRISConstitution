@@ -21,7 +21,7 @@ Rows (dicts of causal_kernel.row) carry `form`: "e1" for the earlier JSON form (
              holders, with each holder it adds and each it re-commits; a recovery is one statement by the recovery
              key the commitment in force commits to, changing that seat alone (CC 2.6.1.11, CC 4.2.6).
     rebind   `transport:canonical_rebind` for `seat`, carrying `xw`, counted by the holders.
-    td       a seat's `transport_destination` carrying `xw`; the genesis names the seats' bindings.
+    td       a seat's binding: `transport_destination`, with `xw` beside it at the payload's top level; the genesis names the seats' bindings.
     confer   any other counted act of the holders.
     resume   `accord:lifecycle:active`, counted, naming a halt.
     ob       an owner-binding, `owner` over `target`, with both voices (the target's cosignature, CC 3.2).
