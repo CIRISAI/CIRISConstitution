@@ -4,7 +4,7 @@ property	P3 the accord's count holds from the genesis, which every holder signs	
 property	P4 no single device yields a halt	holds	one_half_verifies=caught earlier_halt=caught
 property	P5 a seat is canonical by the genesis's count and has one transit key from it, moved only by the holders' count	holds	seat_alone_td=caught one_holder_rebind=caught pick_one=caught earlier_rebind=caught canonical_self_claimed=caught canonical_ends_with_record=caught
 property	P6 an agent has no standing until its steward-binding of this form exists	holds	earlier_binding=caught act_without_steward=caught earlier_roster=caught owner_revocation_ignored=caught
-property	P7 two geneses are a fork: tips to a reader with no pin, the other void to one that pinned	holds	fork_union=caught pinned_ignored=caught
+property	P7 two geneses are a fork: a reader under a thumbprint anchor roots on neither and runs no agent; one pinned by object id holds the other void	holds	fork_union=caught pinned_ignored=caught fork_common=caught act_unrooted=caught
 property	P8 a halt of this form is available from the first moment after the genesis	holds	publish_ungated=caught
 property	P9 the result does not depend on the order in which a node receives the rows	holds	by_arrival=caught fork_first=caught
 property	P10 a roster change is a later bundle, counted at a strict majority of the predecessor's holders and by each holder it adds or re-commits	holds	change_minority=caught added_unsigned=caught recommit_unsigned=caught fork_union=caught
@@ -18,4 +18,4 @@ finding	F6 the earlier sealed halt, published after the genesis	refused
 finding	F7 a holder's composite key with both halves on the token	one device yields a halt
 finding	F8 halts sealed after the genesis was signed	the genesis is held back until they exist
 finding	F9 the earlier community	no member of this form
-count	worlds 55, arrival orders per world and reader 16, readers 3	2910 answers computed
+count	worlds 55, arrival orders per world and reader 16, readers 3	2930 answers computed

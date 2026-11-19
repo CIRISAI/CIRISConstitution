@@ -80,7 +80,7 @@ and the earlier mesh goes on.
 |---|---|
 | a holder is unavailable | no genesis can be signed (**model**, F2); the ceremony waits, or the holders re-form the roster in the earlier mesh first |
 | a holder's key is lost after | the roster and its count stand (**model**, P3); the holder recovers by a later bundle signed by its recovery key alone (**model**, P11) |
-| two geneses | a fork. A reader without an object-id anchor holds both as tips and takes only what both name; one anchored by an object id holds the other void (**model**, P7) |
+| two geneses | a fork. A reader under a thumbprint anchor reports it and roots on neither: no root, so no agent runs and the node serves nothing of that mesh until its owner re-anchors it by an object id. One anchored by an object id holds the other void (**model**, P7) |
 | the pin is published wrong | a node pinned to a bundle no holder signed roots on nothing; it changes its own pin |
 | a key holder never signs a record | it has no standing in this mesh, and is never removed from anything by silence, since nothing of it was carried |
 
