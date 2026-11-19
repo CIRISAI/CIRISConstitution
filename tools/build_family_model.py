@@ -469,7 +469,7 @@ def conferral_columns(fams, reg):
         if [k for k, _ in p] != [k for k, _ in s]: errs.append(f"family_shapes.tsv: {r['family']}: parameters and sources do not name the same things")
         shapes[r["family"]] = (r, OrderedDict(p), OrderedDict(s))
     if set(shapes) != set(fams): errs.append("family_shapes.tsv: its families are not the model's: " + ", ".join(sorted(set(shapes) ^ set(fams))))
-    default, by_seg, by_class, stated, derived = None, {}, {}, OrderedDict(), OrderedDict()
+    default, by_seg, by_class, stated, derived, armed = None, {}, {}, OrderedDict(), OrderedDict(), OrderedDict()
     for t in tsv_rows(CONFERS_TEXT):
         where = f"confers_text.tsv: {t['column']} {t['when']}"
         span = section_span(t["cc_ref"])
@@ -478,6 +478,18 @@ def conferral_columns(fams, reg):
         if t["column"] == "confers" and t["when"].startswith("shape="):
             if default is not None: errs.append(f"{where}: the default is stated once")
             default = (set(t["when"][6:].split("|")), t["value"], src)
+        elif t["column"] == "confers" and " => " in t["value"]:
+            # an armed cell, in the count column's style: `selector => value ; ...`, the first arm that holds deciding
+            if t["when"] not in fams: errs.append(f"{where}: no such family"); continue
+            arms_ = []
+            for seg in t["value"].split(" ; "):
+                sel, _, val = seg.partition(" => ") if " => " in seg else ("*", "", seg)
+                if sel != "*" and not re.fullmatch(r"[a-z_]+=[a-z_|]+", sel): errs.append(f"{where}: {sel} is not a selector"); break
+                arms_.append(OrderedDict([("when", sel), ("value", val.strip())]))
+            else:
+                if arms_[-1]["when"] != "*": errs.append(f"{where}: an armed cell ends in a `*` arm")
+                armed[t["when"]] = OrderedDict([("value", t["value"]), ("arms", arms_), ("source", "cc-table"), ("cc_ref", t["cc_ref"]),
+                                                ("rule", "stated"), ("from", "formal/derivation/confers_text.tsv")])
         elif t["column"] == "confers":
             if t["when"] not in fams: errs.append(f"{where}: no such family"); continue
             k, _, v = t["value"].partition("=") if t["value"] != "nothing" else ("confers", "", "nothing")
@@ -495,6 +507,8 @@ def conferral_columns(fams, reg):
             derived[t["when"]] = OrderedDict([("value", t["value"]), ("source", "cc-table"), ("cc_ref", t["cc_ref"]), ("rule", "stated"), ("from", "formal/derivation/confers_text.tsv")])
         else: errs.append(f"{where}: the column is confers, binds_segment or derived")
     if default is None: errs.append("confers_text.tsv: no default for confers")
+    for f, cell in armed.items():
+        if f in stated: errs.append(f"confers_text.tsv: {f}: an armed cell and a plain one; state it once")
     for f in fams:
         if f not in shapes: continue
         r, P, S = shapes[f]
@@ -502,6 +516,8 @@ def conferral_columns(fams, reg):
         for k, (v, src) in stated.get(f, {}).items():   # a parameter the shapes table does not state, from confers_text.tsv; never a copy
             if k in P: errs.append(f"confers_text.tsv: {f}: family_shapes.tsv already states {k}; remove the row"); continue
             P, S = OrderedDict(P, **{k: v}), OrderedDict(S, **{k: src})
+        if f in armed:
+            conf[f] = armed[f]; continue
         if "confers" in P:
             if r["shape"] in default[0]: errs.append(f"confers_text.tsv: {f}: a {r['shape']} takes the default; its row is a copy")
             m = re.match(r'^quote:(CC [\d.]+) "(.*)"$', S["confers"])
