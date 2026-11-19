@@ -51,6 +51,15 @@ informative:
   I-D.mih-scitt-agent-action-capsule:
   I-D.birkholz-vcon-ai-agent-extension:
   I-D.gilda-audit-agent-audit-record:
+  I-D.kuehlewind-audit-architecture:
+  I-D.birkholz-verifiable-agent-conversations:
+  I-D.cosme-audit-agent-traceability:
+  AUDIT-CHARTER:
+    title: "Agent Use of Delegation and Interaction Traceability (AUDIT) Working Group Charter (draft)"
+    author:
+      - org: AUDIT BoF proponents
+    date: 2026
+    target: https://github.com/mirjak/audit-bof-preparation/blob/main/audit-charter.md
   TLA:
     title: "Specifying Systems: The TLA+ Language and Tools for Hardware and Software Engineers"
     author:
@@ -949,10 +958,66 @@ statements.  Measured against the five properties of the Introduction:
   model calls and can capture input messages, but carry no provenance,
   trust or signature.
 
+* {{I-D.kuehlewind-audit-architecture}} describes an architecture for
+  auditing agent delegation and interactions across domains, and
+  {{I-D.cosme-audit-agent-traceability}} the attestation and registry
+  evidence for delegation traceability.  {{I-D.birkholz-verifiable-agent-conversations}}
+  specifies verifiable records of agent conversations.  These address
+  what passed between parties; this document addresses what each model
+  call inside one party was given.
+
 None of these, as far as the author has found, records the locale of
 model input or states its properties as model-checked invariants.  This
 document is complementary to all of them: an action record can
 reference the manifests of the calls behind the action.
+
+## Relationship to the AUDIT Charter {#audit}
+
+The proposed AUDIT working group {{AUDIT-CHARTER}} would define
+interoperable audit records for agents and delegated systems,
+verifiable by a party that trusts neither the agent nor its operator.
+The table below maps each signal the draft charter names to where a
+deployment of {{I-D.moore-scitt-ciris-ceg}} with this profile carries
+it.
+
+| AUDIT signal | Carried by |
+|---|---|
+| Attribution to a user, agent instance or delegation context | the trace row is signed by the agent's own key; the `authn` carrier names the verified sender; delegation is a CEG `delegates_to` row |
+| Delegation chains | `delegates_to` rows and their references ({{I-D.moore-scitt-ciris-ceg}}) |
+| Authorization as a time-evolving state | `authz` carriers with grant identifier, authorizer, signature status and grant time; the grant's own rows, replaced and withdrawn by later rows; the policy predicates evaluated per call |
+| Identity transitions | key records and identity amendments as signed rows; `amendment` segments with their grants |
+| User intent declarations | the `request` segment (its digest, and its stub where withheld) |
+| Agent and tool interactions, exchanged data | `tool_output`, `dma_output` and `draft` segments with span digests; `messages_sha256` per call |
+| Invoked or declined actions, and outcomes | the trace's terminal result (completed, refused, deferred); typed vetoes in `conscience_feedback` |
+| Execution context and structure as it emerges | one manifest per call, in call order, with stage, role, retry index and thought kind |
+| Verifiable without trusting agent or operator | signed rows with transparency receipts; check V2 against bytes captured by a party the agent does not control ({{verify}}) |
+| Privacy and selective disclosure without disclosing prompts | manifests carry identifiers, digests and closed-vocabulary values, never text; CEG members can be blinded (selective disclosure); V1, V3, V5, V6 and V7 run without the prompts |
+{: title="AUDIT draft-charter signals and where they are carried"}
+
+This profile also carries signals the draft charter does not ask for:
+per-segment provenance and trust with taint, withholding with a record,
+locale, and machine-checked policy invariants.
+
+Two charter items are not covered here, and are not claimed:
+
+* **Cross-domain correlation in protocols.**  CEG rows reference one
+  another by name, and a manifest names its task and thought, but this
+  document defines no identifier propagated across other parties'
+  protocols (HTTP headers, token claims) to link one interaction across
+  administrative domains.  That is the charter's third deliverable, and
+  the identifier is expected from the agentproto working group.
+
+* **Evidence from parties other than the agent.**  A trace row is the
+  agent's own account.  Correlating it with records made by tools,
+  services and other agents in other domains, where no single party has
+  the whole picture, needs those parties' records; this profile is one
+  of them, not the collection.
+
+The draft charter places the auditing of "the underlying AI model,
+training data, or inference mechanisms" out of scope while allowing
+interactions with the model.  A manifest describes what each model call
+was given and under which policy, not how the model computes; it is a
+record of an interaction with the model, in the charter's terms.
 
 # Implementation Status {#impl}
 

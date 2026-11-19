@@ -124,17 +124,18 @@ Internet-Draft          Agent Context Provenance           November 2026
      10.1.  As a CEG Trace Row . . . . . . . . . . . . . . . . . . .  23
      10.2.  As a SCITT Signed Statement  . . . . . . . . . . . . . .  24
    11. Relationship to Other Work  . . . . . . . . . . . . . . . . .  24
-   12. Implementation Status . . . . . . . . . . . . . . . . . . . .  25
-   13. Security Considerations . . . . . . . . . . . . . . . . . . .  25
-   14. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  26
-   15. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  26
-   16. References  . . . . . . . . . . . . . . . . . . . . . . . . .  26
-     16.1.  Normative References . . . . . . . . . . . . . . . . . .  26
-     16.2.  Informative References . . . . . . . . . . . . . . . . .  27
-   Appendix A.  Measured Motivation  . . . . . . . . . . . . . . . .  29
-   Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  30
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  32
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  32
+     11.1.  Relationship to the AUDIT Charter  . . . . . . . . . . .  25
+   12. Implementation Status . . . . . . . . . . . . . . . . . . . .  27
+   13. Security Considerations . . . . . . . . . . . . . . . . . . .  27
+   14. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  28
+   15. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  28
+   16. References  . . . . . . . . . . . . . . . . . . . . . . . . .  28
+     16.1.  Normative References . . . . . . . . . . . . . . . . . .  28
+     16.2.  Informative References . . . . . . . . . . . . . . . . .  29
+   Appendix A.  Measured Motivation  . . . . . . . . . . . . . . . .  32
+   Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  33
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  34
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  34
 
 1.  Introduction
 
@@ -161,7 +162,6 @@ Internet-Draft          Agent Context Provenance           November 2026
    *  A rule a Wise Authority (the agent's human overseer) had stated
       reached the drafter, but almost never the two ablated judges.  The
       judges then vetoed compliant replies as "invented policy".
-
 
 
 
@@ -1350,10 +1350,119 @@ Internet-Draft          Agent Context Provenance           November 2026
       model calls and can capture input messages, but carry no
       provenance, trust or signature.
 
+   *  [I-D.kuehlewind-audit-architecture] describes an architecture for
+      auditing agent delegation and interactions across domains, and
+      [I-D.cosme-audit-agent-traceability] the attestation and registry
+      evidence for delegation traceability.
+      [I-D.birkholz-verifiable-agent-conversations] specifies verifiable
+      records of agent conversations.  These address what passed between
+      parties; this document addresses what each model call inside one
+      party was given.
+
    None of these, as far as the author has found, records the locale of
    model input or states its properties as model-checked invariants.
    This document is complementary to all of them: an action record can
    reference the manifests of the calls behind the action.
+
+11.1.  Relationship to the AUDIT Charter
+
+   The proposed AUDIT working group [AUDIT-CHARTER] would define
+   interoperable audit records for agents and delegated systems,
+   verifiable by a party that trusts neither the agent nor its operator.
+   The table below maps each signal the draft charter names to where a
+   deployment of [I-D.moore-scitt-ciris-ceg] with this profile carries
+   it.
+
+      +====================+========================================+
+      | AUDIT signal       | Carried by                             |
+      +====================+========================================+
+      | Attribution to a   | the trace row is signed by the agent's |
+      | user, agent        | own key; the authn carrier names the   |
+      | instance or        | verified sender; delegation is a CEG   |
+      | delegation context | delegates_to row                       |
+      +--------------------+----------------------------------------+
+      | Delegation chains  | delegates_to rows and their references |
+      |                    | ([I-D.moore-scitt-ciris-ceg])          |
+      +--------------------+----------------------------------------+
+      | Authorization as a | authz carriers with grant identifier,  |
+      | time-evolving      | authorizer, signature status and grant |
+      | state              | time; the grant's own rows, replaced   |
+      |                    | and withdrawn by later rows; the       |
+      |                    | policy predicates evaluated per call   |
+      +--------------------+----------------------------------------+
+      | Identity           | key records and identity amendments as |
+      | transitions        | signed rows; amendment segments with   |
+      |                    | their grants                           |
+      +--------------------+----------------------------------------+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 25]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
+
+      | User intent        | the request segment (its digest, and   |
+      | declarations       | its stub where withheld)               |
+      +--------------------+----------------------------------------+
+      | Agent and tool     | tool_output, dma_output and draft      |
+      | interactions,      | segments with span digests;            |
+      | exchanged data     | messages_sha256 per call               |
+      +--------------------+----------------------------------------+
+      | Invoked or         | the trace's terminal result            |
+      | declined actions,  | (completed, refused, deferred); typed  |
+      | and outcomes       | vetoes in conscience_feedback          |
+      +--------------------+----------------------------------------+
+      | Execution context  | one manifest per call, in call order,  |
+      | and structure as   | with stage, role, retry index and      |
+      | it emerges         | thought kind                           |
+      +--------------------+----------------------------------------+
+      | Verifiable without | signed rows with transparency          |
+      | trusting agent or  | receipts; check V2 against bytes       |
+      | operator           | captured by a party the agent does not |
+      |                    | control (Section 8)                    |
+      +--------------------+----------------------------------------+
+      | Privacy and        | manifests carry identifiers, digests   |
+      | selective          | and closed-vocabulary values, never    |
+      | disclosure without | text; CEG members can be blinded       |
+      | disclosing prompts | (selective disclosure); V1, V3, V5, V6 |
+      |                    | and V7 run without the prompts         |
+      +--------------------+----------------------------------------+
+
+      Table 8: AUDIT draft-charter signals and where they are carried
+
+   This profile also carries signals the draft charter does not ask for:
+   per-segment provenance and trust with taint, withholding with a
+   record, locale, and machine-checked policy invariants.
+
+   Two charter items are not covered here, and are not claimed:
+
+   *  *Cross-domain correlation in protocols.* CEG rows reference one
+      another by name, and a manifest names its task and thought, but
+      this document defines no identifier propagated across other
+      parties' protocols (HTTP headers, token claims) to link one
+      interaction across administrative domains.  That is the charter's
+      third deliverable, and the identifier is expected from the
+      agentproto working group.
+
+   *  *Evidence from parties other than the agent.* A trace row is the
+      agent's own account.  Correlating it with records made by tools,
+      services and other agents in other domains, where no single party
+      has the whole picture, needs those parties' records; this profile
+      is one of them, not the collection.
+
+
+
+Moore                      Expires 23 May 2027                 [Page 26]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
+
+   The draft charter places the auditing of "the underlying AI model,
+   training data, or inference mechanisms" out of scope while allowing
+   interactions with the model.  A manifest describes what each model
+   call was given and under which policy, not how the model computes; it
+   is a record of an interaction with the model, in the charter's terms.
 
 12.  Implementation Status
 
@@ -1397,7 +1506,10 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 
 
-Moore                      Expires 23 May 2027                 [Page 25]
+
+
+
+Moore                      Expires 23 May 2027                 [Page 27]
 
 Internet-Draft          Agent Context Provenance           November 2026
 
@@ -1453,7 +1565,7 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 
 
-Moore                      Expires 23 May 2027                 [Page 26]
+Moore                      Expires 23 May 2027                 [Page 28]
 
 Internet-Draft          Agent Context Provenance           November 2026
 
@@ -1498,21 +1610,25 @@ Internet-Draft          Agent Context Provenance           November 2026
 
 16.2.  Informative References
 
+   [AUDIT-CHARTER]
+              AUDIT BoF proponents, "Agent Use of Delegation and
+              Interaction Traceability (AUDIT) Working Group Charter
+              (draft)", 2026, <https://github.com/mirjak/audit-bof-
+              preparation/blob/main/audit-charter.md>.
+
    [CC]       CIRIS L3C, "The CIRIS Constitution", n.d.,
               <https://github.com/CIRISAI/CIRISConstitution>.
+
+
+
+Moore                      Expires 23 May 2027                 [Page 29]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
 
    [CIRISAGENT]
               CIRIS L3C, "CIRISAgent", n.d.,
               <https://github.com/CIRISAI/CIRISAgent>.
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 27]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    [FORMAL]   CIRIS L3C, "H3ERE context-flow model (TLA+), vendored at
               CIRISAgent 59b7e5d", n.d.,
@@ -1526,6 +1642,21 @@ Internet-Draft          Agent Context Provenance           November 2026
               draft-birkholz-vcon-ai-agent-extension-00, 2 November
               2026, <https://datatracker.ietf.org/doc/html/draft-
               birkholz-vcon-ai-agent-extension-00>.
+
+   [I-D.birkholz-verifiable-agent-conversations]
+              Birkholz, H., Heldt, T., and O. Steele, "Verifiable Agent
+              Conversation Records", Work in Progress, Internet-Draft,
+              draft-birkholz-verifiable-agent-conversations-01, 31
+              August 2026, <https://datatracker.ietf.org/doc/html/draft-
+              birkholz-verifiable-agent-conversations-01>.
+
+   [I-D.cosme-audit-agent-traceability]
+              Cosme, C. F., "Delegation and Interaction Traceability for
+              AI Agents: An Attestation and Registry Evidence Model",
+              Work in Progress, Internet-Draft, draft-cosme-audit-agent-
+              traceability-00, 18 November 2026,
+              <https://datatracker.ietf.org/doc/html/draft-cosme-audit-
+              agent-traceability-00>.
 
    [I-D.durga-wimse-ctx-isolation]
               Durga, R. K., "Cryptographic Separation of Untrusted Data-
@@ -1542,12 +1673,29 @@ Internet-Draft          Agent Context Provenance           November 2026
               2026, <https://datatracker.ietf.org/doc/html/draft-
               emirdag-scitt-ai-agent-execution-01>.
 
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 30]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
+
    [I-D.gilda-audit-agent-audit-record]
               Gilda, S., "An Audit Record Format for AI Agent
               Authorization Decisions", Work in Progress, Internet-
               Draft, draft-gilda-audit-agent-audit-record-04, 19
               November 2026, <https://datatracker.ietf.org/doc/html/
               draft-gilda-audit-agent-audit-record-04>.
+
+   [I-D.kuehlewind-audit-architecture]
+              Kühlewind, M. and H. Birkholz, "An Architecture for
+              Auditing Agent Delegation and Interactions", Work in
+              Progress, Internet-Draft, draft-kuehlewind-audit-
+              architecture-01, 7 September 2026,
+              <https://datatracker.ietf.org/doc/html/draft-kuehlewind-
+              audit-architecture-01>.
 
    [I-D.mih-scitt-agent-action-capsule]
               Mih, S., "An Agent Action Capsule Profile for SCITT", Work
@@ -1562,13 +1710,6 @@ Internet-Draft          Agent Context Provenance           November 2026
               Draft, draft-sharif-agent-audit-trail-10, 17 November
               2026, <https://datatracker.ietf.org/doc/html/draft-sharif-
               agent-audit-trail-10>.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 28]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    [I-D.thaha-scitt-agent-execution-evidence]
               Thaha, S. and S. Shamsudeen, "Agent Execution Evidence: A
@@ -1587,6 +1728,15 @@ Internet-Draft          Agent Context Provenance           November 2026
               Code: The Implementation Status Section", BCP 205,
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
               <https://www.rfc-editor.org/rfc/rfc7942>.
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 31]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
 
    [RFC8785]  Rundgren, A., Jordan, B., and S. Erdtman, "JSON
               Canonicalization Scheme (JCS)", RFC 8785,
@@ -1610,22 +1760,6 @@ Appendix A.  Measured Motivation
    per case, before the mechanism of this document existed.  They are
    reported to explain the design, not as general claims about agents.
 
-
-
-
-
-
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 29]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
-
     +======================================+=========================+
     | Finding                              | Measured                |
     +======================================+=========================+
@@ -1645,7 +1779,20 @@ Internet-Draft          Agent Context Provenance           November 2026
     | verified field                       |                         |
     +--------------------------------------+-------------------------+
 
-              Table 8: Findings that motivated the manifest
+              Table 9: Findings that motivated the manifest
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 32]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
 
 Appendix B.  Example
 
@@ -1674,14 +1821,6 @@ Appendix B.  Example
     "guard_violations": [],
     "messages_sha256":
      "d61c8b816c5a6f1a63528f38cdf9985a8aa28c119874de5694451ac5de4f7377",
-
-
-
-Moore                      Expires 23 May 2027                 [Page 30]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
-
     "sent_messages_match": true,
     "provider_capture": "unavailable",
     "segments": [
@@ -1703,6 +1842,14 @@ Internet-Draft          Agent Context Provenance           November 2026
                 "role": "OBSERVER", "verifier": "api_auth"},
       "message_index": 3, "span_start": 11, "span_end": 236,
       "sha256":
+
+
+
+Moore                      Expires 23 May 2027                 [Page 33]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
+
      "c38e1604e79f43dfd5dd92f5d2c2188716b860c04154ff90627ba120c9a07916",
       "form": "stub",
       "stub": {
@@ -1730,14 +1877,6 @@ Internet-Draft          Agent Context Provenance           November 2026
 
                Figure 2: An entropy-judge manifest (trimmed)
 
-
-
-
-Moore                      Expires 23 May 2027                 [Page 31]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
-
    Reading it: the judge received the draft in full (a residual) and, in
    place of the request, a stub saying that an observer's request
    exists, open, of medium size and carrying no authority, that the
@@ -1762,31 +1901,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 32]
+Moore                      Expires 23 May 2027                 [Page 34]
