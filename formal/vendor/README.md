@@ -10,6 +10,9 @@ The models the implementing repositories keep of their own parts, copied here so
 | [`edge`](edge/) | CIRISEdge `main` | the transport tiers, rooms over the onion, the event path, the reply lane, the retry schedule (quantitative) | transport: load and capacity, not security |
 | [`../onion_layers`](../onion_layers/) | CIRISEdge `feat/onion-fsd` | the anonymous tier's layer deal (TLA+ and Lean) | transport: the onion tier |
 | [`../cewp_node/catalog`](../cewp_node/catalog/) | CIRISServer `main` | the twenty topologies the harness stands up on real nodes | the node as a whole |
+| *pinned, not copied* ([`PINS.tsv`](PINS.tsv)) | CEWP `main` | the network simulation (the twin, calibrated from the live mesh), its specs, and the kernel compiled to WASM that the mesh page folds every node with | the whole path at scale: rows moving between devices, each folding with the kernel |
+
+The CEWP twin is too large to copy, so it is cited by commit: `PINS.tsv` gives the repository, ref, commit, path and git tree id of each piece.
 
 **Checked.** `python3 tools/vendor_models.py --check` (CI) holds every listed file to its recorded hash, refuses a file under a vendored directory that the manifest does not list, and refuses an edit made here without a note. `--upstream`, run where the repositories are cloned, re-hashes each file at its recorded commit and names the files whose ref has moved on since. After a re-vendor, `--write` re-hashes the local copies.
 

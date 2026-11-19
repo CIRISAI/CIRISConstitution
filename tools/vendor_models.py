@@ -11,12 +11,18 @@ differ only where this repository edited the copy (a section number re-cut, say)
               upstream_sha256, and reports where the ref's head has moved since the recorded commit
   --write     re-hash the local files into the manifest (after a re-vendor), keeping the other columns
 
+formal/vendor/PINS.tsv names trees that are cited by commit and not copied (a simulation too large to vendor): the
+repository, ref, commit, path and git tree id. --check holds each row's form; --upstream checks the tree id at the
+commit and names the pins whose ref has moved on.
+
 Run: python3 tools/vendor_models.py --check
 """
 import csv, hashlib, os, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TSV = os.path.join(ROOT, "formal/vendor/VENDOR.tsv")
+PINS = os.path.join(ROOT, "formal/vendor/PINS.tsv")
+PIN_COLS = ["repo", "ref", "commit", "path", "tree", "what"]
 COLS = ["local_path", "repo", "ref", "commit", "upstream_path", "upstream_sha256", "local_sha256", "note"]
 # directories whose every file is vendored (besides the manifest and the README that explain them)
 DIRS = ["formal/vendor/edge", "formal/vendor/server", "formal/vendor/client", "formal/vendor/agent", "formal/onion_layers",
@@ -73,15 +79,43 @@ def upstream(rs):
     return errs
 
 
+def pins():
+    with open(PINS, encoding="utf-8", newline="") as f:
+        return list(csv.DictReader(f, delimiter="\t"))
+
+
+def check_pins(ps):
+    errs = []
+    for p in ps:
+        if list(p) != PIN_COLS: return [f"PINS.tsv: columns {list(p)}, expected {PIN_COLS}"]
+        for k in ("commit", "tree"):
+            if len(p[k]) != 40 or any(c not in "0123456789abcdef" for c in p[k]): errs.append(f"PINS.tsv {p['repo']}:{p['path']}: {k} is not a full git id")
+        if not p["what"].strip(): errs.append(f"PINS.tsv {p['repo']}:{p['path']}: says nothing of what it pins")
+    return errs
+
+
+def upstream_pins(ps):
+    errs = []
+    for p in ps:
+        repo = os.path.expanduser("~/" + p["repo"])
+        if not os.path.isdir(os.path.join(repo, ".git")): errs.append(f"{p['repo']}: no clone at {repo}"); continue
+        g = lambda ref: subprocess.run(["git", "-C", repo, "rev-parse", f"{ref}:{p['path']}"], capture_output=True, text=True).stdout.strip()
+        if g(p["commit"]) != p["tree"]: errs.append(f"pin {p['repo']}:{p['path']}: tree at {p['commit'][:7]} is not {p['tree'][:12]}")
+        h = g(f"origin/{p['ref']}")
+        if h and h != p["tree"]: print(f"vendor: pin moved on {p['repo']} {p['ref']}: {p['path']}")
+    return errs
+
+
 def main():
     rs = rows()
+    ps = pins()
     if "--write" in sys.argv:
         for r in rs: r["local_sha256"] = sha(open(os.path.join(ROOT, r["local_path"]), "rb").read())
         write(rs); print(f"vendor: {len(rs)} files re-hashed"); return 0
-    errs = check(rs) + (upstream(rs) if "--upstream" in sys.argv else [])
+    errs = check(rs) + check_pins(ps) + (upstream(rs) + upstream_pins(ps) if "--upstream" in sys.argv else [])
     edited = sum(r["local_sha256"] != r["upstream_sha256"] for r in rs)
     for e in errs: print("vendor: error: " + e)
-    print(f"vendor: {len(rs)} files from {len({r['repo'] for r in rs})} repositories; {edited} edited here, each with its note; {len(errs)} error(s)")
+    print(f"vendor: {len(rs)} files from {len({r['repo'] for r in rs})} repositories; {edited} edited here, each with its note; {len(ps)} trees pinned by commit; {len(errs)} error(s)")
     return 1 if errs else 0
 
 

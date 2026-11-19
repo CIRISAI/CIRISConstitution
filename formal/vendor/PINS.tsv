@@ -1,0 +1,4 @@
+repo	ref	commit	path	tree	what
+CEWP	main	dc1c30c31c87476ddad270ab1ae8e6b7fdc0ceee	FSD	4b86ed79a1cba168211abb6b24f379b6d749de90	the platform and simulation specs: CEWP.md, SIMULATION_ENGINE.md, the twin packages (FSD/twin)
+CEWP	main	dc1c30c31c87476ddad270ab1ae8e6b7fdc0ceee	crates	d71e1ced0d7b40940062771e56848cfdc7430dbd	the twin: cewp-sim (the simulation), cewp-kernel, cewp-adversary, cewp-csd4, cewp-evidence, cewp-cli
+CEWP	main	dc1c30c31c87476ddad270ab1ae8e6b7fdc0ceee	kernel-wasm	be325e2f04b354df38338668d7adcaf905ab3c28	the kernel compiled to WASM that the mesh page folds every node with
