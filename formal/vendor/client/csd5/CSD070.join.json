@@ -1,0 +1,603 @@
+{
+ "_meta": {
+  "generated_by": "packaging/check_csd5.py --write-tla",
+  "what": "One CSD/5 card as data for a model joining it to CIRISConstitution formal/event_lifecycle. The join is not built. Guards are the card's text; `defs` names what they use.",
+  "format": 1
+ },
+ "card": "CSD-070",
+ "surface": "commons",
+ "registry_draft": 1,
+ "distinct_states": 134928,
+ "context": [
+  "window"
+ ],
+ "locals": {
+  "cohort": {
+   "type": "enum",
+   "values": [
+    "family",
+    "community",
+    "affiliations"
+   ],
+   "lives_while": null
+  },
+  "cohort_key": {
+   "type": "text",
+   "lives_while": null
+  },
+  "action": {
+   "type": "text",
+   "lives_while": null
+  },
+  "raise_grounds": {
+   "type": "text",
+   "lives_while": "standing = ok"
+  },
+  "ballot_grounds": {
+   "type": "text",
+   "lives_while": "has_objections"
+  },
+  "ballot": {
+   "type": "enum",
+   "values": [
+    "unset",
+    "uphold",
+    "overrule"
+   ],
+   "lives_while": "sheet = ballot"
+  },
+  "lifting": {
+   "type": "bool",
+   "lives_while": "has_objections or dry_run = taken"
+  },
+  "dismiss_grounds": {
+   "type": "text",
+   "lives_while": "lifting or dry_run = taken"
+  },
+  "cosigner_key": {
+   "type": "text",
+   "lives_while": "lifting and has_objections and dry_run = taken"
+  },
+  "cosigner_classical": {
+   "type": "text",
+   "lives_while": "lifting and has_objections and dry_run = taken"
+  },
+  "cosigners": {
+   "type": "enum",
+   "values": [
+    "none",
+    "some"
+   ],
+   "lives_while": "dry_run = taken"
+  },
+  "result": {
+   "type": "enum",
+   "values": [
+    "none",
+    "answer",
+    "preview"
+   ],
+   "lives_while": "result != preview or dry_run = taken"
+  },
+  "write_error": {
+   "type": "bool",
+   "lives_while": "standing = ok"
+  }
+ },
+ "reads": {
+  "standing": {
+   "of": [
+    "cohort",
+    "cohort_key",
+    "action"
+   ],
+   "carries": {
+    "refused": {
+     "type": "bool"
+    },
+    "arm": {
+     "type": "enum",
+     "values": [
+      "unreadable",
+      "action_unknown",
+      "cohort_unknown",
+      "not_governed",
+      "quiet",
+      "objected",
+      "stood",
+      "reversed"
+     ]
+    },
+    "fold": {
+     "type": "bool"
+    },
+    "escalation": {
+     "type": "bool"
+    },
+    "objections": {
+     "type": "bool"
+    },
+    "prices": {
+     "type": "bool"
+    }
+   },
+   "where": [
+    "not standing.refused or (standing.arm = unreadable and not standing.fold and not standing.escalation and not standing.objections and not standing.prices)",
+    "standing.arm in [quiet, objected, stood, reversed] or (not standing.fold and not standing.escalation)",
+    "not standing.objections or standing.fold or standing.escalation"
+   ]
+  }
+ },
+ "previews": {
+  "dry_run": {
+   "covers": [
+    "cohort",
+    "cohort_key",
+    "action",
+    "dismiss_grounds"
+   ],
+   "lives_while": "standing != ok or standing.refused or has_objections"
+  }
+ },
+ "defs": {
+  "answered": "standing = ok and not standing.refused",
+  "has_objections": "standing = ok and not standing.refused and standing.objections",
+  "counted": "standing = ok and not standing.refused and standing.fold and standing.arm in [quiet, objected, stood, reversed]",
+  "question_filled": "cohort_key != blank and action != blank"
+ },
+ "writes": {
+  "raise": {
+   "family": "objection:{state}",
+   "verb": "attest",
+   "scope": {
+    "local": "cohort",
+    "values": [
+     "family",
+     "community",
+     "affiliations"
+    ]
+   },
+   "confirm": true,
+   "sends": [
+    "cohort",
+    "cohort_key",
+    "action",
+    "raise_grounds"
+   ],
+   "adds": [],
+   "previewed_by": null,
+   "preview_covers": [],
+   "senders": [
+    {
+     "id": "raise",
+     "primitive": "ConfirmSheet",
+     "tags": {
+      "root": "sheet_commons_raise",
+      "fact_1": "sheet_commons_raise__fact_1",
+      "fact_2": "sheet_commons_raise__fact_2",
+      "fact_3": "sheet_commons_raise__fact_3",
+      "note": "sheet_commons_raise__note",
+      "confirm": "sheet_commons_raise__confirm",
+      "cancel": "sheet_commons_raise__cancel"
+     },
+     "shows": [
+      "action",
+      "cohort_key"
+     ],
+     "sent_from": "confirm",
+     "while": "standing = ok and raise_grounds != blank",
+     "opened_by": [
+      {
+       "id": "object",
+       "present": "standing = ok",
+       "enabled": "raise_grounds != blank",
+       "per": null,
+       "tags": {
+        "root": "btn_commons_object"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "ballot": {
+   "family": "objection:{state}",
+   "verb": "attest",
+   "scope": {
+    "local": "cohort",
+    "values": [
+     "family",
+     "community",
+     "affiliations"
+    ]
+   },
+   "confirm": true,
+   "sends": [
+    "cohort",
+    "cohort_key",
+    "action",
+    "ballot_grounds",
+    "ballot"
+   ],
+   "adds": [],
+   "previewed_by": null,
+   "preview_covers": [],
+   "senders": [
+    {
+     "id": "ballot",
+     "primitive": "ConfirmSheet",
+     "tags": {
+      "root": "sheet_commons_ballot",
+      "fact_1": "sheet_commons_ballot__fact_1",
+      "fact_2": "sheet_commons_ballot__fact_2",
+      "fact_3": "sheet_commons_ballot__fact_3",
+      "note": "sheet_commons_ballot__note",
+      "confirm": "sheet_commons_ballot__confirm",
+      "cancel": "sheet_commons_ballot__cancel"
+     },
+     "shows": [
+      "action",
+      "cohort_key",
+      "ballot"
+     ],
+     "sent_from": "confirm",
+     "while": "has_objections and ballot_grounds != blank",
+     "opened_by": [
+      {
+       "id": "uphold",
+       "present": "has_objections",
+       "enabled": "ballot_grounds != blank",
+       "per": "objection",
+       "tags": {
+        "root": "btn_commons_uphold.<objection>"
+       }
+      },
+      {
+       "id": "overrule",
+       "present": "has_objections",
+       "enabled": "ballot_grounds != blank",
+       "per": "objection",
+       "tags": {
+        "root": "btn_commons_overrule.<objection>"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "dismiss": {
+   "family": "objection:{state}",
+   "verb": "attest",
+   "scope": {
+    "local": "cohort",
+    "values": [
+     "family",
+     "community",
+     "affiliations"
+    ]
+   },
+   "confirm": true,
+   "sends": [
+    "cohort",
+    "cohort_key",
+    "action",
+    "dismiss_grounds"
+   ],
+   "adds": [
+    "cosigners"
+   ],
+   "previewed_by": "dry_run",
+   "preview_covers": [
+    "cohort",
+    "cohort_key",
+    "action",
+    "dismiss_grounds"
+   ],
+   "senders": [
+    {
+     "id": "dismiss",
+     "primitive": "ConfirmSheet",
+     "tags": {
+      "root": "sheet_commons_dismiss",
+      "fact_1": "sheet_commons_dismiss__fact_1",
+      "fact_2": "sheet_commons_dismiss__fact_2",
+      "fact_3": "sheet_commons_dismiss__fact_3",
+      "note": "sheet_commons_dismiss__note",
+      "confirm": "sheet_commons_dismiss__confirm",
+      "cancel": "sheet_commons_dismiss__cancel"
+     },
+     "shows": [
+      "action",
+      "cohort_key",
+      "cosigners"
+     ],
+     "sent_from": "confirm",
+     "while": "has_objections",
+     "opened_by": [
+      {
+       "id": "dismiss_submit",
+       "present": "lifting and has_objections",
+       "enabled": "dry_run = taken",
+       "per": "objection",
+       "tags": {
+        "root": "btn_commons_dismiss_submit.<objection>"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "drawn": [
+  {
+   "id": "standing",
+   "primitive": "StateBlock",
+   "bound_to": {
+    "read": "standing"
+   },
+   "per": null,
+   "present": null,
+   "tags": {
+    "root": "state_commons_standing",
+    "idle": "state_commons_standing__idle",
+    "loading": "state_commons_standing__loading",
+    "error": "state_commons_standing__error",
+    "refused": "state_commons_standing__refused",
+    "unknown": "state_commons_standing__unknown",
+    "not_on_this_node": "state_commons_standing__not_on_this_node",
+    "empty": "state_commons_standing__empty",
+    "populated": "state_commons_standing__populated"
+   },
+   "states": {
+    "idle": "standing = idle",
+    "loading": "standing = pending",
+    "error": "standing = failed",
+    "refused": "standing = ok and standing.refused",
+    "unknown": "answered and (standing.arm = unreadable or (standing.arm in [quiet, objected, stood, reversed] and not standing.fold))",
+    "not_on_this_node": "answered and standing.arm in [action_unknown, cohort_unknown]",
+    "empty": "answered and standing.arm = quiet and standing.fold",
+    "populated": "answered and (standing.arm = not_governed or (standing.arm in [objected, stood, reversed] and standing.fold))"
+   }
+  },
+  {
+   "id": "arm",
+   "primitive": "Chip",
+   "bound_to": {
+    "read": "standing"
+   },
+   "per": null,
+   "present": "answered",
+   "tags": {
+    "root": "chip_commons_arm"
+   }
+  },
+  {
+   "id": "no_counts",
+   "primitive": "FieldRow",
+   "bound_to": {
+    "read": "standing"
+   },
+   "per": null,
+   "present": "answered and not counted",
+   "tags": {
+    "root": "txt_commons_no_counts"
+   }
+  },
+  {
+   "id": "objectors",
+   "primitive": "FieldRow",
+   "bound_to": {
+    "read": "standing"
+   },
+   "per": null,
+   "present": "counted",
+   "tags": {
+    "root": "txt_commons_objectors"
+   }
+  },
+  {
+   "id": "escalation",
+   "primitive": "FieldRow",
+   "bound_to": {
+    "read": "standing"
+   },
+   "per": null,
+   "present": "answered and standing.escalation",
+   "tags": {
+    "root": "txt_commons_escalation"
+   }
+  },
+  {
+   "id": "ballot_tally",
+   "primitive": "FieldRow",
+   "bound_to": {
+    "read": "standing"
+   },
+   "per": "objection",
+   "present": "has_objections and standing.escalation",
+   "tags": {
+    "root": "txt_commons_ballot_tally.<objection>"
+   }
+  },
+  {
+   "id": "dry_run_hash",
+   "primitive": "FieldRow",
+   "bound_to": {
+    "preview": "dry_run"
+   },
+   "per": "objection",
+   "present": "lifting and has_objections and dry_run = taken",
+   "tags": {
+    "root": "txt_commons_dry_run_hash.<objection>"
+   }
+  },
+  {
+   "id": "write_error",
+   "primitive": "FieldRow",
+   "bound_to": null,
+   "per": null,
+   "present": "write_error",
+   "tags": {
+    "root": "txt_commons_write_error"
+   }
+  },
+  {
+   "id": "result",
+   "primitive": "CardShell",
+   "bound_to": null,
+   "per": null,
+   "present": "result != none",
+   "tags": {
+    "root": "card_commons_result"
+   }
+  },
+  {
+   "id": "raise_price",
+   "primitive": "Metric",
+   "bound_to": {
+    "read": "standing"
+   },
+   "per": null,
+   "present": null,
+   "tags": {
+    "root": "stat_commons_raise_price"
+   },
+   "shown": "standing = ok and standing.prices",
+   "sent": "standing.prices"
+  },
+  {
+   "id": "lift_price",
+   "primitive": "Metric",
+   "bound_to": {
+    "read": "standing"
+   },
+   "per": null,
+   "present": null,
+   "tags": {
+    "root": "stat_commons_lift_price"
+   },
+   "shown": "answered and standing.fold",
+   "sent": "standing.fold"
+  },
+  {
+   "id": "floor",
+   "primitive": "Metric",
+   "bound_to": {
+    "read": "standing"
+   },
+   "per": null,
+   "present": "standing = ok and standing.prices",
+   "tags": {
+    "root": "stat_commons_floor"
+   },
+   "shown": "standing = ok and standing.prices",
+   "sent": "standing.prices"
+  },
+  {
+   "id": "cohort",
+   "primitive": "Choice",
+   "bound_to": {
+    "local": "cohort"
+   },
+   "per": null,
+   "present": null,
+   "tags": {
+    "root": "opt_commons_cohort.affiliations"
+   }
+  },
+  {
+   "id": "cohort_key",
+   "primitive": "Field",
+   "bound_to": {
+    "local": "cohort_key"
+   },
+   "per": null,
+   "present": null,
+   "tags": {
+    "root": "input_commons_cohort_key"
+   }
+  },
+  {
+   "id": "action",
+   "primitive": "Field",
+   "bound_to": {
+    "local": "action"
+   },
+   "per": null,
+   "present": null,
+   "tags": {
+    "root": "input_commons_action"
+   }
+  },
+  {
+   "id": "objection_grounds",
+   "primitive": "Field",
+   "bound_to": {
+    "local": "raise_grounds"
+   },
+   "per": null,
+   "present": "standing = ok",
+   "tags": {
+    "root": "input_commons_objection_grounds"
+   }
+  },
+  {
+   "id": "ballot_grounds",
+   "primitive": "Field",
+   "bound_to": {
+    "local": "ballot_grounds"
+   },
+   "per": "objection",
+   "present": "has_objections",
+   "tags": {
+    "root": "input_commons_ballot_grounds.<objection>"
+   }
+  },
+  {
+   "id": "dismiss_grounds",
+   "primitive": "Field",
+   "bound_to": {
+    "local": "dismiss_grounds"
+   },
+   "per": "objection",
+   "present": "lifting and has_objections",
+   "tags": {
+    "root": "input_commons_dismiss_grounds.<objection>"
+   }
+  },
+  {
+   "id": "cosigner_key",
+   "primitive": "Field",
+   "bound_to": {
+    "local": "cosigner_key"
+   },
+   "per": "objection",
+   "present": "lifting and has_objections",
+   "tags": {
+    "root": "input_commons_cosigner_key.<objection>"
+   }
+  },
+  {
+   "id": "cosigner_classical",
+   "primitive": "Field",
+   "bound_to": {
+    "local": "cosigner_classical"
+   },
+   "per": "objection",
+   "present": "lifting and has_objections",
+   "tags": {
+    "root": "input_commons_cosigner_classical.<objection>"
+   }
+  },
+  {
+   "id": "cosigner_pqc",
+   "primitive": "Field",
+   "bound_to": null,
+   "per": "objection",
+   "present": "lifting and has_objections",
+   "tags": {
+    "root": "input_commons_cosigner_pqc.<objection>"
+   }
+  }
+ ]
+}
