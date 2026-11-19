@@ -96,9 +96,10 @@ def occ(id, signer, iss, okey, vf, vu, names=(), admitted=True, sigs=None):
 
 
 def evict(id, signer, of, names=()):
-    """The roster door's eviction of the occurrence `of`, signed by `signer`; `names` holds the signer's own record,
-    which the eviction waits for (CC 2.6.1.7 way (d))."""
-    return CK.row(id, "evict", signer, (of,) + tuple(names), of=of)
+    """The roster door's eviction of the occurrence `of`, signed by `signer`; `names` is the proof it carries in
+    refs.also cites: the signer's key record and, where the key is bound by an occurrence, that occurrence. They travel
+    with the row (CC 2.6.1.7 way (d))."""
+    return CK.row(id, "evict", signer, (of,) + tuple(names), of=of, cites=tuple(names))
 
 
 def voice(id, signer, at, names):
@@ -124,6 +125,8 @@ def needs_end(r):
 
 
 def WF(r):
+    if r["kind"] == "evict":     # the row alone: an eviction that carries no proof of its signer fails on its own bytes
+        return bool(r["cites"]) or "evict_waits" in MUT                 # PLANT: it is kept and judged as the rows arrive
     if r["kind"] == "occ":
         return r["okey"] in r["sigs"] or "iss_occ_no_own_voice" in MUT   # the bound key's own voice, else it waits
     if r["kind"] != "rec":
@@ -234,7 +237,8 @@ def evicted(S, o):
     yet resolve waits and counts for nothing (CC 2.6.1.7 way (d))."""
     if "iss_occ_unconcluded_eviction" in MUT:                 # PLANT: an eviction counts whoever signed it
         return any(e["of"] == o["id"] for e in S.Cs if e["kind"] == "evict")
-    keys = {o["iss"]} | {r["key"] for r in S.Cs if r["kind"] == "rec" and r["iss"] == o["iss"]}
+    keys = ({o["iss"]} | {r["key"] for r in S.Cs if r["kind"] == "rec" and r["iss"] == o["iss"]}
+            | {r["okey"] for r in S.Cs if r["kind"] == "occ" and r["iss"] == o["iss"] and r["id"] != o["id"]})
     return any(e["of"] == o["id"] and e["signer"] in keys for e in S.Cs if e["kind"] == "evict")
 
 

@@ -63,9 +63,21 @@ occurrence-revocation = {
   "effective_at": ms-time,                  ; POSIX milliseconds; may be later than asserted_at.
   ? "witness_set": [* identity-ref],        ; A set. (where the revocation names its witnesses)
   ? "reason": uint,                         ; A code from the closed registry. (where the revocation carries a reason)
-  "refs": self-roster-refs,                 ; The self-roster head the revocation is counted over, and a merge's further tips.
+  "refs": eviction-refs,                    ; The self-roster head the revocation is counted over, a merge's further tips, and the proof of its signers.
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
+}
+
+; The refs of an eviction (CC 2.6.1.7, CC 3.3.6.4): the head, and the proof of its signers, both required; a closed map.
+eviction-refs = {
+  "head": row-ref,                          ; The last landed self-roster row the signers stood on.
+  ? "further_heads": row-ref-set,           ; The other tips the row merges, as a roster version names them: a set. (where the row merges tips)
+  "also": eviction-proof,                   ; The proof of the signers, which travels with the row.
+}
+
+; The proof an eviction carries (CC 2.6.1.7): the rows that resolve its voices; a closed map.
+eviction-proof = {
+  "cites": row-ref-set,                     ; Each voice's key record and, where that key is bound by an occurrence, the occurrence: a set.
 }
 
 ; revocation:{entity_type}:{reason}: authored by the revoker; sub is the revoked entity.

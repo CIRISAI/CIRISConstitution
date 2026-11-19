@@ -41985,7 +41985,7 @@
       },
       {
        "member": "refs",
-       "type": "self-roster-refs",
+       "type": "eviction-refs",
        "presence": "required",
        "when": "always",
        "in_cddl": true,

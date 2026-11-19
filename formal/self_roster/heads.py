@@ -26,6 +26,8 @@ Facts checked, each with a plant that must fail it:
             merge reads the thief's tip.
   revive    a merge never revives an evicted key: the eviction reached from any named head stands.
                                                               plant: the roster at heads as the union of each head's roster
+  carried   an eviction carries its signers' proof (CC 2.6.1.7): with it, it lands at once; without it, it is
+            Invalid at the door.                              plant: a door that keeps it, to wait
   unconcluded  an eviction that has not landed (its head not held, or its signers off the roster) evicts nothing.
                                                               plant: a fold that counts every held eviction
   wait      a row naming a head not yet held waits, so the landed set is the same in every arrival order.
@@ -43,8 +45,18 @@ GEN = "G"                      # the genesis key's own record; the genesis key i
 MUT = set()
 
 
-def row(rid, kind, key, head, signers, further=()):
-    return {"id": rid, "kind": kind, "key": key, "head": head, "further": frozenset(further), "signers": frozenset(signers)}
+def row(rid, kind, key, head, signers, further=(), proof=True):
+    """`proof`: an eviction carries the proof of its signers in refs.also cites (CC 2.6.1.7)."""
+    return {"id": rid, "kind": kind, "key": key, "head": head, "further": frozenset(further), "signers": frozenset(signers),
+            "proof": proof}
+
+
+def door(r):
+    """The row alone: an eviction that carries no proof of its signers is Invalid. The plant keeps it, to be judged
+    as rows arrive."""
+    if r["kind"] == "evict" and not r["proof"]:
+        return "waiting" if "evict_waits" in MUT else "invalid"
+    return "kept"
 
 
 class Reader:
@@ -76,7 +88,7 @@ class Reader:
         if rid in self.memo: return self.memo[rid]
         self.memo[rid] = False
         r = self.rows.get(rid)
-        if r is None: return False
+        if r is None or door(r) == "invalid": return False
         hs = self.heads(r)
         if any(h != GEN and h not in self.rows for h in hs): return False               # waits
         if not all(self.landed(h) for h in hs): return False
@@ -186,6 +198,19 @@ def facts():
     MUT.add("count_unlanded"); pl = unlanded(); MUT.discard("count_unlanded")
     out.append(("unconcluded: an eviction naming a head the reader lacks, or signed off the roster, has not landed and d1 stands",
                 ok, "a fold that counts every held eviction, landed or not", not pl))
+
+    def carried():
+        """d2's eviction carrying its signers' proof lands at once; the same eviction without it is Invalid at the door
+        and d2 stays."""
+        bare = row("E2n", "evict", "d2", "B2", {"g", "d1"}, proof=False)
+        with_proof, without = Reader([B1, B2, E2]), Reader([B1, B2, bare])
+        return (with_proof.landed("E2") and "d2" not in with_proof.roster()
+                and door(bare) == "invalid" and not without.landed("E2n") and "d2" in without.roster())
+
+    ok = carried()
+    MUT.add("evict_waits"); pl = carried(); MUT.discard("evict_waits")
+    out.append(("carried: an eviction carrying its signers' proof lands at once; one without it is Invalid at the door",
+                ok, "a door that keeps an eviction with no proof, to wait", not pl))
 
     def wait(refuse):
         rows = [B1, B2, E2, S3, M]

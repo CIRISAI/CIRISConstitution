@@ -536,7 +536,7 @@ def family_payloads():
             "joined_at": t, "effective_at": t, "refs": {"head": _ref(1), "also": {"cites": [_ref(3)]}}, "asserted_at": t}),
         "occurrence-revocation": ("identity:occurrence_revocation", {
             "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "revoked_at": t, "effective_at": t,
-            "refs": {"head": _ref(10)}, "asserted_at": t}),
+            "refs": {"head": _ref(10), "also": {"cites": sorted([_ref(13), _ref(14)], key=cde)}}, "asserted_at": t}),
         "entity-revocation": ("revocation:.entity_type:.reason", {
             "author": iref(0), "dimension": "revocation:agent:compromised:v1", "revoked_at": t, "effective_at": t,
             "asserted_at": t}),
@@ -602,7 +602,9 @@ def family_payload_samples():
             ("a revocation with no occurrence_key_id", D("occurrence-revocation", "occurrence_key_id")),
             ("an effective_at as text", W("occurrence-revocation", effective_at="2026-11-14T00:00:00Z")),
             ("a revocation naming no self-roster head", D("occurrence-revocation", "refs")),
-            ("a revocation whose refs name tips but no head", W("occurrence-revocation", refs={"further_heads": [_ref(11)]}))]),
+            ("a revocation whose refs name tips but no head", W("occurrence-revocation", refs={"further_heads": [_ref(11)], "also": {"cites": [_ref(13)]}})),
+            ("an eviction without its signer's proof", W("occurrence-revocation", refs={"head": _ref(10)})),
+            ("an eviction whose proof is under another role", W("occurrence-revocation", refs={"head": _ref(10), "also": {"ack": [_ref(13)]}}))]),
         ("entity-revocation", "revocation:{entity_type}:{reason} payload", cde(P["entity-revocation"]), [
             ("an entity revocation with no author", D("entity-revocation", "author")),
             ("an entity revocation with revoked_at as text", W("entity-revocation", revoked_at="2026-11-14T00:00:00Z"))]),
@@ -827,6 +829,8 @@ FAMILY_RULE_HEAD = {
     "membership-change": "membership:{stage}, the stages widening and removal: counted, with no author; sub is the member.",
     "occurrence-revocation": "identity:occurrence_revocation: authored by the revoker, or counted over a user self's roster at the head refs names.",
     "self-roster-refs": "The refs of a self-roster row (CC 3.3.6.4): the head it stands on, required; a closed map.",
+    "eviction-refs": "The refs of an eviction (CC 2.6.1.7, CC 3.3.6.4): the head, and the proof of its signers, both required; a closed map.",
+    "eviction-proof": "The proof an eviction carries (CC 2.6.1.7): the rows that resolve its voices; a closed map.",
     "entity-revocation": "revocation:{entity_type}:{reason}: authored by the revoker; sub is the revoked entity.",
     "takedown-notice": "takedown_notice:{basis}: authored, or counted on a steward purge; sub is the claimant.",
     "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
@@ -840,7 +844,7 @@ FAMILY_RULE_HEAD = {
     "deferral-response": "deferral:response:{outcome} (CC 3.1.9.3, CC 4.3): the members this form names; the response's further members are the store's.",
     "admission-unit": "admission:unit (CC 2.7.11, CC 3.1.3): authored by one person, or counted over refs.head with no author; one person's row naming an effect admits only on that person's own host; sub is the unit's digest as canonical:sha256:{hex}.",
 }
-FAMILY_CLOSED = {"roster-member", "encryption-pubkeys", "self-roster-refs"}            # every other family rule keeps a member it does not name (CC 2.1.1)
+FAMILY_CLOSED = {"roster-member", "encryption-pubkeys", "self-roster-refs", "eviction-refs", "eviction-proof"}            # every other family rule keeps a member it does not name (CC 2.1.1)
 FAMILY_EXTRA = {"admission-unit": [
     "; The capabilities of CC 2.7.11: a closed set; the last five are effects.",
     'capability = "compute" / "read" / "net_send" / "submit" / "sign" / "store_write" / "actuate"'],

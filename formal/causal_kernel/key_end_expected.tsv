@@ -39,8 +39,9 @@ of_iss	a rotation made just inside the old record	valid
 of_iss	a rotation whose predecessor's voice is a separate statement: it waits for it, then counts	valid
 of_iss	a person's second device bound by a live admitted occurrence	valid
 of_iss	an occurrence the roster door evicted	evicted
-of_iss	an eviction whose signer the reader cannot yet resolve: it waits and the occurrence stands	valid
-of_iss	an eviction by a key the reader cannot resolve as A's counts for nothing	valid
+of_iss	an eviction by another device, carrying that device's record and occurrence, evicts at once	evicted
+of_iss	an eviction that carries no proof of its signer is Invalid at the door, and the occurrence stands	valid
+of_iss	an eviction whose carried proof does not resolve its signer as A's counts for nothing	valid
 of_iss	an occurrence signed by a key that is no key of A	invalid
 of_iss	an occurrence the roster door did not admit	invalid
 of_iss	a statement at the occurrence's end (outside it)	invalid
@@ -68,6 +69,7 @@ of_iss_plant	a reader that skips way (d), so a person's second device is refused
 of_iss_plant	a reader that accepts an occurrence whatever its signer	caught
 of_iss_plant	a reader that keeps an evicted occurrence	caught
 of_iss_plant	a reader that lets an eviction it cannot resolve evict	caught
+of_iss_plant	a door that keeps an eviction carrying no proof and judges it as rows arrive	caught
 of_iss_plant	a reader that accepts an agent key bound under a person's identity	caught
 of_iss_plant	a reader that admits an occurrence without the bound key's own voice	caught
 wording	rule: an end is required by the record's own identity type	the door reads the row alone
