@@ -10,10 +10,10 @@
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
-    "commit": "01eb6ff25b931dd121373cec5889cef497886236",
+    "commit": "7af5d4ebc56a2f092f9c22cfef4bbc7f6c67ce3d",
     "path": "harness/native/topologies/catalog/",
-    "vendored": "2026-10-21",
-    "tag": "v0.5.232"
+    "vendored": "2026-11-19",
+    "tag": "v0.5.245"
    },
    "evidence_pins": {
     "CIRISServer": "7af5d4eb",
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "115143a5af583e011693da94114773f563d9816d342807614f5aeee67f0bf849"
+  "chain_sha256": "d851bd8435d541d4d32a3ff8123710829e4c6d6b1aee4ba1bd1b3bae9a4fdd79"
  },
  "chain": [
   {
@@ -47319,7 +47319,9 @@
      ]
     }
    ],
-   "promised_by": []
+   "promised_by": [
+    "T7"
+   ]
   },
   "agent.deferral.approved": {
    "plane": "agent",
@@ -47374,7 +47376,9 @@
      ]
     }
    ],
-   "promised_by": []
+   "promised_by": [
+    "T7"
+   ]
   },
   "agent.deferral.rejected": {
    "plane": "agent",
@@ -47429,7 +47433,9 @@
      ]
     }
    ],
-   "promised_by": []
+   "promised_by": [
+    "T7"
+   ]
   },
   "agent.identity.amended": {
    "plane": "agent",
@@ -47684,7 +47690,9 @@
      ]
     }
    ],
-   "promised_by": []
+   "promised_by": [
+    "T7"
+   ]
   },
   "affiliation.charter.declared": {
    "plane": "governance",
@@ -53726,7 +53734,7 @@
     "node.unannounced",
     "values.ready"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T1": {
    "title": "One person, two devices, self room",
@@ -53743,7 +53751,7 @@
     "file.custody_received",
     "file.withdrawn"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T10": {
    "title": "A stolen device — the owner evicts it by the quorum path",
@@ -53755,7 +53763,7 @@
     "key.membership.evicted",
     "self.roster_size.three_more"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T11": {
    "title": "Two lost devices — recovery by the lone path over the window",
@@ -53765,7 +53773,7 @@
     "key.membership.evicted",
     "self.roster_size.one"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T12": {
    "title": "A root stalls (a founder resigns below the margin) and recovers by a conferred human",
@@ -53775,7 +53783,7 @@
     "root.liveness.live",
     "seat.identity_type.human"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T13": {
    "title": "A witnessed lineage — a stale head refuses attach; a node-bearing seat never counts",
@@ -53783,7 +53791,7 @@
     "root.head.stale",
     "seat.identity_type.node_bearing"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T14": {
    "title": "Consent end to end — grant, revoke, expiry, decay; replication grant and its withdrawal",
@@ -53798,7 +53806,7 @@
     "consent.community_trust.bounded",
     "consent.replication.none"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T15": {
    "title": "A community's ceremony — decline, removal, resignation; a moderator lapses, the room fails secure",
@@ -53813,7 +53821,7 @@
     "group.moderator.fail_secure",
     "group.federating.no"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T16": {
    "title": "An agent retired under the Standard",
@@ -53829,7 +53837,7 @@
     "agent.retirement.retired",
     "agent.halt_gate.acting"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T17": {
    "title": "A takedown and a steward purge — tombstone, dwell, purge; family and community scope",
@@ -53840,7 +53848,7 @@
     "row.scope.family",
     "row.scope.community"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T18": {
    "title": "Delegation ends — a withdrawal cascades, a term expires; a key grant held; a guardian bond absent and made",
@@ -53850,7 +53858,7 @@
     "grant.state.held",
     "guardian.bond.none"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T19": {
    "title": "Holders under coercion and censorship — the standing rule holds; an announced node; revoked_after",
@@ -53864,7 +53872,7 @@
     "key.revocation.revoked_all",
     "key.revocation.none"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T2": {
    "title": "Two people, pair room, one outsider",
@@ -53877,7 +53885,7 @@
     "node.unannounced",
     "negatives.held"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T3": {
    "title": "Two people, contact by code, second device by approval",
@@ -53892,7 +53900,7 @@
     "roster.visible",
     "negatives.held"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T4": {
    "title": "A household — guardian on two devices, one child",
@@ -53905,7 +53913,7 @@
     "person.multi_device",
     "room.self.keyed"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T5": {
    "title": "A community — a held quorum change, a moderator duty",
@@ -53916,7 +53924,7 @@
     "quorum_change.applied",
     "moderator.named"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T6": {
    "title": "An affiliation — licensing authority, delegation chain",
@@ -53926,16 +53934,26 @@
     "authority.licensing",
     "delegation.chain"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T7": {
    "title": "An agent under a steward with a Wise Authority",
    "promises": [
     "agent.bound",
     "steward.bonded",
-    "wa.present"
+    "wa.present",
+    "agent.deferral.pending",
+    "agent.deferral.approved",
+    "agent.deferral.rejected",
+    "agent.identity.amended"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5,
+   "realizers": {
+    "agent.deferral.pending": "CIRISAgent",
+    "agent.deferral.approved": "CIRISAgent",
+    "agent.deferral.rejected": "CIRISAgent",
+    "agent.identity.amended": "CIRISAgent"
+   }
   },
   "T8": {
    "title": "A trust root with M-of-N holders — halt, confirm, resume",
@@ -53947,7 +53965,7 @@
     "root.halt_confirmed",
     "root.resumed"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T9": {
    "title": "Two roots and a party outside both",
@@ -53957,7 +53975,7 @@
     "root.infrastructure",
     "party.outside_roots"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   }
  },
  "refusal_tokens": {

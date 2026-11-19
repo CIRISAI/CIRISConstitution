@@ -1,7 +1,7 @@
 {
  "catalog_id": "T7",
  "title": "An agent under a steward with a Wise Authority",
- "catalogue_version": 3,
+ "catalogue_version": 5,
  "serves": [
   "CSD-111",
   "CSD-112",
@@ -62,8 +62,40 @@
    "cc_ref": "4.3",
    "in_state_table": true,
    "plane_models": "guarantees"
+  },
+  "agent.deferral.pending": {
+   "plane": "agent",
+   "state_predicate": "agent.deferral=pending",
+   "cc_ref": "1.9 4.3",
+   "in_state_table": true,
+   "plane_models": "guarantees",
+   "realizer": "CIRISAgent"
+  },
+  "agent.deferral.approved": {
+   "plane": "agent",
+   "state_predicate": "agent.deferral=approved",
+   "cc_ref": "4.3",
+   "in_state_table": true,
+   "plane_models": "guarantees",
+   "realizer": "CIRISAgent"
+  },
+  "agent.deferral.rejected": {
+   "plane": "agent",
+   "state_predicate": "agent.deferral=rejected",
+   "cc_ref": "4.3",
+   "in_state_table": true,
+   "plane_models": "guarantees",
+   "realizer": "CIRISAgent"
+  },
+  "agent.identity.amended": {
+   "plane": "agent",
+   "state_predicate": "agent.identity=amended",
+   "cc_ref": "3.1.5 4.3",
+   "in_state_table": true,
+   "plane_models": "guarantees",
+   "realizer": "CIRISAgent"
   }
  },
- "atoms_with_a_plane_model": 3,
+ "atoms_with_a_plane_model": 7,
  "atoms_without": 0
 }

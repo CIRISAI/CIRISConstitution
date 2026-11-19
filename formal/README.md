@@ -87,7 +87,7 @@ Each chapter model takes one step of the story and proves it in detail. A chapte
 | **The one object beneath every chapter** | The grammar the chapters share: eleven kinds of change by five verbs plus carries, the Record as a relation, and the family row that every scores family is one of. | | | |
 | [`family_model`](family_model/) (Lean) | the family model against the 11+1 × 5+1 grammar: a family's row factors into a change half the kind constrains and a reach half it does not; authorize only under Rules, Identity and Process; nothing carries into Identity; a family that maintains the Record keeps erasure at none or legal hold and a byte-equal projection; every one of the registry's 187 families fits its kind profile, one theorem each, generated from the derivation table | every participant, through every family at once | 3.1, 2.4.1.1, 4.5.13 | proved; the registry fits |
 | **The node as a whole** | The planes composed over the twenty topologies the harness stands up. | | | |
-| [`cewp_node`](cewp_node/) | the planes composed; the catalogue turned into constants | the node as a whole | 3.2, 3.3.6.4, 3.3.7, 5.3.2.7, 4.2.1 | closes, 419,328 states; breaker twin fails |
+| [`cewp_node`](cewp_node/) | the planes composed; the catalogue turned into constants | the node as a whole | 3.2, 3.3.6.4, 3.3.7, 5.3.2.7, 4.2.1 | closes, 483,840 states; breaker twin fails |
 
 ## The cascade, simply
 

@@ -46,6 +46,7 @@ def main():
     for f in sorted(glob.glob(os.path.join(CAT, "T*.yaml"))):
         e = yaml.safe_load(open(f, encoding="utf-8"))
         for a in e.get("promises", []):
+            if isinstance(a, dict): a = a["atom"]   # catalogue v5: {atom, realizer}
             promised.setdefault(a, []).append(e["catalog_id"])
     by_plane = collections.OrderedDict()
     unexercised = []

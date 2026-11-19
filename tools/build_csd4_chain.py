@@ -104,7 +104,11 @@ def main():
     entries = {}
     for f in sorted(glob.glob(P(CAT, "T*.yaml"))):
         e = yaml.safe_load(open(f, encoding="utf-8"))
-        entries[e["catalog_id"]] = {"title": e.get("title", ""), "promises": list(e.get("promises", [])), "catalogue_version": e.get("catalogue_version")}
+        # a promise is an atom, or (catalogue v5) {atom, realizer} when a repository other than the harness realizes it
+        ps = [p["atom"] if isinstance(p, dict) else p for p in e.get("promises", [])]
+        rz = {p["atom"]: p["realizer"] for p in e.get("promises", []) if isinstance(p, dict) and p.get("realizer")}
+        entries[e["catalog_id"]] = {"title": e.get("title", ""), "promises": ps, "catalogue_version": e.get("catalogue_version")}
+        if rz: entries[e["catalog_id"]]["realizers"] = rz
     promised_by = defaultdict(list)
     for cid, e in entries.items():
         for a in e["promises"]: promised_by[a].append(cid)

@@ -184,12 +184,15 @@ def gen(entry_path):
     # ---- closure report ----
     atoms = {}
     for a in e.get("promises", []):
+        realizer = a.get("realizer") if isinstance(a, dict) else None   # catalogue v5: {atom, realizer}
+        if isinstance(a, dict): a = a["atom"]
         v = VOC["atoms"].get(a)
         if not v:
             atoms[a] = {"error": "atom not in manifests/topology_vocabulary.json"}
             continue
         atoms[a] = {"plane": v["plane"], "state_predicate": v["state_predicate"], "cc_ref": v["cc_ref"],
                     "in_state_table": v["in_state_table"], "plane_models": PLANE_MODEL.get(v["plane"], "—")}
+        if realizer: atoms[a]["realizer"] = realizer
     report = {"catalog_id": tid, "title": e.get("title"), "catalogue_version": e.get("catalogue_version"),
               "serves": e.get("serves", []), "derives": e.get("derives", []),
               "entity_counts": {"roots": len(roots), "canonicals": len(canon), "nodes": len(nodes), "persons": len(persons),

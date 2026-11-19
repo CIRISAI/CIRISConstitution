@@ -1,6 +1,6 @@
 repo	CIRISServer
 branch	main
-commit	01eb6ff25b931dd121373cec5889cef497886236
+commit	7af5d4ebc56a2f092f9c22cfef4bbc7f6c67ce3d
 path	harness/native/topologies/catalog/
-vendored	2026-10-21
-tag	v0.5.232
+vendored	2026-11-19
+tag	v0.5.245
