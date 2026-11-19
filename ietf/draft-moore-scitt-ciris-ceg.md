@@ -707,6 +707,14 @@ batches, never single chunks.
 A holder may add a receipt to a statement's unprotected header.  The
 receipt is outside the signature and outside the row id.
 
+A host does not run code a row admits until it holds a receipt for
+that row, or for the unit statement the row names, from a
+Transparency Service the host trusts.  The receipt is the SCITT
+receipt itself: a COSE Receipt {{RFC9942}} in the unprotected
+header's `receipts` parameter (label 394), as {{RFC9943}} carries it.
+Anyone may run a Transparency Service; which ones a host trusts is
+its own acceptance, and a receipt adds no authority.
+
 # Admission as a Registration Policy {#admission}
 
 {{RFC9943}} lets each Transparency Service define a Registration

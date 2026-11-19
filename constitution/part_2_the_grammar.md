@@ -614,6 +614,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
 | `sd_claims` | `17` | header:unprotected | `[+ bstr .cbor sd-disclosure]` | when disclosures are presented beside the statement | [2.6.1.10](#2.6.1.10) | sd_claims of SD-CWT: disclosures as presented to one who may see them; they travel and are held as bytes, never in the row. |
+| `receipts` | `394` | header:unprotected | `[+ bstr .cbor ceg-receipt]` | where a Transparency Service has registered the statement | [2.6.1.11](#2.6.1.11) [2.7.11](#2.7.11) | receipts of RFC 9942: COSE receipts, never signed; admitted code runs only once one from a service the host trusts is held. |
 
 **The payload**
 
@@ -1216,7 +1217,7 @@ No rule ranks statements of different issuers by `iat`, and no helper picks the 
 
 **Room keys** ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). A room key's `iss` is its own identity reference, never its person's. Its seat row carries `seat_commitment`, which the binding opens. It is SHA-256 over the deterministic encoding of `["CEG-seat/2", room, room_key, person, nonce]`, written as `[-16, digest]`. `room` is the room's id, and the member that carries it is an open encoding ([CC 2.6.1.12](#2.6.1.12)). `room_key` is the key's thumbprint, `person` an identity reference and `nonce` 32 fresh random bytes. An identity's binding key and its content-KEM keys are distinct bytes, and a node refuses at admission a record where they are not. The HPKE `info` of a binding is `CEG-binding/2`, and of an invitation `CEG-invitation/2`. The KEM key, the binding's two encapsulations and the occurrence keys wait on the hybrid KEM, X-Wing ([X-Wing]): their bytes are fixed with its known-answer vectors. The derivation label of the binding seed is an open encoding ([CC 2.6.1.12](#2.6.1.12)).
 
-There is no transparency service and no registrar, since a trust decides what a node serves and no party stands in the middle.
+No transparency service or registrar stands in the middle, since a trust decides what a node serves. Anyone may run a Transparency Service under their own key, and its receipt witnesses registration and confers nothing ([CC 2.7.11](#2.7.11)).
 
 #### 2.6.1.12 `earlier-form` — The earlier form and the cutover (normative)
 
@@ -1681,7 +1682,9 @@ Every voice's `iss` is a person's identity, whose `identity_type` contains `user
 
 **The halt reaches every unit.** On a node the halt reaches, from the instant it latches, the host permits no effect of any admitted unit ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)). The host reads the latch before every effect. Computing and reading continue, and the lease ends a halted unit.
 
-**Receipts are the owner's policy.** The family requires no witness's receipt before a unit runs, since no party stands in the middle ([CC 2.6.1.11](#2.6.1.11)). A host owner MAY require receipts by a row under the owner's own key. The host then waits for acknowledgement rows from the voices that row names ([CC 2.7.5](#2.7.5)).
+**A receipt before it runs.** A host MUST NOT run admitted code until it holds a receipt for the `admission:unit` row, or for the unit statement the row names, from a Transparency Service the host trusts. The receipt is SCITT's own: a COSE receipt ([RFC-9942]) in the unprotected header's `receipts` parameter, label 394, as [RFC-9943] carries it. A missing or unverifiable receipt is not held, so the unit waits, and it never admits. A receipt adds no authority. It witnesses that the statement was registered, which closes a release seen only by those it was sent to.
+
+**Who runs a Transparency Service.** Anyone may run one, under their own key. A host trusts a service by an acceptance edge with the class `transparency` ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34)), as it trusts anyone. No list of services ships with anything. A receipt from a service the host does not trust counts for nothing there.
 
 **Profile.** An agent loads its profile only when the digest of what it loads equals the digest its rows derive ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). The base link of the `identity_amendment` chain names no predecessor and approves the exact digest of the agent's shipped template, as that template's manifest signature or the attested build checks it. Each later link names the one before. With no base link, the agent runs that template alone, counts no amendment and reports `profile_unanchored`. The expected digest is SHA-256 over the deterministic encoding of `["CEG-profile/2", d0, ..., dn]`, the links' digests in chain order. Two links that name one predecessor both stay uncounted, and the expected digest is that of the chain before them ([CC 2.7.7](#2.7.7) rule 2).
 
@@ -1707,6 +1710,7 @@ An agent MUST NOT dispatch a call unless a review record of the same thought nam
 | `admission_issuer_not_reached` | admits nothing at this host | the author or group does not stand here, or one person's row names an effect on a host that person does not own |
 | `admission_count_unmet` | held | the count is not met at the head the row names |
 | `admission_none` | the unit does not run | no live row admits this digest; detail `no_row`, `lease_ended` or `withdrawn` |
+| `admission_receipt_missing` | the unit waits, and does not run | no receipt from a Transparency Service the host trusts is held; detail `none`, `unverifiable` or `untrusted_service` |
 | `admission_capability_not_admitted` | the effect is refused | no live row names the capability |
 | `admission_capability_not_held` | the effect is refused | the unit's parent lacks the capability |
 | `admission_halted` | the effect is refused | the halt is latched |

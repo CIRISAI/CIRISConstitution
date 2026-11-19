@@ -22,7 +22,8 @@ revision replaces the outputs of the one before (git history keeps them).
 Run:  python3 tools/build_ietf_draft.py [--rev 01] [--idnits]
       python3 tools/build_ietf_draft.py --check   (CI; writes nothing)
 --check parses both CDDL files and runs the samples against each, then compares what the build
-would write from manifests/signed_object_v2.ietf-01.cddl (the CDDL as -01 published it) with the committed files: ietf/signed_object.cddl always, and the .xml and .txt of the
+would write from manifests/signed_object_v2.ietf-01.cddl and ietf/draft-moore-scitt-ciris-ceg.ietf-01.md (the CDDL
+and the source as -01 published them) with the committed files: ietf/signed_object.cddl always, and the .xml and .txt of the
 draft when kramdown-rfc and xml2rfc are installed (a line says so when they are not). A
 difference exits 1: run the build and commit ietf/. The draft's date is the source's `date:`
 line, so a build on any day compares equal; set it when the draft is revised.
@@ -35,6 +36,9 @@ import glob, os, re, shutil, subprocess, sys, tempfile, textwrap, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IETF = os.path.join(ROOT, "ietf")
 SRC = os.path.join(IETF, "draft-moore-scitt-ciris-ceg.md")
+# The source as draft -01 published it: --check builds -01 from this frozen copy, so the working source may carry text
+# toward -02. Revision -02 is cut from SRC, and the copy is then retired.
+SRC_PUBLISHED = os.path.join(IETF, "draft-moore-scitt-ciris-ceg.ietf-01.md")
 CDDL_IN = os.path.join(ROOT, "manifests", "signed_object_v2.cddl")
 CDDL_OUT = os.path.join(IETF, "signed_object.cddl")
 # The CDDL as draft -01 published it: --check compares the draft against this frozen copy, so the manifest may move
@@ -176,10 +180,10 @@ def wrapped_cddl(text=None):
     return wrap_cddl(text.replace("\u2014", "-").replace("\u00a7", "Section "))
 
 
-def build_draft(rev, out, cddl):
+def build_draft(rev, out, cddl, source=SRC):
     """kramdown-rfc and xml2rfc over the source, in directory `out`, which holds `cddl` as signed_object.cddl."""
     name = f"draft-moore-scitt-ciris-ceg-{rev}"
-    src = open(SRC, encoding="utf-8").read()
+    src = open(source, encoding="utf-8").read()
     src = src.replace("docname: draft-moore-scitt-ciris-ceg-latest", f"docname: {name}")
     if os.path.abspath(out) != IETF:
         open(os.path.join(out, "signed_object.cddl"), "w", encoding="utf-8").write(cddl)
@@ -236,7 +240,7 @@ def check(rev):
         stale.append(f"ietf/signed_object.cddl is stale ({w})")
     if find_tool("kramdown-rfc") and find_tool("xml2rfc"):
         with tempfile.TemporaryDirectory() as d:
-            name = build_draft(rev, d, wrapped)
+            name = build_draft(rev, d, wrapped, SRC_PUBLISHED)
             for ext in (".xml", ".txt"):
                 w = differs(open(os.path.join(d, name + ext), encoding="utf-8").read(), os.path.join(IETF, name + ext))
                 if w:

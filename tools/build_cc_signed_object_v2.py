@@ -651,6 +651,11 @@ def family_payload_samples():
         ("body-decimal", "body decimal 0.5", cde(Tag(4, [-1, 5])), [
             ("a decimal with a non-negative exponent", cde(Tag(4, [0, 5]))),
             ("a decimal of three members", cde(Tag(4, [-1, 5, 0])))]),
+        ("ceg-statement", "an admission:unit statement with a Transparency Service's receipt",
+         statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: [cde(_receipt())]}), [
+            ("an empty receipts array", statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: []})),
+            ("a receipt that is no COSE_Sign1", statement(P["admission-unit"], rtype="scores", family="admission:unit",
+                                                          unprotected={394: [cde([bytes(4), {}, None, bytes(64)])]}))]),
         ("delivery-receipt", "delivery_receipt:{stream_id} payload", cde(P["delivery-receipt"]), [
             ("a receipt with no chunk index", D("delivery-receipt", "k")),
             ("a chunk root as bare bytes", W("delivery-receipt", chunk_root=bytes(32)))]),
@@ -739,6 +744,45 @@ def admission_samples():
         ("a counted row at federation scope: a registry's admission for every host that accepts it", dict(counted, cohort_scope="federation"), None),
         ("one person's row names an effect at federation scope", dict(base, capabilities=["compute", "net_send"], cohort_scope="federation"), "admission_owner_row_not_self"),
     ]
+
+
+def _receipt(service=b"ts-1"):
+    """A schema-sample COSE receipt (RFC 9942): vds 1 (RFC9162_SHA256) protected, one inclusion proof under vdp."""
+    return Tag(18, [cde({1: -7, 395: 1, 4: service}), {396: {-1: [bytes(32)]}}, None, bytes(64)])
+
+
+RECEIPT_MISSING = "admission_receipt_missing"
+
+
+def receipt_rule(receipts, trusted):
+    """CC 2.7.11: admitted code runs only once a receipt from a Transparency Service the host trusts is held.
+    receipts: [(service key, verifies)] held for the row or the unit statement it names; trusted: the services the
+    host's acceptance edges with class transparency reach. None, or (RECEIPT_MISSING, detail): the unit waits."""
+    if not receipts:
+        return RECEIPT_MISSING, "none"
+    if any(v and s in trusted for s, v in receipts):
+        return None
+    if any(s in trusted for s, _ in receipts):
+        return RECEIPT_MISSING, "unverifiable"
+    return RECEIPT_MISSING, "untrusted_service"
+
+
+def receipt_checks():
+    """(line, problems): a trusted receipt lets the unit run; none, an unverifiable one, and one from a service the host
+    does not trust each wait; a planted rule that admits any receipt must be caught."""
+    trusted = {"ts-1"}
+    cases = [("a receipt from a service the host trusts", [("ts-1", True)], None),
+             ("two receipts, one trusted", [("ts-9", True), ("ts-1", True)], None),
+             ("no receipt", [], (RECEIPT_MISSING, "none")),
+             ("a trusted service's receipt that does not verify", [("ts-1", False)], (RECEIPT_MISSING, "unverifiable")),
+             ("a receipt from a service the host does not trust", [("ts-9", True)], (RECEIPT_MISSING, "untrusted_service"))]
+    bad = [f"receipt rule: {w}: {receipt_rule(r, trusted)} where {want} was expected"
+           for w, r, want in cases if receipt_rule(r, trusted) != want]
+    planted = lambda r, t: None if r else (RECEIPT_MISSING, "none")
+    if all(planted(r, trusted) == want for _, r, want in cases):
+        bad.append("deliberate break not caught: a rule admitting any receipt passed every receipt sample")
+    return (f"receipts before admitted code runs: {sum(w is None for *_, w in cases)} run, "
+            f"{sum(w is not None for *_, w in cases)} wait ({RECEIPT_MISSING}); the planted break is caught"), bad
 
 
 def admission_checks():
@@ -1710,6 +1754,9 @@ def main(argv):
     dline, dbad = decimal_checks()
     lines.append(dline)
     bad += dbad
+    rline2, rbad2 = receipt_checks()
+    lines.append(rline2)
+    bad += rbad2
     sys.path.insert(0, HERE)
     fline, fbad = family_checks()
     lines.append(fline)
