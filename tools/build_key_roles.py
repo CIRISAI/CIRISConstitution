@@ -182,8 +182,8 @@ def plants():
         ("infra:attest given an agent key", lambda rs: first(rs, lambda r: r["family"] == "transport:{kind}").update(signer_kind="agent"), "role token infra:attest"),
         ("a kind outside the vocabulary", lambda rs: first(rs, lambda r: r["family"] == "chat:*").update(signer_kind="engine"), "outside the vocabulary"),
         ("a cell with no line", lambda rs: first(rs, lambda r: r["family"] == "chat:*").update(at=""), "cites no section"),
-        ("an open cell with no question", lambda rs: first(rs, lambda r: r["family"] == "@mls_leaf").update(signer_kind="open", question=""), "carries its question"),
-        ("a closed cell with a question", lambda rs: first(rs, lambda r: r["family"] == "@mls_leaf").update(question="which key?"), "only an open cell does"),
+        ("an open cell with no question", lambda rs: first(rs, lambda r: r["family"] == "custody:{kind}").update(signer_kind="open", question=""), "carries its question"),
+        ("a closed cell with a question", lambda rs: first(rs, lambda r: r["family"] == "custody:{kind}").update(question="which key?"), "only an open cell does"),
     ]
     for name, mut, needle in cases:
         if not any(needle in e for e in run(mut)):

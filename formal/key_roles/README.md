@@ -60,10 +60,10 @@ An implementation is a set of choices: which key signs a use for a party, which 
 | R13 | which key is the node is decided by what was minted as the node, never by a configured label | CC 3.4.7.3 (no key declares itself into a duty), Clause F |
 | R14 | a node or agent key with no counted owner-binding signs nothing but a device-join request | CC 3.2 |
 | R15 | a rotation hands on no more than the old key held, and rival rotations hand on nothing | CC 2.4.1.1 |
-| R16 | MLS group state is keyed by the room member's key (the room key in a private room, the member's own key otherwise) | read from CC 3.1.3.2 and RFC 9420 (below) |
+| R16 | MLS group state is keyed by the room member's key (the room key in a private room, the member's own key otherwise) | **open**: for Eric (below) |
 | R17 | the node is named by its node key: its public identity, its transport binding and its serve seat | Clauses A and E, CC 3.2 |
 
-Results: R1–R17 hold. An R whose rule rests on a cell is reported OPEN while the cell is open, never passed. Each of the 19 plants fails the R that names it:
+Results: R1–R15 and R17 hold; R16 is OPEN while its cell is. An R whose rule rests on a cell is reported OPEN while the cell is open, never passed. Each of the 19 plants fails the R that names it:
 
 | Plant | Caught by |
 |---|---|
@@ -95,11 +95,9 @@ Results: R1–R17 hold. An R whose rule rests on a cell is reported OPEN while t
 | `custody:{kind}` | the node: what a node holds is the node's, and the report is about the device that holds it | CC 3.1.3.3 (P3:307) |
 | an invitation (`membership:{stage}` proposal) | a person: an invite counts one voice a person, and an agent has no vote | CC 3.1.3.2 (P3:228), CC 4.5.13 (P4:2178) |
 | an agent's `identity:occurrence` | its owner, a person; the agent voices its own possession as the occurrence role | CC 3.3.6 (P3:1821) |
-| the stream binding's publisher | the actor, person or agent; never the node, which never signs as the actor | CC 3.4.7.3 Clause E |
-| an MLS leaf and its KeyPackage | the room member's key: the room key in a private room, the member's own otherwise; a KeyPackage is signed by its leaf's key | CC 3.1.3.2 (P3:281), RFC 9420 |
 | the configured key_id at the split | the actor keeps it; the node key is minted fresh. No verdict depends on it | CC 3.4.7.3 Clause F (P3:2615) |
 
-A cell opened later is reported, not passed. 
+Open, for Eric: the MLS leaf and KeyPackage (a room key per device in a private room is stated, P3:281; elsewhere the node key, as edge builds it, or the device's roster key) and the stream binding's publisher (the producing device's node key, as edge signs it, or the actor's key on that device). The text fixes neither axis, and each choice decides how edge builds rooms and calls, so they are not read here. A site that uses an open cell is reported, not passed. 
 
 **What it found.**
 - **The tokens never carried the key axis.** The signer gate's role tokens carry no key axis at all. Read alone, the 466 transitions cannot tell an agent signing a node's row from the node signing it. With the signer-kind column, the two columns agree everywhere, and every token that implies a kind (`owner`, `infra:attest`, `holder`, `serve`) meets one.
@@ -132,10 +130,10 @@ A cell opened later is reported, not passed.
 | `signs:invite proposal`, `signs:family invite`, `signs:pair join intent`, `signs:pair-room founding/proposal` | `membership:{stage}[proposal]` (person) | R3 |
 | `signs:invite reply`, `signs:… acceptance widen`, `signs:membership widening`, `signs:member removal`, `signs:leave` | `membership:{stage}[acceptance\|decline\|resignation]` (the invitee), `[widening\|removal]` (person) | R3 |
 | `signs:room rows`, `signs:self room actor half`, `signs:room epoch`, `signs:… DEK rewrap`, `signs:self-DEK rekey`, `signs:group-content …` | `@room_row` (room key, in a private room); `key_grant:{axis}` | R10 |
-| `mls-leaf/store-key`, `mls`, `signs:KeyPackage` | `@mls_leaf`, `@mls_keypackage` (the member's key) | R16 |
+| `mls-leaf/store-key`, `mls`, `signs:KeyPackage` | `@mls_leaf`, `@mls_keypackage` (open) | R16 |
 | `transport-occurrence`, `signs:transport`, `route-publish`, `signs:node_proof`, `sign as node` | `transport:{kind}` (node), `@transit_pair`; the read `node_identity` | R2, R9, R17 |
 | `call-attendee` | the read `may_act_through` (Clause D) | R6 |
-| `call-row`, `call chunk-key-binding` | `@stream_key_binding` (the actor), `@chunk_key` | R2 |
+| `call-row`, `call chunk-key-binding` | `@stream_key_binding` (open), `@chunk_key` | open |
 | `holding claims`, `signs:holding-claim withdrawals` | `custody:{kind}` (node) | R2 |
 | `health/telemetry label` | the read `node_identity` | R17 |
 | `audience/self-check`, `audience`, `cache key`, `store key …` | a set of "own keys" never mixes the node key with an actor's | R1, R17 |

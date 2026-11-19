@@ -4,7 +4,7 @@
   "cc_section": "3.4.7.3",
   "sources": {
    "manifests/transitions.json": "5a3e5409917bfdcbbfe5a348f578bd3da3c5872215563dcfc70ce0cd7306b226",
-   "formal/derivation/signer_kind.tsv": "2ad6853efd3a31506e604c7d9a188055c42ca46b7e806ce6d14353e2603be5c9"
+   "formal/derivation/signer_kind.tsv": "09ada06fc877f578d86766d1613bb2fe6d347ffddb9784fedbe62a80c9a5c4f2"
   },
   "kinds": [
    "person",
@@ -62,8 +62,8 @@
   "counts": {
    "uses": 504,
    "transitions": 466,
-   "open_uses": 0,
-   "open_questions": 0
+   "open_uses": 3,
+   "open_questions": 3
   },
   "model": "formal/key_roles",
   "reading": "a key of a kind not in a use's kinds must not sign it; an open use is reported, never passed"
@@ -135,16 +135,12 @@
    "verb": "sign",
    "leaf": null,
    "roles": [],
-   "kinds": [
-    "agent",
-    "person",
-    "room"
-   ],
-   "open": false,
-   "question": null,
+   "kinds": [],
+   "open": true,
+   "question": "MLS KeyPackage: signed by its leaf's key (RFC 9420), so it follows the @mls_leaf ruling. For Eric.",
    "rule": "use",
-   "cc_ref": "CC 3.3.6.2; RFC 9420 (a KeyPackage is signed by its leaf's signature key)",
-   "at": "P3:1891, P3:1891"
+   "cc_ref": "CC 3.3.6.2",
+   "at": "P3:1891"
   },
   {
    "use": "@mls_leaf",
@@ -152,16 +148,12 @@
    "verb": "sign",
    "leaf": null,
    "roles": [],
-   "kinds": [
-    "agent",
-    "person",
-    "room"
-   ],
-   "open": false,
-   "question": null,
+   "kinds": [],
+   "open": true,
+   "question": "MLS leaf: the text states a room key per device in a private room (P3:281) and is silent elsewhere; one leaf per device under the node key (edge's CohortGroups) or under the device's roster key (the person's key on that device, CC 3.3.6.4)? For Eric.",
    "rule": "use",
-   "cc_ref": "CC 5.1 MLS TreeKEM rekey; CC 3.1.3.2 (a private room's rows are the room key's)",
-   "at": "P5:61, P3:281"
+   "cc_ref": "CC 5.1 MLS TreeKEM rekey",
+   "at": "P5:61"
   },
   {
    "use": "@private_invitation",
@@ -215,15 +207,12 @@
    "verb": "sign",
    "leaf": null,
    "roles": [],
-   "kinds": [
-    "agent",
-    "person"
-   ],
-   "open": false,
-   "question": null,
+   "kinds": [],
+   "open": true,
+   "question": "StreamKeyBinding 'publisher's federation key' (P5:493): the producing device's node key (edge 45.1.6, set_node_signer) or the actor's key on that device? The text does not fix the axis. For Eric.",
    "rule": "use",
-   "cc_ref": "CC 5 StreamKeyBinding; CC 3.4.7.3 Clause E (the node never signs as the actor)",
-   "at": "P5:477, P3:2581"
+   "cc_ref": "CC 5 StreamKeyBinding",
+   "at": "P5:477"
   },
   {
    "use": "@transit_pair",
@@ -9238,10 +9227,7 @@
  ],
  "by_kind": {
   "person": [
-   "@mls_keypackage",
-   "@mls_leaf",
    "@split_key_id",
-   "@stream_key_binding",
    "activity_tier:{period}#attest:none>admitted",
    "activity_tier:{period}#supersede:admitted>superseded",
    "admission:unit#attest:none>admitted",
@@ -9664,10 +9650,7 @@
    "transport:canonical_rebind#supersede:admitted>superseded"
   ],
   "agent": [
-   "@mls_keypackage",
-   "@mls_leaf",
    "@split_key_id",
-   "@stream_key_binding",
    "activity_tier:{period}#attest:none>admitted",
    "activity_tier:{period}#supersede:admitted>superseded",
    "age_assurance:{level}:{band}:{version}#attest:none>admitted",
@@ -10214,8 +10197,6 @@
    "rendezvous:route#supersede:admitted>superseded"
   ],
   "room": [
-   "@mls_keypackage",
-   "@mls_leaf",
    "@room_row"
   ],
   "ephemeral": [
@@ -10279,5 +10260,9 @@
    "at": "P3:2581, P3:2600, P3:996"
   }
  ],
- "open_questions": []
+ "open_questions": [
+  "MLS KeyPackage: signed by its leaf's key (RFC 9420), so it follows the @mls_leaf ruling. For Eric.",
+  "MLS leaf: the text states a room key per device in a private room (P3:281) and is silent elsewhere; one leaf per device under the node key (edge's CohortGroups) or under the device's roster key (the person's key on that device, CC 3.3.6.4)? For Eric.",
+  "StreamKeyBinding 'publisher's federation key' (P5:493): the producing device's node key (edge 45.1.6, set_node_signer) or the actor's key on that device? The text does not fix the axis. For Eric."
+ ]
 }
