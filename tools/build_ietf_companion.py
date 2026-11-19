@@ -15,6 +15,10 @@ Steps: stamp the revision into ietf/<name>-NN.md, check that every ``~~~ cddl`` 
 the build.
 
 Run:  python3 tools/build_ietf_companion.py <name> [--rev 00]
+      python3 tools/build_ietf_companion.py <name> --check [--rev 00]   (CI; writes nothing)
+--check builds from the committed stamped copy ietf/<name>-NN.md (the source as revision NN froze it; the working
+source may already carry text toward NN+1) in a temporary directory and compares the .xml and .txt byte for byte with
+the committed ones. A difference exits 1.
       e.g. python3 tools/build_ietf_companion.py draft-moore-scitt-ciris-trace-context
 Tools: kramdown-rfc and cddl (gem install --user-install kramdown-rfc cddl), xml2rfc (pip).
 """
@@ -42,9 +46,12 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("name", help="draft name without revision, e.g. draft-moore-scitt-ciris-trace-context")
     ap.add_argument("--rev", default="00")
+    ap.add_argument("--check", action="store_true", help="rebuild the stamped copy and compare; write nothing")
     args = ap.parse_args()
     NAME, rev = args.name, args.rev
     SRC = os.path.join(IETF, f"{NAME}.md")
+    if args.check:
+        return check(NAME, rev)
     env = dict(os.environ, PATH=gem_path(), KRAMDOWN_REFCACHEDIR=os.path.join(IETF, ".refcache"))
     src = open(SRC, encoding="utf-8").read()
     doc = f"{NAME}-{rev}"
@@ -76,6 +83,34 @@ def main() -> int:
         print("\n".join(warnings))
         return 1
     print(f"built ietf/{doc}.xml, .txt, .html")
+    return 0
+
+
+def check(name: str, rev: str) -> int:
+    """Rebuild ietf/<name>-<rev>.md in a temporary directory and compare its .xml and .txt with the committed."""
+    import filecmp
+    import shutil
+
+    doc = f"{name}-{rev}"
+    stamped = os.path.join(IETF, f"{doc}.md")
+    if not os.path.exists(stamped):
+        print(f"no stamped copy {stamped}")
+        return 1
+    env = dict(os.environ, PATH=gem_path(), KRAMDOWN_REFCACHEDIR=os.path.join(IETF, ".refcache"))
+    with tempfile.TemporaryDirectory() as tmp:
+        shutil.copy(stamped, tmp)
+        with open(os.path.join(tmp, f"{doc}.xml"), "w", encoding="utf-8") as out:
+            subprocess.run(["kramdown-rfc", f"{doc}.md"], cwd=tmp, env=env, check=True, stdout=out, stderr=subprocess.PIPE)
+        run(["xml2rfc", "--v3", "--text", os.path.join(tmp, f"{doc}.xml")], cwd=tmp, env=env)
+        bad = [
+            ext
+            for ext in ("xml", "txt")
+            if not filecmp.cmp(os.path.join(tmp, f"{doc}.{ext}"), os.path.join(IETF, f"{doc}.{ext}"), shallow=False)
+        ]
+    if bad:
+        print(f"{doc}: {', '.join(bad)} differ from a rebuild of the stamped copy: run the build and commit ietf/")
+        return 1
+    print(f"{doc}: .xml and .txt rebuild byte-identically from the stamped copy")
     return 0
 
 

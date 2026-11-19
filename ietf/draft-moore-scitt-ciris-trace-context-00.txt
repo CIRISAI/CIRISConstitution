@@ -140,8 +140,8 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
      16.2.  Informative References . . . . . . . . . . . . . . . . .  30
    Appendix A.  Measured Motivation  . . . . . . . . . . . . . . . .  33
    Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  34
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  35
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  35
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  36
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  36
 
 1.  Introduction
 
@@ -1688,8 +1688,9 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               (draft)", 2026, <https://github.com/mirjak/audit-bof-
               preparation/blob/main/audit-charter.md>.
 
-   [CC]       CIRIS L3C, "The CIRIS Constitution", n.d.,
-              <https://github.com/CIRISAI/CIRISConstitution>.
+   [CC]       CIRIS L3C, "CIRIS Constitution 1.0-rc21", November 2026,
+              <https://github.com/CIRISAI/CIRISConstitution/tree/
+              v1.0-rc21>.
 
    [CIRISAGENT]
               CIRIS L3C, "CIRISAgent", n.d.,
@@ -1723,13 +1724,12 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               <https://datatracker.ietf.org/doc/html/draft-cosme-audit-
               agent-traceability-00>.
 
-   [I-D.durga-wimse-ctx-isolation]
-              Durga, R. K., "Cryptographic Separation of Untrusted Data-
-              Plane Context from Control-Plane Tool Invocations in
-              Autonomous AI Agents", Work in Progress, Internet-Draft,
-              draft-durga-wimse-ctx-isolation-00, 29 October 2026,
-              <https://datatracker.ietf.org/doc/html/draft-durga-wimse-
-              ctx-isolation-00>.
+
+
+
+
+
+
 
 
 
@@ -1737,6 +1737,14 @@ Moore                      Expires 23 May 2027                 [Page 31]
 
 Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
+
+   [I-D.durga-wimse-ctx-isolation]
+              Durga, R. K., "Cryptographic Separation of Untrusted Data-
+              Plane Context from Control-Plane Tool Invocations in
+              Autonomous AI Agents", Work in Progress, Internet-Draft,
+              draft-durga-wimse-ctx-isolation-00, 29 October 2026,
+              <https://datatracker.ietf.org/doc/html/draft-durga-wimse-
+              ctx-isolation-00>.
 
    [I-D.emirdag-scitt-ai-agent-execution]
               Emirdag, P. and D. Feichtinger, "AI Agent Execution
@@ -1778,6 +1786,14 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               Thaha, S. and S. Shamsudeen, "Agent Execution Evidence: A
               SCITT Profile for Verifiable Records of AI Agent Runs",
               Work in Progress, Internet-Draft, draft-thaha-scitt-agent-
+
+
+
+Moore                      Expires 23 May 2027                 [Page 32]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
               execution-evidence-02, 1 November 2026,
               <https://datatracker.ietf.org/doc/html/draft-thaha-scitt-
               agent-execution-evidence-02>.
@@ -1786,13 +1802,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               OpenTelemetry, "Semantic Conventions for Generative AI
               Systems", n.d.,
               <https://opentelemetry.io/docs/specs/semconv/gen-ai/>.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 32]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
 
    [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
               Code: The Implementation Status Section", BCP 205,
@@ -1821,6 +1830,26 @@ Appendix A.  Measured Motivation
    per case, before the mechanism of this document existed.  They are
    reported to explain the design, not as general claims about agents.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 33]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
     +======================================+=========================+
     | Finding                              | Measured                |
     +======================================+=========================+
@@ -1841,14 +1870,6 @@ Appendix A.  Measured Motivation
     +--------------------------------------+-------------------------+
 
               Table 10: Findings that motivated the manifest
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 33]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
 
 Appendix B.  Example
 
@@ -1877,6 +1898,14 @@ Appendix B.  Example
     "guard_violations": [],
     "messages_sha256":
      "d61c8b816c5a6f1a63528f38cdf9985a8aa28c119874de5694451ac5de4f7377",
+
+
+
+Moore                      Expires 23 May 2027                 [Page 34]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
     "sent_messages_match": true,
     "provider_capture": "unavailable",
     "segments": [
@@ -1898,14 +1927,6 @@ Appendix B.  Example
                 "role": "OBSERVER", "verifier": "api_auth"},
       "message_index": 3, "span_start": 11, "span_end": 236,
       "sha256":
-
-
-
-Moore                      Expires 23 May 2027                 [Page 34]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
-
      "c38e1604e79f43dfd5dd92f5d2c2188716b860c04154ff90627ba120c9a07916",
       "form": "stub",
       "stub": {
@@ -1933,6 +1954,14 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
                Figure 2: An entropy-judge manifest (trimmed)
 
+
+
+
+Moore                      Expires 23 May 2027                 [Page 35]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    Reading it: the judge received the draft in full (a residual) and, in
    place of the request, a stub saying that an observer's request
    exists, open, of medium size and carrying no authority, that the
@@ -1957,4 +1986,31 @@ Author's Address
 
 
 
-Moore                      Expires 23 May 2027                 [Page 35]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 36]

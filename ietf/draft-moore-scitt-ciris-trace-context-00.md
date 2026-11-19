@@ -80,10 +80,11 @@ informative:
       - org: OpenTelemetry
     target: https://opentelemetry.io/docs/specs/semconv/gen-ai/
   CC:
-    title: "The CIRIS Constitution"
+    title: "CIRIS Constitution 1.0-rc21"
     author:
-      - org: CIRIS L3C
-    target: https://github.com/CIRISAI/CIRISConstitution
+      org: CIRIS L3C
+    date: 2026-11
+    target: https://github.com/CIRISAI/CIRISConstitution/tree/v1.0-rc21
   CIRISAGENT:
     title: "CIRISAgent"
     author:
