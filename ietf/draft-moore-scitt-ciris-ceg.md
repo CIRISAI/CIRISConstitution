@@ -708,12 +708,18 @@ A holder may add a receipt to a statement's unprotected header.  The
 receipt is outside the signature and outside the row id.
 
 A host does not run code a row admits until it holds a receipt for
-that row, or for the unit statement the row names, from a
-Transparency Service the host trusts.  The receipt is the SCITT
-receipt itself: a COSE Receipt {{RFC9942}} in the unprotected
-header's `receipts` parameter (label 394), as {{RFC9943}} carries it.
-Anyone may run a Transparency Service; which ones a host trusts is
-its own acceptance, and a receipt adds no authority.
+a statement of that row from a Transparency Service the host
+trusts.  The receipt is the SCITT receipt itself: a COSE Receipt
+{{RFC9942}} in the unprotected header's `receipts` parameter (label
+394), as {{RFC9943}} carries it.  The service registers the
+statement's deterministic COSE_Sign1 encoding with an empty
+unprotected header, its leaf hash SHA-256(0x00 || leaf) as
+{{RFC9162}} hashes a leaf.  The host's own acceptance edge carries
+the service's key, a COSE_Key with its algorithm or an identity
+reference, and a receipt under another algorithm does not verify.
+The unprotected header is unsigned, so a malformed receipt is
+ignored and never makes the statement invalid.  Anyone may run a
+Transparency Service, and a receipt adds no authority.
 
 # Admission as a Registration Policy {#admission}
 

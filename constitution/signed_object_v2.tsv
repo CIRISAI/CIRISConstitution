@@ -4,7 +4,7 @@ statement	COSE_Sign1	unprotected	-	statement	unprotected-header	always	2.6.1.1	N
 statement	COSE_Sign1	payload	-	statement	bstr .cbor attestation-envelope	always	2.6.1.1 2.6.1.2	The payload as bytes, in deterministic encoding; a payload that is not the deterministic re-encoding of the value it decodes to is refused. Never nil.
 statement	COSE_Sign1	signature	scrub_signature_classical, scrub_signature_pqc	statement	composite-signature	always	2.6.1.7	The composite ML-DSA-65 with Ed25519 signature, 3373 bytes; neither half verifies alone.
 unprotected	unprotected-header	17	sd_claims	header:unprotected	[+ bstr .cbor sd-disclosure]	when disclosures are presented beside the statement	2.6.1.10	sd_claims of SD-CWT: disclosures as presented to one who may see them; they travel and are held as bytes, never in the row.
-unprotected	unprotected-header	394	receipts	header:unprotected	[+ bstr .cbor ceg-receipt]	where a Transparency Service has registered the statement	2.6.1.11 2.7.11	receipts of RFC 9942: COSE receipts, never signed; admitted code runs only once one from a service the host trusts is held.
+unprotected	unprotected-header	394	receipts	header:unprotected	[* bstr]	where a Transparency Service has registered the statement	2.6.1.11 2.7.11	receipts of RFC 9942, never signed: each read by the host as a COSE receipt, a malformed one ignored; admitted code runs only once one from a service the host trusts is held.
 protected	statement-protected	1	-	header:protected	composite-alg	always	2.6.1.7	alg: -70100, the composite; a private-use identifier until one is assigned.
 protected	statement-protected	3	-	header:protected	row-cty	always	2.6.1.1	cty: application/vnd.ciris.row+cbor, with no parameters; any other is refused.
 protected	statement-protected	-70001	attestation_type	header:protected	row-type	always	2.6.1.1	The row's type, one of the five; refused on any object that is not a row. The row id reads it.
@@ -280,6 +280,12 @@ disclosure	salted-claim	value	-	object	ceg-value	always	2.6.1.10	The blinded mem
 disclosure	salted-claim	key	-	object	tstr	always	2.6.1.10	The blinded member's name; the digest is SHA-256 over the disclosure's bytes as sd_claims carries them.
 disclosure	salted-element	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes; a blinded array element is disclosed as [salt, value].
 disclosure	salted-element	value	-	object	ceg-value	always	2.6.1.10	The blinded element's value.
+trust_accepts	trust-accepts	"author"	attesting_key_id	payload	identity-ref	always	4.4.3.34	The reader whose edge it is.
+trust_accepts	trust-accepts	"dimension"	dimension	payload	tstr	always	4.4.3.34	trust:accepts:v1.
+trust_accepts	trust-accepts	"trust_classes"	trust_classes	payload	[+ tstr]	where the edge narrows its classes	4.4.3.34 2.6.1.2	A set of class ids; absent, every class the charter declares.
+trust_accepts	trust-accepts	"trust_depth"	trust_depth	payload	0..5	where the edge reaches further	4.4.3.34	Absent reads 0.
+trust_accepts	trust-accepts	"service_key"	-	payload	{ 1: int, 3: int, * int => any } / identity-ref	on an edge of the class transparency	2.7.11 4.4.3.34	The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record.
+trust_accepts	trust-accepts	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 logical	-	the row id	attestation_id	none	-	-	2.6.1.3	Computed by every holder from the statement; the same for every voice of a counted row.
 logical	-	kid, iss and author	attesting_key_id	none	-	-	2.6.1.7	kid names the signing key; iss the signer's stable identity; author the author of an authored row.
 logical	-	label -70001	attestation_type	none	-	-	2.6.1.1	One of the five.

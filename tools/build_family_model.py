@@ -33,8 +33,8 @@ FORWARD_PAYLOAD = OrderedDict([("group-roster", "group:roster"), ("membership-ch
                                ("key-grant", "key_grant:{axis}"), ("delivery-receipt", "delivery_receipt:{stream_id}"),
                                ("identity-occurrence", "identity:occurrence"), ("identity-amendment", "identity_amendment"),
                                ("deferral-response", "deferral:response:{outcome}"), ("deferral-request", "deferral:request"),
-                               ("canonical-rebind", "transport:canonical_rebind")])
-FORWARD_PARTIAL = {"deferral:response:{outcome}", "deferral:request", "transport:canonical_rebind"}   # the rule names some members; the cell's others stay
+                               ("canonical-rebind", "transport:canonical_rebind"), ("trust-accepts", "trust:accepts")])
+FORWARD_PARTIAL = {"deferral:response:{outcome}", "deferral:request", "transport:canonical_rebind", "trust:accepts"}   # the rule names some members; the cell's others stay
 FORWARD_LEAVES = {"membership:{stage}": ("widening", "removal")}   # the stages the rule states; the others keep their cell
 CELL_CITES = os.path.join(ROOT, "formal/derivation/cell_cites.tsv")
 FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")

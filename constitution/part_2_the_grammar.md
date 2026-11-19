@@ -614,7 +614,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
 | `sd_claims` | `17` | header:unprotected | `[+ bstr .cbor sd-disclosure]` | when disclosures are presented beside the statement | [2.6.1.10](#2.6.1.10) | sd_claims of SD-CWT: disclosures as presented to one who may see them; they travel and are held as bytes, never in the row. |
-| `receipts` | `394` | header:unprotected | `[+ bstr .cbor ceg-receipt]` | where a Transparency Service has registered the statement | [2.6.1.11](#2.6.1.11) [2.7.11](#2.7.11) | receipts of RFC 9942: COSE receipts, never signed; admitted code runs only once one from a service the host trusts is held. |
+| `receipts` | `394` | header:unprotected | `[* bstr]` | where a Transparency Service has registered the statement | [2.6.1.11](#2.6.1.11) [2.7.11](#2.7.11) | receipts of RFC 9942, never signed: each read by the host as a COSE receipt, a malformed one ignored; admitted code runs only once one from a service the host trusts is held. |
 
 **The payload**
 
@@ -901,6 +901,17 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `epoch` | `"epoch"` | payload | `uint` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The key-rotation index. |
 | `K` | `"k"` | payload | `uint` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The chunk index acknowledged. |
 | `chunk_root` | `"chunk_root"` | payload | `hash-digest` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The published tree root the subscriber signs over. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**An acceptance edge: the members this form names of a `trust:accepts` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | The reader whose edge it is. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | trust:accepts:v1. |
+| `trust_classes` | `"trust_classes"` | payload | `[+ tstr]` | where the edge narrows its classes | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) [2.6.1.2](#2.6.1.2) | A set of class ids; absent, every class the charter declares. |
+| `trust_depth` | `"trust_depth"` | payload | `0..5` | where the edge reaches further | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | Absent reads 0. |
+| — | `"service_key"` | payload | `{ 1: int, 3: int, * int => any } / identity-ref` | on an edge of the class transparency | [2.7.11](#2.7.11) [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
 **An occurrence: the payload of an `identity:occurrence` row**
@@ -1682,9 +1693,9 @@ Every voice's `iss` is a person's identity, whose `identity_type` contains `user
 
 **The halt reaches every unit.** On a node the halt reaches, from the instant it latches, the host permits no effect of any admitted unit ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)). The host reads the latch before every effect. Computing and reading continue, and the lease ends a halted unit.
 
-**A receipt before it runs.** A host MUST NOT run admitted code until it holds a receipt for the `admission:unit` row, or for the unit statement the row names, from a Transparency Service the host trusts. The receipt is SCITT's own: a COSE receipt ([RFC-9942]) in the unprotected header's `receipts` parameter, label 394, as [RFC-9943] carries it. A missing or unverifiable receipt is not held, so the unit waits, and it never admits. A receipt adds no authority. It witnesses that the statement was registered, which closes a release seen only by those it was sent to.
+**A receipt before it runs.** A host MUST NOT run admitted code until it holds a receipt for a statement of the `admission:unit` row from a Transparency Service the host trusts. The receipt is SCITT's own: a COSE receipt ([RFC-9942]) in the unprotected header's `receipts` parameter, label 394, as [RFC-9943] carries it. The service registers the statement's deterministic `COSE_Sign1` encoding with an empty unprotected header, and its leaf hash is SHA-256(0x00 ‖ leaf), as [RFC-9162] hashes a leaf. A missing or unverifiable receipt is not held, so the unit waits, and it never admits. The unprotected header is unsigned, so a malformed receipt is ignored and is never a fault of the statement. A receipt adds no authority. It witnesses that the statement was registered, which closes a release seen only by those it was sent to.
 
-**Who runs a Transparency Service.** Anyone may run one, under their own key. A host trusts a service by an acceptance edge with the class `transparency` ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34)), as it trusts anyone. No list of services ships with anything. A receipt from a service the host does not trust counts for nothing there.
+**Who runs a Transparency Service.** Anyone may run one, under their own key. A host trusts a service by its owner's own acceptance edge with the class `transparency` ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34)): one hop, read at the host's `self` scope, whatever the edge's tier. The edge carries the service's key as `service_key`: a COSE key with its algorithm, or an identity reference whose key is its `key:record`. A receipt whose protected algorithm is not that key's does not verify. No list of services ships with anything. A receipt from a service the host does not trust counts for nothing there.
 
 **Profile.** An agent loads its profile only when the digest of what it loads equals the digest its rows derive ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). The base link of the `identity_amendment` chain names no predecessor and approves the exact digest of the agent's shipped template, as that template's manifest signature or the attested build checks it. Each later link names the one before. With no base link, the agent runs that template alone, counts no amendment and reports `profile_unanchored`. The expected digest is SHA-256 over the deterministic encoding of `["CEG-profile/2", d0, ..., dn]`, the links' digests in chain order. Two links that name one predecessor both stay uncounted, and the expected digest is that of the chain before them ([CC 2.7.7](#2.7.7) rule 2).
 

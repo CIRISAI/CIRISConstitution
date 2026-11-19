@@ -240,3 +240,14 @@ canonical-rebind = {
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }
+
+; trust:accepts (CC 4.4.3.34, CC 2.7.11): the reader's own edge; the members this form names, its further members are the store's.
+trust-accepts = {
+  "author": identity-ref,                   ; The reader whose edge it is.
+  "dimension": tstr,                        ; trust:accepts:v1.
+  ? "trust_classes": [+ tstr],              ; A set of class ids; absent, every class the charter declares. (where the edge narrows its classes)
+  ? "trust_depth": 0..5,                    ; Absent reads 0. (where the edge reaches further)
+  ? "service_key": { 1: int, 3: int, * int => any } / identity-ref, ; The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record. (on an edge of the class transparency)
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}

@@ -85,6 +85,7 @@ OBJECTS = [
     ("custody", "A custody report: the payload of a `custody:{kind}` row"),
     ("key_grant", "A key grant: the payload of a `key_grant:{axis}` row"),
     ("receipt", "A delivery receipt: the payload of a `delivery_receipt:{stream_id}` row"),
+    ("trust_accepts", "An acceptance edge: the members this form names of a `trust:accepts` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
     ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
     ("admission", "An admission of a unit: the members of an `admission:unit` row"),
@@ -572,6 +573,9 @@ def family_payloads():
         "admission-unit": ("admission:unit", {
             "author": iref(0), "unit": dig, "capabilities": ["read", "compute"], "cohort_scope": "self", "asserted_at": t,
             "valid_until": t + 86400000}),
+        "trust-accepts": ("trust:accepts", {
+            "author": iref(0), "dimension": "trust:accepts:v1", "trust_classes": ["transparency"],
+            "service_key": {1: 2, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32)}, "asserted_at": t}),
         "delivery-receipt": ("delivery_receipt:.stream_id", {
             "author": iref(1), "dimension": "delivery_receipt:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
             "chunk_root": dig, "asserted_at": t}),
@@ -653,9 +657,16 @@ def family_payload_samples():
             ("a decimal of three members", cde(Tag(4, [-1, 5, 0])))]),
         ("ceg-statement", "an admission:unit statement with a Transparency Service's receipt",
          statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: [cde(_receipt())]}), [
-            ("an empty receipts array", statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: []})),
-            ("a receipt that is no COSE_Sign1", statement(P["admission-unit"], rtype="scores", family="admission:unit",
-                                                          unprotected={394: [cde([bytes(4), {}, None, bytes(64)])]}))]),
+            ("receipts as one byte string, not an array", statement(P["admission-unit"], rtype="scores", family="admission:unit",
+                                                                    unprotected={394: cde(_receipt())}))]),
+        # a statement's validity never depends on its receipts: these stay valid, and the host's rule ignores the receipts
+        ("ceg-statement", "an admission:unit statement with an empty receipts array",
+         statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: []}), []),
+        ("ceg-statement", "an admission:unit statement whose receipt is no COSE_Sign1",
+         statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: [cde([bytes(4), {}, None, bytes(64)])]}), []),
+        ("trust-accepts", "a transparency edge carrying its service's COSE key", cde(family_payloads()["trust-accepts"][1]), [
+            ("a service key that is a key id, not an identity reference", cde(dict(family_payloads()["trust-accepts"][1], service_key="A1"))),
+            ("a trust depth of 6", cde(dict(family_payloads()["trust-accepts"][1], trust_depth=6)))]),
         ("delivery-receipt", "delivery_receipt:{stream_id} payload", cde(P["delivery-receipt"]), [
             ("a receipt with no chunk index", D("delivery-receipt", "k")),
             ("a chunk root as bare bytes", W("delivery-receipt", chunk_root=bytes(32)))]),
@@ -756,33 +767,41 @@ RECEIPT_MISSING = "admission_receipt_missing"
 
 def receipt_rule(receipts, trusted):
     """CC 2.7.11: admitted code runs only once a receipt from a Transparency Service the host trusts is held.
-    receipts: [(service key, verifies)] held for the row or the unit statement it names; trusted: the services the
-    host's acceptance edges with class transparency reach. None, or (RECEIPT_MISSING, detail): the unit waits."""
-    if not receipts:
+    receipts: [{"wellformed", "service", "alg", "verifies"}] held for a statement of the admission:unit row; a receipt that
+    is not a well-formed COSE receipt is ignored, never a fault of the statement. trusted: {service: alg} from the host
+    owner's own edges of the class transparency (one hop, at the host's self scope). None, or (RECEIPT_MISSING, detail)."""
+    held = [r for r in receipts if r.get("wellformed")]
+    if not held:
         return RECEIPT_MISSING, "none"
-    if any(v and s in trusted for s, v in receipts):
+    if any(r["service"] in trusted and r["alg"] == trusted[r["service"]] and r["verifies"] for r in held):
         return None
-    if any(s in trusted for s, _ in receipts):
+    if any(r["service"] in trusted for r in held):
         return RECEIPT_MISSING, "unverifiable"
     return RECEIPT_MISSING, "untrusted_service"
 
 
 def receipt_checks():
-    """(line, problems): a trusted receipt lets the unit run; none, an unverifiable one, and one from a service the host
-    does not trust each wait; a planted rule that admits any receipt must be caught."""
-    trusted = {"ts-1"}
-    cases = [("a receipt from a service the host trusts", [("ts-1", True)], None),
-             ("two receipts, one trusted", [("ts-9", True), ("ts-1", True)], None),
-             ("no receipt", [], (RECEIPT_MISSING, "none")),
-             ("a trusted service's receipt that does not verify", [("ts-1", False)], (RECEIPT_MISSING, "unverifiable")),
-             ("a receipt from a service the host does not trust", [("ts-9", True)], (RECEIPT_MISSING, "untrusted_service"))]
+    """(line, problems): a trusted receipt lets the unit run; none, an empty array, a malformed one (ignored), one under
+    another alg, an unverifiable one and one from a service the host does not trust each wait; a planted rule that
+    admits any receipt must be caught."""
+    trusted = {"ts-1": -7}
+    ok = lambda s="ts-1", alg=-7, v=True: {"wellformed": True, "service": s, "alg": alg, "verifies": v}
+    malformed = {"wellformed": False}
+    cases = [("a receipt from a service the host trusts", [ok()], None),
+             ("a malformed receipt beside a trusted one", [malformed, ok()], None),
+             ("no receipts member", [], (RECEIPT_MISSING, "none")),
+             ("an empty receipts array", [], (RECEIPT_MISSING, "none")),
+             ("a receipt that is no COSE_Sign1, ignored", [malformed], (RECEIPT_MISSING, "none")),
+             ("a trusted service's receipt under another algorithm", [ok(alg=-8)], (RECEIPT_MISSING, "unverifiable")),
+             ("a trusted service's receipt that does not verify", [ok(v=False)], (RECEIPT_MISSING, "unverifiable")),
+             ("a receipt from a service the host does not trust", [ok(s="ts-9")], (RECEIPT_MISSING, "untrusted_service"))]
     bad = [f"receipt rule: {w}: {receipt_rule(r, trusted)} where {want} was expected"
            for w, r, want in cases if receipt_rule(r, trusted) != want]
     planted = lambda r, t: None if r else (RECEIPT_MISSING, "none")
     if all(planted(r, trusted) == want for _, r, want in cases):
         bad.append("deliberate break not caught: a rule admitting any receipt passed every receipt sample")
     return (f"receipts before admitted code runs: {sum(w is None for *_, w in cases)} run, "
-            f"{sum(w is not None for *_, w in cases)} wait ({RECEIPT_MISSING}); the planted break is caught"), bad
+            f"{sum(w is not None for *_, w in cases)} wait ({RECEIPT_MISSING}), a malformed receipt ignored; the planted break is caught"), bad
 
 
 def admission_checks():
@@ -866,7 +885,7 @@ def family_cddl_checks(text, ftext):
 
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
 FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "receipt",
-                  "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission")
+                  "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
@@ -880,6 +899,7 @@ FAMILY_RULE_HEAD = {
     "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
     "key-grant": "key_grant:{axis}: authored by the sealer; sub is the recipient.",
     "delivery-receipt": "delivery_receipt:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
+    "trust-accepts": "trust:accepts (CC 4.4.3.34, CC 2.7.11): the reader's own edge; the members this form names, its further members are the store's.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",
     "deferral-request": "deferral:request (CC 3.1.9.3, CC 4.3): authored by the deferring party; the request's further members are the store's.",

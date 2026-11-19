@@ -399,7 +399,7 @@ The delivery axis was framed for 1:1 observer-share and 1:N broadcast multicast 
 | **1:1 / group video call** | each participant emits a `live_stream` (their A/V) scoped to the channel `community`; each subscribes to peers. N↔N = N simultaneous bidirectional streams over a small roster |
 | **Voice channel** | identical to group video with an audio-only codec; same `live_stream` wire |
 | **Desktop / screen sharing** | a `live_stream` whose source is a screen capture (1→N within the channel); same chunk-seal + epoch-DEK wire |
-| **Text chat** | `chat_message` at `cohort_scope: community`, `community_id: <channel>`; threads via `topical_relation: replies_to` |
+| **Text chat** | `chat_message` at `cohort_scope: community`, `community_id: <channel>`; threads via `refs.answers` ([CC 3.3.11](part_3_the_namespace.md#3.3.11)) |
 | **Channel** | a `community` (persistent) — its roster gates who can join the call / read the chat |
 | **Sub-channels** | nested `community` membership ([CC 4.4.3.9](part_4_composition_governance.md#4.4.3.9) multi-level pattern): a parent "space" community whose members admit child channel-communities; sub-channel members are a subset of the space roster |
 | **Presence ("who's here")** | the reachable set ([CC 5.3.3.9](#5.3.3.9)) — node-local, never an attestation, never logged |
