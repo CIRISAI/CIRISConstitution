@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "policy_sha256": "32cfcb6c9503fecf6f1827075342bc438ebe721360253f936c680f4d1944247a",
+  "policy_sha256": "96edc650156b080724037c9ac7b6cf42a8386a577fd935713b02b77bd8554eaf",
   "count": 819,
   "rule_vector_count": 270,
   "target_voice": "on a row whose target_voice cell is yes, a vector's target_voice says whether the target's own yes is held: one voice toward the floor of two and toward the floor count, never a member and never part of the enact fraction; a vector without the field reads false",
@@ -15237,7 +15237,7 @@
    "family": "moderator_election",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voices_or_roster",
     "count": 2
    },
    "base": 2,
@@ -15247,7 +15247,7 @@
    "family": "moderator_election",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voices_or_roster",
     "count": 2
    },
    "base": 3,
@@ -15257,7 +15257,7 @@
    "family": "moderator_election",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voices_or_roster",
     "count": 2
    },
    "base": 5,
@@ -15267,7 +15267,7 @@
    "family": "moderator_election",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voices_or_roster",
     "count": 2
    },
    "base": 9,
@@ -15277,7 +15277,7 @@
    "family": "moderator_election",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voices_or_roster",
     "count": 2
    },
    "base": 100,

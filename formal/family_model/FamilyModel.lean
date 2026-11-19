@@ -677,7 +677,7 @@ def f177 : FamilyRow :=
   ⟨"preserve_response", ⟨.process, [.attest], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit177 : fits f177 = true := by decide
 def f178 : FamilyRow :=
-  ⟨"rendezvous:route", ⟨.circumstances, [.attest, .replace], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"rendezvous:route", ⟨.circumstances, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit178 : fits f178 = true := by decide
 def f179 : FamilyRow :=
   ⟨"retirement:{state}", ⟨.process, [.attest, .withdraw], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩

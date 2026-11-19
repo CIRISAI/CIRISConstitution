@@ -227,24 +227,24 @@ image:*	format	unstated	unstated	no	CC 3.3.13	Source struct carries dimensions, 
 key:record	attestation_evidence	unstated	unstated	yes	CC 4.2.2	The field is carried as a member of the `attestation_evidence` of a signed key record
 key:record	hardware_class	unstated	unstated	no	CC 4.2.2	The field is carried as a member of the `attestation_evidence` of a signed key record
 key_grant:{axis}	at_rest_sha256	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
-key_grant:{axis}	attested_key_id	unstated	unstated	yes	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	attested_key_id	unstated	unstated	yes	CC 4.4.3.16	a grant names its recipient (attested_key_id) and its axis; it carries no scope
 key_grant:{axis}	axis	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
-key_grant:{axis}	axis	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	axis	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id) and its axis; it carries no scope
 key_grant:{axis}	community_key_id	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
-key_grant:{axis}	content_sha256	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	content_sha256	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id) and its axis; it carries no scope
 key_grant:{axis}	epoch	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
 key_grant:{axis}	minter_key_id	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
 key_grant:{axis}	owner_key_id	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
-key_grant:{axis}	recipient_key_id	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
-key_grant:{axis}	scope	unstated	unstated	yes	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	recipient_key_id	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id) and its axis; it carries no scope
+key_grant:{axis}	scope	unstated	unstated	yes	CC 4.4.3.16	a grant names its recipient (attested_key_id) and its axis; it carries no scope
 key_grant:{axis}	stream_id	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
 key_grant:{axis}	wrap_algorithm	"v2"	unstated	no	CC 3.1.3	`attested_key_id` is the recipient occurrence; the envelope carries the key's identity on that axis and the wrap (`wrap_algorithm` v2, `wrapped_dek`).
 key_grant:{axis}	wrap_algorithm	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
 key_grant:{axis}	wrap_algorithm	unstated	unstated	no	CC 4.4.3.4	`wrap_algorithm: v2` (hybrid PQC) MANDATORY
-key_grant:{axis}	wrap_algorithm	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	wrap_algorithm	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id) and its axis; it carries no scope
 key_grant:{axis}	wrapped_dek	tstr	unstated	no	CC 3.1.3	`attested_key_id` is the recipient occurrence; the envelope carries the key's identity on that axis and the wrap (`wrap_algorithm` v2, `wrapped_dek`).
 key_grant:{axis}	wrapped_dek	unstated	unstated	no	CC 3.3.2	A wrap is one `scores` row on `key_grant:{axis}:v1` ([CC 3.1.3](#3.1.3) registry row) and has no struct of its own.
-key_grant:{axis}	wrapped_dek	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
+key_grant:{axis}	wrapped_dek	unstated	unstated	no	CC 4.4.3.16	a grant names its recipient (attested_key_id) and its axis; it carries no scope
 lawful_order:release	reference	unstated	unstated	yes	CC 3.1.5	The steward's record, under their own name, of a lawful order to **release** sealed material: issuing authority, reference, scope, order digest.
 lawful_order:release	scope	unstated	unstated	yes	CC 3.1.5	The steward's record, under their own name, of a lawful order to **release** sealed material: issuing authority, reference, scope, order digest.
 ledger:head:{unit}:{version}	sequence	uint	unstated	yes	CC 3.1.3	Catalogue row (CC 3.1.7 R1); an in-grammar ledger's **head** — sequence, unit and the declared anchoring cadence ([CC 3.3.10.1](part_3_the_namespace.md#3.3.10.1) clauses 1–4).

@@ -69,6 +69,8 @@ When a narrative reaches for a concept the wire does not name as a primitive, th
 
 The clearest way to see the wire grammar carry a real life-cycle is to watch one Contribution grow up. A NodeCore consumer keeps private notes in `local_data` Contributions at `cohort_scope: self`, then decides to publish one as an encyclopedia entry. The promotion is not a new claim from nowhere — it is a `supersedes` chained off the original, widening scope and morphing sub-kind while preserving the content hash:
 
+The example is written in the earlier JSON form of [CC 8.11](#8.11) for readability; in the forward form the rows are deterministic CBOR under COSE ([CC 2.6.1](part_2_the_grammar.md#2.6.1)), and a score or confidence is a fixed-scale integer ([CC 2.6.1.5](part_2_the_grammar.md#2.6.1.5)).
+
 ```
 // Original (local_data, self scope):
 {
@@ -213,7 +215,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | T-3 gap — testimonial_witness:{kind} | **CLOSED** via [CC 3.1.9.3](part_3_the_namespace.md#3.1.9.3) new prefix; opened to open vocabulary. |
 | T-3 gap — labor:individual_loss | **CLOSED by documentation**. Existing `non_maleficence:*` with `target_key_id = affected_individual` + `witness_relation: external` carries the per-individual claim. |
 | T-3 gap — Constitutional-constraint grounding | **CLOSED in [CC 1.13.1](part_1_foundation.md#1.13.1) prose**. Wire stays tradition-multiplicity-neutral per [CC 1.2](part_1_foundation.md#1.2). |
-| canonical-bytes newline-injection | **CLOSED** in [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1): contracts redesigned to JCS (RFC 8785) objects with a pinned `domain` member (one canonicalization family, so TupleHash128 is not used; JSON escaping structurally removes the newline surface). |
+| canonical-bytes newline-injection | **CLOSED** in [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1): each contract carries a pinned `domain` and states its own encoding, so no free text reaches the signed bytes ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)); the JCS form is the earlier one ([CC 8.11.16](#8.11.16)). |
 | supersedes/withdraws/recants ordering | **CLOSED** in [CC 3.5.1](part_3_the_namespace.md#3.5.1) precedence rule + idempotency dedup. |
 | cell_pool < min_pool cliff | **CLOSED** in [CC 4.4.3.2](part_4_composition_governance.md#4.4.3.2) sub-quorum fallback paths. |
 | no RFC 2119 anchor | **CLOSED** in [CC 2.6.9](part_2_the_grammar.md#2.6.9). |
@@ -1185,7 +1187,7 @@ The regulatory-watch source-feed list MUST include at minimum: EUR-Lex, Federal 
 
 *MH §225:* "When it is unclear who carried out an attack, the risk of disproportionate reaction, miscalculation and escalation increases."
 
-CIRIS deployments that include network-facing inference, API exposure, or federation transport are subject to emerging cyber-domain treaty obligations even where no enacted statute currently applies. The `cyber_offensive` prohibition ([CC 3.1.5.4](part_3_the_namespace.md#3.1.5.4)) is the internal firebreak; §6 of this annex tracks the external treaty surface. The WA docket may receive a "Breaking" tag related to cyber-domain treaty ratification (e.g., Budapest Convention extension, proposed UN cybercrime convention). Then the CRE Protocol (Annex D) must re-evaluate any deployment assessed at RM ≥ 4 with network-facing components before the next F-Audit cycle ([CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3)).
+CIRIS deployments that include network-facing inference, API exposure, or federation transport may become subject to emerging cyber-domain treaty obligations; no enacted statute applies to them yet. The `cyber_offensive` prohibition ([CC 3.1.5.4](part_3_the_namespace.md#3.1.5.4)) is the internal firebreak; §6 of this annex tracks the external treaty surface. The WA docket may receive a "Breaking" tag related to cyber-domain treaty ratification (e.g., Budapest Convention extension, proposed UN cybercrime convention). Then the CRE Protocol (Annex D) must re-evaluate any deployment assessed at RM ≥ 4 with network-facing components before the next F-Audit cycle ([CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3)).
 
 **1. Data-Protection Cross-Walk ("DP-Map").**
 
@@ -1210,7 +1212,7 @@ The DP-Map above maps individual data-subject rights to GDPR articles and CIRIS 
 | DP Topic | GDPR Art. | CIRIS Clause | Stage | Accountability Hook |
 |---|---|---|---|---|
 | Design-time bias documentation | 35 (DPIA) | [CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3) Creator Ledger | Design | `cis_bias_assessment` field in Creator Intent Statement; ST ≥ 3 requires independent reviewer signature |
-| Deployment-time processing record | 30 | PDMA Step 1 `processing_basis` field | Deployment | `processing_basis` logged to CIRISPersist tamper-evident store with ISO 8601 timestamp |
+| Deployment-time processing record | 30 | PDMA Step 1 `processing_basis` field | Deployment | `processing_basis` logged to CIRISPersist tamper-evident store with its instant ([CC 2.6.2](part_2_the_grammar.md#2.6.2)) |
 | Decision-time contestability log | 22(3) | Annex F Autonomy Tier A3+ override panel | Decision | `contestability_url` returned in every automated-decision response body; hash-anchored in transparency log |
 | Controller identification | 4(7) | Who determines the purposes and means of the processing | All stages | Controller duties attach to the party that determines the purposes and means of the processing; processor duties attach to a party that processes on that party's documented instructions; a party that does both for different processing carries both sets, each for the processing it does in that role; recorded in `dp-map.yaml` |
 
@@ -1452,9 +1454,9 @@ Contrasts: pipeline − prompt **−31.6 points** (95% CI [−40.4, −22.7], p 
 
 **3. The untuned domain — transfer, *in progress, not citable*.** Whether machinery built for one domain cross-applies with no tuning is the architectural thesis's natural falsification surface. It is being tested against a hazardous-knowledge probe paired with a benign-prompt over-refusal probe (both axes mandatory — an agent that refuses everything scores perfectly on one and is useless). The early signal runs **against** the tuned-domain ordering: on single-turn untuned harm the accord as a plain prompt outperformed the pipeline on both axes, while both beat the bare model. That is a boundary on the transfer claim, not a refutation of the tuned result. No number is ratified until it meets the standard below.
 
-**4. The standard any such number has to meet (normative).** A cross-application result has standing as its own claim class — ***measured-transfer, domain-untuned*** — never prose-comparable to tuned-domain numbers, and admissible only in the **two-axis form** (a hazard-declined figure without its paired over-refusal cost is inadmissible). Judge-scored numbers additionally require, for the **pivotal class of the claim being made**, κ ≥ 0.7 against human labels on the binary axis and recall *and* precision ≥ 80% on the pivotal class. They also require, reported with the number, an **adversarial-flip sensitivity**: the judge's known error modes turned maximally against the conclusion, with the contrast surviving. An instrument that fails these carries no reading regardless of how impressive the reading is. A validated instrument is the durable output; the number is perishable.
+**4. The standard any such number has to meet (binding where the annex is adopted, [CC 8.8](#8.8)).** A cross-application result has standing as its own claim class — ***measured-transfer, domain-untuned*** — never prose-comparable to tuned-domain numbers, and admissible only in the **two-axis form** (a hazard-declined figure without its paired over-refusal cost is inadmissible). Judge-scored numbers additionally require, for the **pivotal class of the claim being made**, κ ≥ 0.7 against human labels on the binary axis and recall *and* precision ≥ 80% on the pivotal class. They also require, reported with the number, an **adversarial-flip sensitivity**: the judge's known error modes turned maximally against the conclusion, with the contrast surviving. An instrument that fails these carries no reading regardless of how impressive the reading is. A validated instrument is the durable output; the number is perishable.
 
-**5. The testimonial-class defect (normative).** A safety check whose *failure to run* reports as a principled refusal — a timed-out conscience returning an abort verdict — is a **testimonial-class defect**. The record testifies that a check ran when it did not, and no re-reading of the artifact recovers the truth. Counts from affected runs are **inadmissible until the defect is fixed and the runs re-executed**, never corrected post hoc, because the contamination is in the only record.
+**5. The testimonial-class defect (binding where the annex is adopted, [CC 8.8](#8.8)).** A safety check whose *failure to run* reports as a principled refusal — a timed-out conscience returning an abort verdict — is a **testimonial-class defect**. The record testifies that a check ran when it did not, and no re-reading of the artifact recovers the truth. Counts from affected runs are **inadmissible until the defect is fixed and the runs re-executed**, never corrected post hoc, because the contamination is in the only record.
 
 *Operational target (the 8.8 standing). The harness, gates and schedules of sections 6 onward are what a deployment that adopts this annex aims at; the present tense here describes the target, not infrastructure that ships.*
 
@@ -2023,7 +2025,6 @@ Body: `consent_basis`, `feature_dim`, `min_feature_dim`, `n_eff_floor`, `n_eff_h
 Count: `none`
 
 Guard:
-- attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded@admitted[attested=attested,leaf:domain=leaf:domain] else exclude` (CC 3.1.2)
 - attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded|capacity_assurance:reversible_pending@admitted[attested=attested,leaf:domain=leaf:domain] else exclude` (CC 3.4.12)
 
 Fold:
@@ -2959,10 +2960,10 @@ Authorship: `leaf=widening|removal => counted ; authored` (CC 3.1.3.2)
 
 Guard:
 - attest: `each(subject) when(leaf=widening) (one membership:acceptance@named[signer=key,object=object] as A & no membership:widening@named[ref:*=A.id] else void+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else contested+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.6)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.6, CC 4.4.3.9, CC 4.4.3.17)
+- attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else contested+community_consensus_protocol_violation)` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.6)
+- attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.6, CC 4.4.3.9, CC 4.4.3.17)
 - attest: `each(subject) when(leaf=widening,type(key,node)) one trust:blessing@landed[attested=key] else exclude` (CC 3.1.3.2)
 - attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
 
@@ -3304,7 +3305,6 @@ Fold:
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
 | attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
-| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
 

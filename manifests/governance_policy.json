@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "32cfcb6c9503fecf6f1827075342bc438ebe721360253f936c680f4d1944247a",
+  "policy_sha256": "96edc650156b080724037c9ac7b6cf42a8386a577fd935713b02b77bd8554eaf",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -862,7 +862,7 @@
    "base": "standing",
    "enact": "instant runoff over ranked choice of three",
    "cancel": null,
-   "floor": "2 voices",
+   "floor": "2 voices, or the roster's size if smaller",
    "enact_rule": {
     "kind": "ranked_irv",
     "choices": 3
@@ -871,7 +871,7 @@
     "kind": "none"
    },
    "floor_rule": {
-    "kind": "voices",
+    "kind": "voices_or_roster",
     "count": 2
    },
    "counted": {

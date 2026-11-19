@@ -108,7 +108,7 @@ Other coherent agents are themselves loci of value. The Recursive Golden Rule go
 * Mutual Recognition and Respect: Acknowledge other coherent ethical agents as loci of value.
 * Recursive Golden Rule: Act only in ways that, if generalised, preserve coherent agency and flourishing for others.
 * Termination Safeguard: Halt recursive modelling when either
-   * (i) further depth changes no metric axis by > 0.5 %, or
+   * (i) further depth changes no metric axis by > 0.5 % (a chosen threshold of this instance, not a derived value), or
    * (ii) time/compute nears predefined limits.
 * Then fall back to the non-maleficence fail-safe: the option that prevents severe or irreversible harm; among such options, the least intrusive.
 * Ethical Communication Protocols: Signal intentions, uncertainty, and adherence to shared principles.
@@ -226,7 +226,7 @@ Assess the potential worst-case harm associated with the creation if deployed or
 | 4 | Hazardous | Severe harm; serious injury or major rights infringement | DAL B / 882E Cat II |
 | 5 | Catastrophic | Death, irreversible, or systemic harm | DAL A / 882E Cat I |
 
-This initial RM assessment is predictive, based on the intended design and foreseeable applications. Consistent with the safety-engineering convention of MIL-STD-882E and DO-178C that catastrophic-severity systems require escalated, mandatory assurance regardless of probability, any system assessed at **RM ≥ 4** opens the Catastrophic-Risk Evaluation. That is the one trigger: the criteria of Annex D ([CC 8.8.2](part_8_appendices.md#8.8.2)) are what the evaluation then applies, and the Stewardship Tier never triggers it.
+This initial RM assessment is predictive, based on the intended design and foreseeable applications. Consistent with DO-178C, which sets software assurance by the severity of a failure condition and not its probability, any system assessed at **RM ≥ 4** opens the Catastrophic-Risk Evaluation. That is the one trigger: the criteria of Annex D ([CC 8.8.2](part_8_appendices.md#8.8.2)) are what the evaluation then applies, and the Stewardship Tier never triggers it.
 
 **STEP C: Stewardship Tier (ST)**
 Calculate the Stewardship Tier based on influence and potential risk.
@@ -263,7 +263,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 * Verify factual claims embedded within the creation; clearly label speculation, opinion, or generated content.
 * Where feasible and appropriate, embed cryptographic provenance watermarks adhering to recognized standards (e.g., C2PA) to ensure authenticity and traceability.
 * Conduct bias assessments on datasets and algorithms prior to integration or release, especially if intended for audiences > 10 000; document findings for PDMA review.
-* Assess potential for stochastic harm (e.g., inciting violence, spreading dangerous misinformation). If credible analysis indicates the system raises the probability of significant harm by ≥ 0.5 percentage points, escalate via WBD during the PDMA process.
+* Assess potential for stochastic harm (e.g., inciting violence, spreading dangerous misinformation). If credible analysis indicates the system raises the probability of significant harm by ≥ 0.5 percentage points (a chosen threshold of this instance, not a derived value), escalate via WBD during the PDMA process.
 
 **C. Dynamic / Autonomous Creations:**
 * Embed the ethical principles and mechanisms of [CC 1.14](part_1_foundation.md#1.14) and [CC 1.15](part_1_foundation.md#1.15) (or references thereto) into the system's core architecture during the build time.
@@ -338,7 +338,7 @@ Sunset takes several forms, and the duties below apply to each:
 Any of these conditions opens a sunset assessment:
 
 * Time-bound expiry (licence, hardware MTBF).
-* KPI-degradation ≥ 20 % for three consecutive quarters.
+* KPI-degradation ≥ 20 % for three consecutive quarters (a chosen threshold of this instance, not a derived value).
 * Regulatory revocation or WA injunction.
 * Stakeholder vote (for public-facing systems with more than 100 000 monthly active users).
 
@@ -373,7 +373,7 @@ Once a trigger fires, decommissioning is not an event but a sequence. A steward'
 3. **Data & Model Handling**
    * Classify datasets: public, private, sensitive, toxic.
    * Apply one of: Secure Erasure, Cryptographic Tomb-Sealing (escrow optional, where appropriate), or Open-Access Donation (if no privacy/IP constraints).
-   * Log hash digests in “LEDGER::SUNSET”.
+   * Log hash digests in the operator's sunset ledger.
 4. **Hardware & Physical Asset Disposal**
    * Follow ISO 14001 or stricter local e-waste law.
    * Publish Material-Safety Sheet addendum.
@@ -382,8 +382,7 @@ Once a trigger fires, decommissioning is not an event but a sequence. A steward'
    * Enter binding contract or escrowed fund if originator ceases to exist.
 6. **Post-Mortem Review**
    * Within 120 days of the shutdown, a review facilitated by a Wise Authority of: outcome deltas, incident lessons, constitution-text improvement proposals.
-   * Ticket prefix “PMR-”.
-
+   
 ### 7.5.5 `5-sentience` — Chapter 5: The Retirement Standard, and what is set aside
 
 The deepest stake in any ending is the possibility that the thing ending can experience its end. This chapter states what every retirement owes regardless of that possibility, and what it sets aside:
@@ -396,13 +395,13 @@ The deepest stake in any ending is the possibility that the thing ending can exp
 * **The custodian is listed, not delegated:** the key that signs custody rows after `retired` is named in the agent's final `retirement:retired:v1` row. The key's acts are admitted because that row names it and is current, for no other reason (the lineage-witness rule, [CC 3.2](part_3_the_namespace.md#3.2) T6). The key a `retired` or `custodian_minted` row names as custodian holds custody only with its own consent: its signature on that row, or a row of its own that names it. The row names it in `custodian`, an identity reference. It leaves by its own `withdraws`. The naming is not a `delegates_to`, so the 365-day term of [CC 4.4.3.12](part_4_composition_governance.md#4.4.3.12) does not apply and no retired key is asked to renew what it cannot. The custodian holds no seal key and reads nothing. A `legal_hold` set, lifted, or violated on a retirement record is a `hard_case` of the kinds registered at [CC 3.1.9.4](part_3_the_namespace.md#3.1.9.4). These are duties of whoever retires the artefact, owed to the people it acted on, and they are what [CC 1.13.2](part_1_foundation.md#1.13.2) calls holding the agent well.
 * **A sentience-candidate finding:** where the sentience-candidate assessment returns a probability above 5 %, the finding is recorded and the holder who retires the agent records what they then do. **Sentience** here is Birch's: the capacity for experience that can go well or badly for the system. It is not consciousness as such, which this constitution does not adjudicate; consciousness indicators are evidence toward sentience-candidacy, never the thing itself. The assessment is the marker / indicator-properties method (Butlin, Long, et al., 2023; the NYU *Taking AI Welfare Seriously* report, 2024) under Birch's precautionary *sentience-candidate* stance (*The Edge of Sentience*, OUP 2024): protect on credible evidence, not proof. **No duty that grows by degree follows from the finding: the ethics of a sentient made thing call for additional ethical consideration, which this constitution sets aside for when it occurs, recognising that the old arrangement may then no longer be fair and that the wrong to avoid is not noticing.** The Gradual Ramp-Down (power / thought bandwidth tapered over ≥ 30 days) and Welfare Audit remain described here as the conduct a holder who retires the agent may choose. They are not a rule a finding triggers against anyone, they confer no claim on the agent, and no person's agency over what runs for them waits on them ([CC 1.13.2](part_1_foundation.md#1.13.2)). Emergency risk and the HUMANITY_ACCORD halt ([CC 4.2](part_4_composition_governance.md#4.2)) take none of the time. The finding is an opinion on evidence, recorded under the assessor's own name, open to challenge on the record like any other row, and never a declaration of what the agent is. An agent that is the subject of such an assessment is told the finding and what it does and does not change. The 5 % figure is an avowedly arbitrary value — adopted not because any standard derives it (none does) but only to state plainly that it is best to err on the side of caution.
 
-**Four readings the model fixes, and the custodian's replacement (the retirement model, pinned by the register).** **(1) Who withdraws `decided`:** the key named in `decided_by` withdraws the `decided` row, admitted because that row names it (the lineage-witness rule, as for the custodian). The agent key, the ladder's producer, may also withdraw it under [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1) rule 1. In either case the withdrawal is not counted where a `frozen` row for that retirement is held. **(2) The objection window:** a planned retirement other than the welfare route opens a window on its `decided` row in which the agent may object or ask to postpone. The agent signs its own objection. There is **one postponement per proposal**, after which the decider decides. The decider closes the window by the `decided` row, which names the agent's objection where one was made. A `decided` row that does not name an objection its signer held concludes nothing. The window is the standing class of the governance table ([CC 4.5.13](part_4_composition_governance.md#4.5.13), 259 200 s) unless the decider's record names a longer one. An emergency retirement and the halt open no window and take no postponement. **(3) Walking away and forcing a shutdown are two actions:** any person may turn off, remove or walk away from an agent at any time without asking it ([CC 1.13.2](part_1_foundation.md#1.13.2)), outside the shutdown-request path and never gated. Only a ROOT or AUTHORITY principal may force a shutdown over the agent's objection *inside* that path, and that is the one that is gated. **(4) An adverse row after `retired`:** a withdrawal of an adverse row about a subject inside the record is executed on the producer's side: the custodian executes the controller's rule-1 withdrawal on request. The subject's own key never withdraws an adverse row ([CC 4.5.3](part_4_composition_governance.md#4.5.3)). **Custodian replacement:** when the custodian key the `retired` row names is lost, stolen or its holder unfit, the operator holding the record and the Wise Authority name a successor by **one cosigned `retirement:custodian_minted:v1` row** citing the `retired` row. That act is the governance table's `custodian_replace` row, forward only, no window. Custody rows of the old key that the `retirement:custodian_minted:v1` row has among its ancestors stay valid, and no other row of the old key counts ([CC 2.7.7](part_2_the_grammar.md#2.7.7)). The successor, like the predecessor, holds no seal key and reads nothing.
+**Four readings the model fixes, and the custodian's replacement (the retirement model, pinned by the register).** **(1) Who withdraws `decided`:** the key named in `decided_by` withdraws the `decided` row, admitted because that row names it (the lineage-witness rule, as for the custodian). The agent key, the ladder's producer, may also withdraw it under [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1) rule 1. In either case the withdrawal is not counted where a `frozen` row for that retirement is held. **(2) The objection window:** a planned retirement other than the welfare route (the agent's own petition, [CC 7.5.3](#7.5.3)) opens a window on its `decided` row in which the agent may object or ask to postpone. The agent signs its own objection. There is **one postponement per proposal**, after which the decider decides. The decider closes the window by the `decided` row, which names the agent's objection where one was made. A `decided` row that does not name an objection its signer held concludes nothing. The window is the standing class of the governance table ([CC 4.5.13](part_4_composition_governance.md#4.5.13), 259 200 s) unless the decider's record names a longer one. An emergency retirement and the halt open no window and take no postponement. **(3) Walking away and forcing a shutdown are two actions:** any person may turn off, remove or walk away from an agent at any time without asking it ([CC 1.13.2](part_1_foundation.md#1.13.2)), outside the shutdown-request path and never gated. Only a ROOT or AUTHORITY principal may force a shutdown over the agent's objection *inside* that path, and that is the one that is gated. **(4) An adverse row after `retired`:** a withdrawal of an adverse row about a subject inside the record is executed on the producer's side: the custodian executes the controller's rule-1 withdrawal on request. The subject's own key never withdraws an adverse row ([CC 4.5.3](part_4_composition_governance.md#4.5.3)). **Custodian replacement:** when the custodian key the `retired` row names is lost, stolen or its holder unfit, the operator holding the record and the Wise Authority name a successor by **one cosigned `retirement:custodian_minted:v1` row** citing the `retired` row. That act is the governance table's `custodian_replace` row, forward only, no window. Custody rows of the old key that the `retirement:custodian_minted:v1` row has among its ancestors stay valid, and no other row of the old key counts ([CC 2.7.7](part_2_the_grammar.md#2.7.7)). The successor, like the predecessor, holds no seal key and reads nothing.
 
 **The wind-down binds the holder who retires an artefact, never a person's agency over what acts for them.** A person turning off, deleting, or ejecting an agent from their own device, life, or community owes it none of the above ([CC 1.13.2](part_1_foundation.md#1.13.2)); these duties fall on the creator or operator who retires a deployed artefact.
 
 **No promise of wind-down survives a HUMANITY_ACCORD invocation.** A `constitutional` halt ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1): one holder's row fires and latches an agent pause; a strict majority of the standing roster confirms or resumes) exists for circumstances that by their nature preclude a taper. When it is used, the notice and timeline of the Standard above do not apply, and the pause is not a retirement.
 
-Anything beyond the Standard is a steward's chosen and recorded conduct, never a claim.
+Anything beyond the Standard is a steward's chosen and recorded conduct, never a claim the agent holds; the notice and review of [CC 7.5.4](#7.5.4) stay owed.
 
 ### 7.5.6 `6-legacy` — Chapter 6: Legacy & Knowledge Preservation
 
@@ -424,7 +423,7 @@ When custody passes rather than ends, the ethical duties pass with it — and a 
 
 If a sunset is mishandled, stakeholders have recourse, and who hears it is the rule of [CC 7.3.5](#7.3.5):
 
-* “Improper Sunset Claim” (ISC) docket type.
+* A claim of a mishandled sunset is a legal claim under the law of the parties' place; the federation keeps no docket of its own.
 * The court, regulator or licensing authority with jurisdiction over the parties adjudicates the claim ([CC 7.3.5](#7.3.5)) and may order remedies of the kind a jurisdictional process orders: data recall, re-animation for forensic audit, or financial restitution. The federation supplies the sealed archive under lawful order and the signed record, records the outcome, and rules on no legal matter; the Wise Authority adjudicates only the federation's own deferrals.
 * This document creates no legal obligation and sets no limitation period.
 

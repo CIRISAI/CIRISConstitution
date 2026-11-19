@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "47be7e98e62523c40df4b29e9e17b9ae2b80f2ca938a03d29a216b2be533b25a",
+  "registry_sha256": "d0689b0e4e7f22d53260299294697ecd4e353f83bd34c8244427a76d4a35157b",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -15122,14 +15122,6 @@
     "source": "cc-table",
     "rule": "cells",
     "by": [
-     {
-      "grammar": "guard",
-      "cell": "formal/derivation/guard_text.tsv#capacity_assurance:{level}:{domain}:{band}:{version} (CC 3.1.2)",
-      "answers": [
-       "state",
-       "may"
-      ]
-     },
      {
       "grammar": "guard",
       "cell": "formal/derivation/guard_text.tsv#capacity_assurance:{level}:{domain}:{band}:{version} (CC 3.4.12)",
@@ -62036,8 +62028,7 @@
    },
    "verbs": {
     "value": [
-     "attest",
-     "replace"
+     "attest"
     ],
     "source": "cc-table"
    },

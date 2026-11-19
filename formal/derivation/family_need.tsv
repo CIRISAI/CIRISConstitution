@@ -32,9 +32,9 @@ build:registered:{target}	nothing shown	0	0	-	-	B036	1	-
 capacity:composite	acts of its own	0	0	fold	reference	B037	1	-
 capacity:relay_delivery	acts of its own	0	0	fold guard	consent:state:{stance} reference	B038	1	-
 capacity:{factor}	read by a rule	1	1	fold	reference	B039	1	capacity:composite.fold
-capacity_assurance:reversible_excluded:{domain}:{version}	read by a rule	2	0	-	-	B008	2	capacity_assurance:{level}:{domain}:{band}:{version}.guard capacity_assurance:{level}:{domain}:{band}:{version}.reaction
+capacity_assurance:reversible_excluded:{domain}:{version}	read by a rule	1	0	-	-	B008	2	capacity_assurance:{level}:{domain}:{band}:{version}.reaction
 capacity_assurance:reversible_pending:{domain}:{version}	nothing shown	0	0	-	-	B008	2	-
-capacity_assurance:{level}:{domain}:{band}:{version}	acts of its own	0	0	fold guard expiry react	capacity_assurance:reversible_excluded:{domain}:{version}	B040	1	-
+capacity_assurance:{level}:{domain}:{band}:{version}	acts of its own	0	0	fold guard expiry react	-	B040	1	-
 census:composite:{class}	read by a rule	1	1	fold guard	reference	B041	1	census:partial:{class}.fold
 census:expected_active	read by a rule	1	0	fold	-	B042	1	census:member:partial.fold
 census:member:partial	acts of its own	0	0	fold	-	B043	1	-

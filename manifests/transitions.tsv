@@ -399,7 +399,6 @@ reconsideration:{grounds}	withdraw	admitted	withdrawn	author,subject	selfAct	fal
 regime:{artifact}:{version}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 regime:{artifact}:{version}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 rendezvous:route	attest	none	admitted	self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
-rendezvous:route	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 retirement:{state}	attest	none	admitted	custodian,operator,self,wa	selfAct	true	withdraw	selfAct	true	derived	cc-table	cc-table
 retirement:{state}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 revocation:{entity_type}:{reason}	attest	none	admitted	registered,self	selfAct	true	withdraw	selfAct	true	derived	derived	derived

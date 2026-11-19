@@ -399,7 +399,6 @@ reconsideration:{grounds}	withdraw	admitted	withdrawn	*	any-of(agent,person)	act
 regime:{artifact}:{version}	attest	none	admitted	*	node	regime	CC 3.1.9.2 (registry); CC 3.1.9.2 substrate-steward-emitted	P3:648, P3:648	
 regime:{artifact}:{version}	supersede	admitted	superseded	*	node	regime	CC 3.1.9.2 (registry); CC 3.1.9.2 substrate-steward-emitted	P3:648, P3:648	
 rendezvous:route	attest	none	admitted	*	rendezvous	rendezvous	CC 3.1.4 (registry); CC 5.4.6 rendezvous key	P3:371, P3:371	
-rendezvous:route	supersede	admitted	superseded	*	rendezvous	rendezvous	CC 3.1.4 (registry); CC 5.4.6 rendezvous key	P3:371, P3:371	
 retirement:{state}	attest	none	admitted	*	any-of(agent,person)	retirement	CC 3.1.5 (registry); CC 7.5.5 the agent's own retirement row	P3:397, P3:397	
 retirement:{state}	withdraw	admitted	withdrawn	*	any-of(agent,person)	retirement	CC 3.1.5 (registry); CC 7.5.5 the agent's own retirement row	P3:397, P3:397	
 revocation:{entity_type}:{reason}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.1 (registry); CC 3.4.7.3 Clause C, Clause E	P3:26, P3:2585, P3:2613	

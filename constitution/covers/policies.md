@@ -8,4 +8,4 @@
 
 **What it leaves out.** The rows themselves, which are *The Wire* and *The Dictionary*; the authorities whose rows a reader chooses to trust, which is *The Constitution*; and the mathematics of coherence under which the aggregation is analysed, which is *The Mathematics*.
 
-**Where the rest lives.** Each normative policy's section states its inputs and output; Policies B, C and D are named sketches, RECOMMENDED, with no reference function.
+**Where the rest lives.** Policies B, C and D are named sketches, RECOMMENDED, with no reference function; the others are stated as rules over the rows they read.

@@ -1106,7 +1106,7 @@ Verifying a statement gives one of three answers: **Valid**, **Invalid** with a 
 
 - A bad signature under a held key is Invalid, and that answer is final. A structural fault is Invalid whatever keys are held.
 - A statement whose key record is Waiting is Waiting, naming the deepest missing key. A statement whose key record is Invalid is Invalid.
-- A key held in part, one half held and the other known only by a commitment to it, is Waiting on the missing half. A key never verifies on one half.
+- A key is one composite key ([CC 2.6.1.7](#2.6.1.7)); a statement whose signer's key record is not held is Waiting on it, and a key never verifies on one half.
 - Waiting never becomes Valid by default and is never counted. A waiting statement is held inert until the key it names is held ([CC 2.7.2](#2.7.2)).
 
 ```

@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "d9e8999f4ab6f9c3e1af4d0297db5416df9afc013d6c0bf43f583c520e455293",
-   "formal/derivation/signer_kind.tsv": "bedb66b5bff9498f8956acc00c71155b019b52e77c68be30a7690bdb7e1137f4"
+   "manifests/transitions.json": "b6e99ad01b4d58ce79048bc685684c1c95788918cc211f9d5476643f940629d1",
+   "formal/derivation/signer_kind.tsv": "f5fb62a4515c90907eb7be07a300022ce83543b408f9cc5363bbb4c68874a6cb"
   },
   "kinds": [
    "person",
@@ -60,8 +60,8 @@
    ]
   },
   "counts": {
-   "uses": 504,
-   "transitions": 466,
+   "uses": 503,
+   "transitions": 465,
    "open_uses": 0,
    "open_questions": 0
   },
@@ -8043,23 +8043,6 @@
    "at": "P3:371, P3:371"
   },
   {
-   "use": "rendezvous:route#supersede:admitted>superseded",
-   "family": "rendezvous:route",
-   "verb": "supersede",
-   "leaf": null,
-   "roles": [
-    "author"
-   ],
-   "kinds": [
-    "rendezvous"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "rendezvous",
-   "cc_ref": "CC 3.1.4 (registry); CC 5.4.6 rendezvous key",
-   "at": "P3:371, P3:371"
-  },
-  {
    "use": "retirement:{state}#attest:none>admitted",
    "family": "retirement:{state}",
    "verb": "attest",
@@ -10210,8 +10193,7 @@
    "transparency_log:cosigned:{tree_size}#attest:none>admitted"
   ],
   "rendezvous": [
-   "rendezvous:route#attest:none>admitted",
-   "rendezvous:route#supersede:admitted>superseded"
+   "rendezvous:route#attest:none>admitted"
   ],
   "room": [
    "@mls_keypackage",

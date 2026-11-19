@@ -429,7 +429,7 @@ key_grant:{axis}	lifecycle	fills	CC 4.4.3.10	epoch rolls on member removal (mand
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.10	removed members retain extant `key_grant`s
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.10	The epoch rotates because of a removal and never because of an admission
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.19	or ends the owner-binding → no further grants to it; what it holds stays
-key_grant:{axis}	lifecycle	fills	CC 4.4.3.22	After a removal each minter rotates its epoch DEK before its next sealed write
+key_grant:{axis}	lifecycle	fills	CC 4.4.3.22	After a removal each minter whose current epoch key reached a departed device rotates it before its next sealed write
 key_grant:{axis}	lifecycle	fills	CC 5.1	`withdraws` on a `key_grant` concludes nothing
 key_grant:{axis}	placement	agree	CC 3.1.3	Union by identity, never withdrawn, placed at the content's scope.
 key_grant:{axis}	projection	agree	CC 3.1.3	Union by identity, never withdrawn, placed at the content's scope.
