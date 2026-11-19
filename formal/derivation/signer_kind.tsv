@@ -480,7 +480,7 @@ identity:occurrence	*	-	-	node	node	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815
 @chunk_key	sign	-	-	*	ephemeral	use	CC 5 StreamKeyBinding chunk_key	P5:477	
 @content_kem	sign	-	-	*	kem	use	CC 3.3.6.1 key separation	P3:1833	
 @transit_pair	sign	-	-	*	kem	use	CC 3.3.6.2 the transit pair is separate from the signing key	P3:1847	
-@stream_key_binding	sign	-	-	*	open	use	CC 5 StreamKeyBinding	P5:477	StreamKeyBinding 'publisher's federation key' (P5:493): the producing device's node key (edge 45.1.6, set_node_signer) or the actor's key on that device? The text does not fix the axis. For Eric.
-@mls_leaf	sign	-	-	*	open	use	CC 5.1 MLS TreeKEM rekey	P5:61	MLS leaf: the text states a room key per device in a private room (P3:281) and is silent elsewhere; one leaf per device under the node key (edge's CohortGroups) or under the device's roster key (the person's key on that device, CC 3.3.6.4)? For Eric.
-@mls_keypackage	sign	-	-	*	open	use	CC 3.3.6.2	P3:1891	MLS KeyPackage: signed by its leaf's key (RFC 9420), so it follows the @mls_leaf ruling. For Eric.
+@stream_key_binding	sign	-	-	*	any-of(agent,person)	use	CC 5.3.3.5 StreamKeyBinding (the publishing member's key on the producing device, never a node key)	P5:493	
+@mls_leaf	sign	-	-	*	any-of(agent,person,room)	use	CC 5.1 People, not infrastructure, join a room	P5:80	
+@mls_keypackage	sign	-	-	*	any-of(agent,person,room)	use	CC 5.1 People, not infrastructure, join a room (a KeyPackage is signed by its leaf's key)	P5:80	
 @split_key_id	sign	-	-	*	any-of(agent,person)	use	CC 3.4.7.3 Clause F; CC 3.4.7.3 Clause F (the configured key is the actor's; the node key is minted fresh)	P3:2615, P3:2615	
