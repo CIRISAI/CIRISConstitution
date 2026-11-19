@@ -38,6 +38,8 @@ This document creates no legal claim and rules on no legal matter. The bet behin
 
 ## Read it
 
+**Start here if you are new:** [`VISION.md`](VISION.md) says what CIRIS is for, in plain words, and how the mesh makes it possible, with the status of each claim.
+
 One edition, printed nine ways for nine readers. The section is always the authority; a volume is a lens on it. The links point at the latest release ([`volumes/README.md`](volumes/README.md) explains the files).
 
 | Volume | Read it if you are | Link |
