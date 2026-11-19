@@ -1,12 +1,12 @@
-# CIRIS Web4
+# CIRIS Web4 Constitutional Mesh
 
-## Cooperation without surrender: a constitutional mesh for people and the agents they hold
+## Constitutional governance of a decentralized mesh: cooperation without surrender, for people and the agents they hold
 
 > CIRIS is building the infrastructure for a world where no one has to surrender their agency to participate in something greater than themselves.
 
 | | |
 |---|---|
-| Draft | 0.5, 2026-11-19 (supersedes 0.4 of 2026-11-16) |
+| Draft | 0.5, 2026-11-19 (supersedes 0.4 of 2026-11-16, titled *CIRIS Web4: A Constitutional Mesh for the Networked Age*) |
 | Normative foundation | the CIRIS Constitution, edition 1.0-rc20 (tag `v1.0-rc20`), released as guidance |
 | Reference implementation | CIRIS |
 | Core coordination engine | CIRISKernel `kernel-v0.2.0`, the causal kernel |
