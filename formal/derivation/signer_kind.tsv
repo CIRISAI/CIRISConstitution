@@ -51,8 +51,8 @@ autonomy:{aspect}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	
 ballot:moderator	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:189, P1:199, P4:2178	
 ballot:moderator	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:189, P1:199, P4:2178	
 ballot:moderator_acceptance	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:190, P1:199, P4:2178	
-ballot:tally:{poll_id}	attest	none	admitted	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:188, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
-ballot:tally:{poll_id}	withdraw	admitted	withdrawn	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:188, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
+ballot:tally:{poll_id}	attest	none	admitted	*	person	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)	P3:188, P3:228, P3:186	
+ballot:tally:{poll_id}	withdraw	admitted	withdrawn	*	person	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)	P3:188, P3:228, P3:186	
 benchmark:he300:{category}:{version}	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.10 (registry); the family's row: a claim a machine may make	P3:725	
 benchmark:he300:{category}:{version}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.10 (registry); the family's row: a claim a machine may make	P3:725	
 benchmark:he300:{category}:{version}	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.10 (registry); the family's row: a claim a machine may make	P3:725	
@@ -89,11 +89,11 @@ capacity_assurance:{level}:{domain}:{band}:{version}	supersede	admitted	supersed
 census:composite:{class}	attest	none	admitted	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:184, P3:2487, P3:996	
 census:composite:{class}	withdraw	admitted	withdrawn	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:184, P3:2487, P3:996	
 census:composite:{class}	supersede	admitted	superseded	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:184, P3:2487, P3:996	
-census:expected_active	attest	none	admitted	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:187, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
-census:expected_active	withdraw	admitted	withdrawn	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:187, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
-census:expected_active	supersede	admitted	superseded	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:187, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
-census:member:partial	attest	none	admitted	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:186, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
-census:member:partial	withdraw	admitted	withdrawn	*	open	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4	P3:186, P3:228	a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).
+census:expected_active	attest	none	admitted	*	person	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)	P3:187, P3:228, P3:186	
+census:expected_active	withdraw	admitted	withdrawn	*	person	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)	P3:187, P3:228, P3:186	
+census:expected_active	supersede	admitted	superseded	*	person	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)	P3:187, P3:228, P3:186	
+census:member:partial	attest	none	admitted	*	person	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)	P3:186, P3:228, P3:186	
+census:member:partial	withdraw	admitted	withdrawn	*	person	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)	P3:186, P3:228, P3:186	
 census:member:share	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:185, P1:199, P4:2178	
 census:member:share	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:185, P1:199, P4:2178	
 census:partial:{class}	attest	none	admitted	*	node	serve_seat	CC 3.1.3 (registry); CC 6.1.9 reserved emitters; CC 3.2 serve seat	P3:183, P3:2487, P3:996	
@@ -170,8 +170,8 @@ cosign:{state}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.
 cosign:{state}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:148, P3:2585, P3:2613	
 credits:{domain}:{language}:{subject}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.6 (registry); CC 3.4.7.3 Clause C, Clause E	P3:698, P3:2585, P3:2613	
 credits:{domain}:{language}:{subject}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.6 (registry); CC 3.4.7.3 Clause C, Clause E	P3:698, P3:2585, P3:2613	
-custody:{kind}	attest	none	admitted	*	open	custody	CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report	P3:307, P3:307	custody:ack is signed by 'the device the report is about' (P3:307); is that the node key or the device's roster key (CC 3.3.6.4 puts two keys on every device)?
-custody:{kind}	withdraw	admitted	withdrawn	*	open	custody	CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report	P3:307, P3:307	custody:ack is signed by 'the device the report is about' (P3:307); is that the node key or the device's roster key (CC 3.3.6.4 puts two keys on every device)?
+custody:{kind}	attest	none	admitted	*	node	custody	CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report; CC 3.1.3.3 (bytes held are the node's)	P3:307, P3:307, P3:307	
+custody:{kind}	withdraw	admitted	withdrawn	*	node	custody	CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report; CC 3.1.3.3 (bytes held are the node's)	P3:307, P3:307, P3:307	
 cw_class:{class}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:651, P3:2585, P3:2613	
 cw_class:{class}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:651, P3:2585, P3:2613	
 deferral:request	attest	none	admitted	*	any-of(agent,person)	deferral_request	CC 3.1.9.3 (registry); CC 1.9, CC 4.3	P3:666, P3:666	
@@ -467,11 +467,11 @@ witness_diversity:{contribution_id}	attest	none	admitted	*	any-of(agent,node,per
 witness_diversity:{contribution_id}	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.9.3 (registry); the family's row: a claim a machine may make	P3:663	
 consent:state:{stance}	*	-	-	granted|revoked	any-of(agent,person)	consent_subject	CC 3.3.1 consent:state granted|revoked	P3:1312	
 consent:state:{stance}	*	-	-	expired	node	consent_expired	CC 3.3.1; CC 3.4.3	P3:1313, P3:2481	
-membership:{stage}	*	-	-	proposal	open	membership	CC 3.1.3.2; CC 3.3.4	P3:228	may an agent member issue membership:proposal (an invite)? The text says 'an active member' (P3:228); the invite counts are one voice a person (P4:2178).
+membership:{stage}	*	-	-	proposal	person	membership	CC 3.1.3.2; CC 3.3.4; CC 4.5.13 invite count, one voice a person	P3:228, P4:2178	
 membership:{stage}	*	-	-	acceptance|decline|resignation	any-of(agent,person)	membership	CC 3.1.3.2; CC 3.3.4	P3:228	
 membership:{stage}	*	-	-	widening|removal	person	vote	CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P1:199, P4:2178	
 identity:occurrence	*	-	-	user	person	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815, P3:1984	
-identity:occurrence	*	-	-	agent	open	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815, P3:1984	who authors an agent's identity:occurrence: 'its owner authors it' (P3:1821) or 'a live roster key of the identity' (P3:1815), and an agent's identity has no person roster (#871)?
+identity:occurrence	*	-	-	agent	person	occurrence_door	CC 3.3.6; CC 3.3.6.4; CC 3.3.6 (an agent's occurrence: its owner authors it)	P3:1815, P3:1984, P3:1821	
 identity:occurrence	*	-	-	node	node	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815, P3:1984	
 @crossing	sign	-	-	*	node	use	CC 3.1.3.4 the promoting author's node carries out the intent; CC 3.4.7.3 Clause E	P3:341, P3:2600	
 @device_join	sign	-	-	*	node	use	CC 3.2 an unowned node originates only a device-join request	P3:1033	
@@ -480,7 +480,7 @@ identity:occurrence	*	-	-	node	node	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815
 @chunk_key	sign	-	-	*	ephemeral	use	CC 5 StreamKeyBinding chunk_key	P5:477	
 @content_kem	sign	-	-	*	kem	use	CC 3.3.6.1 key separation	P3:1833	
 @transit_pair	sign	-	-	*	kem	use	CC 3.3.6.2 the transit pair is separate from the signing key	P3:1847	
-@stream_key_binding	sign	-	-	*	open	use	CC 5 StreamKeyBinding	P5:477	StreamKeyBinding 'publisher's federation key' (P5:477): node, agent or person axis?
-@mls_leaf	sign	-	-	*	open	use	CC 5.1 MLS TreeKEM rekey	P5:61	MLS leaf credential and group state: keyed by the room member's key (room key in a private room, the member's own key otherwise)? Not in the text; inferred from P3:281 and P5:150 (R16).
-@mls_keypackage	sign	-	-	*	open	use	CC 3.3.6.2	P3:1891	who signs an MLS KeyPackage? The text says only that its init key is a cohort credential, never a hop key (P3:1891).
-@split_key_id	sign	-	-	*	open	use	CC 3.4.7.3 Clause F	P3:2615	at the split, which key keeps the configured key_id: the actor's or the fresh node's? Clause F says re-mint, forward-only (P3:2615); the text does not say which identifier is kept.
+@stream_key_binding	sign	-	-	*	any-of(agent,person)	use	CC 5 StreamKeyBinding; CC 3.4.7.3 Clause E (the node never signs as the actor)	P5:477, P3:2581	
+@mls_leaf	sign	-	-	*	any-of(agent,person,room)	use	CC 5.1 MLS TreeKEM rekey; CC 3.1.3.2 (a private room's rows are the room key's)	P5:61, P3:281	
+@mls_keypackage	sign	-	-	*	any-of(agent,person,room)	use	CC 3.3.6.2; RFC 9420 (a KeyPackage is signed by its leaf's signature key)	P3:1891, P3:1891	
+@split_key_id	sign	-	-	*	any-of(agent,person)	use	CC 3.4.7.3 Clause F; CC 3.4.7.3 Clause F (the configured key is the actor's; the node key is minted fresh)	P3:2615, P3:2615	

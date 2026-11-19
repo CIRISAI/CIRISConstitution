@@ -4,7 +4,7 @@
   "cc_section": "3.4.7.3",
   "sources": {
    "manifests/transitions.json": "5a3e5409917bfdcbbfe5a348f578bd3da3c5872215563dcfc70ce0cd7306b226",
-   "formal/derivation/signer_kind.tsv": "f5f8ebd54cf7fdd8e4fd67380cc09262768c81495bff2121cbbd09f9efaacb6c"
+   "formal/derivation/signer_kind.tsv": "2ad6853efd3a31506e604c7d9a188055c42ca46b7e806ce6d14353e2603be5c9"
   },
   "kinds": [
    "person",
@@ -62,8 +62,8 @@
   "counts": {
    "uses": 504,
    "transitions": 466,
-   "open_uses": 19,
-   "open_questions": 8
+   "open_uses": 0,
+   "open_questions": 0
   },
   "model": "formal/key_roles",
   "reading": "a key of a kind not in a use's kinds must not sign it; an open use is reported, never passed"
@@ -135,12 +135,16 @@
    "verb": "sign",
    "leaf": null,
    "roles": [],
-   "kinds": [],
-   "open": true,
-   "question": "who signs an MLS KeyPackage? The text says only that its init key is a cohort credential, never a hop key (P3:1891).",
+   "kinds": [
+    "agent",
+    "person",
+    "room"
+   ],
+   "open": false,
+   "question": null,
    "rule": "use",
-   "cc_ref": "CC 3.3.6.2",
-   "at": "P3:1891"
+   "cc_ref": "CC 3.3.6.2; RFC 9420 (a KeyPackage is signed by its leaf's signature key)",
+   "at": "P3:1891, P3:1891"
   },
   {
    "use": "@mls_leaf",
@@ -148,12 +152,16 @@
    "verb": "sign",
    "leaf": null,
    "roles": [],
-   "kinds": [],
-   "open": true,
-   "question": "MLS leaf credential and group state: keyed by the room member's key (room key in a private room, the member's own key otherwise)? Not in the text; inferred from P3:281 and P5:150 (R16).",
+   "kinds": [
+    "agent",
+    "person",
+    "room"
+   ],
+   "open": false,
+   "question": null,
    "rule": "use",
-   "cc_ref": "CC 5.1 MLS TreeKEM rekey",
-   "at": "P5:61"
+   "cc_ref": "CC 5.1 MLS TreeKEM rekey; CC 3.1.3.2 (a private room's rows are the room key's)",
+   "at": "P5:61, P3:281"
   },
   {
    "use": "@private_invitation",
@@ -191,12 +199,15 @@
    "verb": "sign",
    "leaf": null,
    "roles": [],
-   "kinds": [],
-   "open": true,
-   "question": "at the split, which key keeps the configured key_id: the actor's or the fresh node's? Clause F says re-mint, forward-only (P3:2615); the text does not say which identifier is kept.",
+   "kinds": [
+    "agent",
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "use",
-   "cc_ref": "CC 3.4.7.3 Clause F",
-   "at": "P3:2615"
+   "cc_ref": "CC 3.4.7.3 Clause F; CC 3.4.7.3 Clause F (the configured key is the actor's; the node key is minted fresh)",
+   "at": "P3:2615, P3:2615"
   },
   {
    "use": "@stream_key_binding",
@@ -204,12 +215,15 @@
    "verb": "sign",
    "leaf": null,
    "roles": [],
-   "kinds": [],
-   "open": true,
-   "question": "StreamKeyBinding 'publisher's federation key' (P5:477): node, agent or person axis?",
+   "kinds": [
+    "agent",
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "use",
-   "cc_ref": "CC 5 StreamKeyBinding",
-   "at": "P5:477"
+   "cc_ref": "CC 5 StreamKeyBinding; CC 3.4.7.3 Clause E (the node never signs as the actor)",
+   "at": "P5:477, P3:2581"
   },
   {
    "use": "@transit_pair",
@@ -1179,12 +1193,14 @@
    "roles": [
     "tally"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:188, P3:228"
+   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)",
+   "at": "P3:188, P3:228, P3:186"
   },
   {
    "use": "ballot:tally:{poll_id}#withdraw:admitted>withdrawn",
@@ -1195,12 +1211,14 @@
     "author",
     "subject"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:188, P3:228"
+   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)",
+   "at": "P3:188, P3:228, P3:186"
   },
   {
    "use": "benchmark:he300:{category}:{version}#attest:none>admitted",
@@ -1882,12 +1900,14 @@
    "roles": [
     "tally"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:187, P3:228"
+   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)",
+   "at": "P3:187, P3:228, P3:186"
   },
   {
    "use": "census:expected_active#supersede:admitted>superseded",
@@ -1897,12 +1917,14 @@
    "roles": [
     "author"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:187, P3:228"
+   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)",
+   "at": "P3:187, P3:228, P3:186"
   },
   {
    "use": "census:expected_active#withdraw:admitted>withdrawn",
@@ -1913,12 +1935,14 @@
     "author",
     "subject"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:187, P3:228"
+   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)",
+   "at": "P3:187, P3:228, P3:186"
   },
   {
    "use": "census:member:partial#attest:none>admitted",
@@ -1928,12 +1952,14 @@
    "roles": [
     "tally"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:186, P3:228"
+   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)",
+   "at": "P3:186, P3:228, P3:186"
   },
   {
    "use": "census:member:partial#withdraw:admitted>withdrawn",
@@ -1944,12 +1970,14 @@
     "author",
     "subject"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:186, P3:228"
+   "cc_ref": "CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)",
+   "at": "P3:186, P3:228, P3:186"
   },
   {
    "use": "census:member:share#attest:none>admitted",
@@ -3471,12 +3499,14 @@
    "roles": [
     "self"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "custody:ack is signed by 'the device the report is about' (P3:307); is that the node key or the device's roster key (CC 3.3.6.4 puts two keys on every device)?",
+   "kinds": [
+    "node"
+   ],
+   "open": false,
+   "question": null,
    "rule": "custody",
-   "cc_ref": "CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report",
-   "at": "P3:307, P3:307"
+   "cc_ref": "CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report; CC 3.1.3.3 (bytes held are the node's)",
+   "at": "P3:307, P3:307, P3:307"
   },
   {
    "use": "custody:{kind}#withdraw:admitted>withdrawn",
@@ -3486,12 +3516,14 @@
    "roles": [
     "author"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "custody:ack is signed by 'the device the report is about' (P3:307); is that the node key or the device's roster key (CC 3.3.6.4 puts two keys on every device)?",
+   "kinds": [
+    "node"
+   ],
+   "open": false,
+   "question": null,
    "rule": "custody",
-   "cc_ref": "CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report",
-   "at": "P3:307, P3:307"
+   "cc_ref": "CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report; CC 3.1.3.3 (bytes held are the node's)",
+   "at": "P3:307, P3:307, P3:307"
   },
   {
    "use": "cw_class:{class}#attest:none>admitted",
@@ -5139,12 +5171,14 @@
    "roles": [
     "self"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "who authors an agent's identity:occurrence: 'its owner authors it' (P3:1821) or 'a live roster key of the identity' (P3:1815), and an agent's identity has no person roster (#871)?",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "occurrence_door",
-   "cc_ref": "CC 3.3.6; CC 3.3.6.4",
-   "at": "P3:1815, P3:1984"
+   "cc_ref": "CC 3.3.6; CC 3.3.6.4; CC 3.3.6 (an agent's occurrence: its owner authors it)",
+   "at": "P3:1815, P3:1984, P3:1821"
   },
   {
    "use": "identity:occurrence[agent]#supersede",
@@ -5154,12 +5188,14 @@
    "roles": [
     "author"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "who authors an agent's identity:occurrence: 'its owner authors it' (P3:1821) or 'a live roster key of the identity' (P3:1815), and an agent's identity has no person roster (#871)?",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "occurrence_door",
-   "cc_ref": "CC 3.3.6; CC 3.3.6.4",
-   "at": "P3:1815, P3:1984"
+   "cc_ref": "CC 3.3.6; CC 3.3.6.4; CC 3.3.6 (an agent's occurrence: its owner authors it)",
+   "at": "P3:1815, P3:1984, P3:1821"
   },
   {
    "use": "identity:occurrence[agent]#withdraw",
@@ -5170,12 +5206,14 @@
     "author",
     "subject"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "who authors an agent's identity:occurrence: 'its owner authors it' (P3:1821) or 'a live roster key of the identity' (P3:1815), and an agent's identity has no person roster (#871)?",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "occurrence_door",
-   "cc_ref": "CC 3.3.6; CC 3.3.6.4",
-   "at": "P3:1815, P3:1984"
+   "cc_ref": "CC 3.3.6; CC 3.3.6.4; CC 3.3.6 (an agent's occurrence: its owner authors it)",
+   "at": "P3:1815, P3:1984, P3:1821"
   },
   {
    "use": "identity:occurrence[node]#attest",
@@ -6177,12 +6215,14 @@
     "member",
     "self"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "may an agent member issue membership:proposal (an invite)? The text says 'an active member' (P3:228); the invite counts are one voice a person (P4:2178).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:228"
+   "cc_ref": "CC 3.1.3.2; CC 3.3.4; CC 4.5.13 invite count, one voice a person",
+   "at": "P3:228, P4:2178"
   },
   {
    "use": "membership:{stage}[proposal]#supersede",
@@ -6192,12 +6232,14 @@
    "roles": [
     "member"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "may an agent member issue membership:proposal (an invite)? The text says 'an active member' (P3:228); the invite counts are one voice a person (P4:2178).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:228"
+   "cc_ref": "CC 3.1.3.2; CC 3.3.4; CC 4.5.13 invite count, one voice a person",
+   "at": "P3:228, P4:2178"
   },
   {
    "use": "membership:{stage}[proposal]#withdraw",
@@ -6207,12 +6249,14 @@
    "roles": [
     "member"
    ],
-   "kinds": [],
-   "open": true,
-   "question": "may an agent member issue membership:proposal (an invite)? The text says 'an active member' (P3:228); the invite counts are one voice a person (P4:2178).",
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
    "rule": "membership",
-   "cc_ref": "CC 3.1.3.2; CC 3.3.4",
-   "at": "P3:228"
+   "cc_ref": "CC 3.1.3.2; CC 3.3.4; CC 4.5.13 invite count, one voice a person",
+   "at": "P3:228, P4:2178"
   },
   {
    "use": "membership:{stage}[removal]#attest",
@@ -9194,6 +9238,10 @@
  ],
  "by_kind": {
   "person": [
+   "@mls_keypackage",
+   "@mls_leaf",
+   "@split_key_id",
+   "@stream_key_binding",
    "activity_tier:{period}#attest:none>admitted",
    "activity_tier:{period}#supersede:admitted>superseded",
    "admission:unit#attest:none>admitted",
@@ -9233,6 +9281,8 @@
    "ballot:moderator#attest:none>admitted",
    "ballot:moderator#withdraw:admitted>withdrawn",
    "ballot:moderator_acceptance#attest:none>admitted",
+   "ballot:tally:{poll_id}#attest:none>admitted",
+   "ballot:tally:{poll_id}#withdraw:admitted>withdrawn",
    "benchmark:he300:{category}:{version}#attest:none>admitted",
    "benchmark:he300:{category}:{version}#supersede:admitted>superseded",
    "benchmark:he300:{category}:{version}#withdraw:admitted>withdrawn",
@@ -9263,6 +9313,11 @@
    "capacity_assurance:{level}:{domain}:{band}:{version}#attest:none>admitted",
    "capacity_assurance:{level}:{domain}:{band}:{version}#supersede:admitted>superseded",
    "capacity_assurance:{level}:{domain}:{band}:{version}#withdraw:admitted>withdrawn",
+   "census:expected_active#attest:none>admitted",
+   "census:expected_active#supersede:admitted>superseded",
+   "census:expected_active#withdraw:admitted>withdrawn",
+   "census:member:partial#attest:none>admitted",
+   "census:member:partial#withdraw:admitted>withdrawn",
    "census:member:share#attest:none>admitted",
    "census:member:share#withdraw:admitted>withdrawn",
    "cert_validity:{authority}#attest:none>admitted",
@@ -9405,6 +9460,9 @@
    "health:liveness:{version}#withdraw:admitted>withdrawn",
    "identity:canonical_binding:{canonical_hash}#attest:none>admitted",
    "identity:canonical_binding:{canonical_hash}#withdraw:admitted>withdrawn",
+   "identity:occurrence[agent]#attest",
+   "identity:occurrence[agent]#supersede",
+   "identity:occurrence[agent]#withdraw",
    "identity:occurrence[user]#attest",
    "identity:occurrence[user]#supersede",
    "identity:occurrence[user]#withdraw",
@@ -9445,6 +9503,9 @@
    "membership:{stage}[decline]#attest",
    "membership:{stage}[decline]#supersede",
    "membership:{stage}[decline]#withdraw",
+   "membership:{stage}[proposal]#attest",
+   "membership:{stage}[proposal]#supersede",
+   "membership:{stage}[proposal]#withdraw",
    "membership:{stage}[removal]#attest",
    "membership:{stage}[removal]#supersede",
    "membership:{stage}[removal]#withdraw",
@@ -9603,6 +9664,10 @@
    "transport:canonical_rebind#supersede:admitted>superseded"
   ],
   "agent": [
+   "@mls_keypackage",
+   "@mls_leaf",
+   "@split_key_id",
+   "@stream_key_binding",
    "activity_tier:{period}#attest:none>admitted",
    "activity_tier:{period}#supersede:admitted>superseded",
    "age_assurance:{level}:{band}:{version}#attest:none>admitted",
@@ -10026,6 +10091,8 @@
    "consent:{kind}#withdraw:admitted>withdrawn",
    "corpus_health:n_eff_measurable#attest:none>admitted",
    "corpus_health:n_eff_measurable#withdraw:admitted>withdrawn",
+   "custody:{kind}#attest:none>admitted",
+   "custody:{kind}#withdraw:admitted>withdrawn",
    "delivery:{class}#attest:none>admitted",
    "delivery:{class}#withdraw:admitted>withdrawn",
    "federation_directory:replication_lag#attest:none>admitted",
@@ -10147,6 +10214,8 @@
    "rendezvous:route#supersede:admitted>superseded"
   ],
   "room": [
+   "@mls_keypackage",
+   "@mls_leaf",
    "@room_row"
   ],
   "ephemeral": [
@@ -10210,14 +10279,5 @@
    "at": "P3:2581, P3:2600, P3:996"
   }
  ],
- "open_questions": [
-  "MLS leaf credential and group state: keyed by the room member's key (room key in a private room, the member's own key otherwise)? Not in the text; inferred from P3:281 and P5:150 (R16).",
-  "StreamKeyBinding 'publisher's federation key' (P5:477): node, agent or person axis?",
-  "a tally member's rows: signed under the member's roster key or its node's key? CC 6.1.9 names a member (P3:186) and the census return is a node's (P3:182).",
-  "at the split, which key keeps the configured key_id: the actor's or the fresh node's? Clause F says re-mint, forward-only (P3:2615); the text does not say which identifier is kept.",
-  "custody:ack is signed by 'the device the report is about' (P3:307); is that the node key or the device's roster key (CC 3.3.6.4 puts two keys on every device)?",
-  "may an agent member issue membership:proposal (an invite)? The text says 'an active member' (P3:228); the invite counts are one voice a person (P4:2178).",
-  "who authors an agent's identity:occurrence: 'its owner authors it' (P3:1821) or 'a live roster key of the identity' (P3:1815), and an agent's identity has no person roster (#871)?",
-  "who signs an MLS KeyPackage? The text says only that its init key is a cohort credential, never a hop key (P3:1891)."
- ]
+ "open_questions": []
 }

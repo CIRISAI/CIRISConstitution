@@ -507,7 +507,7 @@ def main():
     fails, nstates, nseq = explore(Correct(d, uses), d, uses)
     results = {}
     for r in R_TEXT:
-        if r in OPEN_R:
+        if r in OPEN_R and any(u["use"] == OPEN_R[r] and u["open"] for u in d["uses"]):
             results[r] = "OPEN"
         else:
             results[r] = "FAIL" if r in fails else "PASS"
