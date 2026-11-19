@@ -350,9 +350,16 @@ recants:
 
 A withdrawal and a recantation are different statements.  A
 withdrawal says "I no longer assert this"; a recantation says "this
-was wrong".  Consumers can weigh them differently.  The subject of a
-row has authority over the first but not the second
-({{withdraw-rule}}).
+was wrong".  The subject of a row has authority over the first but
+not the second ({{withdraw-rule}}).
+
+None of the three removes its target: the target stays held and
+verifiable, and each names it in `refs.target` ({{refs}}).  A
+verifier reports a row's state as one of four: admitted, superseded,
+withdrawn or recanted (CC 2.7.5).  The state is derived, not final,
+since a later row on the same target, concurrent with the first, can
+change it.  Consumers may weigh a withdrawn and a recanted row
+differently; they MUST NOT report either as admitted.
 
 A new kind of record is expressed as a new family or dimension on one
 of the five types, never as a sixth type.
@@ -524,7 +531,7 @@ the row id.  `refs` is a map with these members:
 | further_heads | Further tips beside `head` |
 | prev | A predecessor |
 | answers | The row this row answers |
-| target | The target of a withdrawal, a supersession or a lifecycle row |
+| target | The row a `supersedes`, `withdraws` or `recants` row names, the act a cut ends or the member a removal removes, and, on a halt's confirmation or resumption, that halt ({{halt}}) |
 | trusted_through | On a key revocation, the last rows of the key held good |
 | also | A map from a role, `ack` or `cites`, to a set of references |
 {: title="Members of refs"}
@@ -872,7 +879,7 @@ each of them a named human:
   no duty holder is left, the community locks and its members elect
   one (CC 4.5.4).
 
-## A Bounded Human Halt
+## A Bounded Human Halt {#halt}
 
 A trust root names a set of human holders.  Any one holder can pause
 the AI agents of the nodes that accepted that root.  The halt is one
