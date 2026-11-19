@@ -877,11 +877,17 @@ carried in such a row as follows:
 
 * The row is signed only by the agent's own key.  {{CC}} (Section
   3.1.5) assigns the trace family's attest and withdraw uses to the
-  agent signer kind; a node, host or person key MUST NOT sign it.
+  agent signer kind; a node, host or person key MUST NOT sign it.  The
+  machine-checkable form is the key-role contract of {{CC}}
+  (`manifests/key_roles.json`, family `trace:{form}:{version}`, signer
+  kind `agent`).
 
 * The row names its run: `run_kind` is in the signed bytes, from the
   closed set of {{CC}} (`production`, `prod-personal`, `prod-managed`,
-  `qa`, `battery`, `mock`).  A `mock` trace is refused at admission.
+  `qa`, `battery`, `mock`).  A `mock` trace is refused at
+  federation-tier admission outright, with refusal token
+  `trace_run_kind_mock`: a mock model's output attests nothing about any
+  agent.  A node MAY hold its own mock rows locally (for QA and tests).
 
 * The manifests of a thought's calls are members of the trace payload,
   in call order.  The payload is deterministically encoded CBOR with no
@@ -1051,8 +1057,8 @@ explain the design, not as general claims about agents.
 
 This example is one call from a context-map run of the reference agent
 (engine commit d6471f2) driven by a deterministic mock model, so it is a
-`mock` run in the sense of {{carrying}} and would be refused as a CEG
-trace.  It is reproduced as the implementation emitted it (JSON, with
+`mock` run in the sense of {{carrying}} and would be refused at
+federation-tier admission (`trace_run_kind_mock`).  It is reproduced as the implementation emitted it (JSON, with
 hexadecimal digests and nulls), trimmed to three of its nine segments.
 The call is the `entropy` judge, an ablated stage, reviewing a draft
 reply to an observer's request.  The request is withheld and a stub

@@ -122,7 +122,7 @@ Internet-Draft          Agent Context Provenance           November 2026
    9.  Formal Model  . . . . . . . . . . . . . . . . . . . . . . . .  21
    10. Carrying the Manifest . . . . . . . . . . . . . . . . . . . .  23
      10.1.  As a CEG Trace Row . . . . . . . . . . . . . . . . . . .  23
-     10.2.  As a SCITT Signed Statement  . . . . . . . . . . . . . .  23
+     10.2.  As a SCITT Signed Statement  . . . . . . . . . . . . . .  24
    11. Relationship to Other Work  . . . . . . . . . . . . . . . . .  24
    12. Implementation Status . . . . . . . . . . . . . . . . . . . .  25
    13. Security Considerations . . . . . . . . . . . . . . . . . . .  25
@@ -1256,11 +1256,16 @@ Internet-Draft          Agent Context Provenance           November 2026
    *  The row is signed only by the agent's own key.  [CC]
       (Section 3.1.5) assigns the trace family's attest and withdraw
       uses to the agent signer kind; a node, host or person key MUST NOT
-      sign it.
+      sign it.  The machine-checkable form is the key-role contract of
+      [CC] (manifests/key_roles.json, family trace:{form}:{version},
+      signer kind agent).
 
    *  The row names its run: run_kind is in the signed bytes, from the
       closed set of [CC] (production, prod-personal, prod-managed, qa,
-      battery, mock).  A mock trace is refused at admission.
+      battery, mock).  A mock trace is refused at federation-tier
+      admission outright, with refusal token trace_run_kind_mock: a mock
+      model's output attests nothing about any agent.  A node MAY hold
+      its own mock rows locally (for QA and tests).
 
    *  The manifests of a thought's calls are members of the trace
       payload, in call order.  The payload is deterministically encoded
@@ -1276,12 +1281,7 @@ Internet-Draft          Agent Context Provenance           November 2026
    admission are those of [I-D.moore-scitt-ciris-ceg]; this document
    repeats none of them.
 
-10.2.  As a SCITT Signed Statement
 
-   A manifest MAY be the payload of any SCITT signed statement [RFC9943]
-   (a COSE_Sign1 [RFC9052] message registered with a transparency
-   service).  The checks of Section 8 are unchanged.  Two guarantees of
-   a CEG row are lost:
 
 
 
@@ -1289,6 +1289,13 @@ Moore                      Expires 23 May 2027                 [Page 23]
 
 Internet-Draft          Agent Context Provenance           November 2026
 
+
+10.2.  As a SCITT Signed Statement
+
+   A manifest MAY be the payload of any SCITT signed statement [RFC9943]
+   (a COSE_Sign1 [RFC9052] message registered with a transparency
+   service).  The checks of Section 8 are unchanged.  Two guarantees of
+   a CEG row are lost:
 
    *  *The family's door.* A CEG node admits a trace row only if its
       family's static checks pass, including the closed run_kind.  A
@@ -1330,6 +1337,15 @@ Internet-Draft          Agent Context Provenance           November 2026
    *  [I-D.birkholz-vcon-ai-agent-extension] attributes each message of
       an agent conversation to a party.
 
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 24]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
+
    *  The OpenTelemetry GenAI conventions [OTEL-GENAI] define spans for
       model calls and can capture input messages, but carry no
       provenance, trust or signature.
@@ -1338,13 +1354,6 @@ Internet-Draft          Agent Context Provenance           November 2026
    model input or states its properties as model-checked invariants.
    This document is complementary to all of them: an action record can
    reference the manifests of the calls behind the action.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 24]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
 12.  Implementation Status
 
@@ -1385,6 +1394,14 @@ Internet-Draft          Agent Context Provenance           November 2026
    control) is what turns that account into evidence.  Without it, a
    compromised agent can emit a consistent but false manifest.
 
+
+
+
+Moore                      Expires 23 May 2027                 [Page 25]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
+
    *Ablation is a stated limit, not a guarantee.* Residuals are
    untrusted text sent to ablated stages by design.  The leak check is a
    substring search over normalized text: paraphrase, translation or
@@ -1394,13 +1411,6 @@ Internet-Draft          Agent Context Provenance           November 2026
    role and disposition of withheld text, and its quote share reveals
    how much of it the draft repeats.  The field set is closed so that
    what leaks is known.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 25]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    *Facts versus segments.* Policy predicates are evaluated against
    facts from trusted state.  An implementation that derived them from
@@ -1440,6 +1450,14 @@ Internet-Draft          Agent Context Provenance           November 2026
    [I-D.moore-scitt-ciris-ceg]
               Moore, E., "Signed Attestation Rows of the CIRIS Epistemic
               Grammar and Their Relationship to SCITT", Work in
+
+
+
+Moore                      Expires 23 May 2027                 [Page 26]
+
+Internet-Draft          Agent Context Provenance           November 2026
+
+
               Progress, Internet-Draft, draft-moore-scitt-ciris-ceg-02,
               November 2026, <https://datatracker.ietf.org/doc/html/
               draft-moore-scitt-ciris-ceg-02>.
@@ -1448,15 +1466,6 @@ Internet-Draft          Agent Context Provenance           November 2026
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 26]
-
-Internet-Draft          Agent Context Provenance           November 2026
-
 
    [RFC5646]  Phillips, A., Ed. and M. Davis, Ed., "Tags for Identifying
               Languages", BCP 47, RFC 5646, DOI 10.17487/RFC5646,
@@ -1496,15 +1505,6 @@ Internet-Draft          Agent Context Provenance           November 2026
               CIRIS L3C, "CIRISAgent", n.d.,
               <https://github.com/CIRISAI/CIRISAgent>.
 
-   [FORMAL]   CIRIS L3C, "H3ERE context-flow model (TLA+), vendored at
-              CIRISAgent 59b7e5d", n.d.,
-              <https://github.com/CIRISAI/CIRISAgent/tree/59b7e5d/
-              formal/h3ere_ctxflow>.
-
-
-
-
-
 
 
 
@@ -1513,6 +1513,11 @@ Moore                      Expires 23 May 2027                 [Page 27]
 
 Internet-Draft          Agent Context Provenance           November 2026
 
+
+   [FORMAL]   CIRIS L3C, "H3ERE context-flow model (TLA+), vendored at
+              CIRISAgent 59b7e5d", n.d.,
+              <https://github.com/CIRISAI/CIRISAgent/tree/59b7e5d/
+              formal/h3ere_ctxflow>.
 
    [I-D.birkholz-vcon-ai-agent-extension]
               Birkholz, H., Petrie, D., McCarthy-Howe, T., Rosenberg,
@@ -1558,11 +1563,6 @@ Internet-Draft          Agent Context Provenance           November 2026
               2026, <https://datatracker.ietf.org/doc/html/draft-sharif-
               agent-audit-trail-10>.
 
-   [I-D.thaha-scitt-agent-execution-evidence]
-              Thaha, S. and S. Shamsudeen, "Agent Execution Evidence: A
-              SCITT Profile for Verifiable Records of AI Agent Runs",
-              Work in Progress, Internet-Draft, draft-thaha-scitt-agent-
-
 
 
 Moore                      Expires 23 May 2027                 [Page 28]
@@ -1570,6 +1570,10 @@ Moore                      Expires 23 May 2027                 [Page 28]
 Internet-Draft          Agent Context Provenance           November 2026
 
 
+   [I-D.thaha-scitt-agent-execution-evidence]
+              Thaha, S. and S. Shamsudeen, "Agent Execution Evidence: A
+              SCITT Profile for Verifiable Records of AI Agent Runs",
+              Work in Progress, Internet-Draft, draft-thaha-scitt-agent-
               execution-evidence-02, 1 November 2026,
               <https://datatracker.ietf.org/doc/html/draft-thaha-scitt-
               agent-execution-evidence-02>.
@@ -1617,10 +1621,6 @@ Appendix A.  Measured Motivation
 
 
 
-
-
-
-
 Moore                      Expires 23 May 2027                 [Page 29]
 
 Internet-Draft          Agent Context Provenance           November 2026
@@ -1652,11 +1652,12 @@ Appendix B.  Example
    This example is one call from a context-map run of the reference
    agent (engine commit d6471f2) driven by a deterministic mock model,
    so it is a mock run in the sense of Section 10 and would be refused
-   as a CEG trace.  It is reproduced as the implementation emitted it
-   (JSON, with hexadecimal digests and nulls), trimmed to three of its
-   nine segments.  The call is the entropy judge, an ablated stage,
-   reviewing a draft reply to an observer's request.  The request is
-   withheld and a stub sent in its place.
+   at federation-tier admission (trace_run_kind_mock).  It is reproduced
+   as the implementation emitted it (JSON, with hexadecimal digests and
+   nulls), trimmed to three of its nine segments.  The call is the
+   entropy judge, an ablated stage, reviewing a draft reply to an
+   observer's request.  The request is withheld and a stub sent in its
+   place.
 
    {
     "call_id": "692f06ff7cdbc46a8bd9963e93b02cf9",
@@ -1673,7 +1674,6 @@ Appendix B.  Example
     "guard_violations": [],
     "messages_sha256":
      "d61c8b816c5a6f1a63528f38cdf9985a8aa28c119874de5694451ac5de4f7377",
-    "sent_messages_match": true,
 
 
 
@@ -1682,6 +1682,7 @@ Moore                      Expires 23 May 2027                 [Page 30]
 Internet-Draft          Agent Context Provenance           November 2026
 
 
+    "sent_messages_match": true,
     "provider_capture": "unavailable",
     "segments": [
      {
@@ -1728,7 +1729,6 @@ Internet-Draft          Agent Context Provenance           November 2026
    }
 
                Figure 2: An entropy-judge manifest (trimmed)
-
 
 
 
