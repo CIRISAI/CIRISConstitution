@@ -49,6 +49,8 @@ run python3 formal/takedown/takedown_model.py --check
 run python3 formal/deletion/deletion_model.py --check
 run python3 formal/owner_binding/owner_binding_model.py --check
 run python3 formal/key_plane/key_plane_model.py --check
+run python3 tools/build_key_roles.py --check
+run python3 formal/key_roles/key_roles_model.py --check
 run python3 formal/guardianship/guardianship_model.py --check
 run python3 formal/ranked_choice/ranked_choice_model.py --check
 run python3 formal/set_item/set_item_model.py --check
@@ -69,6 +71,7 @@ run bash formal/causal_order/build.sh
 run bash formal/audience_view/build.sh
 run python3 -B tools/kx_check.py --check
 run python3 -I formal/roster_fork/fork_check.py --check
+run python3 -I formal/self_roster/heads.py --check
 run python3 tools/ui_closure.py --check
 run python3 tools/check_termination.py
 run python3 tools/kernel_closure.py --check

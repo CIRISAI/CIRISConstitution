@@ -6,7 +6,7 @@ The rulebook for a network that people, organizations and AI systems share, runn
 
 **What it is for.** Messages, groups, posts, photos and files, events, reviews of the businesses around you, and AI agents that work for you: a social network and a personal store in one, with no operator. It lets you make and coordinate decisions with others, by votes that no single voice can carry and polls nobody outside can see. It streams live video and chat to groups of thousands peer to peer, through an application-layer multicast mesh the members themselves form, without giving up privacy or the community's ability to moderate. Your things live on your own devices and copy between them, in five circles from just you outward: you, your family, your neighbours, the communities and businesses you join, everyone. Nothing leaves a circle unless you move it, and a stranger reaches you only if you chose to be found. Ignore, block and mute are yours and private. Each thing people do on a social network, and the rule that carries it, is listed in [`formal/STORIES.md`](formal/STORIES.md).
 
-**This tree:** 1.0-rc20, released. **Latest release:** 1.0-rc20, 2026-11-16, tag `v1.0-rc20`, released as guidance: the signed object standardised on CBOR and COSE, a fresh genesis that carries nothing over, and the accord as bundles. The register ties every rule to the code, test or proof behind it or says plainly that nothing does yet: 387 established rows, 47 normative, 172 staged. Sixteen machine-checked models carrying 232 properties, the life of a mesh told as one story whose model closes, and one state processor whose preview is proved equal to its door ([`formal/`](formal/)). **Steward:** Eric Moore ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)). Releases: [`CHANGELOG.md`](CHANGELOG.md).
+**This tree:** 1.0-rc21 · **Latest release:** 1.0-rc21, 2026-11-19, tag `v1.0-rc21`, released as guidance: the forward payloads, families and refusals the first builds to rc20 asked for, a verification order in which a statement's key is a key of its issuer, and the CIRIS SCITT drafts released with it as one suite ([`ietf/`](ietf/)). The register ties every rule to the code, test or proof behind it or says plainly that nothing does yet: 387 established rows, 48 normative, 179 staged. Seventeen machine-checked models carrying 247 properties, the life of a mesh told as one story whose model closes, and one state processor whose preview is proved equal to its door ([`formal/`](formal/)). **Steward:** Eric Moore ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)). Releases: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## What it protects
 
@@ -37,6 +37,8 @@ Each is kept by a named section and, where a machine can check it, by a model or
 This document creates no legal claim and rules on no legal matter. The bet behind it: there are two roads to safe powerful AI, train values you trust, or assume the model may be wrong and make its consequential acts refusable, attributable and stoppable by construction. This is the second road, and it is built so that an unaccountable AI cannot take part.
 
 ## Read it
+
+**Start here if you are new:** [`VISION.md`](VISION.md) says what CIRIS is for, in plain words, and how the mesh makes it possible, with the status of each claim.
 
 One edition, printed nine ways for nine readers. The section is always the authority; a volume is a lens on it. The links point at the latest release ([`volumes/README.md`](volumes/README.md) explains the files).
 

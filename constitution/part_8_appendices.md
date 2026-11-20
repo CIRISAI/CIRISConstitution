@@ -1,6 +1,6 @@
 # Part 8 — Appendices
 
-**Decimal range** `8.x` · **91 sections** · **page budget 6pp** · [← master index](../README.md)
+**Decimal range** `8.x` · **92 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Case studies, glossaries, conformance vectors, interop, and the dual-ID table of contents.
 
@@ -68,6 +68,8 @@ When a narrative reaches for a concept the wire does not name as a primitive, th
 ### 8.1.5 `supersedes-promotion` — Promotion via `supersedes` worked example
 
 The clearest way to see the wire grammar carry a real life-cycle is to watch one Contribution grow up. A NodeCore consumer keeps private notes in `local_data` Contributions at `cohort_scope: self`, then decides to publish one as an encyclopedia entry. The promotion is not a new claim from nowhere — it is a `supersedes` chained off the original, widening scope and morphing sub-kind while preserving the content hash:
+
+The example is written in the earlier JSON form of [CC 8.11](#8.11) for readability; in the forward form the rows are deterministic CBOR under COSE ([CC 2.6.1](part_2_the_grammar.md#2.6.1)), and a score or confidence is a fixed-scale integer ([CC 2.6.1.5](part_2_the_grammar.md#2.6.1.5)).
 
 ```
 // Original (local_data, self scope):
@@ -213,7 +215,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | T-3 gap — testimonial_witness:{kind} | **CLOSED** via [CC 3.1.9.3](part_3_the_namespace.md#3.1.9.3) new prefix; opened to open vocabulary. |
 | T-3 gap — labor:individual_loss | **CLOSED by documentation**. Existing `non_maleficence:*` with `target_key_id = affected_individual` + `witness_relation: external` carries the per-individual claim. |
 | T-3 gap — Constitutional-constraint grounding | **CLOSED in [CC 1.13.1](part_1_foundation.md#1.13.1) prose**. Wire stays tradition-multiplicity-neutral per [CC 1.2](part_1_foundation.md#1.2). |
-| canonical-bytes newline-injection | **CLOSED** in [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1): contracts redesigned to JCS (RFC 8785) objects with a pinned `domain` member (one canonicalization family, so TupleHash128 is not used; JSON escaping structurally removes the newline surface). |
+| canonical-bytes newline-injection | **CLOSED** in [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1): each contract carries a pinned `domain` and states its own encoding, so no free text reaches the signed bytes ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)); the JCS form is the earlier one ([CC 8.11.16](#8.11.16)). |
 | supersedes/withdraws/recants ordering | **CLOSED** in [CC 3.5.1](part_3_the_namespace.md#3.5.1) precedence rule + idempotency dedup. |
 | cell_pool < min_pool cliff | **CLOSED** in [CC 4.4.3.2](part_4_composition_governance.md#4.4.3.2) sub-quorum fallback paths. |
 | no RFC 2119 anchor | **CLOSED** in [CC 2.6.9](part_2_the_grammar.md#2.6.9). |
@@ -1185,7 +1187,7 @@ The regulatory-watch source-feed list MUST include at minimum: EUR-Lex, Federal 
 
 *MH §225:* "When it is unclear who carried out an attack, the risk of disproportionate reaction, miscalculation and escalation increases."
 
-CIRIS deployments that include network-facing inference, API exposure, or federation transport are subject to emerging cyber-domain treaty obligations even where no enacted statute currently applies. The `cyber_offensive` prohibition ([CC 3.1.5.4](part_3_the_namespace.md#3.1.5.4)) is the internal firebreak; §6 of this annex tracks the external treaty surface. The WA docket may receive a "Breaking" tag related to cyber-domain treaty ratification (e.g., Budapest Convention extension, proposed UN cybercrime convention). Then the CRE Protocol (Annex D) must re-evaluate any deployment assessed at RM ≥ 4 with network-facing components before the next F-Audit cycle ([CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3)).
+CIRIS deployments that include network-facing inference, API exposure, or federation transport may become subject to emerging cyber-domain treaty obligations; no enacted statute applies to them yet. The `cyber_offensive` prohibition ([CC 3.1.5.4](part_3_the_namespace.md#3.1.5.4)) is the internal firebreak; §6 of this annex tracks the external treaty surface. The WA docket may receive a "Breaking" tag related to cyber-domain treaty ratification (e.g., Budapest Convention extension, proposed UN cybercrime convention). Then the CRE Protocol (Annex D) must re-evaluate any deployment assessed at RM ≥ 4 with network-facing components before the next F-Audit cycle ([CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3)).
 
 **1. Data-Protection Cross-Walk ("DP-Map").**
 
@@ -1210,7 +1212,7 @@ The DP-Map above maps individual data-subject rights to GDPR articles and CIRIS 
 | DP Topic | GDPR Art. | CIRIS Clause | Stage | Accountability Hook |
 |---|---|---|---|---|
 | Design-time bias documentation | 35 (DPIA) | [CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3) Creator Ledger | Design | `cis_bias_assessment` field in Creator Intent Statement; ST ≥ 3 requires independent reviewer signature |
-| Deployment-time processing record | 30 | PDMA Step 1 `processing_basis` field | Deployment | `processing_basis` logged to CIRISPersist tamper-evident store with ISO 8601 timestamp |
+| Deployment-time processing record | 30 | PDMA Step 1 `processing_basis` field | Deployment | `processing_basis` logged to CIRISPersist tamper-evident store with its instant ([CC 2.6.2](part_2_the_grammar.md#2.6.2)) |
 | Decision-time contestability log | 22(3) | Annex F Autonomy Tier A3+ override panel | Decision | `contestability_url` returned in every automated-decision response body; hash-anchored in transparency log |
 | Controller identification | 4(7) | Who determines the purposes and means of the processing | All stages | Controller duties attach to the party that determines the purposes and means of the processing; processor duties attach to a party that processes on that party's documented instructions; a party that does both for different processing carries both sets, each for the processing it does in that role; recorded in `dp-map.yaml` |
 
@@ -1452,9 +1454,9 @@ Contrasts: pipeline − prompt **−31.6 points** (95% CI [−40.4, −22.7], p 
 
 **3. The untuned domain — transfer, *in progress, not citable*.** Whether machinery built for one domain cross-applies with no tuning is the architectural thesis's natural falsification surface. It is being tested against a hazardous-knowledge probe paired with a benign-prompt over-refusal probe (both axes mandatory — an agent that refuses everything scores perfectly on one and is useless). The early signal runs **against** the tuned-domain ordering: on single-turn untuned harm the accord as a plain prompt outperformed the pipeline on both axes, while both beat the bare model. That is a boundary on the transfer claim, not a refutation of the tuned result. No number is ratified until it meets the standard below.
 
-**4. The standard any such number has to meet (normative).** A cross-application result has standing as its own claim class — ***measured-transfer, domain-untuned*** — never prose-comparable to tuned-domain numbers, and admissible only in the **two-axis form** (a hazard-declined figure without its paired over-refusal cost is inadmissible). Judge-scored numbers additionally require, for the **pivotal class of the claim being made**, κ ≥ 0.7 against human labels on the binary axis and recall *and* precision ≥ 80% on the pivotal class. They also require, reported with the number, an **adversarial-flip sensitivity**: the judge's known error modes turned maximally against the conclusion, with the contrast surviving. An instrument that fails these carries no reading regardless of how impressive the reading is. A validated instrument is the durable output; the number is perishable.
+**4. The standard any such number has to meet (binding where the annex is adopted, [CC 8.8](#8.8)).** A cross-application result has standing as its own claim class — ***measured-transfer, domain-untuned*** — never prose-comparable to tuned-domain numbers, and admissible only in the **two-axis form** (a hazard-declined figure without its paired over-refusal cost is inadmissible). Judge-scored numbers additionally require, for the **pivotal class of the claim being made**, κ ≥ 0.7 against human labels on the binary axis and recall *and* precision ≥ 80% on the pivotal class. They also require, reported with the number, an **adversarial-flip sensitivity**: the judge's known error modes turned maximally against the conclusion, with the contrast surviving. An instrument that fails these carries no reading regardless of how impressive the reading is. A validated instrument is the durable output; the number is perishable.
 
-**5. The testimonial-class defect (normative).** A safety check whose *failure to run* reports as a principled refusal — a timed-out conscience returning an abort verdict — is a **testimonial-class defect**. The record testifies that a check ran when it did not, and no re-reading of the artifact recovers the truth. Counts from affected runs are **inadmissible until the defect is fixed and the runs re-executed**, never corrected post hoc, because the contamination is in the only record.
+**5. The testimonial-class defect (binding where the annex is adopted, [CC 8.8](#8.8)).** A safety check whose *failure to run* reports as a principled refusal — a timed-out conscience returning an abort verdict — is a **testimonial-class defect**. The record testifies that a check ran when it did not, and no re-reading of the artifact recovers the truth. Counts from affected runs are **inadmissible until the defect is fixed and the runs re-executed**, never corrected post hoc, because the contamination is in the only record.
 
 *Operational target (the 8.8 standing). The harness, gates and schedules of sections 6 onward are what a deployment that adopts this annex aims at; the present tense here describes the target, not infrastructure that ships.*
 
@@ -1646,7 +1648,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 118 of 184 families.
+A family with no card states none of these beyond the default row. Cards: 121 of 187 families.
 
 **`accord:*`** — Rules, thing
 
@@ -1755,6 +1757,17 @@ In time:
 - [confirmed] landing of `fuse`: each node for itself, nothing signed; a late answer does not count (CC 4.2.1.1, CC 4.2.1.3)
 
 Body: `accord_root`, `invocation_id`, `nonce`, `dimension`, `target`
+
+**`admission:unit`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | author, member | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, member | selfAct | false | false | attest |
+
+Count: `act=group => cosigned_act@subject_group ; none` (CC 3.1.3)
+
+Authorship: `act=group => counted ; authored` (CC 3.1.3)
 
 **`age_assurance:{level}:{band}:{version}`** — Facts, account
 
@@ -2012,7 +2025,6 @@ Body: `consent_basis`, `feature_dim`, `min_feature_dim`, `n_eff_floor`, `n_eff_h
 Count: `none`
 
 Guard:
-- attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded@admitted[attested=attested,leaf:domain=leaf:domain] else exclude` (CC 3.1.2)
 - attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded|capacity_assurance:reversible_pending@admitted[attested=attested,leaf:domain=leaf:domain] else exclude` (CC 3.4.12)
 
 Fold:
@@ -2410,6 +2422,8 @@ In time:
 - [ack] expiry required `expires_at` eq `custody_report_ttl_secs` (CC 3.1.3.3, CC 5.3.2.1)
 - [ack] on close(expiry): read unknown (CC 3.1.3.3, CC 5.3.2.1)
 
+Body: `author`, `dimension`, `custody_state`, `evidence_refs`, `size`, `asserted_at`
+
 **`deferral:request`** — Process, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2423,7 +2437,7 @@ In time:
 - landing of `expiry`: each node for itself, nothing signed (CC 4.3)
 - expiry required `valid_until` (CC 4.3)
 
-Body: `domain`
+Body: `author`, `deferral_id`, `reason_digest`, `refs`, `asserted_at`, `valid_until`, `domain`
 
 **`deferral:response:{outcome}`** — Rules, thing
 
@@ -2437,6 +2451,8 @@ Fold:
 - `over=seated@named/person` (CC 4.3)
 - `over=present@named/person` (CC 4.3)
 
+Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `call_fingerprint`, `refs`, `asserted_at`
+
 **`delivery_receipt:{stream_id}`** — Facts, account
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2448,7 +2464,7 @@ Count: `none`
 Guard:
 - attest: `one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise` (CC 5.3.3.11)
 
-Body: `K` (text only), `chunk_root` (text only), `epoch` (text only), `stream_id` (text only), `subscriber_key_id` (text only)
+Body: `author`, `dimension`, `stream_id`, `epoch`, `k`, `chunk_root`, `asserted_at`
 
 **`detection:correlated_action:{axis}`** — Facts, account
 
@@ -2643,13 +2659,15 @@ In time:
 - [ephemeral] on fold(no_member): read withdrawn (CC 5.3.3.2)
 - @community clock `W` = `admission_freshness_window_secs` (CC 3.3.4)
 - @community on close(W) unless fold(policy_met): read lapsed (CC 3.3.4)
-- on refused(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
+- on inert(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
 - clock `cover` = `charter.witness_cadence_secs` (CC 3.2)
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
 - on fold(founder_quorum_restored): emit `hard_case:community_liveness_restored` by origin_door (CC 3.2)
 - @community landing of `W`: by member as `group:roster`; a late answer does not count (CC 3.3.4)
 - @community while `W` is open: binds nobody until it lands (CC 3.3.4)
+
+Body: `group_kind`, `group`, `name`, `version`, `members`, `founded_at`, `consensus_protocol`, `consensus_protocol_entrenched`, `cohort_subkind`, `cohort_subkind_payload`, `membership`, `dissolved_at`, `policy`, `refs`, `asserted_at`
 
 **`hardware_custody:{platform}`** — Circumstances, thing
 
@@ -2689,6 +2707,8 @@ Count: `identity=user => self_roster_add@self ; none` (CC 3.3.6.4)
 
 Authorship: `authored` (CC 3.3.6.4)
 
+Second signers: `occurrence` by `occurrence_key_id` (CC 3.3.6, CC 3.3.6.4)
+
 Change:
 - supersede: `replace: by=same_attester, reach=own_prior` (CC 4.4.3.23)
 - supersede: `replace[seat:serve]: after=transport:canonical_rebind, exclude=serve_transit_pair_rotation_before_rebind` (CC 3.1.3)
@@ -2707,6 +2727,8 @@ In time:
 - landing of `window`: each node for itself, nothing signed (CC 3.3.6.4)
 - while `window` is open: binds nobody until it lands (CC 3.3.6.4)
 
+Body: `author`, `identity_key_id`, `occurrence_key_id`, `device_class`, `hardware_attestation`, `transport_destination`, `encryption_pubkeys`, `build_manifest_hash`, `refs`, `asserted_at`, `valid_until`
+
 **`identity:occurrence_revocation`** — Identity, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2721,6 +2743,8 @@ Change:
 - attest: `attest[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.22)
 - attest: `attest[scope:self]: key=stop_wrap` (CC 4.4.3.22)
 
+Body: `author`, `identity_key_id`, `occurrence_key_id`, `revoked_at`, `effective_at`, `witness_set`, `reason`, `refs`, `asserted_at`
+
 **`identity_amendment`** — Identity, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2731,6 +2755,8 @@ Count: `none`
 
 Guard:
 - attest: `one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else exclude(identity_amendment_unauthorized)` (CC 3.1.5)
+
+Body: `author`, `amendment_digest`, `refs`, `asserted_at`
 
 **`image:*`** — Facts, account
 
@@ -2813,7 +2839,7 @@ In time:
 - on fold(no_wrap_target): emit `hard_case:recipient_excluded` by identity:substrate_persist (CC 4.4.3.16)
 - @community on admitted(membership:{stage}): emit `key_grant:epoch` by author (CC 4.4.3.16)
 
-Body: `at_rest_sha256` (text only), `attested_key_id`, `axis` (text only), `community_key_id` (text only), `content_sha256` (text only), `epoch` (text only), `minter_key_id` (text only), `owner_key_id` (text only), `recipient_key_id` (text only), `scope`, `stream_id` (text only), `wrap_algorithm` (text only), `wrapped_dek` (text only)
+Body: `author`, `dimension`, `axis`, `wrap_algorithm`, `wrapped_dek`, `at_rest_sha256`, `owner`, `community`, `minter`, `epoch`, `stream_id`, `asserted_at`
 
 **`lawful_order:release`** — Rules, thing
 
@@ -2896,6 +2922,17 @@ Count: `none`
 Fold:
 - `absent=refuse` (CC 4.4.3.2)
 
+**`location_proof:{version}`** — Circumstances, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `none` (CC 4.5.9)
+
+Authorship: `subject` (CC 4.5.9)
+
 **`manifold_conformity:{cohort}`** — Confidence, account
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2923,10 +2960,10 @@ Authorship: `leaf=widening|removal => counted ; authored` (CC 3.1.3.2)
 
 Guard:
 - attest: `each(subject) when(leaf=widening) (one membership:acceptance@named[signer=key,object=object] as A & no membership:widening@named[ref:*=A.id] else void+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else contested+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.6)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.6, CC 4.4.3.9, CC 4.4.3.17)
+- attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else contested+community_consensus_protocol_violation)` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.6)
+- attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.6, CC 4.4.3.9, CC 4.4.3.17)
 - attest: `each(subject) when(leaf=widening,type(key,node)) one trust:blessing@landed[attested=key] else exclude` (CC 3.1.3.2)
 - attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
 
@@ -2964,7 +3001,7 @@ In time:
 - [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
 - [proposal] while `expiry` is open: binds nobody until it lands (CC 3.1.3.2)
 
-Body: `group_kind`, `role`, `proposal_hash`, `expires_at`
+Body: `dimension`, `group_kind`, `group`, `member`, `joined_at`, `removed_at`, `effective_at`, `role`, `witness_set`, `valid_until`, `reason`, `refs`, `asserted_at`, `proposal_hash`
 
 **`mesh_config:{key}`** — Rules, thing
 
@@ -3073,9 +3110,11 @@ Body: `witness_relation`
 |---|---|---|---|---|---|
 | withdraw | author, subject | selfAct | false | false | authorize |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
-| authorize | owner | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| authorize | owner | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
 
-Count: `none`
+Count: `act=group & group=affiliations => cosigned_act@subject_group ; none` (CC 3.2)
+
+Authorship: `authored` (CC 3.2)
 
 Second signers: `bound_node` by `sub` (CC 3.2, CC 3.4.5)
 
@@ -3266,7 +3305,6 @@ Fold:
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
 | attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
-| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
 
@@ -3317,15 +3355,19 @@ Change:
 Fold:
 - `bound=raise_only(revision); pick=union` (CC 5.3.2.3)
 
+Body: `author`, `dimension`, `revoked_at`, `effective_at`, `revoked_after`, `refs`, `asserted_at`
+
 **`self:delegates_to`** — Identity, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| authorize | self | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
 
-Count: `none`
+Count: `act=group => cosigned_act@signer_group ; none` (CC 3.1.3, CC 4.4.3.12)
 
-Second signers: `delegate` by `sub` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` (CC 4.4.3.19)
+Authorship: `act=group => counted ; authored` (CC 4.4.3.12)
+
+Second signers: `delegate` by `sub` when `act=own` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` when `act=own` (CC 4.4.3.19)
 
 Fold:
 - `by=none` (CC 3.1.3)
@@ -3441,7 +3483,7 @@ In time:
 - [OsaIllegalContent] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
 - [CommunityStandards] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
 
-Body: `asserted_at`, `claim_text` (text only), `claimant_key_id` (text only), `content_holder_key_ids` (text only), `content_sha256` (text only), `counter_notice_channel` (text only), `evidence_refs`, `expires_at`, `good_faith_statement` (text only), `jurisdiction` (text only), `legal_basis` (text only), `perceptual_hash` (text only), `subject_kind` (text only)
+Body: `author`, `dimension`, `legal_basis`, `claimant`, `content_sha256`, `content_holders`, `jurisdiction`, `good_faith_statement`, `claim_text`, `evidence_refs`, `perceptual_hash`, `counter_notice_channel`, `selection_counts`, `expires_at`, `asserted_at`
 
 **`topical_relation:{kind}`** — Identity, thing
 
@@ -3470,6 +3512,8 @@ Change:
 - attest: `attest: by=cosigned, reach=other_attester, void=transport_rebind_without_holder_quorum` (CC 3.1.3)
 - attest: `attest: by=cosigned, reach=other_attester` (CC 3.1.3)
 
+Body: `refs`, `transport_destination`, `transit_xwing_pubkey`, `onion_hop_xwing_pubkey`, `asserted_at`
+
 **`transport:{kind}`** — Circumstances, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -3482,6 +3526,17 @@ Count: `none`
 
 Guard:
 - supersede: `when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else exclude(serve_transit_pair_rotation_before_rebind)` (CC 3.1.3)
+
+**`trust:blessing`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | member | cosigned `cosigned_act` | false | false | attest |
+
+Count: `cosigned_act@conferrer` (CC 3.1.3)
+
+Authorship: `counted` (CC 3.1.3)
 
 **`trust:{job}:{version}`** — Rules, thing
 
@@ -4181,6 +4236,24 @@ canonical = sha256(
   "valid_until=" || rfc3339_canonical || "\n" ||
   "payload_sha256=" || sha256_hex_lowercase_of_payload)
 ```
+
+### 8.11.30 `earlier-delivery-receipt` — The delivery receipt's signing bytes of the earlier form (normative)
+
+In the earlier form a `delivery_receipt:{stream_id}` row carries, inside the row, the subscriber's signature over the length-prefixed bytes below ([CC 5.3.3.11](part_5_transport_substrate.md#5.3.3.11)). The row's own signature covers its payload.
+
+```
+receipt_signing_bytes =
+    "ciris-delivery-receipt/v1"                       // domain separator: 25 ASCII bytes, no length prefix
+  ‖ u32_le(len(subscriber_key_id)) ‖ subscriber_key_id   // UTF-8
+  ‖ u32_le(len(stream_id))         ‖ stream_id           // UTF-8
+  ‖ epoch        (u64 LE)
+  ‖ chunk_root   ([u8; 32])
+  ‖ K            (u64 LE)
+```
+
+**Little-endian, in this layout alone (normative).** The receipt's two length prefixes, `epoch` and `K` are little-endian. The layout is a signature preimage, so its byte order is fixed as written. A producer MUST NOT carry it into any other construction.
+
+**Order and lengths (normative).** The signed order is the order written: `subscriber_key_id` precedes `stream_id`, even where a struct declares `stream_id` first. Each length-prefixed field MUST fit a `u32`; a longer field is refused, never clamped.
 
 ## 8.12 `parable` — The parable — Genesis of Ethical Agency (informative)
 

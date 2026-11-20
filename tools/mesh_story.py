@@ -217,6 +217,14 @@ def more(s):
     one("rebind:1", "transport:canonical_rebind", "bob", ["owner", "registered"], "Bob tries to re-bind his serve node's transport destination: refused, a re-bind is the accord holders' act")
     one("rebind:1", "transport:canonical_rebind", "alice", ["holder"], "The accord holders re-bind the serve node's transport destination, cosigned at the charter's threshold")
     one("rebind:1", "transport:canonical_rebind", "alice", ["holder"], "A later re-bind by the holders supersedes the first: again their cosigned act, never one holder's", verb="supersede")
+    # 21. a rough location is the subject's own row; a blessing is the conferring roster's counted act
+    one("loc:dave", "location_proof:{version}", "erin", [], "A stranger tries to publish Dave's rough location: refused, only the subject signs it")
+    one("loc:dave", "location_proof:{version}", "dave", ["self"], "Dave publishes his own rough location to join a geographic community: the subject's own row")
+    one("bless:ci", "trust:blessing", "bob", ["owner", "registered"], "Bob tries to bless his build pipeline's key: refused, a blessing is the conferring roster's act")
+    one("bless:ci", "trust:blessing", "alice", ["holder", "member"], "The accord holders bless the pipeline's key with infra:attest, counted at a strict majority of their roster")
+    # 22. a unit runs only by a row naming its digest: one person's for computing, a group's count for an effect
+    one("unit:1", "admission:unit", "erin", ["registered"], "Erin, no member of the reviewing group, tries to add her voice to its admission of a unit: refused")
+    one("unit:2", "admission:unit", "bob", ["author"], "Bob admits a unit that only computes, for one day, under his own key")
 
 def check(s):
     errs = []

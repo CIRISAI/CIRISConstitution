@@ -1,6 +1,6 @@
 # `formal/vendor/edge` — edge's quantitative models, vendored
 
-Edge's models of the transport and the mesh, vendored from CIRISEdge branch `docs/fsd-ciris-mesh` at commit `bf383b3` (2026-11-05; local to the machine until edge's release push, which is why the commit and not a tag is named). They are **models, not measurements**: seeded, standard-library Python, run with `python3 -I`, and every figure they print is marked `[inf]` or `[model]` in the FSD beside it. The CC cites them where a residual in the text carries their number.
+Edge's models of the transport and the mesh, vendored from CIRISEdge `main` at commit `3e0de45` (2026-11-05). They are **models, not measurements**: seeded, standard-library Python, run with `python3 -I`, and every figure they print is marked `[inf]` or `[model]` in the FSD beside it. The CC cites them where a residual in the text carries their number.
 
 | Script | FSD | What it models | Where the CC uses it |
 |---|---|---|---|
@@ -12,4 +12,4 @@ Edge's models of the transport and the mesh, vendored from CIRISEdge branch `doc
 
 `EVENT_PATH_MODEL.md` §0.1 maps each piece to the formal model and invariant of this directory it relies on (membership, transport_tiers, withdraws_admission, anonymous, moderator_election, mesh_net), as read at CC rc17 `6d9e1da`.
 
-**Running.** Each script runs stand-alone and prints its tables; some run for minutes. They are not run in CI here; CI checks that the vendored copies match the recorded commit when edge's branch is pushed (`tools/vendor_edge_models.py --check`, to come with the push). Re-vendor by copying the five scripts and three FSDs and updating the commit above.
+**Running.** Each script runs stand-alone and prints its tables; some run for minutes. They are not run in CI here. CI holds each copy to the hash recorded in [`../VENDOR.tsv`](../VENDOR.tsv) (`tools/vendor_models.py --check`). The copies are the bytes of CIRISEdge `main` at `3e0de45`, the commit that took the branch's models, apart from the section numbers re-cut in `retry_schedule.py` and `EVENT_PATH_MODEL.md`. To re-vendor, copy the five scripts and three FSDs and run `--write`.

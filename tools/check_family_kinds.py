@@ -63,7 +63,15 @@ def main():
         if m.group(2) != body:
             if "--check" in sys.argv: errs.append("FamilyModel.lean DATA section is stale (run tools/check_family_kinds.py)")
             else:
-                open(LEAN, "w", encoding="utf-8").write(src[:m.start(2)] + body + src[m.end(2):])
+                src = src[:m.start(2)] + body + src[m.end(2):]
+                open(LEAN, "w", encoding="utf-8").write(src)
+        # registry_fits states the family count; it follows the data, so a new family cannot leave it stale.
+        n = re.search(r"(theorem registry_fits : families\.length = )(\d+)", src)
+        if not n: errs.append("FamilyModel.lean has no registry_fits count")
+        elif int(n.group(2)) != len(lean):
+            if "--check" in sys.argv: errs.append(f"FamilyModel.lean registry_fits states {n.group(2)} families, the data gives {len(lean)} (run tools/check_family_kinds.py)")
+            else:
+                open(LEAN, "w", encoding="utf-8").write(src[:n.start(2)] + str(len(lean)) + src[n.end(2):])
     print(f"family kinds: {len(rows)} families, {sum(1 for r in rows if r.get('maintains_record')=='yes')} maintain the record, "
           f"{sum(1 for r in rows if 'carries' in r['verbs'])} carry; {len(errs)} misfit(s)")
     for e in errs: print("  ERR", e)

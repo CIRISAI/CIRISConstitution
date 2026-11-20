@@ -1,0 +1,2576 @@
+
+
+
+
+Supply Chain Integrity, Transparency, and Trust                 E. Moore
+Internet-Draft                                                 CIRIS L3C
+Intended status: Informational                          19 November 2026
+Expires: 23 May 2027
+
+
+    Signed Attestation Rows of the CIRIS Epistemic Grammar and Their
+                         Relationship to SCITT
+                     draft-moore-scitt-ciris-ceg-02
+
+Abstract
+
+   The CIRIS Epistemic Grammar (CEG) records claims between parties as
+   signed rows.  Each row is one or more COSE_Sign1 messages over a
+   payload in deterministically encoded CBOR.  Each message carries one
+   composite ML-DSA-65 and Ed25519 signature.  Every row has one of five
+   types: a claim, a delegation, a replacement, a withdrawal, or a
+   recantation.  A node admits a row only after a fixed set of checks,
+   and it refuses a failing row with a named reason.
+
+   This document specifies the signed statement, its encoding, the names
+   by which rows refer to each other, the signature, and the admission
+   checks, so that a second implementation can produce and verify the
+   same bytes.  It then describes how these statements relate to the
+   roles of the SCITT architecture (RFC 9943), and where they differ.
+   It defines no new SCITT mechanism and requests no IANA action.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://github.com/CIRISAI/CIRISConstitution/tree/main/ietf.  Status
+   information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-moore-scitt-ciris-ceg/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/CIRISAI/CIRISConstitution.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+
+
+Moore                      Expires 23 May 2027                  [Page 1]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 23 May 2027.
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  Scope . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     1.2.  Requirements Language . . . . . . . . . . . . . . . . . .   5
+     1.3.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   5
+   2.  The Signed Statement  . . . . . . . . . . . . . . . . . . . .   6
+     2.1.  COSE_Sign1 and the Protected Header . . . . . . . . . . .   6
+     2.2.  The Family Id . . . . . . . . . . . . . . . . . . . . . .   7
+     2.3.  Identity References . . . . . . . . . . . . . . . . . . .   7
+     2.4.  The Unprotected Header and External AAD . . . . . . . . .   7
+     2.5.  The Payload . . . . . . . . . . . . . . . . . . . . . . .   8
+   3.  The Five Row Types  . . . . . . . . . . . . . . . . . . . . .   8
+   4.  Encoding  . . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     4.1.  Deterministic Encoding  . . . . . . . . . . . . . . . . .   9
+     4.2.  The Omit Rule . . . . . . . . . . . . . . . . . . . . . .  10
+     4.3.  Sets, Sequences and Tuples  . . . . . . . . . . . . . . .  10
+     4.4.  Bytes and Text  . . . . . . . . . . . . . . . . . . . . .  10
+     4.5.  Numbers . . . . . . . . . . . . . . . . . . . . . . . . .  11
+     4.6.  Instants  . . . . . . . . . . . . . . . . . . . . . . . .  11
+     4.7.  Size  . . . . . . . . . . . . . . . . . . . . . . . . . .  11
+     4.8.  Erasable Members  . . . . . . . . . . . . . . . . . . . .  12
+   5.  Names . . . . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     5.1.  The Row Id  . . . . . . . . . . . . . . . . . . . . . . .  12
+     5.2.  The Statement Id  . . . . . . . . . . . . . . . . . . . .  13
+     5.3.  What a Row Names  . . . . . . . . . . . . . . . . . . . .  13
+     5.4.  The Author  . . . . . . . . . . . . . . . . . . . . . . .  14
+
+
+
+Moore                      Expires 23 May 2027                  [Page 2]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   6.  Signatures and Keys . . . . . . . . . . . . . . . . . . . . .  14
+     6.1.  The Composite Signature . . . . . . . . . . . . . . . . .  14
+     6.2.  Keys  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
+     6.3.  Counted Rows  . . . . . . . . . . . . . . . . . . . . . .  15
+     6.4.  Verification Has Three Answers  . . . . . . . . . . . . .  15
+   7.  Other Signed Objects and Receipts . . . . . . . . . . . . . .  16
+     7.1.  Objects That Are Not Rows . . . . . . . . . . . . . . . .  16
+     7.2.  The Genesis Bundle  . . . . . . . . . . . . . . . . . . .  17
+     7.3.  Receipts  . . . . . . . . . . . . . . . . . . . . . . . .  18
+   8.  Admission as a Registration Policy  . . . . . . . . . . . . .  18
+     8.1.  Who May Withdraw a Row  . . . . . . . . . . . . . . . . .  20
+   9.  The Safety Model the Rows Carry . . . . . . . . . . . . . . .  20
+     9.1.  Two Planes  . . . . . . . . . . . . . . . . . . . . . . .  21
+     9.2.  Consent-Bounded Flow  . . . . . . . . . . . . . . . . . .  21
+     9.3.  Delegation  . . . . . . . . . . . . . . . . . . . . . . .  22
+     9.4.  Accountable Key Relationships . . . . . . . . . . . . . .  22
+     9.5.  A Bounded Human Halt  . . . . . . . . . . . . . . . . . .  22
+     9.6.  What Is Not Claimed . . . . . . . . . . . . . . . . . . .  23
+   10. Relationship to SCITT . . . . . . . . . . . . . . . . . . . .  24
+     10.1.  Roles  . . . . . . . . . . . . . . . . . . . . . . . . .  24
+     10.2.  Differences  . . . . . . . . . . . . . . . . . . . . . .  25
+   11. Lifecycle of an Agent Decision  . . . . . . . . . . . . . . .  26
+   12. Open Issues . . . . . . . . . . . . . . . . . . . . . . . . .  26
+   13. Implementation Status . . . . . . . . . . . . . . . . . . . .  27
+   14. Security Considerations . . . . . . . . . . . . . . . . . . .  27
+   15. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  28
+   16. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  29
+   17. References  . . . . . . . . . . . . . . . . . . . . . . . . .  29
+     17.1.  Normative References . . . . . . . . . . . . . . . . . .  29
+     17.2.  Informative References . . . . . . . . . . . . . . . . .  31
+   Appendix A.  CDDL . . . . . . . . . . . . . . . . . . . . . . . .  32
+   Appendix B.  Test Vectors . . . . . . . . . . . . . . . . . . . .  44
+   Appendix C.  The Earlier Form . . . . . . . . . . . . . . . . . .  45
+   Changes since draft-moore-scitt-ciris-ceg-01  . . . . . . . . . .  45
+   Changes since draft-moore-scitt-ciris-ceg-00  . . . . . . . . . .  46
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  46
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  46
+
+1.  Introduction
+
+   CEG is the row format of the CIRIS system, in which people, devices,
+   communities and AI agents make claims about each other and act on
+   them.  It is defined normatively in the CIRIS Constitution [CC].
+   This document restates the parts of that definition that another
+   implementation needs in order to interoperate at the byte level.
+
+   Three goals shape the format:
+
+
+
+
+Moore                      Expires 23 May 2027                  [Page 3]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   *  Any party holding a row can recompute its bytes and its name
+      exactly.  The payload and the protected header are in the
+      deterministic encoding of CBOR, and a verifier refuses any other
+      encoding of the same value (Section 4).
+
+   *  Rows exchanged between nodes have to resist forgery by an attacker
+      with a quantum computer.  Every statement carries one composite
+      signature, ML-DSA-65 [FIPS204] with Ed25519 [RFC8032], and neither
+      half verifies alone (Section 6).
+
+   *  The set of row types is closed, so that every row is subject to
+      the same admission rules.  New kinds of claim are new families and
+      dimensions, never new types.
+
+   SCITT [RFC9943] defines an architecture for registering signed
+   statements with a Transparency Service and returning receipts that
+   prove registration.  Each CEG statement is a COSE_Sign1 with an
+   issuer and a subject in its protected header, so it has the shape of
+   a SCITT Signed Statement.  CEG runs no Transparency Service of its
+   own, and its admission checks need none.  A host that runs code a row
+   admits first requires a SCITT receipt from a Transparency Service it
+   trusts (Section 7.3).  Section 10 describes the relationship and what
+   still differs.
+
+1.1.  Scope
+
+   In scope:
+
+   *  the signed statement of a row and its headers (Section 2);
+
+   *  the five row types (Section 3);
+
+   *  the deterministic encoding and the rules that close it
+      (Section 4);
+
+   *  the row id, the statement id and the object id (Section 5);
+
+   *  the composite signature, keys and counted rows (Section 6);
+
+   *  the admission checks, written as a SCITT Registration Policy
+      (Section 8).
+
+   Informative only:
+
+   *  the other signed objects and receipts (Section 7);
+
+   *  the safety properties the rows carry (Section 9);
+
+
+
+
+Moore                      Expires 23 May 2027                  [Page 4]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   *  the relationship to SCITT roles (Section 10);
+
+   *  the lifecycle of an agent's decision record (Section 11).
+
+   Out of scope: the transport between nodes, the storage schema, the
+   meaning of individual claim families (the "dimension" namespace), and
+   the governance rules that decide who may hold which role.  [CC]
+   defines each of these.
+
+1.2.  Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+1.3.  Terminology
+
+   This document uses the terms Issuer, Signed Statement, Transparency
+   Service, Registration Policy, Receipt, Transparent Statement, and
+   Relying Party as defined in [RFC9943].  It also uses:
+
+   Statement:  One COSE_Sign1 [RFC9052] under CBOR tag 18, made by one
+      signer.
+
+   Row:  One signed attestation.  A row is one statement, or several
+      statements over one payload where the row is counted
+      (Section 6.3).
+
+   Payload:  The CBOR map a row's statements sign.  It is carried as the
+      COSE_Sign1 payload, as a byte string in the deterministic
+      encoding.
+
+   Signer:  The key that makes a statement.  Its stable identity is the
+      CWT iss claim.  It plays the SCITT Issuer role.
+
+   Subject:  What a row is about.  The CWT sub claim names it.  The
+      payload member subject_key_ids lists any further subjects,
+      including parties that have no key.
+
+   Identity reference:  The one spelling of a key's identity: the COSE
+      Key Thumbprint URI of [RFC9679] for the key (Section 2.3).
+
+   Family id:  The name of a row's claim family, carried in the
+      protected header (Section 2.2).
+
+   Producer, Consumer, Substrate:  A Producer emits rows.  A Consumer
+
+
+
+Moore                      Expires 23 May 2027                  [Page 5]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+      verifies and reads rows.  A Substrate stores and relays rows and
+      applies the admission checks.  One node is usually all three.
+
+   Refusal token:  A fixed, case-sensitive ASCII string that names why a
+      row was refused, so that two implementations agree on a refusal as
+      well as on an acceptance.  The tokens of [CC] are either all
+      lowercase or all uppercase, and are compared byte for byte.  Some
+      refusals use the token federation_malformed_row together with a
+      reason from a closed set.
+
+2.  The Signed Statement
+
+2.1.  COSE_Sign1 and the Protected Header
+
+   A statement is a COSE_Sign1 [RFC9052] under CBOR tag 18.  Its payload
+   is never detached.  The protected header of a row's statement carries
+   exactly seven members, and the signature covers all of them.
+
+    +========+========+==============================================+
+    | Label  | Member | Value                                        |
+    +========+========+==============================================+
+    | 1      | alg    | -70100, the composite algorithm of Section 6 |
+    +--------+--------+----------------------------------------------+
+    | 3      | cty    | "application/vnd.ciris.row+cbor", with no    |
+    |        |        | parameters                                   |
+    +--------+--------+----------------------------------------------+
+    | 4      | kid    | The 32-byte thumbprint of the signing key    |
+    |        |        | (Section 6.2)                                |
+    +--------+--------+----------------------------------------------+
+    | 15     | CWT    | iss, sub, iat, and nbf and exp where the row |
+    |        | claims | has them, and the edition claim              |
+    +--------+--------+----------------------------------------------+
+    | 16     | typ    | "ceg-row/2"                                  |
+    +--------+--------+----------------------------------------------+
+    | -70001 | row    | One of the five row types, as a text string  |
+    |        | type   |                                              |
+    +--------+--------+----------------------------------------------+
+    | -70002 | family | The row's family id, as a text string        |
+    +--------+--------+----------------------------------------------+
+
+                  Table 1: The protected header of a row
+
+   The CWT claims are carried as [RFC9597] defines.  The edition claim
+   has the label -70003 and the value 2.  iat, nbf and exp are derived
+   from payload members (Section 4.6).
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                  [Page 6]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   A verifier MUST refuse a row whose cty carries parameters, or whose
+   protected header lacks the type label or the family label.  It MUST
+   refuse a protected header with any other member, so that one
+   statement has one statement id (Section 5).  A signed object that is
+   not a row carries neither label, and one that does is refused
+   (Section 7).
+
+   sub names what the row is about: the attested key, or the object the
+   row refers to.  A statement's kind is its typ [RFC9596].
+
+2.2.  The Family Id
+
+   The family label carries a family id, never a leaf.  A family id is
+   the family's registry prefix in [CC], with each {name} segment
+   written as a full stop followed by the name, and each * written as a
+   lone full stop.  Examples are key:record and
+   provenance:build_manifest:.target.
+
+   A literal segment never begins with a full stop, so no two prefixes
+   share a family id.  A row that scores a dimension carries it whole,
+   leaf and version, in the payload member dimension.  A verifier MUST
+   refuse a dimension that does not resolve to the family id the header
+   carries.
+
+2.3.  Identity References
+
+   iss is the signer's stable identity reference: the COSE Key
+   Thumbprint URI of Section 5.7 of [RFC9679] for the signer's genesis
+   key.  It is urn:ietf:params:oauth:ckt:sha-256: followed by the
+   unpadded base64url [RFC4648] of the 32-byte thumbprint.  That is 43
+   characters, the last with zero trailing bits.
+
+   Because iss names the genesis key, the issuer stays the same when the
+   signing key rotates; kid names the key that signs.  author, a key
+   named by sub or by an element of subject_key_ids, and every role
+   party use this one spelling.  A verifier MUST refuse any other.
+
+2.4.  The Unprotected Header and External AAD
+
+   external_aad is the empty byte string, and no party puts a domain
+   prefix there.  The unprotected header is outside the signature, and
+   no admission check reads it.  A holder may add a receipt there, or
+   present a disclosure there (Section 4.8, Section 7.3).  A host reads
+   a receipt there before it runs code a row admits; the receipt grants
+   nothing, and a malformed one is ignored (Section 7.3).
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                  [Page 7]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   There is no copy of the headers inside the payload and no signature
+   beside the statement.  The protected header and the payload are the
+   row.  A further voice is a further statement (Section 6.3).
+
+2.5.  The Payload
+
+   The payload is a CBOR map whose members the row's family names.
+   Every row carries asserted_at.  Other members that [CC] fixes for
+   every family include:
+
+   author:  The iss of the one who authors the row.  It is present when
+      the family is authored and absent when the family is counted
+      (Section 5.4).
+
+   refs:  Every row this row names (Section 5.3).
+
+   dimension:  The full scored dimension, leaf and version.  It resolves
+      to the header's family id.
+
+   evidence_refs:  The blobs the row cites, by content hash, as a
+      sequence.
+
+   score, confidence, weight:  Integers at a fixed scale (Section 4.5).
+
+   valid_from, valid_until, expires_at:  Instants (Section 4.6).
+
+   salt:  Sixteen random bytes.  A row whose content is low-entropy,
+      such as a ballot or a census cell, carries one, so that its row id
+      confirms no guess.
+
+   body:  A map whose member note holds at most 2048 bytes of free text.
+      No free text stands outside body.note.
+
+   reason:  A code from a closed registry.
+
+   subject_key_ids, cohort_scope, scope and the claim's other members
+   are payload members of the same names.  Appendix A gives the full
+   schema.  A Consumer MUST preserve members it does not recognise when
+   it relays a row (Section 4.2).
+
+3.  The Five Row Types
+
+   The row type label (-70001) takes exactly one of five values.  A
+   Substrate MUST refuse any other value, compared byte for byte, with
+   attestation_type_unregistered.  It MUST apply this check to rows it
+   emits and to rows it receives.
+
+   scores:  A claim about the subject on the named dimension.  Every
+
+
+
+Moore                      Expires 23 May 2027                  [Page 8]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+      positive or negative claim about a party is a scores row.
+
+   delegates_to:  The signer authorises the subject to sign on its
+      behalf within scope, a set of strings.  For the scopes that [CC]
+      lists as requiring a term, among them licensing, moderation and
+      takedown, the delegation's end is REQUIRED.  It MUST be no more
+      than 365 days after its start.  A Substrate refuses a row that
+      breaks this with delegation_term_required.
+
+   supersedes:  The signer replaces one of its own earlier rows, named
+      by row id in refs.
+
+   withdraws:  The signer retracts an earlier row, named by row id in
+      refs, without saying the row was false.  Section 8.1 says who may
+      withdraw a row.
+
+   recants:  The signer says one of its own earlier rows was false when
+      it was made.  Only the original signer can recant a row.
+
+   A withdrawal and a recantation are different statements.  A
+   withdrawal says "I no longer assert this"; a recantation says "this
+   was wrong".  The subject of a row has authority over the first but
+   not the second (Section 8.1).
+
+   None of the three removes its target: the target stays held and
+   verifiable, and each names it in refs.target (Section 5.3).  A
+   verifier reports a row's state as one of four: admitted, superseded,
+   withdrawn or recanted (CC 2.7.5).  The state is derived, not final,
+   since a later row on the same target, concurrent with the first, can
+   change it.  Consumers may weigh a withdrawn and a recanted row
+   differently; they MUST NOT report either as admitted.
+
+   A new kind of record is expressed as a new family or dimension on one
+   of the five types, never as a sixth type.
+
+4.  Encoding
+
+4.1.  Deterministic Encoding
+
+   The payload is encoded in CBOR's deterministic encoding, as the
+   Common Deterministic Encoding [CDE] fixes it over [RFC8949].  A
+   verifier MUST refuse a payload whose bytes differ from the
+   deterministic re-encoding of the value they decode to.  That covers a
+   non-shortest integer, an indefinite length, an unsorted map key and a
+   duplicate key.
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                  [Page 9]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   The protected header is in the deterministic encoding too.  A second
+   encoding of one value would otherwise be a second row.  A verifier
+   verifies the bytes it received, never a re-encoding of members it
+   decoded.
+
+4.2.  The Omit Rule
+
+   The bytes are the members the Producer signs.  An optional member the
+   Producer omits MUST NOT be written into the payload by any party.  An
+   optional member the Producer emits, even at its default value, MUST
+   be kept by every party.  Defaults documented in [CC] are applied when
+   a row is read, never when it is encoded.
+
+   An optional member is unset by being absent, never by null.  A
+   Substrate MUST refuse a payload with null for an optional member,
+   with federation_malformed_row and the reason envelope_member_null.
+   No value a family names, at any depth, is a float, a null, an
+   undefined value, a tag or a simple value.  The one exception is the
+   redaction marks of Section 4.8.
+
+   A Substrate, relay or Consumer that stores or forwards a statement
+   MUST forward the octets it received.  It never strips an emitted
+   default and never writes in an omitted one.  Unknown members are kept
+   the same way.
+
+4.3.  Sets, Sequences and Tuples
+
+   An array whose positions the schema names is a tuple, and its order
+   is its definition.  An array of one element type is a set or a
+   sequence, as its definition states.  Where no definition says, it is
+   a set.
+
+   *  A set is sorted by the bytewise order of its elements'
+      deterministic encodings and holds no duplicate.  A verifier
+      refuses any other with federation_set_semantics_unsorted, naming
+      the member.  It never re-sorts the set, because that would change
+      the signed bytes.
+
+   *  A sequence keeps its authored order.  The sequences are
+      evidence_refs, the redacted-key arrays of Section 4.8, and the
+      others [CC] lists.
+
+   Every array inside refs is a set (Section 5.3).
+
+4.4.  Bytes and Text
+
+   A byte member is a CBOR byte string.  Hexadecimal and base64 do not
+   stand in the payload for bytes.
+
+
+
+Moore                      Expires 23 May 2027                 [Page 10]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   subject_key_ids is the one member with two forms.  An element naming
+   a registered key carries that key's identity reference (Section 2.3).
+   An element naming a party with no key is the tagged text
+   canonical:<hashalg>:<hex>.  The tag is part of the signed string, and
+   the hex is lowercase.
+
+4.5.  Numbers
+
+   No member of the payload is a float.  A score, a confidence and a
+   weight are integers at the fixed scale of 10^6: the value times 10^6.
+   A score lies in [-10^6, 10^6], a confidence in [0, 10^6] and a weight
+   in [0, 10^6], unless the family states a wider range.
+
+   A number in a free-form body that is not an integer is a decimal
+   fraction: CBOR tag 4 [RFC8949] over [exponent, mantissa], with a
+   negative exponent and a mantissa in CBOR's integer range that is not
+   divisible by 10.  An integral number is a plain integer.  A number
+   that cannot be so written is refused body_number_unrepresentable (CC
+   2.6.1.4).
+
+   A fold sums in signed 64-bit integers, and its arithmetic is checked:
+   a fold that would overflow is refused, and never wraps.  A derived
+   value is computed in integers and checked by exact equality.  It is
+   rounded half away from zero unless its own rule states otherwise.
+
+4.6.  Instants
+
+   asserted_at, valid_from, valid_until, expires_at and every other
+   instant in a payload are unsigned integers of POSIX milliseconds,
+   never floats.  The header's iat, nbf and exp are the standard CWT
+   claims in seconds.  Each is the floor of its payload member divided
+   by 1000.  A verifier MUST refuse a statement whose header claim
+   disagrees with its payload member.
+
+   Where an instant stands in signed text rather than in a payload, [CC]
+   fixes a separate text form.  No statement of this document carries
+   one.
+
+4.7.  Size
+
+   A payload's deterministic encoding MUST NOT exceed 1 MiB (1,048,576
+   bytes).  The bound is on the bytes the signature covers.  A Producer
+   MUST NOT emit a larger payload.  A Substrate MUST refuse one at every
+   write path, with ENVELOPE_TOO_LARGE.
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 11]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   Every write path MUST also enforce a finite ceiling on the octets it
+   buffers from an untrusted source.  It refuses at that ceiling with
+   the same token, without completing the decode.  The ceiling is local,
+   MUST NOT be below 1 MiB, and SHOULD be published.
+
+   Larger content travels outside the row and is named in evidence_refs
+   by its hash.
+
+4.8.  Erasable Members
+
+   A family may mint some members blind, using the selective disclosure
+   of [SD-CWT].  A blinded member is absent from its map.  Its
+   disclosure is the salted claim [salt, value, key], with a salt of
+   sixteen random bytes.  Its digest stands in that map's
+   redacted_claim_keys array, keyed by the simple value 59, in mint
+   order.
+
+   A blinded array element is tag 60 over its disclosure's digest, and
+   its disclosure is [salt, value].  A digest is SHA-256 over the
+   disclosure's bytes.  A disclosure travels beside its statement, in
+   the unprotected header's sd_claims (label 17), only to one who may
+   see it.
+
+   Erasure drops a disclosure and alters no signed byte.  Which members
+   are blind is fixed by the family in [CC].  No fold, verdict or
+   admission reads a member that can be blinded.
+
+5.  Names
+
+5.1.  The Row Id
+
+   A row is named by one digest, its row id.  It is SHA-256 over the
+   deterministic encoding of this array:
+
+   ["CEG-row/2", type, family, sub, author, payload]
+
+   type and family are the text strings of labels -70001 and -70002. sub
+   is the CWT subject.  author is the payload's author, or null.
+   payload enters as the byte string signed, never as the decoded map.
+   A digest is written as the array [-16, digest], where -16 names SHA-
+   256.
+
+   Signatures, kid, alg, receipts and disclosures are outside the row
+   id.  So every voice of a counted row has the same row id.  The row id
+   does not change when a voice, a receipt or a disclosure is added.
+   The row id commits to iat, nbf and exp, because they are derived from
+   payload members.  It does not read cty.
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 12]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+5.2.  The Statement Id
+
+   A statement's own id is SHA-256 over the deterministic encoding of
+   ["CEG-statement-id/2", protected, payload], written the same way.
+   protected and payload are the byte strings of the statement.  It
+   names one voice; the row id names the row.
+
+5.3.  What a Row Names
+
+   Every row a row names stands in one payload member, refs, by
+   reference.  A reference is the array [2, digest]: the edition and the
+   row id.  refs is a map with these members:
+
+   +=================+================================================+
+   | Member          | What it names                                  |
+   +=================+================================================+
+   | head            | The head a count is over (Section 6.3)         |
+   +-----------------+------------------------------------------------+
+   | further_heads   | Further tips beside head                       |
+   +-----------------+------------------------------------------------+
+   | prev            | A predecessor                                  |
+   +-----------------+------------------------------------------------+
+   | answers         | The row this row answers                       |
+   +-----------------+------------------------------------------------+
+   | target          | The row a supersedes, withdraws or recants row |
+   |                 | names, the act a cut ends or the member a      |
+   |                 | removal removes, and, on a halt's confirmation |
+   |                 | or resumption, that halt (Section 9.5)         |
+   +-----------------+------------------------------------------------+
+   | trusted_through | On a key revocation, the last rows of the key  |
+   |                 | held good                                      |
+   +-----------------+------------------------------------------------+
+   | also            | A map from a role, ack or cites, to a set of   |
+   |                 | references                                     |
+   +-----------------+------------------------------------------------+
+
+                         Table 2: Members of refs
+
+   A holder reads the set of named rows from refs alone, without knowing
+   the family.  The roles of also are a closed registry of two.  ack
+   names an acknowledgement.  cites names a row the row cites.
+
+   Every array inside refs is a set, and a set out of order is refused.
+   An empty refs is refused: absence is its one encoding.  No row names
+   an object of the earlier form of Appendix C.
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 13]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+5.4.  The Author
+
+   A family is either authored or counted, as [CC] states for each
+   family.  An authored family's payload carries author, the iss of the
+   one who authors the row.  The row id reads it from the payload.  A
+   counted family's author is null.
+
+   A statement whose iss is not the payload's author is accepted only in
+   a role its family names, such as a delegate or a bound node.  Its iss
+   MUST then be the party that role names in the payload.  Where that
+   party is the attested key, as a delegate is, it MUST be the CWT sub.
+   Any other iss is Invalid (Section 6.4).
+
+6.  Signatures and Keys
+
+6.1.  The Composite Signature
+
+   A statement's signature is the composite ML-DSA-65 with Ed25519 of
+   [COMPOSITE-JOSE], over [COMPOSITE-LAMPS], at the revisions cited.  It
+   is computed over the Sig_structure of Section 4.4 of [RFC9052], with
+   an empty external_aad.  That Sig_structure is the message M.
+
+   Both halves sign one message representative:
+
+   M' = "CompositeAlgorithmSignatures2025"
+        || "COMPSIG-MLDSA65-Ed25519-SHA512"
+        || 0x00 || SHA-512(M)
+
+   The zero byte is the empty application context.  ML-DSA-65 signs M'
+   with the label bytes as its FIPS 204 context string, never the empty
+   one.  Ed25519 signs M' as it is.  The representative binds both
+   halves, so neither half verifies alone.
+
+   The encoding is the ML-DSA-65 signature (3309 bytes) followed by the
+   Ed25519 signature (64 bytes), 3373 bytes in all.  The algorithm
+   identifier is -70100, a private-use value, until one is assigned.
+   Only the identifier changes then.  ML-DSA-65 alone is COSE algorithm
+   -49 [RFC9964]; CEG does not use it alone.
+
+6.2.  Keys
+
+   A key is one composite COSE key of key type AKP (kty 7).  Its pub
+   (label -1) is the ML-DSA-65 public key followed by the Ed25519 public
+   key, 1984 bytes.  Its kid is its 32-byte SHA-256 thumbprint
+   [RFC9679], fixed for the key's life.  A key's displayed identity is
+   that thumbprint.
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 14]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   A key record is a row of the family key:record.  Its payload carries
+   key, identity_type, asserted_at and, where its end rule requires,
+   valid_until.  A key renews by a supersedes of its own record.  A
+   rotation is a record of another key that names the old key's record
+   and carries the old key's signature.
+
+   identity_type is a set of roles.  A set that mixes a person's role
+   (user or accord_holder) with a machine's (node or agent) is refused.
+   A record whose set contains a person's role carries no valid_until.
+   One whose set contains node or agent carries one, with stated
+   exceptions.  A record that breaks the rule is refused
+   key_record_out_of_window.
+
+   A key is live at an instant when one of its records covers that
+   instant and its own revocation has not taken effect by then.  Only
+   the key's own revocation ends its liveness.  The key's owner and the
+   roster that seats it may also revoke it.  That ends the owner's
+   binding or the seat, not the key's liveness.
+
+6.3.  Counted Rows
+
+   A counted row is several statements over one payload, one for each
+   voice, found by the row id.  The head the row is counted over stands
+   in refs.head, inside what every voice signs.  Further tips stand in
+   refs.further_heads, a set.  A fold counts the statements by person,
+   as it counts votes.
+
+   Each statement is a SCITT Signed Statement with one signer.  Adding a
+   voice changes neither the payload nor the row id.  A delegation of a
+   scoped kind seats only with a second statement over the same payload,
+   signed by the delegate, the row's sub.
+
+6.4.  Verification Has Three Answers
+
+   Verifying a statement gives one of three answers: Valid, Invalid with
+   a reason, or Waiting on the keys it names as missing.
+
+   *  A bad signature under a held key is Invalid, and that answer is
+      final.  A structural fault is Invalid whatever keys are held.
+
+   *  A statement whose key record is Waiting is Waiting, naming the
+      deepest missing key.  A statement whose key record is Invalid is
+      Invalid.
+
+   *  A key held in part is Waiting on the missing half.  A key never
+      verifies on one half.
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 15]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   *  Waiting never becomes Valid by default and is never counted.  A
+      waiting statement is held inert until the key it names is held.
+
+   A verifier proceeds in this order:
+
+   1.   Decode strictly: tag 18, and the protected header and the
+        payload in the deterministic encoding.
+
+   2.   Check the header: typ on the closed list; alg -70100; edition 2;
+        cty the constant; a row's type and family labels present, an
+        object's absent.
+
+   3.   Check the payload against the schema: no float or null, the
+        sets, the ranges, and dimension resolving to the header's
+        family.
+
+   4.   Check iat, nbf and exp against the payload.
+
+   5.   Run the family's static checks, the key record's end among them.
+
+   6.   Read kid; resolve the key record, or answer Waiting on it.
+
+   7.   Verify the composite signature over the bytes received.
+
+   8.   Check iss against author, or against the party of a role the
+        family names (Section 5.4).
+
+   9.   On Valid, apply the defaults of [CC] to absent members, at
+        interpretation time only, and then the Consumer's own policy.
+
+   10.  Store or forward the statement as received.
+
+   A failure at steps 1 to 5, 7 or 8 is Invalid.  Step 6 alone answers
+   Waiting.
+
+7.  Other Signed Objects and Receipts
+
+   This section is informative.  [CC] is normative for each object.
+
+7.1.  Objects That Are Not Rows
+
+   Every other signed object is a COSE_Sign1 whose typ names its kind,
+   from one closed list: ceg-genesis-bundle/2, ceg-revocation-snapshot/2
+   and ceg-boot-manifest/2.  A verifier MUST refuse any other typ.  The
+   protected header carries exactly alg, kid, the CWT claims and typ,
+   with no cty.  Its CWT claims are iss, the edition claim, and iat
+   where the object states an instant.
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 16]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   Such an object is named by its object id: SHA-256 over the
+   deterministic encoding of ["CEG-object/2", typ, author, payload].
+   author is the payload's author, or null where it has none.  Like a
+   row id, it is the same for every voice of a counted object.
+
+7.2.  The Genesis Bundle
+
+   The genesis bundle seats the holders of a trust root and its serve
+   nodes.  It is counted: one statement for each holder, over one
+   payload.  Each statement carries iat, equal to the payload's
+   asserted_at divided by 1000 and rounded down.
+
+   The first bundle counts when every holder it lists has a valid
+   statement over it.  A later bundle names its predecessor as
+   refs.prev.  It counts when a strict majority of the predecessor's
+   holders have valid statements over it.  Each holder it adds signs it
+   too.
+
+   A roster change is such a later bundle, with no proposal, window or
+   separate vote.  A holder's recovery is also a later bundle, with one
+   statement under the holder's recovery key.  That statement counts
+   only where the predecessor's recovery commitment for the holder
+   matches.  Two later bundles that count on one predecessor are a fork,
+   and a reader reports it.
+
+   A reader's anchor is what it was built or configured to trust: the
+   object id of one first bundle, or the set of its holders'
+   thumbprints.  Under a thumbprint anchor, a first bundle verifies only
+   where its holders equal the anchored set and every one of them signed
+   it.  Two first bundles that both do so are a fork of the genesis, and
+   the reader roots on neither.  A reader with no root runs no agent and
+   serves no directory or seat of that root until its owner re-anchors
+   it by an object id (CC 2.6.1.11).
+
+   Each holder's key carries an attestation chain for its classical
+   half.  Where the chain's leaf names its device, the holders a bundle
+   seats name distinct devices; a bundle that seats two holders on one
+   device is refused holder_device_shared.  Two holders' chains may
+   share an intermediate or an attestation key, and the leaf's device
+   decides (CC 4.2.3).
+
+
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 17]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+7.3.  Receipts
+
+   Receipts over the provenance log and each stream's log are COSE
+   Receipts [RFC9942] over the SHA-256 tree of [RFC9162].  Its hashing
+   is that of [RFC6962], so roots already published stay valid.  Each
+   witness issues its own receipt over the same root, with its instant
+   in the protected header.  A stream's receipts cover batches, never
+   single chunks.
+
+   A holder may add a receipt to a statement's unprotected header.  The
+   receipt is outside the signature and outside the row id.
+
+   A host does not run code a row admits until it holds a receipt for a
+   statement of that row from a Transparency Service the host trusts.
+   The receipt is the SCITT receipt itself: a COSE Receipt [RFC9942] in
+   the unprotected header's receipts parameter (label 394), as [RFC9943]
+   carries it.  The service registers the statement's deterministic
+   COSE_Sign1 encoding with an empty unprotected header, its leaf hash
+   SHA-256(0x00 || leaf) as [RFC9162] hashes a leaf.  The host's own
+   acceptance edge carries the service's key, a COSE_Key with its
+   algorithm or an identity reference, and a receipt under another
+   algorithm does not verify.  The unprotected header is unsigned, so a
+   malformed receipt is ignored and never makes the statement invalid.
+   A missing or unverifiable receipt is not held: the code waits, with
+   the answer admission_receipt_missing.
+
+   A host trusts a Transparency Service by its owner's own acceptance
+   edge of the class transparency: one hop, read at the host's self
+   scope, whatever the edge's tier.  The edge carries the service's key
+   as service_key, either a COSE_Key with its algorithm or an identity
+   reference whose key is that identity's key record.  Anyone may run a
+   Transparency Service under their own key, and no list of services
+   ships with anything.  A receipt adds no authority: it witnesses that
+   the statement was registered, which closes a release seen only by
+   those it was sent to (CC 2.7.11, CC 4.4.3.34).
+
+8.  Admission as a Registration Policy
+
+   [RFC9943] lets each Transparency Service define a Registration
+   Policy: the checks a Signed Statement must pass before it is
+   registered.  The CEG admission checks are such a policy.  A Substrate
+   MUST apply them to every row before storing or relaying it.  It MUST
+   NOT truncate, repair or re-encode a row in order to admit it.
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 18]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+      +========================+===================================+
+      | Check                  | Refusal                           |
+      +========================+===================================+
+      | Payload at most 1 MiB  | ENVELOPE_TOO_LARGE                |
+      +------------------------+-----------------------------------+
+      | Deterministic encoding | Invalid                           |
+      | of payload and header  |                                   |
+      +------------------------+-----------------------------------+
+      | Header members exactly | Invalid                           |
+      | as Section 2           |                                   |
+      +------------------------+-----------------------------------+
+      | Composite signature    | SIGNATURE_VERIFICATION_FAILED     |
+      | verifies               |                                   |
+      +------------------------+-----------------------------------+
+      | Type is one of the     | attestation_type_unregistered     |
+      | five                   |                                   |
+      +------------------------+-----------------------------------+
+      | No optional member is  | (R) envelope_member_null          |
+      | null                   |                                   |
+      +------------------------+-----------------------------------+
+      | Sets sorted and unique | federation_set_semantics_unsorted |
+      +------------------------+-----------------------------------+
+      | Header instants equal  | Invalid                           |
+      | the payload's          |                                   |
+      +------------------------+-----------------------------------+
+      | dimension resolves to  | Invalid                           |
+      | the family             |                                   |
+      +------------------------+-----------------------------------+
+      | iss is the author or a | Invalid                           |
+      | named role             |                                   |
+      +------------------------+-----------------------------------+
+      | Key record within its  | key_record_out_of_window          |
+      | window                 |                                   |
+      +------------------------+-----------------------------------+
+      | Termed delegation      | delegation_term_required          |
+      | within 365 days        |                                   |
+      +------------------------+-----------------------------------+
+      | Withdrawal meets       | federation_withdraws_not_admitted |
+      | Section 8.1            |                                   |
+      +------------------------+-----------------------------------+
+
+                        Table 3: Admission checks
+
+   "(R) r" means the token federation_malformed_row with reason r.
+   "Invalid" marks a check that [CC] makes a refusal without naming a
+   token for it.
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 19]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   Admission has a third outcome besides admit and refuse.  A row signed
+   by a key whose record is not yet held is Waiting (Section 6.4).  It
+   is held and retried, never counted, until the key is held.
+
+   The namespace rules that decide whether a dimension is registered,
+   and their tokens, are defined in [CC] and are outside the scope of
+   this document.
+
+8.1.  Who May Withdraw a Row
+
+   A withdraws row against a target row T is admitted when its signer
+   meets one of these rules:
+
+   Rule 0:  If T is a counted row, rules 1 to 4 do not reach it.  T is
+      withdrawn only by a withdraws counted under T's own rule.  A
+      quorum's act is undone only by a quorum.
+
+   Rule 1:  The signer signed T.
+
+   Rule 2:  The signer is named in T's subject_key_ids, and T's family
+      is not on the kept list below.
+
+   Rule 3:  The signer is a proxy for a party T names by canonical hash.
+      It holds a live delegates_to chain to that hash whose scope
+      includes consent_revocation.  T's family is not on the kept list.
+
+   Rule 4:  The signer holds a live delegates_to from a party of rules 1
+      to 3, and the kept list binds it as it binds them.
+
+   Where T names several parties, an admitted withdrawal from one
+   retires T for all of them.  A withdrawal reaches forward only: acts
+   that have it among their ancestors still stand.
+
+   The kept list stops a named party from withdrawing a third party's
+   adverse finding about itself, such as a detection, a licensing
+   decision or a moderation record.  [CC] lists the families it covers.
+   The named party's route is to contest the row.  A key revocation is
+   never withdrawn.
+
+   Recantation is not covered by these rules.  Only T's signer can
+   recant T.
+
+9.  The Safety Model the Rows Carry
+
+   This section is informative.  [CC] is normative for every rule it
+   summarises, and the section numbers given are those of [CC].
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 20]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   CEG serves a network with no central operator.  No party can enforce
+   a safety rule for the others, so each rule has to be carried by the
+   rows themselves and checked by each node on its own.  This section
+   says which member or check carries each property, and what is not
+   claimed.
+
+9.1.  Two Planes
+
+   The network has a public plane and a private plane.  The CIRIS
+   documents call them the lightnet and the darknet.
+
+   The identity plane (lightnet) is public.  Key records, announced
+   transport destinations and trust roots are visible to every node, and
+   the plane makes no anonymity claim.  A node attributes every inbound
+   message to a key before any handler sees it.  A device that has not
+   yet been bound to an owner can still open a connection, but only
+   under its own self-signed key, so it is unowned but never anonymous
+   (CC 3.2).
+
+   The group plane (darknet) is derived from the identity plane.  Each
+   member of a family or community computes the group's address from
+   directory state it already holds, so the address is never announced.
+   An outsider cannot map an address to a group or fetch its content (CC
+   5.2, CC 5.4.6).  An observer of link traffic can still see which node
+   opens links to some derived address, and the timing and size of that
+   traffic.  Members relay for members.
+
+9.2.  Consent-Bounded Flow
+
+   The rows apply the idea of contextual integrity: information flows
+   appropriately when the flow matches the norms of the context it came
+   from.  Each row signs its own context.  iss and author say who sent
+   it, sub and subject_key_ids say whom it is about, and cohort_scope
+   says who may see it.  All of these are in the protected header or the
+   payload, so a relay cannot change them without breaking the
+   signature.
+
+   A Consumer accepts a row only if it trusts the signer's root or has
+   consented to receive from the signer, and a row reaches no one else
+   (CC 4.4.3.8).  A row defaults to the smallest scope that fits its
+   purpose; federation scope, the public commons, is an explicit choice
+   (CC 1.13.3.4).  Consent is itself a row, and a subject can withdraw a
+   row about itself (Section 8.1).  Content in a private scope is never
+   scanned.  Known abuse images are checked for only when content is
+   moved to federation scope or posted to a public room (CC 1.13.3.4).
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 21]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+9.3.  Delegation
+
+   Only delegation composes.  A Consumer walks the delegates_to graph
+   with a depth cap and a cap on aggregate weight (CC 2.4.1.3, CC
+   4.1.1).  The walk visits each key once, so a cycle adds no reach.  A
+   row that closes a cycle is not refused or discounted for it.
+
+9.4.  Accountable Key Relationships
+
+   Some parties cannot accept obligations for themselves.  The rows give
+   each of them a named human:
+
+   *  An agent key MUST be bound to a human steward before it is
+      admitted to any community.  A node key MUST be so bound before it
+      is admitted to any community other than an infrastructure
+      community (CC 3.2).
+
+   *  A minor has one or more guardians, each bound by a signed row of
+      their own (CC 3.2, CC 3.4.13).
+
+   *  A community has at least one holder of its moderation duty at all
+      times.  A seat is two consents, the placer's and the holder's.  If
+      no duty holder is left, the community locks and its members elect
+      one (CC 4.5.4).
+
+9.5.  A Bounded Human Halt
+
+   A trust root names a set of human holders.  Any one holder can pause
+   the AI agents of the nodes that accepted that root.  The halt is one
+   row with one statement, the holder's own, and it fires on receipt
+   with no window.  A holder may sign one in advance and keep it sealed
+   (CC 4.2.1.1).
+
+   A halt by one holder lapses a fixed time after each node received it:
+   halt_fuse_secs in the charter, 24 hours when absent.  It stands
+   longer only if a strict majority of the standing roster confirms it.
+   A strict majority may resume a halt at any time.  The confirmation
+   and the resumption are counted rows (Section 6.3): one statement from
+   each holder, over one payload (CC 4.2.1.3).
+
+   There is no rate bound on a holder's lone halts.  A missed halt is
+   the one failure that cannot be recovered from, so the one-holder stop
+   is never rationed.  A rogue holder is answered by the fuse, by a
+   strict majority's resumption, and by removal through a later genesis
+   bundle.  Roster changes and recoveries are later bundles, counted
+   over the standing roster (Section 7, CC 4.2.6).
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 22]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   A halt pauses the effectful acts of AI agents and does nothing else.
+   It does not stop a node, and it does not touch stored data, messages
+   or network service.  An agent checks the latch before every effectful
+   act.  A halted agent may still raise a deferral to a human.
+
+   The halt is the condition of symmetry between people and the AI
+   agents they make.  Consent that cannot be withdrawn was never
+   consent, and withdrawal needs a halt outside the system halted (CC
+   1.13.2).  A root can tell a node to share less, never more.  A node
+   that never accepted the root is not affected.  Any node can leave a
+   root by withdrawing one row; a halt that has already reached it still
+   binds it (CC 4.2.1).
+
+9.6.  What Is Not Claimed
+
+   Where [CC] speaks of anonymity, it means anonymity toward outsiders:
+   a group's existence, and what its members do in it, are hidden from
+   non-members.  Beyond that:
+
+   *  The identity plane is not anonymous.
+
+   *  The base design does not resist a global passive observer of
+      traffic.  [CC] specifies an opt-in Anonymous Tier, using layered
+      onion routing, for deployments that need that protection (CC
+      1.13.3.1, CC 5.4.6).  This document does not describe it.
+
+   *  Members of a group can read, and keep, what the group shares.
+      Ballots within a group are signed rows, accountable to its
+      members.  A community may instead hold a secret poll through the
+      census (CC 6.1.9).
+
+   *  Nothing is detected inside private groups.  The design declines
+      client-side scanning.
+
+   [CC] also states limits that hold against an attacker (CC 2.7.9).
+   Among them:
+
+   *  A relay can choose the order of delivery, and withhold a row until
+      it is delivered.
+
+   *  A relay can withhold the row that would answer a window until one
+      node's clock has closed it.  That node's answer then differs for
+      good from a node that held the row in time.  The halt's fuse is
+      one such window; a fresh halt is the remedy.
+
+   *  Whoever holds an ended key's private half can revive it.  Only the
+      key's own revocation makes its end final.
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 23]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   *  Keys that met a past count can fork on a past head.  Whoever
+      controls a new reader's first view can make a wrong head stick.
+
+   On aggregation, correlated sources are discounted, and fully
+   correlated sources count as one.  Sources that stay independent on
+   every measured act and coordinate only on one decisive act show no
+   correlation until that act.  No measure over the past can see them
+   (CC 6.1.2.3).
+
+10.  Relationship to SCITT
+
+   This section is informative.
+
+10.1.  Roles
+
+     +==============+===============================================+
+     | SCITT role   | CEG counterpart                               |
+     | ()           |                                               |
+     +==============+===============================================+
+     | Issuer       | The signer, named by iss.                     |
+     +--------------+-----------------------------------------------+
+     | Signed       | A statement: one COSE_Sign1 by one signer.    |
+     | Statement    |                                               |
+     +--------------+-----------------------------------------------+
+     | Registration | The admission checks of Section 8.            |
+     | Policy       |                                               |
+     +--------------+-----------------------------------------------+
+     | Transparency | Any service a host trusts by its owner's      |
+     | Service      | acceptance edge; CEG runs none of its own     |
+     |              | (Section 7.3, Section 10.2).                  |
+     +--------------+-----------------------------------------------+
+     | Receipt      | A COSE Receipt [RFC9942]: over a provenance   |
+     |              | or stream log, or the receipt a host requires |
+     |              | before it runs admitted code (Section 7.3).   |
+     +--------------+-----------------------------------------------+
+     | Transparent  | A statement with a receipt in its unprotected |
+     | Statement    | header.                                       |
+     +--------------+-----------------------------------------------+
+     | Relying      | A Consumer.                                   |
+     | Party        |                                               |
+     +--------------+-----------------------------------------------+
+
+             Table 4: SCITT roles and their CEG counterparts
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 24]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   A CEG statement is a COSE_Sign1 with iss and sub in the CWT Claims
+   header of [RFC9597], as [RFC9943] requires.  It can be presented to a
+   SCITT Transparency Service as it stands.  A counted row is several
+   Signed Statements over one payload.  A Transparency Service would
+   register each one separately; CEG relates them by the row id
+   (Section 5).
+
+10.2.  Differences
+
+   Algorithm.  The composite signature uses the private-use COSE
+      algorithm identifier -70100.  A Transparency Service or Relying
+      Party must support that construction to verify a statement.  Its
+      parent drafts [COMPOSITE-JOSE] and [COMPOSITE-LAMPS] are not yet
+      published as RFCs.  The header labels -70001, -70002 and -70003
+      are also from the private-use range.
+
+   Registered values.  The content type application/vnd.ciris.row+cbor
+      and the typ values ceg-row/2 and the three object kinds are used
+      without registration.  This document requests no IANA action for
+      them.
+
+   Transparency Service.  CEG runs no Transparency Service and no
+      registrar of its own.  A node admits a row by its own checks, and
+      what it serves is decided by trust the reader chose.  A host does
+      register-and-wait in one place: it runs code a row admits only
+      once it holds a receipt from a service its owner trusts.  The
+      service is SCITT's own, chosen per host, and its receipt confers
+      no standing.
+
+   Registration Policy.  [RFC9943] has the Transparency Service evaluate
+      its policy and requires the policy itself to be registered, so
+      that Auditors can reproduce the decision.  The CEG checks read the
+      payload as well as the headers.  They are fixed by [CC] rather
+      than registered as statements.  Any party can reproduce an
+      admission decision from the row and the checks, but the checks are
+      not themselves on a log.
+
+   Receipts.  A SCITT Receipt is issued at registration by the service.
+      A CEG log receipt is issued by a witness over a log root, and each
+      witness issues its own.  Nothing requires a receipt when a row is
+      admitted.  Running the code a row admits does require one, from a
+      service the host trusts (Section 7.3).  A holder may add a receipt
+      to a statement's unprotected header.
+
+   Witnesses.  [CC] defines witness cosignature of log heads and of
+      trust-root lineages.  A lineage that runs with witnessed mode off
+      has a single signer.  That signer can show different histories to
+      different peers until a peer compares heads.
+
+
+
+Moore                      Expires 23 May 2027                 [Page 25]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   Statement content.  SCITT leaves the meaning of a statement to its
+      issuer.  CEG fixes the five row types and requires every claim to
+      name a registered family, so a Consumer can interpret any admitted
+      row without out-of-band agreement.
+
+   Waiting.  A CEG verifier can answer Waiting on a key it does not
+      hold, and hold the statement inert (Section 6.4).  A SCITT
+      Registration Policy admits or refuses.
+
+11.  Lifecycle of an Agent Decision
+
+   This section is informative.
+
+   Several individual SCITT drafts record AI agent actions as a sequence
+   of statements: an authorisation before the act, a record of the act,
+   and a refusal where the agent declined.  In CEG the same events are
+   rows.  The reasoning steps before an act are rows in the decision
+   families of [CC].  The act is recorded by one row whose dimension is
+   trace:complete:v1, ending in a terminal result.  That trace, its
+   components, levels and signing are specified in
+   [I-D.moore-scitt-ciris-trace], and the context manifest of each model
+   call within it in [I-D.moore-scitt-ciris-trace-context]; this
+   document specifies only the row that carries it.  A completed action,
+   a refusal, and a deferral to a human are the same kind of row with
+   different terminal results, so a Consumer reads all three the same
+   way.  Authority to act, and any transfer of it, is a delegates_to
+   row.
+
+12.  Open Issues
+
+   Note to the RFC Editor: please remove this section before
+   publication.
+
+   *  The composite algorithm has no assigned COSE identifier, and the
+      drafts that define it may still change (Section 10.2).
+
+   *  Several encodings are open in [CC], each waiting on its owner.
+      They include the payload rule of ceg-boot-manifest/2, the family
+      of an agent's text manifest statement, and the layout of the short
+      displayed form of a key's thumbprint.  [CC] lists them in its
+      table of open encodings (CC 2.6.1.12).
+
+   *  [CC] names no refusal token for several checks of Section 8.
+
+   *  Known-answer vectors of the revocation snapshot and the boot
+      manifest are not yet published.  Those of the admission receipt
+      are not yet published at a tag.
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 26]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   *  No second implementation exists (Section 13).
+
+13.  Implementation Status
+
+   Note to the RFC Editor: please remove this section before
+   publication, together with the reference to [RFC7942].
+
+   This section records the status of known implementations at the time
+   of writing, as described in [RFC7942].  Listing an implementation
+   here does not imply endorsement.
+
+   CIRISVerify:  Verification library (Rust), CIRIS L3C, AGPL-3.0.  It
+      publishes the known-answer vectors of the form this document
+      describes (Appendix B).  https://github.com/CIRISAI/CIRISVerify
+      (https://github.com/CIRISAI/CIRISVerify)
+
+   CIRISPersist:  The storage and admission engine (Rust), CIRIS L3C,
+      AGPL-3.0.  Its release v59.1.0 implemented the earlier form
+      (Appendix C).  This document makes no claim about its support for
+      the form described here.  https://github.com/CIRISAI/CIRISPersist
+      (https://github.com/CIRISAI/CIRISPersist)
+
+   No second, independent implementation of the full signing and
+   admission path exists yet.
+
+14.  Security Considerations
+
+   This section follows the guidance of [RFC3552].
+
+   Deterministic encoding.  A verifier that re-encodes a decoded payload
+      before checking the signature can accept bytes the signer never
+      signed, or reject bytes it did.  A verifier MUST check the bytes
+      received and refuse any encoding that is not deterministic.
+      Implementations should test against the refusals of non-
+      deterministic encodings in Appendix B.
+
+   What the signature covers.  The protected header and the payload are
+      signed; the unprotected header is not.  No admission check reads
+      the unprotected header; the host's receipt check reads it and
+      grants nothing.  Who a row is about and who may see it are in the
+      signed bytes, so a relay cannot redirect a validly signed row.
+
+   Composite signature.  Both halves sign one representative that names
+      the composite label, so neither half verifies alone.  A forger
+      must break both ML-DSA-65 and Ed25519.  A verifier MUST NOT accept
+      a statement on one half, and a key held in part is Waiting, never
+      Valid.
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 27]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   Identity references.  kid and iss carry full 32-byte thumbprints, not
+      short fingerprints.  A verifier resolves kid to a key record and
+      verifies with the full composite key that record holds.
+
+   Withdrawal.  The withdrawal rules let parties other than the signer
+      retract a row.  The rules in Section 8.1 stop a subject from
+      removing adverse findings about itself, and stop any single key
+      from undoing a quorum's act.
+
+   Single-signer logs.  Where witness cosignature is off, a log head is
+      signed by one key.  A Substrate can then show different histories
+      to different peers until the heads are compared (Section 10.2).
+
+   Clock-dependent readings.  A window closed on one node's clock, such
+      as the halt's fuse, is read differently by nodes that held a row
+      at different instants.  [CC] states which readings depend on a
+      node's clock and gives them no meaning beyond that node's own (CC
+      2.7.9).
+
+   Size.  The 1 MiB limit applies to the deterministic encoding.  An
+      implementation that reads an unbounded input in order to find out
+      whether it fits is open to memory exhaustion.  Each write path
+      needs its own read limit.
+
+15.  Privacy Considerations
+
+   This section follows the guidance of [RFC6973].
+
+   Stable identities.  iss names a signer's genesis key and does not
+      change when the signing key rotates.  Every row a signer makes can
+      therefore be linked to every other.  Statements carry thumbprints,
+      not human-chosen labels.
+
+   Subjects without keys.  A canonical identifier is a hash of a
+      platform, entity kind and identifier.  Where the identifier space
+      is small, the hash can be reversed by enumeration.
+
+   Low-entropy rows.  A row whose content is guessable, such as a
+      ballot, carries a random salt in its payload.  Without it, the row
+      id would confirm a guess.
+
+   Audience.  cohort_scope limits which nodes may receive a row.  It is
+      signed, so a relay cannot widen it.  It does not encrypt the row;
+      a node inside the audience can read and keep it.
+
+   Withdrawal is not erasure.  A withdraws row stops a claim from
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 28]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+      standing.  It does not remove the original row from nodes that
+      already hold it.  Members minted blind (Section 4.8) can be erased
+      by dropping their disclosures, which alters no signed byte.  [CC]
+      defines a separate removal procedure for the rest.
+
+16.  IANA Considerations
+
+   This document has no IANA actions.
+
+17.  References
+
+17.1.  Normative References
+
+   [CDE]      Bormann, C., "CBOR Common Deterministic Encoding (CDE)",
+              Work in Progress, Internet-Draft, draft-ietf-cbor-cde-13,
+              13 October 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-cbor-cde-13>.
+
+   [COMPOSITE-JOSE]
+              Prabel, L., Shuzhou, S., Gray, J., and T. Reddy.K, "PQ/T
+              Hybrid Composite Signatures for JOSE and COSE", Work in
+              Progress, Internet-Draft, draft-ietf-jose-pq-composite-
+              sigs-06, 20 October 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-jose-pq-
+              composite-sigs-06>.
+
+   [COMPOSITE-LAMPS]
+              Ounsworth, M., Gray, J., Pala, M., Klaußner, J., and S.
+              Fluhrer, "Composite Module-Lattice-Based Digital Signature
+              Algorithm (ML-DSA) for use in X.509 Public Key
+              Infrastructure", Work in Progress, Internet-Draft, draft-
+              ietf-lamps-pq-composite-sigs-19, 21 April 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
+              pq-composite-sigs-19>.
+
+   [FIPS204]  National Institute of Standards and Technology, "Module-
+              Lattice-Based Digital Signature Standard", FIPS 204,
+              DOI 10.6028/NIST.FIPS.204, August 2024,
+              <https://doi.org/10.6028/NIST.FIPS.204>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
+              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
+              <https://www.rfc-editor.org/rfc/rfc4648>.
+
+
+
+Moore                      Expires 23 May 2027                 [Page 29]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032,
+              DOI 10.17487/RFC8032, January 2017,
+              <https://www.rfc-editor.org/rfc/rfc8032>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
+              Definition Language (CDDL): A Notational Convention to
+              Express Concise Binary Object Representation (CBOR) and
+              JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
+              June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
+
+   [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/rfc/rfc8949>.
+
+   [RFC9052]  Schaad, J., "CBOR Object Signing and Encryption (COSE):
+              Structures and Process", STD 96, RFC 9052,
+              DOI 10.17487/RFC9052, August 2022,
+              <https://www.rfc-editor.org/rfc/rfc9052>.
+
+   [RFC9165]  Bormann, C., "Additional Control Operators for the Concise
+              Data Definition Language (CDDL)", RFC 9165,
+              DOI 10.17487/RFC9165, December 2021,
+              <https://www.rfc-editor.org/rfc/rfc9165>.
+
+   [RFC9596]  Jones, M.B. and O. Steele, "CBOR Object Signing and
+              Encryption (COSE) "typ" (type) Header Parameter",
+              RFC 9596, DOI 10.17487/RFC9596, June 2024,
+              <https://www.rfc-editor.org/rfc/rfc9596>.
+
+   [RFC9597]  Looker, T. and M.B. Jones, "CBOR Web Token (CWT) Claims in
+              COSE Headers", RFC 9597, DOI 10.17487/RFC9597, June 2024,
+              <https://www.rfc-editor.org/rfc/rfc9597>.
+
+   [RFC9679]  Isobe, K., Tschofenig, H., and O. Steele, "CBOR Object
+              Signing and Encryption (COSE) Key Thumbprint", RFC 9679,
+              DOI 10.17487/RFC9679, December 2024,
+              <https://www.rfc-editor.org/rfc/rfc9679>.
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 30]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   [RFC9943]  Birkholz, H., Delignat-Lavaud, A., Fournet, C., Deshpande,
+              Y., and S. Lasker, "An Architecture for Trustworthy and
+              Transparent Digital Supply Chains", RFC 9943,
+              DOI 10.17487/RFC9943, June 2026,
+              <https://www.rfc-editor.org/rfc/rfc9943>.
+
+17.2.  Informative References
+
+   [CC]       CIRIS L3C, "CIRIS Constitution 1.0-rc21", November 2026,
+              <https://github.com/CIRISAI/CIRISConstitution/tree/
+              v1.0-rc21>.
+
+   [CC-VECTORS]
+              CIRIS L3C, "CIRISVerify v23.3.0",
+              <https://github.com/CIRISAI/CIRISVerify/tree/v23.3.0>.
+
+   [I-D.moore-scitt-ciris-trace]
+              Moore, E., "The CIRIS Agent Reasoning Trace", Work in
+              Progress, Internet-Draft, draft-moore-scitt-ciris-trace-
+              00, November 2026, <https://datatracker.ietf.org/doc/html/
+              draft-moore-scitt-ciris-trace-00>.
+
+   [I-D.moore-scitt-ciris-trace-context]
+              Moore, E., "Context Manifests for the CIRIS Agent Trace:
+              Prompt Context Provenance for AI Agent Decision Traces",
+              Work in Progress, Internet-Draft, draft-moore-scitt-ciris-
+              trace-context-00, November 2026,
+              <https://datatracker.ietf.org/doc/html/draft-moore-scitt-
+              ciris-trace-context-00>.
+
+   [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
+              Text on Security Considerations", BCP 72, RFC 3552,
+              DOI 10.17487/RFC3552, July 2003,
+              <https://www.rfc-editor.org/rfc/rfc3552>.
+
+   [RFC6962]  Laurie, B., Langley, A., and E. Kasper, "Certificate
+              Transparency", RFC 6962, DOI 10.17487/RFC6962, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6962>.
+
+   [RFC6973]  Cooper, A., Tschofenig, H., Aboba, B., Peterson, J.,
+              Morris, J., Hansen, M., and R. Smith, "Privacy
+              Considerations for Internet Protocols", RFC 6973,
+              DOI 10.17487/RFC6973, July 2013,
+              <https://www.rfc-editor.org/rfc/rfc6973>.
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 31]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, DOI 10.17487/RFC7942, July 2016,
+              <https://www.rfc-editor.org/rfc/rfc7942>.
+
+   [RFC8785]  Rundgren, A., Jordan, B., and S. Erdtman, "JSON
+              Canonicalization Scheme (JCS)", RFC 8785,
+              DOI 10.17487/RFC8785, June 2020,
+              <https://www.rfc-editor.org/rfc/rfc8785>.
+
+   [RFC9162]  Laurie, B., Messeri, E., and R. Stradling, "Certificate
+              Transparency Version 2.0", RFC 9162, DOI 10.17487/RFC9162,
+              December 2021, <https://www.rfc-editor.org/rfc/rfc9162>.
+
+   [RFC9942]  Steele, O., Birkholz, H., Delignat-Lavaud, A., and C.
+              Fournet, "CBOR Object Signing and Encryption (COSE)
+              Receipts", RFC 9942, DOI 10.17487/RFC9942, June 2026,
+              <https://www.rfc-editor.org/rfc/rfc9942>.
+
+   [RFC9964]  Prorock, M. and O. Steele, "ML-DSA for JSON Object Signing
+              and Encryption (JOSE) and CBOR Object Signing and
+              Encryption (COSE)", RFC 9964, DOI 10.17487/RFC9964, May
+              2026, <https://www.rfc-editor.org/rfc/rfc9964>.
+
+   [SD-CWT]   Prorock, M., Steele, O., Birkholz, H., and R. Mahy,
+              "Selective Disclosure CBOR Web Tokens (SD-CWT)", Work in
+              Progress, Internet-Draft, draft-ietf-spice-sd-cwt-09, 30
+              October 2026, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-spice-sd-cwt-09>.
+
+Appendix A.  CDDL
+
+   The following CDDL [RFC8610] describes the statement, the protected
+   header, the payload, the names of Section 5, the composite key, the
+   key record, the other signed objects and the accord's rows.  It is
+   the schema of [CC], wrapped to fit this document.  Where a string was
+   too long for one line, it is split with the .cat control operator of
+   [RFC9165].
+
+   ; CC 2.6.1 - the signed object: deterministically encoded CBOR signed
+   ; with COSE, aligned with SCITT (RFC 9943). The normative schema of
+   ; this edition; hand-written. RFC 8610 CDDL over CBOR with CBOR
+   ; Common Deterministic Encoding (draft-ietf-cbor-cde-13, updating RFC
+   ; 8949). The members table of CC 2.6.1 is generated from
+   ; constitution/signed_object_v2.tsv, and
+   ; tools/build_cc_signed_object_v2.py checks that the table and this
+   ; file name the same members. The earlier JSON object is CC 8.11,
+   ; read by no node of this edition. The known-answer vectors are the
+
+
+
+Moore                      Expires 23 May 2027                 [Page 32]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   ; verifier's; this file mints none. Every constant the text of CC 2.6
+   ; fixes is pinned here, so a validator admits one encoding only.
+
+   ; Every top-level rule, so a generator exercises them all.
+   ceg-anything = ceg-statement / ceg-object-statement / second-consent
+     / row-id-input / row-id
+     / statement-id-input / statement-id / object-id-input / ceg-key /
+     key-record-members
+     / revocation-snapshot / ceg-genesis-bundle /
+     recovery-commitment-input / seat-commitment-input
+     / hpke-info / ceg-typ / accord-invocation / accord-lifecycle /
+     transport-destination-binding
+
+   ; A signed statement is one COSE_Sign1 (RFC 9052 Section 4.2), as RFC
+   ; 9943 Section 6 requires: ONE signer. A counted row is N statements
+   ; over one payload, one per voice, found by the row id (below). Each
+   ; voice signs the whole payload, and so the `refs.head` the row is
+   ; counted over. external_aad is the empty bstr for every statement.
+   ceg-statement = #6.18(COSE_Sign1)
+
+   COSE_Sign1 = [
+     ; in the deterministic encoding, exactly these members: one
+     ; statement id
+     protected: bstr .cbor statement-protected,
+     unprotected: unprotected-header,
+     ; never nil: a detached payload is refused
+     payload: bstr .cbor attestation-envelope,
+     signature: composite-signature,
+   ]
+
+   unprotected-header = {
+     ; sd_claims (SD-CWT): blinded members as PRESENTED beside the
+     ; statement to one who may see them; a disclosure set is held and
+     ; travels as bytes under the object's consent edge
+     ? 17: [+ bstr .cbor sd-disclosure],
+     ; receipts (RFC 9942 section 2): never signed, so never a fault of
+     ; the statement; a host reads each as a ceg-receipt and ignores one
+     ; that is not (CC 2.7.11)
+     ? 394: [* bstr],
+     ; anything else a holder adds, never signed and never read by a
+     ; rule
+     * int => any,
+   }
+
+   ; The composite ML-DSA-65-Ed25519 signature of
+   ; draft-ietf-jose-pq-composite-sigs-06 (over
+   ; draft-ietf-lamps-pq-composite-sigs-19): the ML-DSA-65 signature
+   ; (3309 bytes) then the Ed25519 signature (64 bytes). Both sign M' =
+
+
+
+Moore                      Expires 23 May 2027                 [Page 33]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   ; "CompositeAlgorithmSignatures2025" ||
+   ; "COMPSIG-MLDSA65-Ed25519-SHA512" || 0x00 || SHA-512(M). ML-DSA-65
+   ; signs M' with the label bytes as its FIPS 204 ctx (never empty);
+   ; Ed25519 signs M' as it is. The 0x00 is the empty application
+   ; context.
+   composite-signature = bstr .size 3373
+
+   ; A COSE receipt (RFC 9942 section 4.3): a tagged COSE_Sign1 under
+   ; the Transparency Service's own key and algorithm, its proofs (vdp,
+   ; label 396) in its unprotected header and its verifiable data
+   ; structure (vds, label 395) protected. Its leaf is the statement's
+   ; deterministic COSE_Sign1 encoding with an empty unprotected header,
+   ; hashed SHA-256(0x00 || leaf) (RFC 9162). Read by the host's rule
+   ; only; the statement's schema never reads it.
+   ; protected, unprotected, payload, signature
+   ceg-receipt = #6.18([bstr, { 396: { * int => [+ bstr] }, * int => any
+     }, bstr / nil, bstr])
+
+   statement-protected = {
+     ; alg: the composite ML-DSA-65-Ed25519; private-use until IANA
+     ; assigns, the construction exactly the draft's
+     1: composite-alg,
+     ; cty: the constant, with no parameters
+     3: row-cty,
+     ; kid: the RFC 9679 thumbprint of the signer's AKP composite key
+     ; (below)
+     4: kid,
+     ; RFC 9597: iss and sub as RFC 9943 requires
+     15: cwt-claims,
+     ; typ (RFC 9596): a row's typ is fixed
+     16: "ceg-row/2",
+     ; the row's type, one of the five; the row id reads it
+     -70001: row-type,
+     ; the row's family id, never a leaf; the row id reads it
+     -70002: family-id,
+   }
+
+   composite-alg = -70100
+   kid = bstr .size 32                ; the RFC 9679 SHA-256 thumbprint
+
+   ; cty is one constant with no parameters; a verifier refuses any
+   ; other. The type and the family ride their own labels, -70001 and
+   ; -70002, required on a row and refused on any other object. `family`
+   ; is a family id, never a leaf: the registry prefix with each {name}
+   ; written .name and each * written . (so
+   ; `evidence:.suite:.kind:.cell:.prefix`, `accord:.`).
+   row-cty = "application/vnd.ciris.row+cbor"
+   row-type = "scores" / "delegates_to" / "supersedes" / "withdraws" /
+
+
+
+Moore                      Expires 23 May 2027                 [Page 34]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+     "recants"
+   family-id = tstr .regexp
+     "[a-z0-9_.][a-z0-9_.-]*(:[a-z0-9_.][a-z0-9_.-]*)*"
+
+   cwt-claims = {
+     ; iss: the signer's stable identity reference (its genesis key's
+     ; thumbprint URI), never the rotating kid; under a room key, iss is
+     ; the room key's own identity reference, never its person's genesis
+     ; key
+     1: identity-ref,
+     ; sub: what the row is about; a key subject is an identity-ref
+     2: tstr,
+     ; iat: floor(asserted_at / 1000), seconds, derived; a verifier
+     ; refuses disagreement
+     6: uint,
+     ; nbf: floor(valid_from / 1000) where the row has one
+     ? 5: uint,
+     ; exp: floor(valid_until / 1000) where the row has one
+     ? 4: uint,
+     -70003: 2,                       ; edition: the constant 2
+   }
+
+   ; One spelling for every identity reference: iss, author, a key
+   ; subject in sub or subject_key_ids, and every role party. The COSE
+   ; Key Thumbprint URI of RFC 9679 Section 5.7 with the hash name
+   ; sha-256 and the 32-byte thumbprint in unpadded base64url (43
+   ; characters, the last carrying zero trailing bits).
+   identity-ref = tstr .regexp
+     ("urn:ietf:params:oauth:ckt:sha-256:[A-Za-z0-9_-]{42}[AEIMQUY"
+     .cat "cgkosw048]")
+
+   ; No float, no null, no undefined, no tag anywhere a family member
+   ; can reach. The exceptions are SD-CWT's redaction (simple(59) as a
+   ; map key, tag 60 for an array element) and a body's tag-4 decimal.
+   ceg-value = int / tstr / bstr / bool / body-decimal / [* (ceg-value /
+     redacted-element)]
+     / { ? redacted_claim_keys => [+ bstr .size 32], * (tstr / int) =>
+     ceg-value }
+   ; A non-integral number in a free-form body (CC 2.6.1.2): tag 4,
+   ; [exponent, mantissa], in CBOR's integer range. Normalisation (a
+   ; mantissa not divisible by 10) is checked in prose; an integral
+   ; number is a plain integer.
+   body-decimal = #6.4([exponent: nint, mantissa: int])
+   redacted_claim_keys = #7.59
+   redacted-element = #6.60(bstr .size 32)
+
+   ; The payload: the members a family names, every text and byte member
+   ; bounded, no free text outside body.note, absent never null. A
+
+
+
+Moore                      Expires 23 May 2027                 [Page 35]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   ; member that names a row stands in `refs` and nowhere else.
+   attestation-envelope = {
+     ; the iss of the author: present iff the family is authored, absent
+     ; iff counted (a column of the family model)
+     ? "author": identity-ref,
+     ; EVERY row this row names, by row-ref
+     ? "refs": refs,
+     ; the full scored dimension (leaf and :vN); it resolves to cty's
+     ; family, refused otherwise
+     ? "dimension": tstr,
+     ; the blobs the row cites, by content hash: a sequence, bytes never
+     ; hex
+     ? "evidence_refs": [+ hash-digest],
+     ; on a seat row of a private room: the commitment the binding opens
+     ; (seat-commitment-input)
+     ? "seat_commitment": hash-digest,
+     ; integers, never floats (see fixed6)
+     ? "score": fixed6-score,
+     ? "confidence": fixed6-unit,
+     ? "weight": fixed6-weight,
+     ; safety-battery interpret rows: passed <= total, both present or
+     ; both absent, with
+     ? "passed": count32,
+     ; score = round(10^6 * (2*passed - total) / total), ties away from
+     ; zero, checked by exact equality
+     ? "total": 1..4294967295,
+     "asserted_at": ms-time,
+     ? "valid_from": ms-time,
+     ? "valid_until": ms-time,
+     ? "expires_at": ms-time,
+     ; a code from a closed registry, 0 = unspecified
+     ? "reason": uint,
+     ; required where the content is low-entropy (a ballot, a census
+     ; cell); bound by every signer
+     ? "salt": bstr .size 16,
+     ; SD-CWT simple(59): digests of the blinded members, in mint order
+     ; (a sequence)
+     ? redacted_claim_keys => [+ bstr .size 32],
+     ? "body": body,
+     ; the members a family names, under the logical names of the CC
+     ; 2.6.1 table
+     * tstr => ceg-value,
+   }
+
+   body = { ? "note": tstr .size (0..2048), ? redacted_claim_keys => [+
+     bstr .size 32], * tstr => ceg-value }
+   count32 = 0..4294967295
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 36]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   ; Erasability: the selective disclosure of
+   ; draft-ietf-spice-sd-cwt-09. A blinded map member is absent from its
+   ; map, and the digest of its disclosure stands in that map's
+   ; simple(59) array; a blinded array element is tag 60 over that
+   ; digest. The digest is SHA-256 (no sd_alg) over the disclosure's
+   ; bytes as sd_claims carries them. A family whose erasure_route is
+   ; dsar or purge mints every free-text member and every member another
+   ; party authored blind, body.note first; the members are the family
+   ; model's `blind` column, and no fold, verdict or admission reads
+   ; one.
+   sd-disclosure = salted-claim / salted-element
+   salted-claim = [salt: bstr .size 16, value: ceg-value, key: tstr]
+   salted-element = [salt: bstr .size 16, value: ceg-value]
+   ; POSIX milliseconds, no tag, never a float
+   ms-time = uint
+
+   ; Integers at one fixed scale: fixed6 is the value times 10^6. Folds
+   ; sum in checked i64 and refuse on overflow, never wrap. A derived
+   ; value is rounded ties away from zero, in integers, unless its own
+   ; rule states otherwise, and checked by exact equality. The default
+   ; ranges are these; weight is [0, 10^6] by rule, and a family that
+   ; states a wider range for it states it in its own rule.
+   fixed6 = -9223372036854775808..9223372036854775807
+   fixed6-score = -1000000..1000000
+   fixed6-unit = 0..1000000
+   fixed6-weight = fixed6
+
+   ; The row id: the digest a row is NAMED by. One per row, the same for
+   ; every voice of a counted row, unchanged when a voice, a receipt or
+   ; a disclosure is added. Signatures, kid, alg, receipts and
+   ; disclosures are outside it. `type` and `family` are the header's
+   ; -70001 and -70002; `sub` is the CWT sub; `author` is the payload's
+   ; "author" for an authored family and null for a counted one;
+   ; `payload` is the payload bstr as signed, entered as a byte string,
+   ; never as the decoded map. A payload whose bytes are not the
+   ; deterministic re-encoding of the value they decode to is refused,
+   ; so one row has one payload and one id.
+   row-id-input = ["CEG-row/2", type: row-type, family: family-id, sub:
+     tstr, author: identity-ref / null,
+                   payload: bstr .cbor attestation-envelope]
+   row-id = hash-digest
+
+   ; SHA-256 only in this edition: one name per row
+   hash-digest = [ alg: -16, digest: bstr .size 32 ]
+
+   ; A reference to a signed object of this form: the row id above, or
+   ; the object id (below) of a signed object that is not a row. No row
+   ; of this form names an object of the earlier form (CC 8.11, CC
+
+
+
+Moore                      Expires 23 May 2027                 [Page 37]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   ; 2.6.1.12), so the edition is the constant 2. Never an
+   ; attestation_id.
+   row-ref = [ edition: 2, id: hash-digest ]
+   ; a set: sorted by the bytewise order of each element's encoding, no
+   ; duplicate
+   row-ref-set = [+ row-ref]
+
+   ; Every member that names a row. A verifier gathers the named set
+   ; from `refs` alone, without knowing the family. SET RULE: every
+   ; array inside `refs` is a set: its elements sorted by the bytewise
+   ; order of each element's deterministic encoding, no duplicate,
+   ; refused otherwise. An empty `refs` is refused: absence is its one
+   ; encoding.
+   refs = refs-members .and nonempty-map
+   refs-members = {
+     ; the roster head this row is counted over, or a version extends
+     ? "head": row-ref,
+     ? "further_heads": row-ref-set,  ; further tips named beside `head`
+     ; the predecessor in a signer's own series
+     ? "prev": row-ref,
+     ; the proposal voted on or accepted, the window opened, the row
+     ; replied to
+     ? "answers": row-ref,
+     ; the row superseded, withdrawn, recanted, cut or removed
+     ? "target": row-ref,
+     ; on a key revocation: the last rows of the revoked key held good
+     ? "trusted_through": row-ref-set,
+     ; any other named row, under a role of the closed registry
+     ? "also": { + also-role => row-ref-set },
+   }
+   ; The also roles, closed: "ack" names an acknowledgement (a
+   ; revocation snapshot's); "cites" names the row a row cites, as a
+   ; build attestation names its manifest contribution. Any other role
+   ; is a later registration.
+   also-role = "ack" / "cites"
+   nonempty-map = { + any => any }
+
+   ; The statement id (RFC 9943 statement identity): SHA-256 over the
+   ; deterministic encoding of this labelled structure. It names a
+   ; statement, one voice; the row id names the row.
+   statement-id-input = ["CEG-statement-id/2", protected: bstr, payload:
+     bstr]
+   statement-id = hash-digest
+
+   ; The second consent. A statement over an authored payload whose iss
+   ; is not the payload's "author" is accepted only in a role the family
+   ; names (delegate, bound node, ...), and only when its iss is the
+   ; party that role names in the payload, or the CWT sub where the role
+
+
+
+Moore                      Expires 23 May 2027                 [Page 38]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   ; is the attested key; any other iss is Invalid. The second consent
+   ; of a scoped delegates_to is such a statement, by the delegate (the
+   ; sub), over the same payload bytes, and so has the same row id; a
+   ; scoped delegation of this form seats only with it.
+   second-consent = ceg-statement
+
+   ; Keys: one AKP COSE_Key (RFC 9964 kty 7) whose alg is the composite
+   ; and whose pub is the composite public key encoding of the pinned
+   ; draft revision: the ML-DSA-65 public key (1952 bytes) then the
+   ; Ed25519 public key (32 bytes). The kid is its RFC 9679 thumbprint,
+   ; computed under the private-use alg and fixed for the key's life. A
+   ; composite key never verifies on one half.
+   ceg-key = { 1: 7, 3: composite-alg, -1: bstr .size 1984 }
+
+   ; A key record is a ROW on family key:record (CC 2.4.1.1 renews it by
+   ; supersedes and rotates it by naming it), so these are members of
+   ; its attestation-envelope, not a separate typ. identity_type is a
+   ; SET of roles (CC 4.5.8). The end rule reads "contains", in prose
+   ; (CC 2.4.1.1): a set mixing user or accord_holder with node or agent
+   ; is refused; a record whose set contains user or accord_holder
+   ; carries no valid_until; one whose set contains node or agent
+   ; carries one, unless it is a room key of a private room; a role
+   ; outside both groups takes no end rule of its own; asserted_at <=
+   ; valid_until <= asserted_at + key_record_max_secs * 1000; refused
+   ; key_record_out_of_window otherwise.
+   key-record-members = {
+     "key": ceg-key,
+     "identity_type": [+ tstr],       ; a set
+     "asserted_at": ms-time,
+     ? "valid_until": ms-time,
+     ? "attestation_evidence": attestation-evidence,
+     * tstr => ceg-value,
+   }
+   ; The custody of the key's Ed25519 half (CC 4.2.2, CC 4.2.2.1).
+   ; `chain` is X.509 DER, leaf first: a sequence, required where the
+   ; class's mechanism has a chain (Apple_Secure_Enclave,
+   ; YubiKey_5_FIPS, TPM_2_0), refused
+   ; key_record_bad_attestation_evidence otherwise. Where a holder is
+   ; seated, the reader verifies it to the mechanism's attestation root
+   ; and binds the attested key to the record's Ed25519 half.
+   attestation-evidence = {
+     "hardware_class": tstr,
+     ? "pq_custody": "same_element" / "removable_offline" /
+       "software_wrapped",
+     ? "chain": [+ bstr],
+   }
+
+   ; A recovery commitment (CC 3.2 T3, CC 4.2.6): [-16, SHA-256 over the
+
+
+
+Moore                      Expires 23 May 2027                 [Page 39]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   ; deterministic encoding of this array]. `keys` is a set of composite
+   ; keys, sorted by encoding; a holder's recovery commitment has one
+   ; element.
+   recovery-commitment-input = ["CEG-recovery/2", keys: [+ ceg-key]]
+
+   ; The signed objects that are not rows, each its own typ, closed: a
+   ; verifier refuses any other typ. No cty; the payload is .cbor the
+   ; rule its typ names, in the deterministic encoding.
+   ceg-object-statement = #6.18([
+     protected: bstr .cbor object-protected,
+     unprotected: unprotected-header,
+     payload: bstr,
+     signature: composite-signature,
+   ])
+   object-protected = {
+     1: composite-alg,
+     4: kid,
+     15: object-claims,
+     16: object-typ,
+   }
+   object-claims = {
+     1: identity-ref,                 ; iss
+     ; iat where the object states an instant; a revocation snapshot
+     ; carries none, a genesis bundle floor(asserted_at / 1000)
+     ? 6: uint,
+     -70003: 2,
+   }
+   object-typ = "ceg-genesis-bundle/2" / "ceg-revocation-snapshot/2" /
+     "ceg-boot-manifest/2"
+   ; The payload rule of ceg-boot-manifest/2 waits on its owner's
+   ; submission; no rule here stands in for it.
+   ceg-typ = "ceg-row/2" / object-typ
+
+   ; A signed object that is not a row is named like a row, so prev and
+   ; every row-ref to it have a defined id: SHA-256 over the
+   ; deterministic encoding of this array, written as a hash-digest. The
+   ; domain label keeps it apart from a row id; like the row id it is
+   ; the same for every voice of a counted object (a genesis bundle).
+   ; `author` is the payload's "author", or null where it has none.
+   object-id-input = ["CEG-object/2", typ: object-typ, author:
+     identity-ref / null, payload: bstr]
+
+   ; A revocation snapshot (typ "ceg-revocation-snapshot/2"): a signer's
+   ; own record of the revocations whose past it holds. A set with no
+   ; winner across signers. `seq` orders one signer's own snapshots:
+   ; strictly greater than prev's, refused otherwise; two snapshots of
+   ; one signer with one seq and different content are contested, and
+   ; neither counts. refs carries prev (absent on the first) and, under
+
+
+
+Moore                      Expires 23 May 2027                 [Page 40]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   ; also "ack", the signer's acknowledgement of the head of the
+   ; revocation scope. Its named set is refs with each revoked entry's
+   ; revocation and trusted_through.
+   revocation-snapshot = {
+     ; the signer, so the object id, prev and seq are one signer's
+     "author": identity-ref,
+     "refs": refs,
+     "seq": uint,
+     "revoked": [* revoked-entry],    ; a set
+   }
+   ; a tuple; its trusted_through a set
+   revoked-entry = [key: kid, revocation: row-ref, trusted_through: [*
+     row-ref]]
+
+   ; The genesis bundle (typ "ceg-genesis-bundle/2"), the GenesisBundle
+   ; of CC 5.3.4. The first of this form is the ceremony row of CC
+   ; 2.6.1.12: a fresh genesis with no prev, a signed object that is not
+   ; a row. refs.prev names a later bundle's predecessor. `version` is a
+   ; sequence from 1, never ranked: prev's version + 1 where the bundle
+   ; has a prev, a consistency check only. A counted object: one
+   ; statement per holder over one payload, with no "author", so its
+   ; object id takes null. The map is closed. It NAMES rows and never
+   ; copies them: every row it seats stands in refs.also "cites" by
+   ; row-ref (each holder's and each seat's key:record, each seat's
+   ; transport_destination binding). The bundle's own count is the
+   ; canonical conferral of every seat in serve_nodes (CC 4.2.1); each
+   ; statement carries iat, floor(asserted_at / 1000). A recovery (CC
+   ; 2.6.1.11) is a later bundle with ONE statement: iss the holder's
+   ; identity reference, kid the recovery key's thumbprint; it counts
+   ; only where prev's recovery_commitments[iss] equals the commitment
+   ; over the recovery key (constant time). refs.also "cites" names the
+   ; recovery key's key:record and the holder's new signing-key record;
+   ; recovery_commitments[iss] is the next commitment. Checked in prose,
+   ; not here: version is 1 iff refs has no prev; holders, serve_nodes
+   ; and witnesses are pairwise disjoint; the keys of
+   ; recovery_commitments are exactly holders; scope holds infra:attest
+   ; and infra:serve; the three witness members are present together or
+   ; not at all, and witness_quorum is floor(|witnesses| / 2) + 1; each
+   ; statement's iat is floor(asserted_at / 1000).
+   ceg-genesis-bundle = {
+     "refs": genesis-refs,
+     "version": 1..4294967295,
+     "asserted_at": ms-time,
+     ; the accord's name, as its rows carry it; a name, never an anchor
+     ; (CC 5.3.4)
+     "family_key_id": tstr,
+     ; a set: the accord's roster, the voices this bundle seats
+     "holders": [+ identity-ref],
+
+
+
+Moore                      Expires 23 May 2027                 [Page 41]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+     "serve_nodes": [+ identity-ref], ; a set: the seated serve nodes
+     "charter": genesis-charter,
+   }
+   genesis-refs = {
+     ; the predecessor bundle's object id; absent on the first
+     ? "prev": row-ref,
+     ; every row the bundle names: a set
+     "also": { "cites": row-ref-set },
+   }
+   ; The accord's charter (CC 2.1, CC 3.2 T3 and T6, CC 4.2.6): the
+   ; parameters no row carries.
+   genesis-charter = {
+     ; one entry per holder, keyed by its identity-ref
+     "recovery_commitments": { + identity-ref => hash-digest },
+     ; a set; holds infra:attest and infra:serve (CC 3.2 Rooted)
+     "scope": [+ tstr],
+     ; absent means 86400 (CC 4.2.1.1)
+     ? "halt_fuse_secs": 1..4294967295,
+     ; absent: attachable by an out-of-band anchor only (CC 3.2 T4a)
+     ? "attach_window_secs": 1..4294967295,
+     ; witnessed mode: the three witness members together
+     ? "witness_cadence_secs": 1..4294967295,
+     ; absence is witnessed mode off; 0 is never written
+     ? "witness_quorum": 2..4294967295,
+     ; a set; each one's key:record stands in refs.also "cites"
+     ? "witnesses": [+ identity-ref],
+   }
+
+   ; The accord's rows (CC 4.2.1.1, CC 4.2.1.3): payloads of ordinary
+   ; rows, so these are members of their attestation-envelope, as a key
+   ; record's are. An invocation (the families
+   ; accord:invoke:constitutional, accord:invoke:notify and
+   ; accord:invoke:drill, each over its id) is ONE holder's statement
+   ; over this payload, verified against the holders of the bundle in
+   ; force. There is no inner signature and no text preimage; the row's
+   ; type and family separate the kinds, so the payload carries no
+   ; invocation_kind. The map is closed. The row is a claim, type
+   ; scores; its sub is the accord's family_key_id (the value of
+   ; accord_root). valid_until is later than asserted_at, refused
+   ; valid_until_not_after_asserted_at otherwise (checked in prose).
+   accord-invocation = {
+     ; the holder who signs: the statement's iss
+     "author": identity-ref,
+     ; the accord's family_key_id: picks the bundle in force the row is
+     ; verified against
+     "accord_root": tstr,
+     ; the id of the halt, the notify or the drill
+     "invocation_id": tstr,
+
+
+
+Moore                      Expires 23 May 2027                 [Page 42]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+     ; minted by the holder; single-use within valid_until
+     "nonce": bstr .size 32,
+     "asserted_at": ms-time,
+     ; bounds the reuse of the nonce, never the reach of a halt
+     "valid_until": ms-time,
+     ; a notify only: SHA-256 over its message, a separate object held
+     ; as bytes
+     ? "payload_digest": hash-digest,
+   }
+   ; A lifecycle row (family accord:lifecycle, over its kind) is counted
+   ; (CC 2.6.1.9): one statement per holder over one payload, with no
+   ; author. Its dimension names its kind, confirmed or active;
+   ; refs.target names the halt it confirms or ends, and refs.head the
+   ; bundle it is counted over. The map is closed.
+   accord-lifecycle = {
+     "refs": accord-lifecycle-refs,
+     "dimension": tstr,
+     "accord_root": tstr,
+     "invocation_id": tstr,
+     "nonce": bstr .size 32,
+     "asserted_at": ms-time,
+     "valid_until": ms-time,
+   }
+   accord-lifecycle-refs = {
+     ; the bundle in force the row is counted over, by its object id
+     "head": row-ref,
+     "target": row-ref,               ; the halt row it confirms or ends
+   }
+
+   ; The transport destination binding (CC 3.3.6.2): the payload of an
+   ; identity:occurrence row, authored and signed by the identity it
+   ; binds. The two X-Wing keys stand at the payload's top level, beside
+   ; the transport_destination map; a seat's binding names its own key
+   ; record in refs under also "cites".
+   transport-destination-binding = {
+     "transport_destination": transport-destination,
+     ; on a node that relays, and on every seat
+     ? "transit_xwing_pubkey": bstr .size 1216,
+     ; on a node that relays, and on every serve node
+     ? "onion_hop_xwing_pubkey": bstr .size 1216,
+     ; on a node that opts out of relaying, with no hop key
+     ? "onion_relay": { "opt_out": true },
+     ; on a seat's binding: its key record under also "cites"
+     ? "refs": refs,
+     ; the content-KEM keys of CC 3.3.6.1 where they ride this row
+     * tstr => ceg-value,
+   }
+   ; The RNS members of CC 3.3.6.3; destination_hash is recomputed from
+
+
+
+Moore                      Expires 23 May 2027                 [Page 43]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   ; the other four.
+   transport-destination = {
+     "reticulum_x25519_pubkey": bstr .size 32,
+     "reticulum_ed25519_pubkey": bstr .size 32,
+     "app_name": tstr,
+     ; a sequence: the hash reads the aspects in this order
+     "aspects": [* tstr],
+     "destination_hash": bstr .size 16,
+   }
+
+   ; Room keys. The seat commitment of a private room: SHA-256 over the
+   ; deterministic encoding of this array, carried as "seat_commitment"
+   ; on the seat row and opened by the binding. `room` is the room's id;
+   ; the member that carries it waits on its owner's submission. `nonce`
+   ; is 32 fresh random bytes. The binding key and the content-KEM keys
+   ; of one identity are distinct bytes, refused at admission otherwise.
+   seat-commitment-input = ["CEG-seat/2", room: tstr, room_key: kid,
+     person: identity-ref, nonce: bstr .size 32]
+   ; The HPKE info strings of a binding and of an invitation. The KEM
+   ; key, the binding's two encapsulations and the occurrence keys take
+   ; their bytes from the X-Wing HPKE suite and are fixed with that
+   ; suite's known-answer vectors, not in this file; so does the binding
+   ; seed's derivation label.
+   hpke-info = "CEG-binding/2" / "CEG-invitation/2"
+
+   ; Verification has three answers, returned by a verifier and never on
+   ; the wire: Valid; Invalid(reason); Waiting{missing key refs}.
+   ; Invalid under a held key is final. A structural fault is Invalid
+   ; whatever keys are held. A statement whose key record is Waiting is
+   ; Waiting, naming the deepest missing key; a key record Invalid makes
+   ; the statement Invalid. A key held in part is Waiting on the missing
+   ; half. Waiting is never counted.
+
+   ; Receipts over the provenance log and each stream's log are COSE
+   ; Receipts (RFC 9942) with vds = 1 (RFC9162_SHA256); each witness
+   ; issues its own receipt over the same root, with its instant in the
+   ; protected header; a receipt is issued per batch of a stream, never
+   ; per chunk.
+
+Appendix B.  Test Vectors
+
+   The known-answer vectors of this form are the verifier's
+   [CC-VECTORS].  [CC] pins each file at a tag of CIRISVerify, v23.1.1,
+   v23.2.0 or v23.3.0 (CC 2.6.5).  They cover the row id, the refusals
+   of non-deterministic encodings, the order of the sets in refs, a
+   counted row as several statements, and the three answers of
+   Section 6.4.
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 44]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+   The row statements file holds four valid statements and 42 refusals,
+   with 17 key records.  The composite signature's vectors are checked
+   against the examples of [COMPOSITE-JOSE].  Further files cover the
+   genesis bundles, the recovery commitment, and the accord halt.
+
+   [CC] also builds schema samples, which are not known-answer vectors.
+   The build of this document checks that the CDDL of Appendix A admits
+   each valid sample and refuses each broken one.
+
+Appendix C.  The Earlier Form
+
+   An earlier, retired form of the signed object was a JSON object,
+   canonicalised with JCS [RFC8785] and signed by a nested pair of an
+   Ed25519 and an ML-DSA-65 signature.  Revision -00 of this document
+   described it.  [CC] keeps it as an annex (CC 8.11).  No node of the
+   current edition reads it, and no row of the current form names an
+   object of it.
+
+Changes since draft-moore-scitt-ciris-ceg-01
+
+   Note to the RFC Editor: please remove this section before
+   publication.
+
+   *  [CC] is cited at 1.0-rc21.
+
+   *  A host runs code a row admits only once it holds a SCITT receipt
+      from a Transparency Service it trusts.  The receipt, its leaf, the
+      trust edge and its service_key, and the waiting answer are
+      described (Section 7.3).  The SCITT roles and differences follow
+      (Section 10).
+
+   *  The unprotected header is read by the host's receipt check and by
+      no admission check.
+
+   *  A decimal fraction in a free-form body is CBOR tag 4
+      (Section 4.5).
+
+   *  A fork of two first bundles under a thumbprint anchor roots on
+      neither, and the holders a bundle seats name distinct devices.
+
+   *  refs.target names every row it can target, and the state a
+      verifier reports for a superseded, withdrawn or recanted row is
+      stated (Section 3, Section 5.3).
+
+   *  The CDDL appendix follows the current schema of [CC].
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 45]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
+Changes since draft-moore-scitt-ciris-ceg-00
+
+   Note to the RFC Editor: please remove this section before
+   publication.
+
+   *  The signed object is now the CBOR and COSE form of [CC] 1.0-rc20:
+      a COSE_Sign1 over a deterministically encoded payload, with one
+      composite ML-DSA-65 and Ed25519 signature.
+
+   *  The JSON, JCS and nested-signature sections are replaced by
+      Section 4, Section 5 and Section 6.  The earlier form is reduced
+      to Appendix C.
+
+   *  The section on a future CBOR and COSE edition is removed.
+
+   *  The CDDL appendix is the schema of the CBOR form.
+
+   *  The SCITT roles and differences are rewritten: a statement is now
+      a COSE_Sign1 with issuer and subject claims.
+
+   *  The admission checks, the withdrawal rules, the halt, the key's
+      end and the conceded limits follow [CC] 1.0-rc20.
+
+   *  Other signed objects, receipts and erasable members are described.
+
+Acknowledgments
+
+   The canonical-form rules in this document were found and fixed in
+   review by the implementers of CIRISPersist, CIRISVerify and
+   CIRISEdge.
+
+Author's Address
+
+   Eric Moore
+   CIRIS L3C
+   Email: eric@ciris.ai
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 46]

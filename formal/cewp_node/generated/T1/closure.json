@@ -1,7 +1,7 @@
 {
  "catalog_id": "T1",
  "title": "One person, two devices, self room",
- "catalogue_version": 3,
+ "catalogue_version": 5,
  "serves": [
   "CSD-107",
   "CSD-096"

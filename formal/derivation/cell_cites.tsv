@@ -61,7 +61,7 @@ age_self_declared:band:{band}:{version}	signer_rule	fills	CC 3.4.11	Admitted iff
 agent_files:{kind}:{platform_or_target}	signer_rule	agree	CC 4.4.3.33	**Layer 2 — Open Contribution**: any federation-key holder may emit `agent_files:*` attestations. The wire format admits them; consumer policy decides whether to surface them. The "Browse alternatives" view shows third-party
 agent_files:{kind}:{platform_or_target}	subject_rule	fills	CC 2.3.1	MUST carry `subject_key_ids` containing that subject
 agent_files:{kind}:{platform_or_target}	subject_rule	fills	CC 4.5.2.1	| `agent_files:*:{subject_target}` (when target names a person)
-archive_release:{basis}	signer_rule	agree	CC 3.1.5	**WA-emitted** (the conferrer of the agent's seat or the person holding its unscoped seat); refused from any other key
+archive_release:{basis}	signer_rule	agree	CC 3.1.5	**WA-emitted** (the conferrer of the agent's seat or the person holding its unscoped seat); concludes nothing from any other key
 archive_release:{basis}	signer_rule	agree	CC 7.5.5	The other two are `archive_release:{basis}:v1` (the one row that opens a seal, WA-emitted, basis `wa_approval` or `lawful_order`) and `lawful_order:release:v1` (the steward's record of an order to release).
 attestation:agent_integrity	projection	agree	CC 3.1.7	The L1-L5 ladder lives as consumer-side composition
 attestation:agent_integrity	projection	agree	CC 4.1.3	`attestation:{mechanism}` bare mechanism (`self_verify` / `hardware_rooted` / `registry_consensus` / `license_validity` / `agent_integrity`); consumer composes L1-L5 ladder via [CC 4.4.3.32](#4.4.3.32) Policy I
@@ -256,7 +256,7 @@ consent:state:{stance}	signer_rule	fills	CC 3.4.5	MUST be emitted by a `subject_
 consent:stream:{kind}	signer_rule	agree	CC 3.3.1	`consent:stream:{kind}` | Pre-packaged stream bundle. Recommended canonical kinds: `temporary` (14d auto-expire, default), `partnered` (bilateral + persistent — the subject's data-retention and learning choice, never a veto over the subject's data
 consent:{kind}	subject_rule	fills	CC 2.3.1	MUST carry `subject_key_ids` containing that subject
 corpus_health:n_eff_measurable	signer_rule	agree	CC 3.1.3	The `system:*` dimensions here are substrate-self-reports — emittable only by the running substrate itself ([CC 3.4.3](#3.4.3)), which is what makes them honest: the substrate cannot be made to lie about its own
-cosign:{state}	cosign_rule	fills	CC 3.1.3	It is admitted only if the primary's signature verifies and the primary resolves to an active member of the group at the roster head the event names.
+cosign:{state}	cosign_rule	fills	CC 3.1.3	Its primary's signature is checked at the door. It is collected only while the primary is a member at the roster head the event names; otherwise it is held and concludes nothing.
 cosign:{state}	fold	agree	CC 3.3.4	it is named by its row id, which covers no signature, and cosignatures are counted by signer
 cosign:{state}	signer_rule	agree	CC 3.1.3	**The collection of cosignatures for an event its protocol has not yet admitted** (registered under CC 3.1.7 R2(a); the hold of [CC 3.3.4](part_3_the_namespace.md#3.3.4), general to any cosigned row of [CC
 custody:{kind}	body	agree	CC 2.1	A signed `none` is a custody fact, not an absence.
@@ -291,7 +291,7 @@ deferral:response:{outcome}	fold	agree	CC 4.3	**A decision that unseats a roster
 deferral:response:{outcome}	fold	agree	CC 4.3	Liveness-critical decisions (deferral-answering and symmetry rule 1 below, per CC 4.2.6) are exempt: there, presence-is-authority governs, because an absent WA freezes the agent.
 deferral:response:{outcome}	fold	agree	CC 4.3	computes its denominator over the **full seated roster**, never the live subset
 deferral:response:{outcome}	signer_rule	agree	CC 3.1.9.3	**A Wise Authority's answer to one deferral**, `{outcome}` ∈ `approved` \| `rejected`. Attester = a key that, at `asserted_at`, held a seat over the deferring party's deferrals in the live
-deferral:response:{outcome}	signer_rule	agree	CC 4.3	A `deferral:response:{outcome}` is admitted only when, at its `asserted_at`, its attester is the conferrer or sits on a live chain from the conferrer bearing `resolve_deferral` or the `resolve_deferral:{domain}` the request
+deferral:response:{outcome}	signer_rule	agree	CC 4.3	A `deferral:response:{outcome}` counts only when, at its `asserted_at`, its attester is the conferrer or sits on a live chain from the conferrer bearing `resolve_deferral` or the `resolve_deferral:{domain}` the request
 deferral:response:{outcome}	signer_rule	agree	CC 4.3	A person confers the seat over their own deferrals under their own key. An agent's seat is conferred by its steward, the holder of its live owner-binding ([CC 3.2](part_3_the_namespace.md#3.2)); the
 deferral:response:{outcome}	signer_rule	agree	CC 4.3	A seat over one party's deferrals is conferred by that party in a signed row and by nobody else; there is no roster of permitted Wise Authorities and a substrate
 deferral:response:{outcome}	signer_rule	agree	CC 4.4.3.19	`resolve_deferral` takes the same test, with the conferrer of the seat as delegator ([CC 4.3](#4.3)).
@@ -366,15 +366,15 @@ group:roster	replication	fills	CC 2.4.1.1	roster-removal rows are addressed by `
 hard_case:{kind}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 hard_case:{kind}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict
 hard_case:{kind}	lifecycle	fills	CC 2.4.1.1	The substrate that produced the proof withdraws it under rule 1, or recants a false one, and nobody else
-hard_case:{kind}	signer_rule	agree	CC 3.4.2	A row on these kinds from any other signer is refused ([CC 3.4.7](#3.4.7)).
+hard_case:{kind}	signer_rule	agree	CC 3.4.2	A row on these kinds from any other signer concludes nothing ([CC 3.4.7](#3.4.7)).
 hard_case:{kind}	signer_rule	agree	CC 3.4.2	The node that admitted or refused the row, holding `infra:attest` from its owner ([CC 3.4.7](#3.4.7)). A kind whose body names another party needs `infra:record_hard_case`.
 hard_case:{kind}	signer_rule	agree	CC 3.4.2	`hard_case:community_liveness_restored:{community_key_id}` | The named community's active founder set returns to `M + 1` or more by the T7 recovery widening ([CC 3.2](part_3_the_namespace.md#3.2) T7); same emitter rule as `_stalled` | Same.
 hard_case:{kind}	signer_rule	agree	CC 3.4.2	`hard_case:community_liveness_stalled:{community_key_id}` | The named community's active founder set falls to `M` or fewer under `quorum:M/N` ([CC 3.2](part_3_the_namespace.md#3.2) T7): valid but non-admitting from this instant. Emitted by the substrate that admitted
 hard_case:{kind}	signer_rule	agree	CC 3.4.2	`hard_case:location_proof_resolution_violation` | Substrate REJECTS a `location_proof` Contribution with `cell_resolution > 7` per [CC 2.6.6.1](part_2_the_grammar.md#2.6.6.1) rough-only enforcement; emitted against the producer's `key_id` so operators can observe malformed-client patterns | Same.
-hard_case:{kind}	signer_rule	agree	CC 3.4.4	A row on these kinds from any other signer is refused ([CC 3.4.7](#3.4.7)).
+hard_case:{kind}	signer_rule	agree	CC 3.4.4	A row on these kinds from any other signer concludes nothing ([CC 3.4.7](#3.4.7)).
 hard_case:{kind}	signer_rule	agree	CC 3.4.4	`hard_case:family_membership_change:{family_key_id}` | Substrate admits an addition or removal in the named family's roster (per the family's `consensus_protocol`) | Same.
 hard_case:{kind}	signer_rule	agree	CC 3.4.4	The node that admitted or refused the row, holding `infra:attest` from its owner ([CC 3.4.7](#3.4.7)). A kind whose body names another party needs `infra:record_hard_case`.
-hard_case:{kind}	signer_rule	agree	CC 3.4.4	`hard_case:family_consensus_protocol_violation:{family_key_id}` | Substrate REJECTS a proposed amendment (rule unsatisfied OR entrenched) | Same.
+hard_case:{kind}	signer_rule	agree	CC 3.4.4	`hard_case:family_consensus_protocol_violation:{family_key_id}` | A proposed amendment concludes nothing (rule unsatisfied OR entrenched) | Same.
 hard_case:{kind}	signer_rule	agree	CC 3.4.4	`hard_case:recipient_excluded:{scope_key_id}` | Substrate fail-secure-skips a recipient in the [CC 5.2](part_5_transport_substrate.md#5.2) at-rest grant cascade. Payload: excluded recipient `key_id`, `reason ∈ {expired_occurrence, invalid_kem_key, missing_encryption_pubkeys}`, skipped Contribution's envelope ref. **Cohort-scoped: emitted INTO the
 hard_case:{kind}	signer_rule	agree	CC 4.5.12.4	The membership-event kinds of [CC 3.4.4](part_3_the_namespace.md#3.4.4) are signed by the node that admitted the change ([CC 3.4.7](part_3_the_namespace.md#3.4.7)).
 hardware_custody:{platform}	fold	agree	CC 4.2.2.1	where no chain verifies, the class is unattested and the multiplier is 0.0
@@ -382,7 +382,7 @@ health:liveness:{version}	signer_rule	agree	CC 3.1.9.4	**External service-health
 identity:occurrence	lifecycle	fills	CC 3.3.6	DEKs delivered before it lands are out of scope
 identity:occurrence	lifecycle	fills	CC 3.3.6.1	a new `identity_occurrence` superseding the prior rotates the KEM keys **without touching the stable signing `key_id`**
 identity:occurrence	lifecycle	fills	CC 3.3.6.2	Rotating the Reticulum destination (new transport identity) is a new `identity_occurrence` `supersedes`-ing the prior: location changes without touching federation identity or community membership. A seated
-identity:occurrence	lifecycle	fills	CC 4.4.3.19	`withdraws` the occurrence → no further grants to it; what it holds stays
+identity:occurrence	lifecycle	fills	CC 3.3.6	Once it lands the substrate stops wrapping new key_grants to the evicted key
 identity:occurrence	lifecycle	fills	CC 4.4.3.23	.where(envelope.valid_until IS NULL OR > now)
 identity:occurrence	lifecycle	fills	CC 4.4.3.23	.where(the occurrence's current version; a version supersedes only its own earlier one)
 identity:occurrence	projection	agree	CC 4.4.3.15	the substrate computes the current member set by walking the latest `identity_occurrence` / `family` Contributions
@@ -393,12 +393,12 @@ identity:occurrence	signer_rule	agree	CC 3.3.6	**Admission is roster maintenance
 identity:occurrence	signer_rule	agree	CC 3.3.6.1	admitted only when `attesting_key_id == identity_key_id` (or a current occurrence of it)
 identity:occurrence	signer_rule	agree	CC 3.3.6.2	**The binding = a federation-key-signed `identity_occurrence` carrying `transport_destination`.** The occurrence is admitted only when `attesting_key_id == identity_key_id` (or a current occurrence of it), and it carries the composite signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)).
 identity:occurrence	signer_rule	agree	CC 4.4.3.20	signed by `identity_key_id` (or a current occurrence):
-identity:occurrence	signer_rule	agree	CC 4.4.3.23	Any current occurrence but an agent's ([CC 4.4.3.19](#4.4.3.19)), `I` itself included, may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4).
+identity:occurrence	signer_rule	agree	CC 4.4.3.23	Any current occurrence, `I` itself included, may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4).
 identity:occurrence_revocation	lifecycle	fills	CC 3.1.3	Wire `identity:occurrence_revocation:v1`. **Never withdrawn.**
 identity:occurrence_revocation	projection	agree	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row
 identity:occurrence_revocation	projection	fills	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row
 identity_amendment	body	agree	CC 2.1	`identity_amendment:v1`, REQUIRED
-identity_amendment	body	agree	CC 3.1.5	Members: `amendment_digest` (lowercase hex SHA-256 of the applied amendment) and `authorized_by` (the `attestation_id` of the `deferral:response:approved:v1` row); `evidence_refs[]` → that response.
+identity_amendment	body	agree	CC 3.1.5	Members: `amendment_digest` (the SHA-256 of the applied amendment) and `authorized_by` (the `deferral:response:approved:v1` row, named in `refs`).
 identity_amendment	signer_rule	agree	CC 3.1.5	Attester = the agent's occurrence key, subject = the agent's identity key.
 identity_continuity:relational_anchor	signer_rule	agree	CC 3.1.3	The `system:*` dimensions here are substrate-self-reports — emittable only by the running substrate itself ([CC 3.4.3](#3.4.3)), which is what makes them honest: the substrate cannot be made to lie about its own
 image:*	signer_rule	agree	CC 3.1.9	None is reserved: all are open-vocabulary content claims under ordinary [CC 4.4](part_4_composition_governance.md#4.4) consumer policy.
@@ -416,27 +416,27 @@ key:revocation	lifecycle	fills	CC 2.4.1.1	The revocation is a `key:revocation:v1
 key:revocation	lifecycle	fills	CC 3.1.3	**Never withdrawn** (non-rollbackable
 key:revocation	projection	agree	CC 2.4.1.1	so one revocation reaches every `key_id` that displays the same key
 key:revocation	signer_rule	agree	CC 2.4.1.1	**(3) Self-revocation** is recognised when the revoker's own key is the subject.
-key:revocation	signer_rule	agree	CC 3.1.3	**Yes:** the revoker's authority is judged without the subject's record; a `withdraws` naming it is refused
+key:revocation	signer_rule	agree	CC 3.1.3	**Yes:** the revoker's authority is judged without the subject's record; a `withdraws` naming it concludes nothing
 key:revocation	subject_rule	fills	CC 2.4.1.1	Its subject is its `sub`: the revoked key's identity reference
 key_boundary:{scope}	signer_rule	agree	CC 3.1.4	Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md#3.4.3).
 key_grant:{axis}	fold	agree	CC 3.3.2	the identity of a wrap is `(dimension, attesting_key_id, attested_key_id, axis identity)`
 key_grant:{axis}	lifecycle	fills	CC 2.4.1.3	`rotation_chain` is supersession lineage, not onward transfer.
-key_grant:{axis}	lifecycle	fills	CC 3.1.3	a `withdraws` naming the row is refused
+key_grant:{axis}	lifecycle	fills	CC 3.1.3	a `withdraws` naming the row concludes nothing
 key_grant:{axis}	lifecycle	fills	CC 3.3.4	the removed member retains existing key_grants (cannot retroactively un-share)
 key_grant:{axis}	lifecycle	fills	CC 3.3.5.1	a revealed `key_grant` ([CC 3.3.2](#3.3.2)) is forward-only
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.5	After a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content ([CC 4.4.3.22](#4.4.3.22)).
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.10	epoch rolls on member removal (mandatory)
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.10	removed members retain extant `key_grant`s
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.10	The epoch rotates because of a removal and never because of an admission
-key_grant:{axis}	lifecycle	fills	CC 4.4.3.19	`withdraws` the occurrence → no further grants to it; what it holds stays
-key_grant:{axis}	lifecycle	fills	CC 4.4.3.22	After a removal each minter rotates its epoch DEK before its next sealed write
-key_grant:{axis}	lifecycle	fills	CC 5.1	`withdraws` on a `key_grant` is refused
+key_grant:{axis}	lifecycle	fills	CC 4.4.3.19	or ends the owner-binding → no further grants to it; what it holds stays
+key_grant:{axis}	lifecycle	fills	CC 4.4.3.22	After a removal each minter whose current epoch key reached a departed device rotates it before its next sealed write
+key_grant:{axis}	lifecycle	fills	CC 5.1	`withdraws` on a `key_grant` concludes nothing
 key_grant:{axis}	placement	agree	CC 3.1.3	Union by identity, never withdrawn, placed at the content's scope.
 key_grant:{axis}	projection	agree	CC 3.1.3	Union by identity, never withdrawn, placed at the content's scope.
 key_grant:{axis}	projection	agree	CC 4.4.3.15	the substrate computes the current member set by walking the latest `identity_occurrence` / `family` Contributions
 key_grant:{axis}	replication	fills	CC 4.4.3.24	stays in Alice's self-collective ([CC 4.4.3.15](#4.4.3.15), [CC 4.4.3.23](#4.4.3.23)), the last boundary case of
 key_grant:{axis}	signer_rule	agree	CC 3.1.3	**Yes — sealer-only:** `attesting_key_id` speaks for the content's or stream's owner (`content`, `stream`) or is the epoch's minter, an active member occurrence at `asserted_at` (`epoch`); a `withdraws` naming the row
-key_grant:{axis}	signer_rule	fills	CC 2.4.1.3	A substrate MUST refuse at admission a `key_grant` whose issuer neither owns or stewards the asset nor holds a `grant`-scoped delegation over it
+key_grant:{axis}	signer_rule	fills	CC 2.4.1.3	A `key_grant` whose issuer neither owns or stewards the asset nor holds a `grant`-scoped delegation over it
 key_grant:{axis}	signer_rule	fills	CC 2.4.1.3	An onward grant is a **new grant issued by the asset's owner or steward, or by a holder of a `grant`-scoped delegation from them**
 key_grant:{axis}	signer_rule	fills	CC 2.4.1.3	the asset's **owner / steward**
 key_grant:{axis}	signer_rule	fills	CC 4.4.3.19	For `grant`, the delegator MUST own or steward the asset, or hold a `grant`-scoped delegation over it.
@@ -449,11 +449,11 @@ ledger:head:{unit}:{version}	signer_rule	agree	CC 3.3.10.1	A ledger is owner-ser
 ledger:promotion:{version}	signer_rule	agree	CC 3.1.3	**Yes:** the ledger's single owner (the steward-bound identity of its `ledger_id` triple); no delegate writes
 ledger:promotion:{version}	signer_rule	agree	CC 3.3.10.1	A ledger is owner-serialized: the owner's key is the one writer, and a `delegates_to` edge
 licensure:{authority_id}	cosign_rule	fills	CC 2.4.1.3	A `licensure:{community_key_id}` row is a **cosigned row** ([CC 2.4](#2.4)) whose protocol source is the authority named in the dimension.
-licensure:{authority_id}	cosign_rule	fills	CC 3.3.9	A licence issued by an organisation is admitted only when its signature set resolves to the affiliation's key set under its `consensus_protocol` (the paragraph below;
+licensure:{authority_id}	cosign_rule	fills	CC 3.3.9	A licence issued by an organisation counts only when its signature set meets the affiliation's `consensus_protocol` at the head it names, and is held while signatures are collected (the paragraph below;
 licensure:{authority_id}	erasure_route	fills	CC 4.5.3	An **adverse** row about the subject, any row on the kept list of [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1), is reached by no subject-authority path
-licensure:{authority_id}	fold	agree	CC 3.3.9	A licence carries a monotonic `revision`; admission refuses a decrease
+licensure:{authority_id}	fold	agree	CC 3.3.9	A licence carries a monotonic `revision`. A write with a lower `revision` than one held for the same `license_id` is kept and never wins the merge
 licensure:{authority_id}	fold	agree	CC 3.4.9	MUST be marked as `confidence ≤ 0.5` in consumer composition until the second co-steward's attestation arrives
-licensure:{authority_id}	fold	agree	CC 5.3.2.3	Admission anti-rollback first: a write whose `revision` decreases never enters the merge.
+licensure:{authority_id}	fold	agree	CC 5.3.2.3	A write with a lower `revision` than one held never wins the merge.
 licensure:{authority_id}	fold	agree	CC 5.3.2.3	At equal weight the more restrictive state stands: `revoked` > `suspended` > `active`.
 licensure:{authority_id}	fold	agree	CC 5.3.2.3	Then the `MergeBallot` comparator: the greater `quorum_weight` stands, a weight being a count.
 licensure:{authority_id}	projection	agree	CC 2.4.1.3	The `licensure:{A}` status set for a subject folds only rows whose emitter resolves to `A`
@@ -461,7 +461,7 @@ licensure:{authority_id}	projection	agree	CC 3.1.1	**`suspended` is reversible; 
 licensure:{authority_id}	projection	agree	CC 3.1.1	so a consumer composes the set rather than reading a scalar
 licensure:{authority_id}	replication	fills	CC 4.5.5	A licence subject **can see every licence about them**
 licensure:{authority_id}	signer_rule	agree	CC 2.4.1.3	`authority_id` names a key: a `federation_keys.key_id`, or an organisation, an affiliation whose keys resolve through its `membership:{stage}` seats on the community record and the `delegates_to` edges of its hierarchy
-licensure:{authority_id}	signer_rule	agree	CC 2.4.1.3	an issuance whose delegator chain does not resolve to `A` is **`licensure_delegator_not_authority`**
+licensure:{authority_id}	signer_rule	agree	CC 2.4.1.3	an issuance whose delegator chain does not resolve to `A`: it concludes nothing, reason **`licensure_delegator_not_authority`**
 licensure:{authority_id}	signer_rule	agree	CC 2.4.1.3	mean exactly that X's key *is* `A`, or holds a `license`-scoped delegation whose chain resolves to `A`
 licensure:{authority_id}	signer_rule	agree	CC 2.4.1.3	who gives it | an **authority** | the asset's **owner / steward** | a **principal**
 licensure:{authority_id}	signer_rule	agree	CC 3.1.1	Co-stewarded with Verify for the CIRIS-issued licence ([CC 3.4.9](part_3_the_namespace.md#3.4.9)) — composition, **not** a reservation: the family is open-emitter.
@@ -480,7 +480,7 @@ membership:{stage}	body	agree	CC 8.11.4	n/a (REQUIRED on a membership proposal)
 membership:{stage}	body	agree	CC 8.11.9	REQUIRED on membership:proposal
 membership:{stage}	body	agree	CC 3.1.3.2	The membership ceremony, one attestation-plane row per step: `{stage}` ∈ `proposal` \| `acceptance` \| `decline` \| `widening` \| `removal` \| `resignation` — closed.
 membership:{stage}	fold	agree	CC 3.2	evaluated over the **founder** subset (`role == founder`), independent of how many non-founder members exist
-membership:{stage}	fold	agree	CC 5.3.2.3	The same anti-rollback as the licence row. A revocation has one state, so no comparator picks among the revocations of one subject: every admitted one stands.
+membership:{stage}	fold	agree	CC 5.3.2.3	No revocation is refused for another, and none is withdrawn. A revocation has one state, so no comparator picks among the revocations of one subject: every admitted one stands.
 membership:{stage}	governance	fills	CC 4.4.3.17	// this protocol runs under the CC 4.5.13 floor, never one vote
 membership:{stage}	governance	fills	CC 4.4.3.17	A removal under `admission: open` runs under the floor of [CC 4.5.13](#4.5.13), no single vote excluding.
 membership:{stage}	lifecycle	fills	CC 3.3.4	A time-boxed guest is a widening with `valid_until`, and the seat lapses at that instant.
@@ -560,7 +560,7 @@ rendezvous:route	signer_rule	agree	CC 5.4.6	A receiver that accepts targeted ano
 retirement:{state}	lifecycle	fills	CC 3.1.5	**A planned retirement is cancelled by the decider `withdraws`-ing the `decided` row** ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1): taking back a declaration because circumstances changed). The withdrawal is not counted where a `frozen` row
 retirement:{state}	signer_rule	agree	CC 3.1.5	**The agent's own retirement row** ([CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5), the Retirement Standard). `{state}` is the closed lifecycle of the `retirement_record` workflow (`decided` \| `frozen` \| `secrets_destroyed` \| `handed_over` \| `notified` \| `custodian_minted`
 revocation:{entity_type}:{reason}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
-revocation:{entity_type}:{reason}	fold	agree	CC 5.3.2.3	The same anti-rollback as the licence row. A revocation has one state, so no comparator picks among the revocations of one subject: every admitted one stands.
+revocation:{entity_type}:{reason}	fold	agree	CC 5.3.2.3	No revocation is refused for another, and none is withdrawn. A revocation has one state, so no comparator picks among the revocations of one subject: every admitted one stands.
 revocation:{entity_type}:{reason}	lifecycle	fills	CC 2.4.1.1	a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`
 self:delegates_to	projection	agree	CC 3.1.3	a reader treats a row carrying it as unlabeled and infers nothing from it
 self:delegates_to	signer_rule	agree	CC 3.1.3	**Yes — closed:** only on an owner's own `delegates_to` row; confers nothing
@@ -613,8 +613,8 @@ trace:{form}:{version}	signer_rule	agree	CC 4.5.8.3	- **Reasoning-trace dimensio
 trace_summary:{kind}	signer_rule	agree	CC 3.1.5	Same self-emission rule; carries no claim the full trace does not.
 trace_summary:{kind}	signer_rule	agree	CC 3.4.5	**Pro-self** — `attesting_key_id` MUST be a member of `subject_key_ids`. Third-party emission on the namespace is REQUIRED to be refused.
 transparency_log:cosigned:{tree_size}	signer_rule	agree	CC 3.1.2	`transparency_log:cosigned:{tree_size}` | Witness cosignature on an STH (substrate-conformance path; see [CC 5.3.1](part_5_transport_substrate.md#5.3.1) endpoints). Witness-emitted, verify-recognized — the signer holds `infra:attest_assurance` ([CC 3.4.10](#3.4.10)). | signed
-transport:canonical_rebind	body	agree	CC 3.1.3	`SignedTransportDestination` under `transport_destination`.
-transport:canonical_rebind	signer_rule	agree	CC 3.1.3	**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself
+transport:canonical_rebind	body	agree	CC 3.1.3	It carries the node's new `transport_destination` and transit key in its payload.
+transport:canonical_rebind	signer_rule	agree	CC 3.1.3	**Yes — the accord holders, a strict majority of the bundle in force**; never a single holder, never the node itself
 transport:{kind}	signer_rule	agree	CC 3.1.4	Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md#3.4.3).
 trust:{job}:{version}	body	agree	CC 2.1	`trust:accepts:v1`, REQUIRED
 trust:{job}:{version}	body	agree	CC 8.11.9	T4a attach window.

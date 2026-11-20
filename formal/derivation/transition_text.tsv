@@ -27,7 +27,7 @@ key:revocation	attest	roles	room_roster	member	CC 2.4.1.1	for a room key the roo
 key:revocation	attest	policy	self_roster	two_path:self_roster_evict	CC 2.4.1.1	the eviction door of a self roster
 key:revocation	attest	policy	room_roster	cosigned:community_remove	CC 2.4.1.1	for a room key the room's removal
 identity:occurrence_revocation	attest	roles	node_or_agent	owner,self	CC 2.4.1.1	The key revokes itself. Its owner revokes it under the owner-binding
-identity:occurrence_revocation	attest	roles	user_self	member	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's current live roster**
+identity:occurrence_revocation	attest	roles	user_self	member	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's roster at the head it names**
 identity:occurrence_revocation	attest	policy	user_self	two_path:self_roster_evict	CC 3.3.6.4	The policy is two rows of the governance table
 archive_release:{basis}	attest	widens		by_scope	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
 community:listing	attest	roles		moderate	CC 3.1.1	signed by a current `moderate`-holder of the community it names
@@ -72,6 +72,16 @@ seed_holder_voting_alignment:{cell}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the
 self:delegates_to	authorize	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
 self:delegates_to:agent_occurrence	authorize	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
 transport:canonical_rebind	attest	undo		withdraw:cosigned	CC 2.4.1.1	a quorum's act is undone only by a quorum
-transport:canonical_rebind	supersede	roles		holder	CC 3.1.3	**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself
-transport:canonical_rebind	supersede	policy		cosigned:accord_majority	CC 3.1.3	**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself
+transport:canonical_rebind	supersede	roles		holder	CC 3.1.3	**Yes — the accord holders, a strict majority of the bundle in force**; never a single holder, never the node itself
+transport:canonical_rebind	supersede	policy		cosigned:accord_majority	CC 3.1.3	**Yes — the accord holders, a strict majority of the bundle in force**; never a single holder, never the node itself
 weighted_aggregate:{contribution_id}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+location_proof:{version}	withdraw	policy		selfAct	CC 3.1.3
+location_proof:{version}	withdraw	roles		author	CC 3.1.3
+trust:blessing	withdraw	policy		cosigned:cosigned_act	CC 3.1.3
+trust:blessing	withdraw	roles		member	CC 3.1.3
+location_proof:{version}	attest	widens		by_scope	CC 3.3.3	Producers MAY scope to `community` with a specific `community_id`
+trust:blessing	attest	widens		by_scope	CC 3.1.3
+admission:unit	attest	roles		author,member	CC 2.7.11
+admission:unit	attest	widens		by_scope	CC 3.1.3
+admission:unit	withdraw	roles		author,member	CC 2.4.1.1
+admission:unit	withdraw	policy		selfAct	CC 2.4.1.1

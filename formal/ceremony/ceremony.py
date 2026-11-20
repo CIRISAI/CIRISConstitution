@@ -21,7 +21,7 @@ Rows (dicts of causal_kernel.row) carry `form`: "e1" for the earlier JSON form (
              holders, with each holder it adds and each it re-commits; a recovery is one statement by the recovery
              key the commitment in force commits to, changing that seat alone (CC 2.6.1.11, CC 4.2.6).
     rebind   `transport:canonical_rebind` for `seat`, carrying `xw`, counted by the holders.
-    td       a seat's `transport_destination` carrying `xw`; the genesis names the seats' bindings.
+    td       a seat's binding: `transport_destination`, with `xw` beside it at the payload's top level; the genesis names the seats' bindings.
     confer   any other counted act of the holders.
     resume   `accord:lifecycle:active`, counted, naming a halt.
     ob       an owner-binding, `owner` over `target`, with both voices (the target's cosignature, CC 3.2).
@@ -110,13 +110,16 @@ def answers(rows, reader, now=5, first=None):
         if len(signed) >= need:
             gens.append(g["id"])
     pin = reader.get("pin")
+    fork = []
     if pin in gens and "pinned_ignored" not in MUT:
         cut = [pin]
     elif "fork_first" in MUT and gens:
         cut = [min(gens, key=lambda i: first.get(i, 0))]
+    elif len(gens) > 1 and not MUT & {"fork_common", "fork_union"}:
+        cut, fork = [], sorted(gens)       # two geneses under a thumbprint anchor: a fork, rooted on neither (CC 2.6.1.11)
     else:
         cut = sorted(gens)
-    void = [g for g in gens if g not in cut]
+    void = [g for g in gens if g not in cut and g not in fork]
     if cut:
         rs = [frozenset(fwd[c]["roster"]) for c in cut]
         roster = frozenset.union(*rs) if "fork_union" in MUT else frozenset.intersection(*rs)
@@ -308,6 +311,8 @@ def answers(rows, reader, now=5, first=None):
         return any(r["kind"] == "edge" and r["signer"] == p and r["form"] == "e2" and live(p) for r in A.values())
 
     def may_act(a):
+        if not cut and "act_unrooted" not in MUT:
+            return False                   # no root, no agent runs (CC 2.6.1.11, the anchor)
         if "act_without_steward" in MUT:
             return live(a)
         st = owner_of(a)
@@ -337,7 +342,7 @@ def answers(rows, reader, now=5, first=None):
 
     keys = sorted({r["key"] for r in by.values() if r["kind"] == "rec"})
     return {
-        "cut": tuple(cut), "void": tuple(sorted(void)),
+        "cut": tuple(cut), "void": tuple(sorted(void)), "fork": tuple(fork),
         "accepted": frozenset(i for i in acc if i in by),
         "live": frozenset(k for k in keys if live(k)),
         "roster": R,

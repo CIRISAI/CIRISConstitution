@@ -187,7 +187,7 @@ def library():
         try: K.group([x, y], None, "greatest", "l"); return False
         except K.Tie: return True
     traps = {
-        "a tie between two rows is refused": tie(),
+        "a tie between two rows concludes nothing": tie(),
         "the same row twice is not a tie": K.group([x, dict(x)], None, "least", "l") == x,
         "max is a function of the set": K.group([x, y], None, "max", "l") == K.group([y, x], None, "max", "l") == 1,
         "sel does not match an absent field against None": K.sel([{"id": "x"}], removes=None) == [] and len(K.sel([{"id": "x", "removes": None}], removes=None)) == 1,

@@ -11,6 +11,9 @@ Five sections, each compared with key_end_expected.tsv:
                  time or back-dated, first held early or late, witnessed or not, under a reader that acknowledged the
                  end or not; for each candidate rule, a FUNCTION PAIR (same rows and now, different verdicts) and the
                  renewals it gets wrong (a back-dated one counted, one signed in time refused)
+    of iss       K-ISS: a statement counts as the identity `iss` it states only if its key is iss's genesis key or
+                 reached from it by rotations; scenarios of a chain of records, each with every link withheld in
+                 turn, read in every arrival order, against a verdict written by hand; five plants, each caught
     wording      the class condition read from the record versus from an owner-binding
     attacks      scenarios in attacks.py's pattern, every arrival order of up to seven rows; each fact must hold
     numbers      the steady state of a seat's store, from formulas over stated rates (not measured)
@@ -39,7 +42,8 @@ def limit():
 limit()
 import key_end as KE  # noqa: E402
 
-rec, att, edge, revoke, unbind = KE.rec, KE.att, KE.edge, KE.revoke, KE.unbind
+rec, att, edge, revoke, unbind, bundle = KE.rec, KE.att, KE.edge, KE.revoke, KE.unbind, KE.bundle
+occ, evict, voice = KE.occ, KE.evict, KE.voice
 KEYS = ("A", "B", "C", "D", "X")
 PARTIES = ("X",)
 SUBJECTS = ("X",)
@@ -299,6 +303,192 @@ def time_section():
             fn = "a function of the rows, the reader's own rows and now; two readers differ"
         out.append((label, fn, pair or "-", forged or "never", honest or "never"))
     return out
+
+
+# ---- of iss: a statement's key is a key of the identity it signs as ------------------------------------------
+# Each scenario: rows, the statement (its signer, its own instant, the record it names), the chain rows a reader must
+# hold, and the verdict written by hand: "valid" (counts as A), "invalid" (held, concludes nothing as A), "waiting"
+# (a record or occurrence lacks a voice, so it and the statement are held waiting and never counted until it arrives).
+gA = rec("pA", "A", 0, 10)
+gP = rec("pP", "A", 0, None, typ="user")          # A as a person: its genesis record states no end
+ISS_SCENARIOS = [
+    ("the genesis key signing as itself", [gA], ("A", 5, "pA"), ["pA"], "valid", None),
+    ("the genesis key under its renewal", [gA, rec("rA", "A", 8, 18, names=("pA",))], ("A", 13, "rA"), ["pA", "rA"], "valid", None),
+    ("a successor reached by one rotation", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4)],
+     ("B", 5, "qB"), ["pA", "qB"], "valid", None),
+    ("a successor signing after the old key's end", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4)],
+     ("B", 13, "qB"), ["pA", "qB"], "valid", None),
+    ("a rotation made under the old key's renewal", [gA, rec("rA", "A", 8, 18, names=("pA",)),
+                                                    rec("qB", "B", 12, 20, names=("rA",), succ_of="A", at_old=12)],
+     ("B", 13, "qB"), ["pA", "rA", "qB"], "valid", None),
+    ("a successor under its own renewal (the chain does not move)", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                                    rec("rB", "B", 12, 20, names=("qB",), iss="A")],
+     ("B", 15, "rB"), ["pA", "qB", "rB"], "valid", None),
+    ("a successor two rotations on", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                      rec("qC", "C", 6, 16, names=("qB",), succ_of="B", at_old=6, iss="A")],
+     ("C", 7, "qC"), ["pA", "qB", "qC"], "valid", None),
+    ("an unrelated key whose own record is of another identity", [gA, rec("pE", "E", 0, 10)], ("E", 5, "pE"), ["pE"], "invalid",
+     "iss_other_identity"),
+    ("an unrelated key whose record claims A with no rotation", [gA, rec("xE", "E", 0, 10, iss="A")], ("E", 5, "xE"), ["xE"], "invalid",
+     "iss_unchecked"),
+    ("a key rotated from another identity", [gA, rec("pE", "E", 0, 10), rec("qC", "C", 4, 14, names=("pE",), succ_of="E", at_old=4)],
+     ("C", 5, "qC"), ["pE", "qC"], "invalid", "iss_other_identity"),
+    ("a record of B superseding A's record (a renewal across keys, no rotation)", [gA, rec("tB", "B", 4, 14, names=("pA",), iss="A")],
+     ("B", 5, "tB"), ["pA", "tB"], "invalid", None),
+    ("a rotation lacking the predecessor's statement", [gA, rec("uB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4, sigs={"B"})],
+     ("B", 5, "uB"), ["pA", "uB"], "waiting", "iss_unsigned_link"),
+    ("a rotation signed after the old record's end", [gA, rec("lB", "B", 12, 20, names=("pA",), succ_of="A", at_old=12)],
+     ("B", 13, "lB"), ["pA", "lB"], "invalid", None),
+    ("a rotation signed before the old key's own revoked_after", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                                 revoke("v", "A", 9)], ("B", 5, "qB"), ["pA", "qB"], "valid", None),
+    ("a rotation signed at or after the old key's own revoked_after", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                                      revoke("v", "A", 3)], ("B", 5, "qB"), ["pA", "qB"], "revoked",
+     "iss_ignores_revoked_after"),
+    ("the owner's revocation of the old key cuts no chain", [pX, gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                            unbind("o", "X", "A", 3, "binding")], ("B", 5, "qB"), ["pA", "qB"], "valid", None),
+    ("a rotation without the new key's own statement", [gA, rec("nB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4, sigs={"A"})],
+     ("B", 5, "nB"), ["pA", "nB"], "waiting", None),
+    ("a rotation made at the old record's valid_until (outside it: covered is asserted_at <= t < valid_until)",
+     [gA, rec("eB", "B", 10, 20, names=("pA",), succ_of="A", at_old=10)], ("B", 11, "eB"), ["pA", "eB"], "invalid", "iss_end_inclusive"),
+    ("a rotation made just inside the old record", [gA, rec("iB", "B", 9, 19, names=("pA",), succ_of="A", at_old=9)],
+     ("B", 11, "iB"), ["pA", "iB"], "valid", None),
+    ("a rotation whose predecessor's voice is a separate statement: it waits for it, then counts",
+     [gA, voice("vB", "A", 4, ("pA",)), rec("wB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4, voice="vB")],
+     ("B", 5, "wB"), ["pA", "vB", "wB"], "valid", None),
+    ("a person's second device bound by a live admitted occurrence", [gP, rec("pD", "D", 0, None, typ="user", iss="A"),
+                                                                       occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD"))],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "valid", "iss_skip_occurrence"),
+    ("an occurrence the roster door evicted", [gP, rec("pD", "D", 0, None, typ="user", iss="A"),
+                                               occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD")), evict("xD", "A", "oD", names=("pP",))],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "evicted", "iss_occ_ignores_eviction"),
+    ("an eviction by another device, carrying that device's record and occurrence, evicts at once",
+     [gP, rec("pD", "D", 0, None, typ="user", iss="A"), occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD")),
+      rec("pE", "E", 0, None, typ="user", iss="A"), occ("oE", "A", "A", "E", 0, 20, names=("pP", "pE")),
+      evict("xE", "E", "oD", names=("pE", "oE"))],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "evicted", None),
+    ("an eviction that carries no proof of its signer is Invalid at the door, and the occurrence stands",
+     [gP, rec("pD", "D", 0, None, typ="user", iss="A"), occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD")),
+      rec("pE", "E", 0, None, typ="user", iss="A"), occ("oE", "A", "A", "E", 0, 20, names=("pP", "pE")),
+      evict("xE", "E", "oD")],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "valid", "evict_waits"),
+    ("an eviction whose carried proof does not resolve its signer as A's counts for nothing",
+     [gP, rec("pD", "D", 0, None, typ="user", iss="A"), occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD")),
+      rec("pX", "E", 0, None, typ="user"), evict("xE", "E", "oD", names=("pX",))],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "valid", "iss_occ_unconcluded_eviction"),
+    ("an occurrence signed by a key that is no key of A", [gP, rec("pE", "E", 0, None, typ="user"), rec("pD", "D", 0, None, typ="user", iss="A"),
+                                                            occ("oD", "E", "A", "D", 0, 20, names=("pE", "pD", "pP"))],
+     ("D", 5, "pD", "oD"), ["pE", "pD", "oD"], "invalid", "iss_occ_any_signer"),
+    ("an occurrence the roster door did not admit", [gP, rec("pD", "D", 0, None, typ="user", iss="A"),
+                                                     occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD"), admitted=False)],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "invalid", None),
+    ("a statement at the occurrence's end (outside it)", [gP, rec("pD", "D", 0, None, typ="user", iss="A"),
+                                                          occ("oD", "A", "A", "D", 0, 5, names=("pP", "pD"))],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "invalid", None),
+    ("an agent key bound under a person's identity", [gP, rec("pG", "G", 0, 10, typ="agent"),
+                                                      occ("oG", "A", "A", "G", 0, 20, names=("pP", "pG"))],
+     ("G", 5, "pG", "oG"), ["pP", "pG", "oG"], "invalid", "iss_occ_agent_as_person"),
+    ("an occurrence without the bound key's own voice waits", [gP, rec("pD", "D", 0, None, typ="user", iss="A"),
+                                                               occ("oD", "A", "A", "D", 0, 20, names=("pP", "pD"), sigs={"A"})],
+     ("D", 5, "pD", "oD"), ["pP", "pD", "oD"], "waiting", "iss_occ_no_own_voice"),
+    ("two rival rotations of A: neither successor counts", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                            rec("qT", "T", 5, 15, names=("pA",), succ_of="A", at_old=5)],
+     ("B", 6, "qB"), ["pA", "qB"], "contested", "iss_rivals_ignored"),
+    ("two rival rotations settled by a rotation naming both", [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4),
+                                                              rec("qT", "T", 5, 15, names=("pA",), succ_of="A", at_old=5),
+                                                              rec("dB", "B", 6, 16, names=("pA", "qB", "qT"), succ_of="A", at_old=6)],
+     ("B", 7, "dB"), ["pA", "qB", "qT", "dB"], "valid", None),
+    ("a rival that names no record of A covering its instant blocks nothing",
+     [gA, rec("qB", "B", 4, 14, names=("pA",), succ_of="A", at_old=4), rec("qT", "T", 12, 20, names=("pA",), succ_of="A", at_old=12)],
+     ("B", 6, "qB"), ["pA", "qB"], "valid", "iss_rival_uncovered"),
+    ("a key a counted bundle seats for A (a recovery, no rotation record)", [gA, rec("pR", "R", 0, 10, iss="A"),
+                                                                              bundle("b1", {"A": "R"})],
+     ("R", 5, "pR", "b1"), ["b1"], "valid", None),
+    ("a key only a bundle not counted seats for A", [gA, rec("pR", "R", 0, 10, iss="A"), bundle("b1", {"A": "R"}, counted=False)],
+     ("R", 5, "pR", "b1"), ["b1"], "invalid", "iss_bundle_uncounted"),
+    ("a key seated by a bundle a later counted bundle no longer seats it in", [gA, rec("pR", "R", 0, 10, iss="A"), bundle("b1", {"A": "R"}),
+                                                                               bundle("b2", {"A": "S"}, prev="b1")],
+     ("R", 5, "pR", "b1"), ["b1"], "seat ended", "iss_bundle_superseded"),
+    ("the key a later counted bundle seats for A", [gA, rec("pS", "S", 0, 10, iss="A"), bundle("b1", {"A": "R"}),
+                                                    bundle("b2", {"A": "S"}, prev="b1")],
+     ("S", 5, "pS", "b2"), ["b1", "b2"], "valid", None),
+    ("a key seated by a bundle whose later bundle is not counted", [gA, rec("pR", "R", 0, 10, iss="A"), bundle("b1", {"A": "R"}),
+                                                                    bundle("b2", {"A": "S"}, prev="b1", counted=False)],
+     ("R", 5, "pR", "b1"), ["b1"], "valid", None),
+]
+
+
+def iss_answer(S):
+    """valid / invalid / revoked / contested / seat ended / evicted, or None (waiting), for the statement s."""
+    if "s" not in S.by:
+        return None
+    if not S.C.get("s"):
+        return "invalid"
+    if KE.of_iss_now(S, "s"):
+        return "valid"
+    links = KE.iss_chain(S.by["s"], {q["id"]: q for q in S.Cs}) or []
+    if links and links[0]["kind"] == "bun":
+        return "seat ended"
+    if links and links[0]["kind"] == "occ":
+        return "evicted"
+    return "revoked" if all(KE.handed_on(S, l) for l in links) else "contested"
+
+
+def iss_world(rows, st):
+    signer, at, cover = st[:3]
+    return rows + [att("s", signer, at, cover, iss="A", names=st[3:])]
+
+
+def iss_run(sc):
+    """(answers, problems): the full world in every arrival order, then each chain row withheld in turn."""
+    name, rows, st, chain, want, _ = sc
+    w = iss_world(rows, st)
+    bad = []
+    full, agree = every_order(w, iss_answer)
+    got = "waiting" if full is None else full
+    if got != want:
+        bad.append("%s: %s, written %s" % (name, got, want))
+    if not agree:
+        bad.append("%s: arrival orders disagree" % name)
+    for gone in chain:
+        part = [r for r in w if r["id"] != gone]
+        a, ag = every_order(part, iss_answer)
+        if a is not None or not ag:
+            bad.append("%s: with %s withheld the statement is %s, not waiting" % (name, gone, a))
+    return got, bad
+
+
+def iss_section():
+    """(lines, ok): each scenario's verdict with the rule, then each plant and the scenario that catches it."""
+    out, ok = [], True
+    for sc in ISS_SCENARIOS:
+        got, bad = iss_run(sc)
+        ok = ok and not bad
+        out.append((sc[0], got, "every arrival order agrees; each chain row withheld waits" if not bad else "; ".join(bad)))
+    plants = [("iss_unchecked", "a reader that accepts any held key"),
+              ("iss_other_identity", "a reader that accepts a record of another identity"),
+              ("iss_unsigned_link", "a reader that accepts a chain whose rotation lacks the predecessor's statement"),
+              ("iss_genesis_only", "a reader that refuses a legitimate successor (kid must be the genesis key)"),
+              ("iss_ignores_revoked_after", "a reader that keeps a link signed after its predecessor's own revoked_after"),
+              ("iss_bundle_uncounted", "a reader that accepts a key seated only by a bundle not counted"),
+              ("iss_bundle_superseded", "a reader that keeps a key a later counted bundle no longer seats"),
+              ("iss_rivals_ignored", "a reader that lets a rotation with a rival hand on"),
+              ("iss_rival_uncovered", "a reader that lets an uncovered or invalid rival block a rotation"),
+              ("iss_end_inclusive", "a reader that reads a record's valid_until as covered"),
+              ("iss_skip_occurrence", "a reader that skips way (d), so a person's second device is refused"),
+              ("iss_occ_any_signer", "a reader that accepts an occurrence whatever its signer"),
+              ("iss_occ_ignores_eviction", "a reader that keeps an evicted occurrence"),
+              ("iss_occ_unconcluded_eviction", "a reader that lets an eviction it cannot resolve evict"),
+              ("evict_waits", "a door that keeps an eviction carrying no proof and judges it as rows arrive"),
+              ("iss_occ_agent_as_person", "a reader that accepts an agent key bound under a person's identity"),
+              ("iss_occ_no_own_voice", "a reader that admits an occurrence without the bound key's own voice")]
+    pl = []
+    for plant, what in plants:
+        KE.MUT.add(plant)
+        caught = [sc[0] for sc in ISS_SCENARIOS if iss_run(sc)[1]]
+        KE.MUT.discard(plant)
+        pl.append((plant, what, caught[0] if caught else None))
+        ok = ok and bool(caught)
+    return out, pl, ok
 
 
 # ---- the class condition: read from the record, or from an owner-binding --------------------------------------
@@ -563,6 +753,15 @@ def main():
         say("  %s\n      %s\n      function pair: %s\n      a back-dated renewal counted: %s\n      a renewal signed in time refused: %s" % (label, fn, pair, forged, honest))
         lines.append("in_time\t%s\t%s\t%s\t%s" % (label, fn, "counts a back-dated renewal" if forged != "never" else "never counts a back-dated renewal",
                                                  "refuses one signed in time" if honest != "never" else "never refuses one signed in time"))
+    say("OF ISS (K-ISS): a statement counts as its iss only by a key of iss")
+    iss_out, iss_pl, iss_ok = iss_section()
+    for name, got, how in iss_out:
+        say("  %s: %s (%s)" % (name, got, how))
+        lines.append("of_iss\t%s\t%s" % (name, got))
+    for plant, what, by in iss_pl:
+        say("  plant %s (%s): %s" % (plant, what, "caught by " + by if by else "NOT CAUGHT"))
+        lines.append("of_iss_plant\t%s\t%s" % (what, "caught" if by else "not caught"))
+    ok = ok and iss_ok
     say("WORDING: which records must state an end")
     for label, got, verdict in wording_section():
         say("  %s: %s -> %s" % (label, got, verdict))

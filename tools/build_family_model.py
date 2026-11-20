@@ -24,6 +24,18 @@ SCOPES = ("self", "family", "community", "affiliations", "species", "biosphere",
 COUNT_TEXT = os.path.join(ROOT, "formal/derivation/count_text.tsv")
 POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
 SIGNED_OBJECT = os.path.join(ROOT, "constitution/signed_object.tsv")
+SIGNED_OBJECT_V2 = os.path.join(ROOT, "constitution/signed_object_v2.tsv")
+# The families whose payload CC 2.6.1.4 states, by the schema rule that holds it (manifests/family_payloads_v2.cddl).
+FORWARD_PAYLOAD = OrderedDict([("group-roster", "group:roster"), ("membership-change", "membership:{stage}"),
+                               ("occurrence-revocation", "identity:occurrence_revocation"),
+                               ("entity-revocation", "revocation:{entity_type}:{reason}"),
+                               ("takedown-notice", "takedown_notice:{basis}"), ("custody-ack", "custody:{kind}"),
+                               ("key-grant", "key_grant:{axis}"), ("delivery-receipt", "delivery_receipt:{stream_id}"),
+                               ("identity-occurrence", "identity:occurrence"), ("identity-amendment", "identity_amendment"),
+                               ("deferral-response", "deferral:response:{outcome}"), ("deferral-request", "deferral:request"),
+                               ("canonical-rebind", "transport:canonical_rebind"), ("trust-accepts", "trust:accepts")])
+FORWARD_PARTIAL = {"deferral:response:{outcome}", "deferral:request", "transport:canonical_rebind", "trust:accepts"}   # the rule names some members; the cell's others stay
+FORWARD_LEAVES = {"membership:{stage}": ("widening", "removal")}   # the stages the rule states; the others keep their cell
 CELL_CITES = os.path.join(ROOT, "formal/derivation/cell_cites.tsv")
 FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
 FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
@@ -60,7 +72,7 @@ COLUMNS = OrderedDict([
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
     ("count", "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)"),
-    ("authorship", "authored | counted | arms `selector => authored|counted` joined by ` ; `, on the count column's selector keys and `act` (group: the row is signed as the act of a roster under its consensus_protocol, by several statements over one payload, CC 2.6.1.9; own: one signer's own row; caller-supplied), the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)"),
+    ("authorship", "authored | subject (authored, and the author is the attested key: iss == sub, positive only) | counted | arms `selector => authored|subject|counted` joined by ` ; `, on the count column's selector keys and `act` (group: the row is signed as the act of a roster under its consensus_protocol, by several statements over one payload, CC 2.6.1.9; own: one signer's own row; caller-supplied), the first that holds deciding; a counted row is several statements over one payload and its author is null (CC 2.6.1.3, CC 2.6.1.9; formal/derivation/authorship_text.tsv)"),
     ("second_signers", "[{role, member, when?, cc_ref}]: each role besides the author whose statement over the same payload the row accepts; member is the payload member that names the party, `sub` where the party is the attested key, `owner_of_sub` where it is the owner the owner-binding of the attested key names, or `gap` where the text names none; [] means only the author signs (formal/derivation/authorship_text.tsv)"),
     ("derived", "projection_id | none (the row must equal the named projection's rebuild; formal/derivation/confers_text.tsv)"),
     ("read_by", "the named answers that read the family's rows (state, stands, tally, may, audience, missing, owed, window), from the KX of its rule cells (tools/kx_translate.py over tools/kx_prelude.kx); `by` names each cell. A family with no cell of its own takes the default reading (state, stands) of the default fold and change: rule default, stated once and checked for none of the families it covers"),
@@ -457,7 +469,7 @@ def conferral_columns(fams, reg):
         if [k for k, _ in p] != [k for k, _ in s]: errs.append(f"family_shapes.tsv: {r['family']}: parameters and sources do not name the same things")
         shapes[r["family"]] = (r, OrderedDict(p), OrderedDict(s))
     if set(shapes) != set(fams): errs.append("family_shapes.tsv: its families are not the model's: " + ", ".join(sorted(set(shapes) ^ set(fams))))
-    default, by_seg, by_class, stated, derived = None, {}, {}, OrderedDict(), OrderedDict()
+    default, by_seg, by_class, stated, derived, armed = None, {}, {}, OrderedDict(), OrderedDict(), OrderedDict()
     for t in tsv_rows(CONFERS_TEXT):
         where = f"confers_text.tsv: {t['column']} {t['when']}"
         span = section_span(t["cc_ref"])
@@ -466,6 +478,18 @@ def conferral_columns(fams, reg):
         if t["column"] == "confers" and t["when"].startswith("shape="):
             if default is not None: errs.append(f"{where}: the default is stated once")
             default = (set(t["when"][6:].split("|")), t["value"], src)
+        elif t["column"] == "confers" and " => " in t["value"]:
+            # an armed cell, in the count column's style: `selector => value ; ...`, the first arm that holds deciding
+            if t["when"] not in fams: errs.append(f"{where}: no such family"); continue
+            arms_ = []
+            for seg in t["value"].split(" ; "):
+                sel, _, val = seg.partition(" => ") if " => " in seg else ("*", "", seg)
+                if sel != "*" and not re.fullmatch(r"[a-z_]+=[a-z_|]+", sel): errs.append(f"{where}: {sel} is not a selector"); break
+                arms_.append(OrderedDict([("when", sel), ("value", val.strip())]))
+            else:
+                if arms_[-1]["when"] != "*": errs.append(f"{where}: an armed cell ends in a `*` arm")
+                armed[t["when"]] = OrderedDict([("value", t["value"]), ("arms", arms_), ("source", "cc-table"), ("cc_ref", t["cc_ref"]),
+                                                ("rule", "stated"), ("from", "formal/derivation/confers_text.tsv")])
         elif t["column"] == "confers":
             if t["when"] not in fams: errs.append(f"{where}: no such family"); continue
             k, _, v = t["value"].partition("=") if t["value"] != "nothing" else ("confers", "", "nothing")
@@ -483,6 +507,8 @@ def conferral_columns(fams, reg):
             derived[t["when"]] = OrderedDict([("value", t["value"]), ("source", "cc-table"), ("cc_ref", t["cc_ref"]), ("rule", "stated"), ("from", "formal/derivation/confers_text.tsv")])
         else: errs.append(f"{where}: the column is confers, binds_segment or derived")
     if default is None: errs.append("confers_text.tsv: no default for confers")
+    for f, cell in armed.items():
+        if f in stated: errs.append(f"confers_text.tsv: {f}: an armed cell and a plain one; state it once")
     for f in fams:
         if f not in shapes: continue
         r, P, S = shapes[f]
@@ -490,6 +516,8 @@ def conferral_columns(fams, reg):
         for k, (v, src) in stated.get(f, {}).items():   # a parameter the shapes table does not state, from confers_text.tsv; never a copy
             if k in P: errs.append(f"confers_text.tsv: {f}: family_shapes.tsv already states {k}; remove the row"); continue
             P, S = OrderedDict(P, **{k: v}), OrderedDict(S, **{k: src})
+        if f in armed:
+            conf[f] = armed[f]; continue
         if "confers" in P:
             if r["shape"] in default[0]: errs.append(f"confers_text.tsv: {f}: a {r['shape']} takes the default; its row is a copy")
             m = re.match(r'^quote:(CC [\d.]+) "(.*)"$', S["confers"])
@@ -538,7 +566,7 @@ def conferral_columns(fams, reg):
 
 
 AUTHORSHIP_TEXT = os.path.join(ROOT, "formal/derivation/authorship_text.tsv")
-AUTHORSHIP_VALUES = ("authored", "counted", "gap")
+AUTHORSHIP_VALUES = ("authored", "subject", "counted", "gap")   # subject: authored, and the author is the attested key (iss == sub)
 AUTHORSHIP_GAP_MAX = 0   # families whose authorship the text gives both ways with no selector to tell them; the number only falls
 SECOND_SIGNERS_GAP_MAX = 0   # roles whose payload member the text does not name; the number only falls
 SELECTOR_VALUE = r"[a-z_:{}]+(?:\|[a-z_:{}]+)*"
@@ -955,6 +983,34 @@ def main():
             r["body"] = {"value": OrderedDict([("members", mem)]), "source": "cc-table", "cc_ref": "CC 8.11.9",
                          "code": {"value": r["body"].get("value"), "source": "gap"},
                          "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"}
+    # The forward payload (CC 2.6.1.4): where the signed-object table of this form states a family's payload rule, that rule
+    # is the family's body, member for member, and the earlier form's cell gives way to it (a family whose rule covers
+    # some leaves only keeps its cell's members of the others). A cosign:{state} row has no payload of its own (CC 3.1.3).
+    fwd = OrderedDict()
+    for so in csv.DictReader(open(SIGNED_OBJECT_V2, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE):
+        fam = FORWARD_PAYLOAD.get(so["rule"])
+        if fam:
+            fwd.setdefault(fam, []).append(OrderedDict([
+                ("member", so["member"].strip('"')), ("type", so["type"]),
+                ("presence", "required" if so["required_when"] == "always" else "optional"),
+                ("when", so["required_when"]), ("in_cddl", True), ("cc_ref", "CC " + so["cc_ref"].split()[0])]))
+    if set(fwd) != set(FORWARD_PAYLOAD.values()):
+        print("signed_object_v2.tsv states no payload for: " + ", ".join(sorted(set(FORWARD_PAYLOAD.values()) - set(fwd)))); return 1
+    for r in rows:
+        if r["family"] in fwd:
+            leaves = FORWARD_LEAVES.get(r["family"])
+            old = r["body"].get("value") if isinstance(r["body"].get("value"), dict) else {}
+            named = {e["member"] for e in fwd[r["family"]]}
+            keep = [e for e in old.get("members", []) if (leaves and e.get("leaf") and e["leaf"].split(":")[1] not in leaves)
+                    or (r["family"] in FORWARD_PARTIAL and e.get("member") not in named)]
+            r["body"] = {"value": OrderedDict([("rule", next(k for k, v in FORWARD_PAYLOAD.items() if v == r["family"])),
+                                               ("members", fwd[r["family"]] + keep)]),
+                         "source": "cc-table", "cc_ref": "CC 2.6.1.4",
+                         "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4"
+                                 + (f"; stages {', '.join(leaves)}; the others keep the members the earlier cell gave" if leaves else "")}
+        elif r["family"] == "cosign:{state}":
+            r["body"] = {"value": "none: each state is a statement over the event's own payload, named by the event's row id",
+                         "source": "cc-table", "cc_ref": "CC 3.1.3"}
     # The sentences that state a closed cell: the cell gains the sections that say it, its value untouched.
     by_fam = {r["family"]: r for r in rows}
     cited = 0
@@ -1012,7 +1068,7 @@ def main():
         print(f"authorship: {len(auth_gap)} families are open, more than {AUTHORSHIP_GAP_MAX}: " + ", ".join(auth_gap)); return 1
     if len(second_gap) > SECOND_SIGNERS_GAP_MAX:
         print(f"second_signers: {len(second_gap)} roles name no payload member, more than {SECOND_SIGNERS_GAP_MAX}: " + ", ".join(f"{f} {x}" for f, x in second_gap)); return 1
-    a_kind = Counter("gap" if c["source"] == "gap" else (c["value"] if c["value"] in ("authored", "counted") else "mixed") for c in auth.values())
+    a_kind = Counter("gap" if c["source"] == "gap" else (c["value"] if c["value"] in ("authored", "subject", "counted") else "mixed") for c in auth.values())
     # The default row: the value a family takes in each of these columns unless it states its own.
     # Pinned as data, and held to be the commonest value of its column, so a change of default is a
     # deliberate edit and never a drift. Each row lists the columns in which it departs.
@@ -1068,10 +1124,10 @@ def main():
                                   [("read_by_default", der_meta),
                                    ("reading", "rule default: the one stated default (confers: a claim or content confers nothing; read_by: the default fold and change, checked for none of the families it covers); shape: the family's consent parameters in formal/derivation/family_shapes.tsv; stated: a sentence for this family; class: every placeholder names no key by its registry class; cells: the family's own rule cells; gap: listed with what is missing")])),
         ("authorship", OrderedDict([("source", "formal/derivation/authorship_text.tsv"),
-                                    ("families", OrderedDict((k, a_kind.get(k, 0)) for k in ("authored", "counted", "mixed", "gap"))),
+                                    ("families", OrderedDict((k, a_kind.get(k, 0)) for k in ("authored", "subject", "counted", "mixed", "gap"))),
                                     ("second_signers", OrderedDict([("families_with_roles", sum(1 for c in second.values() if c["value"])), ("families_author_only", sum(1 for c in second.values() if not c["value"])),
                                                                     ("roles", sum(len(c["value"]) for c in second.values())), ("roles_without_member", len(second_gap))])),
-                                    ("reading", "authorship gives each family's rows as authored (one party authors; the payload carries author) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)")])),
+                                    ("reading", "authorship gives each family's rows as authored (one party authors; the payload carries author), subject (authored, and the author is the attested key: a statement whose iss is not the sub is refused) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)")])),
         ("default_row", OrderedDict([("columns", default), ("families_on_it", by_count.get(0, 0)),
                                      ("families_by_departures", OrderedDict((str(k), by_count[k]) for k in sorted(by_count))),
                                      ("reading", "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone")])),

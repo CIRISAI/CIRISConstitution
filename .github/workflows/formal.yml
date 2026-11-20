@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - 'formal/**'
+      - 'tools/**'
       - 'constitution/part_3_the_namespace.md'
       - 'constitution/part_1_foundation.md'
       - 'constitution/part_4_composition_governance.md'
@@ -14,6 +15,7 @@ on:
   pull_request:
     paths:
       - 'formal/**'
+      - 'tools/**'
       - 'constitution/part_3_the_namespace.md'
       - '.github/workflows/formal.yml'
 
@@ -118,6 +120,10 @@ jobs:
           grep -q 'Invariant Inv_HaltFromHolder is violated' r1.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h10" -deadlock -config AccordHaltRow_anytarget.cfg AccordHaltRow.tla | tee r2.log
           grep -q 'Invariant Inv_LifecycleNamesHalt is violated' r2.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h11" -deadlock -config AccordHaltRow_discard.cfg AccordHaltRow.tla | tee r3.log
+          grep -q 'Inv_HolderHaltLatchable is violated' r3.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h12" -deadlock -config AccordHaltRow_reach_h4.cfg AccordHaltRow.tla | tee r4.log
+          grep -q 'NeverLatchedOnH4 is violated' r4.log || exit 1
       - name: The members' lift of a moderator's act closes; a count over later joiners is shown to fail
         working-directory: formal/moderation_lift
         run: |
@@ -320,6 +326,7 @@ jobs:
           python3 ../deletion/deletion_model.py --check
           python3 ../owner_binding/owner_binding_model.py --check
           python3 ../key_plane/key_plane_model.py --check
+          python3 ../key_roles/key_roles_model.py --check
           python3 ../guardianship/guardianship_model.py --check
           python3 ../ranked_choice/ranked_choice_model.py --check
           python3 ../set_item/set_item_model.py --check

@@ -9,6 +9,15 @@ accord:invoke:drill:{drill_id}	subject_rule	accord_named	{"attested_party": ["Ta
 accord:invoke:notify:{notify_id}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle:{kind}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
+admission:unit	placement	unbuilt	null
+admission:unit	subject_rule	unbuilt	null
+admission:unit	cosign_rule	unbuilt	null
+admission:unit	freshness	unbuilt	null
+admission:unit	lifecycle	unbuilt	null
+admission:unit	replication	unbuilt	null
+admission:unit	projection	unbuilt	null
+admission:unit	erasure_route	unbuilt	null
+admission:unit	governance	unbuilt	null
 age_assurance:{level}:{band}:{version}	subject_rule	verdict_not_yours	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "not_subject (attester != attested)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 archive_release:{basis}	placement	unbuilt	"none (held shut: never stored)"
 archive_release:{basis}	subject_rule	unbuilt	"none (held shut)"
@@ -151,6 +160,15 @@ ledger:checkpoint:{unit}:{version}	subject_rule	one_ledger	{"attested_party": ["
 ledger:head:{unit}:{version}	subject_rule	one_ledger	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: ledger_id == derive_ledger_id(attested, unit, standard_version)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 ledger:promotion:{version}	subject_rule	one_ledger	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: ledger_id == derive_ledger_id(attested, unit, standard_version)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 licensure:{authority_id}	lifecycle	adverse	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
+location_proof:{version}	placement	unbuilt	null
+location_proof:{version}	subject_rule	unbuilt	null
+location_proof:{version}	cosign_rule	unbuilt	null
+location_proof:{version}	freshness	unbuilt	null
+location_proof:{version}	lifecycle	unbuilt	null
+location_proof:{version}	replication	unbuilt	null
+location_proof:{version}	projection	unbuilt	null
+location_proof:{version}	erasure_route	unbuilt	null
+location_proof:{version}	governance	unbuilt	null
 membership:{stage}	placement	two_consents	["targeted_family", "targeted_room (at the group)"]
 membership:{stage}	subject_rule	two_consents	{"proposal": "cardinality exactly 1 invitee (0 for a standing offer in an open public room), expires_at <= 30 d", "reply": "attested = invitee"}
 membership:{stage}	cosign_rule	quorum	{"proposal/reply/resignation": "none", "widening/removal": "group_consensus_protocol"}
@@ -208,6 +226,15 @@ trace:{form}:{version}	subject_rule	own_record	{"kind": "cardinality >= 1, subje
 trace:{form}:{version}	projection	trace_store_columns	{"rebuild": "none", "table": "trace_events + trace_llm_calls"}
 trace:{form}:{version}	erasure_route	trace_signer_erases	["dsar (trace corpus hard delete)", "purge"]
 transport:canonical_rebind	cosign_rule	quorum	"holder quorum (CC 5.3.4)"
+trust:blessing	placement	unbuilt	null
+trust:blessing	subject_rule	unbuilt	null
+trust:blessing	cosign_rule	unbuilt	null
+trust:blessing	freshness	unbuilt	null
+trust:blessing	lifecycle	unbuilt	null
+trust:blessing	replication	unbuilt	null
+trust:blessing	projection	unbuilt	null
+trust:blessing	erasure_route	unbuilt	null
+trust:blessing	governance	unbuilt	null
 trust:{job}:{version}	subject_rule	trust_edge_is_a_delegation	"delegation term required, no cycle, node agency scopes infra-only"
 trust:{job}:{version}	cosign_rule	quorum	"family charter witness quorum (check_charter_witness_quorum)"
 trust:{job}:{version}	freshness	standing_at_signing	{"W": "attach freshness window W (check_attach_freshness, CC 2.6.7); charter/cycle read received_at", "judged_at": "signed_instant_with_W"}

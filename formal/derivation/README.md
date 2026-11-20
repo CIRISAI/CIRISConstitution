@@ -53,9 +53,9 @@ pointing elsewhere is a row of its own, so the table counts repeats.
 The cut-candidates table gives `file`, `line_start`, `line_end`, `kind` (`rationale`,
 `restated_block`, `informative`, `example`, `duplicate_table`, `history`), `bytes` and a note.
 
-Headline numbers: 4,435 statements (Part 3 1,535, Part 4 952, Part 5 662, Part 2 517, Part 6 227,
-Part 8 229, Part 1 155, Part 7 158); by scope family 1,884, kernel 1,370, mechanism 757, foundation 218,
-stewardship 206; by role states 3,426, restates 697, applies 245, exception 66, reason 1. 206 cut-candidate
+Headline numbers: 4,503 statements (Part 3 1,543, Part 4 959, Part 5 659, Part 2 570, Part 6 227,
+Part 8 232, Part 1 155, Part 7 158); by scope family 1,896, kernel 1,426, mechanism 757, foundation 218,
+stewardship 206; by role states 3,492, restates 697, applies 246, exception 67, reason 1. 206 cut-candidate
 blocks, about 260 KB.
 
 Caveats: twelve readers each took one line range, so a rule stated in two ranges may carry two
@@ -110,7 +110,7 @@ ASEAN Guide on AI Governance and Ethics. The mapping lives outside this reposito
 | File | Rows | What a row is |
 |---|---|---|
 | `compliance_dimensions.tsv` | 27 | a dimension id, its stem and tier, which works attest it, the registry families that carry the stem, the Part 3 sections that define them |
-| `compliance_wire_forms.tsv` | 1,059 | one wire form a work's mapping cites, the number of mapped lines citing it, the registry family it resolves to, and the answer: `resolves`, `open` (open vocabulary no row claims) or the refusal token |
+| `compliance_wire_forms.tsv` | 1,059 | one wire form a work's mapping cites, the number of mapped lines citing it, the registry family it resolves to, the answer: `resolves`, `open` (open vocabulary no row claims) or the refusal token, and a note where a mapped form was corrected |
 
 `python3 tools/check_compliance_wire_forms.py` re-resolves every form against the generated
 registry and fails when a dimension loses its family or anchor, a cited section is no longer a
@@ -153,8 +153,8 @@ closes is never overridden here: where text and build differ, that is a departur
 reason in `departure_reasons.json`. `signer_rule_text.tsv` does the same for the signer column,
 with its own grammar.
 
-`authorship_text.tsv` states who signs a family's row: the `authorship` cell, authored or counted, in arms on the
-count column's selector keys and `act`, and the `second_signers` cell, each role besides the author whose statement over the
+`authorship_text.tsv` states who signs a family's row: the `authorship` cell, authored, `subject` (authored, and the
+author is the attested key: `iss` equals `sub`, positive only) or counted, in arms on the count column's selector keys and `act`, and the `second_signers` cell, each role besides the author whose statement over the
 same payload the row accepts, with the payload member that names its party (`sub`, or `gap` where the text names
 none). Every quote stands verbatim in its section. A family with a count and no row fails the build, as does a
 counted arm with no count; the open cells of each column are capped, and the number only falls.
@@ -162,14 +162,19 @@ counted arm with no count; the open cells of each column are capped, and the num
 `tools/cc_family_select.py` is the one reader of the selector arms in the `count`, `authorship` and
 `second_signers` cells. It binds the leaf from the dimension with `tools/cc_namespace_match.py` under
 the cell's own family, version tail stripped, and takes verb, identity, group, seats and act from the
-caller, since no sentence reads them from the row alone. `act` is `group` when the row is signed as the act of a
-roster under its `consensus_protocol`, by several statements over one payload (CC 2.6.1.9), and `own` when it is
-one signer's own row; a count arm does not read it. An unsupplied key answers unknown; an arm
+caller, since no sentence reads them from the payload. `act` is never a payload member: the reader derives it from the
+statements the row carries, `group` when the row is signed as the act of a roster under its `consensus_protocol`, by
+several statements over one payload (CC 2.6.1.9), and `own` when it is one statement by the author (CC 2.6.1.3). An unsupplied key answers unknown; an arm
 is false if any test is false, else unknown if any is; an unknown arm before the decider makes the
 answer unknown. `--write-vectors` writes `manifests/family_select_vectors.json` (every arm held and
 not held, the unknown, order and `{name}` cases) and `manifests/family_authorship.json` (the two
 signer cells and the model's SHA-256, for a consumer that vendors them); the gate replays the
-vectors, runs four broken evaluators they must catch, and checks both files current.
+vectors, runs four broken evaluators, two broken author checks and two broken voice checks they must catch, and checks both files current.
+An `authorship` answer of `subject` carries `admits` in its vectors: true when the statement's `iss` is its `sub`,
+false when another key signed, unknown when either is absent.
+A `voice_refused` vector offers a roster member's statement on a row whose `act` is `own`: no role names it, so `admits`
+is false. A `voice_admitted` vector offers a statement in each role a second_signers cell names, and a
+`voice_refused` one offers a statement by an unrelated key; two breaks, accepting any voice and accepting none, must be caught.
 
 `placement_text.tsv` states where a row goes when its family states no placement of its own.
 Its one `default` row gives the placements a family's rows may take and the sentence that leaves

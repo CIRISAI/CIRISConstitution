@@ -14,15 +14,15 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 | column | families |
 |---|---|
-| placement | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| subject_rule | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| cosign_rule | `ballot:moderator_acceptance` |
-| freshness | `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}` |
-| lifecycle | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| replication | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| projection | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| erasure_route | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| governance | `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}` |
+| placement | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| subject_rule | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| cosign_rule | `admission:unit`, `ballot:moderator_acceptance`, `location_proof:{version}`, `trust:blessing` |
+| freshness | `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `location_proof:{version}`, `trust:blessing` |
+| lifecycle | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| replication | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| projection | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| erasure_route | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| governance | `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `location_proof:{version}`, `trust:blessing` |
 
 ## The family is a key
 
@@ -389,7 +389,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A withdrawal cannot make a device forget a key it holds, so a withdrawal of a wrap is refused. Access ends by changing the key for what is written afterwards.
 
-**Text.** CC 3.3.2: "a `withdraws` or `recants` naming a `key_grant` row is refused; once shared, always shared at the wire layer, and forward secrecy is by rotation"
+**Text.** CC 3.3.2: "a `withdraws` or `recants` naming a `key_grant` row concludes nothing; once shared, always shared at the wire layer, and forward secrecy is by rotation"
 
 | column | families |
 |---|---|

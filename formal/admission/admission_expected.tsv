@@ -1,0 +1,107 @@
+property	P1 nothing runs without an admitted digest	holds	run_unadmitted=caught any_signature=caught any_class=caught
+case	P1	a unit with no row does not run	as expected
+case	P1	a statement by an issuer the owner reaches runs	as expected
+case	P1	a valid statement by a stranger does not run	as expected
+case	P1	an issuer the other host's owner does not reach	as expected
+case	P1	a host with no owner-binding runs nothing	as expected
+property	P2 a changed unit has no admission	holds	no_digest_bind=caught
+case	P2	another digest under the same statement does not run	as expected
+case	P2	the admitted digest runs	as expected
+property	P3 a program's key admits nothing	holds	program_issuer=caught program_relay=caught program_voice=caught
+case	P3	a statement by an agent the owner accepts	as expected
+case	P3	a statement by a node key	as expected
+case	P3	an issuer reached only through a program	as expected
+case	P3	a program's voice is not counted	as expected
+property	P4 an effect-capable unit needs the count, or the host's own owner on that host	holds	effect_on_one=caught owner_alone_anywhere=caught owner_row_any_scope=caught count_floor_one=caught voices_outside_head=caught
+case	P4	the host's owner admits an effect alone on the host	as expected
+case	P4	the same row on another host admits nothing	as expected
+case	P4	one person the owner reaches does not admit an effect	as expected
+case	P4	the owner's own effect row at any scope but self is Invalid	as expected
+case	P4	a counted row published at federation scope admits	as expected
+case	P4	two members of the head admit an effect	as expected
+case	P4	one member is not a count	as expected
+case	P4	a group declaring one voice still needs two	as expected
+case	P4	voices outside the head are not counted	as expected
+case	P4	a head not held waits	as expected
+case	P4	a compute-only unit may be one person's	as expected
+case	P4	a group the host's owner does not reach admits nothing	as expected
+property	P5 a lease ends execution on the host's own clock	holds	no_lease=caught lease_from_signed=caught lease_unbounded=caught
+case	P5	inside the lease runs	as expected
+case	P5	at valid_until it stops	as expected
+case	P5	before asserted_at it does not run	as expected
+case	P5	a lease over 24 hours is Invalid	as expected
+case	P5	a statement held 24 hours ends though its own end is later	as expected
+case	P5	a renewal for the same digest continues it	as expected
+case	P5	with no renewal, silence ends it	as expected
+property	P6 a withdrawal ends it forward	holds	withdraw_ignored=caught stranger_withdraws=caught
+case	P6	the author's withdrawal ends it	as expected
+case	P6	it ran before the withdrawal was held	as expected
+case	P6	a stranger's withdrawal ends nothing	as expected
+case	P6	a counted admission is withdrawn by the count	as expected
+case	P6	one voice does not withdraw a count	as expected
+property	P7 a halt stops every effect from receipt	holds	no_halt=caught stranger_halt=caught no_fuse=caught lone_resume=caught halt_stops_compute=caught
+case	P7	before the halt the effect is permitted	as expected
+case	P7	from receipt no effect	as expected
+case	P7	computing continues under the halt	as expected
+case	P7	a stranger's halt stops nothing	as expected
+case	P7	a lone halt lapses at its fuse	as expected
+case	P7	a confirmed halt outlasts the fuse	as expected
+case	P7	one holder does not resume	as expected
+case	P7	a majority resumes	as expected
+case	P7	programs do not resume	as expected
+case	P7	a unit of the build is halted too	as expected
+property	P8 capabilities only attenuate	holds	no_attenuation=caught sender_standing_carries=caught
+case	P8	a child with a capability its parent lacks	as expected
+case	P8	a child within its parent	as expected
+case	P8	a capability no row admits	as expected
+case	P8	a submitted unit runs only by the receiver's own admission	as expected
+case	P8	the receiver's own admission runs it	as expected
+property	P9 dispatch executes only the reviewed fingerprint	holds	exec_unreviewed=caught fp_from_review=caught three_of_four=caught self_discharge=caught same_fp_passes=caught objection_binds_thought=caught drop_considered=caught approval_unbound=caught
+case	P9	four passes over the fingerprint dispatch	as expected
+case	P9	no record, no dispatch	as expected
+case	P9	three of four is not a pass	as expected
+case	P9	a changed call is another fingerprint	as expected
+case	P9	a record of another thought	as expected
+case	P9	an objection to this draft, undischarged, blocks it	as expected
+case	P9	discharged by the drafter's own word	as expected
+case	P9	discharged by a seated person's row	as expected
+case	P9	an objection to another draft, carried as considered, does not block a new draft	as expected
+case	P9	an objection to another draft not carried into the review	as expected
+case	P9	an approved call runs only as approved	as expected
+case	P9	the approved fingerprint runs	as expected
+property	P10 a profile loads only when its derived digest matches	holds	no_profile_check=caught fork_picks_one=caught amend_unauthorized=caught order_free=caught orphan_counts=caught unanchored_amends=caught digest_unbound=caught
+case	P10	the base and two amendments in their order load	as expected
+case	P10	the same digests in another order do not	as expected
+case	P10	an unapproved amendment does not	as expected
+case	P10	an amendment approved by the agent's own key does not count	as expected
+case	P10	a fork counts neither branch	as expected
+case	P10	with no base link the template alone loads, unanchored	as expected
+case	P10	with no base link an approved amendment counts for nothing	as expected
+case	P10	with no attested template nothing loads	as expected
+case	P10	a base link approved by a program's key does not anchor	as expected
+case	P10	a base link a seated person approved anchors	as expected
+case	P10	an approval of another digest anchors nothing	as expected
+property	P11 a result is no more trusted than what it derives from	holds	declared_trust=caught undeclared_passes=caught absent_evidence_licenses=caught binds_no_ack=caught
+case	P11	arguments built from a request are untrusted	as expected
+case	P11	arguments built from a signed rule keep its trust	as expected
+case	P11	a review that does not declare the derivation does not license the effect	as expected
+case	P11	a review that declares it is the review holding the evidence	as expected
+case	P11	trusted arguments need no declaration	as expected
+case	P11	an action claiming authority without its approving row	as expected
+case	P11	an action claiming authority with the row naming its fingerprint	as expected
+case	P11	a mesh row binding others waits for those who could stop it	as expected
+case	P11	their acknowledgements permit it	as expected
+property	P12 every answer is the same in every arrival order	holds	first_statement_only=caught
+case	P12	renewal	as expected
+case	P12	count and withdrawal	as expected
+case	P12	two issuers	as expected
+property	P13 profile and code are one admission	holds	program_issuer=caught amend_unauthorized=caught
+case	P13	profile and code agree: well formed	as expected
+case	P13	profile and code agree: program	as expected
+case	P13	profile and code agree: unsigned	as expected
+case	P13	profile and code agree: other_digest	as expected
+property	P14 a unit of the attested build runs under the build alone	holds	unblessed_build=caught build_any_digest=caught
+case	P14	a unit the blessed build names runs with no admission row	as expected
+case	P14	a unit the build does not name needs its own row	as expected
+case	P14	a build whose pipeline is not blessed admits nothing	as expected
+count	14 properties, 92 cases, 48 planted breaks, 12 arrival orders

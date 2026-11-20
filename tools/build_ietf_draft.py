@@ -16,13 +16,14 @@ Steps:
   3. kramdown-rfc → .xml, xml2rfc --v3 → .txt and .html;
   4. with --idnits, POST the .xml to the IETF author-tools idnits API and save the report.
 
-The tree holds one revision, REV below: the build writes it, --check compares it, and a new
-revision replaces the outputs of the one before (git history keeps them).
+The build writes revision REV below and --check compares it. The outputs of earlier revisions stay in ietf/ as
+published.
 
 Run:  python3 tools/build_ietf_draft.py [--rev 01] [--idnits]
       python3 tools/build_ietf_draft.py --check   (CI; writes nothing)
 --check parses both CDDL files and runs the samples against each, then compares what the build
-would write with the committed files: ietf/signed_object.cddl always, and the .xml and .txt of the
+would write from manifests/signed_object_v2.ietf-02.cddl and ietf/draft-moore-scitt-ciris-ceg.ietf-02.md (the CDDL
+and the source as -02 published them) with the committed files: ietf/signed_object.cddl always, and the .xml and .txt of the
 draft when kramdown-rfc and xml2rfc are installed (a line says so when they are not). A
 difference exits 1: run the build and commit ietf/. The draft's date is the source's `date:`
 line, so a build on any day compares equal; set it when the draft is revised.
@@ -35,9 +36,16 @@ import glob, os, re, shutil, subprocess, sys, tempfile, textwrap, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IETF = os.path.join(ROOT, "ietf")
 SRC = os.path.join(IETF, "draft-moore-scitt-ciris-ceg.md")
+# The source as draft -02 published it: --check builds -02 from this frozen copy, so the working source may carry text
+# toward -03. A revision is cut from SRC: copy SRC and the manifest CDDL to the frozen pair of the new revision, set REV,
+# point these two paths at it, and build. The -01 pair and its .xml and .txt stay as published.
+SRC_PUBLISHED = os.path.join(IETF, "draft-moore-scitt-ciris-ceg.ietf-02.md")
 CDDL_IN = os.path.join(ROOT, "manifests", "signed_object_v2.cddl")
 CDDL_OUT = os.path.join(IETF, "signed_object.cddl")
-REV = "01"  # the one revision the tree holds
+# The CDDL as draft -02 published it: --check compares the draft against this frozen copy, so the manifest may move
+# ahead of the published draft.
+CDDL_PUBLISHED = os.path.join(ROOT, "manifests", "signed_object_v2.ietf-02.cddl")
+REV = "02"  # the revision --check builds
 BREAK = ("composite-alg = -70100", "composite-alg = -70199")  # the deliberate break
 WIDTH = 69  # artwork is indented three columns in the text rendering
 
@@ -173,10 +181,10 @@ def wrapped_cddl(text=None):
     return wrap_cddl(text.replace("\u2014", "-").replace("\u00a7", "Section "))
 
 
-def build_draft(rev, out, cddl):
+def build_draft(rev, out, cddl, source=SRC):
     """kramdown-rfc and xml2rfc over the source, in directory `out`, which holds `cddl` as signed_object.cddl."""
     name = f"draft-moore-scitt-ciris-ceg-{rev}"
-    src = open(SRC, encoding="utf-8").read()
+    src = open(source, encoding="utf-8").read()
     src = src.replace("docname: draft-moore-scitt-ciris-ceg-latest", f"docname: {name}")
     if os.path.abspath(out) != IETF:
         open(os.path.join(out, "signed_object.cddl"), "w", encoding="utf-8").write(cddl)
@@ -212,7 +220,8 @@ def differs(generated, path):
 
 def check(rev):
     stale = []
-    wrapped = wrapped_cddl()
+    published = open(CDDL_PUBLISHED, encoding="utf-8").read()
+    wrapped = wrapped_cddl(published)
     with tempfile.TemporaryDirectory() as d:
         tmp = os.path.join(d, "signed_object.cddl")
         open(tmp, "w", encoding="utf-8").write(wrapped)
@@ -221,9 +230,9 @@ def check(rev):
     check_cddl(CDDL_IN)
     print("manifests/signed_object_v2.cddl parses; the same samples validate and the same breaks are refused")
     # the deliberate break: the same source with its algorithm identifier altered must not compare equal
-    src = open(CDDL_IN, encoding="utf-8").read()
+    src = published
     if src.count(BREAK[0]) != 1:
-        sys.exit(f"build_ietf_draft: {BREAK[0]!r} is not in manifests/signed_object_v2.cddl once, for the deliberate break")
+        sys.exit(f"build_ietf_draft: {BREAK[0]!r} is not in {os.path.relpath(CDDL_PUBLISHED, ROOT)} once, for the deliberate break")
     if differs(wrapped_cddl(src.replace(*BREAK)), CDDL_OUT) is None:
         sys.exit("build_ietf_draft: the deliberate break (an altered algorithm identifier) was not caught")
     print("deliberate break caught: an altered algorithm identifier makes ietf/signed_object.cddl stale")
@@ -232,7 +241,7 @@ def check(rev):
         stale.append(f"ietf/signed_object.cddl is stale ({w})")
     if find_tool("kramdown-rfc") and find_tool("xml2rfc"):
         with tempfile.TemporaryDirectory() as d:
-            name = build_draft(rev, d, wrapped)
+            name = build_draft(rev, d, wrapped, SRC_PUBLISHED)
             for ext in (".xml", ".txt"):
                 w = differs(open(os.path.join(d, name + ext), encoding="utf-8").read(), os.path.join(IETF, name + ext))
                 if w:

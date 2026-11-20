@@ -1,10 +1,10 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "483012bb119dec77b3b6dfb8a75a04cb7befa0b5e855672a99379576f9c97907",
-  "policy_sha256": "32cfcb6c9503fecf6f1827075342bc438ebe721360253f936c680f4d1944247a",
-  "steps": 105,
-  "rows": 74,
+  "transitions_sha256": "7dbb1b3d3e50ba851edccc606f9df64c0d66ad47e3b7a737d39226988658a60e",
+  "policy_sha256": "96edc650156b080724037c9ac7b6cf42a8386a577fd935713b02b77bd8554eaf",
+  "steps": 111,
+  "rows": 77,
   "errors": []
  },
  "steps": [
@@ -2805,6 +2805,150 @@
     "verb": "supersede",
     "signer": "alice",
     "object": "rebind:1"
+   }
+  },
+  {
+   "n": 106,
+   "note": "A stranger tries to publish Dave's rough location: refused, only the subject signs it",
+   "actor": "erin",
+   "standing": [],
+   "view": {
+    "object": "loc:dave",
+    "family": "location_proof:{version}",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 107,
+   "note": "Dave publishes his own rough location to join a geographic community: the subject's own row",
+   "actor": "dave",
+   "standing": [
+    "self"
+   ],
+   "view": {
+    "object": "loc:dave",
+    "family": "location_proof:{version}",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "dave"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row75",
+    "family": "location_proof:{version}",
+    "verb": "attest",
+    "signer": "dave",
+    "object": "loc:dave"
+   }
+  },
+  {
+   "n": 108,
+   "note": "Bob tries to bless his build pipeline's key: refused, a blessing is the conferring roster's act",
+   "actor": "bob",
+   "standing": [
+    "owner",
+    "registered"
+   ],
+   "view": {
+    "object": "bless:ci",
+    "family": "trust:blessing",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 109,
+   "note": "The accord holders bless the pipeline's key with infra:attest, counted at a strict majority of their roster",
+   "actor": "alice",
+   "standing": [
+    "holder",
+    "member"
+   ],
+   "view": {
+    "object": "bless:ci",
+    "family": "trust:blessing",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "alice"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row76",
+    "family": "trust:blessing",
+    "verb": "attest",
+    "signer": "alice",
+    "object": "bless:ci"
+   }
+  },
+  {
+   "n": 110,
+   "note": "Erin, no member of the reviewing group, tries to add her voice to its admission of a unit: refused",
+   "actor": "erin",
+   "standing": [
+    "registered"
+   ],
+   "view": {
+    "object": "unit:1",
+    "family": "admission:unit",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 111,
+   "note": "Bob admits a unit that only computes, for one day, under his own key",
+   "actor": "bob",
+   "standing": [
+    "author"
+   ],
+   "view": {
+    "object": "unit:2",
+    "family": "admission:unit",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row77",
+    "family": "admission:unit",
+    "verb": "attest",
+    "signer": "bob",
+    "object": "unit:2"
    }
   }
  ]

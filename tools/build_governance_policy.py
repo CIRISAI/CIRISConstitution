@@ -90,7 +90,7 @@ def rule_of(s):
     """Every cell as a typed rule, so no implementer parses prose (CEWP#16, 2026-11-08). One of:
     fraction{num,den}; one_of_n (any one member of the standing set); strict_majority (more than half of the
     standing set); strict_majority_of_others (more than half of the set less the actor); role_at{roles,count}
-    (a named role, count holders); voices{count}; voted_majority{count} (more than half of the members who voted,
+    (a named role, count holders); voices{count}; voices_or_roster{count} (count voices, or the whole standing set if it is smaller); voted_majority{count} (more than half of the members who voted,
     never fewer than count voices: its base is the number who voted, not the roster); ranked_irv{choices};
     none (this path does not exist)."""
     s = s.strip()
@@ -115,6 +115,9 @@ def rule_of(s):
     m = re.match(r"^(\d+) voices?$", s)
     if m:
         return OrderedDict([("kind", "voices"), ("count", int(m.group(1)))])
+    m = re.match(r"^(\d+) voices?, or the roster's size if smaller$", s)
+    if m:   # CC 4.5.4: the floor in a small room is the smaller of two voices and the roster's size
+        return OrderedDict([("kind", "voices_or_roster"), ("count", int(m.group(1)))])
     if s == "instant runoff over ranked choice of three":
         return OrderedDict([("kind", "ranked_irv"), ("choices", 3)])
     sys.exit(f"governance_policy: cell {s!r} is prose with no typed rule; add one to rule_of")
@@ -134,6 +137,8 @@ def rule_votes(rule, base, strict):
         return (base - 1) // 2 + 1
     if k in ("role_at", "voices"):
         return rule["count"]
+    if k == "voices_or_roster":
+        return min(rule["count"], base)
     if k == "voted_majority":
         return max(rule["count"], base // 2 + 1)
     return None

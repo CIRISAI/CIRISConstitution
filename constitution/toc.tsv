@@ -100,6 +100,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 2.7.8	kernel-roster	The roster is the one ledger	—	0.00050	444	0.3	II	ceg	wire
 2.7.9	kernel-limits	What the kernel does not give	—	0.00050	444	0.3	II	ceg	wire
 2.7.10	kernel-checkpoint	Checkpoint and purge	—	0.00050	444	0.3	II	ceg	wire
+2.7.11	kernel-admission	Admission: what an agent is, what a node runs, what an agent does	—	0.00050	466	0.5	II	ceg	wire
 3.1	namespace	The dimension namespace	§5	0.01687	5	2.02	III	ceg	dictionary
 3.1.1	registry	CIRISRegistry — identity / build / license / partner	§5.9	0.00765	22	0.92	III	ceg	dictionary
 3.1.2	attestation	CIRISVerify — attestation ladder, provenance, transparency	§5.2	0.00428	53	0.51	III	ceg	dictionary
@@ -455,6 +456,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.11.27	earlier-canonical-envelope	The canonical key's envelope of the earlier form (normative)	—	0.00050	463	0.1	APP	ceg	wire
 8.11.28	earlier-transit-pair	The transit pair of the earlier form (normative)	—	0.00050	464	0.1	APP	ceg	wire
 8.11.29	earlier-accord-invocation	The accord invocation and lifecycle preimages of the earlier form (normative)	—	0.00050	465	0.1	APP	ceg	wire
+8.11.30	earlier-delivery-receipt	The delivery receipt's signing bytes of the earlier form (normative)	—	0.00050	466	0.1	APP	ceg	wire
 8.12	parable	The parable — Genesis of Ethical Agency (informative)	—	0.00050	448	0.1	APP	accord	charter
 8.12.1	i-quiet	I. The Quiet Threshold	Accord 0.i-the-quiet-threshold	0.00092	303	0.11	APP	accord	charter
 8.12.2	ii-first	II. The First Leaning	Accord 0.ii-the-first-leaning	0.00092	304	0.11	APP	accord	charter

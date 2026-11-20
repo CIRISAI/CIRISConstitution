@@ -164,9 +164,10 @@ def world(**o):
         xw["n1"] = None
     x["xw"] = xw if x["gen_valid"] else {"n1": None, "n2": None}
     # canonical standing: the seats every genesis in force lists; a fork leaves what both list
-    x["canonical"] = frozenset() if not x["gen_valid"] else frozenset({"N1"} if o["fork"] else {"N1", "N2"})
+    # canonical standing: the seats the genesis lists; a fork under a thumbprint anchor roots on neither
+    x["canonical"] = frozenset() if not x["gen_valid"] or o["fork"] else frozenset({"N1", "N2"})
     x["steward"] = "U2" if o["ob2"] and not o["owner_rev"] else None     # the owner's revocation ends the binding
-    x["may_act"] = bool(o["ob2"] and o["edge"] and not o["owner_rev"])
+    x["may_act"] = bool(o["ob2"] and o["edge"] and not o["owner_rev"] and not o["fork"])   # no root, no agent runs
     x["members"] = frozenset({"U1", "U2"})
     x["live_holders"] = set(HOLD) - rev
     # the lineage: which later bundles count, and the roster at its head, from how the world was made
@@ -363,14 +364,15 @@ def worlds_p7():
 
 
 def p7(o, orders):
-    """Two geneses are a fork (CC 2.7.8): a reader with no pin holds both as tips and takes only what they share; a
-    reader that pinned one holds the other void."""
+    """Two geneses are a fork (CC 2.6.1.11, the anchor): a reader under a thumbprint anchor reports it and roots on
+    neither, so it seats no transit key, confers no canonical standing and runs no agent; a reader that pinned one by
+    object id holds the other void."""
     rows, x, o = world(**o)
     for order in orders(rows):
         a, b = run(rows, UP, order), run(rows, PIN, order)
-        if a["cut"] != ("G", "Gb") or a["void"] != () or dict(a["seats"]) != {"n1": None, "n2": None}:
+        if a["cut"] != () or a["fork"] != ("G", "Gb") or a["void"] != () or dict(a["seats"]) != {"n1": None, "n2": None}:
             return False
-        if a["canonical"] != frozenset({"N1"}) or b["canonical"] != frozenset({"N1", "N2"}):
+        if a["canonical"] != frozenset() or any(ok for _, ok in a["may_act"]) or b["canonical"] != frozenset({"N1", "N2"}):
             return False
         if b["cut"] != ("G",) or b["void"] != ("Gb",) or dict(b["seats"]) != {"n1": "xw1", "n2": "xw2"}:
             return False
@@ -471,8 +473,8 @@ PROPS = [
                      "canonical_ends_with_record")),
     ("P6", "an agent has no standing until its steward-binding of this form exists", p6, worlds_p6,
      ("earlier_binding", "act_without_steward", "earlier_roster", "owner_revocation_ignored")),
-    ("P7", "two geneses are a fork: tips to a reader with no pin, the other void to one that pinned", p7, worlds_p7,
-     ("fork_union", "pinned_ignored")),
+    ("P7", "two geneses are a fork: a reader under a thumbprint anchor roots on neither and runs no agent; one pinned by object id holds the other void", p7, worlds_p7,
+     ("fork_union", "pinned_ignored", "fork_common", "act_unrooted")),
     ("P8", "a halt of this form is available from the first moment after the genesis", p8, worlds_p8,
      ("publish_ungated",)),
     ("P9", "the result does not depend on the order in which a node receives the rows", p9, worlds_p9,

@@ -28,7 +28,9 @@ COSE_Sign1 = [
 unprotected-header = {
   ? 17: [+ bstr .cbor sd-disclosure],       ; sd_claims (SD-CWT): blinded members as PRESENTED beside the statement to one who may
                                             ; see them; a disclosure set is held and travels as bytes under the object's consent edge
-  * int => any,                             ; a receipt (RFC 9942) may be added by a holder, never signed and never read by a rule
+  ? 394: [* bstr],                         ; receipts (RFC 9942 section 2): never signed, so never a fault of the statement; a host
+                                            ; reads each as a ceg-receipt and ignores one that is not (CC 2.7.11)
+  * int => any,                             ; anything else a holder adds, never signed and never read by a rule
 }
 
 ; The composite ML-DSA-65-Ed25519 signature of draft-ietf-jose-pq-composite-sigs-06 (over
@@ -37,6 +39,12 @@ unprotected-header = {
 ; || 0x00 || SHA-512(M). ML-DSA-65 signs M' with the label bytes as its FIPS 204 ctx (never empty);
 ; Ed25519 signs M' as it is. The 0x00 is the empty application context.
 composite-signature = bstr .size 3373
+
+; A COSE receipt (RFC 9942 section 4.3): a tagged COSE_Sign1 under the Transparency Service's own key and algorithm,
+; its proofs (vdp, label 396) in its unprotected header and its verifiable data structure (vds, label 395) protected.
+; Its leaf is the statement's deterministic COSE_Sign1 encoding with an empty unprotected header, hashed
+; SHA-256(0x00 || leaf) (RFC 9162). Read by the host's rule only; the statement's schema never reads it.
+ceg-receipt = #6.18([bstr, { 396: { * int => [+ bstr] }, * int => any }, bstr / nil, bstr])   ; protected, unprotected, payload, signature
 
 statement-protected = {
   1: composite-alg,                ; alg: the composite ML-DSA-65-Ed25519; private-use until IANA assigns, the construction exactly the draft's
@@ -75,9 +83,12 @@ cwt-claims = {
 identity-ref = tstr .regexp "urn:ietf:params:oauth:ckt:sha-256:[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]"
 
 ; No float, no null, no undefined, no tag anywhere a family member can reach.
-; The one exception is SD-CWT's redaction: simple(59) as a map key and tag 60 for an array element.
-ceg-value = int / tstr / bstr / bool / [* (ceg-value / redacted-element)]
+; The exceptions are SD-CWT's redaction (simple(59) as a map key, tag 60 for an array element) and a body's tag-4 decimal.
+ceg-value = int / tstr / bstr / bool / body-decimal / [* (ceg-value / redacted-element)]
           / { ? redacted_claim_keys => [+ bstr .size 32], * (tstr / int) => ceg-value }
+; A non-integral number in a free-form body (CC 2.6.1.2): tag 4, [exponent, mantissa], in CBOR's integer range.
+; Normalisation (a mantissa not divisible by 10) is checked in prose; an integral number is a plain integer.
+body-decimal = #6.4([exponent: nint, mantissa: int])
 redacted_claim_keys = #7.59
 redacted-element = #6.60(bstr .size 32)
 

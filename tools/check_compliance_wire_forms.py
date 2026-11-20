@@ -42,7 +42,7 @@ WORKS = OrderedDict([("v1.4", "MH"), ("EU_HLEG", "EU"), ("IEEE_EAD", "IEEE"), ("
 # A dimension whose evidence is a structure and not a family of its own stem names the family that carries it.
 STRUCTURAL = {"D23": "audit_chain:hash_continuity"}
 DIM_HDR = ["id", "prefix", "tier", "MH", "EU", "IEEE", "ASEAN", "families", "sections"]
-FORM_HDR = ["work", "wire_form", "lines", "family", "answer"]
+FORM_HDR = ["work", "wire_form", "lines", "family", "answer", "note"]   # note: where a mapped form was corrected, and why
 
 
 def resolve(rules, form):
@@ -68,7 +68,7 @@ def write_tsv(path, hdr, rows):
         w = csv.writer(fh, delimiter="\t", lineterminator="\n")
         w.writerow(hdr)
         for r in rows:
-            w.writerow([r[h] for h in hdr])
+            w.writerow([r.get(h) or "" for h in hdr])
 
 
 def fill_dims(manifest, dims):

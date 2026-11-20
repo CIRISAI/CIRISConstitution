@@ -6,7 +6,7 @@
 family	selector	doors	cc_ref	quote
 membership:{stage}	leaf=proposal|acceptance|decline	none	CC 3.1.3.2	The first three are single-signer (below)
 membership:{stage}	leaf=resignation	none	CC 3.1.3.2	a resignation is signed by the leaving member
-membership:{stage}	leaf=removal & group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.12	is admitted only when countersigned by a key outside the deciding seat
+membership:{stage}	leaf=removal & group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the deciding seat
 membership:{stage}	*	cosigned_act@subject_group	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
 accord:invoke:constitutional:{halt_id}	*	accord_halt@accord	CC 4.2.1.1	One holder can stop every agent, each at its node's own receipt, and silently
 accord:lifecycle:{kind}	leaf=confirmed	accord_halt@accord	CC 4.2.1.1	unless a strict majority of the standing roster confirms it
@@ -14,7 +14,7 @@ accord:lifecycle:{kind}	leaf=active	accord_majority@accord	CC 4.2.1.3	It is a co
 identity:occurrence	identity=user	self_roster_add@self	CC 3.3.6.4	The door is a person's: it governs the roster of a user fedID.
 identity:occurrence	*	none	CC 3.3.6.4	an agent's occurrence is single-signer, and neither runs these paths
 identity:occurrence_revocation	identity=node|agent	none	CC 3.1.3	for an occurrence of a `node` or `agent` identity, which is single-signer in any case
-identity:occurrence_revocation	identity=user	self_roster_evict@self	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's current live roster**
+identity:occurrence_revocation	identity=user	self_roster_evict@self	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's roster at the head it names**
 ballot:moderator	*	moderator_election@subject_group	CC 4.5.13	There is **one ballot per person** however many keys they hold
 ballot:moderator_acceptance	*	moderator_election@subject_group!result	CC 4.5.13	the winner's acceptance row binds the ballot set it was seated on
 retirement:{state}	leaf=custodian_minted	custodian_replace	CC 7.5.5	That act is the governance table's `custodian_replace` row
@@ -26,7 +26,7 @@ lineage_witness:{stage}	*	none	CC 3.4.10	Its cosignature is the `ciris.lineage_h
 takedown_notice:{basis}	leaf=steward_purge	cosigned_act@trust_root	CC 2.4.1.1	authorised by a cosigned `takedown_notice` under the trust root's `consensus_protocol` with basis `steward_purge`
 takedown_notice:{basis}	group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.12	Where the body has one deciding seat, an act against a member
 takedown_notice:{basis}	*	none	CC 4.5.3	A duty-holder's notice is admitted by the [CC 4.5.5](#4.5.5) enforced-admission rule and reaches the bytes plane only.
-transport:canonical_rebind	*	accord_majority@accord	CC 3.1.3	a counted row the accord's holders sign as statements over one payload ([CC 2.6.1.9](part_2_the_grammar.md#2.6.1.9)), admitted at the accord charter's threshold
+transport:canonical_rebind	*	accord_majority@accord	CC 3.1.3	a counted row the accord's holders sign as statements over one payload ([CC 2.6.1.9](part_2_the_grammar.md#2.6.1.9)), counted at a strict majority of the holders of the bundle in force
 quarantine:{state}	group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.12	Where the body has one deciding seat, an act against a member
 quarantine:{state}	*	none	CC 4.4.3.12	A body of two or more deciding seats decides under its own protocol as a community does
 slashing:{outcome}	group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.12	Where the body has one deciding seat, an act against a member
@@ -35,3 +35,13 @@ licensure:{authority_id}	act=group	cosigned_act@dimension_authority	CC 2.4.1.3	A
 licensure:{authority_id}	*	none	CC 2.4	and every other is authored
 key:record	act=group	accord_majority@accord	CC 4.2.1	The enumeration also admits a `trust:blessing:v1` row counted by a strict majority of the standing accord roster, whose payload names a CI pipeline's key record and carries `infra:attest` and nothing wider
 key:record	*	none	CC 3.1.3	Admitted by **proof of possession** against the keys it carries
+trust:blessing	*	cosigned_act@conferrer	CC 3.1.3	cosigned under the root's conferring family's `consensus_protocol`
+location_proof:{version}	*	none	CC 4.5.9	is emitted **only** by the subject themselves
+self:delegates_to	act=group	cosigned_act@signer_group	CC 4.4.3.12	Appointment is the body's signature under its protocol
+self:delegates_to	*	none	CC 3.1.3	only on an owner's own `delegates_to` row
+# ownership is the first authored family with a count: the binding is the owner's act (CC 3.2, the signature is the claim of ownership), and an
+#   affiliation it names in community_id cosigns it under its protocol, so the members' voices are the count and the steward stays the author.
+ownership:{relation}:{target_kind}:{version}	act=group & group=affiliations	cosigned_act@subject_group	CC 3.2	It is cosigned under that affiliation's protocol
+ownership:{relation}:{target_kind}:{version}	*	none	CC 3.2	Without a `community_id` the binding is a personal steward's.
+admission:unit	act=group	cosigned_act@subject_group	CC 3.1.3	under the group's protocol and never on fewer than two persons
+admission:unit	*	none	CC 3.1.3	any other row MAY carry `author`

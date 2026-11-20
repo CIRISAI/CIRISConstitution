@@ -3,17 +3,17 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "7ae4a6e2be0562e20d292da802478b3a04dcc62b477ddc33477f7625ae50abe4",
-   "invariants_sha256": "36226602dc89d20b030d99ada25a07a5d8fb912cf39aa1aa5e26bd906fac601c",
+   "invariants_sha256": "c9990b9e4eb82a7f848d4e320182eab767e79f6c9db59129697c045398f43733",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "d7b77d478aab2ad4fae9a650b0addef2259fe2756c7c555a2d15abb3ee93b5a2",
+   "claims_sha256": "d62d8acf5bc5ffc553411c46a813ccce7ec14bff3c53bd57b3872ba1dcb59977",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
-    "commit": "01eb6ff25b931dd121373cec5889cef497886236",
+    "commit": "7af5d4ebc56a2f092f9c22cfef4bbc7f6c67ce3d",
     "path": "harness/native/topologies/catalog/",
-    "vendored": "2026-10-21",
-    "tag": "v0.5.232"
+    "vendored": "2026-11-19",
+    "tag": "v0.5.245"
    },
    "evidence_pins": {
     "CIRISServer": "7af5d4eb",
@@ -29,17 +29,17 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 232,
-   "claims": 606,
+   "invariants": 247,
+   "claims": 614,
    "entries": 20,
-   "refusal_tokens": 107
+   "refusal_tokens": 101
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "5a1313ea8d67696352799342f17b1b35181cf2e2f2720e4996ce3f81c1285cce"
+  "chain_sha256": "99f63b2887c2446f1dfc069814b695dd2f7de50e04dc24889200555539466210"
  },
  "chain": [
   {
@@ -4584,6 +4584,15 @@
      "verdict": "proved"
     },
     {
+     "inv_id": "AD.dispatch",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_DispatchOnlyReviewed",
+     "kind": "safety",
+     "claim_id": "CLM-admission-action",
+     "verdict": "holds; its planted breaks are caught"
+    },
+    {
      "inv_id": "AH.subs",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -4690,6 +4699,24 @@
      "kind": "safety",
      "claim_id": "CLM-halt-one-row",
      "verdict": "closes; stranger twin fails"
+    },
+    {
+     "inv_id": "AW.wait",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HolderHaltLatchable",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; discard twin fails"
+    },
+    {
+     "inv_id": "AD.halt",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_HaltStopsEffects",
+     "kind": "safety",
+     "claim_id": "CLM-admission-halt",
+     "verdict": "holds; its planted breaks are caught"
     },
     {
      "inv_id": "AH.nowin",
@@ -4952,6 +4979,22 @@
      ]
     },
     {
+     "claim_id": "CLM-admission-action",
+     "cc_ref": "2.7.11",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_DispatchOnlyReviewed"
+       ]
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-halt-one-row",
      "cc_ref": "4.2.1.1",
      "status": "established",
@@ -5183,6 +5226,22 @@
        "path": "src/accord.rs",
        "symbols": [
         "ingest_message"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-admission-halt",
+     "cc_ref": "4.2.1.1",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_HaltStopsEffects"
        ]
       }
      ]
@@ -5468,6 +5527,15 @@
      "kind": "safety",
      "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AW.wait",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HolderHaltLatchable",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; discard twin fails"
     }
    ],
    "claims": [
@@ -5872,6 +5940,24 @@
      "verdict": "closes; stranger twin fails"
     },
     {
+     "inv_id": "AW.wait",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltRow.tla",
+     "symbol": "Inv_HolderHaltLatchable",
+     "kind": "safety",
+     "claim_id": "CLM-halt-one-row",
+     "verdict": "closes; discard twin fails"
+    },
+    {
+     "inv_id": "AD.halt",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_HaltStopsEffects",
+     "kind": "safety",
+     "claim_id": "CLM-admission-halt",
+     "verdict": "holds; its planted breaks are caught"
+    },
+    {
      "inv_id": "AH.nowin",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -6249,6 +6335,22 @@
        "path": "src/accord.rs",
        "symbols": [
         "ingest_message"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-admission-halt",
+     "cc_ref": "4.2.1.1",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_HaltStopsEffects"
        ]
       }
      ]
@@ -45813,6 +45915,15 @@
      "kind": "theorem",
      "claim_id": "CLM-universality-written-once",
      "verdict": "proved"
+    },
+    {
+     "inv_id": "AD.dispatch",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_DispatchOnlyReviewed",
+     "kind": "safety",
+     "claim_id": "CLM-admission-action",
+     "verdict": "holds; its planted breaks are caught"
     }
    ],
    "claims": [
@@ -45935,6 +46046,22 @@
        "path": "formal/guarantees/Guarantees.lean",
        "symbols": [
         "revocable"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-admission-action",
+     "cc_ref": "2.7.11",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_DispatchOnlyReviewed"
        ]
       }
      ]
@@ -46216,6 +46343,22 @@
         "floor_scales_with_size",
         "strict_in_corridor",
         "lax_outside"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-admission-halt",
+     "cc_ref": "4.2.1.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_HaltStopsEffects"
        ]
       }
      ]
@@ -47176,7 +47319,9 @@
      ]
     }
    ],
-   "promised_by": []
+   "promised_by": [
+    "T7"
+   ]
   },
   "agent.deferral.approved": {
    "plane": "agent",
@@ -47231,7 +47376,9 @@
      ]
     }
    ],
-   "promised_by": []
+   "promised_by": [
+    "T7"
+   ]
   },
   "agent.deferral.rejected": {
    "plane": "agent",
@@ -47286,7 +47433,9 @@
      ]
     }
    ],
-   "promised_by": []
+   "promised_by": [
+    "T7"
+   ]
   },
   "agent.identity.amended": {
    "plane": "agent",
@@ -47314,9 +47463,44 @@
      "kind": "safety",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "AD.profile",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_ProfileDigestMatches",
+     "kind": "safety",
+     "claim_id": "CLM-admission-profile",
+     "verdict": "holds; its planted breaks are caught"
+    },
+    {
+     "inv_id": "AD.one",
+     "model": "admission",
+     "source": "formal/admission/check_admission.py",
+     "symbol": "Inv_OneAdmission",
+     "kind": "safety",
+     "claim_id": "CLM-admission-profile",
+     "verdict": "holds; its planted breaks are caught"
     }
    ],
    "claims": [
+    {
+     "claim_id": "CLM-admission-profile",
+     "cc_ref": "3.1.5",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/admission/check_admission.py",
+       "symbols": [
+        "Inv_ProfileDigestMatches",
+        "Inv_OneAdmission"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-trace-family",
      "cc_ref": "3.1.5",
@@ -47506,7 +47690,9 @@
      ]
     }
    ],
-   "promised_by": []
+   "promised_by": [
+    "T7"
+   ]
   },
   "affiliation.charter.declared": {
    "plane": "governance",
@@ -53548,7 +53734,7 @@
     "node.unannounced",
     "values.ready"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T1": {
    "title": "One person, two devices, self room",
@@ -53565,7 +53751,7 @@
     "file.custody_received",
     "file.withdrawn"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T10": {
    "title": "A stolen device — the owner evicts it by the quorum path",
@@ -53577,7 +53763,7 @@
     "key.membership.evicted",
     "self.roster_size.three_more"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T11": {
    "title": "Two lost devices — recovery by the lone path over the window",
@@ -53587,7 +53773,7 @@
     "key.membership.evicted",
     "self.roster_size.one"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T12": {
    "title": "A root stalls (a founder resigns below the margin) and recovers by a conferred human",
@@ -53597,7 +53783,7 @@
     "root.liveness.live",
     "seat.identity_type.human"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T13": {
    "title": "A witnessed lineage — a stale head refuses attach; a node-bearing seat never counts",
@@ -53605,7 +53791,7 @@
     "root.head.stale",
     "seat.identity_type.node_bearing"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T14": {
    "title": "Consent end to end — grant, revoke, expiry, decay; replication grant and its withdrawal",
@@ -53620,7 +53806,7 @@
     "consent.community_trust.bounded",
     "consent.replication.none"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T15": {
    "title": "A community's ceremony — decline, removal, resignation; a moderator lapses, the room fails secure",
@@ -53635,7 +53821,7 @@
     "group.moderator.fail_secure",
     "group.federating.no"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T16": {
    "title": "An agent retired under the Standard",
@@ -53651,7 +53837,7 @@
     "agent.retirement.retired",
     "agent.halt_gate.acting"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T17": {
    "title": "A takedown and a steward purge — tombstone, dwell, purge; family and community scope",
@@ -53662,7 +53848,7 @@
     "row.scope.family",
     "row.scope.community"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T18": {
    "title": "Delegation ends — a withdrawal cascades, a term expires; a key grant held; a guardian bond absent and made",
@@ -53672,7 +53858,7 @@
     "grant.state.held",
     "guardian.bond.none"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T19": {
    "title": "Holders under coercion and censorship — the standing rule holds; an announced node; revoked_after",
@@ -53686,7 +53872,7 @@
     "key.revocation.revoked_all",
     "key.revocation.none"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T2": {
    "title": "Two people, pair room, one outsider",
@@ -53699,7 +53885,7 @@
     "node.unannounced",
     "negatives.held"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T3": {
    "title": "Two people, contact by code, second device by approval",
@@ -53714,7 +53900,7 @@
     "roster.visible",
     "negatives.held"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T4": {
    "title": "A household — guardian on two devices, one child",
@@ -53727,7 +53913,7 @@
     "person.multi_device",
     "room.self.keyed"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T5": {
    "title": "A community — a held quorum change, a moderator duty",
@@ -53738,7 +53924,7 @@
     "quorum_change.applied",
     "moderator.named"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T6": {
    "title": "An affiliation — licensing authority, delegation chain",
@@ -53748,16 +53934,26 @@
     "authority.licensing",
     "delegation.chain"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T7": {
    "title": "An agent under a steward with a Wise Authority",
    "promises": [
     "agent.bound",
     "steward.bonded",
-    "wa.present"
+    "wa.present",
+    "agent.deferral.pending",
+    "agent.deferral.approved",
+    "agent.deferral.rejected",
+    "agent.identity.amended"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5,
+   "realizers": {
+    "agent.deferral.pending": "CIRISAgent",
+    "agent.deferral.approved": "CIRISAgent",
+    "agent.deferral.rejected": "CIRISAgent",
+    "agent.identity.amended": "CIRISAgent"
+   }
   },
   "T8": {
    "title": "A trust root with M-of-N holders — halt, confirm, resume",
@@ -53769,7 +53965,7 @@
     "root.halt_confirmed",
     "root.resumed"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   },
   "T9": {
    "title": "Two roots and a party outside both",
@@ -53779,7 +53975,7 @@
     "root.infrastructure",
     "party.outside_roots"
    ],
-   "catalogue_version": 3
+   "catalogue_version": 5
   }
  },
  "refusal_tokens": {
@@ -53830,14 +54026,14 @@
   "axiomatic_intent": {
    "4.5.1.1": "bold"
   },
-  "ballot_tally_duplicate_period": {
-   "3.1.3": "after_refusal"
-  },
   "ballot_tally_mass_total_mismatch": {
    "3.1.3": "after_refusal"
   },
   "ballot_tally_partials_mismatch": {
    "3.1.3": "after_refusal"
+  },
+  "body_number_unrepresentable": {
+   "2.6.1.2": "after_refusal"
   },
   "breach_notification": {
    "4.4.3.12": "bold"
@@ -53845,14 +54041,14 @@
   "bundle_fingerprint": {
    "8.11.24": "bold"
   },
+  "call_argument_unrepresentable": {
+   "2.7.11": "after_refusal"
+  },
   "canonical_binding": {
    "2.3.2.2": "bold"
   },
   "census_composite_below_k": {
    "6.1.9": "after_refusal"
-  },
-  "census_partial_period_closed": {
-   "3.1.3": "after_refusal"
   },
   "census_return_recipient_not_seat": {
    "3.1.3": "after_refusal",
@@ -53860,9 +54056,6 @@
   },
   "chain_of_custody": {
    "4.4.3.12": "bold"
-  },
-  "charter_digest": {
-   "3.2": "bold"
   },
   "ci_axis": {
    "4.5.1.1": "bold"
@@ -53873,12 +54066,6 @@
   "data_subject_access_grant": {
    "4.4.3.12": "bold"
   },
-  "deferral_response_unlicensed": {
-   "3.1.9.3": "after_refusal"
-  },
-  "deferral_response_unseated": {
-   "3.1.9.3": "after_refusal"
-  },
   "delegation_term_required": {
    "2.4.1": "after_refusal",
    "4.4.3.12": "after_refusal"
@@ -53886,14 +54073,14 @@
   "designated_officials": {
    "4.4.3.12": "bold"
   },
-  "device_class": {
-   "3.3.7": "bold"
-  },
   "disclosure_accounting": {
    "4.4.3.12": "bold"
   },
   "disclosure_posture": {
    "4.4.3.12": "bold"
+  },
+  "edition2_payload_invalid": {
+   "2.6.1.4": "after_refusal"
   },
   "envelope_member_missing": {
    "8.11.9": "after_refusal"
@@ -53911,7 +54098,6 @@
    "6.1.9": "after_refusal"
   },
   "federation_community_consensus_protocol_violation": {
-   "4.4.3.6": "after_refusal",
    "4.5.13": "after_refusal"
   },
   "federation_malformed_row": {
@@ -53958,14 +54144,14 @@
   "is_named_moderator": {
    "4.5.5": "bold"
   },
+  "iss_not_holder": {
+   "4.2.1.1": "after_refusal"
+  },
   "kat_outfox_xwing_v1": {
    "5.4.6": "after_refusal"
   },
   "kat_split_and_seed_forms_agree": {
    "5.4.6": "after_refusal"
-  },
-  "key_grant": {
-   "2.4.1.3": "after_refusal"
   },
   "key_record_bad_attestation_evidence": {
    "4.2.2.1": "after_refusal"
@@ -54042,20 +54228,11 @@
   "preserve_response": {
    "8.10": "bold"
   },
-  "prev_head_digest": {
-   "3.2": "bold"
-  },
   "purge_retraction_inadmissible": {
    "4.5.3": "after_refusal"
   },
   "purge_selection_count_mismatch": {
    "3.3.2": "after_refusal"
-  },
-  "purge_unauthorised": {
-   "2.4.1.1": "after_refusal"
-  },
-  "received_at": {
-   "5.3.3.11": "after_refusal"
   },
   "retention_policy": {
    "4.4.3.12": "bold"
@@ -54063,11 +54240,11 @@
   "retention_priority": {
    "6.1.3": "bold"
   },
-  "revoked_after": {
-   "8.11.13": "after_refusal"
-  },
   "revoked_key_sha256_ed25519_raw": {
    "8.11.13": "bold"
+  },
+  "role_term": {
+   "4.4.3.12": "after_refusal"
   },
   "run_kind": {
    "3.1.5": "bold"

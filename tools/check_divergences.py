@@ -31,6 +31,7 @@ Run: python3 tools/check_divergences.py
 import copy
 import json
 import os
+import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -167,6 +168,11 @@ def main():
     for name, ok in caught:
         if not ok: errs.append("plant not caught: " + name)
 
+    # The executive summary states the list's size; it follows the list.
+    es = open(os.path.join(ROOT, "constitution/EXECUTIVE_SUMMARY.md"), encoding="utf-8").read()
+    for n in re.findall(r"a published list of (\d+) cases", es):
+        if int(n) != len(doc["entries"]):
+            errs.append("EXECUTIVE_SUMMARY.md says the list has %s cases; manifests/divergences.json has %d" % (n, len(doc["entries"])))
     for e in errs: print("divergences check: error: " + e)
     m = doc["_meta"]
     print("divergences check: %d entries (total, not held): %d runnable, %d disputed, %d stated (max %d), %d wording only; "

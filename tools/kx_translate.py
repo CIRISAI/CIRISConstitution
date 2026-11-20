@@ -679,7 +679,7 @@ DROPPED = [
     ("reaction", r"\bfrom (?:asserted_at|claimed_at|effective_at|cosigned_at|delegation_valid_from) by receipt\b", "by receipt from a signed instant",
      "a window from a signed instant judged at receipt: KERNEL 5 has the row's own end or a window from first holding, not this"),
     ("reaction", r"\bfrom \S+ by origin_door\b", "by origin_door", "which node is the door the row first entered is not a function of the rows held"),
-    ("reaction", r"\b(purged|matched|sealed|refused)\(", "EVENT", "the state has no row that states it"),
+    ("reaction", r"\b(purged|matched|sealed|inert)\(", "EVENT", "the state has no row that states it"),
     ("reaction", r"[^;]*\bfold\([^;]*", "fold(NAME)", "no cell defines the fold: the whole clause is dropped"),
 ]
 LABEL_PARTS = {"fold": r"\b(by|result|feeds)=[A-Za-z_.:*{},|()]+"}   # who runs the fold, its shape, its readers: carried, not evaluated

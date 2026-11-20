@@ -1,7 +1,7 @@
 {
  "catalog_id": "T10",
  "title": "A stolen device — the owner evicts it by the quorum path",
- "catalogue_version": 3,
+ "catalogue_version": 5,
  "serves": [
   "CSD-037",
   "CSD-095"

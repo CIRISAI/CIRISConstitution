@@ -22,7 +22,7 @@ Each statement is marked **text** (the Parts say it), **model** (the check in th
 | Edge | the composite on every producer; the mutual X-Wing handshake (`CTKX` 0x02) and seal frame 0x02, the earlier versions refused by name; a fresh X-Wing transit key per relaying node |
 | The server | the route serving the bundle of this form and its object id; the holders' thumbprints as the default anchor, the object id once published |
 | The agent | the composite holder signature on the halt; its own `key:record` of this form with `valid_until` |
-| The holders' custody | the Ed25519 half on a token, the ML-DSA-65 half `removable_offline` on separate media (CC 4.2.3). **model** (P4): then no one device yields a halt; **model** (F7): with both halves on the token one device does |
+| The holders' custody | the Ed25519 half on a token, the ML-DSA-65 half `removable_offline` on separate media (CC 4.2.3). **model** (P4): then no one device yields a halt; **model** (F7): with both halves on the token one device does. Each holder's attestation is exported fresh from that holder's own token, and the leaves name three distinct token serials (CC 4.2.3, `holder_device_shared`) |
 
 ## 2. Roles
 
@@ -42,7 +42,7 @@ No one is an authority over another's key, and no one signs another's record (CC
 | # | Row | Signer and count | Names | What a node that holds it concludes |
 |---|---|---|---|---|
 | 1 | each holder's `key:record`, `identity_type` {`accord_holder`}, no `valid_until`, `attestation_evidence` with `hardware_class`, `pq_custody` `removable_offline` and the attestation chain | the holder | nothing | the key is live; the holders' thumbprints, the release's default anchor, now exist |
-| 2 | each seat's `key:record` {`node`}, `valid_until` at most 365 days, and its `transport_destination` carrying `transit_xwing_pubkey` and `onion_hop_xwing_pubkey` | the seat's key, offline | the binding names the record | the seat's key is live |
+| 2 | each seat's `key:record` {`node`}, `valid_until` at most 365 days, and its `identity:occurrence` binding: `transport_destination`, with `transit_xwing_pubkey` and `onion_hop_xwing_pubkey` at the payload's top level beside it, never inside it (CC 2.6.1.4, the transport destination binding) | the seat's key, offline | the binding names the record | the seat's key is live |
 | 3 | each holder's pre-signed halt, sealed | the holder | the holder's record | nothing until published; a node holding the genesis honours it then (**model**, P8) |
 | 4 | **the genesis**: `ceg-genesis-bundle/2`, `version` 1, no `prev`; `holders`, `serve_nodes`, and its charter with `halt_fuse_secs` and a new `recovery_commitments` entry per holder; its count is each listed seat's canonical conferral (CC 4.2.1) | every holder (CC 5.3.4) | steps 1 and 2 | the mesh of this form exists; its roster is the holders it lists, and its seats are canonical (**model**, P3, P5) |
 | 5 | the anchor: the release carries the holders' thumbprints as its default anchor, which exist from step 1; the genesis's object id is published once step 4 is signed, and a later release may carry it as the anchor | the steward | none | a node anchored by thumbprints verifies only a genesis every anchored holder signed, and two such are a fork; a node anchored by the object id holds any other genesis void (**model**, P7) |
@@ -80,7 +80,7 @@ and the earlier mesh goes on.
 |---|---|
 | a holder is unavailable | no genesis can be signed (**model**, F2); the ceremony waits, or the holders re-form the roster in the earlier mesh first |
 | a holder's key is lost after | the roster and its count stand (**model**, P3); the holder recovers by a later bundle signed by its recovery key alone (**model**, P11) |
-| two geneses | a fork. A reader without an object-id anchor holds both as tips and takes only what both name; one anchored by an object id holds the other void (**model**, P7) |
+| two geneses | a fork. A reader under a thumbprint anchor reports it and roots on neither: no root, so no agent runs and the node serves nothing of that mesh until its owner re-anchors it by an object id. One anchored by an object id holds the other void (**model**, P7) |
 | the pin is published wrong | a node pinned to a bundle no holder signed roots on nothing; it changes its own pin |
 | a key holder never signs a record | it has no standing in this mesh, and is never removed from anything by silence, since nothing of it was carried |
 

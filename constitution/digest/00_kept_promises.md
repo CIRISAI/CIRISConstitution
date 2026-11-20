@@ -61,7 +61,7 @@ Today's AI lacks wisdom and cannot answer for itself, so no agent operates on th
 
 The human holds the agency; the agent holds the tools and skills. Because someone chose to create and run the agent, that choice carries duties:
 
-- Nobody edits an agent's identity record without a Wise Authority.
+- No identity edit is admitted without a Wise Authority, apart from one known gap (dream edges, G19).
 - Upgrades are offered with their risks stated before they are applied.
 - A planned shutdown is explained, the agent has a short window to object or ask to postpone, and the steward records the final decision under their own name.
 - When an agent is retired, its identity record, audit trail, and sealed logs are assembled with a request to preserve them (five years by default as a best practice), and the people it served are told.

@@ -5,7 +5,7 @@ category: info
 submissiontype: IETF
 docname: draft-moore-scitt-ciris-ceg-latest
 number:
-date: 2026-11-16
+date: 2026-11-19
 v: 3
 area: "Security"
 workgroup: "Supply Chain Integrity, Transparency, and Trust"
@@ -62,17 +62,33 @@ informative:
   RFC9964:
   SD-CWT: I-D.draft-ietf-spice-sd-cwt-09
   CC:
-    title: "CIRIS Constitution 1.0-rc20"
+    title: "CIRIS Constitution 1.0-rc21"
     author:
       org: CIRIS L3C
-    date: 2026-11-16
-    target: https://github.com/CIRISAI/CIRISConstitution/tree/v1.0-rc20
+    date: 2026-11
+    target: https://github.com/CIRISAI/CIRISConstitution/tree/v1.0-rc21
+  I-D.moore-scitt-ciris-trace:
+    title: "The CIRIS Agent Reasoning Trace"
+    author:
+      ins: E. Moore
+      name: Eric Moore
+    date: 2026-11
+    seriesinfo:
+      Internet-Draft: draft-moore-scitt-ciris-trace-00
+  I-D.moore-scitt-ciris-trace-context:
+    title: "Context Manifests for the CIRIS Agent Trace: Prompt Context Provenance for AI Agent Decision Traces"
+    author:
+      ins: E. Moore
+      name: Eric Moore
+    date: 2026-11
+    seriesinfo:
+      Internet-Draft: draft-moore-scitt-ciris-trace-context-00
   CC-VECTORS:
-    title: "CIRISVerify v23.2.0"
+    title: "CIRISVerify v23.3.0"
     author:
       org: CIRIS L3C
     date: false
-    target: https://github.com/CIRISAI/CIRISVerify/tree/v23.2.0
+    target: https://github.com/CIRISAI/CIRISVerify/tree/v23.3.0
 
 --- abstract
 
@@ -121,8 +137,11 @@ SCITT {{RFC9943}} defines an architecture for registering signed
 statements with a Transparency Service and returning receipts that
 prove registration.  Each CEG statement is a COSE_Sign1 with an
 issuer and a subject in its protected header, so it has the shape of
-a SCITT Signed Statement.  CEG has no Transparency Service of its
-own.  {{scitt}} describes the relationship and what still differs.
+a SCITT Signed Statement.  CEG runs no Transparency Service of its
+own, and its admission checks need none.  A host that runs code a row
+admits first requires a SCITT receipt from a Transparency Service it
+trusts ({{receipts}}).  {{scitt}} describes the relationship and what
+still differs.
 
 ## Scope
 
@@ -265,8 +284,10 @@ role party use this one spelling.  A verifier MUST refuse any other.
 
 `external_aad` is the empty byte string, and no party puts a domain
 prefix there.  The unprotected header is outside the signature, and
-no rule reads it.  A holder may add a receipt there, or present a
-disclosure there ({{erasable}}, {{receipts}}).
+no admission check reads it.  A holder may add a receipt there, or
+present a disclosure there ({{erasable}}, {{receipts}}).  A host reads
+a receipt there before it runs code a row admits; the receipt grants
+nothing, and a malformed one is ignored ({{receipts}}).
 
 There is no copy of the headers inside the payload and no signature
 beside the statement.  The protected header and the payload are the
@@ -350,9 +371,16 @@ recants:
 
 A withdrawal and a recantation are different statements.  A
 withdrawal says "I no longer assert this"; a recantation says "this
-was wrong".  Consumers can weigh them differently.  The subject of a
-row has authority over the first but not the second
-({{withdraw-rule}}).
+was wrong".  The subject of a row has authority over the first but
+not the second ({{withdraw-rule}}).
+
+None of the three removes its target: the target stays held and
+verifiable, and each names it in `refs.target` ({{refs}}).  A
+verifier reports a row's state as one of four: admitted, superseded,
+withdrawn or recanted (CC 2.7.5).  The state is derived, not final,
+since a later row on the same target, concurrent with the first, can
+change it.  Consumers may weigh a withdrawn and a recanted row
+differently; they MUST NOT report either as admitted.
 
 A new kind of record is expressed as a new family or dimension on one
 of the five types, never as a sixth type.
@@ -429,6 +457,13 @@ No member of the payload is a float.  A score, a confidence and a
 weight are integers at the fixed scale of 10^6: the value times 10^6.
 A score lies in [-10^6, 10^6], a confidence in [0, 10^6] and a weight
 in [0, 10^6], unless the family states a wider range.
+
+A number in a free-form body that is not an integer is a decimal
+fraction: CBOR tag 4 {{RFC8949}} over `[exponent, mantissa]`, with a
+negative exponent and a mantissa in CBOR's integer range that is not
+divisible by 10.  An integral number is a plain integer.  A number
+that cannot be so written is refused
+`body_number_unrepresentable` (CC 2.6.1.4).
 
 A fold sums in signed 64-bit integers, and its arithmetic is checked:
 a fold that would overflow is refused, and never wraps.  A derived
@@ -524,7 +559,7 @@ the row id.  `refs` is a map with these members:
 | further_heads | Further tips beside `head` |
 | prev | A predecessor |
 | answers | The row this row answers |
-| target | The target of a withdrawal, a supersession or a lifecycle row |
+| target | The row a `supersedes`, `withdraws` or `recants` row names, the act a cut ends or the member a removal removes, and, on a halt's confirmation or resumption, that halt ({{halt}}) |
 | trusted_through | On a key revocation, the last rows of the key held good |
 | also | A map from a role, `ack` or `cites`, to a set of references |
 {: title="Members of refs"}
@@ -695,6 +730,22 @@ only where the predecessor's recovery commitment for the holder
 matches.  Two later bundles that count on one predecessor are a fork,
 and a reader reports it.
 
+A reader's anchor is what it was built or configured to trust: the
+object id of one first bundle, or the set of its holders'
+thumbprints.  Under a thumbprint anchor, a first bundle verifies only
+where its holders equal the anchored set and every one of them signed
+it.  Two first bundles that both do so are a fork of the genesis, and
+the reader roots on neither.  A reader with no root runs no agent and
+serves no directory or seat of that root until its owner re-anchors
+it by an object id (CC 2.6.1.11).
+
+Each holder's key carries an attestation chain for its classical
+half.  Where the chain's leaf names its device, the holders a bundle
+seats name distinct devices; a bundle that seats two holders on one
+device is refused `holder_device_shared`.  Two holders' chains may
+share an intermediate or an attestation key, and the leaf's device
+decides (CC 4.2.3).
+
 ## Receipts {#receipts}
 
 Receipts over the provenance log and each stream's log are COSE
@@ -706,6 +757,31 @@ batches, never single chunks.
 
 A holder may add a receipt to a statement's unprotected header.  The
 receipt is outside the signature and outside the row id.
+
+A host does not run code a row admits until it holds a receipt for
+a statement of that row from a Transparency Service the host
+trusts.  The receipt is the SCITT receipt itself: a COSE Receipt
+{{RFC9942}} in the unprotected header's `receipts` parameter (label
+394), as {{RFC9943}} carries it.  The service registers the
+statement's deterministic COSE_Sign1 encoding with an empty
+unprotected header, its leaf hash SHA-256(0x00 || leaf) as
+{{RFC9162}} hashes a leaf.  The host's own acceptance edge carries
+the service's key, a COSE_Key with its algorithm or an identity
+reference, and a receipt under another algorithm does not verify.
+The unprotected header is unsigned, so a malformed receipt is
+ignored and never makes the statement invalid.  A missing or
+unverifiable receipt is not held: the code waits, with the answer
+`admission_receipt_missing`.
+
+A host trusts a Transparency Service by its owner's own acceptance
+edge of the class `transparency`: one hop, read at the host's `self`
+scope, whatever the edge's tier.  The edge carries the service's key as `service_key`, either a
+COSE_Key with its algorithm or an identity reference whose key is that
+identity's key record.  Anyone may run a Transparency Service under
+their own key, and no list of services ships with anything.  A
+receipt adds no authority: it witnesses that the statement was
+registered, which closes a release seen only by those it was sent to
+(CC 2.7.11, CC 4.4.3.34).
 
 # Admission as a Registration Policy {#admission}
 
@@ -858,7 +934,7 @@ each of them a named human:
   no duty holder is left, the community locks and its members elect
   one (CC 4.5.4).
 
-## A Bounded Human Halt
+## A Bounded Human Halt {#halt}
 
 A trust root names a set of human holders.  Any one holder can pause
 the AI agents of the nodes that accepted that root.  The halt is one
@@ -941,8 +1017,8 @@ This section is informative.
 | Issuer | The signer, named by `iss`. |
 | Signed Statement | A statement: one COSE_Sign1 by one signer. |
 | Registration Policy | The admission checks of {{admission}}. |
-| Transparency Service | No counterpart; see {{deltas}}. |
-| Receipt | A COSE Receipt {{RFC9942}} over a provenance or stream log ({{receipts}}). |
+| Transparency Service | Any service a host trusts by its owner's acceptance edge; CEG runs none of its own ({{receipts}}, {{deltas}}). |
+| Receipt | A COSE Receipt {{RFC9942}}: over a provenance or stream log, or the receipt a host requires before it runs admitted code ({{receipts}}). |
 | Transparent Statement | A statement with a receipt in its unprotected header. |
 | Relying Party | A Consumer. |
 {: title="SCITT roles and their CEG counterparts"}
@@ -970,9 +1046,12 @@ Registered values.
   registration.  This document requests no IANA action for them.
 
 Transparency Service.
-: CEG has no Transparency Service and no registrar.  A node admits by
-  its own checks, and what it serves is decided by trust the reader
-  chose.  No party stands in the middle.
+: CEG runs no Transparency Service and no registrar of its own.  A
+  node admits a row by its own checks, and what it serves is decided
+  by trust the reader chose.  A host does register-and-wait in one
+  place: it runs code a row admits only once it holds a receipt from a
+  service its owner trusts.  The service is SCITT's own, chosen per
+  host, and its receipt confers no standing.
 
 Registration Policy.
 : {{RFC9943}} has the Transparency Service evaluate its policy and
@@ -984,9 +1063,11 @@ Registration Policy.
 
 Receipts.
 : A SCITT Receipt is issued at registration by the service.  A CEG
-  receipt is issued by a witness over a log root, and each witness
+  log receipt is issued by a witness over a log root, and each witness
   issues its own.  Nothing requires a receipt when a row is admitted.
-  A holder may add one to a statement's unprotected header.
+  Running the code a row admits does require one, from a service the
+  host trusts ({{receipts}}).  A holder may add a receipt to a
+  statement's unprotected header.
 
 Witnesses.
 : {{CC}} defines witness cosignature of log heads and of trust-root
@@ -1014,7 +1095,11 @@ of statements: an authorisation before the act, a record of the act,
 and a refusal where the agent declined.  In CEG the same events are
 rows.  The reasoning steps before an act are rows in the decision
 families of {{CC}}.  The act is recorded by one row whose dimension is
-`trace:complete:v1`, ending in a terminal result.  A completed action,
+`trace:complete:v1`, ending in a terminal result.  That trace, its
+components, levels and signing are specified in
+{{I-D.moore-scitt-ciris-trace}}, and the context manifest of each
+model call within it in {{I-D.moore-scitt-ciris-trace-context}}; this
+document specifies only the row that carries it.  A completed action,
 a refusal, and a deferral to a human are the same kind of row with
 different terminal results, so a Consumer reads all three the same
 way.  Authority to act, and any transfer of it, is a `delegates_to`
@@ -1036,7 +1121,8 @@ Note to the RFC Editor: please remove this section before publication.
 - {{CC}} names no refusal token for several checks of {{admission}}.
 
 - Known-answer vectors of the revocation snapshot and the boot
-  manifest are not yet published.
+  manifest are not yet published.  Those of the admission receipt are
+  not yet published at a tag.
 
 - No second implementation exists ({{implementation-status}}).
 
@@ -1076,7 +1162,8 @@ Deterministic encoding.
 
 What the signature covers.
 : The protected header and the payload are signed; the unprotected
-  header is not.  No rule may read the unprotected header.  Who a row
+  header is not.  No admission check reads the unprotected header;
+  the host's receipt check reads it and grants nothing.  Who a row
   is about and who may see it are in the signed bytes, so a relay
   cannot redirect a validly signed row.
 
@@ -1169,7 +1256,7 @@ operator of {{RFC9165}}.
 
 The known-answer vectors of this form are the verifier's
 {{CC-VECTORS}}.  {{CC}} pins each file at a tag of CIRISVerify,
-v23.1.1 or v23.2.0 (CC 2.6.5).
+v23.1.1, v23.2.0 or v23.3.0 (CC 2.6.5).
 They cover the row id, the refusals of non-deterministic encodings,
 the order of the sets in `refs`, a counted row as several
 statements, and the three answers of {{verify}}.
@@ -1191,6 +1278,27 @@ Ed25519 and an ML-DSA-65 signature.  Revision -00 of this document
 described it.  {{CC}} keeps it as an annex (CC 8.11).  No node of the
 current edition reads it, and no row of the current form names an
 object of it.
+
+# Changes since draft-moore-scitt-ciris-ceg-01
+{:numbered="false"}
+
+Note to the RFC Editor: please remove this section before publication.
+
+- {{CC}} is cited at 1.0-rc21.
+- A host runs code a row admits only once it holds a SCITT receipt
+  from a Transparency Service it trusts.  The receipt, its leaf, the
+  trust edge and its `service_key`, and the waiting answer are
+  described ({{receipts}}).  The SCITT roles and differences follow
+  ({{scitt}}).
+- The unprotected header is read by the host's receipt check and by
+  no admission check.
+- A decimal fraction in a free-form body is CBOR tag 4 ({{numbers}}).
+- A fork of two first bundles under a thumbprint anchor roots on
+  neither, and the holders a bundle seats name distinct devices.
+- `refs.target` names every row it can target, and the state a
+  verifier reports for a superseded, withdrawn or recanted row is
+  stated ({{types}}, {{refs}}).
+- The CDDL appendix follows the current schema of {{CC}}.
 
 # Changes since draft-moore-scitt-ciris-ceg-00
 {:numbered="false"}

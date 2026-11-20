@@ -116,7 +116,7 @@ as written and have a replacement. Two are not covered and are recorded with the
 attached against the node's clock at first receipt, and a session held by the earliest claimed instant.
 
 **A shape for every family** (`check_shapes.py`, `claim.py`, `shapes_expected.tsv`, and the table
-`formal/derivation/family_shapes.tsv`). Each of the 184 families is run as an instance of its shape, with every
+`formal/derivation/family_shapes.tsv`). Each of the 186 families is run as an instance of its shape, with every
 parameter traced to a table cell or a quoted sentence and each quote checked against the section it cites.
 `claim.py` states a claim and content over the kernel's layers. The check also removes the shapes in three
 orders and records which survive. Three made-up families that fit no shape must be reported as not fitting.
@@ -131,7 +131,22 @@ twelve properties over 9,450 generated worlds at six instants in eight
 arrival orders each, with a plant per property that must be caught. It runs six candidate readings of "renewed
 in time", the class condition read from the record and from an owner-binding, twelve attacks in every arrival
 order of up to seven rows, and the store's steady state from stated rates. Nothing here is measured. Whoever
-holds an ended key's private half can revive it, and that is recorded as conceded.
+holds an ended key's private half can revive it, and that is recorded as conceded. K-ISS: a statement counts as
+the `iss` it states only if its key is `iss`'s genesis key or reached from it by rotations, each carrying its
+predecessor's statement made inside the predecessor's record; a renewal does not move the chain, and a link its
+predecessor signed at or after its own `revoked_after` does not stand. A key a counted genesis bundle seats for `iss`
+counts too (a recovery), until a later counted bundle no longer seats it; whether a bundle is counted is the accord
+model's answer, taken as given. Two rival rotations hand on nothing until a rotation names both, and a rival counts
+only where it concluded (it names a valid record of the predecessor covering its own instant). A record covers
+`vf <= t < vu`. A rotation or occurrence that lacks a voice waits for it. A fourth way: a live, admitted, not evicted
+occurrence of `iss` binds the key, never a node or agent key under a person's identity. Thirty-five scenarios run in
+every arrival order with each chain row withheld in turn (it waits), against verdicts written by hand, and fifteen
+plants are caught: any held key accepted, a record of another identity accepted, a rotation without the
+predecessor's statement accepted, a rotated successor refused, a link after the predecessor's own revocation kept, a
+key seated only by a bundle not counted accepted, a seat a later counted bundle ended kept, a rotation with a rival
+handing on, an uncovered rival blocking a rotation, a record's end read as covered, the occurrence way skipped, an
+occurrence accepted whatever its signer, an evicted occurrence kept, an agent key accepted under a person, and an
+occurrence admitted without the bound key's own voice.
 
 **Checkpoint and purge** (`purge.py`, `check_purge.py`, `purge_expected.tsv`). Answers are indexed by head: whether an
 act counts at the head it names, and whether it is still in force at a later head. A node signs a checkpoint under
