@@ -1033,6 +1033,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `attestation_type` | label -70001 | none | — | - | [2.6.1.1](#2.6.1.1) | One of the five. |
 | `attested_key_id` | sub | none | — | - | [2.6.1.1](#2.6.1.1) | — |
 | `references_attestation_id` | a member of refs | none | — | - | [2.6.1.3](#2.6.1.3) | Under the label the family's role gives it. |
+| `wa_adjudication_ref` | a member of refs | none | — | - | [3.2](part_3_the_namespace.md#3.2) [2.6.1.3](#2.6.1.3) | On a rule-2 or rule-4 withdraws against a live owner-binding, the Wise-Authority quorum finding, under the also role cites; the owner-binding withdrawn is under target. |
 | `additional_scrubs` | a further statement over the same payload | none | — | - | [2.6.1.9](#2.6.1.9) | Each voice is its own statement, found by the row id. |
 | `original_content_hash` | none | none | — | - | [2.6.1.3](#2.6.1.3) | The earlier form's content hash; no row of this form names an earlier-form row. |
 | `row` | none | none | — | - | [2.6.1.1](#2.6.1.1) | The protected header carries type, family and kid; the CWT claims carry iss and sub. |
