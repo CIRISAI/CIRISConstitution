@@ -5,7 +5,7 @@ category: info
 submissiontype: IETF
 docname: draft-moore-scitt-ciris-ceg-latest
 number:
-date: 2026-11-19
+date: 2026-11-20
 v: 3
 area: "Security"
 workgroup: "Supply Chain Integrity, Transparency, and Trust"
@@ -67,6 +67,7 @@ informative:
       org: CIRIS L3C
     date: 2026-11
     target: https://github.com/CIRISAI/CIRISConstitution/tree/v1.0-rc21
+    annotation: "The tag v1.0-rc21 is commit b016df47a7697b6544e34177541be442ff6f24e9."
   I-D.moore-scitt-ciris-trace:
     title: "The CIRIS Agent Reasoning Trace"
     author:
@@ -89,6 +90,21 @@ informative:
       org: CIRIS L3C
     date: false
     target: https://github.com/CIRISAI/CIRISVerify/tree/v23.3.0
+    annotation: "The tag v23.3.0 is commit ffd7af1f1b53."
+  I-D.aylward-aiga:
+    title: "Artificial Intelligence Governance Architecture (AIGA)"
+    author:
+      ins: E. Aylward
+    date: false
+    seriesinfo:
+      Internet-Draft: draft-aylward-aiga-00
+  I-D.sparysh-pala-audit:
+    title: "PALA-1: A Tamper-Evident Audit Record Format for Constrained and Disconnected Deployments"
+    author:
+      ins: A. Sparysh
+    date: false
+    seriesinfo:
+      Internet-Draft: draft-sparysh-pala-audit-02
 
 --- abstract
 
@@ -212,13 +228,13 @@ Producer, Consumer, Substrate:
   Substrate stores and relays rows and applies the admission checks.
   One node is usually all three.
 
-Refusal token:
-: A fixed, case-sensitive ASCII string that names why a row was
-  refused, so that two implementations agree on a refusal as well as
-  on an acceptance.  The tokens of {{CC}} are either all lowercase or
-  all uppercase, and are compared byte for byte.  Some refusals use
-  the token `federation_malformed_row` together with a reason from a
-  closed set.
+Reason, refusal token:
+: A fixed, case-sensitive ASCII string that names why a statement is
+  Invalid or why a row was refused, so that two implementations agree
+  on a refusal as well as on an acceptance.  Every reason and token
+  in this document is lower case, and is compared byte for byte.  A
+  reason may carry a detail after a colon, as in `malformed:refs`.
+  {{admission}} lists them all.
 
 # The Signed Statement {#object}
 
@@ -488,11 +504,11 @@ carries one.
 A payload's deterministic encoding MUST NOT exceed 1 MiB (1,048,576
 bytes).  The bound is on the bytes the signature covers.  A Producer
 MUST NOT emit a larger payload.  A Substrate MUST refuse one at every
-write path, with `ENVELOPE_TOO_LARGE`.
+write path, with `envelope_too_large` ({{admission}}).
 
 Every write path MUST also enforce a finite ceiling on the octets it
-buffers from an untrusted source.  It refuses at that ceiling with
-the same token, without completing the decode.  The ceiling is local,
+buffers from an untrusted source.  It refuses at that ceiling in the
+same way, without completing the decode.  The ceiling is local,
 MUST NOT be below 1 MiB, and SHOULD be published.
 
 Larger content travels outside the row and is named in
@@ -635,6 +651,33 @@ refused.  A record whose set contains a person's role carries no
 with stated exceptions.  A record that breaks the rule is refused
 `key_record_out_of_window`.
 
+A statement's key MUST be a key of its `iss`.  A signature that
+verifies shows only that the holder of `kid`'s key signed.  It does
+not show that the key belongs to the identity `iss` claims, and
+without this check a statement signed by one party could name
+another as its issuer.  The key that `kid` resolves to is a key of
+`iss` in one of four ways:
+
+1. `kid` is the thumbprint inside `iss`.  The key is the genesis
+   key, or a room key signing as itself.
+2. The verifier holds a key record of that key whose own `iss` is the
+   statement's `iss`, and that record reaches the genesis key's
+   record through rotation records.  Each rotation record names its
+   predecessor's record and carries the predecessor key's statement.
+3. The genesis bundle in force seats that key for that `iss`
+   ({{objects}}).
+4. A live occurrence of `iss` binds that key: an `identity:occurrence`
+   row of `iss` that the verifier holds, admitted, not evicted,
+   covering the statement's instant, and carrying the bound key's own
+   statement as proof of possession.
+
+Where none of the four holds and a row one of them needs is not held,
+the answer is Waiting on that row.  Otherwise the statement is
+Invalid, `kid_not_of_iss`.  A held record of the key under another
+identity is the plain case.  A verifier that holds bare keys and no
+rows can show only the first way.  A `node` or `agent` key is never a
+key of an identity whose genesis record is a person's.
+
 A key is live at an instant when one of its records covers that
 instant and its own revocation has not taken effect by then.  Only
 the key's own revocation ends its liveness.  The key's owner and the
@@ -682,14 +725,16 @@ A verifier proceeds in this order:
 5. Run the family's static checks, the key record's end among them.
 6. Read `kid`; resolve the key record, or answer Waiting on it.
 7. Verify the composite signature over the bytes received.
-8. Check `iss` against `author`, or against the party of a role the
+8. Check that `kid`'s key is a key of `iss` ({{keys}}), or answer
+   Waiting on the row that check needs.
+9. Check `iss` against `author`, or against the party of a role the
    family names ({{author}}).
-9. On Valid, apply the defaults of {{CC}} to absent members, at
-   interpretation time only, and then the Consumer's own policy.
-10. Store or forward the statement as received.
+10. On Valid, apply the defaults of {{CC}} to absent members, at
+    interpretation time only, and then the Consumer's own policy.
+11. Store or forward the statement as received.
 
-A failure at steps 1 to 5, 7 or 8 is Invalid.  Step 6 alone answers
-Waiting.
+A failure at steps 1 to 5, 7, 8 or 9 is Invalid.  Steps 6 and 8 alone
+answer Waiting.
 
 # Other Signed Objects and Receipts {#objects}
 
@@ -791,26 +836,67 @@ registered.  The CEG admission checks are such a policy.  A Substrate
 MUST apply them to every row before storing or relaying it.  It MUST
 NOT truncate, repair or re-encode a row in order to admit it.
 
-| Check | Refusal |
-|---|---|
-| Payload at most 1 MiB | ENVELOPE_TOO_LARGE |
-| Deterministic encoding of payload and header | Invalid |
-| Header members exactly as {{object}} | Invalid |
-| Composite signature verifies | SIGNATURE_VERIFICATION_FAILED |
-| Type is one of the five | attestation_type_unregistered |
-| No optional member is null | (R) envelope_member_null |
-| Sets sorted and unique | federation_set_semantics_unsorted |
-| Header instants equal the payload's | Invalid |
-| `dimension` resolves to the family | Invalid |
-| `iss` is the author or a named role | Invalid |
-| Key record within its window | key_record_out_of_window |
-| Termed delegation within 365 days | delegation_term_required |
-| Withdrawal meets {{withdraw-rule}} | federation_withdraws_not_admitted |
-{: title="Admission checks"}
+The checks run in the order of {{verify}}.  Each has one reason.  A
+verifier reports `invalid:` followed by the reason, and the vectors
+of {{vectors}} carry the same strings.
 
-"(R) r" means the token `federation_malformed_row` with reason r.
-"Invalid" marks a check that {{CC}} makes a refusal without naming a
-token for it.
+| Step | Check | Reason |
+|---|---|---|
+| 1 | The statement is a COSE_Sign1 under tag 18 | `not_cose_sign1` |
+| 1 | Statement, protected header and payload are deterministically encoded; no float | `not_deterministic:<part>` |
+| 2 | The protected header holds exactly the members of {{object}} | `unexpected:protected` |
+| 2 | The unprotected header holds only integer labels | `unexpected:unprotected` |
+| 2 | Each header member has its type and value: `cty`, `typ`, `row-type`, `family-id`, `edition`, `iss` | `malformed:<member>` |
+| 2 | The family id is registered | `unregistered_family` |
+| 3 | Each payload member has its type and range; no null | `malformed:<member>` |
+| 3 | A closed map holds only its members | `unexpected:<map>` |
+| 3 | Each set in `refs` is sorted and without duplicates | `set_order:<member>` |
+| 3 | A decimal fraction is in its one form ({{numbers}}) | `body_number_unrepresentable` |
+| 3 | Each disclosure opens one digest the payload carries, once | `disclosure_unmatched` |
+| 3 | No redaction digest appears twice | `duplicate_digest` |
+| 3 | `dimension` is claimed by a registered family | `dimension_unregistered` |
+| 3 | `dimension` resolves to the header's family | `dimension_family` |
+| 3 | `dimension` passes the namespace rules of {{CC}} | `dimension_refused:<token>` |
+| 4 | `iat`, `nbf` and `exp` equal the payload's instants | `time:<claim>` |
+| 4 | `valid_until` is later than `asserted_at` | `valid_until_not_after_asserted_at` |
+| 5 | A key record meets its end rule ({{keys}}) | `key_record_out_of_window` |
+| 5 | A key record's roles do not mix a person's with a machine's | `key_record_mixed_roles` |
+| 6 | The held key has the thumbprint `kid` | `kid_mismatch` |
+| 6 | The signer's key record is not itself Invalid | `key_not_valid` |
+| 7 | The composite signature verifies | `bad_signature` |
+| 8 | `kid`'s key is a key of `iss` | `kid_not_of_iss` |
+| 9 | `author` is present on an authored family and absent on a counted one | `author_column` |
+| 9 | `iss` is the author or fills a role the family names | `iss_not_in_role` |
+| 9 | A family that scores a dimension carries one | `dimension_missing` |
+{: #tab-verify title="Verification checks and their reasons"}
+
+A name in angle brackets stands for the part, member, map or claim
+at fault, as in `not_deterministic:payload`, `malformed:refs`,
+`unexpected:also` and `time:iat`.  The token after
+`dimension_refused:` is the namespace token of {{CC}}.  Step 6
+answers `waiting:kid:` and the thumbprint when the key is not held,
+and step 8 answers Waiting on the row it needs.
+
+A Substrate then applies the checks of {{tab-admit}} to a statement
+that verified.  Each refuses with one token.
+
+| Check | Token |
+|---|---|
+| Payload at most 1 MiB ({{canon}}) | `envelope_too_large` |
+| Type is one of the five | `attestation_type_unregistered` |
+| Termed delegation within 365 days | `delegation_term_required` |
+| Withdrawal meets {{withdraw-rule}} | `federation_withdraws_not_admitted` |
+{: #tab-admit title="Admission checks and their tokens"}
+
+The two tables are the complete list for a row statement.  The
+reasons of {{tab-verify}} are those the verifier's vectors carry at
+the commit {{vectors}} pins.  {{CC}} 1.0-rc21 names `kid_not_of_iss`,
+`key_record_out_of_window` and the last three tokens of {{tab-admit}}
+in its own text.  It states the remaining checks without a name, and
+it spells the size refusal in upper case, as the HTTP error code of
+its write path.  Its next edition adopts the reasons and tokens as
+written here.  The HTTP error codes of {{CC}}'s write path are
+transport status and are not reasons of this document.
 
 Admission has a third outcome besides admit and refuse.  A row signed
 by a key whose record is not yet held is Waiting ({{verify}}).  It is
@@ -1073,7 +1159,8 @@ Witnesses.
 : {{CC}} defines witness cosignature of log heads and of trust-root
   lineages.  A lineage that runs with witnessed mode off has a single
   signer.  That signer can show different histories to different
-  peers until a peer compares heads.
+  peers until a peer compares heads.  {{loghead}} proposes a way to
+  close this with a Transparency Service.
 
 Statement content.
 : SCITT leaves the meaning of a statement to its issuer.  CEG fixes
@@ -1086,14 +1173,46 @@ Waiting.
   hold the statement inert ({{verify}}).  A SCITT Registration Policy
   admits or refuses.
 
+## Registering a Log Head (Proposed) {#loghead}
+
+This subsection is a proposal for review.  It is not in {{CC}}
+1.0-rc21 and no implementation has it.
+
+A single-signer log can show different histories to different peers.
+A Transparency Service closes that gap without any change to the row
+format.  The node that signs a log's head registers each head with a
+Transparency Service as a Signed Statement.  The statement carries
+the log's identifier, the tree size and the root hash, and is signed
+by the key that signs the head.  The service returns a Receipt.
+
+Two peers that hold receipts for heads of the same log can then
+compare them.  A consistency proof {{RFC9162}} between the two
+registered roots shows that the later log extends the earlier one.
+Two registered heads of one size with different roots are proof of
+equivocation, signed by the equivocating key and held by a third
+party.
+
+A reader would name the service it accepts by the same trust edge
+that {{receipts}} uses for admitted code.  A node that registers no
+head is as it is today: its log is single-signer and its readers
+compare heads themselves.
+
+This is the method of Section 8 of {{I-D.sparysh-pala-audit}}, where
+a chain head is carried to a Transparency Service as a signed
+statement that also carries the derived root.
+
 # Lifecycle of an Agent Decision {#lifecycle}
 
 This section is informative.
 
-Several individual SCITT drafts record AI agent actions as a sequence
-of statements: an authorisation before the act, a record of the act,
-and a refusal where the agent declined.  In CEG the same events are
-rows.  The reasoning steps before an act are rows in the decision
+Other individual drafts record AI agent actions as a sequence of
+logged events: an authorisation before the act, a record of the act,
+and a refusal where the agent declined.  The Artificial Intelligence
+Governance Architecture {{I-D.aylward-aiga}} logs agent activity in
+Merkle trees and is the closest in aim.  PALA-1
+{{I-D.sparysh-pala-audit}} defines a tamper-evident audit record for
+inference runtimes and carries its chain head to a Transparency
+Service.  In CEG the same events are rows.  The reasoning steps before an act are rows in the decision
 families of {{CC}}.  The act is recorded by one row whose dimension is
 `trace:complete:v1`, ending in a terminal result.  That trace, its
 components, levels and signing are specified in
@@ -1118,7 +1237,10 @@ Note to the RFC Editor: please remove this section before publication.
   displayed form of a key's thumbprint.  {{CC}} lists them in its
   table of open encodings (CC 2.6.1.12).
 
-- {{CC}} names no refusal token for several checks of {{admission}}.
+- {{CC}} 1.0-rc21 names only some of the reasons of {{admission}} in
+  its own text.  Its next edition adopts the rest as written here.
+
+- The log-head profile of {{loghead}} is a proposal.
 
 - Known-answer vectors of the revocation snapshot and the boot
   manifest are not yet published.  Those of the admission receipt are
@@ -1255,16 +1377,76 @@ operator of {{RFC9165}}.
 # Test Vectors {#vectors}
 
 The known-answer vectors of this form are the verifier's
-{{CC-VECTORS}}.  {{CC}} pins each file at a tag of CIRISVerify,
-v23.1.1, v23.2.0 or v23.3.0 (CC 2.6.5).
-They cover the row id, the refusals of non-deterministic encodings,
-the order of the sets in `refs`, a counted row as several
-statements, and the three answers of {{verify}}.
+{{CC-VECTORS}}.  {{CC}} 1.0-rc21 is the tag `v1.0-rc21`, commit
+b016df47a7697b6544e34177541be442ff6f24e9.  It pins each vector file
+at a tag of CIRISVerify (CC 2.6.5).  The tags are commits
+f878dee630de (v23.1.1), fc7fb02a8412 (v23.2.0) and ffd7af1f1b53
+(v23.3.0).  The files of this document, with the SHA-256 digest of
+each at its tag:
+
+~~~
+edition2/row_statements_v3.json  (v23.3.0)
+  0c072516dea1d89132567e0f343ca47a2183df79697651685aa557d739cdf920
+edition2/key_of_iss_v1.json  (v23.3.0)
+  bd584d9b31b7271dc86c05a29eec75044b5fe74aae8dd586701a227f09001333
+edition2/genesis/genesis_bundles_v2.json  (v23.2.0)
+  395819725ad28899fcff8ee75f238d09a319d5a0a8d3e242f91d7f973fa52153
+edition2/genesis/genesis_reseat_v1.json  (v23.3.0)
+  11cd3aba1af28cd9cf9d1d2328b529b1aed1efd80b552b0283cd6ed7e6abc0e2
+accord_halt/accord_halt_v2.json  (v23.3.0)
+  a70536271ee3d19af4390c4c603e17a4cba54fa18449d6296d3696f6756e9581
+recovery_commitment/recovery_commitment_v1.json  (v23.2.0)
+  cf552e323d06776c42c3da25ad8b2a01874e622402fcbbee0be77c41d0a521a2
+mldsa65_ed25519_draft_kats.json  (v23.1.1)
+  7dc03ce5e7da7d54c2e1616593bce53ff4a09b0cb52b787a0a6061a22eb102f3
+~~~
+
+The first six files are under `src/ciris-verify-core/tests/vectors/`,
+and the last under `src/ciris-crypto/tests/vectors/composite/`.
 
 The row statements file holds four valid statements and 42 refusals,
-with 17 key records.  The composite signature's vectors are checked
-against the examples of {{COMPOSITE-JOSE}}.  Further files cover the
-genesis bundles, the recovery commitment, and the accord halt.
+with 17 key records.  Each refusal carries its reason of
+{{admission}}.  The key-of-issuer file holds 24 cases of the check of
+{{keys}}: an unrelated key (Invalid), a rotated successor (Valid) and
+a missing link (Waiting), under one `iss`.  The composite signature's
+vectors are checked against the examples of {{COMPOSITE-JOSE}}.
+
+## A Row Id Known Answer
+
+The first valid statement of the row statements file,
+`authored_score`, is a `scores` row of the family
+`evidence:.suite:.kind:.cell:.prefix`, with `sub` `subject-1` and its
+signer as `author`.  Its payload is these 236 bytes:
+
+~~~
+a66573636f72651a000b71b066617574686f72784d75726e3a696574663a70617261
+6d733a6f617574683a636b743a7368612d3235363a31764356747a696834592d324c
+366b6b65414e686963754a51674f5562557878705332624a37515264474d6964696d
+656e73696f6e782665766964656e63653a7361666574795f626174746572793a6361
+70747572653a613a623a76316a636f6e666964656e63651a000dbba06b6173736572
+7465645f61741b0000019a86e8e07b6d65766964656e63655f7265667381822f5820
+0909090909090909090909090909090909090909090909090909090909090909
+~~~
+
+The row id input of {{names}} is the six-element array
+`["CEG-row/2", "scores", family, "subject-1", author, payload]`, with
+the payload entered as a byte string.  Its deterministic encoding is
+382 bytes: the prefix below, then the byte-string head `58ec`, then
+the payload above.
+
+~~~
+86694345472d726f772f326673636f726573782365766964656e63653a2e73756974
+653a2e6b696e643a2e63656c6c3a2e707265666978697375626a6563742d31784d75
+726e3a696574663a706172616d733a6f617574683a636b743a7368612d3235363a31
+764356747a696834592d324c366b6b65414e686963754a51674f5562557878705332
+624a37515264474d
+~~~
+
+The row id is the SHA-256 of those 382 bytes:
+
+~~~
+4d7193e4b48b2313b7f03a9a79fbf8749202c988d94f8909e2fdc652ae74e1f5
+~~~
 
 {{CC}} also builds schema samples, which are not known-answer
 vectors.  The build of this document checks that the CDDL of
@@ -1278,6 +1460,27 @@ Ed25519 and an ML-DSA-65 signature.  Revision -00 of this document
 described it.  {{CC}} keeps it as an annex (CC 8.11).  No node of the
 current edition reads it, and no row of the current form names an
 object of it.
+
+# Changes since draft-moore-scitt-ciris-ceg-02
+{:numbered="false"}
+
+Note to the RFC Editor: please remove this section before publication.
+
+Revision -02 brought the text to the wire of {{CC}} 1.0-rc21.  This
+revision answers the reviews of -01.
+
+- A statement's key must be a key of its `iss`, by one of four ways,
+  with the reason `kid_not_of_iss` and a Waiting answer where a row
+  is missing ({{keys}}, {{verify}}).  Songbo Bu found that -01 did
+  not bind the two.
+- Every check has a reason or token, in one lower-case style, and
+  the two tables of {{admission}} are the complete list.
+- {{CC}} and each vector file are pinned by commit, each vector file
+  also by SHA-256, and one row id known answer is given in full
+  ({{vectors}}).
+- A profile that registers a log head with a Transparency Service is
+  proposed for review ({{loghead}}).
+- The related drafts are named ({{lifecycle}}).
 
 # Changes since draft-moore-scitt-ciris-ceg-01
 {:numbered="false"}
@@ -1321,6 +1524,17 @@ Note to the RFC Editor: please remove this section before publication.
 
 # Acknowledgments
 {:numbered="false"}
+
+Songbo Bu found that revision -01 did not bind a statement's signing
+key to the identity in `iss`, supplied the test cases that confirmed
+it, and re-ran them against the fix.  The rule of {{keys}} is the
+result.
+
+Andrii Sparysh reviewed revision -01 as an implementer would.  The
+complete list of reasons, the pinned digests, the row id known
+answer, the statement of what `refs.target` names and of a verifier's
+reported state, and the log-head proposal of {{loghead}} all follow
+from that review.
 
 The canonical-form rules in this document were found and fixed in
 review by the implementers of CIRISPersist, CIRISVerify and CIRISEdge.

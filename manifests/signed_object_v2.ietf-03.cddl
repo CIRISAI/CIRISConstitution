@@ -1,0 +1,384 @@
+; CC 2.6.1 — the signed object: deterministically encoded CBOR signed with COSE, aligned with
+; SCITT (RFC 9943). The normative schema of this edition; hand-written. RFC 8610 CDDL over CBOR
+; with CBOR Common Deterministic Encoding (draft-ietf-cbor-cde-13, updating RFC 8949). The members
+; table of CC 2.6.1 is generated from constitution/signed_object_v2.tsv, and
+; tools/build_cc_signed_object_v2.py checks that the table and this file name the same members.
+; The earlier JSON object is CC 8.11, read by no node of this edition. The known-answer vectors are the verifier's; this file mints none.
+; Every constant the text of CC 2.6 fixes is pinned here, so a validator admits one encoding only.
+
+; Every top-level rule, so a generator exercises them all.
+ceg-anything = ceg-statement / ceg-object-statement / second-consent / row-id-input / row-id
+             / statement-id-input / statement-id / object-id-input / ceg-key / key-record-members
+             / revocation-snapshot / ceg-genesis-bundle / recovery-commitment-input / seat-commitment-input
+             / hpke-info / ceg-typ / accord-invocation / accord-lifecycle / transport-destination-binding
+
+; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
+; A counted row is N statements over one payload, one per voice, found by the row id (below).
+; Each voice signs the whole payload, and so the `refs.head` the row is counted over.
+; external_aad is the empty bstr for every statement.
+ceg-statement = #6.18(COSE_Sign1)
+
+COSE_Sign1 = [
+  protected: bstr .cbor statement-protected,   ; in the deterministic encoding, exactly these members: one statement id
+  unprotected: unprotected-header,
+  payload: bstr .cbor attestation-envelope,    ; never nil: a detached payload is refused
+  signature: composite-signature,
+]
+
+unprotected-header = {
+  ? 17: [+ bstr .cbor sd-disclosure],       ; sd_claims (SD-CWT): blinded members as PRESENTED beside the statement to one who may
+                                            ; see them; a disclosure set is held and travels as bytes under the object's consent edge
+  ? 394: [* bstr],                         ; receipts (RFC 9942 section 2): never signed, so never a fault of the statement; a host
+                                            ; reads each as a ceg-receipt and ignores one that is not (CC 2.7.11)
+  * int => any,                             ; anything else a holder adds, never signed and never read by a rule
+}
+
+; The composite ML-DSA-65-Ed25519 signature of draft-ietf-jose-pq-composite-sigs-06 (over
+; draft-ietf-lamps-pq-composite-sigs-19): the ML-DSA-65 signature (3309 bytes) then the Ed25519
+; signature (64 bytes). Both sign M' = "CompositeAlgorithmSignatures2025" || "COMPSIG-MLDSA65-Ed25519-SHA512"
+; || 0x00 || SHA-512(M). ML-DSA-65 signs M' with the label bytes as its FIPS 204 ctx (never empty);
+; Ed25519 signs M' as it is. The 0x00 is the empty application context.
+composite-signature = bstr .size 3373
+
+; A COSE receipt (RFC 9942 section 4.3): a tagged COSE_Sign1 under the Transparency Service's own key and algorithm,
+; its proofs (vdp, label 396) in its unprotected header and its verifiable data structure (vds, label 395) protected.
+; Its leaf is the statement's deterministic COSE_Sign1 encoding with an empty unprotected header, hashed
+; SHA-256(0x00 || leaf) (RFC 9162). Read by the host's rule only; the statement's schema never reads it.
+ceg-receipt = #6.18([bstr, { 396: { * int => [+ bstr] }, * int => any }, bstr / nil, bstr])   ; protected, unprotected, payload, signature
+
+statement-protected = {
+  1: composite-alg,                ; alg: the composite ML-DSA-65-Ed25519; private-use until IANA assigns, the construction exactly the draft's
+  3: row-cty,                      ; cty: the constant, with no parameters
+  4: kid,                          ; kid: the RFC 9679 thumbprint of the signer's AKP composite key (below)
+  15: cwt-claims,                  ; RFC 9597: iss and sub as RFC 9943 requires
+  16: "ceg-row/2",                 ; typ (RFC 9596): a row's typ is fixed
+  -70001: row-type,                ; the row's type, one of the five; the row id reads it
+  -70002: family-id,               ; the row's family id, never a leaf; the row id reads it
+}
+
+composite-alg = -70100
+kid = bstr .size 32                ; the RFC 9679 SHA-256 thumbprint
+
+; cty is one constant with no parameters; a verifier refuses any other. The type and the family
+; ride their own labels, -70001 and -70002, required on a row and refused on any other object.
+; `family` is a family id, never a leaf: the registry prefix with each {name} written .name and
+; each * written . (so `evidence:.suite:.kind:.cell:.prefix`, `accord:.`).
+row-cty = "application/vnd.ciris.row+cbor"
+row-type = "scores" / "delegates_to" / "supersedes" / "withdraws" / "recants"
+family-id = tstr .regexp "[a-z0-9_.][a-z0-9_.-]*(:[a-z0-9_.][a-z0-9_.-]*)*"
+
+cwt-claims = {
+  1: identity-ref,                 ; iss: the signer's stable identity reference (its genesis key's thumbprint URI), never the rotating kid;
+                                   ; under a room key, iss is the room key's own identity reference, never its person's genesis key
+  2: tstr,                         ; sub: what the row is about; a key subject is an identity-ref
+  6: uint,                         ; iat: floor(asserted_at / 1000), seconds, derived; a verifier refuses disagreement
+  ? 5: uint,                       ; nbf: floor(valid_from / 1000) where the row has one
+  ? 4: uint,                       ; exp: floor(valid_until / 1000) where the row has one
+  -70003: 2,                       ; edition: the constant 2
+}
+
+; One spelling for every identity reference: iss, author, a key subject in sub or subject_key_ids,
+; and every role party. The COSE Key Thumbprint URI of RFC 9679 §5.7 with the hash name sha-256 and
+; the 32-byte thumbprint in unpadded base64url (43 characters, the last carrying zero trailing bits).
+identity-ref = tstr .regexp "urn:ietf:params:oauth:ckt:sha-256:[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]"
+
+; No float, no null, no undefined, no tag anywhere a family member can reach.
+; The exceptions are SD-CWT's redaction (simple(59) as a map key, tag 60 for an array element) and a body's tag-4 decimal.
+ceg-value = int / tstr / bstr / bool / body-decimal / [* (ceg-value / redacted-element)]
+          / { ? redacted_claim_keys => [+ bstr .size 32], * (tstr / int) => ceg-value }
+; A non-integral number in a free-form body (CC 2.6.1.2): tag 4, [exponent, mantissa], in CBOR's integer range.
+; Normalisation (a mantissa not divisible by 10) is checked in prose; an integral number is a plain integer.
+body-decimal = #6.4([exponent: nint, mantissa: int])
+redacted_claim_keys = #7.59
+redacted-element = #6.60(bstr .size 32)
+
+; The payload: the members a family names, every text and byte member bounded, no free text
+; outside body.note, absent never null. A member that names a row stands in `refs` and nowhere else.
+attestation-envelope = {
+  ? "author": identity-ref,        ; the iss of the author: present iff the family is authored, absent iff counted (a column of the family model)
+  ? "refs": refs,                  ; EVERY row this row names, by row-ref
+  ? "dimension": tstr,             ; the full scored dimension (leaf and :vN); it resolves to cty's family, refused otherwise
+  ? "evidence_refs": [+ hash-digest],   ; the blobs the row cites, by content hash: a sequence, bytes never hex
+  ? "seat_commitment": hash-digest,; on a seat row of a private room: the commitment the binding opens (seat-commitment-input)
+  ? "score": fixed6-score,         ; integers, never floats (see fixed6)
+  ? "confidence": fixed6-unit,
+  ? "weight": fixed6-weight,
+  ? "passed": count32,             ; safety-battery interpret rows: passed <= total, both present or both absent, with
+  ? "total": 1..4294967295,        ; score = round(10^6 * (2*passed - total) / total), ties away from zero, checked by exact equality
+  "asserted_at": ms-time,
+  ? "valid_from": ms-time,
+  ? "valid_until": ms-time,
+  ? "expires_at": ms-time,
+  ? "reason": uint,                ; a code from a closed registry, 0 = unspecified
+  ? "salt": bstr .size 16,         ; required where the content is low-entropy (a ballot, a census cell); bound by every signer
+  ? redacted_claim_keys => [+ bstr .size 32],   ; SD-CWT simple(59): digests of the blinded members, in mint order (a sequence)
+  ? "body": body,
+  * tstr => ceg-value,             ; the members a family names, under the logical names of the CC 2.6.1 table
+}
+
+body = { ? "note": tstr .size (0..2048), ? redacted_claim_keys => [+ bstr .size 32], * tstr => ceg-value }
+count32 = 0..4294967295
+
+; Erasability: the selective disclosure of draft-ietf-spice-sd-cwt-09. A blinded map member is absent
+; from its map, and the digest of its disclosure stands in that map's simple(59) array; a blinded array
+; element is tag 60 over that digest. The digest is SHA-256 (no sd_alg) over the disclosure's bytes as
+; sd_claims carries them. A family whose erasure_route is dsar or purge mints every free-text member and
+; every member another party authored blind, body.note first; the members are the family model's
+; `blind` column, and no fold, verdict or admission reads one.
+sd-disclosure = salted-claim / salted-element
+salted-claim = [salt: bstr .size 16, value: ceg-value, key: tstr]
+salted-element = [salt: bstr .size 16, value: ceg-value]
+ms-time = uint                     ; POSIX milliseconds, no tag, never a float
+
+; Integers at one fixed scale: fixed6 is the value times 10^6. Folds sum in checked i64 and refuse on
+; overflow, never wrap. A derived value is rounded ties away from zero, in integers, unless its own
+; rule states otherwise, and checked by exact equality. The default ranges are these; weight is
+; [0, 10^6] by rule, and a family that states a wider range for it states it in its own rule.
+fixed6 = -9223372036854775808..9223372036854775807
+fixed6-score = -1000000..1000000
+fixed6-unit = 0..1000000
+fixed6-weight = fixed6
+
+; The row id: the digest a row is NAMED by. One per row, the same for every voice of a counted row,
+; unchanged when a voice, a receipt or a disclosure is added. Signatures, kid, alg, receipts and
+; disclosures are outside it. `type` and `family` are the header's -70001 and -70002; `sub` is the CWT sub; `author` is
+; the payload's "author" for an authored family and null for a counted one; `payload` is the payload
+; bstr as signed, entered as a byte string, never as the decoded map. A payload whose bytes are not the
+; deterministic re-encoding of the value they decode to is refused, so one row has one payload and one id.
+row-id-input = ["CEG-row/2", type: row-type, family: family-id, sub: tstr, author: identity-ref / null,
+                payload: bstr .cbor attestation-envelope]
+row-id = hash-digest
+
+hash-digest = [ alg: -16, digest: bstr .size 32 ]   ; SHA-256 only in this edition: one name per row
+
+; A reference to a signed object of this form: the row id above, or the object id (below) of a
+; signed object that is not a row. No row of this form names an object of the earlier form (CC 8.11,
+; CC 2.6.1.12), so the edition is the constant 2. Never an attestation_id.
+row-ref = [ edition: 2, id: hash-digest ]
+row-ref-set = [+ row-ref]          ; a set: sorted by the bytewise order of each element's encoding, no duplicate
+
+; Every member that names a row. A verifier gathers the named set from `refs` alone, without knowing
+; the family. SET RULE: every array inside `refs` is a set: its elements sorted by the bytewise order
+; of each element's deterministic encoding, no duplicate, refused otherwise. An empty `refs` is
+; refused: absence is its one encoding.
+refs = refs-members .and nonempty-map
+refs-members = {
+  ? "head": row-ref,               ; the roster head this row is counted over, or a version extends
+  ? "further_heads": row-ref-set,  ; further tips named beside `head`
+  ? "prev": row-ref,               ; the predecessor in a signer's own series
+  ? "answers": row-ref,            ; the proposal voted on or accepted, the window opened, the row replied to
+  ? "target": row-ref,             ; the row superseded, withdrawn, recanted, cut or removed
+  ? "trusted_through": row-ref-set,; on a key revocation: the last rows of the revoked key held good
+  ? "also": { + also-role => row-ref-set },   ; any other named row, under a role of the closed registry
+}
+; The also roles, closed: "ack" names an acknowledgement (a revocation snapshot's);
+; "cites" names the row a row cites, as a build attestation names its manifest contribution. Any other
+; role is a later registration.
+also-role = "ack" / "cites"
+nonempty-map = { + any => any }
+
+; The statement id (RFC 9943 statement identity): SHA-256 over the deterministic encoding of this
+; labelled structure. It names a statement, one voice; the row id names the row.
+statement-id-input = ["CEG-statement-id/2", protected: bstr, payload: bstr]
+statement-id = hash-digest
+
+; The second consent. A statement over an authored payload whose iss is not the payload's "author"
+; is accepted only in a role the family names (delegate, bound node, ...), and only when its iss is
+; the party that role names in the payload, or the CWT sub where the role is the attested key; any
+; other iss is Invalid. The second consent of a scoped delegates_to is such a statement, by the
+; delegate (the sub), over the same payload bytes, and so has the same row id; a scoped delegation
+; of this form seats only with it.
+second-consent = ceg-statement
+
+; Keys: one AKP COSE_Key (RFC 9964 kty 7) whose alg is the composite and whose pub is the composite
+; public key encoding of the pinned draft revision: the ML-DSA-65 public key (1952 bytes) then the
+; Ed25519 public key (32 bytes). The kid is its RFC 9679 thumbprint, computed under the private-use
+; alg and fixed for the key's life. A composite key never verifies on one half.
+ceg-key = { 1: 7, 3: composite-alg, -1: bstr .size 1984 }
+
+; A key record is a ROW on family key:record (CC 2.4.1.1 renews it by supersedes and rotates it by
+; naming it), so these are members of its attestation-envelope, not a separate typ. identity_type is
+; a SET of roles (CC 4.5.8). The end rule reads "contains", in prose (CC 2.4.1.1): a set mixing
+; user or accord_holder with node or agent is refused; a record whose set contains user or
+; accord_holder carries no valid_until; one whose set contains node or agent carries one, unless it
+; is a room key of a private room; a role outside both groups takes no end rule of its own; asserted_at <= valid_until <= asserted_at +
+; key_record_max_secs * 1000; refused key_record_out_of_window otherwise.
+key-record-members = {
+  "key": ceg-key,
+  "identity_type": [+ tstr],       ; a set
+  "asserted_at": ms-time,
+  ? "valid_until": ms-time,
+  ? "attestation_evidence": attestation-evidence,
+  * tstr => ceg-value,
+}
+; The custody of the key's Ed25519 half (CC 4.2.2, CC 4.2.2.1). `chain` is X.509 DER, leaf first: a sequence,
+; required where the class's mechanism has a chain (Apple_Secure_Enclave, YubiKey_5_FIPS, TPM_2_0), refused
+; key_record_bad_attestation_evidence otherwise. Where a holder is seated, the reader verifies it to the
+; mechanism's attestation root and binds the attested key to the record's Ed25519 half.
+attestation-evidence = {
+  "hardware_class": tstr,
+  ? "pq_custody": "same_element" / "removable_offline" / "software_wrapped",
+  ? "chain": [+ bstr],
+}
+
+; A recovery commitment (CC 3.2 T3, CC 4.2.6): [-16, SHA-256 over the deterministic encoding of this array].
+; `keys` is a set of composite keys, sorted by encoding; a holder's recovery commitment has one element.
+recovery-commitment-input = ["CEG-recovery/2", keys: [+ ceg-key]]
+
+; The signed objects that are not rows, each its own typ, closed: a verifier refuses any other typ.
+; No cty; the payload is .cbor the rule its typ names, in the deterministic encoding.
+ceg-object-statement = #6.18([
+  protected: bstr .cbor object-protected,
+  unprotected: unprotected-header,
+  payload: bstr,
+  signature: composite-signature,
+])
+object-protected = {
+  1: composite-alg,
+  4: kid,
+  15: object-claims,
+  16: object-typ,
+}
+object-claims = {
+  1: identity-ref,                 ; iss
+  ? 6: uint,                       ; iat where the object states an instant; a revocation snapshot carries none,
+                                   ; a genesis bundle floor(asserted_at / 1000)
+  -70003: 2,
+}
+object-typ = "ceg-genesis-bundle/2" / "ceg-revocation-snapshot/2" / "ceg-boot-manifest/2"
+; The payload rule of ceg-boot-manifest/2 waits on its owner's submission; no rule here stands in for it.
+ceg-typ = "ceg-row/2" / object-typ
+
+; A signed object that is not a row is named like a row, so prev and every row-ref to it have a
+; defined id: SHA-256 over the deterministic encoding of this array, written as a hash-digest. The
+; domain label keeps it apart from a row id; like the row id it is the same for every voice of a
+; counted object (a genesis bundle). `author` is the payload's "author", or null where it has none.
+object-id-input = ["CEG-object/2", typ: object-typ, author: identity-ref / null, payload: bstr]
+
+; A revocation snapshot (typ "ceg-revocation-snapshot/2"): a signer's own record of the revocations
+; whose past it holds. A set with no winner across signers. `seq` orders one signer's own snapshots:
+; strictly greater than prev's, refused otherwise; two snapshots of one signer with one seq and
+; different content are contested, and neither counts. refs carries prev (absent on the first) and,
+; under also "ack", the signer's acknowledgement of the head of the revocation scope. Its named set
+; is refs with each revoked entry's revocation and trusted_through.
+revocation-snapshot = {
+  "author": identity-ref,          ; the signer, so the object id, prev and seq are one signer's
+  "refs": refs,
+  "seq": uint,
+  "revoked": [* revoked-entry],    ; a set
+}
+revoked-entry = [key: kid, revocation: row-ref, trusted_through: [* row-ref]]   ; a tuple; its trusted_through a set
+
+; The genesis bundle (typ "ceg-genesis-bundle/2"), the GenesisBundle of CC 5.3.4. The first of this
+; form is the ceremony row of CC 2.6.1.12: a fresh genesis with no prev, a signed object that is not
+; a row. refs.prev names a later bundle's predecessor. `version` is a sequence from 1, never ranked:
+; prev's version + 1 where the bundle has a prev, a consistency check only.
+; A counted object: one statement per holder over one payload, with no "author", so its object id
+; takes null. The map is closed. It NAMES rows and never copies them: every row it seats stands in
+; refs.also "cites" by row-ref (each holder's and each seat's key:record, each seat's transport_destination
+; binding). The bundle's own count is the canonical conferral of every seat in serve_nodes (CC 4.2.1);
+; each statement carries iat, floor(asserted_at / 1000).
+;  A recovery (CC 2.6.1.11) is a later bundle with ONE statement: iss the holder's identity reference, kid the
+;  recovery key's thumbprint; it counts only where prev's recovery_commitments[iss] equals the commitment over the
+;  recovery key (constant time). refs.also "cites" names the recovery key's key:record and the holder's new
+;  signing-key record; recovery_commitments[iss] is the next commitment.
+; Checked in prose, not here: version is 1 iff refs has no prev; holders, serve_nodes and witnesses are
+; pairwise disjoint;
+; the keys of recovery_commitments are exactly holders; scope holds infra:attest and infra:serve; the
+; three witness members are present together or not at all, and witness_quorum is
+; floor(|witnesses| / 2) + 1; each statement's iat is floor(asserted_at / 1000).
+ceg-genesis-bundle = {
+  "refs": genesis-refs,
+  "version": 1..4294967295,
+  "asserted_at": ms-time,
+  "family_key_id": tstr,           ; the accord's name, as its rows carry it; a name, never an anchor (CC 5.3.4)
+  "holders": [+ identity-ref],     ; a set: the accord's roster, the voices this bundle seats
+  "serve_nodes": [+ identity-ref], ; a set: the seated serve nodes
+  "charter": genesis-charter,
+}
+genesis-refs = {
+  ? "prev": row-ref,               ; the predecessor bundle's object id; absent on the first
+  "also": { "cites": row-ref-set },; every row the bundle names: a set
+}
+; The accord's charter (CC 2.1, CC 3.2 T3 and T6, CC 4.2.6): the parameters no row carries.
+genesis-charter = {
+  "recovery_commitments": { + identity-ref => hash-digest },   ; one entry per holder, keyed by its identity-ref
+  "scope": [+ tstr],               ; a set; holds infra:attest and infra:serve (CC 3.2 Rooted)
+  ? "halt_fuse_secs": 1..4294967295,       ; absent means 86400 (CC 4.2.1.1)
+  ? "attach_window_secs": 1..4294967295,   ; absent: attachable by an out-of-band anchor only (CC 3.2 T4a)
+  ? "witness_cadence_secs": 1..4294967295, ; witnessed mode: the three witness members together
+  ? "witness_quorum": 2..4294967295,       ; absence is witnessed mode off; 0 is never written
+  ? "witnesses": [+ identity-ref],         ; a set; each one's key:record stands in refs.also "cites"
+}
+
+; The accord's rows (CC 4.2.1.1, CC 4.2.1.3): payloads of ordinary rows, so these are members of their
+; attestation-envelope, as a key record's are. An invocation (the families accord:invoke:constitutional,
+; accord:invoke:notify and accord:invoke:drill, each over its id) is ONE holder's statement over this payload,
+; verified against the holders of the bundle in force. There is no inner signature and no text preimage; the
+; row's type and family separate the kinds, so the payload carries no invocation_kind. The map is closed. The row is a
+; claim, type scores; its sub is the accord's family_key_id (the value of accord_root). valid_until is later than
+; asserted_at, refused valid_until_not_after_asserted_at otherwise (checked in prose).
+accord-invocation = {
+  "author": identity-ref,          ; the holder who signs: the statement's iss
+  "accord_root": tstr,             ; the accord's family_key_id: picks the bundle in force the row is verified against
+  "invocation_id": tstr,           ; the id of the halt, the notify or the drill
+  "nonce": bstr .size 32,          ; minted by the holder; single-use within valid_until
+  "asserted_at": ms-time,
+  "valid_until": ms-time,          ; bounds the reuse of the nonce, never the reach of a halt
+  ? "payload_digest": hash-digest, ; a notify only: SHA-256 over its message, a separate object held as bytes
+}
+; A lifecycle row (family accord:lifecycle, over its kind) is counted (CC 2.6.1.9): one statement per
+; holder over one payload, with no author. Its dimension names its kind, confirmed or active; refs.target
+; names the halt it confirms or ends, and refs.head the bundle it is counted over. The map is closed.
+accord-lifecycle = {
+  "refs": accord-lifecycle-refs,
+  "dimension": tstr,
+  "accord_root": tstr,
+  "invocation_id": tstr,
+  "nonce": bstr .size 32,
+  "asserted_at": ms-time,
+  "valid_until": ms-time,
+}
+accord-lifecycle-refs = {
+  "head": row-ref,                 ; the bundle in force the row is counted over, by its object id
+  "target": row-ref,               ; the halt row it confirms or ends
+}
+
+; The transport destination binding (CC 3.3.6.2): the payload of an identity:occurrence row, authored and
+; signed by the identity it binds. The two X-Wing keys stand at the payload's top level, beside the
+; transport_destination map; a seat's binding names its own key record in refs under also "cites".
+transport-destination-binding = {
+  "transport_destination": transport-destination,
+  ? "transit_xwing_pubkey": bstr .size 1216,     ; on a node that relays, and on every seat
+  ? "onion_hop_xwing_pubkey": bstr .size 1216,   ; on a node that relays, and on every serve node
+  ? "onion_relay": { "opt_out": true },          ; on a node that opts out of relaying, with no hop key
+  ? "refs": refs,                                ; on a seat's binding: its key record under also "cites"
+  * tstr => ceg-value,                           ; the content-KEM keys of CC 3.3.6.1 where they ride this row
+}
+; The RNS members of CC 3.3.6.3; destination_hash is recomputed from the other four.
+transport-destination = {
+  "reticulum_x25519_pubkey": bstr .size 32,
+  "reticulum_ed25519_pubkey": bstr .size 32,
+  "app_name": tstr,
+  "aspects": [* tstr],             ; a sequence: the hash reads the aspects in this order
+  "destination_hash": bstr .size 16,
+}
+
+; Room keys. The seat commitment of a private room: SHA-256 over the deterministic encoding of this
+; array, carried as "seat_commitment" on the seat row and opened by the binding. `room` is the room's
+; id; the member that carries it waits on its owner's submission. `nonce` is 32 fresh random bytes. The binding key and the content-KEM keys
+; of one identity are distinct bytes, refused at admission otherwise.
+seat-commitment-input = ["CEG-seat/2", room: tstr, room_key: kid, person: identity-ref, nonce: bstr .size 32]
+; The HPKE info strings of a binding and of an invitation. The KEM key, the binding's two
+; encapsulations and the occurrence keys take their bytes from the X-Wing HPKE suite and are fixed
+; with that suite's known-answer vectors, not in this file; so does the binding seed's derivation label.
+hpke-info = "CEG-binding/2" / "CEG-invitation/2"
+
+; Verification has three answers, returned by a verifier and never on the wire: Valid; Invalid(reason);
+; Waiting{missing key refs}. Invalid under a held key is final. A structural fault is Invalid whatever
+; keys are held. A statement whose key record is Waiting is Waiting, naming the deepest missing key; a
+; key record Invalid makes the statement Invalid. A key held in part is Waiting on the missing half. Waiting is never counted.
+
+; Receipts over the provenance log and each stream's log are COSE Receipts (RFC 9942) with
+; vds = 1 (RFC9162_SHA256); each witness issues its own receipt over the same root, with its
+; instant in the protected header; a receipt is issued per batch of a stream, never per chunk.
