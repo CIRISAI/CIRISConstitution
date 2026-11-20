@@ -147,9 +147,9 @@ agent in every trace is derived from that key ({{agent-id-hash}}), so a
 verifier can bind the trace to the key without trusting a directory's
 label.  Third, the trace is carried as a signed row of the CIRIS
 Epistemic Grammar {{I-D.moore-scitt-ciris-ceg}}, whose admission rules
-refuse a trace signed by any key but the agent's, a trace from a run
-on a mock model, and a trace whose fields break its pinned schema
-({{carriage}}).
+refuse a trace signed by any key but the agent's, a trace whose
+fields break its pinned schema, and, at federation-tier admission, a
+trace from a run on a mock model ({{carriage}}).
 
 A trace is the agent's own account.  The signature proves who gave the
 account and that it is unchanged, not that it is true.  Checking it
