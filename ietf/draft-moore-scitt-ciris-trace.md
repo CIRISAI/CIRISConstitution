@@ -1240,11 +1240,21 @@ setting wins; otherwise an operator's `CIRIS_DEPLOYMENT_KIND` of
 `managed` or `personal`; otherwise `prod-managed` under the agent's
 deployment manager and `prod-personal` elsewhere.  `deployment_type`
 is unchanged.  The value is in the signed bytes but in each
-component, not as a member of the envelope or of the CEG row.  An
-admitter reads it from the components.  A federation-tier admitter
-MUST refuse a trace any of whose components carries `mock`; and, once
-it requires the member, MUST refuse a trace whose components disagree
-or of which any component lacks it.
+component, not as a member of the envelope or of the CEG row.  The
+trace format 3.1.0 schema of that pull request requires it in every
+event's `data`.  An admitter reads it from the components, in this
+order (the rule is to be stated in Section 3.1.5 of {{CC}} after its
+`v1.0-rc21` release):
+
+1. If any component carries `mock`, the trace is refused with
+   `trace_run_kind_mock`.
+
+2. Otherwise every component MUST carry the same `run_kind` value.  A
+   trace any of whose components differ, or of which any component
+   lacks `run_kind`, is refused with `trace_field_shape_violation`.
+   This check compares values exactly: a trace mixing `prod-personal`
+   and `production` is refused.  The three production values are
+   treated alike only at admission, after this check passes.
 
 The value can change within a trace for one reason: the agent's mock
 model can engage partway through a thought, so that earlier components

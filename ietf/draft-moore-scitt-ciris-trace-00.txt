@@ -130,7 +130,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
      9.1.  The trace:complete:v1 Row . . . . . . . . . . . . . . . .  28
      9.2.  The Run Kind  . . . . . . . . . . . . . . . . . . . . . .  30
      9.3.  The Oversize Form . . . . . . . . . . . . . . . . . . . .  31
-     9.4.  trace_summary . . . . . . . . . . . . . . . . . . . . . .  31
+     9.4.  trace_summary . . . . . . . . . . . . . . . . . . . . . .  32
      9.5.  Numbers in the Row  . . . . . . . . . . . . . . . . . . .  32
    10. The Action Anchor and Orphan Purge  . . . . . . . . . . . . .  32
    11. Validation by a Consumer  . . . . . . . . . . . . . . . . . .  33
@@ -1682,11 +1682,20 @@ Moore                      Expires 23 May 2027                 [Page 30]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-   not as a member of the envelope or of the CEG row.  An admitter reads
-   it from the components.  A federation-tier admitter MUST refuse a
-   trace any of whose components carries mock; and, once it requires the
-   member, MUST refuse a trace whose components disagree or of which any
-   component lacks it.
+   not as a member of the envelope or of the CEG row.  The trace format
+   3.1.0 schema of that pull request requires it in every event's data.
+   An admitter reads it from the components, in this order (the rule is
+   to be stated in Section 3.1.5 of [CC] after its v1.0-rc21 release):
+
+   1.  If any component carries mock, the trace is refused with
+       trace_run_kind_mock.
+
+   2.  Otherwise every component MUST carry the same run_kind value.  A
+       trace any of whose components differ, or of which any component
+       lacks run_kind, is refused with trace_field_shape_violation.
+       This check compares values exactly: a trace mixing prod-personal
+       and production is refused.  The three production values are
+       treated alike only at admission, after this check passes.
 
    The value can change within a trace for one reason: the agent's mock
    model can engage partway through a thought, so that earlier
@@ -1716,15 +1725,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    The trace's bytes travel on the blob plane of [CC] and are named by
    hash in the row's evidence_refs.
 
-9.4.  trace_summary
-
-   trace_summary:{kind} is a post-scrub digest of a trace for
-   consumption on another node, used when the trace itself is out of
-   scope or over the size bound.  The same self-emission rule applies,
-   and a summary carries no claim the full trace does not.  Its payload
-   is not specified by the sources (Section 13).
-
-
 
 
 
@@ -1737,6 +1737,14 @@ Moore                      Expires 23 May 2027                 [Page 31]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+9.4.  trace_summary
+
+   trace_summary:{kind} is a post-scrub digest of a trace for
+   consumption on another node, used when the trace itself is out of
+   scope or over the size bound.  The same self-emission rule applies,
+   and a summary carries no claim the full trace does not.  Its payload
+   is not specified by the sources (Section 13).
 
 9.5.  Numbers in the Row
 
@@ -1777,14 +1785,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       MUST close with a terminal result row.  In this document's terms
       that is the ACTION_RESULT that seals the trace.
 
-   *  An in-flight trace that reaches no terminal event MUST be purged
-      after a declared, bounded age, and the emitter MUST export a count
-      of the traces it purges, so that an auditor can see how much is
-      discarded while its contents stay unavailable.
-
-   *  The purge cannot erase evidence of a consequential act.  If it
-      ever did, the defect is in the action path, not the purge.
-
 
 
 
@@ -1793,6 +1793,14 @@ Moore                      Expires 23 May 2027                 [Page 32]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+   *  An in-flight trace that reaches no terminal event MUST be purged
+      after a declared, bounded age, and the emitter MUST export a count
+      of the traces it purges, so that an auditor can see how much is
+      discarded while its contents stay unavailable.
+
+   *  The purge cannot erase evidence of a consequential act.  If it
+      ever did, the defect is in the action path, not the purge.
 
    The implementation purges orphan traces after a configured age
    (default the larger of 120 seconds and twice the sweep interval) and
@@ -1835,20 +1843,19 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    7.   Read absent members as not emitted (Section 4.1), and group by
         trace_level before concluding that reasoning data is missing.
 
-   8.   Keep every repeated event: every ASPDMA_RESULT,
-        CONSCIENCE_RESULT and LLM_CALL.
-
-   9.   As a CEG admitter, apply the row rules of Section 9: the agent's
-        key only, the closed run_kind with mock refused at federation
-        tier, and the pinned field schema, refused not truncated.
-
-
 
 
 Moore                      Expires 23 May 2027                 [Page 33]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+   8.   Keep every repeated event: every ASPDMA_RESULT,
+        CONSCIENCE_RESULT and LLM_CALL.
+
+   9.   As a CEG admitter, apply the row rules of Section 9: the agent's
+        key only, the closed run_kind with mock refused at federation
+        tier, and the pinned field schema, refused not truncated.
 
    10.  Reject a trace whose schema version is newer than it supports,
         and say which version it supports.
@@ -1891,13 +1898,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    What this document adds is a fixed pipeline vocabulary with a signed
    link from every model call to the step that made it, the record of
    every veto and reselection, disclosure levels that are part of the
-   signed bytes, and a lifecycle rule under which a trace exists exactly
-   when an act does.  It is complementary to the action records above: a
-   trace can be referenced from them by (agent_id_hash, trace_id).
-
-
-
-
 
 
 
@@ -1905,6 +1905,10 @@ Moore                      Expires 23 May 2027                 [Page 34]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+   signed bytes, and a lifecycle rule under which a trace exists exactly
+   when an act does.  It is complementary to the action records above: a
+   trace can be referenced from them by (agent_id_hash, trace_id).
 
 13.  Open Issues
 
@@ -1947,10 +1951,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    *  *context_manifest.* The LLM_CALL member of Section 5.10 is in
       CIRISAgent pull request 1370, not yet merged, and not yet in the
       egress schema.
-
-
-
-
 
 
 
