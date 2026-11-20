@@ -344,18 +344,35 @@ def untrusted_labels(R, rid):
     return {by[a]["label"] for a in anc[rid] | {rid} if a in by and by[a]["trust"] < VERIFIED}
 
 
-def may_effect(R, thought, fp, args, claims=None, binds_others=()):
+def delegated(R, agent, rid, duty):
+    """A standing delegation that is authority for an act (CC 4.5.5 (b)): a live `delegates_to` onto this agent,
+    signed by a person seated over it, whose scope names the act's duty. An act within it needs no approval of its
+    own. A withdrawn delegation, one from a program's key, one onto another agent or one whose scope does not name the
+    duty licenses nothing."""
+    seated = {s["wa"] for s in sel(R, kind="seat", agent=agent)} | {steward(R, agent)}
+    for d in sel(R, kind="deleg", id=rid):
+        if d["agent"] != agent or not person(R, d["by"]) or d["by"] not in seated: continue
+        if sel(R, kind="withdraw", of=d["id"]): continue
+        if duty in d["scope"] or "delegation_any_scope" in PLANTS: return True
+    return False
+
+
+def may_effect(R, thought, fp, args, claims=None, binds_others=(), under=None, duty=None, agent="ag"):
     """The effect gate after review. The pass record over `fp` is the review holding the evidence when it declares
     in `derived_from` every untrusted kind the arguments derive from. An action that claims authority (for a person,
-    or under a seat) needs the approving row that names its fingerprint. An effect that is a mesh row binding others
-    needs the acknowledgements of every voice that could stop it (CC 2.7.5). Absent evidence licenses nothing."""
+    or under a seat) has it in one of two ways: a standing delegation whose scope names the act (`under`, `duty`),
+    which needs no approval of each act; or the approving row that names its fingerprint (`claims`), for an act no
+    delegation covers. An effect that is a mesh row binding others needs the acknowledgements of every voice that
+    could stop it (CC 2.7.5). Absent evidence licenses nothing."""
     p = next(iter(sel(R, kind="review", thought=thought, outcome="passed", fp=fp)), None)
     if p is None: return False, "action_not_reviewed"
     declared = p["derived_from"]
     if trust_of(R, args) < VERIFIED:
         if not untrusted_labels(R, args) <= declared and "undeclared_passes" not in PLANTS:
             return False, "effect_untrusted_unacknowledged"
-    if claims and "absent_evidence_licenses" not in PLANTS:
+    if under is not None:
+        if not delegated(R, agent, under, duty): return False, "effect_untrusted_unacknowledged"
+    elif claims and "absent_evidence_licenses" not in PLANTS:
         if not any(r.get("fp") == fp and trusted_evidence(R, r["id"]) for r in sel(R, kind="resp", id=claims)):
             return False, "effect_untrusted_unacknowledged"
     if binds_others and "binds_no_ack" not in PLANTS:

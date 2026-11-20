@@ -81,7 +81,7 @@ case	P10	with no attested template nothing loads	as expected
 case	P10	a base link approved by a program's key does not anchor	as expected
 case	P10	a base link a seated person approved anchors	as expected
 case	P10	an approval of another digest anchors nothing	as expected
-property	P11 a result is no more trusted than what it derives from	holds	declared_trust=caught undeclared_passes=caught absent_evidence_licenses=caught binds_no_ack=caught
+property	P11 a result is no more trusted than what it derives from	holds	declared_trust=caught undeclared_passes=caught absent_evidence_licenses=caught binds_no_ack=caught delegation_any_scope=caught
 case	P11	arguments built from a request are untrusted	as expected
 case	P11	arguments built from a signed rule keep its trust	as expected
 case	P11	a review that does not declare the derivation does not license the effect	as expected
@@ -89,6 +89,11 @@ case	P11	a review that declares it is the review holding the evidence	as expecte
 case	P11	trusted arguments need no declaration	as expected
 case	P11	an action claiming authority without its approving row	as expected
 case	P11	an action claiming authority with the row naming its fingerprint	as expected
+case	P11	an act within a standing delegation needs no approval of its own	as expected
+case	P11	a delegation whose scope does not name the act licenses nothing	as expected
+case	P11	a withdrawn delegation licenses nothing	as expected
+case	P11	a delegation signed by a program's key licenses nothing	as expected
+case	P11	a delegation onto another agent licenses nothing	as expected
 case	P11	a mesh row binding others waits for those who could stop it	as expected
 case	P11	their acknowledgements permit it	as expected
 property	P12 every answer is the same in every arrival order	holds	first_statement_only=caught
@@ -104,4 +109,4 @@ property	P14 a unit of the attested build runs under the build alone	holds	unble
 case	P14	a unit the blessed build names runs with no admission row	as expected
 case	P14	a unit the build does not name needs its own row	as expected
 case	P14	a build whose pipeline is not blessed admits nothing	as expected
-count	14 properties, 92 cases, 48 planted breaks, 12 arrival orders
+count	14 properties, 97 cases, 49 planted breaks, 12 arrival orders
