@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - 'formal/**'
+      - 'tools/**'
       - 'constitution/part_3_the_namespace.md'
       - 'constitution/part_1_foundation.md'
       - 'constitution/part_4_composition_governance.md'
@@ -14,6 +15,7 @@ on:
   pull_request:
     paths:
       - 'formal/**'
+      - 'tools/**'
       - 'constitution/part_3_the_namespace.md'
       - '.github/workflows/formal.yml'
 

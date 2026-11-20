@@ -1069,7 +1069,7 @@ A node estimates no age: where no band is on record the minor is treated as the 
 
 ```
 admit_user_steward_binding(delegates_to S -> T):
-  require  delegation_purpose == owner_binding // else not a steward-binding: ordinary delegates_to admission applies
+  require  delegation_purpose == owner_binding // else not a steward-binding: ordinary admission, but never a duty onto a minor (below)
   require  user in T.identity_type            // target is a user identity
   require  age_band(T) == minor   (< 18)      // ward is a minor   — I1 age band,
                                               //   age_self_declared / age_assurance:* [CC 3.3.12]
@@ -1079,7 +1079,11 @@ admit_user_steward_binding(delegates_to S -> T):
   otherwise CONCLUDE NOTHING                  // the legs read other rows (CC 2.7.3)
 ```
 
-The age band is the I1 band ([CC 3.3.12](part_3_the_namespace.md#3.3.12); `minor` < 18 / `adult` ≥ 18). The ward's `minor` band may rest on `age_self_declared`. The steward's `adult` band MUST rest on `age_assurance:provider:adult` or higher, and the guardianship relationship to that child MUST be verified ([CC 3.4.13](#3.4.13) Q3). A user-target binding where `T` is an adult **concludes nothing except under the adjudicated-incapacity basis of [CC 3.4.12](part_3_the_namespace.md#3.4.12)** — the un-stewardable case above, with its one aperture. A user-target binding where `S` is a minor, or where the agreeing signer is not the steward, concludes nothing. `node`/`agent`-target admission is governed solely by the steward-binding gate above and is **not affected** by this rule.
+The age band is the I1 band ([CC 3.3.12](part_3_the_namespace.md#3.3.12); `minor` < 18 / `adult` ≥ 18). The ward's `minor` band may rest on `age_self_declared`. The steward's `adult` band MUST rest on `age_assurance:provider:adult` or higher, and the guardianship relationship to that child MUST be verified ([CC 3.4.13](#3.4.13) Q3). A user-target binding where `T` is an adult **concludes nothing except under the adjudicated-incapacity basis of [CC 3.4.12](part_3_the_namespace.md#3.4.12)** — the un-stewardable case above, with its one aperture. A user-target binding where `S` is a minor, or where the agreeing signer is not the steward, concludes nothing. **A minor is a ward, never a duty holder.** A `delegates_to` whose target resolves to a `user` with the `minor` band, on any basis including `age_self_declared`, is the guardianship of this rule or nothing. Whatever its `delegation_purpose`, it confers no duty (`moderate`, `slash`, `takedown`, `review`, or one a community's record declares) and never makes its target a named moderator ([CC 4.5.4](part_4_composition_governance.md#4.5.4)). Such an appointment is **void**. A duty-scoped `delegates_to` `D` onto `T` is void when both of the following hold:
+1. a `minor`-band age row about `T` is held, assured or `age_self_declared`, live or retracted;
+2. no assured `adult` age row about `T` (the `age_assurance:*` rung, [CC 3.3.12](#3.3.12)) is dated before `D`'s `asserted_at`.
+
+A void edge concludes nothing (`minor_appointment_void`, a fold reason, [CC 2.7.3](part_2_the_grammar.md#2.7.3)) and never seats. A later adult proof does not revive it. The person, once proven adult, needs a fresh appointment and their own fresh acceptance. The rule is a fold over the held rows, so every node reaches the same answer in any order of arrival. Backdating `D` can only void it, a retracted minor row still counts, and a self-declared `adult` lifts nothing. A user with no age row takes ordinary `delegates_to` admission. A duty-free guardianship is unaffected. `node`/`agent`-target admission is governed solely by the steward-binding gate above and is **not affected** by this rule.
 
 ##### Trust and consent, by role
 
