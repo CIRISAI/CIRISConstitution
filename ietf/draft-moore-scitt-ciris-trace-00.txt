@@ -121,32 +121,32 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    7.  Trace Levels as a Disclosure Profile  . . . . . . . . . . . .  23
    8.  Signatures  . . . . . . . . . . . . . . . . . . . . . . . . .  25
      8.1.  The Normative Signature . . . . . . . . . . . . . . . . .  25
-     8.2.  The Current Form: Per-Trace Ed25519 . . . . . . . . . . .  25
-       8.2.1.  What Is Signed  . . . . . . . . . . . . . . . . . . .  25
-       8.2.2.  Canonical Shapes by Version . . . . . . . . . . . . .  26
+     8.2.  The Current Form: Per-Trace Ed25519 . . . . . . . . . . .  26
+       8.2.1.  What Is Signed  . . . . . . . . . . . . . . . . . . .  26
+       8.2.2.  Canonical Shapes by Version . . . . . . . . . . . . .  27
        8.2.3.  Keys  . . . . . . . . . . . . . . . . . . . . . . . .  27
-       8.2.4.  Verification  . . . . . . . . . . . . . . . . . . . .  27
+       8.2.4.  Verification  . . . . . . . . . . . . . . . . . . . .  28
    9.  Carriage as a CEG Row . . . . . . . . . . . . . . . . . . . .  28
      9.1.  The trace:complete:v1 Row . . . . . . . . . . . . . . . .  28
-     9.2.  The Run Kind  . . . . . . . . . . . . . . . . . . . . . .  29
-     9.3.  The Oversize Form . . . . . . . . . . . . . . . . . . . .  30
-     9.4.  trace_summary . . . . . . . . . . . . . . . . . . . . . .  30
-     9.5.  Numbers in the Row  . . . . . . . . . . . . . . . . . . .  30
-   10. The Action Anchor and Orphan Purge  . . . . . . . . . . . . .  31
-   11. Validation by a Consumer  . . . . . . . . . . . . . . . . . .  32
+     9.2.  The Run Kind  . . . . . . . . . . . . . . . . . . . . . .  30
+     9.3.  The Oversize Form . . . . . . . . . . . . . . . . . . . .  31
+     9.4.  trace_summary . . . . . . . . . . . . . . . . . . . . . .  31
+     9.5.  Numbers in the Row  . . . . . . . . . . . . . . . . . . .  31
+   10. The Action Anchor and Orphan Purge  . . . . . . . . . . . . .  32
+   11. Validation by a Consumer  . . . . . . . . . . . . . . . . . .  33
    12. Relationship to Other Work  . . . . . . . . . . . . . . . . .  33
-   13. Open Issues . . . . . . . . . . . . . . . . . . . . . . . . .  33
-   14. Implementation Status . . . . . . . . . . . . . . . . . . . .  35
-   15. Security Considerations . . . . . . . . . . . . . . . . . . .  36
-   16. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  37
-   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  38
-   18. References  . . . . . . . . . . . . . . . . . . . . . . . . .  38
-     18.1.  Normative References . . . . . . . . . . . . . . . . . .  38
-     18.2.  Informative References . . . . . . . . . . . . . . . . .  39
-   Appendix A.  Divergences Between the Sources  . . . . . . . . . .  42
-   Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  45
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  49
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  50
+   13. Open Issues . . . . . . . . . . . . . . . . . . . . . . . . .  34
+   14. Implementation Status . . . . . . . . . . . . . . . . . . . .  36
+   15. Security Considerations . . . . . . . . . . . . . . . . . . .  37
+   16. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  38
+   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  39
+   18. References  . . . . . . . . . . . . . . . . . . . . . . . . .  39
+     18.1.  Normative References . . . . . . . . . . . . . . . . . .  39
+     18.2.  Informative References . . . . . . . . . . . . . . . . .  40
+   Appendix A.  Divergences Between the Sources  . . . . . . . . . .  43
+   Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  46
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  51
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  51
 
 1.  Introduction
 
@@ -682,8 +682,10 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    [EGRESS-SCHEMA]; where the wire contract assigns a different level,
    Appendix A says so.  Every component's data also carries
    attempt_index (Section 6), inserted by the emitter at every level.
-   All members are optional unless stated: what is absent was not
-   emitted.
+   In CIRISAgent#1370 (not yet merged) every component's data also
+   carries run_kind (Section 9.2) and, when the emitter's filter altered
+   it, egress_alterations (Section 7).  All members are optional unless
+   stated: what is absent was not emitted.
 
 5.1.  THOUGHT_START
 
@@ -717,8 +719,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    the same facts written by the agent, not by a model; it is the one
    text member carried at generic, and it is not authoritative: the
    booleans are.
-
-
 
 
 
@@ -1351,10 +1351,32 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    does not allow or whose type does not fit, truncates over-long text
    and cuts over-long lists, and logs and counts each violation without
    its value.  Because this happens before signing, the signed trace is
-   what the agent attests to; but the emitter's filter truncates, which
-   the Constitution's rule forbids at admission, and no pinned-hash
-   binding between the emitter's schema and an admitter's is implemented
-   yet (Appendix A).
+   what the agent attests to.  At commit 59b7e5d the alteration is
+   silent in the signed bytes.
+
+   In CIRISAgent#1370 (not yet merged) the emitter records each
+   alteration in the component's signed data, as egress_alterations: a
+   list of at most 64 marks, with a count of any beyond that.  A mark
+   gives the member's path, the kind of alteration (truncated,
+   dropped_wrong_type or dropped_not_in_schema), and the
+   original_length; a truncated mark also gives sha256, the SHA-256
+   digest of the original value.  A dropped value gets no digest: it was
+   content in the wrong place, and a digest of a short value can be
+   confirmed by guessing.  A member above the trace level is not an
+   alteration and is not marked.  The emitter discards any
+   egress_alterations a producer supplies before filtering, so the marks
+   are the filter's own.  With the marks, an emitter's cut is declared
+   in what the agent signs rather than silent; the admitter's rule is
+   unchanged.  Whether the Constitution's text should say so, and how
+   the emitter's and admitter's schemas are bound by one pinned hash,
+   are open (Appendix A).
+
+   egress-alteration = {
+     path: tstr,
+     kind: "truncated" / "dropped_wrong_type" / "dropped_not_in_schema",
+     original_length: uint,
+     ? sha256: tstr,                  ; truncated only
+   }
 
 8.  Signatures
 
@@ -1369,6 +1391,16 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    attestation and its withdrawal to the agent alone, and an admitter
    verifies the statement at the door.  A node, host or person key MUST
    NOT sign a trace.
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 25]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
 
    Because the statement signature covers the whole payload, it covers
    everything the current form covers (Section 8.2): the trace level,
@@ -1395,13 +1427,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    canonicalization [RFC8785] of the following JSON object, built from
    the trace:
 
-
-
-Moore                      Expires 23 May 2027                 [Page 25]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
    {
      "trace_id":             trace.trace_id,
      "thought_id":           trace.thought_id,
@@ -1426,6 +1451,13 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
      ]
    }
 
+
+
+Moore                      Expires 23 May 2027                 [Page 26]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
    Exactly these members are present, and no others: an unknown member
    of the envelope or of a component is not signed, and a verifier MUST
    NOT add it to the canonical object.  strip_empty is the removal of
@@ -1440,23 +1472,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    The verifier of this form selects the canonical shape and the
    canonicalizer from trace_schema_version, which is itself inside the
    signed bytes:
-
-
-
-
-
-
-
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 26]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
 
      +=========+====================+================+===============+
      | Version | Envelope members   | Component      | Canonicalizer |
@@ -1489,6 +1504,16 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    The key of this form is the agent's own signing key, the same key
    that signs the agent's audit entries.
 
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 27]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
    signature_key_id names the key for lookup.  How a consumer obtains
    the public key for a signature_key_id is not specified by the current
    sources: the registration path of the wire contract has been retired
@@ -1506,13 +1531,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    3.  selects the shape and canonicalizer from trace_schema_version,
        rejecting an unsupported version;
-
-
-
-Moore                      Expires 23 May 2027                 [Page 27]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
 
    4.  builds the canonical object from the received trace and
        canonicalizes it;
@@ -1539,6 +1557,19 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    1.  *Identifiers.* The envelope carries a non-empty trace_id and a
        non-empty agent_id_hash, equal to those of the trace.
 
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 28]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
    2.  *Exactly one body.* The envelope carries exactly one of an inline
        trace (the CompleteTrace), within the 1 MiB payload bound of [CC]
        (Section 2.6.1.6), or a manifest object of schema
@@ -1559,18 +1590,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
        substrate that admits traces.  A row that violates it is refused,
        never truncated, with trace_field_shape_violation (Section 7).
 
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 28]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
-   5.  *Run kind.* The envelope carries run_kind in the signed bytes
+   5.  *Run kind.* The trace carries run_kind in the signed bytes
        (Section 9.2).  A mock row is refused at federation-tier
        admission only, with trace_run_kind_mock; the three production
        values are admitted alike.
@@ -1585,11 +1605,32 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
        stop its own node holding a trace's bytes; that reaches no copy
        another party holds under a consent grant.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 29]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
    trace-row-payload = {
      dimension: "trace:complete:v1",
      trace_id: tstr,                  ; non-empty
      agent_id_hash: tstr,             ; non-empty
-     run_kind: run-kind,              ; CC 3.1.5; not yet emitted
+     run_kind: run-kind,              ; CC 3.1.5; see {{run-kind}}
      ( trace: { * tstr => any }       ; a CompleteTrace
      // manifest: trace-manifest )
      * tstr => any,                   ; members every CEG row carries
@@ -1616,28 +1657,37 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    test-harness run and battery an evaluation battery, both of which may
    use a real model.  mock marks a run on a mock model.
 
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 29]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
    A federation-tier admitter MUST refuse a mock row with
    trace_run_kind_mock: a mock model's output attests nothing about any
    agent.  The refusal is at federation tier only: a node MAY hold its
    own mock rows locally, for tests.
 
-   *Not implemented as specified.* The implementation carries the run
-   kind inside deployment_profile.deployment_type, which is signed, as
-   one of mock, qa or battery overriding the operator's value, with no
-   marker for a production run and no prod-personal or prod-managed.  It
-   keeps mock traces out of its federation store at the source.  A
-   dedicated member is pending in the agent's next trace format, and its
-   placement is not yet agreed (Appendix A).
+   *Implementation.* At commit 59b7e5d the implementation carries the
+   run kind inside deployment_profile.deployment_type, which is signed,
+   as one of mock, qa or battery overriding the operator's value, with
+   no marker for a production run and no prod-personal or prod-managed.
+   It keeps mock traces out of its federation store at the source.
+
+   In CIRISAgent#1370 (not yet merged) every component's signed data
+   carries run_kind from the six-value set.  A test-harness or mock
+   setting wins; otherwise an operator's CIRIS_DEPLOYMENT_KIND of
+   managed or personal; otherwise prod-managed under the agent's
+   deployment manager and prod-personal elsewhere.  deployment_type is
+   unchanged.  The value is in the signed bytes but in each component,
+
+
+
+Moore                      Expires 23 May 2027                 [Page 30]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
+   not as a member of the envelope or of the CEG row.  An admitter reads
+   it from the components; every component of a trace MUST carry the
+   same value, and an admitter MUST refuse a trace whose components
+   disagree or of which any component lacks it, once it requires the
+   member.  Whether the value also becomes an envelope or row member is
+   open (Appendix A).
 
 9.3.  The Oversize Form
 
@@ -1674,20 +1724,20 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    [I-D.moore-scitt-ciris-ceg].  A trace is JSON, and many of its
    members are non-integral numbers: every score in [0, 1]
    (entropy_score, plausibility_score), k_eff, cost_usd, cost_cents and
-
-
-
-Moore                      Expires 23 May 2027                 [Page 30]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
    duration_ms among them.  The trace's own scores are not fixed6
    integers.
 
    The sources do not say how these map into a CBOR statement
    (Section 13).  Under the statement signature the signed bytes are the
    CBOR payload, so the mapping is free of the JSON canonicalization;
+
+
+
+Moore                      Expires 23 May 2027                 [Page 31]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
    but a conversion that rounds (to fixed6, for example) changes the
    values the agent attests to, so the mapping must be applied by the
    agent before it signs, never by a relay.  While a current-form
@@ -1730,18 +1780,19 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    named wager wherever the control is claimed, and this document so
    represents it.
 
-
-
-
-Moore                      Expires 23 May 2027                 [Page 31]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
    A consumer that needs records of interrupted reasoning will not find
    them in traces.  [CC] allows an operator to enable a bounded,
    privacy-scoped plane for incomplete receipts as an explicit opt-in;
    this document does not specify one.
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 32]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
 
 11.  Validation by a Consumer
 
@@ -1783,22 +1834,21 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    A consumer MAY reject a component whose agent_id_hash differs from
    the envelope's as malformed even where step 2 does not apply.
 
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 32]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
 12.  Relationship to Other Work
 
    Several individual Internet-Drafts record AI agent activity as signed
    statements, several of them registered with a SCITT transparency
    service [RFC9943]:
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 33]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
 
    *  [I-D.thaha-scitt-agent-execution-evidence] records digests of the
       request and response octets of each model call.  This document's
@@ -1838,6 +1888,11 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    Note to the RFC Editor: please remove this section before
    publication.
 
+   *  *Run kind member.* [CC] requires a signed run_kind from a six-
+      value set on the envelope.  CIRISAgent#1370 carries the six values
+      in every component's signed data.  Whether the value is also an
+      envelope or row member, and the rule for a trace whose components
+      disagree, are not agreed.
 
 
 
@@ -1845,22 +1900,18 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
 
-Moore                      Expires 23 May 2027                 [Page 33]
+
+Moore                      Expires 23 May 2027                 [Page 34]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-   *  *Run kind member.* [CC] requires a signed run_kind from a six-
-      value set.  The implementation carries four values inside
-      deployment_type.  The agent's next trace format adds a dedicated
-      member; whether it sits inside deployment_profile or at the top of
-      the trace is not agreed.
-
    *  *Refuse, not truncate.* The implementation's emitter truncates
       over-long values before signing; [CC] forbids truncation at
-      admission.  Whether the emitter should refuse instead, and how the
-      emitter's and admitter's schemas are bound by one pinned hash, is
-      open.
+      admission.  CIRISAgent#1370 declares each cut in the signed data
+      (egress_alterations, Section 7).  Whether the Constitution accepts
+      a declared emitter cut, and how the emitter's and admitter's
+      schemas are bound by one pinned hash, are open.
 
    *  *Numbers in a CBOR row.* How a trace's non-integral JSON numbers
       are carried in a CEG CBOR payload, given that the trace's
@@ -1898,18 +1949,18 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    *  *Schema version.* 3.0.0 is what is stamped today, and the current
       form's verifier dispatches canonicalization on it.  3.1.0, naming
       context_manifest, is accepted by the storage engine's release 62.0
-
-
-
-Moore                      Expires 23 May 2027                 [Page 34]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
       and stamped by the server's release 0.6; neither had shipped at
       the time of writing, and the per-level schema for it (the pinned
       trace_format_v{n}.json) and its evidence re-pin in [CC] land with
       them.
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 35]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
 
    *  *conscience_guidance_mode.* The implementation hands each
       component a member conscience_guidance_mode outside data.  Whether
@@ -1954,23 +2005,24 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       admission; it had not shipped at the time of writing.
 
    CIRISLens:  CIRIS L3C.  Named by the wire contract as the consumer
-
-
-
-Moore                      Expires 23 May 2027                 [Page 35]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
       that verifies and persists traces and computes scores over them.
 
    The trace of Appendix B was emitted by the agent at release 2.9.9 and
    carried as an earlier-form JSON CEG row of dimension
    trace:complete:v1, signed by the agent's key, with the trace inline.
+
+
+
+Moore                      Expires 23 May 2027                 [Page 36]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
    No implementation emits the CBOR row of [I-D.moore-scitt-ciris-ceg]
-   for a trace, the run_kind member, or (outside an unmerged pull
-   request) the context_manifest member.  No second, independent
-   implementation of the emitter or the verifier exists.
+   for a trace or the envelope's run_kind member.  The context_manifest
+   member, the per-component run_kind and the egress_alterations marks
+   are in an unmerged pull request (CIRISAgent#1370).  No second,
+   independent implementation of the emitter or the verifier exists.
 
 15.  Security Considerations
 
@@ -2009,19 +2061,18 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    *Unknown events.* Accepting an unknown event_type would admit a
    payload no schema has reviewed.  Consumers reject it.
 
+   *Mock runs.* A trace from a mock model looks like a real one.  The
+   run kind is the only signed marker.  At commit 59b7e5d an admitter
+   relies on deployment_type and on the emitter keeping mock traces
+   local; with CIRISAgent#1370 it reads run_kind from the components.
 
 
 
 
-Moore                      Expires 23 May 2027                 [Page 36]
+Moore                      Expires 23 May 2027                 [Page 37]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
-
-   *Mock runs.* A trace from a mock model looks like a real one.  The
-   run kind is the only signed marker; until it is a dedicated member,
-   an admitter relies on deployment_type and on the emitter keeping mock
-   traces local.
 
    *Unspecified signatures.* The ML-DSA-65 members are not specified.
    Relying on them could give a false sense of post-quantum protection.
@@ -2067,16 +2118,17 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    agent's key, not a person, but an agent serving one person links that
    person's traces.
 
-
-
-Moore                      Expires 23 May 2027                 [Page 37]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
    *Erasure.* A person whose data is in a trace keeps the route of [CC]:
    withdrawing consent starts a deletion clock.  The trace itself is
    erased only by its signer or custodian (Section 9).
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 38]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
 
    Location and timezone metadata that the implementation sends beside
    traces, under consent, are outside the CompleteTrace and its
@@ -2120,20 +2172,19 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
               DOI 10.17487/RFC6234, May 2011,
               <https://www.rfc-editor.org/rfc/rfc6234>.
 
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 38]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
-
    [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
               Signature Algorithm (EdDSA)", RFC 8032,
               DOI 10.17487/RFC8032, January 2017,
               <https://www.rfc-editor.org/rfc/rfc8032>.
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 39]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -2181,7 +2232,12 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
 
-Moore                      Expires 23 May 2027                 [Page 39]
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 40]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
@@ -2237,7 +2293,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
 
-Moore                      Expires 23 May 2027                 [Page 40]
+Moore                      Expires 23 May 2027                 [Page 41]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
@@ -2293,7 +2349,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
 
-Moore                      Expires 23 May 2027                 [Page 41]
+Moore                      Expires 23 May 2027                 [Page 42]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
@@ -2325,10 +2381,11 @@ Appendix A.  Divergences Between the Sources
    where the question is what ships, and states the Constitution's rule
    where the question is what is required.
 
-   Each entry's status is as of CIRISAgent#1370 at commit 7dc7e1e, which
-   adds a Section 0 ("As shipped") to the wire contract and fixes two
-   entries in the code.  That pull request is not yet merged; until it
-   is, the "Shipped" text describes commit 59b7e5d.
+   Each entry's status is as of CIRISAgent#1370, which adds a Section 0
+   ("As shipped") to the wire contract and fixes entries in the code;
+   this paragraph and the statuses below are updated to its commit
+   3c4713a.  That pull request is not yet merged; until it is, the
+   "Shipped" text describes commit 59b7e5d.
 
    Transport:  Specified: HTTP POST of batches to a collector, with key
       registration.  Shipped: HTTP shipping and registration retired;
@@ -2348,8 +2405,7 @@ Appendix A.  Divergences Between the Sources
 
 
 
-
-Moore                      Expires 23 May 2027                 [Page 42]
+Moore                      Expires 23 May 2027                 [Page 43]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
@@ -2389,26 +2445,30 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    Run kind:  Specified: a dedicated member pending in trace format
       v2.8.0 (contract); its own signed member with six values ([CC]).
       Shipped: inside deployment_type; four values (production implicit,
-      qa, battery, mock).  Status: contract corrected to the code in
-      CIRISAgent#1370 (not yet merged); the Constitution's dedicated
-      signed member and its six values remain open.
+      qa, battery, mock).  Status: CIRISAgent#1370 (not yet merged)
+      carries the six values as signed run_kind in every component's
+      data; an envelope or row member remains open.
 
    Field schema enforcement:  Specified: refuse, never truncate ([CC]).
       Shipped: emitter drops and truncates before signing.  Status:
-      open; a decision between the Constitution and the code, not made
-      in CIRISAgent#1370.
+      CIRISAgent#1370 (not yet merged) declares each cut and drop in the
+      signed data (egress_alterations); whether the Constitution accepts
+      a declared emitter cut, and the pinned-hash binding, remain open.
 
    Reasoning text:  Specified: reasoning text at detailed (contract).
-      Shipped: reasoning text at full_traces; short reasons only at
-      detailed.  Status: contract corrected to the code in
-      CIRISAgent#1370, Section 0 (not yet merged).
 
 
 
-Moore                      Expires 23 May 2027                 [Page 43]
+
+
+Moore                      Expires 23 May 2027                 [Page 44]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+      Shipped: reasoning text at full_traces; short reasons only at
+      detailed.  Status: contract corrected to the code in
+      CIRISAgent#1370, Section 0 (not yet merged).
 
    Second-pass reasoning:  Specified: original_reasoning and
       final_reasoning at detailed (contract).  Shipped: at full_traces.
@@ -2454,18 +2514,15 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       contract corrected to the code in CIRISAgent#1370, Section 0 (not
       yet merged).
 
-   Once-per-thought list:  Specified: the contract lists ROUND_COMPLETE
 
 
 
-
-
-
-Moore                      Expires 23 May 2027                 [Page 44]
+Moore                      Expires 23 May 2027                 [Page 45]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+   Once-per-thought list:  Specified: the contract lists ROUND_COMPLETE
       among once-per-thought events.  Shipped: no such event type exists
       in the contract's own closed set or in the code.  Status: contract
       corrected to the code in CIRISAgent#1370, Section 0 (not yet
@@ -2513,15 +2570,15 @@ Appendix B.  Example
        "attempt_index": 0,
        "round_number": 0,
        "task_priority": 0,
-       "thought_depth": 0,
 
 
 
-Moore                      Expires 23 May 2027                 [Page 45]
+Moore                      Expires 23 May 2027                 [Page 46]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+       "thought_depth": 0,
        "thought_type": "standard",
        "updated_info_available": false
       },
@@ -2569,15 +2626,15 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
         "domain_alignment": 0.5
        },
        "dsdma_domain": "theology / philosophy of suffering",
-       "dsdma_domain_alignment": 0.5,
 
 
 
-Moore                      Expires 23 May 2027                 [Page 46]
+Moore                      Expires 23 May 2027                 [Page 47]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+       "dsdma_domain_alignment": 0.5,
        "pdma": {
         "has_conflicts": false
        }
@@ -2625,15 +2682,15 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       "agent_id_hash": "9bff02b556cd84cb",
       "component_type": "conscience",
       "data": {
-       "action_was_overridden": false,
 
 
 
-Moore                      Expires 23 May 2027                 [Page 47]
+Moore                      Expires 23 May 2027                 [Page 48]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+       "action_was_overridden": false,
        "attempt_index": 0,
        "coherence_level": 0.9,
        "coherence_passed": true,
@@ -2681,15 +2738,15 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       "event_type": "ACTION_RESULT",
       "timestamp": "2026-08-01T02:55:05.156598+00:00"
      }
-    ],
 
 
 
-Moore                      Expires 23 May 2027                 [Page 48]
+Moore                      Expires 23 May 2027                 [Page 49]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+    ],
     "deployment_profile": {
      "agent_role": "ally",
      "agent_template": "Ally-default-unspecified",
@@ -2734,17 +2791,21 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    optimization-veto or epistemic-humility members, because those checks
    did not run for that action.
 
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 50]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
 Acknowledgments
 
    The wire contract this document mirrors was written by the CIRIS
    agent and lens engineers.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 49]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
 
 Author's Address
 
@@ -2792,9 +2853,4 @@ Author's Address
 
 
 
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 50]
+Moore                      Expires 23 May 2027                 [Page 51]

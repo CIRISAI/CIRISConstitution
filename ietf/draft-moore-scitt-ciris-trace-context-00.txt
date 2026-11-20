@@ -1298,11 +1298,18 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    still tell that two calls answered the same sender, and is not
    linkable across agents.
 
-   *Size.* Measured on the reference agent's assembler over its
-   evaluator and drafting stages, a context manifest is 6 to 12 KB per
-   call (13 to 28 segments), about 90 to 120 KB per thought through the
-   full pipeline: within the 1 MiB inline payload bound of [CC]
-   (Section 2.6.1.6).  The judges' calls were not in that measurement.
+   *Size.* Measured on the reference agent's assembler, a context
+   manifest is about 6 to 12 KB per call for the evaluators and drafters
+   (13 to 28 segments) and about 4.5 KB per call for the judges (8 to 9
+   segments).  Every attempt is its own LLM_CALL event, so per thought
+   at detailed the manifests total about 69 KB on a clean pass, about
+   360 KB in the worst case the agent's remote-model retry budget allows
+   (three evaluator attempts, four judge attempts and one veto retry),
+   and about 540 KB at the budget schema's ceiling of five attempts
+   everywhere.  Each is within the 1 MiB inline payload bound of [CC]
+   (Section 2.6.1.6) before the trace's other members; a trace that
+   exceeds the bound is carried in the oversize form of
+   [I-D.moore-scitt-ciris-trace].
 
    At detailed, the LLM_CALL event also carries prompt_hash, which is
    the manifest's messages_sha256: the two MUST be equal.  At
@@ -1330,13 +1337,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       model's output attests nothing about any agent.  A node MAY hold
       its own mock rows locally (for QA and tests).
 
-   *  The manifests of a thought's calls ride in its LLM_CALL events, in
-      call order.  The payload is deterministically encoded CBOR with no
-      floating-point values.  Any score or confidence elsewhere in the
-      trace is a fixed6 integer, as [I-D.moore-scitt-ciris-ceg]
-      requires.
-
-
 
 
 
@@ -1345,6 +1345,12 @@ Moore                      Expires 23 May 2027                 [Page 24]
 
 Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
+
+   *  The manifests of a thought's calls ride in its LLM_CALL events, in
+      call order.  The payload is deterministically encoded CBOR with no
+      floating-point values.  Any score or confidence elsewhere in the
+      trace is a fixed6 integer, as [I-D.moore-scitt-ciris-ceg]
+      requires.
 
    *  The policy document a manifest names by policy_sha256 SHOULD
       itself be published as a signed row, so that a verifier can obtain
@@ -1385,6 +1391,17 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       content is withheld; it has no notion of a stage denied some
       context.
 
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 25]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    *  [I-D.durga-wimse-ctx-isolation] attests a taint level for a
       context window per tool call, and refuses a call rather than
       withholding content.  This document's taint rule is per segment
@@ -1394,14 +1411,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       [I-D.emirdag-scitt-ai-agent-execution],
       [I-D.mih-scitt-agent-action-capsule] and
       [I-D.gilda-audit-agent-audit-record] record actions, decisions,
-
-
-
-Moore                      Expires 23 May 2027                 [Page 25]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
-
       delegation and input hashes, and some redact the stored record.
       Redacting a record after the fact is different from withholding
       text from a model before the call, which is what a stub records.
@@ -1436,6 +1445,19 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    deployment of [I-D.moore-scitt-ciris-ceg] with this profile carries
    it.
 
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 26]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
       +====================+========================================+
       | AUDIT signal       | Carried by                             |
       +====================+========================================+
@@ -1450,14 +1472,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       | Authorization as a | authz carriers with grant identifier,  |
       | time-evolving      | authorizer, signature status and grant |
       | state              | time; the grant's own rows, replaced   |
-
-
-
-Moore                      Expires 23 May 2027                 [Page 26]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
-
       |                    | and withdrawn by later rows; the       |
       |                    | policy predicates evaluated per call   |
       +--------------------+----------------------------------------+
@@ -1492,20 +1506,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       |                    | and V7 run without the prompts         |
       +--------------------+----------------------------------------+
 
-      Table 9: AUDIT draft-charter signals and where they are carried
-
-   This profile also carries signals the draft charter does not ask for:
-   per-segment provenance and trust with taint, withholding with a
-   record, locale, and machine-checked policy invariants.
-
-   Two charter items are not covered here, and are not claimed:
-
-
-
-
-
-
-
 
 
 
@@ -1513,6 +1513,14 @@ Moore                      Expires 23 May 2027                 [Page 27]
 
 Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
+
+      Table 9: AUDIT draft-charter signals and where they are carried
+
+   This profile also carries signals the draft charter does not ask for:
+   per-segment provenance and trust with taint, withholding with a
+   record, locale, and machine-checked policy invariants.
+
+   Two charter items are not covered here, and are not claimed:
 
    *  *Cross-domain correlation in protocols.* CEG rows reference one
       another by name, and a manifest names its task and thought, but
@@ -1544,24 +1552,16 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    here does not imply endorsement.
 
    CIRISAgent:  [CIRISAGENT], CIRIS L3C, AGPL-3.0.  The assembler, the
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      policy file ciris_engine/data/context_policy.yaml, the runtime
+      guard, ablation stubs and the per-call manifest are on the main
+      branch at commit 59b7e5d (pull request 1367).  The locale record
+      of Section 3.7 is in pull request 1368, merged at commit e18b78b.
+      The implementation emits each manifest as JSON, with hexadecimal
+      digests and the ciris-json-1 messages form, on the llm_call event
+      of its reasoning stream.  Its signed traces carry each call's
+      messages_sha256 (as prompt_hash).  The context_manifest member of
+      the signed LLM_CALL event, with keyed subject pseudonyms at
+      detailed (Section 10), is in pull request 1370, not yet merged.
 
 
 
@@ -1570,26 +1570,15 @@ Moore                      Expires 23 May 2027                 [Page 28]
 Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
-      policy file ciris_engine/data/context_policy.yaml, the runtime
-      guard, ablation stubs and the per-call manifest are on the main
-      branch at commit 59b7e5d (pull request 1367).  The locale record
-      of Section 3.7 is in pull request 1368, not yet merged at the time
-      of writing.  The implementation emits each manifest as JSON, with
-      hexadecimal digests and the ciris-json-1 messages form, on the
-      llm_call event of its reasoning stream.  Its signed traces carry
-      each call's messages_sha256 (as prompt_hash).  The
-      context_manifest member of the signed LLM_CALL event, with keyed
-      subject pseudonyms at detailed (Section 10), is in pull request
-      1370, not yet merged.  The pinned per-level schema leaves event
-      data open to further members, so the member is admitted under
-      trace_schema_version 3.0.0; it is named in the schema at 3.1.0,
-      under the same leaf trace:complete:v1, which the storage engine's
-      release 62.0 accepts and the server's release 0.6 stamps (neither
-      shipped at the time of writing).  Where no pseudonym key is
-      available, the agent drops the subject identifier rather than send
-      it.  It does not emit messages_digest_form.  The reference policy
-      compiler and the TLA+ specification are in formal/h3ere_ctxflow/
-      of the same repository.
+      The pinned per-level schema leaves event data open to further
+      members, so the member is admitted under trace_schema_version
+      3.0.0; it is named in the schema at 3.1.0, under the same leaf
+      trace:complete:v1, which the storage engine's release 62.0 accepts
+      and the server's release 0.6 stamps (neither shipped at the time
+      of writing).  Where no pseudonym key is available, the agent drops
+      the subject identifier rather than send it.  It does not emit
+      messages_digest_form.  The reference policy compiler and the TLA+
+      specification are in formal/h3ere_ctxflow/ of the same repository.
 
    RATCHET:  CIRIS L3C.  A context-map harness that drives the agent
       through the six scenarios with a deterministic mock model and
@@ -1618,14 +1607,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    how much of it the draft repeats.  The field set is closed so that
    what leaks is known.
 
-
-
-
-Moore                      Expires 23 May 2027                 [Page 29]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
-
    *Facts versus segments.* Policy predicates are evaluated against
    facts from trusted state.  An implementation that derived them from
    the segments could let a missing rule hide itself, or let a forged
@@ -1634,6 +1615,16 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    *Provider libraries.* A library that rewrites messages after the
    assembler can add text the policy never admitted.  The
    provider_capture field makes that visible; it cannot prevent it.
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 29]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
 
 14.  Privacy Considerations
 
@@ -1671,17 +1662,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               November 2026, <https://datatracker.ietf.org/doc/html/
               draft-moore-scitt-ciris-ceg-02>.
 
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 30]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
-
    [I-D.moore-scitt-ciris-trace]
               Moore, E., "The CIRIS Agent Reasoning Trace", Work in
               Progress, Internet-Draft, draft-moore-scitt-ciris-trace-
@@ -1692,6 +1672,15 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 30]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
 
    [RFC5646]  Phillips, A., Ed. and M. Davis, Ed., "Tags for Identifying
               Languages", BCP 47, RFC 5646, DOI 10.17487/RFC5646,
@@ -1730,14 +1719,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               (draft)", 2026, <https://github.com/mirjak/audit-bof-
               preparation/blob/main/audit-charter.md>.
 
-
-
-
-Moore                      Expires 23 May 2027                 [Page 31]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
-
    [CC]       CIRIS L3C, "CIRIS Constitution 1.0-rc21", November 2026,
               <https://github.com/CIRISAI/CIRISConstitution/tree/
               v1.0-rc21>.
@@ -1745,6 +1726,17 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    [CIRISAGENT]
               CIRIS L3C, "CIRISAgent", n.d.,
               <https://github.com/CIRISAI/CIRISAgent>.
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 31]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
 
    [FORMAL]   CIRIS L3C, "H3ERE context-flow model (TLA+), vendored at
               CIRISAgent 59b7e5d", n.d.,
@@ -1782,6 +1774,14 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               <https://datatracker.ietf.org/doc/html/draft-durga-wimse-
               ctx-isolation-00>.
 
+   [I-D.emirdag-scitt-ai-agent-execution]
+              Emirdag, P. and D. Feichtinger, "AI Agent Execution
+              Profile of SCITT", Work in Progress, Internet-Draft,
+              draft-emirdag-scitt-ai-agent-execution-01, 12 October
+              2026, <https://datatracker.ietf.org/doc/html/draft-
+              emirdag-scitt-ai-agent-execution-01>.
+
+
 
 
 
@@ -1793,13 +1793,6 @@ Moore                      Expires 23 May 2027                 [Page 32]
 
 Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
-
-   [I-D.emirdag-scitt-ai-agent-execution]
-              Emirdag, P. and D. Feichtinger, "AI Agent Execution
-              Profile of SCITT", Work in Progress, Internet-Draft,
-              draft-emirdag-scitt-ai-agent-execution-01, 12 October
-              2026, <https://datatracker.ietf.org/doc/html/draft-
-              emirdag-scitt-ai-agent-execution-01>.
 
    [I-D.gilda-audit-agent-audit-record]
               Gilda, S., "An Audit Record Format for AI Agent
@@ -1843,17 +1836,19 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               Systems", n.d.,
               <https://opentelemetry.io/docs/specs/semconv/gen-ai/>.
 
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, DOI 10.17487/RFC7942, July 2016,
+              <https://www.rfc-editor.org/rfc/rfc7942>.
+
+
+
 
 
 Moore                      Expires 23 May 2027                 [Page 33]
 
 Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
-
-   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
-              Code: The Implementation Status Section", BCP 205,
-              RFC 7942, DOI 10.17487/RFC7942, July 2016,
-              <https://www.rfc-editor.org/rfc/rfc7942>.
 
    [RFC8785]  Rundgren, A., Jordan, B., and S. Erdtman, "JSON
               Canonicalization Scheme (JCS)", RFC 8785,
@@ -1897,6 +1892,11 @@ Appendix A.  Measured Motivation
     +--------------------------------------+-------------------------+
 
               Table 10: Findings that motivated the manifest
+
+
+
+
+
 
 
 

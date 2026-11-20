@@ -922,11 +922,18 @@ traces.  The keyed form is stable within one agent, so a verifier can
 still tell that two calls answered the same sender, and is not linkable
 across agents.
 
-**Size.**  Measured on the reference agent's assembler over its
-evaluator and drafting stages, a context manifest is 6 to 12 KB per
-call (13 to 28 segments), about 90 to 120 KB per thought through the
-full pipeline: within the 1 MiB inline payload bound of {{CC}} (Section
-2.6.1.6).  The judges' calls were not in that measurement.
+**Size.**  Measured on the reference agent's assembler, a context
+manifest is about 6 to 12 KB per call for the evaluators and drafters
+(13 to 28 segments) and about 4.5 KB per call for the judges (8 to 9
+segments).  Every attempt is its own LLM_CALL event, so per thought at
+`detailed` the manifests total about 69 KB on a clean pass, about
+360 KB in the worst case the agent's remote-model retry budget allows
+(three evaluator attempts, four judge attempts and one veto retry),
+and about 540 KB at the budget schema's ceiling of five attempts
+everywhere.  Each is within the 1 MiB inline payload bound of {{CC}}
+(Section 2.6.1.6) before the trace's other members; a trace that
+exceeds the bound is carried in the oversize form of
+{{I-D.moore-scitt-ciris-trace}}.
 
 At `detailed`, the LLM_CALL event also carries `prompt_hash`, which is
 the manifest's `messages_sha256`: the two MUST be equal.  At
@@ -1090,7 +1097,7 @@ CIRISAgent:
   `ciris_engine/data/context_policy.yaml`, the runtime guard, ablation
   stubs and the per-call manifest are on the main branch at commit
   59b7e5d (pull request 1367).  The locale record of {{locale}} is in
-  pull request 1368, not yet merged at the time of writing.  The
+  pull request 1368, merged at commit e18b78b.  The
   implementation emits each manifest as JSON, with hexadecimal digests
   and the `ciris-json-1` messages form, on the `llm_call` event of its
   reasoning stream.  Its signed traces carry each call's

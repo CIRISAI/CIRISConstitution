@@ -490,7 +490,10 @@ each member names the lowest trace level at which it is carried
 egress schema {{EGRESS-SCHEMA}}; where the wire contract assigns a
 different level, {{divergences}} says so.  Every component's `data`
 also carries `attempt_index` ({{attempt-index}}), inserted by the
-emitter at every level.  All members are optional unless stated: what
+emitter at every level.  In CIRISAgent#1370 (not yet merged) every
+component's `data` also carries `run_kind` ({{run-kind}}) and, when
+the emitter's filter altered it, `egress_alterations` ({{levels}}).
+All members are optional unless stated: what
 is absent was not emitted.
 
 ## THOUGHT_START
@@ -980,10 +983,34 @@ filters each component before signing instead: it drops a member the
 level does not allow or whose type does not fit, truncates over-long
 text and cuts over-long lists, and logs and counts each violation
 without its value.  Because this happens before signing, the signed
-trace is what the agent attests to; but the emitter's filter
-truncates, which the Constitution's rule forbids at admission, and no
-pinned-hash binding between the emitter's schema and an admitter's is
-implemented yet ({{divergences}}).
+trace is what the agent attests to.  At commit 59b7e5d the alteration
+is silent in the signed bytes.
+
+In CIRISAgent#1370 (not yet merged) the emitter records each
+alteration in the component's signed `data`, as `egress_alterations`:
+a list of at most 64 marks, with a count of any beyond that.  A mark
+gives the member's `path`, the `kind` of alteration (`truncated`,
+`dropped_wrong_type` or `dropped_not_in_schema`), and the
+`original_length`; a `truncated` mark also gives `sha256`, the SHA-256
+digest of the original value.  A dropped value gets no digest: it was
+content in the wrong place, and a digest of a short value can be
+confirmed by guessing.  A member above the trace level is not an
+alteration and is not marked.  The emitter discards any
+`egress_alterations` a producer supplies before filtering, so the
+marks are the filter's own.  With the marks, an emitter's cut is
+declared in what the agent signs rather than silent; the admitter's
+rule is unchanged.  Whether the Constitution's text should say so, and
+how the emitter's and admitter's schemas are bound by one pinned hash,
+are open ({{divergences}}).
+
+~~~ cddl
+egress-alteration = {
+  path: tstr,
+  kind: "truncated" / "dropped_wrong_type" / "dropped_not_in_schema",
+  original_length: uint,
+  ? sha256: tstr,                  ; truncated only
+}
+~~~
 
 # Signatures {#signing}
 
@@ -1146,7 +1173,7 @@ The statement's signature is the trace's signature ({{signing}}).
    that admits traces.  A row that violates it is refused, never
    truncated, with `trace_field_shape_violation` ({{levels}}).
 
-5. **Run kind.**  The envelope carries `run_kind` in the signed bytes
+5. **Run kind.**  The trace carries `run_kind` in the signed bytes
    ({{run-kind}}).  A `mock` row is refused at federation-tier
    admission only, with `trace_run_kind_mock`; the three production
    values are admitted alike.
@@ -1166,7 +1193,7 @@ trace-row-payload = {
   dimension: "trace:complete:v1",
   trace_id: tstr,                  ; non-empty
   agent_id_hash: tstr,             ; non-empty
-  run_kind: run-kind,              ; CC 3.1.5; not yet emitted
+  run_kind: run-kind,              ; CC 3.1.5; see {{run-kind}}
   ( trace: { * tstr => any }       ; a CompleteTrace
   // manifest: trace-manifest )
   * tstr => any,                   ; members every CEG row carries
@@ -1200,13 +1227,25 @@ A federation-tier admitter MUST refuse a `mock` row with
 agent.  The refusal is at federation tier only: a node MAY hold its own
 `mock` rows locally, for tests.
 
-**Not implemented as specified.**  The implementation carries the run
-kind inside `deployment_profile.deployment_type`, which is signed, as
-one of `mock`, `qa` or `battery` overriding the operator's value, with
-no marker for a production run and no `prod-personal` or
+**Implementation.**  At commit 59b7e5d the implementation carries the
+run kind inside `deployment_profile.deployment_type`, which is signed,
+as one of `mock`, `qa` or `battery` overriding the operator's value,
+with no marker for a production run and no `prod-personal` or
 `prod-managed`.  It keeps `mock` traces out of its federation store at
-the source.  A dedicated member is pending in the agent's next trace
-format, and its placement is not yet agreed ({{divergences}}).
+the source.
+
+In CIRISAgent#1370 (not yet merged) every component's signed `data`
+carries `run_kind` from the six-value set.  A test-harness or mock
+setting wins; otherwise an operator's `CIRIS_DEPLOYMENT_KIND` of
+`managed` or `personal`; otherwise `prod-managed` under the agent's
+deployment manager and `prod-personal` elsewhere.  `deployment_type`
+is unchanged.  The value is in the signed bytes but in each
+component, not as a member of the envelope or of the CEG row.  An
+admitter reads it from the components; every component of a trace
+MUST carry the same value, and an admitter MUST refuse a trace whose
+components disagree or of which any component lacks it, once it
+requires the member.  Whether the value also becomes an envelope or
+row member is open ({{divergences}}).
 
 ## The Oversize Form {#oversize}
 
@@ -1383,16 +1422,17 @@ trace can be referenced from them by (`agent_id_hash`, `trace_id`).
 Note to the RFC Editor: please remove this section before publication.
 
 - **Run kind member.**  {{CC}} requires a signed `run_kind` from a
-  six-value set.  The implementation carries four values inside
-  `deployment_type`.  The agent's next trace format adds a dedicated
-  member; whether it sits inside `deployment_profile` or at the top of
-  the trace is not agreed.
+  six-value set on the envelope.  CIRISAgent#1370 carries the six
+  values in every component's signed `data`.  Whether the value is
+  also an envelope or row member, and the rule for a trace whose
+  components disagree, are not agreed.
 
 - **Refuse, not truncate.**  The implementation's emitter truncates
   over-long values before signing; {{CC}} forbids truncation at
-  admission.  Whether the emitter should refuse instead, and how the
-  emitter's and admitter's schemas are bound by one pinned hash, is
-  open.
+  admission.  CIRISAgent#1370 declares each cut in the signed data
+  (`egress_alterations`, {{levels}}).  Whether the Constitution
+  accepts a declared emitter cut, and how the emitter's and admitter's
+  schemas are bound by one pinned hash, are open.
 
 - **Numbers in a CBOR row.**  How a trace's non-integral JSON numbers
   are carried in a CEG CBOR payload, given that the trace's signature
@@ -1487,8 +1527,10 @@ The trace of {{example}} was emitted by the agent at release 2.9.9
 and carried as an earlier-form JSON CEG row of dimension
 `trace:complete:v1`, signed by the agent's key, with the trace inline.
 No implementation emits the CBOR row of {{I-D.moore-scitt-ciris-ceg}}
-for a trace, the `run_kind` member, or (outside an unmerged pull
-request) the `context_manifest` member.
+for a trace or the envelope's `run_kind` member.  The
+`context_manifest` member, the per-component `run_kind` and the
+`egress_alterations` marks are in an unmerged pull request
+(CIRISAgent#1370).
 No second, independent implementation of the emitter or the verifier
 exists.
 
@@ -1531,9 +1573,9 @@ another step without invalidating the trace.
 payload no schema has reviewed.  Consumers reject it.
 
 **Mock runs.**  A trace from a mock model looks like a real one.  The
-run kind is the only signed marker; until it is a dedicated member,
-an admitter relies on `deployment_type` and on the emitter keeping
-mock traces local.
+run kind is the only signed marker.  At commit 59b7e5d an admitter
+relies on `deployment_type` and on the emitter keeping mock traces
+local; with CIRISAgent#1370 it reads `run_kind` from the components.
 
 **Unspecified signatures.**  The ML-DSA-65 members are not specified.
 Relying on them could give a false sense of post-quantum protection.
@@ -1602,9 +1644,10 @@ emitted trace, or {{CC}} disagree.  This document follows the code
 where the question is what ships, and states the Constitution's rule
 where the question is what is required.
 
-Each entry's status is as of CIRISAgent#1370 at commit 7dc7e1e, which
-adds a Section 0 ("As shipped") to the wire contract and fixes two
-entries in the code.  That pull request is not yet merged; until it
+Each entry's status is as of CIRISAgent#1370, which
+adds a Section 0 ("As shipped") to the wire contract and fixes entries in
+the code; this paragraph and the statuses below are updated to its
+commit 3c4713a.  That pull request is not yet merged; until it
 is, the "Shipped" text describes commit 59b7e5d.
 
 Transport:
@@ -1632,10 +1675,10 @@ Component type `unknown`:
 : Specified: listed in the contract.  Shipped: no event maps to it.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 Run kind:
-: Specified: a dedicated member pending in trace format v2.8.0 (contract); its own signed member with six values ({{CC}}).  Shipped: inside `deployment_type`; four values (`production` implicit, `qa`, `battery`, `mock`).  Status: contract corrected to the code in CIRISAgent#1370 (not yet merged); the Constitution's dedicated signed member and its six values remain open.
+: Specified: a dedicated member pending in trace format v2.8.0 (contract); its own signed member with six values ({{CC}}).  Shipped: inside `deployment_type`; four values (`production` implicit, `qa`, `battery`, `mock`).  Status: CIRISAgent#1370 (not yet merged) carries the six values as signed `run_kind` in every component's `data`; an envelope or row member remains open.
 
 Field schema enforcement:
-: Specified: refuse, never truncate ({{CC}}).  Shipped: emitter drops and truncates before signing.  Status: open; a decision between the Constitution and the code, not made in CIRISAgent#1370.
+: Specified: refuse, never truncate ({{CC}}).  Shipped: emitter drops and truncates before signing.  Status: CIRISAgent#1370 (not yet merged) declares each cut and drop in the signed data (`egress_alterations`); whether the Constitution accepts a declared emitter cut, and the pinned-hash binding, remain open.
 
 Reasoning text:
 : Specified: reasoning text at `detailed` (contract).  Shipped: reasoning text at `full_traces`; short reasons only at `detailed`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
