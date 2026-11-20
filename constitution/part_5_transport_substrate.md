@@ -733,7 +733,7 @@ All four are charter members, changed only by re-scrub. The window exceeds the c
 - or a Rooted binding;
 - or a pairing pin ([CC 3.2](part_3_the_namespace.md#3.2) (f)).
 
-Such a row otherwise arrives over a sealed link, so a device that knows no one needs a first row from somewhere. For the seated serve nodes it is this bundle.
+Such a row otherwise arrives over a sealed link, so a device that knows no one needs a first row from somewhere. For the seated serve nodes it is this bundle. Each serve seat's binding in the bundle therefore carries `dial_hints`, signed with the binding: an ordered list of places to dial in the hint types of the node code ([CC 2.6.8](part_2_the_grammar.md#2.6.8)), with at least one `tcp` hint. The list is a cold-start seed and nothing more. The seat's live signed route row supersedes it once a link is up, an operator's own configuration overrides it, and a counted re-bind MAY carry a new list.
 
 *A canonical node is one source of route rows, never a required party.* The premise of this document is a network with no company in the middle. A trust decides what a node serves ([CC 3.2](part_3_the_namespace.md#3.2) T8), not whether two keys may speak privately. Two peers holding each other's signed route rows seal, exchange the allegiance facts and root each other directly. They hold those rows from a contact code, from the owner's own hand at first contact (the contact rule of [CC 5.4.6](#5.4.6)), or, for an unowned node, from any relay of the bootstrap kinds.
 

@@ -166,6 +166,7 @@ identity-occurrence = {
   ? "transport_destination": transport-destination, ; The RNS members of the binding's table. (where the occurrence binds an address)
   ? "encryption_pubkeys": encryption-pubkeys, ; The content-KEM keys. (where the occurrence is a wrap target)
   ? "build_manifest_hash": hash-digest,     ; The hash of the pipeline-signed manifest. (where the occurrence names its build)
+  ? "dial_hints": [1*4 [uint .le 255, bstr .size (0..255)]], ; An ordered sequence, most preferred first, of at most four hints. Each is a type and a body, the body byte for byte that of the node code (CC 2.6.8). Never empty: absence is its one encoding. (where the occurrence gives places to dial; on a serve seat's binding in a genesis bundle)
   "refs": self-roster-refs,                 ; The self-roster head the signer stood on; a merge's further tips; and the rows the occurrence cites.
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   ? "valid_until": ms-time,                 ; Later than asserted_at (CC 2.6.2). (where the occurrence states its own end)

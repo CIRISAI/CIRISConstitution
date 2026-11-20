@@ -41407,6 +41407,14 @@
        "cc_ref": "CC 3.3.6"
       },
       {
+       "member": "dial_hints",
+       "type": "[1*4 [uint .le 255, bstr .size (0..255)]]",
+       "presence": "optional",
+       "when": "where the occurrence gives places to dial; on a serve seat's binding in a genesis bundle",
+       "in_cddl": true,
+       "cc_ref": "CC 3.3.6.2"
+      },
+      {
        "member": "refs",
        "type": "self-roster-refs",
        "presence": "required",
