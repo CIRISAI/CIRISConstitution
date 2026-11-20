@@ -26,6 +26,7 @@ author:
     email: eric@ciris.ai
 
 normative:
+  RFC2104:
   RFC2119:
   RFC8174:
   RFC3339:
@@ -138,10 +139,10 @@ the action is taken.  Every language-model call made along the way is
 recorded as its own event, linked to the step that issued it.
 
 A third party can check a trace for three reasons.  First, the trace
-is signed by the agent's own key, over canonical bytes that a verifier
-can recompute exactly ({{signing}}), so any change after signing is
-detectable, including the disclosure level and the link from each
-model call to the step that made it.  Second, the identifier of the
+is the payload of a CEG statement signed by the agent's own key
+({{signing}}), so any change after signing is detectable, including
+the disclosure level and the link from each model call to the step
+that made it.  Second, the identifier of the
 agent in every trace is derived from that key ({{agent-id-hash}}), so a
 verifier can bind the trace to the key without trusting a directory's
 label.  Third, the trace is carried as a signed row of the CIRIS
@@ -242,15 +243,18 @@ A trace is a JSON object.  Its members are:
 | `started_at` | timestamp | yes | When the first component arrived at the emitter |
 | `completed_at` | timestamp | yes | When the terminal event arrived (the seal) |
 | `trace_level` | text | yes | `generic`, `detailed` or `full_traces` ({{levels}}) |
-| `trace_schema_version` | text | yes | The canonical-shape selector ({{versions}}) |
+| `trace_schema_version` | text | yes | The schema version stamped by the emitter ({{versions}}) |
 | `deployment_profile` | object | yes | Six operator-declared labels ({{profile}}) |
 | `components` | array | yes | The events, in receipt order ({{components}}) |
-| `signature` | text | yes | Base64 Ed25519 signature ({{signing}}) |
+| `signature` | text | yes | Base64 Ed25519 signature, current form ({{current-form}}) |
 | `signature_key_id` | text | yes | Identifier of the signing key |
 {: title="CompleteTrace members"}
 
-The members `signature` and `signature_key_id` are outside the signed
-bytes.  Every other member listed above is inside them ({{signing}}).
+`signature` and `signature_key_id` belong to the current, per-trace
+signature form ({{current-form}}), which is being replaced by the
+signature of the CEG statement that carries the trace ({{signing}}).
+In the current form they are outside the signed bytes and every other
+member listed above is inside them.
 
 Traces emitted by the reference implementation also carry
 `pqc_key_id`, `pubkey_ml_dsa_65` and `signature_ml_dsa_65` (an ML-DSA-65
@@ -269,11 +273,11 @@ complete-trace = {
   started_at: tstr,             ; RFC 3339 date-time
   completed_at: tstr,           ; RFC 3339 date-time
   trace_level: trace-level,
-  trace_schema_version: tstr,   ; "3.0.0" as emitted today
+  trace_schema_version: tstr,   ; "3.0.0" stamped today; not settled
   deployment_profile: deployment-profile,
   components: [+ trace-component],
-  signature: tstr,              ; base64 of a 64-byte Ed25519 sig
-  signature_key_id: tstr,
+  signature: tstr,              ; current form: base64 Ed25519
+  signature_key_id: tstr,       ; current form
   ; Emitted, not yet specified (see Open Issues):
   ? pqc_key_id: tstr,
   ? pubkey_ml_dsa_65: tstr,
@@ -385,29 +389,17 @@ consumer MUST accept them.
 
 ## Schema Versions {#versions}
 
-`trace_schema_version` is inside the signed bytes and selects the
-canonical shape and canonicalizer ({{signing}}).  Three values are
-defined:
+The shape of a trace at each trace level is fixed by the agent's
+per-level field schema, the pinned artifact `trace_format_v{n}.json`
+({{CC}}, Section 3.1.5; {{levels}}).  This document does not fix a
+value of `trace_schema_version`.
 
-| Version | Envelope in signed bytes | Component in signed bytes | Canonicalizer |
-|---|---|---|---|
-| `2.7.0` | 9 members, no `deployment_profile` | 4 members, no `agent_id_hash` | legacy (see below) |
-| `2.7.9` | 10 members | 5 members | legacy (see below) |
-| `3.0.0` | 10 members | 5 members | JCS {{RFC8785}} |
-{: title="Schema versions"}
-
-The legacy canonicalizer is Python's `json.dumps(obj, sort_keys=True,
-separators=(",", ":"))` with its default ASCII escaping.  It agrees
-with JCS on traces whose text is all ASCII and differs on any other
-text.  It is described so that historical traces can be verified; an
-emitter conforming to this document MUST emit `3.0.0`.
-
-A verifier MUST select the shape and canonicalizer from
-`trace_schema_version` alone, and MUST NOT try another shape when
-verification fails under the selected one.  A verifier MUST reject a
-version it does not support.  At `2.7.0` a verifier MUST ignore any
-`deployment_profile` on the envelope and any `agent_id_hash` on a
-component; neither is signed at that version.
+Today the emitter stamps `trace_schema_version` `3.0.0`, and the
+verifier of the current signature form selects its canonicalizer by
+that string ({{current-form}}).  Whether the member survives the move
+to statement signatures is for the storage engine to decide, and a
+`3.1.0` that names the `context_manifest` member is proposed, not
+settled ({{open}}).
 
 # Components and the Pipeline {#components}
 
@@ -852,22 +844,30 @@ An `LLM_CALL` component MAY carry a member `context_manifest` at trace
 level `detailed` and above: the per-call context manifest specified by
 {{I-D.moore-scitt-ciris-trace-context}}, which describes each piece of
 text placed into the call by kind, provenance, trust, lifetime and
-language.  At `detailed`, every verified-sender subject identifier in
-the manifest is a keyed pseudonym: the first 16 hexadecimal characters
-of HMAC-SHA256 over the identifier string under a per-agent secret that
-the agent holds and never discloses (`subject_id_form`
-`hmac_sha256_16`).  Where the key is unavailable the identifier is
-omitted, never sent as is.  At `full_traces` the identifiers are
-carried as verified (`raw`).  At `generic` the member is omitted.
+language.  The verified sender's `subject_id` in the manifest depends
+on the level:
 
-The member is additive: the pinned per-level schema leaves event data
-open to further members, so a trace carrying it is admitted under
-`trace_schema_version` `3.0.0`.  It is implemented in the agent's pull
-request 1370, not yet merged.  It is to be named in the per-level
-schema at `trace_schema_version` `3.1.0`, which the storage engine's
-release 62.0 accepts and the server's release 0.6 stamps, under the
-same leaf `trace:complete:v1`; neither release had shipped at the time
-of writing.
+* At `detailed` it is HMAC-SHA256 {{RFC2104}} of the identifier string
+  under a per-agent secret that the agent holds and never discloses,
+  truncated to 16 hexadecimal characters, with `subject_id_form`
+  `hmac_sha256_16`.  Where the secret is unavailable the identifier is
+  omitted, never sent as it is.
+
+* At `full_traces` it is the identifier as verified, with
+  `subject_id_form` `raw`.
+
+* At `generic` the `context_manifest` member is omitted.
+
+The keyed form is used because user identifiers are low-entropy: an
+unkeyed digest could be reversed by trying candidates, and would link
+one person across every agent that saw them.  The keyed value is
+stable within one agent and cannot be linked across agents.
+
+The member is additive: event data stays open to further members, so a
+trace carrying it is admitted under the current `3.0.0`.  It is
+implemented in CIRISAgent pull request 1370, not yet merged, and is
+not in any emitted trace.  Naming it in the per-level schema at a
+`3.1.0` is proposed only ({{open}}).
 
 ~~~ cddl
 llm-call = {
@@ -895,7 +895,7 @@ llm-call = {
   ? parent_event_type: tstr,        ; G
   ? parent_attempt_index: uint,     ; G
   ? prompt_hash: tstr,              ; D  64 lowercase hex
-  ? context_manifest: any,          ; D  not yet emitted
+  ? context_manifest: any,          ; D  PR 1370, not merged
   ? prompt: tstr,                   ; F
   ? response_text: tstr,            ; F
 }
@@ -912,7 +912,7 @@ credit and deferral system: `DEFERRAL_ROUTED`, `DEFERRAL_RECEIVED`,
 with a component type of the same name in lowercase.  They are not in
 the wire contract, the reference implementation does not capture them
 into traces by default, and this document does not specify them
-({{divergences}}).  A consumer of a `3.0.0` trace that contains one
+({{divergences}}).  A consumer of a trace that contains one
 MUST reject the trace unless it implements their shapes.
 
 # attempt_index {#attempt-index}
@@ -944,7 +944,7 @@ consumer cannot be misled about which profile it holds.
 | Level | Carries | Does not carry |
 |---|---|---|
 | `generic` | Scores, booleans, counts, sizes, durations, costs, closed-vocabulary tokens, model and handler names, the attestation summary | Free text from a model or a person, reasoning, prompts, prompt digests, channel and key identifiers |
-| `detailed` | Generic, plus bounded lists of labels, key identifiers, channel identifiers, short reason fields (at most 500 characters), prompt digests, provider endpoints, and the context manifest with pseudonymized senders | The reasoning chain, prompts and completions |
+| `detailed` | Generic, plus bounded lists of labels, key identifiers, channel identifiers, short reason fields (at most 500 characters), prompt digests, provider endpoints, and the context manifest with keyed sender identifiers | The reasoning chain, prompts and completions |
 | `full_traces` | Detailed, plus reasoning text, prompts and completions verbatim, tool parameters, and full context snapshots, each bounded | Nothing by design |
 {: title="Trace levels"}
 
@@ -977,11 +977,42 @@ truncates, which the Constitution's rule forbids at admission, and no
 pinned-hash binding between the emitter's schema and an admitter's is
 implemented yet ({{divergences}}).
 
-# Signing and Canonical Bytes {#signing}
+# Signatures {#signing}
 
-## What Is Signed
+## The Normative Signature {#statement-sig}
 
-For `trace_schema_version` `3.0.0`, the signed bytes are the JCS
+The signature of a trace is the signature of the CEG statement that
+carries it ({{carriage}}).  The signed object, its composite
+signature, its keys and its admission are those of
+{{I-D.moore-scitt-ciris-ceg}}; this document repeats none of them.
+The signer is the agent: {{CC}} (Section 3.1.5) and its key-role
+contract (`manifests/key_roles.json`, family `trace:{form}:{version}`,
+signer kind `agent`) give a trace's attestation and its withdrawal to
+the agent alone, and an admitter verifies the statement at the door.
+A node, host or person key MUST NOT sign a trace.
+
+Because the statement signature covers the whole payload, it covers
+everything the current form covers ({{current-form}}): the trace
+level, the deployment profile, every component and its
+`attempt_index`, and every parent link of a model call.
+
+No released implementation yet emits a trace as such a statement.
+The transition is in {{open}}.
+
+## The Current Form: Per-Trace Ed25519 {#current-form}
+
+What ships today is a separate Ed25519 signature carried inside the
+trace, over canonical bytes of the trace.  It is described so that
+traces signed this way can be verified.  It is being replaced by the
+statement signature above: the storage engine's version 62 (the
+server's 0.6 release, not shipped at the time of writing) removes the
+earlier-form trace verification and verifies traces as agent-signed
+statements.  An implementer SHOULD NOT build a new emitter or
+verifier on this form alone.
+
+### What Is Signed
+
+With `trace_schema_version` `3.0.0`, the signed bytes are the JCS
 canonicalization {{RFC8785}} of the following JSON object, built from
 the trace:
 
@@ -1019,18 +1050,35 @@ The signature is pure Ed25519 {{RFC8032}} over the signed bytes, with
 the agent's signing key.  `signature` is its 64 bytes in base64 with
 padding ({{RFC4648}}, Section 4).
 
-For `2.7.9`, the object is the same and the canonicalizer is the
-legacy one of {{versions}}.  For `2.7.0`, the object has no
-`deployment_profile` and no component `agent_id_hash`.
+### Canonical Shapes by Version
 
-## Keys
+The verifier of this form selects the canonical shape and the
+canonicalizer from `trace_schema_version`, which is itself inside the
+signed bytes:
 
-The trace key is the agent's own signing key.  {{CC}} (Section 3.1.5)
-and its key-role contract (`manifests/key_roles.json`, family
-`trace:{form}:{version}`, signer kind `agent`) assign a trace's
-attestation and its withdrawal to the agent alone; a node, host or
-person key MUST NOT sign a trace.  The same key signs the agent's
-audit entries.
+| Version | Envelope members signed | Component members signed | Canonicalizer |
+|---|---|---|---|
+| `2.7.0` | 9, no `deployment_profile` | 4, no `agent_id_hash` | legacy |
+| `2.7.9` | 10 | 5 | legacy |
+| `3.0.0` | 10 | 5 | JCS {{RFC8785}} |
+{: title="Canonical shapes of the current form"}
+
+The legacy canonicalizer is Python's `json.dumps(obj, sort_keys=True,
+separators=(",", ":"))` with its default ASCII escaping.  It agrees
+with JCS on traces whose text is all ASCII and differs on any other
+text.
+
+A verifier MUST select the shape and canonicalizer from
+`trace_schema_version` alone, and MUST NOT try another shape when
+verification fails under the selected one.  A verifier MUST reject a
+version it does not support.  At `2.7.0` a verifier MUST ignore any
+`deployment_profile` on the envelope and any `agent_id_hash` on a
+component; neither is signed at that version.
+
+### Keys
+
+The key of this form is the agent's own signing key, the same key
+that signs the agent's audit entries.
 
 `signature_key_id` names the key for lookup.  How a consumer obtains
 the public key for a `signature_key_id` is not specified by the
@@ -1038,9 +1086,9 @@ current sources: the registration path of the wire contract has been
 retired in the implementation ({{open}}).  Whatever the lookup, the
 consumer checks the key against `agent_id_hash` ({{validation}}).
 
-## Verification
+### Verification
 
-A verifier:
+A verifier of this form:
 
 1. obtains the public key named by `signature_key_id`;
 2. checks that `agent_id_hash` equals the first 16 lowercase
@@ -1063,40 +1111,47 @@ family `trace:{form}:{version}`; the canonical leaf is
 `trace:complete:v1`, which carries the trace after scrubbing.  The
 signed object, its composite signature, its names, references,
 receipts and admission are those of {{I-D.moore-scitt-ciris-ceg}}.
-The row adds an outer signature; in the shipping form the trace's own
-Ed25519 signature stays inside the payload and is verified separately,
-at promotion to federation tier and again by consumers ({{CC}},
-Section 3.1.5).  In edition 2 the row's signature, by the agent's own
-key, is the trace signature and is verified at admission; the separate
-Ed25519 verification is retired ({{open}}).
+The statement's signature is the trace's signature ({{signing}}).
 
-The row's payload carries, besides the members every row carries:
+{{CC}} (Section 3.1.5) states these rules for the row:
 
-* `trace_id` and `agent_id_hash`, both non-empty and equal to those of
-  the trace;
+1. **Identifiers.**  The envelope carries a non-empty `trace_id` and a
+   non-empty `agent_id_hash`, equal to those of the trace.
 
-* `run_kind` ({{run-kind}}); and
+2. **Exactly one body.**  The envelope carries exactly one of an
+   inline `trace` (the CompleteTrace), within the 1 MiB payload bound
+   of {{CC}} (Section 2.6.1.6), or a `manifest` object of schema
+   `trace_manifest:v1` naming it ({{oversize}}).  This trace manifest
+   is not the per-call context manifest of
+   {{I-D.moore-scitt-ciris-trace-context}}.
 
-* exactly one of an inline `trace` (the CompleteTrace) or a
-  `manifest` naming it ({{oversize}}).
+3. **Shape and provenance.**  Admission validates that the row
+   parses, and nothing more: an admitted `trace:*` row is guaranteed
+   parseable, and that is all admission claims.  Provenance rides the
+   producer's signature, verified at promotion to federation tier
+   ({{CC}}, Section 5.3.2.6) and again by consumers.  Neither
+   substitutes for the other.
 
-The rules {{CC}} (Section 3.1.5) states for this row are:
+4. **Field schema.**  The per-level field schema is the agent's
+   artifact, `trace_format_v{n}.json`, pinned by hash in the
+   Constitution's evidence pins and vendored by tag by every substrate
+   that admits traces.  A row that violates it is refused, never
+   truncated, with `trace_field_shape_violation` ({{levels}}).
 
-* **Self-emission.**  The row is signed by the agent's own key, the
-  same key that signed the trace.  An admitter MUST refuse a
-  `trace:*` row signed by any other key.
+5. **Run kind.**  The envelope carries `run_kind` in the signed bytes
+   ({{run-kind}}).  A `mock` row is refused at federation-tier
+   admission only, with `trace_run_kind_mock`; the three production
+   values are admitted alike.
 
-* **Shape.**  Admission checks that the row parses.  An admitted row
-  is guaranteed parseable; that is all admission claims.  Provenance
-  rides the trace's own signature.
+6. **Signer and withdrawal.**  The family is reserved ({{CC}},
+   Section 3.4.5).  Its attestation and its withdrawal are the
+   agent's own, signer kind `agent`; an admitter MUST refuse a
+   `trace:*` row signed by any other key.
 
-* **Field schema.**  A row whose trace violates the pinned per-level
-  schema is refused with `trace_field_shape_violation` ({{levels}}).
-
-* **Erasure.**  Only the signer's withdrawal, or after retirement the
-  custodian its retirement row names, erases a trace.  An owner MAY
-  stop its own node holding a trace's bytes; that reaches no copy
-  another party holds under a consent grant.
+7. **Erasure.**  Only the signer's withdrawal, or after retirement the
+   custodian its retirement row names, erases a trace.  An owner MAY
+   stop its own node holding a trace's bytes; that reaches no copy
+   another party holds under a consent grant.
 
 ~~~ cddl
 trace-row-payload = {
@@ -1134,7 +1189,8 @@ a run on a mock model.
 
 A federation-tier admitter MUST refuse a `mock` row with
 `trace_run_kind_mock`: a mock model's output attests nothing about any
-agent.  A node MAY hold its own `mock` rows locally, for tests.
+agent.  The refusal is at federation tier only: a node MAY hold its own
+`mock` rows locally, for tests.
 
 **Not implemented as specified.**  The implementation carries the run
 kind inside `deployment_profile.deployment_type`, which is signed, as
@@ -1185,21 +1241,25 @@ score in [0, 1] (`entropy_score`, `plausibility_score`), `k_eff`,
 `cost_usd`, `cost_cents` and `duration_ms` among them.  The trace's
 own scores are not fixed6 integers.
 
-The sources do not say how these map into a CBOR row ({{open}}).  The
-mapping has one hard constraint: the trace's signature is over the
-JCS bytes of the JSON trace, so whatever form the row uses, a verifier
-must be able to reconstruct those bytes exactly.  Converting a score
-to fixed6 loses that ability.  The implementation's carrier is the
-earlier JSON row form, which carries the trace's numbers as JSON
-numbers ({{impl}}).
+The sources do not say how these map into a CBOR statement
+({{open}}).  Under the statement signature the signed bytes are the
+CBOR payload, so the mapping is free of the JSON canonicalization; but
+a conversion that rounds (to fixed6, for example) changes the values
+the agent attests to, so the mapping must be applied by the agent
+before it signs, never by a relay.  While a current-form signature is
+also carried, a verifier must be able to reconstruct the JCS bytes of
+the JSON trace exactly, which a lossy conversion prevents.  The
+implementation's carrier is the earlier JSON row form, which carries
+the trace's numbers as JSON numbers ({{impl}}).
 
 # The Action Anchor and Orphan Purge {#anchor}
 
 A trace exists only when its thought produces an action.  The emitter
 seals and signs the trace when `ACTION_RESULT` arrives; a thought that
 times out, ends without acting, or is abandoned produces no trace.
-This is the anchor rule of {{CC}} (Section 5.3.2): a trace is durable
-only when it is anchored on the record of an act.  Reasoning that
+This is the anchor rule of {{CC}} (Section 1.13.6), which Section
+5.3.2 applies to the durable trace: a trace is durable only when it is
+anchored on the record of an act.  Reasoning that
 produced no act is working state, not history.
 
 {{CC}} states the rule as duties:
@@ -1346,16 +1406,24 @@ Note to the RFC Editor: please remove this section before publication.
 - **trace_summary payload.**  The members of `trace_summary:{kind}`.
 
 - **context_manifest.**  The `LLM_CALL` member of {{llm-call}} is in
-  the agent's pull request 1370, not yet merged, and is named in the
-  per-level schema only from `3.1.0`.
+  CIRISAgent pull request 1370, not yet merged, and not yet in the
+  egress schema.
 
-- **Signing in edition 2.**  The storage engine's release 62 retires the
-  verification of the trace's own Ed25519 signature ({{signing}}).
-  Traces become agent-signed edition-2 statements of
-  {{I-D.moore-scitt-ciris-ceg}}, verified at admission ({{CC}},
-  Section 3.1.5).  This document specifies the shipping form; the next
-  revision makes the row's signature the trace signature and describes
-  the Ed25519 form as superseded.
+- **Signature transition.**  The normative signature is the agent's
+  CEG statement signature ({{statement-sig}}).  What ships is the
+  per-trace Ed25519 form ({{current-form}}) in an earlier-form JSON
+  row.  The storage engine's version 62 (server 0.6, not shipped)
+  removes the earlier-form verification and verifies traces as
+  agent-signed statements at admission.  Whether the current-form
+  members are kept inside the payload during the change, and for how
+  long, is not settled.
+
+- **Schema version.**  `3.0.0` is what is stamped today, and the
+  current form's verifier dispatches canonicalization on it.  Whether
+  `trace_schema_version` survives the move to statements is the
+  storage engine's call; a `3.1.0` naming `context_manifest` is
+  proposed only.  The per-level schema is the pinned
+  `trace_format_v{n}.json`.
 
 - **conscience_guidance_mode.**  The implementation hands each
   component a member `conscience_guidance_mode` outside `data`.
@@ -1396,9 +1464,11 @@ ciris-lens-core:
 
 ciris-persist:
 : CIRIS L3C.  Named by the wire contract as the store that verifies a
-  trace's signature by version-selected canonicalizer before storing
-  it, and that keys stored components on the tuple of
-  {{attempt-index}}.
+  trace's current-form signature by version-selected canonicalizer
+  before storing it, and that keys stored components on the tuple of
+  {{attempt-index}}.  Its version 62 removes that verification and
+  verifies traces as agent-signed CEG statements at admission; it had
+  not shipped at the time of writing.
 
 CIRISLens:
 : CIRIS L3C.  Named by the wire contract as the consumer that verifies
@@ -1408,7 +1478,8 @@ The trace of {{example}} was emitted by the agent at release 2.9.9
 and carried as an earlier-form JSON CEG row of dimension
 `trace:complete:v1`, signed by the agent's key, with the trace inline.
 No implementation emits the CBOR row of {{I-D.moore-scitt-ciris-ceg}}
-for a trace, the `run_kind` member, or the `context_manifest` member.
+for a trace, the `run_kind` member, or (outside an unmerged pull
+request) the `context_manifest` member.
 No second, independent implementation of the emitter or the verifier
 exists.
 
@@ -1434,9 +1505,9 @@ chosen by the agent.  Keying stored components without
 `agent_id_hash` would let one agent pre-claim keys another agent's
 traces need.
 
-**Version confusion.**  The version selects the canonicalizer and is
+**Version confusion.**  In the current form the version selects the canonicalizer and is
 itself signed.  Trying several shapes until one verifies would let an
-attacker choose the interpretation; {{versions}} forbids it.  At
+attacker choose the interpretation; {{current-form}} forbids it.  At
 `2.7.0`, members a later version signs are unsigned, and a verifier
 that read them would accept injected values.
 
@@ -1480,9 +1551,16 @@ endpoint `base_url`.  The current schema moves both to `detailed`.
 fingerprints, provider endpoints, short reasons written by a model
 (which can paraphrase the request), and prompt digests.  A digest of a
 short or guessable prompt can be inverted by trying candidates.  The
-context manifest at this level pseudonymizes verified senders by an
-unkeyed SHA-256 prefix, which can be inverted the same way when
-identifiers are guessable.
+context manifest at this level carries each verified sender as a
+keyed digest (HMAC-SHA256 under a per-agent secret the agent never
+discloses, truncated to 16 hexadecimal characters, `subject_id_form`
+`hmac_sha256_16`).  Without the secret it cannot be reversed by trying
+candidate identifiers, and it differs between agents, so it does not
+link one person across agents.  Within one agent it is stable and
+links that person's traces to one another.  The protection lasts only
+while the secret is kept: a party that learns it can try candidates
+as against an unkeyed digest.  At `full_traces` the identifier is
+carried raw.
 
 **full_traces.**  Adds prompts and completions verbatim, conversation
 history and memories: the person's own words.  The implementation
