@@ -1096,9 +1096,13 @@ CIRISAgent:
   reasoning stream.  Its signed traces carry each call's
   `messages_sha256` (as `prompt_hash`).  The `context_manifest` member
   of the signed LLM_CALL event, with keyed subject pseudonyms at
-  `detailed` ({{carrying}}), is in pull request 1370, not yet merged; it
-  rides additively in the event data under the current trace schema
-  version until a schema revision names it.  Where no pseudonym key is
+  `detailed` ({{carrying}}), is in pull request 1370, not yet merged.
+  The pinned per-level schema leaves event data open to further
+  members, so the member is admitted under `trace_schema_version`
+  `3.0.0`; it is named in the schema at `3.1.0`, under the same leaf
+  `trace:complete:v1`, which the storage engine's release 62.0 accepts
+  and the server's release 0.6 stamps (neither shipped at the time of
+  writing).  Where no pseudonym key is
   available, the agent drops the subject identifier rather than send
   it.  It does not emit `messages_digest_form`.  The reference
   policy compiler and the TLA+ specification are in

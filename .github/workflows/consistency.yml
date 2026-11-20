@@ -126,6 +126,7 @@ jobs:
         run: |
           sudo gem install -q cddl
           python3 tools/build_ietf_draft.py --check
+          python3 tools/build_ietf_companion.py draft-moore-scitt-ciris-trace --check
           python3 tools/build_ietf_companion.py draft-moore-scitt-ciris-trace-context --check
       - name: Counts the formal prose quotes (states, properties, atoms, catalogue) equal the tables and the chain
         run: |
