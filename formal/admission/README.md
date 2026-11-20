@@ -54,7 +54,9 @@ measured elsewhere and is a declared residual, not a model claim. That the three
 one voice only for a unit that names no effect, or for the host owner's own row on its own host; any other unit that
 names an effect needs a count of at least two persons. An action differs in more than its count: its root and stander
 are the agent's own key, and its voices are the agent's four faculties, not persons. A Lean proof of the walk, with
-both qualifications, is in the kernel's repository and is vendored here once it is pinned.
+both qualifications and all fourteen properties over every row set, is the kernel's, vendored at
+[`../vendor/kernel/Admission.lean`](../vendor/kernel/Admission.lean) (CIRISKernel 7f4fb7cbcae5). It reads a set where this model reads a first
+row, so the two agree wherever one such row is held.
 
     python3 -I formal/admission/check_admission.py           # compare with admission_expected.tsv
     python3 -I formal/admission/check_admission.py --write   # write it
