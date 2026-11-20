@@ -2,6 +2,10 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
+## 1.0-rc22 (open)
+
+- Opened 2026-11-20 from the rc21 release. The edition names every reason the Internet-Draft's checks carry, in one lower-case style; states the node code of this mesh's keys, so that two nodes with no root and no directory reach each other by a code handed over; and states the trace rules the agent now ships.
+
 ## 1.0-rc21 (released 2026-11-19, tag v1.0-rc21)
 
 - Cut 2026-11-19, released as guidance. The edition states the forward payloads, families and refusals that the first builds to rc20 asked for, and completes the verification order: a statement's key is a key of its issuer. The register holds 387 established rows, 48 normative and 179 staged; the namespace registry has 187 families; seventeen machine-checked models carry 247 properties, and the full formal run passed on the frozen tree (994b4f5). The three CIRIS SCITT Internet-Drafts are released with it as one suite pinned to this tag ([`ietf/SUITE.tsv`](ietf/SUITE.tsv)): `draft-moore-scitt-ciris-ceg-02`, `draft-moore-scitt-ciris-trace-00` and `draft-moore-scitt-ciris-trace-context-00`. The admission proofs are run, not proved in Lean. Carried to the next edition: an emitter may shape a trace component to the pinned schema before signing only if it records each alteration in the signed data; the trace's `run_kind` order (any `mock` component refuses the trace, otherwise every component carries the same value); the pin of the agent's 3.1.0 trace format once it ships; an exhaustive count of the guard mutants in place of the seeded sample; and the items the outside review raised for the steward.
