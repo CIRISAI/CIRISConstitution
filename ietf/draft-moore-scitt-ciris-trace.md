@@ -50,7 +50,7 @@ informative:
   RFC8792:
   RFC9943:
   I-D.moore-scitt-ciris-trace-context:
-    title: "Prompt Context Provenance for AI Agent Decision Traces"
+    title: "Context Manifests for the CIRIS Agent Trace: Prompt Context Provenance for AI Agent Decision Traces"
     author:
       - name: Eric Moore
     date: 2026-11
@@ -71,10 +71,11 @@ informative:
       - org: OpenTelemetry
     target: https://opentelemetry.io/docs/specs/semconv/gen-ai/
   CC:
-    title: "The CIRIS Constitution"
+    title: "CIRIS Constitution 1.0-rc21"
     author:
-      - org: CIRIS L3C
-    target: https://github.com/CIRISAI/CIRISConstitution
+      org: CIRIS L3C
+    date: 2026-11
+    target: https://github.com/CIRISAI/CIRISConstitution/tree/v1.0-rc21
   CIRISAGENT:
     title: "CIRISAgent"
     author:
@@ -852,11 +853,21 @@ level `detailed` and above: the per-call context manifest specified by
 {{I-D.moore-scitt-ciris-trace-context}}, which describes each piece of
 text placed into the call by kind, provenance, trust, lifetime and
 language.  At `detailed`, every verified-sender subject identifier in
-the manifest is pseudonymized to the first 16 hexadecimal characters
-of the SHA-256 of the identifier string.  At `full_traces` the
-identifiers are carried as they are.  At `generic` the member is
-omitted.  This member is not yet in the implementation's egress
-schema or in any emitted trace; it is being added.
+the manifest is a keyed pseudonym: the first 16 hexadecimal characters
+of HMAC-SHA256 over the identifier string under a per-agent secret that
+the agent holds and never discloses (`subject_id_form`
+`hmac_sha256_16`).  Where the key is unavailable the identifier is
+omitted, never sent as is.  At `full_traces` the identifiers are
+carried as verified (`raw`).  At `generic` the member is omitted.
+
+The member is additive: the pinned per-level schema leaves event data
+open to further members, so a trace carrying it is admitted under
+`trace_schema_version` `3.0.0`.  It is implemented in the agent's pull
+request 1370, not yet merged.  It is to be named in the per-level
+schema at `trace_schema_version` `3.1.0`, which the storage engine's
+release 62.0 accepts and the server's release 0.6 stamps, under the
+same leaf `trace:complete:v1`; neither release had shipped at the time
+of writing.
 
 ~~~ cddl
 llm-call = {
@@ -1052,9 +1063,12 @@ family `trace:{form}:{version}`; the canonical leaf is
 `trace:complete:v1`, which carries the trace after scrubbing.  The
 signed object, its composite signature, its names, references,
 receipts and admission are those of {{I-D.moore-scitt-ciris-ceg}}.
-The row adds an outer signature; the trace's own Ed25519 signature
-stays inside the payload and is verified separately, at promotion to
-federation tier and again by consumers ({{CC}}, Section 3.1.5).
+The row adds an outer signature; in the shipping form the trace's own
+Ed25519 signature stays inside the payload and is verified separately,
+at promotion to federation tier and again by consumers ({{CC}},
+Section 3.1.5).  In edition 2 the row's signature, by the agent's own
+key, is the trace signature and is verified at admission; the separate
+Ed25519 verification is retired ({{open}}).
 
 The row's payload carries, besides the members every row carries:
 
@@ -1331,8 +1345,17 @@ Note to the RFC Editor: please remove this section before publication.
 
 - **trace_summary payload.**  The members of `trace_summary:{kind}`.
 
-- **context_manifest.**  The `LLM_CALL` member of {{llm-call}} is not
-  yet in the egress schema.
+- **context_manifest.**  The `LLM_CALL` member of {{llm-call}} is in
+  the agent's pull request 1370, not yet merged, and is named in the
+  per-level schema only from `3.1.0`.
+
+- **Signing in edition 2.**  The storage engine's release 62 retires the
+  verification of the trace's own Ed25519 signature ({{signing}}).
+  Traces become agent-signed edition-2 statements of
+  {{I-D.moore-scitt-ciris-ceg}}, verified at admission ({{CC}},
+  Section 3.1.5).  This document specifies the shipping form; the next
+  revision makes the row's signature the trace signature and describes
+  the Ed25519 form as superseded.
 
 - **conscience_guidance_mode.**  The implementation hands each
   component a member `conscience_guidance_mode` outside `data`.
