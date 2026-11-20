@@ -1248,7 +1248,6 @@ The verifier publishes fourteen files of them ([edition-2-vectors]). The composi
 
 | Open encoding | Section | Owner |
 |---|---|---|
-| The FedCode layout over the composite thumbprint | [CC 2.6.8](#2.6.8) | verifier |
 | The payload rule of `ceg-boot-manifest/2` | [CC 2.6.1.11](#2.6.1.11) | server |
 | The family of the agent text manifest statement | [CC 2.6.1.11](#2.6.1.11), [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | agent |
 | The member that carries a seat commitment's `room` | [CC 2.6.1.11](#2.6.1.11) | edge |
@@ -1401,7 +1400,48 @@ This entry says which clock every stated instant refers to, and how far that ins
 
 This entry sets the short code that stands for a federation identity, and the format of the `key_id` that the code renders. It gives the code's kinds, how a code resolves to nodes, the wire format, five constraints, the commitment to the PQC half of the key, and how a node given its owner's code comes to be owned.
 
-**The earlier form.** The `key_id` format below and FedCode v1 to v3 are the earlier form: they render and decode the keys of the earlier mesh ([CC 2.6.1.12](#2.6.1.12)). In this mesh a key's displayed identity is the composite key's thumbprint ([CC 2.6.1.7](#2.6.1.7)). The FedCode layout over the thumbprint is an open encoding, the verifier's ([CC 2.6.1.12](#2.6.1.12)).
+**The earlier form.** The `key_id` format below and FedCode v1 to v3 are the earlier form: they render and decode the keys of the earlier mesh ([CC 2.6.1.12](#2.6.1.12)). In this mesh a key's displayed identity is the composite key's thumbprint ([CC 2.6.1.7](#2.6.1.7)), and its code is the form `CIRIS-V4-` stated next. No code of the earlier form converts to it.
+
+**The code of this mesh, `CIRIS-V4-` (normative).** A code names one identity by its key's thumbprint. A `user` code MAY also name up to four of its owner's nodes, and a `node` code names one node. For each node it gives the node's transport identity and an ordered list of hints for reaching it. Two nodes that hold no root and reach no directory find each other by a code handed over ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)).
+
+```
+payload (big-endian)
+  version(1) = 0x04 | kind(1) | kid(32)
+  kind user:    node_count(1) = 0..=4 | node_count × [ node_kid(32) | endpoint ]
+  kind node:    endpoint
+  kind agent, family, community: nothing more
+endpoint = transport_identity(64) | hint_count(1) = 0..=4 | hint_count × hint
+hint     = type(1) | len(1) | body(len)
+code     = "CIRIS-V4-" ‖ base32( payload ‖ CRC-16-CCITT(payload) )
+```
+
+`kid` is the 32-byte thumbprint of the identity's composite key ([CC 2.6.1.7](#2.6.1.7)), and `node_kid` that of the node's. The identity reference is derived from the thumbprint. The thumbprint commits to both halves of the key, so the code carries no separate commitment. `transport_identity` is the node's transport public identity, the X25519 key then the Ed25519 key, in the order of [CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2). The node's destination is derived from it by that section's four steps and from nothing else. The CRC is as for the earlier form, appended as two bytes big-endian. The base32 is RFC 4648 without padding, in its canonical form. A code is displayed in groups of four characters joined by dashes, and its QR form is ungrouped. A decoder drops white space and dashes and folds case. The payload is at most 1024 bytes.
+
+**The hints.** A hint says how to reach a node whose address the transport identity already gives. Hints are a sequence, most preferred first. Each is unsigned and is only a place to dial. A hint is never a transit pair, a route row or a secret, and a network passphrase never stands in one.
+
+| Type | Name | Body |
+|---|---|---|
+| 1 | `tcp` | port (2 bytes, not zero), then a host of 1 to 253 bytes |
+| 2 | `udp` | as `tcp` |
+| 3 | `auto` | scope (1 byte: 0 link, 1 admin, 2 site, 3 organisation, 4 global), then a group id of 1 to 64 bytes |
+| 4 | `rnode` | frequency (4 bytes, not zero), bandwidth (4 bytes, not zero), spreading factor 7 to 12, coding rate 5 to 8: exactly 10 bytes |
+| 5 | `http` | an `https://` URL of at most 255 bytes |
+
+Text in a hint carries no space and no control character. Types 6 and 7 are reserved. A decoder carries a hint of any other type as unknown and a dialler skips it, so a later type breaks no earlier reader. A hint of a known type whose body is malformed is refused.
+
+**What a minter writes.** A minter writes hints from the node's configured, stable reachability, in this order: an endpoint the operator set, then each relay the node holds a client interface to, then its local group, then its radio. It MUST NOT write an address it bound without choosing, an address inside a container, an observed address mapping or a punched path. A relay the node is attached to is a permitted hint, and it is how a node behind address translation is reached. A minter emits only the five assigned types. Where the nodes and hints exceed the payload bound, the minter drops the least preferred hint of the last node first, then trailing nodes, until the code fits. A decoder never truncates. A node left out crosses as an ordinary row after the link is sealed. Empty is valid: a `user` code with no node, and a node with no hint.
+
+**What a dialler does.** A dialler records the node's thumbprint, its transport identity and its hints, locally and unsigned. It dials the derived destination over each hint in order, and over any path it already has. With no path it asks the network for one, which needs no directory and no root. A hint that fails is a failed dial and never a refusal of the code. The dialler then makes the pre-seal route request of [CC 5.3.3.10](part_5_transport_substrate.md#5.3.3.10). It keeps the key record it receives only where that record's thumbprint equals the code's `node_kid`, and the route row only where that key signed it. The code's `node_kid` is the anchor that section requires. Nothing but the node's own key record and route row crosses before the seal. The owner's rows cross sealed, inside the contact request and the acceptance ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)), and the dialler then checks that the owner they name has the code's `kid`.
+
+**The rules of the code (each MUST be enforced at the encoder and at the decoder).**
+
+1. A transport identity is never a federation key. Once the reader holds the composite keys, the Ed25519 half of the transport identity MUST differ from the Ed25519 half of the owner's key and of that node's key (`fedcode_transport_is_federation_key`).
+2. Only a `user` code names nodes. A `node` code carries its own one endpoint, and any other kind carries nothing after the thumbprint (`fedcode_nodes_not_user`).
+3. No node equals the identity, no node is named twice, and no two nodes share one transport identity (`fedcode_duplicate_node`).
+4. The counts and the size are bounded as stated (`fedcode_node_count`, `fedcode_hint_count`, `fedcode_payload_too_large`).
+5. A decoder of this form reads only `CIRIS-V4-`. It refuses `CIRIS-V1-`, `CIRIS-V2-` and `CIRIS-V3-` by their prefix, before any payload byte (`fedcode_earlier_form`).
+
+The other refusals are `fedcode_prefix`, `fedcode_base32` (a non-canonical encoding included), `fedcode_crc`, `fedcode_version`, `fedcode_kind`, `fedcode_truncated`, `fedcode_trailing_bytes` and `fedcode_hint_malformed`. A code is unsigned and confers no authority: what it names is believed only as the rows fetched under it verify.
 
 Federation `key_id`s are long opaque identifiers, unfit for a human to type or read aloud. **FedCode** is the **one** human-shareable shorthand: a compact, QR-able, checksummed render of a federation entity's identity for **bootstrap UX**. It is pinned here so **every implementation renders and parses the same code for the same key**. That is a cross-impl determinism requirement of the same class as [CC 2.6.3](#2.6.3) hex / [CC 2.6.1.2](#2.6.1.2) deterministic encoding. FedCode is a deterministic render of an existing `key_id`, **not** a new envelope field. It is additive on the frozen 1+4 surface. The `kind` byte is a payload discriminator of the same discipline as `subject_kind` riding the single `scores` shape ([CC 3.3.2](part_3_the_namespace.md#3.3.2)). Resolution is **DNS-free**. The reference implementation is the verifier; every other component decodes through it.
 

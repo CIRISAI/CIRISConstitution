@@ -5,6 +5,8 @@ The CIRIS Constitution is one document with one version line. Each release below
 ## 1.0-rc22 (open)
 
 - Opened 2026-11-20 from the rc21 release. The edition names every reason the Internet-Draft's checks carry, in one lower-case style; states the node code of this mesh's keys, so that two nodes with no root and no directory reach each other by a code handed over; and states the trace rules the agent now ships.
+- The node code of this mesh's keys is `CIRIS-V4-` (2.6.8): an identity by its thumbprint, up to four nodes each with its 64-byte transport identity and up to four ordered hints (`tcp`, `udp`, `auto`, `rnode`, `http`), within 1024 bytes. A minter writes hints from configured, stable reachability only. A dialler anchors the pre-seal route request on the code's node thumbprint, so two nodes with no root and no directory reach each other by a code handed over. The layout leaves the open encodings.
+- An admission of a profile or of code is rooted in a person; an action's row is the agent's own review record (2.7.11). The ceremony's pre-signed halt names no row.
 
 ## 1.0-rc21 (released 2026-11-19, tag v1.0-rc21)
 
