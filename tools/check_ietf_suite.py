@@ -2,7 +2,8 @@
 """The CIRIS SCITT drafts land as one suite (ietf/SUITE.tsv).
 
 For every draft source in ietf/ (the working `<name>.md` of each suite row that is in-tree):
-  - each sibling it cites (an I-D.moore-scitt-ciris-* reference) names the revision SUITE.tsv releases;
+  - each sibling it cites (an I-D.moore-scitt-ciris-* reference) names the revision SUITE.tsv releases, or an earlier
+    one where the citing draft was published before the sibling's newer revision (a note, not an error);
   - a normative sibling reference follows the suite's `depends` order, and nothing cites up it normatively;
   - every draft that pins the CC pins the same tag;
   - a row marked in-tree has its stamped `<name>-<rev>.txt` in ietf/.
@@ -36,7 +37,7 @@ def refs(src):
 
 
 def main():
-    rows = suite(); by = {r["name"]: r for r in rows}; errs, tags = [], {}
+    rows = suite(); by = {r["name"]: r for r in rows}; errs, notes, tags = [], [], {}
     for r in rows:
         if "--release" in sys.argv and r["status"] != "in-tree":
             errs.append(f"{r['name']}: still {r['status']} on {r['branch']}; the suite is cut whole")
@@ -49,13 +50,15 @@ def main():
         for name, (rev, section) in refs(src).items():
             if name == r["name"]: continue
             if name not in by: errs.append(f"{r['name']}: cites {name}, which is not in SUITE.tsv"); continue
-            if rev != by[name]["rev"]: errs.append(f"{r['name']}: cites {name}-{rev}; the suite releases -{by[name]['rev']}")
+            if rev > by[name]["rev"]: errs.append(f"{r['name']}: cites {name}-{rev}; the suite releases -{by[name]['rev']}")
+            elif rev < by[name]["rev"]: notes.append(f"{r['name']}-{r['rev']} cites {name}-{rev}, published before -{by[name]['rev']}; its next revision cites the newer one")
             deps = by[r["name"]]["depends"].split()
             if section == "normative" and name not in deps:
                 errs.append(f"{r['name']}: cites {name} normatively against the suite's order (depends: {' '.join(deps) or '-'})")
         m = re.search(r"CIRISConstitution/tree/(v1\.0-rc\d+)", src)
         if m: tags[r["name"]] = m.group(1)
     if len(set(tags.values())) > 1: errs.append("the drafts pin different CC tags: " + ", ".join(f"{k} {v}" for k, v in tags.items()))
+    for n in notes: print("ietf suite: note: " + n)
     for e in errs: print("ietf suite: error: " + e)
     print(f"ietf suite: {len(rows)} drafts ({sum(r['status'] == 'in-tree' for r in rows)} in tree), CC tag {', '.join(sorted(set(tags.values()))) or 'none'}; {len(errs)} error(s)")
     return 1 if errs else 0
