@@ -1669,7 +1669,7 @@ A deletion duty outranks a kept copy ([CC 4.5.3](part_4_composition_governance.m
 
 ### 2.7.11 `kernel-admission` — Admission: what an agent is, what a node runs, what an agent does
 
-Three changes are one admission: a change to what an agent is (its profile), to what a node runs (code), and to what an agent is about to do (an action). In each, authority is a verified row that names the exact digest which takes effect. It reads forward only and is rooted in a person. No program's key produces it: a key whose `identity_type` contains `node` or `agent` admits nothing ([CC 2.6.1.7](#2.6.1.7)).
+Three changes are one admission: a change to what an agent is (its profile), to what a node runs (code), and to what an agent is about to do (an action). In each, authority is a verified row that names the exact digest which takes effect, and it reads forward only. For a profile and for code that row is rooted in a person. No program's key produces it: a key whose `identity_type` contains `node` or `agent` admits nothing ([CC 2.6.1.7](#2.6.1.7)). An action's row is different: it is the agent's own review record, under the agent's key, which binds only its own dispatch, and a person's row is needed where an objection is discharged or authority is claimed.
 
 | Scope | What changes | The row | Who |
 |---|---|---|---|

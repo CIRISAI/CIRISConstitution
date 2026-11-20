@@ -50,8 +50,11 @@ exact decimal value: four of the call cases are refused, `call_argument_unrepres
 **What it does not model.** Bytes, encodings and signatures (the signed object's vectors carry them); the walk's
 classes beyond `admission`; a roster's own lineage (`formal/accord_roster`, `formal/roster_fork`); the halt's
 interleavings (`formal/accord_halt`); how often an untrusted text reaches a stage that must see it, which is
-measured elsewhere and is a declared residual, not a model claim. That code and profile admission is the kernel's seat
-walk at one voice, and action admission the same walk at a count, is argued here and run, not proved in Lean.
+measured elsewhere and is a declared residual, not a model claim. That the three admissions are one walk is argued here and run. It holds with two qualifications. Code is at
+one voice only for a unit that names no effect, or for the host owner's own row on its own host; any other unit that
+names an effect needs a count of at least two persons. An action differs in more than its count: its root and stander
+are the agent's own key, and its voices are the agent's four faculties, not persons. A Lean proof of the walk, with
+both qualifications, is in the kernel's repository and is vendored here once it is pinned.
 
     python3 -I formal/admission/check_admission.py           # compare with admission_expected.tsv
     python3 -I formal/admission/check_admission.py --write   # write it
