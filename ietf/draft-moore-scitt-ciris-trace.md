@@ -396,10 +396,12 @@ value of `trace_schema_version`.
 
 Today the emitter stamps `trace_schema_version` `3.0.0`, and the
 verifier of the current signature form selects its canonicalizer by
-that string ({{current-form}}).  Whether the member survives the move
-to statement signatures is for the storage engine to decide, and a
-`3.1.0` that names the `context_manifest` member is proposed, not
-settled ({{open}}).
+that string ({{current-form}}).  The version survives the move to
+statement signatures: the storage engine's release 62.0 accepts
+`3.1.0`, which names the `context_manifest` member, and the server's
+release 0.6 stamps it.  The trace format remains named by the row
+family's leaf `trace:complete:v1`; an additive member needs no new
+leaf.  Neither release had shipped at the time of writing ({{open}}).
 
 # Components and the Pipeline {#components}
 
@@ -866,8 +868,10 @@ stable within one agent and cannot be linked across agents.
 The member is additive: event data stays open to further members, so a
 trace carrying it is admitted under the current `3.0.0`.  It is
 implemented in CIRISAgent pull request 1370, not yet merged, and is
-not in any emitted trace.  Naming it in the per-level schema at a
-`3.1.0` is proposed only ({{open}}).
+not in any emitted trace.  It is named in the per-level schema at
+`3.1.0`, accepted by the storage engine's release 62.0 and stamped by
+the server's release 0.6, neither shipped at the time of writing
+({{open}}).
 
 ~~~ cddl
 llm-call = {
@@ -1419,11 +1423,12 @@ Note to the RFC Editor: please remove this section before publication.
   long, is not settled.
 
 - **Schema version.**  `3.0.0` is what is stamped today, and the
-  current form's verifier dispatches canonicalization on it.  Whether
-  `trace_schema_version` survives the move to statements is the
-  storage engine's call; a `3.1.0` naming `context_manifest` is
-  proposed only.  The per-level schema is the pinned
-  `trace_format_v{n}.json`.
+  current form's verifier dispatches canonicalization on it.  `3.1.0`,
+  naming `context_manifest`, is accepted by the storage engine's
+  release 62.0 and stamped by the server's release 0.6; neither had
+  shipped at the time of writing, and the per-level schema for it (the
+  pinned `trace_format_v{n}.json`) and its evidence re-pin in {{CC}}
+  land with them.
 
 - **conscience_guidance_mode.**  The implementation hands each
   component a member `conscience_guidance_mode` outside `data`.

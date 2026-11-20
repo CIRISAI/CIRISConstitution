@@ -537,10 +537,12 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    Today the emitter stamps trace_schema_version 3.0.0, and the verifier
    of the current signature form selects its canonicalizer by that
-   string (Section 8.2).  Whether the member survives the move to
-   statement signatures is for the storage engine to decide, and a 3.1.0
-   that names the context_manifest member is proposed, not settled
-   (Section 13).
+   string (Section 8.2).  The version survives the move to statement
+   signatures: the storage engine's release 62.0 accepts 3.1.0, which
+   names the context_manifest member, and the server's release 0.6
+   stamps it.  The trace format remains named by the row family's leaf
+   trace:complete:v1; an additive member needs no new leaf.  Neither
+   release had shipped at the time of writing (Section 13).
 
 4.  Components and the Pipeline
 
@@ -553,14 +555,14 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    event_type:  The discriminator of data (Section 5).
 
-   timestamp:  The emitting step's wall-clock time.
-
 
 
 Moore                      Expires 23 May 2027                 [Page 10]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+   timestamp:  The emitting step's wall-clock time.
 
    data:  The event's members (Section 5), filtered to the trace level
       (Section 7), with empty values removed (Section 4.1).
@@ -608,8 +610,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    2.  SNAPSHOT_AND_CONTEXT.
 
-   3.  DMA_RESULTS: three evaluators run in parallel.
-
 
 
 
@@ -617,6 +617,8 @@ Moore                      Expires 23 May 2027                 [Page 11]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+   3.  DMA_RESULTS: three evaluators run in parallel.
 
    4.  IDMA_RESULT.
 
@@ -664,8 +666,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    attempt_index (Section 6), inserted by the emitter at every level.
    All members are optional unless stated: what is absent was not
    emitted.
-
-
 
 
 
@@ -1148,10 +1148,10 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    The member is additive: event data stays open to further members, so
    a trace carrying it is admitted under the current 3.0.0.  It is
    implemented in CIRISAgent pull request 1370, not yet merged, and is
-   not in any emitted trace.  Naming it in the per-level schema at a
-   3.1.0 is proposed only (Section 13).
-
-
+   not in any emitted trace.  It is named in the per-level schema at
+   3.1.0, accepted by the storage engine's release 62.0 and stamped by
+   the server's release 0.6, neither shipped at the time of writing
+   (Section 13).
 
 
 
@@ -1895,9 +1895,9 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       kept inside the payload during the change, and for how long, is
       not settled.
 
-
-
-
+   *  *Schema version.* 3.0.0 is what is stamped today, and the current
+      form's verifier dispatches canonicalization on it.  3.1.0, naming
+      context_manifest, is accepted by the storage engine's release 62.0
 
 
 
@@ -1906,11 +1906,10 @@ Moore                      Expires 23 May 2027                 [Page 34]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-   *  *Schema version.* 3.0.0 is what is stamped today, and the current
-      form's verifier dispatches canonicalization on it.  Whether
-      trace_schema_version survives the move to statements is the
-      storage engine's call; a 3.1.0 naming context_manifest is proposed
-      only.  The per-level schema is the pinned trace_format_v{n}.json.
+      and stamped by the server's release 0.6; neither had shipped at
+      the time of writing, and the per-level schema for it (the pinned
+      trace_format_v{n}.json) and its evidence re-pin in [CC] land with
+      them.
 
    *  *conscience_guidance_mode.* The implementation hands each
       component a member conscience_guidance_mode outside data.  Whether
@@ -1954,6 +1953,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       verification and verifies traces as agent-signed CEG statements at
       admission; it had not shipped at the time of writing.
 
+   CIRISLens:  CIRIS L3C.  Named by the wire contract as the consumer
 
 
 
@@ -1962,7 +1962,6 @@ Moore                      Expires 23 May 2027                 [Page 35]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-   CIRISLens:  CIRIS L3C.  Named by the wire contract as the consumer
       that verifies and persists traces and computes scores over them.
 
    The trace of Appendix B was emitted by the agent at release 2.9.9 and
@@ -2009,6 +2008,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    *Unknown events.* Accepting an unknown event_type would admit a
    payload no schema has reviewed.  Consumers reject it.
+
 
 
 
