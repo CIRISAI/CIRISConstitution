@@ -1241,11 +1241,19 @@ setting wins; otherwise an operator's `CIRIS_DEPLOYMENT_KIND` of
 deployment manager and `prod-personal` elsewhere.  `deployment_type`
 is unchanged.  The value is in the signed bytes but in each
 component, not as a member of the envelope or of the CEG row.  An
-admitter reads it from the components; every component of a trace
-MUST carry the same value, and an admitter MUST refuse a trace whose
-components disagree or of which any component lacks it, once it
-requires the member.  Whether the value also becomes an envelope or
-row member is open ({{divergences}}).
+admitter reads it from the components.  A federation-tier admitter
+MUST refuse a trace any of whose components carries `mock`; and, once
+it requires the member, MUST refuse a trace whose components disagree
+or of which any component lacks it.
+
+The value can change within a trace for one reason: the agent's mock
+model can engage partway through a thought, so that earlier components
+carry a production or `qa` value and later ones `mock`.  An emitter
+MUST NOT relabel a component's `run_kind` to match an earlier
+component's: doing so would carry mock output under a production
+label.  The disagreement reaches the admitter, which refuses the
+trace.  Whether the value also becomes an envelope or row member is
+open ({{divergences}}).
 
 ## The Oversize Form {#oversize}
 
