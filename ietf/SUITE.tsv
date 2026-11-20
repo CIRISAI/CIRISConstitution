@@ -4,4 +4,4 @@
 name	rev	status	branch	depends	owns
 draft-moore-scitt-ciris-ceg	02	in-tree	rc21	-	the signed row, its encoding, refs, the signature, admission, and the relationship to SCITT
 draft-moore-scitt-ciris-trace	00	pending	ietf/agent-context-00	draft-moore-scitt-ciris-ceg	the CIRIS agent reasoning trace: components, levels, signing, run_kind, the action anchor
-draft-moore-scitt-ciris-trace-context	00	pending	ietf/agent-context-00	draft-moore-scitt-ciris-trace draft-moore-scitt-ciris-ceg	the context manifest of each model call within the trace
+draft-moore-scitt-ciris-trace-context	00	in-tree	rc21	draft-moore-scitt-ciris-trace draft-moore-scitt-ciris-ceg	the context manifest of each model call within the trace

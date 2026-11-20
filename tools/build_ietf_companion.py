@@ -97,6 +97,11 @@ def check(name: str, rev: str) -> int:
         print(f"no stamped copy {stamped}")
         return 1
     env = dict(os.environ, PATH=gem_path(), KRAMDOWN_REFCACHEDIR=os.path.join(IETF, ".refcache"))
+    missing = [tool for tool in ("kramdown-rfc", "xml2rfc") if shutil.which(tool, path=env["PATH"]) is None]
+    if missing:
+        # As build_ietf_draft.py --check: without the renderers the byte comparison cannot run; say so, pass.
+        print(f"{doc}: {' and '.join(missing)} not installed: .xml/.txt comparison skipped")
+        return 0
     with tempfile.TemporaryDirectory() as tmp:
         shutil.copy(stamped, tmp)
         with open(os.path.join(tmp, f"{doc}.xml"), "w", encoding="utf-8") as out:

@@ -922,6 +922,12 @@ traces.  The keyed form is stable within one agent, so a verifier can
 still tell that two calls answered the same sender, and is not linkable
 across agents.
 
+**Size.**  Measured on the reference agent's assembler over its
+evaluator and drafting stages, a context manifest is 6 to 12 KB per
+call (13 to 28 segments), about 90 to 120 KB per thought through the
+full pipeline: within the 1 MiB inline payload bound of {{CC}} (Section
+2.6.1.6).  The judges' calls were not in that measurement.
+
 At `detailed`, the LLM_CALL event also carries `prompt_hash`, which is
 the manifest's `messages_sha256`: the two MUST be equal.  At
 `full_traces` the event carries the prompt itself, so checks V2 and V4
@@ -1088,10 +1094,13 @@ CIRISAgent:
   implementation emits each manifest as JSON, with hexadecimal digests
   and the `ciris-json-1` messages form, on the `llm_call` event of its
   reasoning stream.  Its signed traces carry each call's
-  `messages_sha256` (as `prompt_hash`); adding `context_manifest` to the
-  signed LLM_CALL event, with keyed subject pseudonyms at `detailed`
-  ({{carrying}}), is in progress and not yet in a released trace schema.
-  It does not emit `messages_digest_form`.  The reference
+  `messages_sha256` (as `prompt_hash`).  The `context_manifest` member
+  of the signed LLM_CALL event, with keyed subject pseudonyms at
+  `detailed` ({{carrying}}), is in pull request 1370, not yet merged; it
+  rides additively in the event data under the current trace schema
+  version until a schema revision names it.  Where no pseudonym key is
+  available, the agent drops the subject identifier rather than send
+  it.  It does not emit `messages_digest_form`.  The reference
   policy compiler and the TLA+ specification are in
   `formal/h3ere_ctxflow/` of the same repository.
 

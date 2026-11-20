@@ -132,12 +132,12 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    11. Relationship to Other Work  . . . . . . . . . . . . . . . . .  25
      11.1.  Relationship to the AUDIT Charter  . . . . . . . . . . .  26
    12. Implementation Status . . . . . . . . . . . . . . . . . . . .  28
-   13. Security Considerations . . . . . . . . . . . . . . . . . . .  28
+   13. Security Considerations . . . . . . . . . . . . . . . . . . .  29
    14. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  29
-   15. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  29
-   16. References  . . . . . . . . . . . . . . . . . . . . . . . . .  29
-     16.1.  Normative References . . . . . . . . . . . . . . . . . .  29
-     16.2.  Informative References . . . . . . . . . . . . . . . . .  30
+   15. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  30
+   16. References  . . . . . . . . . . . . . . . . . . . . . . . . .  30
+     16.1.  Normative References . . . . . . . . . . . . . . . . . .  30
+     16.2.  Informative References . . . . . . . . . . . . . . . . .  31
    Appendix A.  Measured Motivation  . . . . . . . . . . . . . . . .  33
    Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  34
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  36
@@ -1298,6 +1298,12 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    still tell that two calls answered the same sender, and is not
    linkable across agents.
 
+   *Size.* Measured on the reference agent's assembler over its
+   evaluator and drafting stages, a context manifest is 6 to 12 KB per
+   call (13 to 28 segments), about 90 to 120 KB per thought through the
+   full pipeline: within the 1 MiB inline payload bound of [CC]
+   (Section 2.6.1.6).  The judges' calls were not in that measurement.
+
    At detailed, the LLM_CALL event also carries prompt_hash, which is
    the manifest's messages_sha256: the two MUST be equal.  At
    full_traces the event carries the prompt itself, so checks V2 and V4
@@ -1330,13 +1336,7 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       trace is a fixed6 integer, as [I-D.moore-scitt-ciris-ceg]
       requires.
 
-   *  The policy document a manifest names by policy_sha256 SHOULD
-      itself be published as a signed row, so that a verifier can obtain
-      it.
 
-   The signed object, its signature, its names and references, and its
-   admission are those of [I-D.moore-scitt-ciris-ceg]; this document
-   repeats none of them.
 
 
 
@@ -1345,6 +1345,14 @@ Moore                      Expires 23 May 2027                 [Page 24]
 
 Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
+
+   *  The policy document a manifest names by policy_sha256 SHOULD
+      itself be published as a signed row, so that a verifier can obtain
+      it.
+
+   The signed object, its signature, its names and references, and its
+   admission are those of [I-D.moore-scitt-ciris-ceg]; this document
+   repeats none of them.
 
 10.3.  As a SCITT Signed Statement
 
@@ -1386,14 +1394,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       [I-D.emirdag-scitt-ai-agent-execution],
       [I-D.mih-scitt-agent-action-capsule] and
       [I-D.gilda-audit-agent-audit-record] record actions, decisions,
-      delegation and input hashes, and some redact the stored record.
-      Redacting a record after the fact is different from withholding
-      text from a model before the call, which is what a stub records.
-
-   *  [I-D.birkholz-vcon-ai-agent-extension] attributes each message of
-      an agent conversation to a party.
-
-
 
 
 
@@ -1401,6 +1401,13 @@ Moore                      Expires 23 May 2027                 [Page 25]
 
 Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
+
+      delegation and input hashes, and some redact the stored record.
+      Redacting a record after the fact is different from withholding
+      text from a model before the call, which is what a stub records.
+
+   *  [I-D.birkholz-vcon-ai-agent-extension] attributes each message of
+      an agent conversation to a party.
 
    *  The OpenTelemetry GenAI conventions [OTEL-GENAI] define spans for
       model calls and can capture input messages, but carry no
@@ -1443,13 +1450,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       | Authorization as a | authz carriers with grant identifier,  |
       | time-evolving      | authorizer, signature status and grant |
       | state              | time; the grant's own rows, replaced   |
-      |                    | and withdrawn by later rows; the       |
-      |                    | policy predicates evaluated per call   |
-      +--------------------+----------------------------------------+
-      | Identity           | key records and identity amendments as |
-      | transitions        | signed rows; amendment segments with   |
-      |                    | their grants                           |
-      +--------------------+----------------------------------------+
 
 
 
@@ -1458,6 +1458,13 @@ Moore                      Expires 23 May 2027                 [Page 26]
 Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
 
+      |                    | and withdrawn by later rows; the       |
+      |                    | policy predicates evaluated per call   |
+      +--------------------+----------------------------------------+
+      | Identity           | key records and identity amendments as |
+      | transitions        | signed rows; amendment segments with   |
+      |                    | their grants                           |
+      +--------------------+----------------------------------------+
       | User intent        | the request segment (its digest, and   |
       | declarations       | its stub where withheld)               |
       +--------------------+----------------------------------------+
@@ -1493,6 +1500,20 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
 
    Two charter items are not covered here, and are not claimed:
 
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 27]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    *  *Cross-domain correlation in protocols.* CEG rows reference one
       another by name, and a manifest names its task and thought, but
       this document defines no identifier propagated across other
@@ -1506,13 +1527,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       services and other agents in other domains, where no single party
       has the whole picture, needs those parties' records; this profile
       is one of them, not the collection.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 27]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
 
    The draft charter places the auditing of "the underlying AI model,
    training data, or inference mechanisms" out of scope while allowing
@@ -1537,14 +1551,25 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
       of writing.  The implementation emits each manifest as JSON, with
       hexadecimal digests and the ciris-json-1 messages form, on the
       llm_call event of its reasoning stream.  Its signed traces carry
-      each call's messages_sha256 (as prompt_hash); adding
-      context_manifest to the signed LLM_CALL event, with keyed subject
-      pseudonyms at detailed (Section 10), is in progress and not yet in
-      a released trace schema.  It does not emit messages_digest_form.
-      The reference policy compiler and the TLA+ specification are in
-      formal/h3ere_ctxflow/ of the same repository.
+      each call's messages_sha256 (as prompt_hash).  The
+      context_manifest member of the signed LLM_CALL event, with keyed
+      subject pseudonyms at detailed (Section 10), is in pull request
+      1370, not yet merged; it rides additively in the event data under
+      the current trace schema version until a schema revision names it.
+      Where no pseudonym key is available, the agent drops the subject
+      identifier rather than send it.  It does not emit
+      messages_digest_form.  The reference policy compiler and the TLA+
+      specification are in formal/h3ere_ctxflow/ of the same repository.
 
    RATCHET:  CIRIS L3C.  A context-map harness that drives the agent
+
+
+
+Moore                      Expires 23 May 2027                 [Page 28]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
       through the six scenarios with a deterministic mock model and
       checks every call's manifest against the policy and against the
       bytes sent (checks V1, V2, V4, and a script-based locale check
@@ -1560,15 +1585,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    captured bytes (for example, at a model gateway the agent does not
    control) is what turns that account into evidence.  Without it, a
    compromised agent can emit a consistent but false manifest.
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 28]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
 
    *Ablation is a stated limit, not a guarantee.* Residuals are
    untrusted text sent to ablated stages by design.  The leak check is a
@@ -1602,6 +1618,14 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    Digests of short, guessable text can be inverted by trying
    candidates. withheld_sha256 and the stub digest of a short request (a
    size of short is at most 200 characters) are open to this.  A
+
+
+
+Moore                      Expires 23 May 2027                 [Page 29]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    deployment that publishes manifests SHOULD replace these with keyed
    digests whose key is held with the prompts, or omit them, and record
    which it did; the reference implementation uses unkeyed SHA-256 and
@@ -1617,14 +1641,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
 16.  References
 
 16.1.  Normative References
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 29]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
 
    [I-D.moore-scitt-ciris-ceg]
               Moore, E., "Signed Attestation Rows of the CIRIS Epistemic
@@ -1657,6 +1673,15 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 30]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
               Definition Language (CDDL): A Notational Convention to
               Express Concise Binary Object Representation (CBOR) and
@@ -1674,13 +1699,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               <https://www.rfc-editor.org/rfc/rfc9052>.
 
 16.2.  Informative References
-
-
-
-Moore                      Expires 23 May 2027                 [Page 30]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
 
    [AUDIT-CHARTER]
               AUDIT BoF proponents, "Agent Use of Delegation and
@@ -1712,6 +1730,14 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
    [I-D.birkholz-verifiable-agent-conversations]
               Birkholz, H., Heldt, T., and O. Steele, "Verifiable Agent
               Conversation Records", Work in Progress, Internet-Draft,
+
+
+
+Moore                      Expires 23 May 2027                 [Page 31]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
               draft-birkholz-verifiable-agent-conversations-01, 31
               August 2026, <https://datatracker.ietf.org/doc/html/draft-
               birkholz-verifiable-agent-conversations-01>.
@@ -1723,20 +1749,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               traceability-00, 18 November 2026,
               <https://datatracker.ietf.org/doc/html/draft-cosme-audit-
               agent-traceability-00>.
-
-
-
-
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 31]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
 
    [I-D.durga-wimse-ctx-isolation]
               Durga, R. K., "Cryptographic Separation of Untrusted Data-
@@ -1775,6 +1787,13 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               <https://datatracker.ietf.org/doc/html/draft-mih-scitt-
               agent-action-capsule-05>.
 
+
+
+Moore                      Expires 23 May 2027                 [Page 32]
+
+Internet-Draft        CIRIS Trace Context Manifest         November 2026
+
+
    [I-D.sharif-agent-audit-trail]
               Sharif, R., "Agent Audit Trail: A Standard Logging Format
               for Autonomous AI Systems", Work in Progress, Internet-
@@ -1786,14 +1805,6 @@ Internet-Draft        CIRIS Trace Context Manifest         November 2026
               Thaha, S. and S. Shamsudeen, "Agent Execution Evidence: A
               SCITT Profile for Verifiable Records of AI Agent Runs",
               Work in Progress, Internet-Draft, draft-thaha-scitt-agent-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 32]
-
-Internet-Draft        CIRIS Trace Context Manifest         November 2026
-
-
               execution-evidence-02, 1 November 2026,
               <https://datatracker.ietf.org/doc/html/draft-thaha-scitt-
               agent-execution-evidence-02>.
@@ -1829,17 +1840,6 @@ Appendix A.  Measured Motivation
    2.22.1, with one model (qwen/qwen3.6-35b-a3b), one or two episodes
    per case, before the mechanism of this document existed.  They are
    reported to explain the design, not as general claims about agents.
-
-
-
-
-
-
-
-
-
-
-
 
 
 
