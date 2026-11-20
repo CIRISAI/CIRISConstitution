@@ -97,7 +97,7 @@ Table of Contents
      3.4.  Schema Versions . . . . . . . . . . . . . . . . . . . . .  10
    4.  Components and the Pipeline . . . . . . . . . . . . . . . . .  10
      4.1.  Empty Values  . . . . . . . . . . . . . . . . . . . . . .  12
-   5.  Event Types . . . . . . . . . . . . . . . . . . . . . . . . .  12
+   5.  Event Types . . . . . . . . . . . . . . . . . . . . . . . . .  13
      5.1.  THOUGHT_START . . . . . . . . . . . . . . . . . . . . . .  13
      5.2.  SNAPSHOT_AND_CONTEXT  . . . . . . . . . . . . . . . . . .  13
      5.3.  DMA_RESULTS . . . . . . . . . . . . . . . . . . . . . . .  14
@@ -144,9 +144,9 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
      18.1.  Normative References . . . . . . . . . . . . . . . . . .  38
      18.2.  Informative References . . . . . . . . . . . . . . . . .  39
    Appendix A.  Divergences Between the Sources  . . . . . . . . . .  42
-   Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  44
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  48
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  49
+   Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  45
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  49
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  50
 
 1.  Introduction
 
@@ -472,6 +472,8 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    or to the literal unknown, when its signing engine is unavailable
    (test environments).  A trace carrying such a value fails the check
    above and MUST NOT be admitted at federation tier (Appendix A).
+   CIRISAgent#1370 (not yet merged) removes the fallback: without a
+   signing engine the component is refused.
 
 3.2.  The Trace Identifier
 
@@ -496,8 +498,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    agent_template:  The identifier of the agent template.
 
-   deployment_domain:  Exactly one value from the closed set in the CDDL
-      above.  general is the value for multi-domain assistants.
 
 
 
@@ -505,6 +505,9 @@ Moore                      Expires 23 May 2027                  [Page 9]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+   deployment_domain:  Exactly one value from the closed set in the CDDL
+      above.  general is the value for multi-domain assistants.
 
    deployment_type:  An operator-declared label.  Not a closed set in
       practice: operator values (for example personal, business,
@@ -551,9 +554,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    agent_id_hash:  Equal to the envelope's (Section 3.1).
 
    component_type:  The pipeline stage, fixed by event_type (table
-      below).
-
-   event_type:  The discriminator of data (Section 5).
 
 
 
@@ -561,6 +561,10 @@ Moore                      Expires 23 May 2027                 [Page 10]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+      below).
+
+   event_type:  The discriminator of data (Section 5).
 
    timestamp:  The emitting step's wall-clock time.
 
@@ -606,10 +610,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    The pipeline order of the steps is:
 
-   1.  THOUGHT_START.
-
-   2.  SNAPSHOT_AND_CONTEXT.
-
 
 
 
@@ -617,6 +617,10 @@ Moore                      Expires 23 May 2027                 [Page 11]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+   1.  THOUGHT_START.
+
+   2.  SNAPSHOT_AND_CONTEXT.
 
    3.  DMA_RESULTS: three evaluators run in parallel.
 
@@ -656,6 +660,20 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    Whether a container left empty by this removal is itself removed is
    not stated by the sources (Section 13).
 
+
+
+
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 12]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
 5.  Event Types
 
    Each subsection gives an event's data members.  The comment after
@@ -666,13 +684,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    attempt_index (Section 6), inserted by the emitter at every level.
    All members are optional unless stated: what is absent was not
    emitted.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 12]
-
-Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
-
 
 5.1.  THOUGHT_START
 
@@ -706,17 +717,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    the same facts written by the agent, not by a model; it is the one
    text member carried at generic, and it is not authoritative: the
    booleans are.
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -899,8 +899,10 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
    The spelling of selected_action is not stable across sources
-   (Appendix A).  A consumer SHOULD compare it case-insensitively after
-   removing a HandlerActionType. prefix.
+   (Appendix A); CIRISAgent#1370 (not yet merged) emits the action's
+   value.  A consumer SHOULD compare it case-insensitively after
+   removing a HandlerActionType. prefix, since traces from earlier
+   releases carry one.
 
 5.6.  TSASPDMA_RESULT (Deprecated)
 
@@ -930,8 +932,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    consumer MUST NOT reject an event because it does not recognise the
    verb, and MUST treat verb_specific_data as opaque apart from the
    members it recognises.
-
-
 
 
 
@@ -2325,26 +2325,26 @@ Appendix A.  Divergences Between the Sources
    where the question is what ships, and states the Constitution's rule
    where the question is what is required.
 
+   Each entry's status is as of CIRISAgent#1370 at commit 7dc7e1e, which
+   adds a Section 0 ("As shipped") to the wire contract and fixes two
+   entries in the code.  That pull request is not yet merged; until it
+   is, the "Shipped" text describes commit 59b7e5d.
+
    Transport:  Specified: HTTP POST of batches to a collector, with key
       registration.  Shipped: HTTP shipping and registration retired;
-      sealing, signing and storage moved to ciris-lens-core.
+      sealing, signing and storage moved to ciris-lens-core.  Status:
+      contract corrected to the code in CIRISAgent#1370, Section 0 (not
+      yet merged).
 
    Schema version:  Specified: 2.7.9 in the contract text, const 2.7.0
-      in the JSON Schema.  Shipped: 3.0.0, JCS.
+      in the JSON Schema.  Shipped: 3.0.0, JCS.  Status: contract and
+      JSON Schema corrected to the code in CIRISAgent#1370 (not yet
+      merged); the trace format 3.1.0 schema is generated from the
+      egress schema.
 
    trace_id:  Specified: trace-<thought_id>-<YYYYMMDDHHMMSS>; schema
-      pattern ^trace-.  Shipped: equals thought_id.
 
-   Envelope members:  Specified: 12 members.  Shipped: also pqc_key_id,
-      pubkey_ml_dsa_65, signature_ml_dsa_65.
 
-   agent_id_hash:  Specified: MUST be the key derivation.  Shipped:
-      falls back to a hash of the agent name, or unknown, without a
-      signing engine.
-
-   Event types:  Specified: 10, closed.  Shipped: 15 in the taxonomy
-      (five credit and deferral types), capture of DEFERRAL_ROUTED off
-      by default.
 
 
 
@@ -2354,54 +2354,54 @@ Moore                      Expires 23 May 2027                 [Page 42]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+      pattern ^trace-.  Shipped: equals thought_id.  Status: contract
+      and JSON Schema corrected to the code in CIRISAgent#1370 (not yet
+      merged); the trace format 3.1.0 schema is generated from the
+      egress schema.
+
+   Envelope members:  Specified: 12 members.  Shipped: also pqc_key_id,
+      pubkey_ml_dsa_65, signature_ml_dsa_65.  Status: contract corrected
+      to the code in CIRISAgent#1370, Section 0 (not yet merged).
+
+   agent_id_hash:  Specified: MUST be the key derivation.  Shipped:
+      falls back to a hash of the agent name, or unknown, without a
+      signing engine.  Status: fixed in CIRISAgent#1370 (not yet
+      merged): with no signing engine the component is refused and
+      counted, never captured under a name hash or unknown.
+
+   Event types:  Specified: 10, closed.  Shipped: 15 in the taxonomy
+      (five credit and deferral types), capture of DEFERRAL_ROUTED off
+      by default.  Status: contract and JSON Schema corrected to the
+      code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0
+      schema is generated from the egress schema.
+
    Components per trace:  Specified: at most 6 components and five
       component types in the JSON Schema.  Shipped: 16 components in the
       example; seven component types in the core pipeline, twelve with
-      the credit and deferral types.
+      the credit and deferral types.  Status: contract and JSON Schema
+      corrected to the code in CIRISAgent#1370 (not yet merged); the
+      trace format 3.1.0 schema is generated from the egress schema.
 
    Component type unknown:  Specified: listed in the contract.  Shipped:
-      no event maps to it.
+      no event maps to it.  Status: contract corrected to the code in
+      CIRISAgent#1370, Section 0 (not yet merged).
 
    Run kind:  Specified: a dedicated member pending in trace format
       v2.8.0 (contract); its own signed member with six values ([CC]).
       Shipped: inside deployment_type; four values (production implicit,
-      qa, battery, mock).
+      qa, battery, mock).  Status: contract corrected to the code in
+      CIRISAgent#1370 (not yet merged); the Constitution's dedicated
+      signed member and its six values remain open.
 
    Field schema enforcement:  Specified: refuse, never truncate ([CC]).
-      Shipped: emitter drops and truncates before signing.
+      Shipped: emitter drops and truncates before signing.  Status:
+      open; a decision between the Constitution and the code, not made
+      in CIRISAgent#1370.
 
    Reasoning text:  Specified: reasoning text at detailed (contract).
       Shipped: reasoning text at full_traces; short reasons only at
-      detailed.
-
-   Second-pass reasoning:  Specified: original_reasoning and
-      final_reasoning at detailed (contract).  Shipped: at full_traces.
-
-   base_url:  Specified: optional, with no level (contract).  Shipped:
-      detailed in the egress schema; at generic in the example trace
-      (release 2.9.9).
-
-   dsdma_domain:  Specified: not in the contract.  Shipped: detailed in
-      the egress schema; at generic in the example trace.
-
-   LLM_CALL members:  Specified: the contract's list.  Shipped: the code
-      adds sent_temperature, sent_seed, sent_max_tokens, served_by,
-      served_model.
-
-   Parent link:  Specified: required from 2.7.9, no transition window.
-      Shipped: omitted when the issuing step is unknown.
-
-   selected_action:  Specified: speak (contract), SPEAK (JSON Schema).
-      Shipped: HandlerActionType.SPEAK in the example trace.
-
-   thought_type:  Specified: seed, follow_up, retry (JSON Schema).
-      Shipped: standard.
-
-   attestation_status:  Specified: four values, without partial
-      (contract text).  Shipped: partial in the emitted trace, and in
-      the contract's own example.
-
-   audit_entry_hash:  Specified: a SHA-256 digest, encoding unstated
+      detailed.  Status: contract corrected to the code in
+      CIRISAgent#1370, Section 0 (not yet merged).
 
 
 
@@ -2410,16 +2410,73 @@ Moore                      Expires 23 May 2027                 [Page 43]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-      (contract).  Shipped: base64 in the emitted trace.
+   Second-pass reasoning:  Specified: original_reasoning and
+      final_reasoning at detailed (contract).  Shipped: at full_traces.
+      Status: contract corrected to the code in CIRISAgent#1370,
+      Section 0 (not yet merged).
+
+   base_url:  Specified: optional, with no level (contract).  Shipped:
+      detailed in the egress schema; at generic in the example trace
+      (release 2.9.9).  Status: contract corrected to the code in
+      CIRISAgent#1370, Section 0 (not yet merged).
+
+   dsdma_domain:  Specified: not in the contract.  Shipped: detailed in
+      the egress schema; at generic in the example trace.  Status:
+      contract corrected to the code in CIRISAgent#1370, Section 0 (not
+      yet merged).
+
+   LLM_CALL members:  Specified: the contract's list.  Shipped: the code
+      adds sent_temperature, sent_seed, sent_max_tokens, served_by,
+      served_model.  Status: contract corrected to the code in
+      CIRISAgent#1370, Section 0 (not yet merged).
+
+   Parent link:  Specified: required from 2.7.9, no transition window.
+      Shipped: omitted when the issuing step is unknown.  Status:
+      contract corrected to the code in CIRISAgent#1370, Section 0 (not
+      yet merged).
+
+   selected_action:  Specified: speak (contract), SPEAK (JSON Schema).
+      Shipped: HandlerActionType.SPEAK in the example trace.  Status:
+      fixed in CIRISAgent#1370 (not yet merged): selected_action and
+      final_action carry the action's value, speak.
+
+   thought_type:  Specified: seed, follow_up, retry (JSON Schema).
+      Shipped: standard.  Status: contract corrected to the code in
+      CIRISAgent#1370, Section 0 (not yet merged).
+
+   attestation_status:  Specified: four values, without partial
+      (contract text).  Shipped: partial in the emitted trace, and in
+      the contract's own example.  Status: contract corrected to the
+      code in CIRISAgent#1370, Section 0 (not yet merged).
+
+   audit_entry_hash:  Specified: a SHA-256 digest, encoding unstated
+      (contract).  Shipped: base64 in the emitted trace.  Status:
+      contract corrected to the code in CIRISAgent#1370, Section 0 (not
+      yet merged).
 
    Once-per-thought list:  Specified: the contract lists ROUND_COMPLETE
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 44]
+
+Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
+
+
       among once-per-thought events.  Shipped: no such event type exists
-      in the contract's own closed set or in the code.
+      in the contract's own closed set or in the code.  Status: contract
+      corrected to the code in CIRISAgent#1370, Section 0 (not yet
+      merged).
 
    Component order:  Specified: receipt order, with component type a
       coarse hint of pipeline order (contract).  Shipped: in the example
       trace a model call for action selection precedes the evaluators'
-      DMA_RESULTS, and timestamps are not monotonic.
+      DMA_RESULTS, and timestamps are not monotonic.  Status: contract
+      corrected to the code in CIRISAgent#1370, Section 0 (not yet
+      merged).
 
 Appendix B.  Example
 
@@ -2457,15 +2514,15 @@ Appendix B.  Example
        "round_number": 0,
        "task_priority": 0,
        "thought_depth": 0,
-       "thought_type": "standard",
 
 
 
-Moore                      Expires 23 May 2027                 [Page 44]
+Moore                      Expires 23 May 2027                 [Page 45]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+       "thought_type": "standard",
        "updated_info_available": false
       },
       "event_type": "THOUGHT_START",
@@ -2513,15 +2570,15 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
        },
        "dsdma_domain": "theology / philosophy of suffering",
        "dsdma_domain_alignment": 0.5,
-       "pdma": {
 
 
 
-Moore                      Expires 23 May 2027                 [Page 45]
+Moore                      Expires 23 May 2027                 [Page 46]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+       "pdma": {
         "has_conflicts": false
        }
       },
@@ -2569,15 +2626,15 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       "component_type": "conscience",
       "data": {
        "action_was_overridden": false,
-       "attempt_index": 0,
 
 
 
-Moore                      Expires 23 May 2027                 [Page 46]
+Moore                      Expires 23 May 2027                 [Page 47]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+       "attempt_index": 0,
        "coherence_level": 0.9,
        "coherence_passed": true,
        "coherence_score": 0.9,
@@ -2625,15 +2682,15 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       "timestamp": "2026-08-01T02:55:05.156598+00:00"
      }
     ],
-    "deployment_profile": {
 
 
 
-Moore                      Expires 23 May 2027                 [Page 47]
+Moore                      Expires 23 May 2027                 [Page 48]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+    "deployment_profile": {
      "agent_role": "ally",
      "agent_template": "Ally-default-unspecified",
      "deployment_domain": "general",
@@ -2684,8 +2741,7 @@ Acknowledgments
 
 
 
-
-Moore                      Expires 23 May 2027                 [Page 48]
+Moore                      Expires 23 May 2027                 [Page 49]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
@@ -2741,4 +2797,4 @@ Author's Address
 
 
 
-Moore                      Expires 23 May 2027                 [Page 49]
+Moore                      Expires 23 May 2027                 [Page 50]

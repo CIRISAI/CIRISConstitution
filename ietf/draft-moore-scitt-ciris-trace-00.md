@@ -332,6 +332,8 @@ The reference implementation falls back to hashing the agent's name,
 or to the literal `unknown`, when its signing engine is unavailable
 (test environments).  A trace carrying such a value fails the check
 above and MUST NOT be admitted at federation tier ({{divergences}}).
+CIRISAgent#1370 (not yet merged) removes the fallback: without a
+signing engine the component is refused.
 
 ## The Trace Identifier
 
@@ -665,8 +667,10 @@ aspdma-result = {
 ~~~
 
 The spelling of `selected_action` is not stable across sources
-({{divergences}}).  A consumer SHOULD compare it case-insensitively
-after removing a `HandlerActionType.` prefix.
+({{divergences}}); CIRISAgent#1370 (not yet merged) emits the
+action's value.  A consumer SHOULD compare it case-insensitively
+after removing a `HandlerActionType.` prefix, since traces from
+earlier releases carry one.
 
 ## TSASPDMA_RESULT (Deprecated)
 
@@ -1598,71 +1602,76 @@ emitted trace, or {{CC}} disagree.  This document follows the code
 where the question is what ships, and states the Constitution's rule
 where the question is what is required.
 
+Each entry's status is as of CIRISAgent#1370 at commit 7dc7e1e, which
+adds a Section 0 ("As shipped") to the wire contract and fixes two
+entries in the code.  That pull request is not yet merged; until it
+is, the "Shipped" text describes commit 59b7e5d.
+
 Transport:
-: Specified: HTTP POST of batches to a collector, with key registration.  Shipped: HTTP shipping and registration retired; sealing, signing and storage moved to ciris-lens-core.
+: Specified: HTTP POST of batches to a collector, with key registration.  Shipped: HTTP shipping and registration retired; sealing, signing and storage moved to ciris-lens-core.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 Schema version:
-: Specified: `2.7.9` in the contract text, const `2.7.0` in the JSON Schema.  Shipped: `3.0.0`, JCS.
+: Specified: `2.7.9` in the contract text, const `2.7.0` in the JSON Schema.  Shipped: `3.0.0`, JCS.  Status: contract and JSON Schema corrected to the code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0 schema is generated from the egress schema.
 
 `trace_id`:
-: Specified: `trace-<thought_id>-<YYYYMMDDHHMMSS>`; schema pattern `^trace-`.  Shipped: equals `thought_id`.
+: Specified: `trace-<thought_id>-<YYYYMMDDHHMMSS>`; schema pattern `^trace-`.  Shipped: equals `thought_id`.  Status: contract and JSON Schema corrected to the code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0 schema is generated from the egress schema.
 
 Envelope members:
-: Specified: 12 members.  Shipped: also `pqc_key_id`, `pubkey_ml_dsa_65`, `signature_ml_dsa_65`.
+: Specified: 12 members.  Shipped: also `pqc_key_id`, `pubkey_ml_dsa_65`, `signature_ml_dsa_65`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 `agent_id_hash`:
-: Specified: MUST be the key derivation.  Shipped: falls back to a hash of the agent name, or `unknown`, without a signing engine.
+: Specified: MUST be the key derivation.  Shipped: falls back to a hash of the agent name, or `unknown`, without a signing engine.  Status: fixed in CIRISAgent#1370 (not yet merged): with no signing engine the component is refused and counted, never captured under a name hash or `unknown`.
 
 Event types:
-: Specified: 10, closed.  Shipped: 15 in the taxonomy (five credit and deferral types), capture of `DEFERRAL_ROUTED` off by default.
+: Specified: 10, closed.  Shipped: 15 in the taxonomy (five credit and deferral types), capture of `DEFERRAL_ROUTED` off by default.  Status: contract and JSON Schema corrected to the code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0 schema is generated from the egress schema.
 
 Components per trace:
-: Specified: at most 6 components and five component types in the JSON Schema.  Shipped: 16 components in the example; seven component types in the core pipeline, twelve with the credit and deferral types.
+: Specified: at most 6 components and five component types in the JSON Schema.  Shipped: 16 components in the example; seven component types in the core pipeline, twelve with the credit and deferral types.  Status: contract and JSON Schema corrected to the code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0 schema is generated from the egress schema.
 
 Component type `unknown`:
-: Specified: listed in the contract.  Shipped: no event maps to it.
+: Specified: listed in the contract.  Shipped: no event maps to it.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 Run kind:
-: Specified: a dedicated member pending in trace format v2.8.0 (contract); its own signed member with six values ({{CC}}).  Shipped: inside `deployment_type`; four values (`production` implicit, `qa`, `battery`, `mock`).
+: Specified: a dedicated member pending in trace format v2.8.0 (contract); its own signed member with six values ({{CC}}).  Shipped: inside `deployment_type`; four values (`production` implicit, `qa`, `battery`, `mock`).  Status: contract corrected to the code in CIRISAgent#1370 (not yet merged); the Constitution's dedicated signed member and its six values remain open.
 
 Field schema enforcement:
-: Specified: refuse, never truncate ({{CC}}).  Shipped: emitter drops and truncates before signing.
+: Specified: refuse, never truncate ({{CC}}).  Shipped: emitter drops and truncates before signing.  Status: open; a decision between the Constitution and the code, not made in CIRISAgent#1370.
 
 Reasoning text:
-: Specified: reasoning text at `detailed` (contract).  Shipped: reasoning text at `full_traces`; short reasons only at `detailed`.
+: Specified: reasoning text at `detailed` (contract).  Shipped: reasoning text at `full_traces`; short reasons only at `detailed`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 Second-pass reasoning:
-: Specified: `original_reasoning` and `final_reasoning` at `detailed` (contract).  Shipped: at `full_traces`.
+: Specified: `original_reasoning` and `final_reasoning` at `detailed` (contract).  Shipped: at `full_traces`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 `base_url`:
-: Specified: optional, with no level (contract).  Shipped: `detailed` in the egress schema; at `generic` in the example trace (release 2.9.9).
+: Specified: optional, with no level (contract).  Shipped: `detailed` in the egress schema; at `generic` in the example trace (release 2.9.9).  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 `dsdma_domain`:
-: Specified: not in the contract.  Shipped: `detailed` in the egress schema; at `generic` in the example trace.
+: Specified: not in the contract.  Shipped: `detailed` in the egress schema; at `generic` in the example trace.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 `LLM_CALL` members:
-: Specified: the contract's list.  Shipped: the code adds `sent_temperature`, `sent_seed`, `sent_max_tokens`, `served_by`, `served_model`.
+: Specified: the contract's list.  Shipped: the code adds `sent_temperature`, `sent_seed`, `sent_max_tokens`, `served_by`, `served_model`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 Parent link:
-: Specified: required from 2.7.9, no transition window.  Shipped: omitted when the issuing step is unknown.
+: Specified: required from 2.7.9, no transition window.  Shipped: omitted when the issuing step is unknown.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 `selected_action`:
-: Specified: `speak` (contract), `SPEAK` (JSON Schema).  Shipped: `HandlerActionType.SPEAK` in the example trace.
+: Specified: `speak` (contract), `SPEAK` (JSON Schema).  Shipped: `HandlerActionType.SPEAK` in the example trace.  Status: fixed in CIRISAgent#1370 (not yet merged): `selected_action` and `final_action` carry the action's value, `speak`.
 
 `thought_type`:
-: Specified: `seed`, `follow_up`, `retry` (JSON Schema).  Shipped: `standard`.
+: Specified: `seed`, `follow_up`, `retry` (JSON Schema).  Shipped: `standard`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 `attestation_status`:
-: Specified: four values, without `partial` (contract text).  Shipped: `partial` in the emitted trace, and in the contract's own example.
+: Specified: four values, without `partial` (contract text).  Shipped: `partial` in the emitted trace, and in the contract's own example.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 `audit_entry_hash`:
-: Specified: a SHA-256 digest, encoding unstated (contract).  Shipped: base64 in the emitted trace.
+: Specified: a SHA-256 digest, encoding unstated (contract).  Shipped: base64 in the emitted trace.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 Once-per-thought list:
-: Specified: the contract lists `ROUND_COMPLETE` among once-per-thought events.  Shipped: no such event type exists in the contract's own closed set or in the code.
+: Specified: the contract lists `ROUND_COMPLETE` among once-per-thought events.  Shipped: no such event type exists in the contract's own closed set or in the code.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 Component order:
-: Specified: receipt order, with component type a coarse hint of pipeline order (contract).  Shipped: in the example trace a model call for action selection precedes the evaluators' `DMA_RESULTS`, and timestamps are not monotonic.
+: Specified: receipt order, with component type a coarse hint of pipeline order (contract).  Shipped: in the example trace a model call for action selection precedes the evaluators' `DMA_RESULTS`, and timestamps are not monotonic.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
 
 
 # Example {#example}
