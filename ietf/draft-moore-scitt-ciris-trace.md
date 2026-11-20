@@ -83,16 +83,21 @@ informative:
       - org: CIRIS L3C
     target: https://github.com/CIRISAI/CIRISAgent
   FSD-TRACE:
-    title: "CIRIS Trace Wire Format Specification (FSD/TRACE_WIRE_FORMAT.md), CIRISAgent 59b7e5d"
+    title: "CIRIS Trace Wire Format Specification (FSD/TRACE_WIRE_FORMAT.md), CIRISAgent v2.23.0-stable"
     author:
       - org: CIRIS L3C
-    target: https://github.com/CIRISAI/CIRISAgent/blob/59b7e5d/FSD/TRACE_WIRE_FORMAT.md
+    target: https://github.com/CIRISAI/CIRISAgent/blob/v2.23.0-stable/FSD/TRACE_WIRE_FORMAT.md
   EGRESS-SCHEMA:
-    title: "Per-level trace egress schema (ciris_adapters/ciris_accord_metrics/egress_schema.py), CIRISAgent 59b7e5d"
+    title: "Per-level trace egress schema (ciris_adapters/ciris_accord_metrics/egress_schema.py), CIRISAgent v2.23.0-stable"
     author:
       - org: CIRIS L3C
-    target: https://github.com/CIRISAI/CIRISAgent/blob/59b7e5d/ciris_adapters/ciris_accord_metrics/egress_schema.py
+    target: https://github.com/CIRISAI/CIRISAgent/blob/v2.23.0-stable/ciris_adapters/ciris_accord_metrics/egress_schema.py
   TRACE-SCHEMA-JSON:
+    title: "CIRIS Reasoning Trace v3.1.0 JSON Schema (ciris_adapters/ciris_accord_metrics/schemas/trace_format_v3_1_0.json), CIRISAgent v2.23.0-stable"
+    author:
+      - org: CIRIS L3C
+    target: https://github.com/CIRISAI/CIRISAgent/blob/v2.23.0-stable/ciris_adapters/ciris_accord_metrics/schemas/trace_format_v3_1_0.json
+  TRACE-SCHEMA-JSON-270:
     title: "CIRIS Reasoning Trace v2.7.0 JSON Schema (ciris_adapters/ciris_accord_metrics/schemas/trace_format_v2_7_0.json), CIRISAgent 59b7e5d"
     author:
       - org: CIRIS L3C
@@ -174,10 +179,13 @@ This document is one of three:
 The normative content of this document mirrors the agent's wire
 contract {{FSD-TRACE}}, its JSON Schema {{TRACE-SCHEMA-JSON}}, the
 per-level egress schema {{EGRESS-SCHEMA}} and the producing code, all
-at CIRISAgent commit 59b7e5d, and the trace rules of the CIRIS
-Constitution {{CC}} (Sections 3.1.5 and 5.3.2).  Where the published
-wire contract and the code disagree, this document follows the code
-and lists the disagreement in {{divergences}}.  Where the Constitution
+at CIRISAgent release v2.23.0-stable (commit 2b6a85c), and the trace
+rules of the CIRIS Constitution {{CC}} (Sections 3.1.5 and 5.3.2).
+The JSON Schema at that release is generated from the egress schema;
+its SHA-256 digest is
+bc2dd9ac2626f1f4c7e977e1f783baf228e966b71fe972dc1d3f207b8d4fe1c3.
+{{divergences}} records where these sources disagreed at the earlier
+commit 59b7e5d and what the release changed.  Where the Constitution
 states a rule the implementation does not yet meet, this document
 states the rule and labels it as not implemented.
 
@@ -259,7 +267,7 @@ member listed above is inside them.
 Traces emitted by the reference implementation also carry
 `pqc_key_id`, `pubkey_ml_dsa_65` and `signature_ml_dsa_65` (an ML-DSA-65
 public key and signature, base64).  The wire contract does not
-specify them, and the bytes the ML-DSA-65 signature covers are not
+specify the bytes the ML-DSA-65 signature covers are not
 stated in any source available to the author ({{open}}).  A consumer
 MUST NOT treat these members as part of the Ed25519 signed bytes and
 MUST NOT rely on them until they are specified.
@@ -328,12 +336,12 @@ the public key can recompute the identifier and check it
 party holding the public key can compute it.  It is 64 bits long;
 {{security}} discusses collisions.
 
-The reference implementation falls back to hashing the agent's name,
-or to the literal `unknown`, when its signing engine is unavailable
-(test environments).  A trace carrying such a value fails the check
-above and MUST NOT be admitted at federation tier ({{divergences}}).
-CIRISAgent#1370 (not yet merged) removes the fallback: without a
-signing engine the component is refused.
+Releases of the reference implementation before v2.23.0 fall back to
+hashing the agent's name, or to the literal `unknown`, when the
+signing engine is unavailable (test environments).  A trace carrying
+such a value fails the check above and MUST NOT be admitted at
+federation tier ({{divergences}}).  From v2.23.0 a component with no
+signing engine is refused, not captured.
 
 ## The Trace Identifier
 
@@ -342,10 +350,10 @@ unique per agent by convention only; consumers MUST key on the pair
 (`agent_id_hash`, `trace_id`), never on `trace_id` alone, because an
 agent controls its own `trace_id` values.
 
-The wire contract gives the format `trace-<thought_id>-<YYYYMMDDHHMMSS>`
-and the JSON Schema requires the prefix `trace-`.  The traces the
-implementation emits carry the thought identifier itself as
-`trace_id` ({{example}}).  A consumer MUST NOT parse `trace_id`
+`trace_id` is assigned by the substrate when it seals the trace, and
+the implementation's traces carry the thought identifier itself
+({{example}}).  Earlier versions of the wire contract and JSON Schema
+gave the format `trace-<thought_id>-<YYYYMMDDHHMMSS>`.  A consumer MUST NOT parse `trace_id`
 ({{divergences}}).
 
 ## The Deployment Profile {#profile}
@@ -490,8 +498,8 @@ each member names the lowest trace level at which it is carried
 egress schema {{EGRESS-SCHEMA}}; where the wire contract assigns a
 different level, {{divergences}} says so.  Every component's `data`
 also carries `attempt_index` ({{attempt-index}}), inserted by the
-emitter at every level.  In CIRISAgent#1370 (not yet merged) every
-component's `data` also carries `run_kind` ({{run-kind}}) and, when
+emitter at every level.  From v2.23.0 every component's `data` also
+carries `run_kind` ({{run-kind}}) and, when
 the emitter's filter altered it, `egress_alterations` ({{levels}}).
 All members are optional unless stated: what
 is absent was not emitted.
@@ -670,8 +678,8 @@ aspdma-result = {
 ~~~
 
 The spelling of `selected_action` is not stable across sources
-({{divergences}}); CIRISAgent#1370 (not yet merged) emits the
-action's value.  A consumer SHOULD compare it case-insensitively
+({{divergences}}); from v2.23.0 the implementation emits the action's
+value.  A consumer SHOULD compare it case-insensitively
 after removing a `HandlerActionType.` prefix, since traces from
 earlier releases carry one.
 
@@ -874,8 +882,8 @@ stable within one agent and cannot be linked across agents.
 
 The member is additive: event data stays open to further members, so a
 trace carrying it is admitted under the current `3.0.0`.  It is
-implemented in CIRISAgent pull request 1370, not yet merged, and is
-not in any emitted trace.  It is named in the per-level schema at
+emitted from CIRISAgent v2.23.0; no trace carrying it is published
+yet.  It is named in the per-level schema at
 `3.1.0`, accepted by the storage engine's release 62.0 and stamped by
 the server's release 0.6, neither shipped at the time of writing
 ({{open}}).
@@ -906,7 +914,7 @@ llm-call = {
   ? parent_event_type: tstr,        ; G
   ? parent_attempt_index: uint,     ; G
   ? prompt_hash: tstr,              ; D  64 lowercase hex
-  ? context_manifest: any,          ; D  PR 1370, not merged
+  ? context_manifest: any,          ; D  from v2.23.0
   ? prompt: tstr,                   ; F
   ? response_text: tstr,            ; F
 }
@@ -920,8 +928,7 @@ llm-status = "ok" / "timeout" / "rate_limited"
 The implementation's event taxonomy has five more types, for a
 credit and deferral system: `DEFERRAL_ROUTED`, `DEFERRAL_RECEIVED`,
 `DEFERRAL_RESOLVED`, `GRATITUDE_SIGNALED` and `CREDIT_GENERATED`, each
-with a component type of the same name in lowercase.  They are not in
-the wire contract, the reference implementation does not capture them
+with a component type of the same name in lowercase.  The reference implementation does not capture them
 into traces by default, and this document does not specify them
 ({{divergences}}).  A consumer of a trace that contains one
 MUST reject the trace unless it implements their shapes.
@@ -983,10 +990,10 @@ filters each component before signing instead: it drops a member the
 level does not allow or whose type does not fit, truncates over-long
 text and cuts over-long lists, and logs and counts each violation
 without its value.  Because this happens before signing, the signed
-trace is what the agent attests to.  At commit 59b7e5d the alteration
-is silent in the signed bytes.
+trace is what the agent attests to.  Before v2.23.0 the alteration is
+silent in the signed bytes.
 
-In CIRISAgent#1370 (not yet merged) the emitter records each
+From v2.23.0 the emitter records each
 alteration in the component's signed `data`, as `egress_alterations`:
 a list of at most 64 marks, with a count of any beyond that.  A mark
 gives the member's `path`, the `kind` of alteration (`truncated`,
@@ -1227,21 +1234,20 @@ A federation-tier admitter MUST refuse a `mock` row with
 agent.  The refusal is at federation tier only: a node MAY hold its own
 `mock` rows locally, for tests.
 
-**Implementation.**  At commit 59b7e5d the implementation carries the
+**Implementation.**  Before v2.23.0 the implementation carries the
 run kind inside `deployment_profile.deployment_type`, which is signed,
 as one of `mock`, `qa` or `battery` overriding the operator's value,
 with no marker for a production run and no `prod-personal` or
 `prod-managed`.  It keeps `mock` traces out of its federation store at
 the source.
 
-In CIRISAgent#1370 (not yet merged) every component's signed `data`
-carries `run_kind` from the six-value set.  A test-harness or mock
+From v2.23.0 every component's signed `data` also carries `run_kind` from the six-value set.  A test-harness or mock
 setting wins; otherwise an operator's `CIRIS_DEPLOYMENT_KIND` of
 `managed` or `personal`; otherwise `prod-managed` under the agent's
 deployment manager and `prod-personal` elsewhere.  `deployment_type`
 is unchanged.  The value is in the signed bytes but in each
 component, not as a member of the envelope or of the CEG row.  The
-trace format 3.1.0 schema of that pull request requires it in every
+trace format 3.1.0 schema {{TRACE-SCHEMA-JSON}} requires it in every
 event's `data`.  An admitter reads it from the components, in this
 order (the rule is to be stated in Section 3.1.5 of {{CC}} after its
 `v1.0-rc21` release):
@@ -1440,14 +1446,14 @@ trace can be referenced from them by (`agent_id_hash`, `trace_id`).
 Note to the RFC Editor: please remove this section before publication.
 
 - **Run kind member.**  {{CC}} requires a signed `run_kind` from a
-  six-value set on the envelope.  CIRISAgent#1370 carries the six
+  six-value set on the envelope.  CIRISAgent v2.23.0 carries the six
   values in every component's signed `data`.  Whether the value is
   also an envelope or row member, and the rule for a trace whose
   components disagree, are not agreed.
 
 - **Refuse, not truncate.**  The implementation's emitter truncates
   over-long values before signing; {{CC}} forbids truncation at
-  admission.  CIRISAgent#1370 declares each cut in the signed data
+  admission.  CIRISAgent v2.23.0 declares each cut in the signed data
   (`egress_alterations`, {{levels}}).  Whether the Constitution
   accepts a declared emitter cut, and how the emitter's and admitter's
   schemas are bound by one pinned hash, are open.
@@ -1470,10 +1476,6 @@ Note to the RFC Editor: please remove this section before publication.
   that becomes empty only after its members are removed.
 
 - **trace_summary payload.**  The members of `trace_summary:{kind}`.
-
-- **context_manifest.**  The `LLM_CALL` member of {{llm-call}} is in
-  CIRISAgent pull request 1370, not yet merged, and not yet in the
-  egress schema.
 
 - **Signature transition.**  The normative signature is the agent's
   CEG statement signature ({{statement-sig}}).  What ships is the
@@ -1498,7 +1500,8 @@ Note to the RFC Editor: please remove this section before publication.
   agent's sources; the emitted example predates it.
 
 - **Event taxonomy.**  The five credit and deferral event types are in
-  the implementation's taxonomy but not in the wire contract.
+  the implementation's taxonomy and wire contract, but their shapes
+  are not specified here.
 
 - **Divergences.**  The disagreements of {{divergences}}.
 
@@ -1512,11 +1515,13 @@ of writing, as described in {{RFC7942}}.  Listing an implementation
 here does not imply endorsement.
 
 CIRISAgent:
-: {{CIRISAGENT}}, CIRIS L3C, AGPL-3.0, version 2.22.1 at commit
-  59b7e5d.  The agent subscribes to its reasoning-event stream, builds
+: {{CIRISAGENT}}, CIRIS L3C, AGPL-3.0, release v2.23.0-stable
+  at commit 2b6a85c.  The agent subscribes to its reasoning-event stream, builds
   each component's `data` under the configured trace level, filters it
   through its egress schema, derives `agent_id_hash` from its signing
-  key, stamps `deployment_profile` with the run kind, and hands each
+  key (refusing a component when it has none), stamps the signed
+  `run_kind` in every component, records each egress alteration, and
+  hands each
   component to the substrate library below.  It keeps traces from mock
   runs out of its federation store.  Its wire contract is
   {{FSD-TRACE}}.
@@ -1547,8 +1552,8 @@ and carried as an earlier-form JSON CEG row of dimension
 No implementation emits the CBOR row of {{I-D.moore-scitt-ciris-ceg}}
 for a trace or the envelope's `run_kind` member.  The
 `context_manifest` member, the per-component `run_kind` and the
-`egress_alterations` marks are in an unmerged pull request
-(CIRISAgent#1370).
+`egress_alterations` marks are emitted from CIRISAgent v2.23.0; no
+trace carrying them is published yet.
 No second, independent implementation of the emitter or the verifier
 exists.
 
@@ -1591,9 +1596,10 @@ another step without invalidating the trace.
 payload no schema has reviewed.  Consumers reject it.
 
 **Mock runs.**  A trace from a mock model looks like a real one.  The
-run kind is the only signed marker.  At commit 59b7e5d an admitter
-relies on `deployment_type` and on the emitter keeping mock traces
-local; with CIRISAgent#1370 it reads `run_kind` from the components.
+run kind is the only signed marker.  For traces from releases before
+v2.23.0 an admitter relies on `deployment_type` and on the emitter
+keeping mock traces local; from v2.23.0 it reads `run_kind` from the
+components.
 
 **Unspecified signatures.**  The ML-DSA-65 members are not specified.
 Relying on them could give a false sense of post-quantum protection.
@@ -1656,83 +1662,84 @@ This document has no IANA actions.
 
 # Divergences Between the Sources {#divergences}
 
-Each entry is a point where the wire contract {{FSD-TRACE}}, the JSON
-Schema {{TRACE-SCHEMA-JSON}}, the implementation at commit 59b7e5d, an
-emitted trace, or {{CC}} disagree.  This document follows the code
+Each entry is a point where, at CIRISAgent commit 59b7e5d, the wire
+contract, the JSON Schema {{TRACE-SCHEMA-JSON-270}}, the
+implementation, an emitted trace, or {{CC}} disagreed.  "Specified"
+and "Shipped" describe that commit.  This document follows the code
 where the question is what ships, and states the Constitution's rule
 where the question is what is required.
 
-Each entry's status is as of CIRISAgent#1370, which
-adds a Section 0 ("As shipped") to the wire contract and fixes entries in
-the code; this paragraph and the statuses below are updated to its
-commit 3c4713a.  That pull request is not yet merged; until it
-is, the "Shipped" text describes commit 59b7e5d.
+Each entry's status is as of release v2.23.0-stable (commit 2b6a85c,
+merging pull request 1370).  The release adds a Section 0 ("As
+shipped") to the wire contract {{FSD-TRACE}}, generates the JSON
+Schema {{TRACE-SCHEMA-JSON}} from the egress schema, and fixes entries
+in the code.
 
 Transport:
-: Specified: HTTP POST of batches to a collector, with key registration.  Shipped: HTTP shipping and registration retired; sealing, signing and storage moved to ciris-lens-core.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: HTTP POST of batches to a collector, with key registration.  Shipped: HTTP shipping and registration retired; sealing, signing and storage moved to ciris-lens-core.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 Schema version:
-: Specified: `2.7.9` in the contract text, const `2.7.0` in the JSON Schema.  Shipped: `3.0.0`, JCS.  Status: contract and JSON Schema corrected to the code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0 schema is generated from the egress schema.
+: Specified: `2.7.9` in the contract text, const `2.7.0` in the JSON Schema.  Shipped: `3.0.0`, JCS.  Status: contract corrected and JSON Schema regenerated from the code in v2.23.0.
 
 `trace_id`:
-: Specified: `trace-<thought_id>-<YYYYMMDDHHMMSS>`; schema pattern `^trace-`.  Shipped: equals `thought_id`.  Status: contract and JSON Schema corrected to the code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0 schema is generated from the egress schema.
+: Specified: `trace-<thought_id>-<YYYYMMDDHHMMSS>`; schema pattern `^trace-`.  Shipped: equals `thought_id`.  Status: contract corrected and JSON Schema regenerated from the code in v2.23.0.
 
 Envelope members:
-: Specified: 12 members.  Shipped: also `pqc_key_id`, `pubkey_ml_dsa_65`, `signature_ml_dsa_65`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: 12 members.  Shipped: also `pqc_key_id`, `pubkey_ml_dsa_65`, `signature_ml_dsa_65`.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 `agent_id_hash`:
-: Specified: MUST be the key derivation.  Shipped: falls back to a hash of the agent name, or `unknown`, without a signing engine.  Status: fixed in CIRISAgent#1370 (not yet merged): with no signing engine the component is refused and counted, never captured under a name hash or `unknown`.
+: Specified: MUST be the key derivation.  Shipped: falls back to a hash of the agent name, or `unknown`, without a signing engine.  Status: fixed in v2.23.0: with no signing engine the component is refused and counted, never captured under a name hash or `unknown`.
 
 Event types:
-: Specified: 10, closed.  Shipped: 15 in the taxonomy (five credit and deferral types), capture of `DEFERRAL_ROUTED` off by default.  Status: contract and JSON Schema corrected to the code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0 schema is generated from the egress schema.
+: Specified: 10, closed.  Shipped: 15 in the taxonomy (five credit and deferral types), capture of `DEFERRAL_ROUTED` off by default.  Status: contract corrected and JSON Schema regenerated from the code in v2.23.0.
 
 Components per trace:
-: Specified: at most 6 components and five component types in the JSON Schema.  Shipped: 16 components in the example; seven component types in the core pipeline, twelve with the credit and deferral types.  Status: contract and JSON Schema corrected to the code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0 schema is generated from the egress schema.
+: Specified: at most 6 components and five component types in the JSON Schema.  Shipped: 16 components in the example; seven component types in the core pipeline, twelve with the credit and deferral types.  Status: contract corrected and JSON Schema regenerated from the code in v2.23.0.
 
 Component type `unknown`:
-: Specified: listed in the contract.  Shipped: no event maps to it.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: listed in the contract.  Shipped: no event maps to it.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 Run kind:
-: Specified: a dedicated member pending in trace format v2.8.0 (contract); its own signed member with six values ({{CC}}).  Shipped: inside `deployment_type`; four values (`production` implicit, `qa`, `battery`, `mock`).  Status: CIRISAgent#1370 (not yet merged) carries the six values as signed `run_kind` in every component's `data`; an envelope or row member remains open.
+: Specified: a dedicated member pending in trace format v2.8.0 (contract); its own signed member with six values ({{CC}}).  Shipped: inside `deployment_type`; four values (`production` implicit, `qa`, `battery`, `mock`).  Status: v2.23.0 carries the six values as signed `run_kind` in every component's `data`; an envelope or row member remains open.
 
 Field schema enforcement:
-: Specified: refuse, never truncate ({{CC}}).  Shipped: emitter drops and truncates before signing.  Status: CIRISAgent#1370 (not yet merged) declares each cut and drop in the signed data (`egress_alterations`); whether the Constitution accepts a declared emitter cut, and the pinned-hash binding, remain open.
+: Specified: refuse, never truncate ({{CC}}).  Shipped: emitter drops and truncates before signing.  Status: v2.23.0 declares each cut and drop in the signed data (`egress_alterations`); whether the Constitution accepts a declared emitter cut, and the pinned-hash binding, remain open.
 
 Reasoning text:
-: Specified: reasoning text at `detailed` (contract).  Shipped: reasoning text at `full_traces`; short reasons only at `detailed`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: reasoning text at `detailed` (contract).  Shipped: reasoning text at `full_traces`; short reasons only at `detailed`.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 Second-pass reasoning:
-: Specified: `original_reasoning` and `final_reasoning` at `detailed` (contract).  Shipped: at `full_traces`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: `original_reasoning` and `final_reasoning` at `detailed` (contract).  Shipped: at `full_traces`.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 `base_url`:
-: Specified: optional, with no level (contract).  Shipped: `detailed` in the egress schema; at `generic` in the example trace (release 2.9.9).  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: optional, with no level (contract).  Shipped: `detailed` in the egress schema; at `generic` in the example trace (release 2.9.9).  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 `dsdma_domain`:
-: Specified: not in the contract.  Shipped: `detailed` in the egress schema; at `generic` in the example trace.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: not in the contract.  Shipped: `detailed` in the egress schema; at `generic` in the example trace.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 `LLM_CALL` members:
-: Specified: the contract's list.  Shipped: the code adds `sent_temperature`, `sent_seed`, `sent_max_tokens`, `served_by`, `served_model`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: the contract's list.  Shipped: the code adds `sent_temperature`, `sent_seed`, `sent_max_tokens`, `served_by`, `served_model`.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 Parent link:
-: Specified: required from 2.7.9, no transition window.  Shipped: omitted when the issuing step is unknown.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: required from 2.7.9, no transition window.  Shipped: omitted when the issuing step is unknown.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 `selected_action`:
-: Specified: `speak` (contract), `SPEAK` (JSON Schema).  Shipped: `HandlerActionType.SPEAK` in the example trace.  Status: fixed in CIRISAgent#1370 (not yet merged): `selected_action` and `final_action` carry the action's value, `speak`.
+: Specified: `speak` (contract), `SPEAK` (JSON Schema).  Shipped: `HandlerActionType.SPEAK` in the example trace.  Status: fixed in v2.23.0: `selected_action` and `final_action` carry the action's value, `speak`.
 
 `thought_type`:
-: Specified: `seed`, `follow_up`, `retry` (JSON Schema).  Shipped: `standard`.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: `seed`, `follow_up`, `retry` (JSON Schema).  Shipped: `standard`.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 `attestation_status`:
-: Specified: four values, without `partial` (contract text).  Shipped: `partial` in the emitted trace, and in the contract's own example.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: four values, without `partial` (contract text).  Shipped: `partial` in the emitted trace, and in the contract's own example.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 `audit_entry_hash`:
-: Specified: a SHA-256 digest, encoding unstated (contract).  Shipped: base64 in the emitted trace.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: a SHA-256 digest, encoding unstated (contract).  Shipped: base64 in the emitted trace.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 Once-per-thought list:
-: Specified: the contract lists `ROUND_COMPLETE` among once-per-thought events.  Shipped: no such event type exists in the contract's own closed set or in the code.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: the contract lists `ROUND_COMPLETE` among once-per-thought events.  Shipped: no such event type exists in the contract's own closed set or in the code.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 Component order:
-: Specified: receipt order, with component type a coarse hint of pipeline order (contract).  Shipped: in the example trace a model call for action selection precedes the evaluators' `DMA_RESULTS`, and timestamps are not monotonic.  Status: contract corrected to the code in CIRISAgent#1370, Section 0 (not yet merged).
+: Specified: receipt order, with component type a coarse hint of pipeline order (contract).  Shipped: in the example trace a model call for action selection precedes the evaluators' `DMA_RESULTS`, and timestamps are not monotonic.  Status: contract corrected to the code in v2.23.0 (Section 0).
 
 
 # Example {#example}

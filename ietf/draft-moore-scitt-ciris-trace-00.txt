@@ -143,7 +143,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    18. References  . . . . . . . . . . . . . . . . . . . . . . . . .  39
      18.1.  Normative References . . . . . . . . . . . . . . . . . .  39
      18.2.  Informative References . . . . . . . . . . . . . . . . .  40
-   Appendix A.  Divergences Between the Sources  . . . . . . . . . .  43
+   Appendix A.  Divergences Between the Sources  . . . . . . . . . .  44
    Appendix B.  Example  . . . . . . . . . . . . . . . . . . . . . .  46
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  51
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  51
@@ -211,13 +211,13 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    The normative content of this document mirrors the agent's wire
    contract [FSD-TRACE], its JSON Schema [TRACE-SCHEMA-JSON], the per-
    level egress schema [EGRESS-SCHEMA] and the producing code, all at
-   CIRISAgent commit 59b7e5d, and the trace rules of the CIRIS
-   Constitution [CC] (Sections 3.1.5 and 5.3.2).  Where the published
-   wire contract and the code disagree, this document follows the code
-   and lists the disagreement in Appendix A.  Where the Constitution
-   states a rule the implementation does not yet meet, this document
-   states the rule and labels it as not implemented.
-
+   CIRISAgent release v2.23.0-stable (commit 2b6a85c), and the trace
+   rules of the CIRIS Constitution [CC] (Sections 3.1.5 and 5.3.2).  The
+   JSON Schema at that release is generated from the egress schema; its
+   SHA-256 digest is
+   bc2dd9ac2626f1f4c7e977e1f783baf228e966b71fe972dc1d3f207b8d4fe1c3.
+   Appendix A records where these sources disagreed at the earlier
+   commit 59b7e5d and what the release changed.  Where the Constitution
 
 
 
@@ -225,6 +225,9 @@ Moore                      Expires 23 May 2027                  [Page 4]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+   states a rule the implementation does not yet meet, this document
+   states the rule and labels it as not implemented.
 
 1.2.  Scope
 
@@ -271,9 +274,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       CEG node, a collector, an auditor.
 
    Seal:  The act of closing a trace when its terminal event arrives,
-      then computing its signature.
-
-
 
 
 
@@ -281,6 +281,8 @@ Moore                      Expires 23 May 2027                  [Page 5]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
+
+      then computing its signature.
 
 3.  The CompleteTrace Envelope
 
@@ -328,8 +330,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    | components           | array     | yes      | The events, in     |
    |                      |           |          | receipt order      |
    |                      |           |          | (Section 4)        |
-   +----------------------+-----------+----------+--------------------+
-   | signature            | text      | yes      | Base64 Ed25519     |
 
 
 
@@ -338,6 +338,8 @@ Moore                      Expires 23 May 2027                  [Page 6]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+   +----------------------+-----------+----------+--------------------+
+   | signature            | text      | yes      | Base64 Ed25519     |
    |                      |           |          | signature, current |
    |                      |           |          | form (Section 8.2) |
    +----------------------+-----------+----------+--------------------+
@@ -355,13 +357,11 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    Traces emitted by the reference implementation also carry pqc_key_id,
    pubkey_ml_dsa_65 and signature_ml_dsa_65 (an ML-DSA-65 public key and
-   signature, base64).  The wire contract does not specify them, and the
-   bytes the ML-DSA-65 signature covers are not stated in any source
-   available to the author (Section 13).  A consumer MUST NOT treat
-   these members as part of the Ed25519 signed bytes and MUST NOT rely
-   on them until they are specified.
-
-
+   signature, base64).  The wire contract does not specify the bytes the
+   ML-DSA-65 signature covers are not stated in any source available to
+   the author (Section 13).  A consumer MUST NOT treat these members as
+   part of the Ed25519 signed bytes and MUST NOT rely on them until they
+   are specified.
 
 
 
@@ -468,12 +468,12 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    party holding the public key can compute it.  It is 64 bits long;
    Section 15 discusses collisions.
 
-   The reference implementation falls back to hashing the agent's name,
-   or to the literal unknown, when its signing engine is unavailable
-   (test environments).  A trace carrying such a value fails the check
-   above and MUST NOT be admitted at federation tier (Appendix A).
-   CIRISAgent#1370 (not yet merged) removes the fallback: without a
-   signing engine the component is refused.
+   Releases of the reference implementation before v2.23.0 fall back to
+   hashing the agent's name, or to the literal unknown, when the signing
+   engine is unavailable (test environments).  A trace carrying such a
+   value fails the check above and MUST NOT be admitted at federation
+   tier (Appendix A).  From v2.23.0 a component with no signing engine
+   is refused, not captured.
 
 3.2.  The Trace Identifier
 
@@ -482,11 +482,11 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    (agent_id_hash, trace_id), never on trace_id alone, because an agent
    controls its own trace_id values.
 
-   The wire contract gives the format
-   trace-<thought_id>-<YYYYMMDDHHMMSS> and the JSON Schema requires the
-   prefix trace-.  The traces the implementation emits carry the thought
-   identifier itself as trace_id (Appendix B).  A consumer MUST NOT
-   parse trace_id (Appendix A).
+   trace_id is assigned by the substrate when it seals the trace, and
+   the implementation's traces carry the thought identifier itself
+   (Appendix B).  Earlier versions of the wire contract and JSON Schema
+   gave the format trace-<thought_id>-<YYYYMMDDHHMMSS>.  A consumer MUST
+   NOT parse trace_id (Appendix A).
 
 3.3.  The Deployment Profile
 
@@ -682,9 +682,9 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    [EGRESS-SCHEMA]; where the wire contract assigns a different level,
    Appendix A says so.  Every component's data also carries
    attempt_index (Section 6), inserted by the emitter at every level.
-   In CIRISAgent#1370 (not yet merged) every component's data also
-   carries run_kind (Section 9.2) and, when the emitter's filter altered
-   it, egress_alterations (Section 7).  All members are optional unless
+   From v2.23.0 every component's data also carries run_kind
+   (Section 9.2) and, when the emitter's filter altered it,
+   egress_alterations (Section 7).  All members are optional unless
    stated: what is absent was not emitted.
 
 5.1.  THOUGHT_START
@@ -899,7 +899,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
    The spelling of selected_action is not stable across sources
-   (Appendix A); CIRISAgent#1370 (not yet merged) emits the action's
+   (Appendix A); from v2.23.0 the implementation emits the action's
    value.  A consumer SHOULD compare it case-insensitively after
    removing a HandlerActionType. prefix, since traces from earlier
    releases carry one.
@@ -1147,11 +1147,11 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    The member is additive: event data stays open to further members, so
    a trace carrying it is admitted under the current 3.0.0.  It is
-   implemented in CIRISAgent pull request 1370, not yet merged, and is
-   not in any emitted trace.  It is named in the per-level schema at
-   3.1.0, accepted by the storage engine's release 62.0 and stamped by
-   the server's release 0.6, neither shipped at the time of writing
-   (Section 13).
+   emitted from CIRISAgent v2.23.0; no trace carrying it is published
+   yet.  It is named in the per-level schema at 3.1.0, accepted by the
+   storage engine's release 62.0 and stamped by the server's release
+   0.6, neither shipped at the time of writing (Section 13).
+
 
 
 
@@ -1203,7 +1203,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
      ? parent_event_type: tstr,        ; G
      ? parent_attempt_index: uint,     ; G
      ? prompt_hash: tstr,              ; D  64 lowercase hex
-     ? context_manifest: any,          ; D  PR 1370, not merged
+     ? context_manifest: any,          ; D  from v2.23.0
      ? prompt: tstr,                   ; F
      ? response_text: tstr,            ; F
    }
@@ -1216,11 +1216,11 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    The implementation's event taxonomy has five more types, for a credit
    and deferral system: DEFERRAL_ROUTED, DEFERRAL_RECEIVED,
    DEFERRAL_RESOLVED, GRATITUDE_SIGNALED and CREDIT_GENERATED, each with
-   a component type of the same name in lowercase.  They are not in the
-   wire contract, the reference implementation does not capture them
-   into traces by default, and this document does not specify them
-   (Appendix A).  A consumer of a trace that contains one MUST reject
-   the trace unless it implements their shapes.
+   a component type of the same name in lowercase.  The reference
+   implementation does not capture them into traces by default, and this
+   document does not specify them (Appendix A).  A consumer of a trace
+   that contains one MUST reject the trace unless it implements their
+   shapes.
 
 
 
@@ -1351,25 +1351,24 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    does not allow or whose type does not fit, truncates over-long text
    and cuts over-long lists, and logs and counts each violation without
    its value.  Because this happens before signing, the signed trace is
-   what the agent attests to.  At commit 59b7e5d the alteration is
-   silent in the signed bytes.
+   what the agent attests to.  Before v2.23.0 the alteration is silent
+   in the signed bytes.
 
-   In CIRISAgent#1370 (not yet merged) the emitter records each
-   alteration in the component's signed data, as egress_alterations: a
-   list of at most 64 marks, with a count of any beyond that.  A mark
-   gives the member's path, the kind of alteration (truncated,
-   dropped_wrong_type or dropped_not_in_schema), and the
-   original_length; a truncated mark also gives sha256, the SHA-256
-   digest of the original value.  A dropped value gets no digest: it was
-   content in the wrong place, and a digest of a short value can be
-   confirmed by guessing.  A member above the trace level is not an
-   alteration and is not marked.  The emitter discards any
-   egress_alterations a producer supplies before filtering, so the marks
-   are the filter's own.  With the marks, an emitter's cut is declared
-   in what the agent signs rather than silent; the admitter's rule is
-   unchanged.  Whether the Constitution's text should say so, and how
-   the emitter's and admitter's schemas are bound by one pinned hash,
-   are open (Appendix A).
+   From v2.23.0 the emitter records each alteration in the component's
+   signed data, as egress_alterations: a list of at most 64 marks, with
+   a count of any beyond that.  A mark gives the member's path, the kind
+   of alteration (truncated, dropped_wrong_type or
+   dropped_not_in_schema), and the original_length; a truncated mark
+   also gives sha256, the SHA-256 digest of the original value.  A
+   dropped value gets no digest: it was content in the wrong place, and
+   a digest of a short value can be confirmed by guessing.  A member
+   above the trace level is not an alteration and is not marked.  The
+   emitter discards any egress_alterations a producer supplies before
+   filtering, so the marks are the filter's own.  With the marks, an
+   emitter's cut is declared in what the agent signs rather than silent;
+   the admitter's rule is unchanged.  Whether the Constitution's text
+   should say so, and how the emitter's and admitter's schemas are bound
+   by one pinned hash, are open (Appendix A).
 
    egress-alteration = {
      path: tstr,
@@ -1391,6 +1390,7 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    attestation and its withdrawal to the agent alone, and an admitter
    verifies the statement at the door.  A node, host or person key MUST
    NOT sign a trace.
+
 
 
 
@@ -1662,18 +1662,18 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    agent.  The refusal is at federation tier only: a node MAY hold its
    own mock rows locally, for tests.
 
-   *Implementation.* At commit 59b7e5d the implementation carries the
-   run kind inside deployment_profile.deployment_type, which is signed,
-   as one of mock, qa or battery overriding the operator's value, with
-   no marker for a production run and no prod-personal or prod-managed.
-   It keeps mock traces out of its federation store at the source.
+   *Implementation.* Before v2.23.0 the implementation carries the run
+   kind inside deployment_profile.deployment_type, which is signed, as
+   one of mock, qa or battery overriding the operator's value, with no
+   marker for a production run and no prod-personal or prod-managed.  It
+   keeps mock traces out of its federation store at the source.
 
-   In CIRISAgent#1370 (not yet merged) every component's signed data
-   carries run_kind from the six-value set.  A test-harness or mock
-   setting wins; otherwise an operator's CIRIS_DEPLOYMENT_KIND of
-   managed or personal; otherwise prod-managed under the agent's
-   deployment manager and prod-personal elsewhere.  deployment_type is
-   unchanged.  The value is in the signed bytes but in each component,
+   From v2.23.0 every component's signed data also carries run_kind from
+   the six-value set.  A test-harness or mock setting wins; otherwise an
+   operator's CIRIS_DEPLOYMENT_KIND of managed or personal; otherwise
+   prod-managed under the agent's deployment manager and prod-personal
+   elsewhere.  deployment_type is unchanged.  The value is in the signed
+   bytes but in each component, not as a member of the envelope or of
 
 
 
@@ -1682,10 +1682,10 @@ Moore                      Expires 23 May 2027                 [Page 30]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-   not as a member of the envelope or of the CEG row.  The trace format
-   3.1.0 schema of that pull request requires it in every event's data.
-   An admitter reads it from the components, in this order (the rule is
-   to be stated in Section 3.1.5 of [CC] after its v1.0-rc21 release):
+   the CEG row.  The trace format 3.1.0 schema [TRACE-SCHEMA-JSON]
+   requires it in every event's data.  An admitter reads it from the
+   components, in this order (the rule is to be stated in Section 3.1.5
+   of [CC] after its v1.0-rc21 release):
 
    1.  If any component carries mock, the trace is refused with
        trace_run_kind_mock.
@@ -1916,17 +1916,17 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    publication.
 
    *  *Run kind member.* [CC] requires a signed run_kind from a six-
-      value set on the envelope.  CIRISAgent#1370 carries the six values
-      in every component's signed data.  Whether the value is also an
-      envelope or row member, and the rule for a trace whose components
-      disagree, are not agreed.
+      value set on the envelope.  CIRISAgent v2.23.0 carries the six
+      values in every component's signed data.  Whether the value is
+      also an envelope or row member, and the rule for a trace whose
+      components disagree, are not agreed.
 
    *  *Refuse, not truncate.* The implementation's emitter truncates
       over-long values before signing; [CC] forbids truncation at
-      admission.  CIRISAgent#1370 declares each cut in the signed data
-      (egress_alterations, Section 7).  Whether the Constitution accepts
-      a declared emitter cut, and how the emitter's and admitter's
-      schemas are bound by one pinned hash, are open.
+      admission.  CIRISAgent v2.23.0 declares each cut in the signed
+      data (egress_alterations, Section 7).  Whether the Constitution
+      accepts a declared emitter cut, and how the emitter's and
+      admitter's schemas are bound by one pinned hash, are open.
 
    *  *Numbers in a CBOR row.* How a trace's non-integral JSON numbers
       are carried in a CEG CBOR payload, given that the trace's
@@ -1948,9 +1948,9 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    *  *trace_summary payload.* The members of trace_summary:{kind}.
 
-   *  *context_manifest.* The LLM_CALL member of Section 5.10 is in
-      CIRISAgent pull request 1370, not yet merged, and not yet in the
-      egress schema.
+
+
+
 
 
 
@@ -1985,7 +1985,8 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       sources; the emitted example predates it.
 
    *  *Event taxonomy.* The five credit and deferral event types are in
-      the implementation's taxonomy but not in the wire contract.
+      the implementation's taxonomy and wire contract, but their shapes
+      are not specified here.
 
    *  *Divergences.* The disagreements of Appendix A.
 
@@ -1998,18 +1999,17 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    of writing, as described in [RFC7942].  Listing an implementation
    here does not imply endorsement.
 
-   CIRISAgent:  [CIRISAGENT], CIRIS L3C, AGPL-3.0, version 2.22.1 at
-      commit 59b7e5d.  The agent subscribes to its reasoning-event
-      stream, builds each component's data under the configured trace
-      level, filters it through its egress schema, derives agent_id_hash
-      from its signing key, stamps deployment_profile with the run kind,
-      and hands each component to the substrate library below.  It keeps
-      traces from mock runs out of its federation store.  Its wire
-      contract is [FSD-TRACE].
+   CIRISAgent:  [CIRISAGENT], CIRIS L3C, AGPL-3.0, release
+      v2.23.0-stable at commit 2b6a85c.  The agent subscribes to its
+      reasoning-event stream, builds each component's data under the
+      configured trace level, filters it through its egress schema,
+      derives agent_id_hash from its signing key (refusing a component
+      when it has none), stamps the signed run_kind in every component,
+      records each egress alteration, and hands each component to the
+      substrate library below.  It keeps traces from mock runs out of
+      its federation store.  Its wire contract is [FSD-TRACE].
 
    ciris-lens-core:  CIRIS L3C.  Named by the agent's sources as the
-
-
 
 
 
@@ -2040,8 +2040,9 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    No implementation emits the CBOR row of [I-D.moore-scitt-ciris-ceg]
    for a trace or the envelope's run_kind member.  The context_manifest
    member, the per-component run_kind and the egress_alterations marks
-   are in an unmerged pull request (CIRISAgent#1370).  No second,
-   independent implementation of the emitter or the verifier exists.
+   are emitted from CIRISAgent v2.23.0; no trace carrying them is
+   published yet.  No second, independent implementation of the emitter
+   or the verifier exists.
 
 15.  Security Considerations
 
@@ -2063,7 +2064,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    *Agent-controlled identifiers.* trace_id and thought_id are chosen by
    the agent.  Keying stored components without agent_id_hash would let
    one agent pre-claim keys another agent's traces need.
-
 
 
 
@@ -2091,9 +2091,10 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    payload no schema has reviewed.  Consumers reject it.
 
    *Mock runs.* A trace from a mock model looks like a real one.  The
-   run kind is the only signed marker.  At commit 59b7e5d an admitter
-   relies on deployment_type and on the emitter keeping mock traces
-   local; with CIRISAgent#1370 it reads run_kind from the components.
+   run kind is the only signed marker.  For traces from releases before
+   v2.23.0 an admitter relies on deployment_type and on the emitter
+   keeping mock traces local; from v2.23.0 it reads run_kind from the
+   components.
 
    *Unspecified signatures.* The ML-DSA-65 members are not specified.
    Relying on them could give a false sense of post-quantum protection.
@@ -2121,7 +2122,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    (which can paraphrase the request), and prompt digests.  A digest of
    a short or guessable prompt can be inverted by trying candidates.
    The context manifest at this level carries each verified sender as a
-   keyed digest (HMAC-SHA256 under a per-agent secret the agent never
 
 
 
@@ -2130,6 +2130,7 @@ Moore                      Expires 23 May 2027                 [Page 38]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+   keyed digest (HMAC-SHA256 under a per-agent secret the agent never
    discloses, truncated to 16 hexadecimal characters, subject_id_form
    hmac_sha256_16).  Without the secret it cannot be reversed by trying
    candidate identifiers, and it differs between agents, so it does not
@@ -2174,7 +2175,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
               Hashing for Message Authentication", RFC 2104,
               DOI 10.17487/RFC2104, February 1997,
               <https://www.rfc-editor.org/rfc/rfc2104>.
-
 
 
 
@@ -2249,15 +2249,16 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
    [EGRESS-SCHEMA]
               CIRIS L3C, "Per-level trace egress schema
               (ciris_adapters/ciris_accord_metrics/egress_schema.py),
-              CIRISAgent 59b7e5d", n.d.,
-              <https://github.com/CIRISAI/CIRISAgent/blob/59b7e5d/
-              ciris_adapters/ciris_accord_metrics/egress_schema.py>.
+              CIRISAgent v2.23.0-stable", n.d.,
+              <https://github.com/CIRISAI/CIRISAgent/blob/v2.23.0-
+              stable/ciris_adapters/ciris_accord_metrics/
+              egress_schema.py>.
 
    [FSD-TRACE]
               CIRIS L3C, "CIRIS Trace Wire Format Specification (FSD/
-              TRACE_WIRE_FORMAT.md), CIRISAgent 59b7e5d", n.d.,
-              <https://github.com/CIRISAI/CIRISAgent/blob/59b7e5d/FSD/
-              TRACE_WIRE_FORMAT.md>.
+              TRACE_WIRE_FORMAT.md), CIRISAgent v2.23.0-stable", n.d.,
+              <https://github.com/CIRISAI/CIRISAgent/blob/v2.23.0-
+              stable/FSD/TRACE_WIRE_FORMAT.md>.
 
    [I-D.birkholz-vcon-ai-agent-extension]
               Birkholz, H., Petrie, D., McCarthy-Howe, T., Rosenberg,
@@ -2288,7 +2289,6 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
               draft-emirdag-scitt-ai-agent-execution-01, 12 October
               2026, <https://datatracker.ietf.org/doc/html/draft-
               emirdag-scitt-ai-agent-execution-01>.
-
 
 
 
@@ -2387,20 +2387,20 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
               <https://www.rfc-editor.org/rfc/rfc9943>.
 
    [TRACE-SCHEMA-JSON]
+              CIRIS L3C, "CIRIS Reasoning Trace v3.1.0 JSON Schema
+              (ciris_adapters/ciris_accord_metrics/schemas/
+              trace_format_v3_1_0.json), CIRISAgent v2.23.0-stable",
+              n.d., <https://github.com/CIRISAI/CIRISAgent/blob/v2.23.0-
+              stable/ciris_adapters/ciris_accord_metrics/schemas/
+              trace_format_v3_1_0.json>.
+
+   [TRACE-SCHEMA-JSON-270]
               CIRIS L3C, "CIRIS Reasoning Trace v2.7.0 JSON Schema
               (ciris_adapters/ciris_accord_metrics/schemas/
               trace_format_v2_7_0.json), CIRISAgent 59b7e5d", n.d.,
               <https://github.com/CIRISAI/CIRISAgent/blob/59b7e5d/ciris_
               adapters/ciris_accord_metrics/schemas/
               trace_format_v2_7_0.json>.
-
-Appendix A.  Divergences Between the Sources
-
-   Each entry is a point where the wire contract [FSD-TRACE], the JSON
-   Schema [TRACE-SCHEMA-JSON], the implementation at commit 59b7e5d, an
-   emitted trace, or [CC] disagree.  This document follows the code
-   where the question is what ships, and states the Constitution's rule
-   where the question is what is required.
 
 
 
@@ -2410,54 +2410,54 @@ Moore                      Expires 23 May 2027                 [Page 43]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-   Each entry's status is as of CIRISAgent#1370, which adds a Section 0
-   ("As shipped") to the wire contract and fixes entries in the code;
-   this paragraph and the statuses below are updated to its commit
-   3c4713a.  That pull request is not yet merged; until it is, the
-   "Shipped" text describes commit 59b7e5d.
+Appendix A.  Divergences Between the Sources
+
+   Each entry is a point where, at CIRISAgent commit 59b7e5d, the wire
+   contract, the JSON Schema [TRACE-SCHEMA-JSON-270], the
+   implementation, an emitted trace, or [CC] disagreed.  "Specified" and
+   "Shipped" describe that commit.  This document follows the code where
+   the question is what ships, and states the Constitution's rule where
+   the question is what is required.
+
+   Each entry's status is as of release v2.23.0-stable (commit 2b6a85c,
+   merging pull request 1370).  The release adds a Section 0 ("As
+   shipped") to the wire contract [FSD-TRACE], generates the JSON Schema
+   [TRACE-SCHEMA-JSON] from the egress schema, and fixes entries in the
+   code.
 
    Transport:  Specified: HTTP POST of batches to a collector, with key
       registration.  Shipped: HTTP shipping and registration retired;
       sealing, signing and storage moved to ciris-lens-core.  Status:
-      contract corrected to the code in CIRISAgent#1370, Section 0 (not
-      yet merged).
+      contract corrected to the code in v2.23.0 (Section 0).
 
    Schema version:  Specified: 2.7.9 in the contract text, const 2.7.0
-      in the JSON Schema.  Shipped: 3.0.0, JCS.  Status: contract and
-      JSON Schema corrected to the code in CIRISAgent#1370 (not yet
-      merged); the trace format 3.1.0 schema is generated from the
-      egress schema.
+      in the JSON Schema.  Shipped: 3.0.0, JCS.  Status: contract
+      corrected and JSON Schema regenerated from the code in v2.23.0.
 
    trace_id:  Specified: trace-<thought_id>-<YYYYMMDDHHMMSS>; schema
       pattern ^trace-.  Shipped: equals thought_id.  Status: contract
-      and JSON Schema corrected to the code in CIRISAgent#1370 (not yet
-      merged); the trace format 3.1.0 schema is generated from the
-      egress schema.
+      corrected and JSON Schema regenerated from the code in v2.23.0.
 
    Envelope members:  Specified: 12 members.  Shipped: also pqc_key_id,
       pubkey_ml_dsa_65, signature_ml_dsa_65.  Status: contract corrected
-      to the code in CIRISAgent#1370, Section 0 (not yet merged).
+      to the code in v2.23.0 (Section 0).
 
    agent_id_hash:  Specified: MUST be the key derivation.  Shipped:
       falls back to a hash of the agent name, or unknown, without a
-      signing engine.  Status: fixed in CIRISAgent#1370 (not yet
-      merged): with no signing engine the component is refused and
-      counted, never captured under a name hash or unknown.
+      signing engine.  Status: fixed in v2.23.0: with no signing engine
+      the component is refused and counted, never captured under a name
+      hash or unknown.
 
    Event types:  Specified: 10, closed.  Shipped: 15 in the taxonomy
       (five credit and deferral types), capture of DEFERRAL_ROUTED off
-      by default.  Status: contract and JSON Schema corrected to the
-      code in CIRISAgent#1370 (not yet merged); the trace format 3.1.0
-      schema is generated from the egress schema.
+      by default.  Status: contract corrected and JSON Schema
+      regenerated from the code in v2.23.0.
 
    Components per trace:  Specified: at most 6 components and five
       component types in the JSON Schema.  Shipped: 16 components in the
       example; seven component types in the core pipeline, twelve with
-      the credit and deferral types.  Status: contract and JSON Schema
-      corrected to the code in CIRISAgent#1370 (not yet merged); the
-      trace format 3.1.0 schema is generated from the egress schema.
-
-   Component type unknown:  Specified: listed in the contract.  Shipped:
+      the credit and deferral types.  Status: contract corrected and
+      JSON Schema regenerated from the code in v2.23.0.
 
 
 
@@ -2466,54 +2466,54 @@ Moore                      Expires 23 May 2027                 [Page 44]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
+   Component type unknown:  Specified: listed in the contract.  Shipped:
       no event maps to it.  Status: contract corrected to the code in
-      CIRISAgent#1370, Section 0 (not yet merged).
+      v2.23.0 (Section 0).
 
    Run kind:  Specified: a dedicated member pending in trace format
       v2.8.0 (contract); its own signed member with six values ([CC]).
       Shipped: inside deployment_type; four values (production implicit,
-      qa, battery, mock).  Status: CIRISAgent#1370 (not yet merged)
-      carries the six values as signed run_kind in every component's
-      data; an envelope or row member remains open.
+      qa, battery, mock).  Status: v2.23.0 carries the six values as
+      signed run_kind in every component's data; an envelope or row
+      member remains open.
 
    Field schema enforcement:  Specified: refuse, never truncate ([CC]).
       Shipped: emitter drops and truncates before signing.  Status:
-      CIRISAgent#1370 (not yet merged) declares each cut and drop in the
-      signed data (egress_alterations); whether the Constitution accepts
-      a declared emitter cut, and the pinned-hash binding, remain open.
+      v2.23.0 declares each cut and drop in the signed data
+      (egress_alterations); whether the Constitution accepts a declared
+      emitter cut, and the pinned-hash binding, remain open.
 
    Reasoning text:  Specified: reasoning text at detailed (contract).
       Shipped: reasoning text at full_traces; short reasons only at
-      detailed.  Status: contract corrected to the code in
-      CIRISAgent#1370, Section 0 (not yet merged).
+      detailed.  Status: contract corrected to the code in v2.23.0
+      (Section 0).
 
    Second-pass reasoning:  Specified: original_reasoning and
       final_reasoning at detailed (contract).  Shipped: at full_traces.
-      Status: contract corrected to the code in CIRISAgent#1370,
-      Section 0 (not yet merged).
+      Status: contract corrected to the code in v2.23.0 (Section 0).
 
    base_url:  Specified: optional, with no level (contract).  Shipped:
       detailed in the egress schema; at generic in the example trace
       (release 2.9.9).  Status: contract corrected to the code in
-      CIRISAgent#1370, Section 0 (not yet merged).
+      v2.23.0 (Section 0).
 
    dsdma_domain:  Specified: not in the contract.  Shipped: detailed in
       the egress schema; at generic in the example trace.  Status:
-      contract corrected to the code in CIRISAgent#1370, Section 0 (not
-      yet merged).
+      contract corrected to the code in v2.23.0 (Section 0).
 
    LLM_CALL members:  Specified: the contract's list.  Shipped: the code
       adds sent_temperature, sent_seed, sent_max_tokens, served_by,
-      served_model.  Status: contract corrected to the code in
-      CIRISAgent#1370, Section 0 (not yet merged).
+      served_model.  Status: contract corrected to the code in v2.23.0
+      (Section 0).
 
    Parent link:  Specified: required from 2.7.9, no transition window.
       Shipped: omitted when the issuing step is unknown.  Status:
-      contract corrected to the code in CIRISAgent#1370, Section 0 (not
-      yet merged).
+      contract corrected to the code in v2.23.0 (Section 0).
 
    selected_action:  Specified: speak (contract), SPEAK (JSON Schema).
-
+      Shipped: HandlerActionType.SPEAK in the example trace.  Status:
+      fixed in v2.23.0: selected_action and final_action carry the
+      action's value, speak.
 
 
 
@@ -2522,36 +2522,29 @@ Moore                      Expires 23 May 2027                 [Page 45]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-      Shipped: HandlerActionType.SPEAK in the example trace.  Status:
-      fixed in CIRISAgent#1370 (not yet merged): selected_action and
-      final_action carry the action's value, speak.
-
    thought_type:  Specified: seed, follow_up, retry (JSON Schema).
       Shipped: standard.  Status: contract corrected to the code in
-      CIRISAgent#1370, Section 0 (not yet merged).
+      v2.23.0 (Section 0).
 
    attestation_status:  Specified: four values, without partial
       (contract text).  Shipped: partial in the emitted trace, and in
       the contract's own example.  Status: contract corrected to the
-      code in CIRISAgent#1370, Section 0 (not yet merged).
+      code in v2.23.0 (Section 0).
 
    audit_entry_hash:  Specified: a SHA-256 digest, encoding unstated
       (contract).  Shipped: base64 in the emitted trace.  Status:
-      contract corrected to the code in CIRISAgent#1370, Section 0 (not
-      yet merged).
+      contract corrected to the code in v2.23.0 (Section 0).
 
    Once-per-thought list:  Specified: the contract lists ROUND_COMPLETE
       among once-per-thought events.  Shipped: no such event type exists
       in the contract's own closed set or in the code.  Status: contract
-      corrected to the code in CIRISAgent#1370, Section 0 (not yet
-      merged).
+      corrected to the code in v2.23.0 (Section 0).
 
    Component order:  Specified: receipt order, with component type a
       coarse hint of pipeline order (contract).  Shipped: in the example
       trace a model call for action selection precedes the evaluators'
       DMA_RESULTS, and timestamps are not monotonic.  Status: contract
-      corrected to the code in CIRISAgent#1370, Section 0 (not yet
-      merged).
+      corrected to the code in v2.23.0 (Section 0).
 
 Appendix B.  Example
 
@@ -2570,6 +2563,13 @@ Appendix B.  Example
    It is shown at level generic, with these changes only: the two ML-
    DSA-65 values (2604 and 4412 characters) are elided as "..."; nine of
    the sixteen components are elided, as marked with ... lines, so the
+   text is not valid JSON as shown; one long line is folded as in
+   [RFC8792]; and the members are in the order the file has them.  Every
+   value shown is as emitted.  The author did not verify the signature,
+   because the artifact does not include the Ed25519 public key.
+
+
+
 
 
 
@@ -2577,11 +2577,6 @@ Moore                      Expires 23 May 2027                 [Page 46]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
-
-   text is not valid JSON as shown; one long line is folded as in
-   [RFC8792]; and the members are in the order the file has them.  Every
-   value shown is as emitted.  The author did not verify the signature,
-   because the artifact does not include the Ed25519 public key.
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -2626,6 +2621,11 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
        "status": "ok"
       },
       "event_type": "LLM_CALL",
+      "timestamp": "2026-08-01T02:54:52.484955+00:00"
+     },
+     ... components 3 to 7 elided: LLM_CALL attempts 1 to 3,
+     ... SNAPSHOT_AND_CONTEXT, LLM_CALL attempt 4
+     ... (parent ASPDMA_RESULT, timestamp 02:54:59.759)
 
 
 
@@ -2634,11 +2634,6 @@ Moore                      Expires 23 May 2027                 [Page 47]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-      "timestamp": "2026-08-01T02:54:52.484955+00:00"
-     },
-     ... components 3 to 7 elided: LLM_CALL attempts 1 to 3,
-     ... SNAPSHOT_AND_CONTEXT, LLM_CALL attempt 4
-     ... (parent ASPDMA_RESULT, timestamp 02:54:59.759)
      {
       "agent_id_hash": "9bff02b556cd84cb",
       "component_type": "rationale",
@@ -2682,6 +2677,11 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
       "timestamp": "2026-08-01T02:54:57.129347+00:00"
      },
      ... components 10 to 13 elided: LLM_CALL attempts 5 to 8,
+     ... parents CONSCIENCE_RESULT attempt 0, handlers
+     ... optimization_veto_conscience, coherence_conscience,
+     ... entropy_conscience, epistemic_humility_conscience
+     {
+      "agent_id_hash": "9bff02b556cd84cb",
 
 
 
@@ -2690,11 +2690,6 @@ Moore                      Expires 23 May 2027                 [Page 48]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-     ... parents CONSCIENCE_RESULT attempt 0, handlers
-     ... optimization_veto_conscience, coherence_conscience,
-     ... entropy_conscience, epistemic_humility_conscience
-     {
-      "agent_id_hash": "9bff02b556cd84cb",
       "component_type": "rationale",
       "data": {
        "attempt_index": 0,
@@ -2738,6 +2733,11 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
        "action_executed": "speak",
        "attempt_index": 0,
        "audit_entry_hash":
+         "wfDyaRQtc/eRD/iV01OH/+dCElBXnLY/wHt3dDoWSWA=",
+       "audit_sequence_number": 2,
+       "carbon_grams": 41.6628,
+       "cost_cents": 5.55504,
+       "energy_mwh": 83325.6,
 
 
 
@@ -2746,11 +2746,6 @@ Moore                      Expires 23 May 2027                 [Page 49]
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
 
-         "wfDyaRQtc/eRD/iV01OH/+dCElBXnLY/wHt3dDoWSWA=",
-       "audit_sequence_number": 2,
-       "carbon_grams": 41.6628,
-       "cost_cents": 5.55504,
-       "energy_mwh": 83325.6,
        "execution_success": true,
        "execution_time_ms": 4.979,
        "has_execution_error": false,
@@ -2791,8 +2786,13 @@ Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
    *  trace_id equals thought_id.
 
+   *  Components are in receipt order.  The model call issued for action
+      selection (timestamp 02:54:59.759) precedes the DMA_RESULTS
+      component (02:54:57.129), and ASPDMA_RESULT (02:54:59.778) follows
+      the four conscience calls (02:55:02 to 02:55:05).
 
-
+   *  Every LLM_CALL names a parent present in the trace, and
+      attempt_index runs 0 to 8 over the nine calls.
 
 
 
@@ -2801,14 +2801,6 @@ Moore                      Expires 23 May 2027                 [Page 50]
 
 Internet-Draft         CIRIS Agent Reasoning Trace         November 2026
 
-
-   *  Components are in receipt order.  The model call issued for action
-      selection (timestamp 02:54:59.759) precedes the DMA_RESULTS
-      component (02:54:57.129), and ASPDMA_RESULT (02:54:59.778) follows
-      the four conscience calls (02:55:02 to 02:55:05).
-
-   *  Every LLM_CALL names a parent present in the trace, and
-      attempt_index runs 0 to 8 over the nine calls.
 
    *  The action was speak; all four checks passed on the first pass.
 
@@ -2830,6 +2822,14 @@ Author's Address
    Eric Moore
    CIRIS L3C
    Email: eric@ciris.ai
+
+
+
+
+
+
+
+
 
 
 

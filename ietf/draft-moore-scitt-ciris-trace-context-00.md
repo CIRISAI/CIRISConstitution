@@ -1095,15 +1095,16 @@ does not imply endorsement.
 CIRISAgent:
 : {{CIRISAGENT}}, CIRIS L3C, AGPL-3.0.  The assembler, the policy file
   `ciris_engine/data/context_policy.yaml`, the runtime guard, ablation
-  stubs and the per-call manifest are on the main branch at commit
-  59b7e5d (pull request 1367).  The locale record of {{locale}} is in
-  pull request 1368, merged at commit e18b78b.  The
+  stubs, the per-call manifest and the locale record of {{locale}} are
+  in release v2.23.0-stable (commit 2b6a85c); they landed in pull
+  requests 1367 and 1368.  The
   implementation emits each manifest as JSON, with hexadecimal digests
   and the `ciris-json-1` messages form, on the `llm_call` event of its
   reasoning stream.  Its signed traces carry each call's
   `messages_sha256` (as `prompt_hash`).  The `context_manifest` member
   of the signed LLM_CALL event, with keyed subject pseudonyms at
-  `detailed` ({{carrying}}), is in pull request 1370, not yet merged.
+  `detailed` ({{carrying}}), is emitted from release v2.23.0-stable
+  (commit 2b6a85c, pull request 1370).
   The pinned per-level schema leaves event data open to further
   members, so the member is admitted under `trace_schema_version`
   `3.0.0`; it is named in the schema at `3.1.0`, under the same leaf
