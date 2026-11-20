@@ -67,6 +67,22 @@ informative:
       org: CIRIS L3C
     date: 2026-11
     target: https://github.com/CIRISAI/CIRISConstitution/tree/v1.0-rc21
+  I-D.moore-scitt-ciris-trace:
+    title: "The CIRIS Agent Reasoning Trace"
+    author:
+      ins: E. Moore
+      name: Eric Moore
+    date: 2026-11
+    seriesinfo:
+      Internet-Draft: draft-moore-scitt-ciris-trace-00
+  I-D.moore-scitt-ciris-trace-context:
+    title: "Context Manifests for the CIRIS Agent Trace: Prompt Context Provenance for AI Agent Decision Traces"
+    author:
+      ins: E. Moore
+      name: Eric Moore
+    date: 2026-11
+    seriesinfo:
+      Internet-Draft: draft-moore-scitt-ciris-trace-context-00
   CC-VECTORS:
     title: "CIRISVerify v23.3.0"
     author:
@@ -1079,7 +1095,11 @@ of statements: an authorisation before the act, a record of the act,
 and a refusal where the agent declined.  In CEG the same events are
 rows.  The reasoning steps before an act are rows in the decision
 families of {{CC}}.  The act is recorded by one row whose dimension is
-`trace:complete:v1`, ending in a terminal result.  A completed action,
+`trace:complete:v1`, ending in a terminal result.  That trace, its
+components, levels and signing are specified in
+{{I-D.moore-scitt-ciris-trace}}, and the context manifest of each
+model call within it in {{I-D.moore-scitt-ciris-trace-context}}; this
+document specifies only the row that carries it.  A completed action,
 a refusal, and a deferral to a human are the same kind of row with
 different terminal results, so a Consumer reads all three the same
 way.  Authority to act, and any transfer of it, is a `delegates_to`

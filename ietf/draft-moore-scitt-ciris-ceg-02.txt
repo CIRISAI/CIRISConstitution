@@ -148,7 +148,7 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    Appendix B.  Test Vectors . . . . . . . . . . . . . . . . . . . .  44
    Appendix C.  The Earlier Form . . . . . . . . . . . . . . . . . .  45
    Changes since draft-moore-scitt-ciris-ceg-01  . . . . . . . . . .  45
-   Changes since draft-moore-scitt-ciris-ceg-00  . . . . . . . . . .  45
+   Changes since draft-moore-scitt-ciris-ceg-00  . . . . . . . . . .  46
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  46
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  46
 
@@ -1420,7 +1420,11 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    and a refusal where the agent declined.  In CEG the same events are
    rows.  The reasoning steps before an act are rows in the decision
    families of [CC].  The act is recorded by one row whose dimension is
-   trace:complete:v1, ending in a terminal result.  A completed action,
+   trace:complete:v1, ending in a terminal result.  That trace, its
+   components, levels and signing are specified in
+   [I-D.moore-scitt-ciris-trace], and the context manifest of each model
+   call within it in [I-D.moore-scitt-ciris-trace-context]; this
+   document specifies only the row that carries it.  A completed action,
    a refusal, and a deferral to a human are the same kind of row with
    different terminal results, so a Consumer reads all three the same
    way.  Authority to act, and any transfer of it, is a delegates_to
@@ -1446,10 +1450,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
       manifest are not yet published.  Those of the admission receipt
       are not yet published at a tag.
 
-   *  No second implementation exists (Section 13).
-
-
-
 
 
 
@@ -1457,6 +1457,8 @@ Moore                      Expires 23 May 2027                 [Page 26]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
+
+   *  No second implementation exists (Section 13).
 
 13.  Implementation Status
 
@@ -1504,8 +1506,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
       a statement on one half, and a key held in part is Waiting, never
       Valid.
 
-   Identity references.  kid and iss carry full 32-byte thumbprints, not
-
 
 
 
@@ -1514,6 +1514,7 @@ Moore                      Expires 23 May 2027                 [Page 27]
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
+   Identity references.  kid and iss carry full 32-byte thumbprints, not
       short fingerprints.  A verifier resolves kid to a key record and
       verifies with the full composite key that record holds.
 
@@ -1559,7 +1560,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
       a node inside the audience can read and keep it.
 
    Withdrawal is not erasure.  A withdraws row stops a claim from
-
 
 
 
@@ -1698,6 +1698,20 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
               CIRIS L3C, "CIRISVerify v23.3.0",
               <https://github.com/CIRISAI/CIRISVerify/tree/v23.3.0>.
 
+   [I-D.moore-scitt-ciris-trace]
+              Moore, E., "The CIRIS Agent Reasoning Trace", Work in
+              Progress, Internet-Draft, draft-moore-scitt-ciris-trace-
+              00, November 2026, <https://datatracker.ietf.org/doc/html/
+              draft-moore-scitt-ciris-trace-00>.
+
+   [I-D.moore-scitt-ciris-trace-context]
+              Moore, E., "Context Manifests for the CIRIS Agent Trace:
+              Prompt Context Provenance for AI Agent Decision Traces",
+              Work in Progress, Internet-Draft, draft-moore-scitt-ciris-
+              trace-context-00, November 2026,
+              <https://datatracker.ietf.org/doc/html/draft-moore-scitt-
+              ciris-trace-context-00>.
+
    [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
               Text on Security Considerations", BCP 72, RFC 3552,
               DOI 10.17487/RFC3552, July 2003,
@@ -1713,6 +1727,17 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
               DOI 10.17487/RFC6973, July 2013,
               <https://www.rfc-editor.org/rfc/rfc6973>.
 
+
+
+
+
+
+
+Moore                      Expires 23 May 2027                 [Page 31]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
               Code: The Implementation Status Section", BCP 205,
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
@@ -1726,17 +1751,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    [RFC9162]  Laurie, B., Messeri, E., and R. Stradling, "Certificate
               Transparency Version 2.0", RFC 9162, DOI 10.17487/RFC9162,
               December 2021, <https://www.rfc-editor.org/rfc/rfc9162>.
-
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 31]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
 
    [RFC9942]  Steele, O., Birkholz, H., Delignat-Lavaud, A., and C.
               Fournet, "CBOR Object Signing and Encryption (COSE)
@@ -1772,6 +1786,14 @@ Appendix A.  CDDL
    ; tools/build_cc_signed_object_v2.py checks that the table and this
    ; file name the same members. The earlier JSON object is CC 8.11,
    ; read by no node of this edition. The known-answer vectors are the
+
+
+
+Moore                      Expires 23 May 2027                 [Page 32]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    ; verifier's; this file mints none. Every constant the text of CC 2.6
    ; fixes is pinned here, so a validator admits one encoding only.
 
@@ -1786,14 +1808,6 @@ Appendix A.  CDDL
      transport-destination-binding
 
    ; A signed statement is one COSE_Sign1 (RFC 9052 Section 4.2), as RFC
-
-
-
-Moore                      Expires 23 May 2027                 [Page 32]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
    ; 9943 Section 6 requires: ONE signer. A counted row is N statements
    ; over one payload, one per voice, found by the row id (below). Each
    ; voice signs the whole payload, and so the `refs.head` the row is
@@ -1828,6 +1842,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; draft-ietf-jose-pq-composite-sigs-06 (over
    ; draft-ietf-lamps-pq-composite-sigs-19): the ML-DSA-65 signature
    ; (3309 bytes) then the Ed25519 signature (64 bytes). Both sign M' =
+
+
+
+Moore                      Expires 23 May 2027                 [Page 33]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    ; "CompositeAlgorithmSignatures2025" ||
    ; "COMPSIG-MLDSA65-Ed25519-SHA512" || 0x00 || SHA-512(M). ML-DSA-65
    ; signs M' with the label bytes as its FIPS 204 ctx (never empty);
@@ -1842,14 +1864,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; deterministic COSE_Sign1 encoding with an empty unprotected header,
    ; hashed SHA-256(0x00 || leaf) (RFC 9162). Read by the host's rule
    ; only; the statement's schema never reads it.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 33]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
    ; protected, unprotected, payload, signature
    ceg-receipt = #6.18([bstr, { 396: { * int => [+ bstr] }, * int => any
      }, bstr / nil, bstr])
@@ -1884,6 +1898,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; `evidence:.suite:.kind:.cell:.prefix`, `accord:.`).
    row-cty = "application/vnd.ciris.row+cbor"
    row-type = "scores" / "delegates_to" / "supersedes" / "withdraws" /
+
+
+
+Moore                      Expires 23 May 2027                 [Page 34]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
      "recants"
    family-id = tstr .regexp
      "[a-z0-9_.][a-z0-9_.-]*(:[a-z0-9_.][a-z0-9_.-]*)*"
@@ -1898,14 +1920,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
      2: tstr,
      ; iat: floor(asserted_at / 1000), seconds, derived; a verifier
      ; refuses disagreement
-
-
-
-Moore                      Expires 23 May 2027                 [Page 34]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
      6: uint,
      ; nbf: floor(valid_from / 1000) where the row has one
      ? 5: uint,
@@ -1940,6 +1954,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
    ; The payload: the members a family names, every text and byte member
    ; bounded, no free text outside body.note, absent never null. A
+
+
+
+Moore                      Expires 23 May 2027                 [Page 35]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    ; member that names a row stands in `refs` and nowhere else.
    attestation-envelope = {
      ; the iss of the author: present iff the family is authored, absent
@@ -1954,14 +1976,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
      ; hex
      ? "evidence_refs": [+ hash-digest],
      ; on a seat row of a private room: the commitment the binding opens
-
-
-
-Moore                      Expires 23 May 2027                 [Page 35]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
      ; (seat-commitment-input)
      ? "seat_commitment": hash-digest,
      ; integers, never floats (see fixed6)
@@ -1996,6 +2010,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
      bstr .size 32], * tstr => ceg-value }
    count32 = 0..4294967295
 
+
+
+
+Moore                      Expires 23 May 2027                 [Page 36]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    ; Erasability: the selective disclosure of
    ; draft-ietf-spice-sd-cwt-09. A blinded map member is absent from its
    ; map, and the digest of its disclosure stands in that map's
@@ -2010,14 +2032,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    salted-claim = [salt: bstr .size 16, value: ceg-value, key: tstr]
    salted-element = [salt: bstr .size 16, value: ceg-value]
    ; POSIX milliseconds, no tag, never a float
-
-
-
-Moore                      Expires 23 May 2027                 [Page 36]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
    ms-time = uint
 
    ; Integers at one fixed scale: fixed6 is the value times 10^6. Folds
@@ -2052,6 +2066,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; A reference to a signed object of this form: the row id above, or
    ; the object id (below) of a signed object that is not a row. No row
    ; of this form names an object of the earlier form (CC 8.11, CC
+
+
+
+Moore                      Expires 23 May 2027                 [Page 37]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    ; 2.6.1.12), so the edition is the constant 2. Never an
    ; attestation_id.
    row-ref = [ edition: 2, id: hash-digest ]
@@ -2066,14 +2088,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; refused otherwise. An empty `refs` is refused: absence is its one
    ; encoding.
    refs = refs-members .and nonempty-map
-
-
-
-Moore                      Expires 23 May 2027                 [Page 37]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
    refs-members = {
      ; the roster head this row is counted over, or a version extends
      ? "head": row-ref,
@@ -2108,6 +2122,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; is not the payload's "author" is accepted only in a role the family
    ; names (delegate, bound node, ...), and only when its iss is the
    ; party that role names in the payload, or the CWT sub where the role
+
+
+
+Moore                      Expires 23 May 2027                 [Page 38]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    ; is the attested key; any other iss is Invalid. The second consent
    ; of a scoped delegates_to is such a statement, by the delegate (the
    ; sub), over the same payload bytes, and so has the same row id; a
@@ -2121,14 +2143,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; computed under the private-use alg and fixed for the key's life. A
    ; composite key never verifies on one half.
    ceg-key = { 1: 7, 3: composite-alg, -1: bstr .size 1984 }
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 38]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
 
    ; A key record is a ROW on family key:record (CC 2.4.1.1 renews it by
    ; supersedes and rotates it by naming it), so these are members of
@@ -2164,6 +2178,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    }
 
    ; A recovery commitment (CC 3.2 T3, CC 4.2.6): [-16, SHA-256 over the
+
+
+
+Moore                      Expires 23 May 2027                 [Page 39]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    ; deterministic encoding of this array]. `keys` is a set of composite
    ; keys, sorted by encoding; a holder's recovery commitment has one
    ; element.
@@ -2178,14 +2200,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
      payload: bstr,
      signature: composite-signature,
    ])
-
-
-
-Moore                      Expires 23 May 2027                 [Page 39]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
    object-protected = {
      1: composite-alg,
      4: kid,
@@ -2220,6 +2234,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; strictly greater than prev's, refused otherwise; two snapshots of
    ; one signer with one seq and different content are contested, and
    ; neither counts. refs carries prev (absent on the first) and, under
+
+
+
+Moore                      Expires 23 May 2027                 [Page 40]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    ; also "ack", the signer's acknowledgement of the head of the
    ; revocation scope. Its named set is refs with each revoked entry's
    ; revocation and trusted_through.
@@ -2233,14 +2255,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; a tuple; its trusted_through a set
    revoked-entry = [key: kid, revocation: row-ref, trusted_through: [*
      row-ref]]
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 40]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
 
    ; The genesis bundle (typ "ceg-genesis-bundle/2"), the GenesisBundle
    ; of CC 5.3.4. The first of this form is the ceremony row of CC
@@ -2276,6 +2290,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
      "family_key_id": tstr,
      ; a set: the accord's roster, the voices this bundle seats
      "holders": [+ identity-ref],
+
+
+
+Moore                      Expires 23 May 2027                 [Page 41]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
      "serve_nodes": [+ identity-ref], ; a set: the seated serve nodes
      "charter": genesis-charter,
    }
@@ -2290,14 +2312,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    genesis-charter = {
      ; one entry per holder, keyed by its identity-ref
      "recovery_commitments": { + identity-ref => hash-digest },
-
-
-
-Moore                      Expires 23 May 2027                 [Page 41]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
      ; a set; holds infra:attest and infra:serve (CC 3.2 Rooted)
      "scope": [+ tstr],
      ; absent means 86400 (CC 4.2.1.1)
@@ -2332,6 +2346,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
      "accord_root": tstr,
      ; the id of the halt, the notify or the drill
      "invocation_id": tstr,
+
+
+
+Moore                      Expires 23 May 2027                 [Page 42]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
      ; minted by the holder; single-use within valid_until
      "nonce": bstr .size 32,
      "asserted_at": ms-time,
@@ -2346,14 +2368,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; author. Its dimension names its kind, confirmed or active;
    ; refs.target names the halt it confirms or ends, and refs.head the
    ; bundle it is counted over. The map is closed.
-
-
-
-Moore                      Expires 23 May 2027                 [Page 42]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
    accord-lifecycle = {
      "refs": accord-lifecycle-refs,
      "dimension": tstr,
@@ -2388,6 +2402,14 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
      * tstr => ceg-value,
    }
    ; The RNS members of CC 3.3.6.3; destination_hash is recomputed from
+
+
+
+Moore                      Expires 23 May 2027                 [Page 43]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    ; the other four.
    transport-destination = {
      "reticulum_x25519_pubkey": bstr .size 32,
@@ -2402,14 +2424,6 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    ; deterministic encoding of this array, carried as "seat_commitment"
    ; on the seat row and opened by the binding. `room` is the room's id;
    ; the member that carries it waits on its owner's submission. `nonce`
-
-
-
-Moore                      Expires 23 May 2027                 [Page 43]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
-
    ; is 32 fresh random bytes. The binding key and the content-KEM keys
    ; of one identity are distinct bytes, refused at admission otherwise.
    seat-commitment-input = ["CEG-seat/2", room: tstr, room_key: kid,
@@ -2444,6 +2458,14 @@ Appendix B.  Test Vectors
    counted row as several statements, and the three answers of
    Section 6.4.
 
+
+
+
+Moore                      Expires 23 May 2027                 [Page 44]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    The row statements file holds four valid statements and 42 refusals,
    with 17 key records.  The composite signature's vectors are checked
    against the examples of [COMPOSITE-JOSE].  Further files cover the
@@ -2452,19 +2474,6 @@ Appendix B.  Test Vectors
    [CC] also builds schema samples, which are not known-answer vectors.
    The build of this document checks that the CDDL of Appendix A admits
    each valid sample and refuses each broken one.
-
-
-
-
-
-
-
-
-
-Moore                      Expires 23 May 2027                 [Page 44]
-
-Internet-Draft       CEG Attestation Rows and SCITT        November 2026
-
 
 Appendix C.  The Earlier Form
 
@@ -2503,15 +2512,6 @@ Changes since draft-moore-scitt-ciris-ceg-01
 
    *  The CDDL appendix follows the current schema of [CC].
 
-Changes since draft-moore-scitt-ciris-ceg-00
-
-   Note to the RFC Editor: please remove this section before
-   publication.
-
-   *  The signed object is now the CBOR and COSE form of [CC] 1.0-rc20:
-      a COSE_Sign1 over a deterministically encoded payload, with one
-      composite ML-DSA-65 and Ed25519 signature.
-
 
 
 
@@ -2521,6 +2521,15 @@ Moore                      Expires 23 May 2027                 [Page 45]
 
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
+
+Changes since draft-moore-scitt-ciris-ceg-00
+
+   Note to the RFC Editor: please remove this section before
+   publication.
+
+   *  The signed object is now the CBOR and COSE form of [CC] 1.0-rc20:
+      a COSE_Sign1 over a deterministically encoded payload, with one
+      composite ML-DSA-65 and Ed25519 signature.
 
    *  The JSON, JCS and nested-signature sections are replaced by
       Section 4, Section 5 and Section 6.  The earlier form is reduced
@@ -2549,15 +2558,6 @@ Author's Address
    Eric Moore
    CIRIS L3C
    Email: eric@ciris.ai
-
-
-
-
-
-
-
-
-
 
 
 

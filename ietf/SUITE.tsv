@@ -1,0 +1,7 @@
+# The CIRIS SCITT drafts, one suite. Each row is a draft and the revision this tree releases.
+# status: in-tree (its stamped -REV .txt is in ietf/) | pending (in flight on the branch named; the suite check refuses a cut while any row is pending)
+# depends: the drafts it cites normatively; the order runs one way, from the profile down to the grammar.
+name	rev	status	branch	depends	owns
+draft-moore-scitt-ciris-ceg	02	in-tree	rc21	-	the signed row, its encoding, refs, the signature, admission, and the relationship to SCITT
+draft-moore-scitt-ciris-trace	00	pending	ietf/agent-context-00	draft-moore-scitt-ciris-ceg	the CIRIS agent reasoning trace: components, levels, signing, run_kind, the action anchor
+draft-moore-scitt-ciris-trace-context	00	pending	ietf/agent-context-00	draft-moore-scitt-ciris-trace draft-moore-scitt-ciris-ceg	the context manifest of each model call within the trace
