@@ -39357,6 +39357,22 @@
        "cc_ref": "CC 4.5.4"
       },
       {
+       "member": "transparency_services",
+       "type": "[2* identity-ref]",
+       "presence": "optional",
+       "when": "where a community names the services its accountable streams register with",
+       "in_cddl": true,
+       "cc_ref": "CC 5.3.3.8"
+      },
+      {
+       "member": "receipt_quorum",
+       "type": "uint .ge 2",
+       "presence": "optional",
+       "when": "where transparency_services is present, and never without it",
+       "in_cddl": true,
+       "cc_ref": "CC 5.3.3.8"
+      },
+      {
        "member": "refs",
        "type": "refs",
        "presence": "optional",

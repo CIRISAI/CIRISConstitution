@@ -2675,7 +2675,7 @@ In time:
 - @community landing of `W`: by member as `group:roster`; a late answer does not count (CC 3.3.4)
 - @community while `W` is open: binds nobody until it lands (CC 3.3.4)
 
-Body: `group_kind`, `group`, `name`, `version`, `members`, `founded_at`, `consensus_protocol`, `consensus_protocol_entrenched`, `cohort_subkind`, `cohort_subkind_payload`, `membership`, `dissolved_at`, `policy`, `duty_holders`, `refs`, `asserted_at`
+Body: `group_kind`, `group`, `name`, `version`, `members`, `founded_at`, `consensus_protocol`, `consensus_protocol_entrenched`, `cohort_subkind`, `cohort_subkind_payload`, `membership`, `dissolved_at`, `policy`, `duty_holders`, `transparency_services`, `receipt_quorum`, `refs`, `asserted_at`
 
 **`hardware_custody:{platform}`** — Circumstances, thing
 
