@@ -2,7 +2,10 @@
 (* The void of a duty appointment made to a minor (CC 3.2 at v1.0-rc21, Constitution commit b016df4, the
    user-target admission rule: "A duty-scoped delegates_to D onto T is void when both of the following hold:
    1. a minor-band age row about T is held, assured or age_self_declared, live or retracted; 2. no assured
-   adult age row about T (the age_assurance:* rung) is dated before D's asserted_at." The same paragraph:
+   adult age row about T (the age_assurance:* rung) is dated before D's asserted_at." As ruled on 2026-11-20
+   (Eric's decision), clause 2 reads "no UN-RETRACTED assured adult age row": a retracted adult proof proves
+   nothing, so its retraction voids an appointment already seated, the one case where a retraction reaches
+   back. The same paragraph:
    "The rule is a fold over the held rows, so every node reaches the same answer in any order of arrival.
    Backdating D can only void it, a retracted minor row still counts, and a self-declared adult lifts
    nothing." The reason is minor_appointment_void, CC 2.7.3).
@@ -21,10 +24,10 @@
    still voids; a later adult proof never revives a void D.
    EXPIRY = TRUE adds the reading "and unexpired at D's asserted_at" to clause 2 (persist's K2-fix14); the
    rc21 text has no such clause, and with it Inv_BackdateOnlyVoids fails (MinorVoid_expiry.cfg).
-   RETRACTED_ADULT_LIFTS (an open question): TRUE, today's reading, a retracted assured adult proof dated
-   before D still lifts the void, as the rc21 text has no word on it; FALSE, the proposed variant, a retracted
-   adult proof is no proof, and only retractions of minor rows are irrelevant (MinorVoid_retracted_adult.cfg).
-   A retraction may arrive before the row it names.
+   RETRACTED_ADULT_LIFTS = FALSE is the ruled reading, the one check.sh runs: a retracted adult proof is no
+   proof, and only retractions of minor rows are irrelevant. TRUE, the earlier reading (a held proof lifts the
+   void whether or not its witness withdrew it), is now a second plant that TLC must catch
+   (MinorVoid_plant_retracted_adult_lifts.cfg). A retraction may arrive before the row it names.
    MUT = TRUE plants the break of persist's K2-fix11: the adult proof is judged unexpired at the node's own
    clock, now, instead of at D's asserted_at. *)
 EXTENDS Naturals, FiniteSets
@@ -100,6 +103,15 @@ Inv_SupersededMinorStillVoids ==
   \A d \in HeldD : \A m \in held :
     (IsMinor(m) /\ (\E a \in held : a \in AgeRows /\ a.s = m.s /\ a.band = "adult" /\ a.at > m.at)
        /\ ~ProofAt(held, d.at)) => void[d]
+\* V8 (the ruling) a retracted assured adult proof does not lift the void: with a minor row held and no
+\* un-retracted proof before D, D is void even when a retracted proof dated before it is held
+LiveProofAt(H, t) == \E r \in H : r.k = "assured" /\ r.band = "adult" /\ r.at < t /\ ~Retracted(H, r)
+                                  /\ (EXPIRY => Unexpired(r.exp, t))
+Inv_RetractedProofLiftsNothing == \A d \in HeldD : ((\E m \in held : IsMinor(m)) /\ ~LiveProofAt(held, d.at)) => void[d]
+\* V9 the retraction of the adult proof arriving after D was seated voids D
+Prop_LateRetractionVoids ==
+  [][\A d \in HeldD : (~void[d] /\ (\E x \in (held' \ held) \cap RetractRows : \E a \in held : a.id = x.tgt /\ a.k = "assured")
+                          /\ (\E m \in held' : IsMinor(m)) /\ ~LiveProofAt(held', d.at)) => void'[d]]_vars
 \* V7 a later adult proof (dated at or after D) never revives a void D
 Prop_LaterProofNoRevive ==
   [][\A d \in HeldD : (void[d] /\ \A r \in held' \ held : r.k = "assured" /\ r.band = "adult" /\ r.at >= d.at)
