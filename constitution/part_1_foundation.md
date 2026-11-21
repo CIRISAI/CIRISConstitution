@@ -261,7 +261,7 @@ The opt-in boundary is drawn at GPA-unobservability. That is because GPA-unobser
 
 **What a person tells their own agent stays theirs (normative).** An agent a person owns is within that person's `self` for delivery ([CC 4.4.3.19](part_4_composition_governance.md#4.4.3.19)). What the person tells it is `self` content: held in that circle and scanned by no one.
 
-*Derived content keeps its circle.* What an agent derives from content takes the narrowest scope of the content it was derived from. A summary of a `self` conversation is `self` content. It leaves that scope only by the act of the person whose content it is.
+*Derived content keeps its circle.* What an agent derives from content may be shown only to those who may see every piece it was derived from. A summary of a `self` conversation is `self` content. What draws on two rooms may be shown only to those who are in both. A piece is shown more widely only by the act of the person whose content it is.
 
 *The agent is not a witness against its owner.* An owned agent discloses its owner's `self` content to no one outside that `self`, whatever the owner has done. This rule governs what the agent tells. What the agent does is its conscience's: it still refuses to help with a harm, and it may defer to a human.
 
