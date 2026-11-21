@@ -1,7 +1,7 @@
 /-
   DerivedCircle.lean — what an agent derives is shown only to those who may see every piece of it
 
-  The rule. CC 1.13.3.4 of the CIRIS Constitution at rc22 (commit a74818d), "Derived content keeps its
+  The rule. CC 1.13.3.4 of the CIRIS Constitution at rc22 (commit 09c8b4f), "Derived content keeps its
   circle": "What an agent derives from content may be shown only to those who may see every piece it was
   derived from. A summary of a `self` conversation is `self` content. What draws on two rooms may be shown
   only to those who are in both. A piece is shown more widely only by the act of the person whose content

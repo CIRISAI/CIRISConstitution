@@ -57,8 +57,8 @@
         one of two arms (`p11_authority_rooted_in_person`): a live delegation whose scope names the act's
         duty, signed by a person seated over THIS agent, who approves no single act under it
         (`p11_delegation_needs_no_approval`); or, for an act no delegation covers, an approving row naming
-        the fingerprint, signed by a person seated over the agent THAT ROW names, which admission.py does not
-        check is this agent. Against v1.0-rc21 this changes no case of `action_needs_no_person`: the
+        the fingerprint, about THIS agent and signed by a person seated over it. (At 4040d0b the model read
+        the approval's own agent; the Constitution fixed that at bdb10ee, `p11_approval_other_agent`.) Against v1.0-rc21 this changes no case of `action_needs_no_person`: the
         dispatches that need no person are the same. What changes is where the person of a role act stands:
         at the grant of the delegation, not at each act. So "the same walk at a count" is true of the
         definition and the count; "differing only in the voice count" is not: the three differ in root,
@@ -84,7 +84,8 @@
        `p11_delegation_licenses`, `p11_scope_must_name_duty` (the plant `delegation_any_scope` refuted;
        `delegation_any_scope_differs` shows a world where the plant's reading licenses and the rule does not),
        `p11_withdrawn_delegation`, `p11_program_delegation`, `p11_other_agent_delegation`,
-       `p11_authority_rooted_in_person`
+       `p11_authority_rooted_in_person`, `p11_approval_other_agent` (an approval of another agent's call
+       licenses nothing here; `approval_any_agent_differs` refutes the plant `approval_any_agent`)
     P12 `p12_runs_perm`, `p12_may_perm`, `p12_loads_perm`, `p12_dispatch_perm`, `p12_effect_perm`
     P13 `profile_is_walk`, `code_is_walk`, `p13_one_voice_clauses`
     P14 `p14_build_runs`, `p14_unblessed_runs_nothing`
@@ -573,6 +574,12 @@ def loads (S : GSet N Dig Id L D) (agent : N) (loaded : List Dig) : Prop :=
 def trusted (S : GSet N Dig Id L D) (rid : Id) : Prop :=
   ∃ ag b d fp, S (.resp rid ag true b d fp) ∧ person b ∧ ((∃ c, S (.seat ag b c)) ∨ S (.bind ag b))
 
+/-- `trusted_evidence(R, rid, agent)` (Constitution bdb10ee): the approving response is about the ACTING agent,
+    and signed by a person seated over it or its steward. An approval of one agent's call is none for another's,
+    though the fingerprints match. -/
+def trustedFor (S : GSet N Dig Id L D) (rid : Id) (agent : N) : Prop :=
+  ∃ b d fp, S (.resp rid agent true b d fp) ∧ person b ∧ ((∃ c, S (.seat agent b c)) ∨ S (.bind agent b))
+
 /-- `may_dispatch`, over the recomputed fingerprint `fp`. -/
 def dispatch (S : GSet N Dig Id L D) (th : Id) (fp : Dig) (approvedBy : Option Id) : Prop :=
   (∃ p : Review Dig Id L, S (.review p) ∧ p.thought = th ∧ p.fp = fp ∧ p.passed = true ∧
@@ -609,7 +616,7 @@ def delegated (S : GSet N Dig Id L D) (agent : N) (rid : Id) (duty : D) : Prop :
 def authorityOK (S : GSet N Dig Id L D) (agent : N) (fp : Dig) : Auth Id D → Prop
   | .none => True
   | .under rid duty => delegated person S agent rid duty
-  | .claims c => ∃ ag ok b d, S (.resp c ag ok b d (some fp)) ∧ trusted person S c
+  | .claims c => ∃ ag ok b d, S (.resp c ag ok b d (some fp)) ∧ trustedFor person S c agent
 
 /-- `may_effect` (Constitution 4040d0b). -/
 def mayEffect (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id) (auth : Auth Id D)
@@ -1276,16 +1283,16 @@ theorem p11_delegation_licenses (S : GSet N Dig Id L D) (agent : N) (th : Id) (f
   ⟨⟨p, hp, ht, hps, hf, fun _ => hdecl⟩, hd, hack⟩
 
 /-- **Authority claimed is rooted in a person.** An act that claims authority, by either arm, rests on a row a
-    person signed: the delegation's signer, seated over this agent; or the approving row's signer, seated over
-    the agent that row names. -/
+    person signed: the delegation's signer, seated over this agent; or the signer of an approving row about this
+    agent, seated over it (Constitution bdb10ee). -/
 theorem p11_authority_rooted_in_person (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id)
     (auth : Auth Id D) (binds : List N) (hauth : auth ≠ .none)
     (h : mayEffect person S agent th fp args auth binds) :
     ∃ b, person b ∧
       ((∃ rid duty sc, auth = .under rid duty ∧ S (.deleg rid agent b sc) ∧
           ((∃ c, S (.seat agent b c)) ∨ S (.bind agent b))) ∨
-       (∃ c ag d f, auth = .claims c ∧ S (.resp c ag true b d f) ∧
-          ((∃ c', S (.seat ag b c')) ∨ S (.bind ag b)))) := by
+       (∃ c d f, auth = .claims c ∧ S (.resp c agent true b d f) ∧
+          ((∃ c', S (.seat agent b c')) ∨ S (.bind agent b)))) := by
   have ha := h.2.1
   cases auth with
   | none => exact absurd rfl hauth
@@ -1293,15 +1300,40 @@ theorem p11_authority_rooted_in_person (S : GSet N Dig Id L D) (agent : N) (th :
     have ⟨b, sc, h1, h2, h3, _⟩ := ha
     exact ⟨b, h2, Or.inl ⟨rid, duty, sc, rfl, h1, h3⟩⟩
   | claims c =>
-    have ⟨_, _, _, _, _, ⟨ag, b, d, f, h1, h2, h3⟩⟩ := ha
-    exact ⟨b, h2, Or.inr ⟨c, ag, d, f, rfl, h1, h3⟩⟩
+    have ⟨_, _, _, _, _, ⟨b, d, f, h1, h2, h3⟩⟩ := ha
+    exact ⟨b, h2, Or.inr ⟨c, d, f, rfl, h1, h3⟩⟩
 
 /-- The plant's reading (`delegation_any_scope`): the same check with the scope not read. -/
 def delegatedAnyScope (S : GSet N Dig Id L D) (agent : N) (rid : Id) : Prop :=
   ∃ b sc, S (.deleg rid agent b sc) ∧ person b ∧ ((∃ c, S (.seat agent b c)) ∨ S (.bind agent b)) ∧
     ¬ S (.withdraw rid)
 
+/-- **An approval of another agent's call licenses nothing here** (Constitution bdb10ee), even where a response
+    with that id names this act's fingerprint: every response with that id is about another agent. -/
+theorem p11_approval_other_agent (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id) (c : Id)
+    (binds : List N) (ho : ∀ ag ok b d f, S (.resp c ag ok b d f) → ag ≠ agent) :
+    ¬ mayEffect person S agent th fp args (.claims c) binds :=
+  fun h =>
+    let ⟨_, _, _, _, _, ⟨b, d, f, h1, _⟩⟩ := h.2.1
+    ho agent true b d f h1 rfl
+
 end PropsAgent
+
+/-- **The plant `approval_any_agent` tells.** Agent `1`'s steward `2` approves agent `1`'s call with fingerprint
+    `()`. For agent `0`, acting on the same fingerprint, the plant's reading (the response need not be about the
+    acting agent: `trusted`) finds the approving row, and the rule does not. -/
+theorem approval_any_agent_differs :
+    (∃ ag ok b d, (fun r => r = .resp () 1 true 2 none (some ()) ∨ r = .bind 1 2 : GSet Nat Unit Unit Unit Unit)
+        (.resp () ag ok b d (some ())) ∧
+      trusted (fun _ => True) (fun r => r = .resp () 1 true 2 none (some ()) ∨ r = .bind 1 2 :
+        GSet Nat Unit Unit Unit Unit) ()) ∧
+    ¬ authorityOK (fun _ => True) (fun r => r = .resp () 1 true 2 none (some ()) ∨ r = .bind 1 2 :
+        GSet Nat Unit Unit Unit Unit) 0 () (.claims ()) := by
+  refine ⟨⟨1, true, 2, none, Or.inl rfl, 1, 2, none, some (), Or.inl rfl, trivial, Or.inr (Or.inr rfl)⟩, ?_⟩
+  intro ⟨_, _, _, _, _, b, d, f, h1, _⟩
+  cases h1 with
+  | inl h => cases h
+  | inr h => cases h
 
 /-- **The plant tells.** In a world with one live delegation of `moderate` (`true`) by the agent's steward, the
     plant's reading licenses a `takedown` (`false`) under it, and the rule does not. -/
@@ -1425,6 +1457,8 @@ end Admission
 #print axioms Admission.p11_authority_rooted_in_person
 #print axioms Admission.delegation_any_scope_differs
 #print axioms Admission.effect_needs_no_person
+#print axioms Admission.p11_approval_other_agent
+#print axioms Admission.approval_any_agent_differs
 #print axioms Admission.p12_runs_perm
 #print axioms Admission.p12_may_perm
 #print axioms Admission.p12_loads_perm
