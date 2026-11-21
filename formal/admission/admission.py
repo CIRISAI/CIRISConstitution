@@ -290,9 +290,12 @@ def fingerprint(call):
     return H("CEG-call/2", call["verb"], call["tool"], call["args"], call["channel"])
 
 
-def trusted_evidence(R, rid):
-    """A row that may discharge an objection: an approving response by a person seated over the agent."""
+def trusted_evidence(R, rid, agent=None):
+    """A row that may discharge an objection: an approving response by a person seated over the agent. Where the
+    acting agent is given, the response must be about THAT agent: an approval for one agent's call is none for
+    another's, though the fingerprints match."""
     for r in sel(R, kind="resp", id=rid):
+        if agent is not None and r["agent"] != agent and "approval_any_agent" not in PLANTS: continue
         seated = {s["wa"] for s in sel(R, kind="seat", agent=r["agent"])} | {steward(R, r["agent"])}
         if r["outcome"] == "approved" and person(R, r["by"]) and r["by"] in seated: return True
     return False
@@ -373,7 +376,7 @@ def may_effect(R, thought, fp, args, claims=None, binds_others=(), under=None, d
     if under is not None:
         if not delegated(R, agent, under, duty): return False, "effect_untrusted_unacknowledged"
     elif claims and "absent_evidence_licenses" not in PLANTS:
-        if not any(r.get("fp") == fp and trusted_evidence(R, r["id"]) for r in sel(R, kind="resp", id=claims)):
+        if not any(r.get("fp") == fp and trusted_evidence(R, r["id"], agent) for r in sel(R, kind="resp", id=claims)):
             return False, "effect_untrusted_unacknowledged"
     if binds_others and "binds_no_ack" not in PLANTS:
         if not set(binds_others) <= {a["by"] for a in sel(R, kind="ack", of=fp)}:

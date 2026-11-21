@@ -9,6 +9,16 @@
   admission is the kernel's seat walk at one voice, and action admission the same walk at a count, is argued
   here and run, not proved in Lean." This file is that proof, and the 14 properties as theorems.
 
+  THE STANDING DELEGATION (Constitution rc22, commit 4040d0b). CC 2.7.11 "Derived trust" now reads: an agent
+  acts under standing delegations, and the person who signed one approves no single act under it. Its
+  owner-binding delegates it the role its template defines, and under that it does any act that needs no role.
+  An act that needs a role needs a live delegation whose scope names that role (CC 4.5.5 (b)). Only an act that
+  no delegation covers needs the approving row that names its fingerprint. admission.py at 4040d0b
+  (`delegated`, `may_effect`) has 14 properties over 97 cases with 49 plants; the new plant is
+  `delegation_any_scope`. Here `mayEffect` takes the act's authority as one of three (`Auth`): none, `under` a
+  delegation for a duty, or `claims` an approving row; the profile and code scopes and the dispatch are as at
+  v1.0-rc21. A `withdraws` naming the delegation ends it whoever signed it, as admission.py reads it.
+
   THE ONE WALK (Part 1). `walk` is built from two pieces of the kernel and nothing else:
     * standing: `Causal.reaches`, the bounded walk that `Kernel.means_is_seat_walk` and
       `TwoMechanisms.claim_is_one_voice_consent` identify with the walk of one-voice seats;
@@ -41,14 +51,20 @@
     (2) The action scope differs from the other two in more than the count: its root and stander are the
         agent's own key at depth 0, and its voices are the four faculties, which are not keys and not
         persons. A dispatch needs no person's row at all (`action_needs_no_person`: a world in which no key is
-        a person, and a dispatch passes). CC 2.7.11's first paragraph says each admission is "rooted in a
-        person" and "No program's key produces it"; for the action scope, as the text's own "Action"
-        paragraphs and admission.py define it, that holds only where an objection is discharged or authority
-        is claimed (`p9_discharge_by_person`). So "the same walk at a count" is true of the definition and
-        the count; "differing only in the voice count" is not: the three differ in root, depth and kind of
-        voice as well, and that is what `three_admissions_one_walk` states.
+        a person, and a dispatch passes), and neither does an effect that needs no role, done under the role
+        the owner-binding delegates (`effect_needs_no_person`). An action is rooted in a person only where an
+        objection is discharged (`p9_discharge_by_person`) or the act claims authority, which it now does by
+        one of two arms (`p11_authority_rooted_in_person`): a live delegation whose scope names the act's
+        duty, signed by a person seated over THIS agent, who approves no single act under it
+        (`p11_delegation_needs_no_approval`); or, for an act no delegation covers, an approving row naming
+        the fingerprint, signed by a person seated over the agent THAT ROW names, which admission.py does not
+        check is this agent. Against v1.0-rc21 this changes no case of `action_needs_no_person`: the
+        dispatches that need no person are the same. What changes is where the person of a role act stands:
+        at the grant of the delegation, not at each act. So "the same walk at a count" is true of the
+        definition and the count; "differing only in the voice count" is not: the three differ in root,
+        depth and kind of voice as well, and that is what `three_admissions_one_walk` states.
 
-  THE FOURTEEN PROPERTIES (Part 5), each as theorems over the transcription, for every world, not the 92 cases:
+  THE FOURTEEN PROPERTIES (Part 5), each as theorems over the transcription, for every world, not the 97 cases:
     P1 `p1_runs_needs_admission`, `p1_issuer_reached`, `p1_no_owner_runs_nothing`
     P2 `p2_digest_bound`, `p2_changed_unit`
     P3 `p3_program_issues_nothing`, `p3_program_edges_carry_nothing`, `p3_program_voice_not_counted`
@@ -63,7 +79,12 @@
        `p9_objection_carried`, `p9_approval_bound`
     P10 `p10_chain_unique`, `p10_loads_unique`, `p10_chain_authorized`, `p10_base_is_template`,
        `p10_fork_stops`, `p10_program_approval`, `p10_unanchored`
-    P11 `p11_least`, `p11_own_trust_not_enough`, `p11_effect_gate`, `p11_trusted_needs_no_declaration`
+    P11 `p11_least`, `p11_own_trust_not_enough`, `p11_effect_gate`, `p11_trusted_needs_no_declaration`,
+       `p11_no_role_reads_no_authority`, `p11_delegation_needs_no_approval`, `p11_delegation_needs`,
+       `p11_delegation_licenses`, `p11_scope_must_name_duty` (the plant `delegation_any_scope` refuted;
+       `delegation_any_scope_differs` shows a world where the plant's reading licenses and the rule does not),
+       `p11_withdrawn_delegation`, `p11_program_delegation`, `p11_other_agent_delegation`,
+       `p11_authority_rooted_in_person`
     P12 `p12_runs_perm`, `p12_may_perm`, `p12_loads_perm`, `p12_dispatch_perm`, `p12_effect_perm`
     P13 `profile_is_walk`, `code_is_walk`, `p13_one_voice_clauses`
     P14 `p14_build_runs`, `p14_unblessed_runs_nothing`
@@ -491,7 +512,7 @@ structure Review (Dig Id L : Type) where
   derived : List L
 
 /-- The rows of the agent's scopes. -/
-inductive GRow (N Dig Id L : Type)
+inductive GRow (N Dig Id L D : Type)
   | bind (agent steward : N)
   | seat (agent wa conferrer : N)
   | resp (id : Id) (agent : N) (approved : Bool) (signer : N) (digest : Option Dig) (fp : Option Dig)
@@ -500,27 +521,38 @@ inductive GRow (N Dig Id L : Type)
   | review (p : Review Dig Id L)
   | data (id : Id) (trust : Nat) (label : L) (names : List Id)
   | ack (of : Dig) (signer : N)
+  | deleg (id : Id) (agent : N) (signer : N) (scope : List D)   -- a `delegates_to` onto `agent`
+  | withdraw (of : Id)                                          -- a `withdraws` naming row `of`
+
+/-- What an act claims as its authority (admission.py `may_effect`'s `under`/`duty` and `claims`): nothing (an
+    act that needs no role, done under the role the agent's owner-binding delegates it), a standing delegation
+    and the duty the act needs, or an approving row. The model reads `under` before `claims`; here the two arms
+    are one sum. -/
+inductive Auth (Id D : Type)
+  | none
+  | under (rid : Id) (duty : D)
+  | claims (c : Id)
 
 section Agent
 
-variable {N Dig Id L : Type} (person : N → Prop)
+variable {N Dig Id L D : Type} (person : N → Prop)
 
-abbrev GSet (N Dig Id L : Type) := GRow N Dig Id L → Prop
+abbrev GSet (N Dig Id L D : Type) := GRow N Dig Id L D → Prop
 
 /-- `authorized`: the cited response is held, approved, about this agent, signed by a person who is the
     agent's steward or seated by the steward, and carries the amendment's exact digest. -/
-def authorized (S : GSet N Dig Id L) (a : Link N Dig Id) : Prop :=
+def authorized (S : GSet N Dig Id L D) (a : Link N Dig Id) : Prop :=
   ∃ b fp st, S (.resp a.byResp a.agent true b (some a.digest) fp) ∧ person b ∧ S (.bind a.agent st) ∧
     (b = st ∨ S (.seat a.agent b st))
 
 /-- A candidate for the link after `cur`: held, authorized, naming `cur`; the base also approves the attested
     template's exact digest. -/
-def step (S : GSet N Dig Id L) (agent : N) (cur : Option Id) (a : Link N Dig Id) : Prop :=
+def step (S : GSet N Dig Id L D) (agent : N) (cur : Option Id) (a : Link N Dig Id) : Prop :=
   S (.amend a) ∧ a.agent = agent ∧ authorized person S a ∧ a.prev = cur ∧
     (cur = none → ∃ tpl, S (.template agent tpl true) ∧ a.digest = tpl)
 
 /-- `chain`: from no predecessor, the one candidate at each link; it stops where there is none or two. -/
-inductive IsChain (S : GSet N Dig Id L) (agent : N) : Option Id → List (Link N Dig Id) → Prop
+inductive IsChain (S : GSet N Dig Id L D) (agent : N) : Option Id → List (Link N Dig Id) → Prop
   | stop (cur : Option Id) :
       (¬ ∃ a, step person S agent cur a ∧ ∀ b, step person S agent cur b → b = a) → IsChain S agent cur []
   | next (cur : Option Id) (a : Link N Dig Id) (l : List (Link N Dig Id)) :
@@ -528,21 +560,21 @@ inductive IsChain (S : GSet N Dig Id L) (agent : N) : Option Id → List (Link N
       IsChain S agent (some a.id) l → IsChain S agent cur (a :: l)
 
 /-- A base link is held. -/
-def anchored (S : GSet N Dig Id L) (agent : N) : Prop :=
+def anchored (S : GSet N Dig Id L D) (agent : N) : Prop :=
   ∃ a, step person S agent none a ∧ ∀ b, step person S agent none b → b = a
 
 /-- `load`: anchored, the agent loads exactly the digests its chain derives (the profile digest read as that
     list: SHA-256 assumed injective); unanchored, the attested template alone. -/
-def loads (S : GSet N Dig Id L) (agent : N) (loaded : List Dig) : Prop :=
+def loads (S : GSet N Dig Id L D) (agent : N) (loaded : List Dig) : Prop :=
   (anchored person S agent ∧ ∃ l, IsChain person S agent none l ∧ loaded = l.map Link.digest) ∨
   (¬ anchored person S agent ∧ ∃ tpl, S (.template agent tpl true) ∧ loaded = [tpl])
 
 /-- `trusted_evidence`: an approving response by a person seated over the agent, or its steward. -/
-def trusted (S : GSet N Dig Id L) (rid : Id) : Prop :=
+def trusted (S : GSet N Dig Id L D) (rid : Id) : Prop :=
   ∃ ag b d fp, S (.resp rid ag true b d fp) ∧ person b ∧ ((∃ c, S (.seat ag b c)) ∨ S (.bind ag b))
 
 /-- `may_dispatch`, over the recomputed fingerprint `fp`. -/
-def dispatch (S : GSet N Dig Id L) (th : Id) (fp : Dig) (approvedBy : Option Id) : Prop :=
+def dispatch (S : GSet N Dig Id L D) (th : Id) (fp : Dig) (approvedBy : Option Id) : Prop :=
   (∃ p : Review Dig Id L, S (.review p) ∧ p.thought = th ∧ p.fp = fp ∧ p.passed = true ∧
     (∀ f : Fac, f ∈ p.facs) ∧
     (∀ o : Review Dig Id L, S (.review o) → o.thought = th → o.passed = false → o.fp = fp →
@@ -552,7 +584,7 @@ def dispatch (S : GSet N Dig Id L) (th : Id) (fp : Dig) (approvedBy : Option Id)
   (∀ g, approvedBy = some g → ∃ ag b d, S (.resp g ag true b d (some fp)))
 
 /-- `a` is `r` or a row `r` derives from, through the held data rows. -/
-inductive From (S : GSet N Dig Id L) : Id → Id → Prop
+inductive From (S : GSet N Dig Id L D) : Id → Id → Prop
   | refl (r : Id) : From S r r
   | step (r a b : Id) (tr : Nat) (lb : L) (ns : List Id) :
       From S r a → S (.data a tr lb ns) → b ∈ ns → From S r b
@@ -560,34 +592,47 @@ inductive From (S : GSet N Dig Id L) : Id → Id → Prop
 def VERIFIED : Nat := 1
 
 /-- `trust_of(r) ≥ v`: the least trust over `r` and everything it derives from is at least `v`. -/
-def trustAtLeast (S : GSet N Dig Id L) (r : Id) (v : Nat) : Prop :=
+def trustAtLeast (S : GSet N Dig Id L D) (r : Id) (v : Nat) : Prop :=
   ∀ a tr lb ns, From S r a → S (.data a tr lb ns) → v ≤ tr
 
-def untrustedLabel (S : GSet N Dig Id L) (r : Id) (lb : L) : Prop :=
+def untrustedLabel (S : GSet N Dig Id L D) (r : Id) (lb : L) : Prop :=
   ∃ a tr ns, From S r a ∧ S (.data a tr lb ns) ∧ tr < VERIFIED
 
-/-- `may_effect`. -/
-def mayEffect (S : GSet N Dig Id L) (th : Id) (fp : Dig) (args : Id) (claims : Option Id) (binds : List N) :
-    Prop :=
+/-- `delegated` (CC 4.5.5 (b)): a `delegates_to` row `rid` onto this agent, signed by a person seated over it
+    (a seat over the agent, or its steward), with no `withdraws` naming it held, whose scope names the duty. -/
+def delegated (S : GSet N Dig Id L D) (agent : N) (rid : Id) (duty : D) : Prop :=
+  ∃ b sc, S (.deleg rid agent b sc) ∧ person b ∧ ((∃ c, S (.seat agent b c)) ∨ S (.bind agent b)) ∧
+    ¬ S (.withdraw rid) ∧ duty ∈ sc
+
+/-- The authority arm of `may_effect`: none asked; the standing delegation; or the approving row naming the
+    fingerprint. -/
+def authorityOK (S : GSet N Dig Id L D) (agent : N) (fp : Dig) : Auth Id D → Prop
+  | .none => True
+  | .under rid duty => delegated person S agent rid duty
+  | .claims c => ∃ ag ok b d, S (.resp c ag ok b d (some fp)) ∧ trusted person S c
+
+/-- `may_effect` (Constitution 4040d0b). -/
+def mayEffect (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id) (auth : Auth Id D)
+    (binds : List N) : Prop :=
   (∃ p : Review Dig Id L, S (.review p) ∧ p.thought = th ∧ p.passed = true ∧ p.fp = fp ∧
     (¬ trustAtLeast S args VERIFIED → ∀ lb, untrustedLabel S args lb → lb ∈ p.derived)) ∧
-  (∀ c, claims = some c → ∃ ag ok b d, S (.resp c ag ok b d (some fp)) ∧ trusted person S c) ∧
+  authorityOK person S agent fp auth ∧
   (∀ k, k ∈ binds → S (.ack fp k))
 
 /-! ### The profile scope is the walk at one voice -/
 
-def profNames (a : Link N Dig Id) (o : GRow N Dig Id L) (_ : Unit) : Prop :=
+def profNames (a : Link N Dig Id) (o : GRow N Dig Id L D) (_ : Unit) : Prop :=
   ∃ b fp, o = .resp a.byResp a.agent true b (some a.digest) fp
 
-def profBody (a : Link N Dig Id) (o : GRow N Dig Id L) (bd : Body N N) : Prop :=
+def profBody (a : Link N Dig Id) (o : GRow N Dig Id L D) (bd : Body N N) : Prop :=
   ∃ b fp, o = .resp a.byResp a.agent true b (some a.digest) fp ∧ bd = ⟨b, [b], 1, 1⟩
 
-def profSigns (o : GRow N Dig Id L) (v : N) : Prop := ∃ i ag ok d fp, o = .resp i ag ok v d fp
+def profSigns (o : GRow N Dig Id L D) (v : N) : Prop := ∃ i ag ok d fp, o = .resp i ag ok v d fp
 
 /-- **Profile admission is the walk at one voice.** A link counts iff, for the agent's steward, its
     approving response is the walk from the steward over the steward's seats over the agent, depth 1, at the
     one-voice body of the response's signer. -/
-theorem profile_is_walk (S : GSet N Dig Id L) (a : Link N Dig Id) :
+theorem profile_is_walk (S : GSet N Dig Id L D) (a : Link N Dig Id) :
     authorized person S a ↔ ∃ st, S (.bind a.agent st) ∧ ∃ o,
       walk (fun m k => S (.seat a.agent k m)) st person S (profNames a) (fun _ => True) (profBody a)
         profSigns () o := by
@@ -608,10 +653,10 @@ theorem profile_is_walk (S : GSet N Dig Id L) (a : Link N Dig Id) :
 
 /-! ### The action scope is the walk at a count of four -/
 
-def actNames (th : Id) (o : GRow N Dig Id L) (fp : Dig) : Prop :=
+def actNames (th : Id) (o : GRow N Dig Id L D) (fp : Dig) : Prop :=
   ∃ p : Review Dig Id L, o = .review p ∧ p.thought = th ∧ p.fp = fp ∧ p.passed = true
 
-def actLive (S : GSet N Dig Id L) (th : Id) (fp : Dig) (g : Option Id) (o : GRow N Dig Id L) : Prop :=
+def actLive (S : GSet N Dig Id L D) (th : Id) (fp : Dig) (g : Option Id) (o : GRow N Dig Id L D) : Prop :=
   (∃ p : Review Dig Id L, o = .review p ∧
     (∀ o : Review Dig Id L, S (.review o) → o.thought = th → o.passed = false → o.fp = fp →
       ∃ ev, (o.id, ev) ∈ p.discharges ∧ trusted person S ev) ∧
@@ -619,14 +664,14 @@ def actLive (S : GSet N Dig Id L) (th : Id) (fp : Dig) (g : Option Id) (o : GRow
       o.id ∈ p.considered)) ∧
   (∀ g', g = some g' → ∃ ag b d, S (.resp g' ag true b d (some fp)))
 
-def actSigns (o : GRow N Dig Id L) (f : Fac) : Prop := ∃ p : Review Dig Id L, o = .review p ∧ f ∈ p.facs
+def actSigns (o : GRow N Dig Id L D) (f : Fac) : Prop := ∃ p : Review Dig Id L, o = .review p ∧ f ∈ p.facs
 
-theorem review_inj {p q : Review Dig Id L} (h : (GRow.review p : GRow N Dig Id L) = GRow.review q) : p = q := by
+theorem review_inj {p q : Review Dig Id L} (h : (GRow.review p : GRow N Dig Id L D) = GRow.review q) : p = q := by
   injection h
 
 /-- **Action admission is the walk at a count.** A dispatch passes iff a pass record is the walk from the
     agent `ag` itself at depth 0, with the four faculties as its voices and a count of four. -/
-theorem action_is_walk (S : GSet N Dig Id L) (ag : N) (th : Id) (fp : Dig) (g : Option Id) :
+theorem action_is_walk (S : GSet N Dig Id L D) (ag : N) (th : Id) (fp : Dig) (g : Option Id) :
     dispatch person S th fp g ↔ ∃ o,
       walk (fun _ _ => False) ag (fun _ => True) S (actNames th) (actLive person S th fp g)
         (fun _ b => b = (⟨ag, Fac.all, 4, 0⟩ : Body N Fac)) actSigns fp o := by
@@ -644,9 +689,10 @@ theorem action_is_walk (S : GSet N Dig Id L) (ag : N) (th : Id) (fp : Dig) (g : 
 
 /-- **Qualification (2).** The action scope needs no person. With no key a person, a world holding one pass
     record of all four faculties dispatches: the review record is under the agent's own key and binds only
-    its own dispatch (CC 2.7.11, "Action"). -/
+    its own dispatch (CC 2.7.11, "Action"). Unchanged by the standing delegation of 4040d0b, which reads only
+    at the effect gate (`effect_needs_no_person`, `p11_authority_rooted_in_person`). -/
 theorem action_needs_no_person :
-    dispatch (N := Unit) (Dig := Unit) (Id := Unit) (L := Unit) (fun _ => False)
+    dispatch (N := Unit) (Dig := Unit) (Id := Unit) (L := Unit) (D := Unit) (fun _ => False)
       (fun r => r = .review ⟨(), (), (), true, Fac.all, [], [], []⟩) () () none := by
   refine ⟨⟨⟨(), (), (), true, Fac.all, [], [], []⟩, rfl, rfl, rfl, rfl, Fac.mem_all, ?_, ?_⟩, ?_⟩
   · intro o ho _ hp _
@@ -666,9 +712,9 @@ end Agent
     for profile (depth 1 from the steward) and for one person's code row (depth 5 from the host owner, depth
     0 when it names an effect), a count of at least two for a counted code row, and the four faculties at a
     count of four for an action (depth 0 from the agent itself). -/
-theorem three_admissions_one_walk {N Dig Id L : Type} (person : N → Prop)
+theorem three_admissions_one_walk {N Dig Id L D : Type} (person : N → Prop)
     (S : Held N Dig Id) (host : N) (now : Nat) (e : Ent N Dig Id) (d : Dig)
-    (G : GSet N Dig Id L) (a : Link N Dig Id) (ag : N) (th : Id) (fp : Dig) (g : Option Id) :
+    (G : GSet N Dig Id L D) (a : Link N Dig Id) (ag : N) (th : Id) (fp : Dig) (g : Option Id) :
     ((∃ u, rowAdmits person S host now e u ∧ u.unit = d) ↔
       ∃ o, owner person S host o ∧
         walk (edgeE person S) o person S codeNames (codeLive person S now) (codeBody S) (codeSigns S) d e) ∧
@@ -676,7 +722,7 @@ theorem three_admissions_one_walk {N Dig Id L : Type} (person : N → Prop)
     (authorized person G a ↔ ∃ st, G (.bind a.agent st) ∧ ∃ o,
       walk (fun m k => G (.seat a.agent k m)) st person G (profNames a) (fun _ => True) (profBody a)
         profSigns () o) ∧
-    (∀ (o : GRow N Dig Id L) b, profBody a o b → b.need = 1 ∧ b.voices.length = 1) ∧
+    (∀ (o : GRow N Dig Id L D) b, profBody a o b → b.need = 1 ∧ b.voices.length = 1) ∧
     (dispatch person G th fp g ↔ ∃ o,
       walk (fun _ _ => False) ag (fun _ => True) G (actNames th) (actLive person G th fp g)
         (fun _ b => b = (⟨ag, Fac.all, 4, 0⟩ : Body N Fac)) actSigns fp o) ∧
@@ -976,11 +1022,11 @@ end Props
 
 section PropsAgent
 
-variable {N Dig Id L : Type} (person : N → Prop)
+variable {N Dig Id L D : Type} (person : N → Prop)
 
 /-! ### P9 dispatch executes only the reviewed fingerprint -/
 
-theorem p9_needs_four_passes (S : GSet N Dig Id L) (th : Id) (fp : Dig) (g : Option Id)
+theorem p9_needs_four_passes (S : GSet N Dig Id L D) (th : Id) (fp : Dig) (g : Option Id)
     (h : dispatch person S th fp g) :
     ∃ p : Review Dig Id L, S (.review p) ∧ p.thought = th ∧ p.fp = fp ∧ p.passed = true ∧ ∀ f, f ∈ p.facs :=
   let ⟨⟨p, h1, h2, h3, h4, h5, _⟩, _⟩ := h
@@ -989,14 +1035,14 @@ theorem p9_needs_four_passes (S : GSet N Dig Id L) (th : Id) (fp : Dig) (g : Opt
 /-- With the fingerprint injective (SHA-256 over the call's CDE encoding assumed collision-free), a changed
     call has no record: what executes is what was reviewed. -/
 theorem p9_changed_call {C : Type} (fpOf : C → Dig) (hinj : ∀ x y, fpOf x = fpOf y → x = y)
-    (S : GSet N Dig Id L) (th : Id) (c c' : C) (hc : c' ≠ c) (g : Option Id)
+    (S : GSet N Dig Id L D) (th : Id) (c c' : C) (hc : c' ≠ c) (g : Option Id)
     (hrec : ∀ p : Review Dig Id L, S (.review p) → p.thought = th → p.passed = true → p.fp = fpOf c) :
     ¬ dispatch person S th (fpOf c') g := by
   intro h
   have ⟨p, h1, h2, h3, h4, _⟩ := p9_needs_four_passes person S th _ g h
   exact hc (hinj c' c (h3.symm.trans (hrec p h1 h2 h4)))
 
-theorem p9_objection_discharged (S : GSet N Dig Id L) (th : Id) (fp : Dig) (g : Option Id)
+theorem p9_objection_discharged (S : GSet N Dig Id L D) (th : Id) (fp : Dig) (g : Option Id)
     (h : dispatch person S th fp g) (o : Review Dig Id L) (ho : S (.review o)) (ht : o.thought = th)
     (hp : o.passed = false) (hf : o.fp = fp) :
     ∃ p : Review Dig Id L, S (.review p) ∧ p.fp = fp ∧ ∃ ev, (o.id, ev) ∈ p.discharges ∧ trusted person S ev :=
@@ -1004,25 +1050,25 @@ theorem p9_objection_discharged (S : GSet N Dig Id L) (th : Id) (fp : Dig) (g : 
   ⟨p, h1, h3, h6 o ho ht hp hf⟩
 
 /-- The drafter's own word discharges nothing: a row discharges only when a person signed it. -/
-theorem p9_discharge_by_person (S : GSet N Dig Id L) (ev : Id) (h : trusted person S ev) :
+theorem p9_discharge_by_person (S : GSet N Dig Id L D) (ev : Id) (h : trusted person S ev) :
     ∃ ag b d fp, S (.resp ev ag true b d fp) ∧ person b :=
   let ⟨ag, b, d, fp, h1, h2, _⟩ := h
   ⟨ag, b, d, fp, h1, h2⟩
 
-theorem p9_objection_carried (S : GSet N Dig Id L) (th : Id) (fp : Dig) (g : Option Id)
+theorem p9_objection_carried (S : GSet N Dig Id L D) (th : Id) (fp : Dig) (g : Option Id)
     (h : dispatch person S th fp g) :
     ∃ p : Review Dig Id L, S (.review p) ∧ p.fp = fp ∧ ∀ o : Review Dig Id L, S (.review o) →
       o.thought = th → o.passed = false → o.fp ≠ fp → o.id ∈ p.considered :=
   let ⟨⟨p, h1, _, h3, _, _, _, h7⟩, _⟩ := h
   ⟨p, h1, h3, h7⟩
 
-theorem p9_approval_bound (S : GSet N Dig Id L) (th : Id) (fp : Dig) (g : Id)
+theorem p9_approval_bound (S : GSet N Dig Id L D) (th : Id) (fp : Dig) (g : Id)
     (h : dispatch person S th fp (some g)) : ∃ ag b d, S (.resp g ag true b d (some fp)) :=
   h.2 g rfl
 
 /-! ### P10 a profile loads only when its derived digest matches -/
 
-theorem p10_chain_unique (S : GSet N Dig Id L) (agent : N) :
+theorem p10_chain_unique (S : GSet N Dig Id L D) (agent : N) :
     ∀ cur l l', IsChain person S agent cur l → IsChain person S agent cur l' → l = l' := by
   intro cur l l' h
   induction h generalizing l' with
@@ -1042,7 +1088,7 @@ theorem p10_chain_unique (S : GSet N Dig Id L) (agent : N) :
 
 /-- Exactly one list of digests loads: the same digests in another order, an extra amendment, or one less do
     not. -/
-theorem p10_loads_unique (S : GSet N Dig Id L) (agent : N) (x y : List Dig)
+theorem p10_loads_unique (S : GSet N Dig Id L D) (agent : N) (x y : List Dig)
     (hx : loads person S agent x) (hy : loads person S agent y)
     (htpl : ∀ t t', S (.template agent t true) → S (.template agent t' true) → t = t') : x = y := by
   rcases hx with ⟨ha, l, hl, rfl⟩ | ⟨hna, t, ht, rfl⟩ <;> rcases hy with ⟨ha', l', hl', rfl⟩ | ⟨hna', t', ht', rfl⟩
@@ -1053,7 +1099,7 @@ theorem p10_loads_unique (S : GSet N Dig Id L) (agent : N) (x y : List Dig)
 
 /-- Every link the chain counts is held and authorized: approved by a person who is the steward or seated by
     it, with the link's exact digest. An amendment approved by the agent's own key counts for nothing. -/
-theorem p10_chain_authorized (S : GSet N Dig Id L) (agent : N) :
+theorem p10_chain_authorized (S : GSet N Dig Id L D) (agent : N) :
     ∀ cur l, IsChain person S agent cur l → ∀ a, a ∈ l → S (.amend a) ∧ authorized person S a := by
   intro cur l h
   induction h with
@@ -1065,13 +1111,13 @@ theorem p10_chain_authorized (S : GSet N Dig Id L) (agent : N) :
     | inr h => exact ih b h
 
 /-- The base link approves the attested template's exact digest. -/
-theorem p10_base_is_template (S : GSet N Dig Id L) (agent : N) (a : Link N Dig Id) (l : List (Link N Dig Id))
+theorem p10_base_is_template (S : GSet N Dig Id L D) (agent : N) (a : Link N Dig Id) (l : List (Link N Dig Id))
     (h : IsChain person S agent none (a :: l)) : ∃ tpl, S (.template agent tpl true) ∧ a.digest = tpl := by
   cases h with
   | next _ _ _ hs _ _ => exact hs.2.2.2.2 rfl
 
 /-- A fork counts neither branch: where two links name one predecessor, the chain stops before them. -/
-theorem p10_fork_stops (S : GSet N Dig Id L) (agent : N) (cur : Option Id) (a b : Link N Dig Id)
+theorem p10_fork_stops (S : GSet N Dig Id L D) (agent : N) (cur : Option Id) (a b : Link N Dig Id)
     (ha : step person S agent cur a) (hb : step person S agent cur b) (hne : a ≠ b) (l : List (Link N Dig Id))
     (h : IsChain person S agent cur l) : l = [] := by
   cases h with
@@ -1079,34 +1125,34 @@ theorem p10_fork_stops (S : GSet N Dig Id L) (agent : N) (cur : Option Id) (a b 
   | next _ c _ _ hu _ => exact absurd ((hu a ha).trans (hu b hb).symm) hne
 
 /-- A response signed by a program's key authorizes nothing. -/
-theorem p10_program_approval (S : GSet N Dig Id L) (a : Link N Dig Id)
+theorem p10_program_approval (S : GSet N Dig Id L D) (a : Link N Dig Id)
     (hp : ∀ b fp, S (.resp a.byResp a.agent true b (some a.digest) fp) → ¬ person b) :
     ¬ authorized person S a :=
   fun ⟨b, fp, _, h1, h2, _⟩ => hp b fp h1 h2
 
 /-- With no base link the attested template alone loads, and no amendment counts. -/
-theorem p10_unanchored (S : GSet N Dig Id L) (agent : N) (hna : ¬ anchored person S agent) (x : List Dig) :
+theorem p10_unanchored (S : GSet N Dig Id L D) (agent : N) (hna : ¬ anchored person S agent) (x : List Dig) :
     loads person S agent x ↔ ∃ tpl, S (.template agent tpl true) ∧ x = [tpl] :=
   ⟨fun h => h.elim (fun h => absurd h.1 hna) (fun h => h.2), fun h => Or.inr ⟨hna, h⟩⟩
 
 /-! ### P11 a result is no more trusted than what it derives from -/
 
-theorem p11_least (S : GSet N Dig Id L) (r : Id) (v : Nat) :
+theorem p11_least (S : GSet N Dig Id L D) (r : Id) (v : Nat) :
     trustAtLeast S r v ↔ ∀ a tr lb ns, From S r a → S (.data a tr lb ns) → v ≤ tr := Iff.rfl
 
 /-- Trust is not declared by the row: a row whose own trust is VERIFIED but which derives from an untrusted
     row is untrusted. -/
-theorem p11_own_trust_not_enough (S : GSet N Dig Id L) (r a : Id) (tr : Nat) (lb : L) (ns : List Id)
+theorem p11_own_trust_not_enough (S : GSet N Dig Id L D) (r a : Id) (tr : Nat) (lb : L) (ns : List Id)
     (hf : From S r a) (ha : S (.data a tr lb ns)) (ht : tr < VERIFIED) : ¬ trustAtLeast S r VERIFIED :=
   fun h => absurd (h a tr lb ns hf ha) (by omega)
 
 /-- The effect gate: the pass record declares every untrusted kind the arguments derive from; claimed
     authority needs the approving row naming the fingerprint; a row binding others needs their
     acknowledgements. -/
-theorem p11_effect_gate (S : GSet N Dig Id L) (th : Id) (fp : Dig) (args : Id) (claims : Option Id)
-    (binds : List N) (h : mayEffect person S th fp args claims binds) :
+theorem p11_effect_gate (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id)
+    (auth : Auth Id D) (binds : List N) (h : mayEffect person S agent th fp args auth binds) :
     (∃ p : Review Dig Id L, S (.review p) ∧ p.fp = fp ∧ ∀ lb, untrustedLabel S args lb → lb ∈ p.derived) ∧
-    (∀ c, claims = some c → ∃ ag ok b d, S (.resp c ag ok b d (some fp)) ∧ trusted person S c) ∧
+    authorityOK person S agent fp auth ∧
     (∀ k, k ∈ binds → S (.ack fp k)) := by
   have ⟨⟨p, h1, _, _, h4, h5⟩, h6, h7⟩ := h
   refine ⟨⟨p, h1, h4, fun lb hl => ?_⟩, h6, h7⟩
@@ -1114,9 +1160,178 @@ theorem p11_effect_gate (S : GSet N Dig Id L) (th : Id) (fp : Dig) (args : Id) (
   exact h5 (p11_own_trust_not_enough S args a tr lb ns hf hd ht) lb hl
 
 /-- Trusted arguments need no declaration. -/
-theorem p11_trusted_needs_no_declaration (S : GSet N Dig Id L) (args : Id) (h : trustAtLeast S args VERIFIED)
+theorem p11_trusted_needs_no_declaration (S : GSet N Dig Id L D) (args : Id) (h : trustAtLeast S args VERIFIED)
     (lb : L) : ¬ untrustedLabel S args lb :=
   fun ⟨a, tr, ns, hf, hd, ht⟩ => p11_own_trust_not_enough S args a tr lb ns hf hd ht h
+
+/-! ### P11, the standing delegation (Constitution 4040d0b; CC 2.7.11 "Derived trust", CC 4.5.5 (b)) -/
+
+/-- An act that needs no role reads no authority row: it is done under the role the owner-binding delegates. -/
+theorem p11_no_role_reads_no_authority (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id)
+    (binds : List N) :
+    mayEffect person S agent th fp args .none binds ↔
+      (∃ p : Review Dig Id L, S (.review p) ∧ p.thought = th ∧ p.passed = true ∧ p.fp = fp ∧
+        (¬ trustAtLeast S args VERIFIED → ∀ lb, untrustedLabel S args lb → lb ∈ p.derived)) ∧
+      (∀ k, k ∈ binds → S (.ack fp k)) :=
+  ⟨fun ⟨a, _, c⟩ => ⟨a, c⟩, fun ⟨a, c⟩ => ⟨a, trivial, c⟩⟩
+
+/-- A row that is a `deferral:response`. -/
+def isResp (r : GRow N Dig Id L D) : Prop := ∃ i ag ok b d f, r = .resp i ag ok b d f
+
+/-- The held rows with every response taken out. -/
+def noResp (S : GSet N Dig Id L D) : GSet N Dig Id L D := fun r => S r ∧ ¬ isResp r
+
+theorem from_noResp (S : GSet N Dig Id L D) (x y : Id) : From (noResp S) x y ↔ From S x y := by
+  constructor
+  · intro hf
+    induction hf with
+    | refl => exact From.refl _
+    | step a c tr lb ns _ hd hc ih => exact From.step _ a c tr lb ns ih hd.1 hc
+  · intro hf
+    induction hf with
+    | refl => exact From.refl _
+    | step a c tr lb ns _ hd hc ih =>
+      exact From.step _ a c tr lb ns ih ⟨hd, fun ⟨_, _, _, _, _, _, e⟩ => by cases e⟩ hc
+
+/-- **An act within a standing delegation needs no approval of its own.** Under a delegation the gate reads no
+    `deferral:response` at all: take every response out of the held rows and the answer is the same. The
+    delegation's signer approves no single act under it. -/
+theorem p11_delegation_needs_no_approval (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id)
+    (rid : Id) (duty : D) (binds : List N) :
+    mayEffect person S agent th fp args (.under rid duty) binds ↔
+      mayEffect person (noResp S) agent th fp args (.under rid duty) binds := by
+  have nr : ∀ r, ¬ isResp r → (noResp S r ↔ S r) := fun r h => ⟨And.left, fun x => ⟨x, h⟩⟩
+  have hrv : ∀ p, noResp S (.review p) ↔ S (.review p) :=
+    fun p => nr _ (fun ⟨_, _, _, _, _, _, e⟩ => by cases e)
+  have hda : ∀ a tr lb ns, noResp S (.data a tr lb ns) ↔ S (.data a tr lb ns) :=
+    fun _ _ _ _ => nr _ (fun ⟨_, _, _, _, _, _, e⟩ => by cases e)
+  have hdl : ∀ b sc, noResp S (.deleg rid agent b sc) ↔ S (.deleg rid agent b sc) :=
+    fun _ _ => nr _ (fun ⟨_, _, _, _, _, _, e⟩ => by cases e)
+  have hse : ∀ b c, noResp S (.seat agent b c) ↔ S (.seat agent b c) :=
+    fun _ _ => nr _ (fun ⟨_, _, _, _, _, _, e⟩ => by cases e)
+  have hbi : ∀ b, noResp S (.bind agent b) ↔ S (.bind agent b) :=
+    fun _ => nr _ (fun ⟨_, _, _, _, _, _, e⟩ => by cases e)
+  have hwd : noResp S (.withdraw rid) ↔ S (.withdraw rid) := nr _ (fun ⟨_, _, _, _, _, _, e⟩ => by cases e)
+  have hak : ∀ k, noResp S (.ack fp k) ↔ S (.ack fp k) := fun _ => nr _ (fun ⟨_, _, _, _, _, _, e⟩ => by cases e)
+  have htr : trustAtLeast (noResp S) args VERIFIED ↔ trustAtLeast S args VERIFIED := by
+    unfold trustAtLeast
+    exact ⟨fun h a tr lb ns hf hd => h a tr lb ns ((from_noResp S _ _).2 hf) ((hda _ _ _ _).2 hd),
+      fun h a tr lb ns hf hd => h a tr lb ns ((from_noResp S _ _).1 hf) ((hda _ _ _ _).1 hd)⟩
+  have hul : ∀ lb, untrustedLabel (noResp S) args lb ↔ untrustedLabel S args lb := by
+    intro lb
+    unfold untrustedLabel
+    exact ⟨fun ⟨a, tr, ns, hf, hd, ht⟩ => ⟨a, tr, ns, (from_noResp S _ _).1 hf, (hda _ _ _ _).1 hd, ht⟩,
+      fun ⟨a, tr, ns, hf, hd, ht⟩ => ⟨a, tr, ns, (from_noResp S _ _).2 hf, (hda _ _ _ _).2 hd, ht⟩⟩
+  unfold mayEffect authorityOK delegated
+  simp only [hrv, hdl, hse, hbi, hwd, hak, htr, hul]
+
+/-- What a delegation arm needs, all of it: a delegation onto this agent, signed by a person seated over it, not
+    withdrawn, whose scope names the act's duty. -/
+theorem p11_delegation_needs (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id) (rid : Id)
+    (duty : D) (binds : List N) (h : mayEffect person S agent th fp args (.under rid duty) binds) :
+    ∃ b sc, S (.deleg rid agent b sc) ∧ person b ∧ ((∃ c, S (.seat agent b c)) ∨ S (.bind agent b)) ∧
+      ¬ S (.withdraw rid) ∧ duty ∈ sc :=
+  h.2.1
+
+/-- **The plant `delegation_any_scope`, refuted.** A delegation whose scope does not name the act's duty licenses
+    nothing: a delegation of `moderate` is no authority for a `takedown`. -/
+theorem p11_scope_must_name_duty (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id) (rid : Id)
+    (duty : D) (binds : List N) (hs : ∀ b sc, S (.deleg rid agent b sc) → duty ∉ sc) :
+    ¬ mayEffect person S agent th fp args (.under rid duty) binds :=
+  fun h =>
+    let ⟨b, sc, h1, _, _, _, h5⟩ := p11_delegation_needs person S agent th fp args rid duty binds h
+    hs b sc h1 h5
+
+/-- A withdrawn delegation licenses nothing. -/
+theorem p11_withdrawn_delegation (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id)
+    (rid : Id) (duty : D) (binds : List N) (hw : S (.withdraw rid)) :
+    ¬ mayEffect person S agent th fp args (.under rid duty) binds :=
+  fun h =>
+    let ⟨_, _, _, _, _, h4, _⟩ := p11_delegation_needs person S agent th fp args rid duty binds h
+    h4 hw
+
+/-- A delegation signed by a program's key licenses nothing. -/
+theorem p11_program_delegation (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id)
+    (rid : Id) (duty : D) (binds : List N) (hp : ∀ b sc, S (.deleg rid agent b sc) → ¬ person b) :
+    ¬ mayEffect person S agent th fp args (.under rid duty) binds :=
+  fun h =>
+    let ⟨b, sc, h1, h2, _⟩ := p11_delegation_needs person S agent th fp args rid duty binds h
+    hp b sc h1 h2
+
+/-- A delegation onto another agent licenses nothing for this one. -/
+theorem p11_other_agent_delegation (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id)
+    (rid : Id) (duty : D) (binds : List N) (ho : ∀ a' b sc, S (.deleg rid a' b sc) → a' ≠ agent) :
+    ¬ mayEffect person S agent th fp args (.under rid duty) binds :=
+  fun h =>
+    let ⟨b, sc, h1, _⟩ := p11_delegation_needs person S agent th fp args rid duty binds h
+    ho agent b sc h1 rfl
+
+/-- An act within a live delegation of its duty is licensed by the pass record, the delegation and the
+    acknowledgements alone. -/
+theorem p11_delegation_licenses (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id)
+    (rid : Id) (duty : D) (binds : List N) (p : Review Dig Id L) (hp : S (.review p)) (ht : p.thought = th)
+    (hps : p.passed = true) (hf : p.fp = fp) (hdecl : ∀ lb, untrustedLabel S args lb → lb ∈ p.derived)
+    (hd : delegated person S agent rid duty) (hack : ∀ k, k ∈ binds → S (.ack fp k)) :
+    mayEffect person S agent th fp args (.under rid duty) binds :=
+  ⟨⟨p, hp, ht, hps, hf, fun _ => hdecl⟩, hd, hack⟩
+
+/-- **Authority claimed is rooted in a person.** An act that claims authority, by either arm, rests on a row a
+    person signed: the delegation's signer, seated over this agent; or the approving row's signer, seated over
+    the agent that row names. -/
+theorem p11_authority_rooted_in_person (S : GSet N Dig Id L D) (agent : N) (th : Id) (fp : Dig) (args : Id)
+    (auth : Auth Id D) (binds : List N) (hauth : auth ≠ .none)
+    (h : mayEffect person S agent th fp args auth binds) :
+    ∃ b, person b ∧
+      ((∃ rid duty sc, auth = .under rid duty ∧ S (.deleg rid agent b sc) ∧
+          ((∃ c, S (.seat agent b c)) ∨ S (.bind agent b))) ∨
+       (∃ c ag d f, auth = .claims c ∧ S (.resp c ag true b d f) ∧
+          ((∃ c', S (.seat ag b c')) ∨ S (.bind ag b)))) := by
+  have ha := h.2.1
+  cases auth with
+  | none => exact absurd rfl hauth
+  | under rid duty =>
+    have ⟨b, sc, h1, h2, h3, _⟩ := ha
+    exact ⟨b, h2, Or.inl ⟨rid, duty, sc, rfl, h1, h3⟩⟩
+  | claims c =>
+    have ⟨_, _, _, _, _, ⟨ag, b, d, f, h1, h2, h3⟩⟩ := ha
+    exact ⟨b, h2, Or.inr ⟨c, ag, d, f, rfl, h1, h3⟩⟩
+
+/-- The plant's reading (`delegation_any_scope`): the same check with the scope not read. -/
+def delegatedAnyScope (S : GSet N Dig Id L D) (agent : N) (rid : Id) : Prop :=
+  ∃ b sc, S (.deleg rid agent b sc) ∧ person b ∧ ((∃ c, S (.seat agent b c)) ∨ S (.bind agent b)) ∧
+    ¬ S (.withdraw rid)
+
+end PropsAgent
+
+/-- **The plant tells.** In a world with one live delegation of `moderate` (`true`) by the agent's steward, the
+    plant's reading licenses a `takedown` (`false`) under it, and the rule does not. -/
+theorem delegation_any_scope_differs :
+    delegatedAnyScope (N := Unit) (Dig := Unit) (Id := Unit) (L := Unit) (fun _ => True)
+        (fun r => r = .deleg () () () [true] ∨ r = .bind () ()) () () ∧
+      ¬ delegated (N := Unit) (Dig := Unit) (Id := Unit) (L := Unit) (fun _ => True)
+        (fun r => r = .deleg () () () [true] ∨ r = .bind () ()) () () false := by
+  refine ⟨⟨(), [true], Or.inl rfl, trivial, Or.inr (Or.inr rfl), fun h => ?_⟩, ?_⟩
+  · cases h with
+    | inl h => cases h
+    | inr h => cases h
+  · intro ⟨_, sc, h1, _, _, _, h5⟩
+    cases h1 with
+    | inl h => cases h; exact absurd h5 (by decide)
+    | inr h => cases h
+
+/-- **Qualification (2), as revised.** An effect that needs no role needs no person either: with no key a person
+    and no delegation or approving row held, a pass record licenses it. -/
+theorem effect_needs_no_person :
+    mayEffect (N := Unit) (Dig := Unit) (Id := Unit) (L := Unit) (D := Unit) (fun _ => False)
+      (fun r => r = .review ⟨(), (), (), true, Fac.all, [], [], []⟩) () () () () .none [] := by
+  refine ⟨⟨⟨(), (), (), true, Fac.all, [], [], []⟩, rfl, rfl, rfl, rfl, fun _ lb hl => ?_⟩, trivial,
+    fun k hk => absurd hk (List.not_mem_nil k)⟩
+  have ⟨_, _, _, _, hd, _⟩ := hl
+  cases hd
+
+section PropsAgent2
+
+variable {N Dig Id L D : Type} (person : N → Prop)
 
 /-! ### P12 every answer is the same in every arrival order (agent scopes) -/
 
@@ -1125,21 +1340,21 @@ theorem set_perm {α β : Type} (F : (α → Prop) → β) (l l' : List α) (h :
   have : (fun r => r ∈ l) = (fun r => r ∈ l') := funext fun _ => propext h.mem_iff
   rw [this]
 
-theorem p12_loads_perm (l l' : List (GRow N Dig Id L)) (h : l.Perm l') (agent : N) (x : List Dig) :
+theorem p12_loads_perm (l l' : List (GRow N Dig Id L D)) (h : l.Perm l') (agent : N) (x : List Dig) :
     loads person (fun r => r ∈ l) agent x ↔ loads person (fun r => r ∈ l') agent x := by
   rw [set_perm (fun S => loads person S agent x) l l' h]
 
-theorem p12_dispatch_perm (l l' : List (GRow N Dig Id L)) (h : l.Perm l') (th : Id) (fp : Dig) (g : Option Id) :
+theorem p12_dispatch_perm (l l' : List (GRow N Dig Id L D)) (h : l.Perm l') (th : Id) (fp : Dig) (g : Option Id) :
     dispatch person (fun r => r ∈ l) th fp g ↔ dispatch person (fun r => r ∈ l') th fp g := by
   rw [set_perm (fun S => dispatch person S th fp g) l l' h]
 
-theorem p12_effect_perm (l l' : List (GRow N Dig Id L)) (h : l.Perm l') (th : Id) (fp : Dig) (args : Id)
-    (claims : Option Id) (binds : List N) :
-    mayEffect person (fun r => r ∈ l) th fp args claims binds ↔
-      mayEffect person (fun r => r ∈ l') th fp args claims binds := by
-  rw [set_perm (fun S => mayEffect person S th fp args claims binds) l l' h]
+theorem p12_effect_perm (l l' : List (GRow N Dig Id L D)) (h : l.Perm l') (agent : N) (th : Id) (fp : Dig)
+    (args : Id) (auth : Auth Id D) (binds : List N) :
+    mayEffect person (fun r => r ∈ l) agent th fp args auth binds ↔
+      mayEffect person (fun r => r ∈ l') agent th fp args auth binds := by
+  rw [set_perm (fun S => mayEffect person S agent th fp args auth binds) l l' h]
 
-end PropsAgent
+end PropsAgent2
 
 end Admission
 
@@ -1198,6 +1413,18 @@ end Admission
 #print axioms Admission.p11_own_trust_not_enough
 #print axioms Admission.p11_effect_gate
 #print axioms Admission.p11_trusted_needs_no_declaration
+#print axioms Admission.p11_no_role_reads_no_authority
+#print axioms Admission.from_noResp
+#print axioms Admission.p11_delegation_needs_no_approval
+#print axioms Admission.p11_delegation_needs
+#print axioms Admission.p11_scope_must_name_duty
+#print axioms Admission.p11_withdrawn_delegation
+#print axioms Admission.p11_program_delegation
+#print axioms Admission.p11_other_agent_delegation
+#print axioms Admission.p11_delegation_licenses
+#print axioms Admission.p11_authority_rooted_in_person
+#print axioms Admission.delegation_any_scope_differs
+#print axioms Admission.effect_needs_no_person
 #print axioms Admission.p12_runs_perm
 #print axioms Admission.p12_may_perm
 #print axioms Admission.p12_loads_perm
