@@ -68,6 +68,8 @@ INVARIANTS = [
     ("C14", "rc22", "2.6.1.11", "a bundle voice's sub is the bundle's family_key_id"),
     ("C15", "rc21", "4.2.1.1", "a halt of this form exists for every holder before the bundle, and names the bundle's lineage"),
     ("C16", "rc21", "2.6.2", "no record is dated after the bundle that cites it, and every valid_until is later than its asserted_at"),
+    ("C18", "rc21", "4.2.3", "every holder's custody names its own device by serial, and no two holders name one device; a certificate shared above the devices is no fault"),
+    ("C19", "rc22", "4.2.6", "each holder's recovery commitment is the one the charter carries, and it commits no key that signs for a holder or a seat"),
     ("C17", "rc21", "2.6.1.2", "where the signed bytes are given, an independent decoding agrees with the trace, and every cites resolves to a statement of the trace"),
 ]
 
@@ -269,6 +271,22 @@ def check(T):
         pl = s["payload"]
         if "valid_until" in pl and not pl["valid_until"] > pl.get("asserted_at", 0): bad("C16", s, "valid_until is not later than asserted_at")
 
+    HD = {h.get("identity_ref"): h for h in T.get("holders") or []}                 # C18, C19
+    for h in H:
+        e = HD.get(h)
+        if e is None: bad("C18", None, f"the trace gives no custody entry for holder {h[-8:]}"); bad("C19", None, f"the trace gives no recovery commitment for holder {h[-8:]}"); continue
+        if not isinstance(e.get("device_serial"), int) or isinstance(e.get("device_serial"), bool):
+            bad("C18", None, f"holder {h[-8:]} names no device serial: {e.get('device_serial_absent_reason') or 'no reason given'}")
+        try: in_charter = hx(charter["recovery_commitments"][h][1])
+        except Exception: in_charter = None
+        if not e.get("recovery_commitment") or e.get("recovery_commitment") != in_charter: bad("C19", None, f"holder {h[-8:]}: the commitment differs from the charter's")
+    serials = [e["device_serial"] for e in HD.values() if isinstance(e.get("device_serial"), int)]
+    if len(set(serials)) != len(serials): bad("C18", None, "two holders name one device serial (holder_device_shared)")
+    signing = {c.get("commitment") for c in T.get("signing_key_commitments") or []}
+    if not {c.get("identity_ref") for c in T.get("signing_key_commitments") or []} >= set(H) | set(SEATS): bad("C19", None, "the trace does not give a commitment over every holder's and seat's signing key")
+    for h, e in HD.items():
+        if e.get("recovery_commitment") in signing: bad("C19", None, f"holder {str(h)[-8:]}: the recovery commitment commits a signing key (recovery_commitment_is_holder_key)")
+
     ids = {s["_id"] for s in S if s.get("_id")}                                     # C17
     for s in S:
         if s.get("_disagree"): bad("C17", s, "the trace's decoding differs from the signed bytes: " + s["_disagree"])
@@ -339,6 +357,10 @@ def plants():
         p("C13", "an attach window in a witnessed-off charter", lambda T: all_voices(T, lambda v: v["payload"]["charter"].update(attach_window_secs=604800))),
         p("C14", "a bundle voice with no sub", lambda T: all_voices(T, lambda v: claims(v).pop("sub", None))),
         p("C15", "a halt naming another lineage", lambda T: (lambda s: (s["payload"].update(accord_root="other"), claims(s).update(sub="other")))(_first(T, "accord:invoke:constitutional"))),
+        p("C18", "two holders on one device", lambda T: T["holders"][1].update(device_serial=T["holders"][0]["device_serial"])),
+        p("C18", "a holder whose custody names no device", lambda T: T["holders"][0].update(device_serial=None, device_serial_absent_reason="the leaf names no device serial")),
+        p("C19", "a recovery key that is a holder's signing key", lambda T: (lambda c: (T["holders"][0].update(recovery_commitment=c), all_voices(T, lambda v: v["payload"]["charter"]["recovery_commitments"].__setitem__(T["holders"][0]["identity_ref"], [-16, {"hex": c}]))))(T["signing_key_commitments"][0]["commitment"])),
+        p("C19", "a recovery commitment that is not the charter's", lambda T: T["holders"][0].update(recovery_commitment="00" * 32)),
         p("C16", "a record dated after the bundle", lambda T: (lambda s: (s["payload"].update(asserted_at=s["payload"]["asserted_at"] + 10 ** 7), claims(s).update(iat=(s["payload"]["asserted_at"]) // 1000)))(_first(T, "key:record", 1))),
     ]
 
@@ -365,7 +387,7 @@ def run_plants(T, at="rc22"):
 def manifest():
     return {"_meta": {"source": "formal/ceremony/CEREMONY.md section 3, steps 1 to 4; formal/ceremony/check_trace.py",
                       "model": "formal/ceremony/ceremony.py (P1 to P11), formal/ceremony/Cutover.tla",
-                      "trace": "one entry per signed statement, in ceremony order: step, kind, index, protected (alg, content_type, kid, cwt_claims, typ, the row labels), payload, sha256, and cose_hex, the signed bytes",
+                      "trace": "statements: one entry per signed statement, in ceremony order: step, kind, index, protected (alg, content_type, kid, cwt_claims, typ, the row labels), payload, sha256, and cose_hex, the signed bytes. holders: for each holder, identity_ref, device_serial (the integer the custody leaf names, or null with device_serial_absent_reason) and recovery_commitment. signing_key_commitments: for each holder and seat, identity_ref and the commitment over its signing key",
                       "editions": EDITIONS},
             "steps": STEPS,
             "invariants": [{"id": i, "since": s, "cc": cc, "statement": t} for i, s, cc, t in INVARIANTS],

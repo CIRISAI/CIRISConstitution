@@ -2,7 +2,7 @@
  "_meta": {
   "source": "formal/ceremony/CEREMONY.md section 3, steps 1 to 4; formal/ceremony/check_trace.py",
   "model": "formal/ceremony/ceremony.py (P1 to P11), formal/ceremony/Cutover.tla",
-  "trace": "one entry per signed statement, in ceremony order: step, kind, index, protected (alg, content_type, kid, cwt_claims, typ, the row labels), payload, sha256, and cose_hex, the signed bytes",
+  "trace": "statements: one entry per signed statement, in ceremony order: step, kind, index, protected (alg, content_type, kid, cwt_claims, typ, the row labels), payload, sha256, and cose_hex, the signed bytes. holders: for each holder, identity_ref, device_serial (the integer the custody leaf names, or null with device_serial_absent_reason) and recovery_commitment. signing_key_commitments: for each holder and seat, identity_ref and the commitment over its signing key",
   "editions": [
    "rc21",
    "rc22"
@@ -156,6 +156,18 @@
    "statement": "no record is dated after the bundle that cites it, and every valid_until is later than its asserted_at"
   },
   {
+   "id": "C18",
+   "since": "rc21",
+   "cc": "4.2.3",
+   "statement": "every holder's custody names its own device by serial, and no two holders name one device; a certificate shared above the devices is no fault"
+  },
+  {
+   "id": "C19",
+   "since": "rc22",
+   "cc": "4.2.6",
+   "statement": "each holder's recovery commitment is the one the charter carries, and it commits no key that signs for a holder or a seat"
+  },
+  {
    "id": "C17",
    "since": "rc21",
    "cc": "2.6.1.2",
@@ -238,6 +250,22 @@
   {
    "invariant": "C15",
    "plant": "a halt naming another lineage"
+  },
+  {
+   "invariant": "C18",
+   "plant": "two holders on one device"
+  },
+  {
+   "invariant": "C18",
+   "plant": "a holder whose custody names no device"
+  },
+  {
+   "invariant": "C19",
+   "plant": "a recovery key that is a holder's signing key"
+  },
+  {
+   "invariant": "C19",
+   "plant": "a recovery commitment that is not the charter's"
   },
   {
    "invariant": "C16",

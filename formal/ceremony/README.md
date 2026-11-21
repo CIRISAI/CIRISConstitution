@@ -54,9 +54,9 @@ spec stops at the genesis (`formal/accord_roster/AccordBundle.tla` checks the li
 ## Checking a ceremony's own output
 
 `check_trace.py` reads the trace a ceremony tool writes, one entry for each signed statement of steps 1 to 4, and
-checks it against the seventeen invariants of [`manifests/ceremony.json`](../../manifests/ceremony.json). Where an
+checks it against the nineteen invariants of [`manifests/ceremony.json`](../../manifests/ceremony.json). Where an
 entry carries its signed bytes, the checker decodes them with its own reader and requires the two decodings to agree.
-It then recomputes each row id and the bundle's object id, and resolves every citation by id. Twenty planted faults,
+It then recomputes each row id and the bundle's object id, and resolves every citation by id. Twenty-four planted faults,
 each a mistake a ceremony could make, are each caught: a holder with no sealed halt, a bundle one holder did not
 sign, a shared recovery commitment, a witness quorum written as zero, a seat with no place to dial.
 
