@@ -400,7 +400,7 @@ def genesis_samples():
         ("a holder named by a key id", genesis_payload(holders=["A1"])),
         ("a recovery commitment in hex", genesis_payload(charter=dict(charter, recovery_commitments={iref(0): "00" * 32}))),
         ("a charter with no scope", genesis_payload(charter={"recovery_commitments": charter["recovery_commitments"]})),
-        ("a witness quorum of 1", genesis_payload(charter=dict(charter, witness_quorum=1))),
+        ("a witness quorum of 1", genesis_payload(charter=dict(charter, receipt_quorum=1))),
         ("a bundle with an author", genesis_payload(author=iref(0))),
         ("a bundle with a count member", genesis_payload(count="majority")),
     ]
@@ -1083,11 +1083,11 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
     voices = [v for v, iat in statements if iat == P["asserted_at"] // 1000]
     # 2. the payload against its rule
     H, S = set(P["holders"]), set(P["serve_nodes"])
-    W = set(P["charter"].get("witnesses", []))
+    W = set(P["charter"].get("transparency_services", []))
     later = "prev" in P["refs"]
     if later != (P["version"] != 1):
         return "Invalid", "version_prev_mismatch"
-    for xs in (P["holders"], P["serve_nodes"], P["charter"]["scope"], P["charter"].get("witnesses", []),
+    for xs in (P["holders"], P["serve_nodes"], P["charter"]["scope"], P["charter"].get("transparency_services", []),
                P["refs"]["also"]["cites"]):
         if not is_set(xs):
             return "Invalid", "federation_set_semantics_unsorted"

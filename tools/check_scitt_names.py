@@ -37,8 +37,17 @@ def main():
         if (fate == "rename") != bool(new): errs.append(f"{surface} {name}: a rename names its new name, and nothing else does")
         if not sense: errs.append(f"{surface} {name}: no sense given")
     seen = found()
-    for k in sorted(seen - set(table)): errs.append(f"{k[0]} {k[1]}: carries one of the plane's words and has no row")
-    for k in sorted(set(table) - seen): errs.append(f"{k[0]} {k[1]}: the table names it and no surface carries it")
+    news = {(s2, new) for (s2, n), (fate, new) in table.items() if fate == "rename"}
+    for k in sorted(seen - set(table)):
+        if (k[0], k[1].split(" ")[-1]) in news: continue   # the new name of a rename that has landed
+        errs.append(f"{k[0]} {k[1]}: carries one of the plane's words and has no row")
+    for k in sorted(set(table) - seen):
+        fate, new = table[k]
+        if fate == "retire": continue                      # a retired name is gone from every surface once the retirement lands
+        if fate == "rename":                               # a renamed name is gone once its new name stands on the same surface
+            if any(s2 == k[0] and n.split(" ")[-1] == new for (s2, n) in seen): continue
+            errs.append(f"{k[0]} {k[1]}: gone from every surface and its new name {new} stands on none"); continue
+        errs.append(f"{k[0]} {k[1]}: the table names it and no surface carries it")
     for (surface, name), (fate, new) in table.items():
         if fate != "rename": continue
         tgt = next((v for (s, n), v in table.items() if s == surface and n.split(" ")[-1] == new and n != name), None)

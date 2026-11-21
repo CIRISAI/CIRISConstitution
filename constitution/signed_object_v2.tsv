@@ -104,9 +104,9 @@ genesis	genesis-charter	"recovery_commitments"	-	object	{ + identity-ref => hash
 genesis	genesis-charter	"scope"	-	object	[+ tstr]	always	3.2 2.6.1.2	A set; it holds infra:attest and infra:serve.
 genesis	genesis-charter	"halt_fuse_secs"	-	object	1..4294967295	where the charter states a fuse	4.2.1.1 2.1	Absent means 86400.
 genesis	genesis-charter	"attach_window_secs"	-	object	1..4294967295	where the charter states a window	3.2 5.3.4	Absent: attachable through an out-of-band anchor only.
-genesis	genesis-charter	"witness_cadence_secs"	-	object	1..4294967295	where witnessed mode is on	3.2 2.1	Present with witness_quorum and witnesses, or none of the three.
-genesis	genesis-charter	"witness_quorum"	-	object	2..4294967295	where witnessed mode is on	3.2 2.1	floor(|witnesses| / 2) + 1; absence is witnessed mode off, and 0 is never written.
-genesis	genesis-charter	"witnesses"	-	object	[+ identity-ref]	where witnessed mode is on	3.2 2.1 2.6.1.2	The witness directory: a set, disjoint from holders and serve_nodes; each witness's key record stands in refs.
+genesis	genesis-charter	"receipt_cadence_secs"	-	object	1..4294967295	where witnessed mode is on	3.2 2.1	Present with receipt_quorum and transparency_services, or none of the three.
+genesis	genesis-charter	"receipt_quorum"	-	object	2..4294967295	where witnessed mode is on	3.2 2.1	floor(|transparency_services| / 2) + 1; absence is witnessed mode off, and 0 is never written.
+genesis	genesis-charter	"transparency_services"	-	object	[+ identity-ref]	where witnessed mode is on	3.2 2.1 2.6.1.2	The witness directory: a set, disjoint from holders and serve_nodes; each witness's key record stands in refs.
 genesis	recovery-commitment-input	keys	-	derived	[+ ceg-key]	always	3.2 4.2.6 2.6.1.2	The committed composite keys, a set; one for a holder's recovery commitment. The commitment is [-16, SHA-256] over the array.
 accord	accord-invocation	"author"	attesting_key_id	payload	identity-ref	always	4.2.1.1 2.6.1.3	The holder who signs: the statement's iss. One holder's statement is the halt.
 accord	accord-invocation	"accord_root"	-	payload	tstr	always	4.2.1.1 2.1	The accord's family_key_id; it picks the bundle in force the row is verified against.

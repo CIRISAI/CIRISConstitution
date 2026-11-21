@@ -2668,7 +2668,7 @@ In time:
 - @community clock `W` = `admission_freshness_window_secs` (CC 3.3.4)
 - @community on close(W) unless fold(policy_met): read lapsed (CC 3.3.4)
 - on inert(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
-- clock `cover` = `charter.witness_cadence_secs` (CC 3.2)
+- clock `cover` = `charter.receipt_cadence_secs` (CC 3.2)
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
 - on fold(founder_quorum_restored): emit `hard_case:community_liveness_restored` by origin_door (CC 3.2)

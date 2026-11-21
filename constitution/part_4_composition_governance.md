@@ -611,7 +611,7 @@ resolve_community(C, now):
            // one held version per group id: a new version waits until the head its signed
            // prev_head_digest names is held; a later signed instant that does not
            // name it is not preferred (CC 3.2 T6)
-  head = held, or the witnessed head where C's charter declares a witness_quorum
+  head = held, or the witnessed head where C's charter declares a receipt_quorum
            // the witnessed head may be an ancestor of the record this node stores
   roster = fold(head, membership rows effective at now)
            // revocations and widenings, each admitted per CURRENT consensus_protocol (CC 4.4.3.6); a resignation on the leaver's own signature (CC 3.1.3.2)
@@ -626,7 +626,7 @@ In a CEG/RET stack member resolution replaces DNS+IP: it is a chain of *signed* 
 
 **(a) Determinism of `resolve_community`.** Where the CC 4.4.3.7 computation has choices, they are fixed:
 - **`now` semantics** — the resolving Consumer's own clock, which reads only a row's own stated end; membership is the members at the head the resolution names (a removal or a leaving binds by causal past, [CC 2.7.8](part_2_the_grammar.md#2.7.8)). No global clock assumed.
-- **"the head"** — the one version of the group record this node holds for the group. A new version waits until the head its signed `prev_head_digest` names is held; a version with a later signed instant that does not name the held head is **not preferred**. Where the group's charter declares a `witness_quorum`, the head is the **witnessed** head ([CC 3.2](part_3_the_namespace.md#3.2) T6), which may be an ancestor of the record the node stores. The roster is the head **folded** with the membership rows in its past — revocations, widenings, resignations; no instant selects anything.
+- **"the head"** — the one version of the group record this node holds for the group. A new version waits until the head its signed `prev_head_digest` names is held; a version with a later signed instant that does not name the held head is **not preferred**. Where the group's charter declares a `receipt_quorum`, the head is the **witnessed** head ([CC 3.2](part_3_the_namespace.md#3.2) T6), which may be an ancestor of the record the node stores. The roster is the head **folded** with the membership rows in its past — revocations, widenings, resignations; no instant selects anything.
 - **member ordering** — the returned set is canonically ordered by `key_id` (lowercase-hex byte order) for any downstream hashing/iteration.
 - **founder-subset eval** — for `cohort_subkind: infrastructure` ([CC 3.2](part_3_the_namespace.md#3.2)) admission is `evaluate_consensus_protocol` over `{m: m.role == founder}`, NOT all members.
 
@@ -1173,7 +1173,7 @@ resolve_family(F, now):
            // one held version per group id: a new version waits until the head its signed
            // prev_head_digest names is held; a later signed instant that does not
            // name it is not preferred (CC 3.2 T6)
-  head = held, or the witnessed head where F's charter declares a witness_quorum
+  head = held, or the witnessed head where F's charter declares a receipt_quorum
            // the witnessed head may be an ancestor of the record this node stores
   roster = fold(head, membership rows effective at now)
            // revocations and widenings, each admitted per CURRENT consensus_protocol (CC 4.4.3.17); a resignation on the leaver's own signature (CC 3.1.3.2)

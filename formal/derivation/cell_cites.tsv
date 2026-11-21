@@ -360,7 +360,7 @@ group:roster	projection	agree	CC 3.2	A consumer's roster fold MUST drop such a s
 group:roster	projection	agree	CC 4.4.3.7	roster = fold(head, membership rows effective at now)
 group:roster	projection	agree	CC 4.4.3.8	the returned set is canonically ordered by `key_id` (lowercase-hex byte order) for any downstream hashing/iteration
 group:roster	projection	agree	CC 4.4.3.10	subscriber_set(C) = resolve_community(C.community_id, now)
-group:roster	projection	agree	CC 4.4.3.21	head = held, or the witnessed head where F's charter declares a witness_quorum
+group:roster	projection	agree	CC 4.4.3.21	head = held, or the witnessed head where F's charter declares a receipt_quorum
 group:roster	projection	agree	CC 4.4.3.21	roster = fold(head, membership rows effective at now)
 group:roster	replication	fills	CC 2.4.1.1	roster-removal rows are addressed by `key_id` — they reach only the audience that already holds the roster
 hard_case:{kind}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone

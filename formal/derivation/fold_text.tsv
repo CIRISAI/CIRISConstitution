@@ -98,7 +98,7 @@ membership:{stage}	feeds=group:roster	CC 4.4.3.7	roster = fold(head, membership 
 membership:{stage}	feeds=group:roster	CC 4.4.3.21	roster = fold(head, membership rows effective at now)
 group:roster	order=min(key_id)	CC 4.4.3.8	- **member ordering** — the returned set is canonically ordered by `key_id` (lowercase-hex byte order) for any downstream hashing/iteration.
 group:roster	feeds=replication.audience	CC 4.4.3.10	subscriber_set(C) = resolve_community(C.community_id, now)
-group:roster	reads=head	CC 4.4.3.21	head = held, or the witnessed head where F's charter declares a witness_quorum
+group:roster	reads=head	CC 4.4.3.21	head = held, or the witnessed head where F's charter declares a receipt_quorum
 identity:occurrence	reads=own&at(now); key=identity_key_id; result=set; by=node	CC 4.4.3.23	For identity `I`, the current self-collective is computed as:
 consent:state:{stance}	pick=max(asserted_at); by=reader	CC 4.4.3.25	consent state evolves over time; consumer policy resolves the effective consent verdict by walking the subject's latest non-superseded `consent:state:*` emission, gated by `valid_until`, and tracks
 consent:state:{stance}	reads=own&signer:subject|proxy	CC 4.4.3.30	attesting_key_id ∈ delegates_to(s).proxies).where(dimension matches "consent:state:*")

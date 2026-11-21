@@ -1551,7 +1551,7 @@
    "family": "group:roster",
    "kind": "clock",
    "name": "cover",
-   "dur": "charter.witness_cadence_secs",
+   "dur": "charter.receipt_cadence_secs",
    "from": "effective_at",
    "by": "receipt",
    "cc_ref": [

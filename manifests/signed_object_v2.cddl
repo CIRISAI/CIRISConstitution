@@ -285,7 +285,7 @@ revoked-entry = [key: kid, revocation: row-ref, trusted_through: [* row-ref]]   
 ; Checked in prose, not here: version is 1 iff refs has no prev; holders, serve_nodes and witnesses are
 ; pairwise disjoint;
 ; the keys of recovery_commitments are exactly holders; scope holds infra:attest and infra:serve; the
-; three witness members are present together or not at all, and witness_quorum is
+; three witness members are present together or not at all, and receipt_quorum is
 ; floor(|witnesses| / 2) + 1; each statement's iat is floor(asserted_at / 1000).
 ceg-genesis-bundle = {
   "refs": genesis-refs,
@@ -306,9 +306,9 @@ genesis-charter = {
   "scope": [+ tstr],               ; a set; holds infra:attest and infra:serve (CC 3.2 Rooted)
   ? "halt_fuse_secs": 1..4294967295,       ; absent means 86400 (CC 4.2.1.1)
   ? "attach_window_secs": 1..4294967295,   ; absent: attachable by an out-of-band anchor only (CC 3.2 T4a)
-  ? "witness_cadence_secs": 1..4294967295, ; witnessed mode: the three witness members together
-  ? "witness_quorum": 2..4294967295,       ; absence is witnessed mode off; 0 is never written
-  ? "witnesses": [+ identity-ref],         ; a set; each one's key:record stands in refs.also "cites"
+  ? "receipt_cadence_secs": 1..4294967295, ; witnessed mode: the three witness members together
+  ? "receipt_quorum": 2..4294967295,       ; absence is witnessed mode off; 0 is never written
+  ? "transparency_services": [+ identity-ref],         ; a set; each one's key:record stands in refs.also "cites"
 }
 
 ; The accord's rows (CC 4.2.1.1, CC 4.2.1.3): payloads of ordinary rows, so these are members of their
