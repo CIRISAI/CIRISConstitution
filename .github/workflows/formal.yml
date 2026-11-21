@@ -439,6 +439,8 @@ jobs:
         run: bash formal/ceremony/run_tlc.sh "$PWD/tla2tools.jar" "$RUNNER_TEMP/cutover"
       - name: The ceremony's worlds (eleven properties, every planted break caught)
         run: python3 -I formal/ceremony/check_ceremony.py
+      - name: A ceremony's signed output is checked against the model, and every planted fault is caught
+        run: python3 -I formal/ceremony/check_trace.py --check
 
   membership:
     name: TLC — the membership ceremony (formal/membership)
