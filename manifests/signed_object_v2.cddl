@@ -353,7 +353,7 @@ transport-destination-binding = {
   ? "onion_hop_xwing_pubkey": bstr .size 1216,   ; on a node that relays, and on every serve node
   ? "onion_relay": { "opt_out": true },          ; on a node that opts out of relaying, with no hop key
   ; places to dial, most preferred first: each a type and a body, the body that of the node code (CC 2.6.8)
-  ? "dial_hints": [1*4 [uint .le 255, bstr .size (0..255)]],
+  ? "dial_hints": [1*8 [uint .le 255, bstr .size (0..255)]],
   ? "refs": refs,                                ; on a seat's binding: its key record under also "cites"
   * tstr => ceg-value,                           ; the content-KEM keys of CC 3.3.6.1 where they ride this row
 }

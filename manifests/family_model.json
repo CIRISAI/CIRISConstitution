@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "9d03d43fa9f642aaac22665d41d4ed1aa05f8e7b60f531e36eef735c401cd76b",
+  "registry_sha256": "fdd3a001912b85cf2c63616523fc354f2f61484dff1a607cd46e2f4f65a18f48",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -41416,7 +41416,7 @@
       },
       {
        "member": "dial_hints",
-       "type": "[1*4 [uint .le 255, bstr .size (0..255)]]",
+       "type": "[1*8 [uint .le 255, bstr .size (0..255)]]",
        "presence": "optional",
        "when": "where the occurrence gives places to dial; on a serve seat's binding in a genesis bundle",
        "in_cddl": true,
