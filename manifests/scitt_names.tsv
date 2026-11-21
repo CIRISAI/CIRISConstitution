@@ -1,0 +1,49 @@
+# The names of the transparency plane, and what becomes of each when the lineage and stream model moves to
+# Signed Statements, Transparency Services and Receipts (RFC 9943, RFC 9942). One row for each protocol-visible name
+# of the registry, the payload tables and the Parts that carries one of the plane's words.
+# fate: rename (new_name takes its place, with no alias), retire (a row or member of that name is refused by name),
+#       keep (the name stands), new (a name this model adds), open (not yet decided; the note says what decides it).
+# Not in scope: SQL names, a component's own verbs and identifiers, and the atoms of the formal models.
+# Checked by tools/check_scitt_names.py. Nothing is renamed by this table: it is the plan every surface follows at once.
+surface	name	fate	new_name	sense	note
+family	transparency_log:cosigned:{tree_size}	retire		a witness's cosignature on a tree head	A Receipt replaces it (RFC 9943): the service registers the head in its own log and answers with a Receipt. A row of the family is refused at the door by name.
+family	lineage_witness:{stage}	retire		the ceremony by which a node agreed to witness a lineage	A lineage names its transparency services in its charter, and a service consents by issuing Receipts. A row of the family is refused at the door by name.
+family	delivery_receipt:{stream_id}	rename	delivery_ack:{stream_id}	a subscriber's acknowledgement of a chunk	A name change and nothing else. Receipt is kept for the Receipt of RFC 9943.
+family	transparency_log:inclusion	open		an inclusion proof as a row	An inclusion proof rides inside a Receipt. No component produces the row. Retire unless a producer is named.
+family	transparency_log:consistency	open		a consistency proof as a row	A consistency proof is submission material beside a head (RFC 9942 label 396). No component produces the row. Retire unless a producer is named.
+family	cosign:{state}	keep		the collection of members' signatures for a counted row	Not the witnessing sense: a member's voice on a row of its own group.
+family	testimonial_witness:{kind}	keep		an affected party's singular testimony	Not the witnessing sense.
+family	witness_diversity:{contribution_id}	keep		the diversity of a Contribution's reviewers	Not the witnessing sense.
+member	genesis-charter witnesses	rename	transparency_services	the services a lineage's heads are registered with	Identity references, composite keys only. Changes the bytes of a charter that carries it; the genesis charter carries none.
+member	genesis-charter witness_quorum	rename	receipt_quorum	how many of the named services must issue a Receipt	Exactly the strict majority of the named services.
+member	genesis-charter witness_cadence_secs	rename	receipt_cadence_secs	how often a service re-registers an unchanged head	
+member	genesis-charter attach_window_secs	keep		how old the newest counted Receipt may be at attach	
+member	group-roster transparency_services	new		the services a room's accountable streams register with	
+member	group-roster receipt_quorum	new		how many of a room's named services must register a head	
+member	membership-change witness_set	open		vouching key ids on a membership change	Not the witnessing sense, and the store refuses the member. Retire or rename under its own ruling.
+member	occurrence-revocation witness_set	open		vouching key ids on an occurrence revocation	As above.
+token	witness_members_partial	rename	transparency_members_partial	one of the charter's service members without the others	
+token	witness_quorum_mismatch	rename	receipt_quorum_mismatch	a stated quorum that is not the strict majority	
+token	trust_root_head_unwitnessed	rename	trust_root_head_unreceipted	a head with fewer Receipts than the quorum	
+token	witness_quorum_met	rename	receipt_quorum_met	the verifier's quorum check	
+token	witness_signatures	retire		the cosignature list inside a tree head	A head is a Signed Statement and its Receipts ride in the unprotected header (label 394).
+token	witness_id	retire		a cosigning witness's id inside that list	Goes with witness_signatures.
+token	delivery_receipt	rename	delivery_ack	the family's stem	
+token	admission_receipt_missing	keep		an admission unit with no counted Receipt	Already the Receipt of RFC 9943.
+token	receipts	keep		the Receipts header, label 394	
+token	transparency	keep		the trust class of a transparency service	
+token	transparency_mode	keep		how a licensing authority publishes its record	Unrelated to a transparency service.
+token	attach_window	keep		the attach window	
+token	attach_window_secs	keep		the attach window, in seconds	
+token	lineage_head	keep		a lineage's head	
+token	lineage_head_lags_roster	keep		a head that does not cover a roster change	
+token	cosignatures	keep		the voices of a counted row	
+token	cosigned	keep		counted under a group's protocol	
+token	cosigned_act	keep		the policy of a counted act	
+token	cosigned_at	keep		the instant of a count	
+token	witness	keep		the identity type and the age-assurance level	Kept by ruling.
+token	witness_relation	keep		how an attester stands to what it attests	
+token	witness_diversity	keep		the family's stem	
+token	witnesses	rename	transparency_services	the charter member, as the text names it	
+token	witness_quorum	rename	receipt_quorum	the charter member, as the text names it	
+token	witness_cadence_secs	rename	receipt_cadence_secs	the charter member, as the text names it	
