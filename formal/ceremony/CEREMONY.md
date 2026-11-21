@@ -30,6 +30,7 @@ Each statement is marked **text** (the Parts say it), **model** (the check in th
 |---|---|
 | accord holder | its own key record; its pre-signed halt; the genesis |
 | a seat's operator | from the node's own custody, offline: the node's key record and its binding carrying `transit_xwing_pubkey` |
+| a seat's owner | a named operator, whoever owns that node, a holder or not: the seat's owner-binding at federation scope, under their own person key |
 | the steward | nothing; it tags the edition, carries the holders' thumbprints as the default anchor, and publishes the genesis's object id once it is signed (CC 5.3.4) |
 | every key's holder | its own `key:record` of this form, after the genesis |
 | every owner | its acceptance edge, and an owner-binding for each node and agent it owns, each cosigned by the key owned |
@@ -49,8 +50,8 @@ No one is an authority over another's key, and no one signs another's record (CC
 | 6 | release and upgrade | node operators | none | the node reads this form only, and its links speak `CTKX` 0x02 only |
 | 7 | every key's own `key:record` | the key | nothing | the key is live (**model**, P2) |
 | 8 | each owner's acceptance edge | the owner | the genesis | the owner's nodes are Rooted and in the halt's reach |
-| 9 | each owner-binding, cosigned by the key owned | owner and key | both records | a node or agent is owned; an agent acts only from here, and only with its steward's edge (**model**, P6) |
-| 10 | each community's founding record, the trust-root community's among them | every member, each signing | the members' records | the community, with the members who signed |
+| 9 | each owner-binding, cosigned by the key owned | owner and key | both records | a node or agent is owned. Each canonical seat's owner-binding is at federation scope, signed by its named operator's own person key, carries `infra:attest`, and stands before the seat serves (CC 3.1.3.2, CC 3.4.7.3); an agent acts only from here, and only with its steward's edge (**model**, P6) |
+| 10 | each community's founding record, the canonical room's among them | every member, each signing | the members' records | the community, with the members who signed. A record several people sign names its duty holders; the canonical room's names `moderate` for all three of its founders (CC 4.5.4) |
 | 11 | the first drill, within 7 days of the genesis's publication (CC 4.2.1.1) | each holder | the holder's record | shown as a drill; it rehearses the fire path. Confirmation and resumption are rehearsed on a `constitutional` halt only when one is fired, since a lifecycle row names a `constitutional` halt and nothing else |
 
 Step 4 is published only once step 3 exists for every holder, so a halt of this form is available from the first
