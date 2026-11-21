@@ -114,6 +114,18 @@ def main():
             if pol != "selfAct" and not t["roles"]["value"] and t["roles"]["source"] != "gap":
                 fails.append(("counted", f"{f} {t['verb']}", f"runs {pol} and names no role"))
 
+    # 4b. the registry and the family model agree on who a substrate self-report is: a node about itself
+    fm = {r["family"]: r for r in json.load(open(os.path.join(ROOT, "manifests", "family_model.json"), encoding="utf-8"))["rows"]}
+    for f in reg["families"]:
+        rule = (f.get("reserved_rule") or {}).get("rule", "")
+        if rule != "substrate-self-report" or f["prefix"] not in fm: continue
+        sr = fm[f["prefix"]]["signer_rule"]["value"]
+        who = sr.get("who", "") if isinstance(sr, dict) else str(sr)
+        if not ("substrate" in who or who == "seat_role(infra:attest)" or who == "self"):
+            fails.append(("self_report", f["prefix"], f"the registry reserves it as a substrate self-report and the family model's signer is {who!r}"))
+        if isinstance(sr, dict) and "person" in (fm[f["prefix"]]["signer_rule"].get("qualifier") or ""):
+            fails.append(("self_report", f["prefix"], "the registry reserves it as a substrate self-report and the family model gives a person's key"))
+
     # 5. duty
     from build_family_model import section_span
     for l in [x for x in open(os.path.join(ROOT, "formal", "derivation", "duty_holders.tsv"), encoding="utf-8").read().split("\n") if x and not x.startswith("#")][1:]:

@@ -274,6 +274,15 @@ def _reserved_rules():
         # CC 3.4.2 / 3.4.4: the hard-case kinds are open and the emitter is reserved to the substrate.
         (lambda p, c: p.startswith("hard_case:"),
          "substrate-emitted (identity_type substrate_persist); the kinds are open, the emitter is reserved; a non-substrate emission is a category error", "CC 3.4.4"),
+        # CC 2.7.11, CC 4.5.13, CC 3.3.6.2: a person's or a holder's row in a substrate-owned family, never a substrate self-report.
+        (lambda p, c: p == "admission:unit",
+         "a person's key, alone or as a voice of the group whose head the row names; never a substrate self-report", "CC 2.7.11"),
+        (lambda p, c: p == "ballot:moderator",
+         "a member of the roster the election names, one ballot a person; never a substrate self-report", "CC 4.5.13"),
+        (lambda p, c: p == "ballot:moderator_acceptance",
+         "the count's winner over the bound ballot set; never a substrate self-report", "CC 4.5.13"),
+        (lambda p, c: p == "transport:canonical_rebind",
+         "the accord's holders, counted at a strict majority of the holders of the bundle in force; never a substrate self-report", "CC 3.3.6.2"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),
