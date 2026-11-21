@@ -45,3 +45,5 @@ ownership:{relation}:{target_kind}:{version}	act=group & group=affiliations	cosi
 ownership:{relation}:{target_kind}:{version}	*	none	CC 3.2	Without a `community_id` the binding is a personal steward's.
 admission:unit	act=group	cosigned_act@subject_group	CC 3.1.3	under the group's protocol and never on fewer than two persons
 admission:unit	*	none	CC 3.1.3	any other row MAY carry `author`
+stream:head	*	none	CC 3.1.3	nobody else writes its head
+contribution:{subject_kind}	*	none	CC 3.1.9.3	The node signs it under its own key, at federation scope.

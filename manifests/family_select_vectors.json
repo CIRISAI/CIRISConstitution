@@ -1,7 +1,7 @@
 {
  "_meta": {
   "cc_version": "1.0-rc22",
-  "family_model_sha256": "903b3aaf7aadcfff5fd0c22ba2e153e408899ae480bda254fa2148742aad786e",
+  "family_model_sha256": "fb83686b4c2d9334f4e0d7b48cdfda6cb879db2090753c770e3ced26e8ce5673",
   "generator": "tools/cc_family_select.py",
   "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` equals ctx `sub`, false when it differs, `unknown` when either is absent. A vector with `voice` offers a statement in that role over the row: `admits` is true only when the second_signers answer names the role",
   "keys": {
@@ -16,7 +16,7 @@
   },
   "counts": {
    "false_beats_unknown": 8,
-   "holds": 84,
+   "holds": 86,
    "no_arm": 2,
    "not_holds": 64,
    "order": 2,
@@ -495,6 +495,18 @@
    "leaf": "sample",
    "ctx": {},
    "expect": "authored",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
+  },
+  {
+   "family": "contribution:{subject_kind}",
+   "cell": "count",
+   "dimension": "contribution:sample:v1",
+   "matcher_family": "contribution:{subject_kind}",
+   "leaf": "sample",
+   "ctx": {},
+   "expect": "none",
    "decided_by": 0,
    "kind": "holds",
    "why": "arm 0 (*) is the first that holds"
@@ -2299,6 +2311,18 @@
    "decided_by": 0,
    "kind": "not_holds",
    "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "stream:head",
+   "cell": "count",
+   "dimension": "stream:head:v1",
+   "matcher_family": "stream:head",
+   "leaf": "",
+   "ctx": {},
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
   },
   {
    "family": "takedown_notice:{basis}",

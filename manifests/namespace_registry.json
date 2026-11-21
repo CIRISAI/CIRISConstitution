@@ -94,6 +94,7 @@
         "state": "vocab",
         "stream_id": "value",
         "subject": "value",
+        "subject_kind": "vocab",
         "substrate_rung": "vocab",
         "suite": "vocab",
         "target": "value",
@@ -225,15 +226,15 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 187,
+    "n_families": 189,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
       "lens": 9,
-      "node": 50,
-      "persist": 37,
+      "node": 51,
+      "persist": 38,
       "registry": 20,
       "transport-delivery": 7
     },
@@ -295,7 +296,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "1f81a1b1ab6f29b645d292f70d8d15810b475fbde5d6444ffe33b4ee68845bd2",
+    "registry_sha256": "95c1a556ad83f1d2ba414a6c7237be9186a005b1e4f5b56557c27cc57ab221a0",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +311,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "b927d4d252d3660f8d64d5c3fe8af34948b68bed70986f2909c0276da368e8e7"
+    "source_sha256": "a221ca4ea3d6b02d7ac2354a0b68272d5f6283a396a12b8a40fd0e7b910f6eeb"
   },
   "families": [
     {
@@ -1963,6 +1964,25 @@
           "class": "external",
           "segment": "{rating}",
           "standard": "the scheme named in the sibling {scheme} segment"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9.3",
+      "description": "A node's Contribution on a subject kind: the row a vote, a tally and a diversity check name by its row id.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "contribution:{subject_kind}",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "contribution"
+        },
+        {
+          "class": "vocab",
+          "segment": "{subject_kind}"
         }
       ]
     },
@@ -4403,6 +4423,29 @@
         {
           "class": "vocab",
           "segment": "{outcome}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "A stream's signed head (registered under CC 3.1.7 R2(a); CC 5.3.3.5, CC 5.3.3.8): the stream's epoch, its tree size and its root at one instant, with the room where the stream is accountable.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "stream:head",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 5.3.3.8",
+        "rule": "self: the signer is the row's author and the stream's producer, a member's key and never a node's; sub is stream: and the stream's id; no second signer"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "stream"
+        },
+        {
+          "class": "literal",
+          "segment": "head"
         }
       ]
     },

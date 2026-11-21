@@ -14,15 +14,15 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 | column | families |
 |---|---|
-| placement | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
-| subject_rule | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
+| placement | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `trust:blessing` |
+| subject_rule | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `trust:blessing` |
 | cosign_rule | `admission:unit`, `ballot:moderator_acceptance`, `location_proof:{version}`, `trust:blessing` |
-| freshness | `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `location_proof:{version}`, `trust:blessing` |
-| lifecycle | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
-| replication | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
-| projection | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
-| erasure_route | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `trust:blessing` |
-| governance | `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `location_proof:{version}`, `trust:blessing` |
+| freshness | `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `cosign:{state}`, `location_proof:{version}`, `stream:head`, `trust:blessing` |
+| lifecycle | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `trust:blessing` |
+| replication | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `trust:blessing` |
+| projection | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `trust:blessing` |
+| erasure_route | `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `cosign:{state}`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `trust:blessing` |
+| governance | `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `cosign:{state}`, `location_proof:{version}`, `stream:head`, `trust:blessing` |
 
 ## The family is a key
 

@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "78866cefb30a9c5e5d294182015cf0d712c46674c039b1dd98c9c60f419d39d8",
+  "registry_sha256": "a021657ed5120d0e5102c8d0c208b0a8ed5c8836b1fbf83662d0971a8782009f",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -35,10 +35,10 @@
    "binds_segment": "placeholder → signer | subject | group | none; a segment of class literal, vocab or external names no key (formal/derivation/confers_text.tsv)",
    "evidence": "{claim_ids, refusal tokens}"
   },
-  "families": 187,
+  "families": 189,
   "coverage": {
    "kind": {
-    "cc-table": 187,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -46,7 +46,7 @@
     "gap": 0
    },
    "side": {
-    "cc-table": 187,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -54,7 +54,7 @@
     "gap": 0
    },
    "verbs": {
-    "cc-table": 187,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -62,7 +62,7 @@
     "gap": 0
    },
    "maintains_record": {
-    "cc-table": 187,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -70,7 +70,7 @@
     "gap": 0
    },
    "reference": {
-    "cc-table": 187,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -83,10 +83,10 @@
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 3
+    "gap": 5
    },
    "signer_rule": {
-    "cc-table": 43,
+    "cc-table": 45,
     "code-v61": 122,
     "generic": 0,
     "prose": 16,
@@ -107,7 +107,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 13,
-    "gap": 10,
+    "gap": 12,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 941,
@@ -118,7 +118,7 @@
     }
    },
    "cosign_rule": {
-    "cc-table": 6,
+    "cc-table": 8,
     "code-v61": 169,
     "generic": 0,
     "prose": 6,
@@ -126,7 +126,7 @@
     "gap": 5
    },
    "polarity": {
-    "cc-table": 6,
+    "cc-table": 8,
     "code-v61": 181,
     "generic": 0,
     "prose": 0,
@@ -139,7 +139,7 @@
     "generic": 0,
     "prose": 26,
     "mixed": 0,
-    "gap": 103
+    "gap": 105
    },
    "freshness": {
     "cc-table": 0,
@@ -147,7 +147,7 @@
     "generic": 174,
     "prose": 7,
     "mixed": 0,
-    "gap": 6
+    "gap": 8
    },
    "lifecycle": {
     "cc-table": 0,
@@ -155,7 +155,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 6,
+    "gap": 8,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 880,
@@ -171,7 +171,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 176,
-    "gap": 6,
+    "gap": 8,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 522,
@@ -187,7 +187,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 6,
+    "gap": 8,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 352,
@@ -203,7 +203,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 6
+    "gap": 8
    },
    "blind": {
     "cc-table": 0,
@@ -211,7 +211,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 6
+    "gap": 8
    },
    "governance": {
     "cc-table": 1,
@@ -219,18 +219,18 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 5
+    "gap": 7
    },
    "fold": {
     "cc-table": 76,
     "code-v61": 0,
-    "generic": 111,
+    "generic": 113,
     "prose": 0,
     "mixed": 0,
     "gap": 0
    },
    "count": {
-    "cc-table": 23,
+    "cc-table": 25,
     "code-v61": 0,
     "generic": 160,
     "prose": 0,
@@ -240,7 +240,7 @@
    "authorship": {
     "cc-table": 25,
     "code-v61": 0,
-    "generic": 162,
+    "generic": 164,
     "prose": 0,
     "mixed": 0,
     "gap": 0
@@ -248,7 +248,7 @@
    "second_signers": {
     "cc-table": 8,
     "code-v61": 0,
-    "generic": 179,
+    "generic": 181,
     "prose": 0,
     "mixed": 0,
     "gap": 0
@@ -259,10 +259,10 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 184
+    "gap": 186
    },
    "read_by": {
-    "cc-table": 187,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -270,7 +270,7 @@
     "gap": 0
    },
    "confers": {
-    "cc-table": 162,
+    "cc-table": 164,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -278,7 +278,7 @@
     "gap": 25
    },
    "binds_segment": {
-    "cc-table": 158,
+    "cc-table": 160,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -291,7 +291,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 130
+    "gap": 132
    }
   },
   "cites": {
@@ -589,22 +589,22 @@
   },
   "conferral": {
    "confers": {
-    "default": 136,
+    "default": 138,
     "gap": 25,
     "shape": 21,
     "stated": 5
    },
    "binds_segment": {
-    "class": 156,
+    "class": 158,
     "gap": 29,
     "stated": 2
    },
    "derived": {
-    "gap": 184,
+    "gap": 186,
     "stated": 3
    },
    "read_by": {
-    "cells": 105,
+    "cells": 107,
     "default": 82
    },
    "read_by_default": {
@@ -757,7 +757,7 @@
   "authorship": {
    "source": "formal/derivation/authorship_text.tsv",
    "families": {
-    "authored": 168,
+    "authored": 170,
     "subject": 1,
     "counted": 4,
     "mixed": 14,
@@ -765,7 +765,7 @@
    },
    "second_signers": {
     "families_with_roles": 8,
-    "families_author_only": 179,
+    "families_author_only": 181,
     "roles": 11,
     "roles_without_member": 0
    },
@@ -829,7 +829,7 @@
     "5": 4,
     "6": 7,
     "7": 1,
-    "8": 2,
+    "8": 4,
     "9": 4
    },
    "reading": "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone"
@@ -842,7 +842,7 @@
      "when": "The store holds no rows of the family: the census read no cell for it, or the family is held shut.",
      "why": "Its cells are unread, not different. When the family is built each cell sits on the default or takes a reason of its own.",
      "basis": "census",
-     "cells": 82
+     "cells": 98
     },
     {
      "id": "key",
@@ -27103,6 +27103,219 @@
    },
    "departs": [],
    "because": {}
+  },
+  {
+   "family": "contribution:{subject_kind}",
+   "kind": {
+    "value": "Priorities",
+    "source": "cc-table",
+    "confidence": "M"
+   },
+   "side": {
+    "value": "account",
+    "source": "cc-table"
+   },
+   "verbs": {
+    "value": [
+     "attest"
+    ],
+    "source": "cc-table"
+   },
+   "maintains_record": {
+    "value": false,
+    "source": "cc-table"
+   },
+   "reference": {
+    "value": null,
+    "source": "cc-table"
+   },
+   "placement": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "signer_rule": {
+    "value": {
+     "who": "self",
+     "via": "none",
+     "conditions": []
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
+   },
+   "subject_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "cosign_rule": {
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
+   },
+   "body": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "freshness": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "lifecycle": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "replication": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "projection": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "erasure_route": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "governance": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "evidence": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "polarity": {
+    "value": "signed",
+    "source": "cc-table",
+    "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
+   "derived": {
+    "value": null,
+    "source": "gap",
+    "note": "no sentence says whether a row of this family equals a recomputation from other rows"
+   },
+   "read_by": {
+    "value": [
+     "state",
+     "stands"
+    ],
+    "source": "cc-table",
+    "rule": "cells",
+    "by": [
+     {
+      "grammar": "fold",
+      "cell": "tools/fold_grammar.py DEFAULT",
+      "answers": [
+       "state",
+       "stands"
+      ]
+     }
+    ]
+   },
+   "confers": {
+    "value": "nothing",
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default"
+   },
+   "binds_segment": {
+    "value": {
+     "{subject_kind}": "none"
+    },
+    "source": "cc-table",
+    "cc_ref": [
+     "CC 3.1.7"
+    ],
+    "rule": "class"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
+   "count": {
+    "value": "none",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.1.9.3"
+     }
+    ],
+    "source": "cc-table"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
+   "blind": {
+    "value": null,
+    "source": "gap",
+    "note": "erasure_route unread"
+   },
+   "departs": [
+    "placement",
+    "subject_rule",
+    "freshness",
+    "lifecycle",
+    "replication",
+    "projection",
+    "erasure_route",
+    "governance"
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "freshness": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ],
+    "governance": [
+     "unbuilt"
+    ]
+   }
   },
   {
    "family": "corpus_health:n_eff_measurable",
@@ -66063,6 +66276,216 @@
     ],
     "erasure_route": [
      "accountability"
+    ]
+   }
+  },
+  {
+   "family": "stream:head",
+   "kind": {
+    "value": "Facts",
+    "source": "cc-table",
+    "confidence": "M"
+   },
+   "side": {
+    "value": "account",
+    "source": "cc-table"
+   },
+   "verbs": {
+    "value": [
+     "attest",
+     "replace"
+    ],
+    "source": "cc-table"
+   },
+   "maintains_record": {
+    "value": true,
+    "source": "cc-table"
+   },
+   "reference": {
+    "value": null,
+    "source": "cc-table"
+   },
+   "placement": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "signer_rule": {
+    "value": {
+     "who": "self",
+     "via": "none",
+     "conditions": []
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
+   },
+   "subject_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "cosign_rule": {
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
+   },
+   "body": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "freshness": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "lifecycle": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "replication": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "projection": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "erasure_route": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "governance": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "evidence": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "polarity": {
+    "value": "positive-only",
+    "source": "cc-table",
+    "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
+   "derived": {
+    "value": null,
+    "source": "gap",
+    "note": "no sentence says whether a row of this family equals a recomputation from other rows"
+   },
+   "read_by": {
+    "value": [
+     "state",
+     "stands"
+    ],
+    "source": "cc-table",
+    "rule": "cells",
+    "by": [
+     {
+      "grammar": "fold",
+      "cell": "tools/fold_grammar.py DEFAULT",
+      "answers": [
+       "state",
+       "stands"
+      ]
+     }
+    ]
+   },
+   "confers": {
+    "value": "nothing",
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default"
+   },
+   "binds_segment": {
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.7",
+    "rule": "class"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
+   "count": {
+    "value": "none",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.1.3"
+     }
+    ],
+    "source": "cc-table"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
+   "blind": {
+    "value": null,
+    "source": "gap",
+    "note": "erasure_route unread"
+   },
+   "departs": [
+    "placement",
+    "subject_rule",
+    "freshness",
+    "lifecycle",
+    "replication",
+    "projection",
+    "erasure_route",
+    "governance"
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "freshness": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ],
+    "governance": [
+     "unbuilt"
     ]
    }
   },

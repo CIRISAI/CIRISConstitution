@@ -164,6 +164,7 @@ content_class:{class}	withdraw	admitted	withdrawn	author,subject	selfAct	false	a
 content_rating:{scheme}:{rating}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 content_rating:{scheme}:{rating}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 content_rating:{scheme}:{rating}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
+contribution:{subject_kind}	attest	none	admitted	self	selfAct	false	none		true	derived	cc-table	cc-table
 corpus_health:n_eff_measurable	attest	none	admitted	identity:substrate_persist	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 corpus_health:n_eff_measurable	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 cosign:{state}	attest	none	admitted	member	selfAct	true	withdraw	selfAct	true	derived	cc-table	cc-table
@@ -415,6 +416,8 @@ settlement:*	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	
 settlement:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 slashing:{outcome}	attest	none	admitted	registered	cosigned	true	withdraw	selfAct	true	derived	cc-table	derived
 slashing:{outcome}	withdraw	admitted	withdrawn	author	selfAct	false	attest	cosigned	false	code-v61	code-v61	derived
+stream:head	attest	none	admitted	self	selfAct	false	none		true	derived	cc-table	cc-table
+stream:head	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
 system:*	attest	none	admitted	identity:substrate_persist	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 system:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 system:*	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived

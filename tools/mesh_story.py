@@ -160,6 +160,8 @@ def more(s):
     one("summary:1", "trace_summary:{kind}", "agent:bob", ["self"], "The agent signs a summary of its own trace")
     # 12. a count nobody can read alone
     one("census:return", "census:share:{class}", "node:bob", ["self"], "Bob's node returns its share of the census to a serve seat")
+    one("head:1", "stream:head", "dave", ["self"], "Dave's stream publishes its signed head")
+    one("contrib:1", "contribution:{subject_kind}", "node:bob", ["self"], "Bob's node files a Contribution for a vote to name")
     one("census:sum", "census:partial:{class}", "bob", ["self", "registered"], "Bob tries to publish a seat's sum: refused, a sum is a serve seat's")
     one("census:sum", "census:partial:{class}", "seat:1", ["serve"], "A serve seat publishes the sum of the shares it accepted")
     one("census:total", "census:composite:{class}", "seat:1", ["serve"], "The seat publishes the count the two sums make")

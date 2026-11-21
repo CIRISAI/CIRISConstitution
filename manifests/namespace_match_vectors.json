@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc22",
-    "registry_sha256": "1f81a1b1ab6f29b645d292f70d8d15810b475fbde5d6444ffe33b4ee68845bd2",
+    "registry_sha256": "95c1a556ad83f1d2ba414a6c7237be9186a005b1e4f5b56557c27cc57ab221a0",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -2601,6 +2601,48 @@
     {
       "dimension": "content_rating:SAMPLE:PG-13:v1",
       "family": "content_rating:{scheme}:{rating}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "contribution:sample:v1",
+      "family": "contribution:{subject_kind}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "contribution:sample:V1",
+      "family": "contribution:{subject_kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "contribution:sample:v1:v2",
+      "family": "contribution:{subject_kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "contribution:sample:v1beta",
+      "family": "contribution:{subject_kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Contribution:sample:v1",
+      "family": "contribution:{subject_kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "contribution:sample",
+      "family": "contribution:{subject_kind}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "contribution:SAMPLE:v1",
+      "family": "contribution:{subject_kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
@@ -6821,6 +6863,42 @@
       "family": "slashing:{outcome}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "stream:head:v1",
+      "family": "stream:head",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "stream:head:V1",
+      "family": "stream:head",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "stream:head:v1:v2",
+      "family": "stream:head",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "stream:head:v1beta",
+      "family": "stream:head",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Stream:head:v1",
+      "family": "stream:head",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "stream:head",
+      "family": "stream:head",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
       "dimension": "system:leaf:v1",

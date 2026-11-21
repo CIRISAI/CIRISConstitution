@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "903b3aaf7aadcfff5fd0c22ba2e153e408899ae480bda254fa2148742aad786e",
+  "source_sha256": "fb83686b4c2d9334f4e0d7b48cdfda6cb879db2090753c770e3ced26e8ce5673",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -89,10 +89,10 @@
   "widens_when": "one rule reads every widens and confirm cell: the boolean never under-states, and `when` narrows it. widens.when is always, by_scope (a row signed at self scope does not widen, a row at any wider scope does) or by_scope_change (a replacing row widens when its scope is wider than the row it replaces, CC 4.4.3.14). confirm.when is always (the row widens at every scope, or this table offers no way back) or if_widens (a way back is offered, and the item is confirmed only when widens.when holds for the row as signed). A way back means this table offers a withdraw or recant of the row; a copy a peer took is not recalled",
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
-  "families": 187,
-  "transitions": 465,
+  "families": 189,
+  "transitions": 468,
   "gap_cells": 1,
-  "confirmed": 256,
+  "confirmed": 258,
   "undo_gap_cells": 3,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
@@ -7617,6 +7617,56 @@
       "value": true,
       "source": "derived",
       "when": "if_widens"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
+   "family": "contribution:{subject_kind}",
+   "kind": "Priorities",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "self"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.9.3"
+      ],
+      "count": "none"
+     },
+     "widens": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.9.3",
+      "value": false
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -19478,6 +19528,96 @@
       "value": true,
       "via": "attest",
       "policy": "cosigned",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
+   "family": "stream:head",
+   "kind": "Facts",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "self"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.3"
+      ],
+      "count": "none"
+     },
+     "widens": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.3",
+      "value": false
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "always"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "supersede",
+     "from": "admitted",
+     "to": "superseded",
+     "roles": {
+      "value": [
+       "author"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "derived"
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
       "source": "derived"
      },
      "confirm": {

@@ -1648,7 +1648,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 121 of 187 families.
+A family with no card states none of these beyond the default row. Cards: 123 of 189 families.
 
 **`accord:*`** — Rules, thing
 
@@ -2382,6 +2382,14 @@ In time:
 - [reported] on close(window) unless fold(keep_decided): read withdrawn (CC 4.5.13)
 - [reported] landing of `window`: each node for itself, nothing signed (CC 4.5.13)
 - [reported] while `window` is open: binds nobody until it lands (CC 4.5.13)
+
+**`contribution:{subject_kind}`** — Priorities, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | false | true (always) | none |
+
+Count: `none` (CC 3.1.9.3)
 
 **`cosign:{state}`** — Process, thing
 
@@ -3444,6 +3452,15 @@ Guard:
 - attest: `one other(ratchet:flag:counter_rii:{layer})@named[id=ref:evidence_refs] else void` (CC 3.4.7.2)
 - attest: `one other(seed_holder_voting_alignment:{cell})@named[id=ref:evidence_refs] else void` (CC 3.1.9.4)
 - attest: `one other(testimonial_witness:{kind})@named[id=ref:evidence_refs] else void` (CC 3.1.9.3, CC 4.4.1)
+
+**`stream:head`** — Facts, account; keeps the Record
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | false | true (always) | none |
+| supersede | author | selfAct | false | false | supersede |
+
+Count: `none` (CC 3.1.3)
 
 **`takedown_notice:{basis}`** — Rules, thing
 

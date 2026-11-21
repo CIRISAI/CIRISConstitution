@@ -99,6 +99,7 @@ key_boundary:{scope}	transport-delivery	Rules	THING	attest,withdraw	L	where keys
 key_grant:{axis}	persist	Rules	THING	attest	H	wrap of a DEK to a recipient; never withdrawn	no	—
 ledger:checkpoint:{unit}:{version}	persist	Facts	ACCOUNT	attest,replace	H	co-witnessed snapshot superseding detail; proves the fold (kind Facts about the record; maintains the Record relation)	yes	—
 ledger:head:{unit}:{version}	persist	Facts	ACCOUNT	attest,replace	H	the ledger head: what can be proven forward (kind Facts about the record; maintains the Record relation)	yes	—
+stream:head	persist	Facts	ACCOUNT	attest,replace	M	a stream's signed head: what its log holds at one instant (kind Facts about the record)	yes	—
 ledger:promotion:{version}	persist	Facts	ACCOUNT	attest,replace	M	carries the compliance proof to cohort visibility (kind Facts about the record; maintains the Record relation)	yes	—
 licensure:{authority_id}	registry	Rules	THING	attest,replace,withdraw	H	licence status under an authority	no	pre:Rules
 lineage_witness:{stage}	persist	Rules	THING	attest,withdraw	M	ceremony whose effect is a witness role; per-stage rows	no	—
@@ -155,6 +156,7 @@ transport:{kind}	transport-delivery	Circumstances	THING	attest,replace,withdraw	
 trust:{job}:{version}	registry	Rules	THING	authorize,replace,withdraw	H	conferral/acceptance edges on delegates_to rows	no	—
 truth_grounding:{subject}	node	Facts	ACCOUNT	attest,withdraw,recant	H	per-subject ground-truth signal	no	—
 video:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about a video	no	—
+contribution:{subject_kind}	node	Priorities	ACCOUNT	attest	M	a node's Contribution on a subject kind, the row a vote names	no	—
 vote:{contribution_id}	node	Priorities	ACCOUNT	attest,withdraw,recant	M	a signed score weighs a Contribution	no	—
 wa_adjudication:{state}	node	Rules	THING	attest,replace,withdraw	M	quorum finding on abandonment/seizure/successor	no	—
 watchlist:{id}	node	Rules	THING	attest,replace,withdraw	M	per-group content-watchlist policy	no	—

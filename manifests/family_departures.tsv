@@ -79,6 +79,14 @@ consent:replication:{version}	projection	derived_no_rebuild	{"rebuild": "none", 
 consent:state:{stance}	subject_rule	consent_addressed	{"for_key_id": ["recipient (the node)", "scope tokens parsed"]}
 consent:state:{stance}	freshness	standing_at_signing	{"W": "W on the owner's standing", "judged_at": "signed_instant_with_W"}
 content_class:{class}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "withdrawal clears only its emitter's flag (read)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
+contribution:{subject_kind}	placement	unbuilt	null
+contribution:{subject_kind}	subject_rule	unbuilt	null
+contribution:{subject_kind}	freshness	unbuilt	null
+contribution:{subject_kind}	lifecycle	unbuilt	null
+contribution:{subject_kind}	replication	unbuilt	null
+contribution:{subject_kind}	projection	unbuilt	null
+contribution:{subject_kind}	erasure_route	unbuilt	null
+contribution:{subject_kind}	governance	unbuilt	null
 cosign:{state}	placement	unbuilt	["targeted_family", "targeted_room"]
 cosign:{state}	subject_rule	unbuilt	null
 cosign:{state}	freshness	unbuilt	null
@@ -218,6 +226,14 @@ session:{kind}	subject_rule	own_record	{"kind": ["occurrence", "attested == atte
 session:{kind}	lifecycle	earliest_claim	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "earliest claimed_at wins (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 slashing:{outcome}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 slashing:{outcome}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
+stream:head	placement	unbuilt	null
+stream:head	subject_rule	unbuilt	null
+stream:head	freshness	unbuilt	null
+stream:head	lifecycle	unbuilt	null
+stream:head	replication	unbuilt	null
+stream:head	projection	unbuilt	null
+stream:head	erasure_route	unbuilt	null
+stream:head	governance	unbuilt	null
 takedown_notice:{basis}	subject_rule	notice_shape	"content_sha256 + legal_basis from the notice shape"
 takedown_notice:{basis}	cosign_rule	quorum	"legal bases: none; steward_purge: GAP (CC trust root's consensus_protocol; held shut)"
 takedown_notice:{basis}	lifecycle	adverse	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}

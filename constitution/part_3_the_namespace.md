@@ -131,6 +131,7 @@ Canonical leaves: `system:*`, `audit_chain:hash_continuity`, `corpus_health:n_ef
 |---|---|---|---|
 | `settlement:*` | Catalogue row (CC 3.1.7 R1); the optional, privacy-scoped linkage of a federation action to its off-stack settlement — a bare `scores` against the paid Contribution, or the `settlement` subject_kind ceremony when an explicit receipt is wanted ([CC 3.3.10](part_3_the_namespace.md#3.3.10)). Open leaves (`settlement:paid:v1` canonical); `cohort_scope` is the producer's choice. CEG records that a settlement happened and what it paid for; the chain settles the value. | signed | No |
 | `ledger:head:{unit}:{version}` | Catalogue row (CC 3.1.7 R1); an in-grammar ledger's **head** — sequence, unit and the declared anchoring cadence ([CC 3.3.10.1](part_3_the_namespace.md#3.3.10.1) clauses 1–4). `{unit}` is the ledger's unit (`external`: an ISO 4217 code or a unit the ledger declares); wire `ledger:head:USD:v1`. | signed | **Yes:** the ledger's single owner (the steward-bound identity of its `ledger_id` triple); no delegate writes |
+| `stream:head` | **A stream's signed head** (registered under CC 3.1.7 R2(a); [CC 5.3.3.5](part_5_transport_substrate.md#5.3.3.5), [CC 5.3.3.8](part_5_transport_substrate.md#5.3.3.8)): the stream's epoch, its tree size and its root at one instant, with the room where the stream is accountable. Its `sub` is `stream:` and the stream's id. Wire `stream:head:v1`. | positive-only | **Yes:** the stream's producer, a member's key and never a node's; nobody else writes its head |
 | `ledger:checkpoint:{unit}:{version}` | Catalogue row (CC 3.1.7 R1); a co-witnessed balance snapshot at a sequence number, superseding the detail below it ([CC 3.3.10.1](part_3_the_namespace.md#3.3.10.1) clause 5); the conservation fold is provable from the latest checkpoint forward. | signed | **Yes:** as `ledger:head` |
 | `ledger:promotion:{version}` | Catalogue row (CC 3.1.7 R1); promotion of a ledger to cohort visibility, carrying the compliance proof — chain validity from the latest witnessed checkpoint to the promoted head ([CC 3.3.10.1](part_3_the_namespace.md#3.3.10.1) clause 6). | signed | **Yes:** as `ledger:head` |
 
@@ -657,6 +658,7 @@ This detector is justice made measurable: it watches for harm that no single com
 
 | Prefix | Description | Polarity |
 |---|---|---|
+| `contribution:{subject_kind}` | **A node's Contribution on a subject kind**: the row a vote, a tally and a diversity check name by its row id. `{subject_kind}` is open vocabulary, lower-case letters, digits and `_`. The node signs it under its own key, at federation scope. Wire `contribution:arc_question:v1`. | signed |
 | `vote:{contribution_id}` | Signed score on a Contribution (P4). Weight = Credits × expertise multiplier. | signed |
 | `truth_grounding:{subject}` | Per-subject ground-truth signal. | signed |
 | `weighted_aggregate:{contribution_id}` | Rolling tally per Contribution (P7). | signed |
