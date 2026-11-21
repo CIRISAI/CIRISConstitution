@@ -34,6 +34,7 @@ HALT_MEMBERS = {"author", "accord_root", "invocation_id", "nonce", "asserted_at"
 WITNESS_MEMBERS = ("witnesses", "witness_quorum", "witness_cadence_secs", "attach_window_secs",
                    "transparency_services", "receipt_quorum", "receipt_cadence_secs")
 TCP = 1
+OWNER_ONLY = {"infra:network_presence", "infra:hold_community_membership", "infra:hold_family_membership"}   # CC 4.4.3.19, two granters
 
 # The steps of CEREMONY.md section 3 that produce signed statements, as data. `kind` is the trace's word for
 # the statement; `per` says how many there are; `after` names the steps whose statements it cites.
@@ -62,13 +63,13 @@ INVARIANTS = [
     ("C08", "rc21", "4.2.1.1", "every holder has exactly one pre-signed halt, with the closed payload, a 32-byte nonce, its own invocation id, and sub equal to accord_root"),
     ("C09", "rc21", "5.3.4", "every holder signs the bundle, over one payload, and nobody else does"),
     ("C10", "rc21", "2.6.1.11", "the bundle is version 1 with no prev, names the holders of step 1 and the seats of step 2, and cites their records"),
-    ("C11", "rc21", "4.2.6", "the charter commits one recovery key for each holder, with a halt fuse and the scopes infra:serve and infra:attest"),
+    ("C11", "rc21", "4.2.6", "the charter commits one recovery key for each holder, with a halt fuse, and its scope carries infra:serve and infra:attest and none of the scopes only an owner grants"),
     ("C12", "rc22", "4.2.6", "no two holders share a recovery commitment"),
     ("C13", "rc21", "3.2", "a charter in witnessed mode off carries none of the witnessing members, and no member is written as zero"),
     ("C14", "rc22", "2.6.1.11", "a bundle voice's sub is the bundle's family_key_id"),
     ("C15", "rc21", "4.2.1.1", "a halt of this form exists for every holder before the bundle, and names the bundle's lineage"),
     ("C16", "rc21", "2.6.2", "no record is dated after the bundle that cites it, and every valid_until is later than its asserted_at"),
-    ("C18", "rc21", "4.2.3", "every holder's custody names its own device by serial, and no two holders name one device; a certificate shared above the devices is no fault"),
+    ("C18", "rc21", "4.2.3", "no two holders name one device in their custody leaves, and no leaf's device serial is malformed; a leaf that names no device and a certificate shared above the devices are no fault"),
     ("C19", "rc22", "4.2.6", "each holder's recovery commitment is the one the charter carries, and it commits no key that signs for a holder or a seat"),
     ("C17", "rc21", "2.6.1.2", "where the signed bytes are given, an independent decoding agrees with the trace, and every cites resolves to a statement of the trace"),
 ]
@@ -254,6 +255,7 @@ def check(T):
         if sorted(rc) != sorted(H): bad("C11", voices[0], "recovery commitments are not one for each holder")
         if not charter.get("halt_fuse_secs"): bad("C11", voices[0], "no halt fuse")
         if not {"infra:serve", "infra:attest"} <= set(charter.get("scope", [])): bad("C11", voices[0], "the scopes lack infra:serve or infra:attest")
+        for t in sorted(set(charter.get("scope", [])) & OWNER_ONLY): bad("C11", voices[0], f"the charter carries {t}, which only an owner grants")
         vals = [json.dumps(v, sort_keys=True) for v in rc.values()]
         if len(set(vals)) != len(vals): bad("C12", voices[0], "two holders share a recovery commitment")
 
@@ -275,8 +277,10 @@ def check(T):
     for h in H:
         e = HD.get(h)
         if e is None: bad("C18", None, f"the trace gives no custody entry for holder {h[-8:]}"); bad("C19", None, f"the trace gives no recovery commitment for holder {h[-8:]}"); continue
-        if not isinstance(e.get("device_serial"), int) or isinstance(e.get("device_serial"), bool):
-            bad("C18", None, f"holder {h[-8:]} names no device serial: {e.get('device_serial_absent_reason') or 'no reason given'}")
+        ds = e.get("device_serial")
+        if isinstance(ds, bool) or not (ds is None or isinstance(ds, int)): bad("C18", None, f"holder {h[-8:]}: the device serial is no integer")
+        if ds is None and "malformed" in (e.get("device_serial_absent_reason") or "malformed: no reason given"):
+            bad("C18", None, f"holder {h[-8:]}: {e.get('device_serial_absent_reason') or 'no serial and no reason given'}")
         try: in_charter = hx(charter["recovery_commitments"][h][1])
         except Exception: in_charter = None
         if not e.get("recovery_commitment") or e.get("recovery_commitment") != in_charter: bad("C19", None, f"holder {h[-8:]}: the commitment differs from the charter's")
@@ -352,13 +356,14 @@ def plants():
         p("C09", "a bundle one holder did not sign", drop_voice),
         p("C10", "a bundle that names a prev", lambda T: all_voices(T, lambda v: v["payload"].update(prev=[2, [-16, {"hex": "00" * 32}]]))),
         p("C11", "a charter with no halt fuse", lambda T: all_voices(T, lambda v: v["payload"]["charter"].pop("halt_fuse_secs"))),
+        p("C11", "a charter that carries a scope only an owner grants", lambda T: all_voices(T, lambda v: v["payload"]["charter"]["scope"].append("infra:network_presence"))),
         p("C12", "two holders sharing a recovery commitment", lambda T: all_voices(T, share_commitment)),
         p("C13", "a witness quorum written as zero", lambda T: all_voices(T, lambda v: v["payload"]["charter"].update(witness_quorum=0))),
         p("C13", "an attach window in a witnessed-off charter", lambda T: all_voices(T, lambda v: v["payload"]["charter"].update(attach_window_secs=604800))),
         p("C14", "a bundle voice with no sub", lambda T: all_voices(T, lambda v: claims(v).pop("sub", None))),
         p("C15", "a halt naming another lineage", lambda T: (lambda s: (s["payload"].update(accord_root="other"), claims(s).update(sub="other")))(_first(T, "accord:invoke:constitutional"))),
         p("C18", "two holders on one device", lambda T: T["holders"][1].update(device_serial=T["holders"][0]["device_serial"])),
-        p("C18", "a holder whose custody names no device", lambda T: T["holders"][0].update(device_serial=None, device_serial_absent_reason="the leaf names no device serial")),
+        p("C18", "a holder whose device serial is malformed", lambda T: T["holders"][0].update(device_serial=None, device_serial_absent_reason="custody_serial_malformed: not one DER INTEGER")),
         p("C19", "a recovery key that is a holder's signing key", lambda T: (lambda c: (T["holders"][0].update(recovery_commitment=c), all_voices(T, lambda v: v["payload"]["charter"]["recovery_commitments"].__setitem__(T["holders"][0]["identity_ref"], [-16, {"hex": c}]))))(T["signing_key_commitments"][0]["commitment"])),
         p("C19", "a recovery commitment that is not the charter's", lambda T: T["holders"][0].update(recovery_commitment="00" * 32)),
         p("C16", "a record dated after the bundle", lambda T: (lambda s: (s["payload"].update(asserted_at=s["payload"]["asserted_at"] + 10 ** 7), claims(s).update(iat=(s["payload"]["asserted_at"]) // 1000)))(_first(T, "key:record", 1))),

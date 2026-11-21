@@ -123,7 +123,7 @@
    "id": "C11",
    "since": "rc21",
    "cc": "4.2.6",
-   "statement": "the charter commits one recovery key for each holder, with a halt fuse and the scopes infra:serve and infra:attest"
+   "statement": "the charter commits one recovery key for each holder, with a halt fuse, and its scope carries infra:serve and infra:attest and none of the scopes only an owner grants"
   },
   {
    "id": "C12",
@@ -159,7 +159,7 @@
    "id": "C18",
    "since": "rc21",
    "cc": "4.2.3",
-   "statement": "every holder's custody names its own device by serial, and no two holders name one device; a certificate shared above the devices is no fault"
+   "statement": "no two holders name one device in their custody leaves, and no leaf's device serial is malformed; a leaf that names no device and a certificate shared above the devices are no fault"
   },
   {
    "id": "C19",
@@ -232,6 +232,10 @@
    "plant": "a charter with no halt fuse"
   },
   {
+   "invariant": "C11",
+   "plant": "a charter that carries a scope only an owner grants"
+  },
+  {
    "invariant": "C12",
    "plant": "two holders sharing a recovery commitment"
   },
@@ -257,7 +261,7 @@
   },
   {
    "invariant": "C18",
-   "plant": "a holder whose custody names no device"
+   "plant": "a holder whose device serial is malformed"
   },
   {
    "invariant": "C19",
