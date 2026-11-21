@@ -39136,6 +39136,14 @@
        "cc_ref": "CC 4.4.3.12"
       },
       {
+       "member": "duty_holders",
+       "type": "{ + tstr => [+ identity-ref] }",
+       "presence": "optional",
+       "when": "on a community's founding record that names who holds its duties",
+       "in_cddl": true,
+       "cc_ref": "CC 4.5.4"
+      },
+      {
        "member": "refs",
        "type": "refs",
        "presence": "optional",

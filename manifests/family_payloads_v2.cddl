@@ -24,6 +24,7 @@ group-roster = {
   ? "membership": "private" / "public",     ; Absent reads public. (where a community declares how its roster is seated)
   ? "dissolved_at": ms-time,                ; POSIX milliseconds. (where the group is dissolved)
   ? "policy": { * tstr => ceg-value },      ; The members the record declares at creation beyond those above. (where the record carries the group's policy)
+  ? "duty_holders": { + tstr => [+ identity-ref] }, ; A duty name (moderate, or one the record declares in policy.duties) to the set of members who hold it at founding. Each is a listed member who signed the record. On the first version of a community only: later seats move by conferral, withdrawal, resignation and election. (on a community's founding record that names who holds its duties)
   ? "refs": refs,                           ; The predecessor version in refs.head, and the trust:charter:v1 row in force under the also role cites. (on every version after the first)
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
