@@ -9,8 +9,8 @@ surface	name	fate	new_name	sense	note
 family	transparency_log:cosigned:{tree_size}	retire		a witness's cosignature on a tree head	A Receipt replaces it (RFC 9943): the service registers the head in its own log and answers with a Receipt. A row of the family is refused at the door by name.
 family	lineage_witness:{stage}	retire		the ceremony by which a node agreed to witness a lineage	A lineage names its transparency services in its charter, and a service consents by issuing Receipts. A row of the family is refused at the door by name.
 family	delivery_receipt:{stream_id}	rename	delivery_ack:{stream_id}	a subscriber's acknowledgement of a chunk	A name change and nothing else. Receipt is kept for the Receipt of RFC 9943.
-family	transparency_log:inclusion	open		an inclusion proof as a row	An inclusion proof rides inside a Receipt. No component produces the row. Retire unless a producer is named.
-family	transparency_log:consistency	open		a consistency proof as a row	A consistency proof is submission material beside a head (RFC 9942 label 396). No component produces the row. Retire unless a producer is named.
+family	transparency_log:inclusion	retire		an inclusion proof as a row	An inclusion proof rides inside a Receipt. No component produces the row or has a door for it. A row of the family is refused at the door by name.
+family	transparency_log:consistency	retire		a consistency proof as a row	A consistency proof is submission material beside a head (RFC 9942 label 396). No component produces the row or has a door for it. A row of the family is refused at the door by name.
 family	cosign:{state}	keep		the collection of members' signatures for a counted row	Not the witnessing sense: a member's voice on a row of its own group.
 family	testimonial_witness:{kind}	keep		an affected party's singular testimony	Not the witnessing sense.
 family	witness_diversity:{contribution_id}	keep		the diversity of a Contribution's reviewers	Not the witnessing sense.
@@ -20,8 +20,8 @@ member	genesis-charter witness_cadence_secs	rename	receipt_cadence_secs	how ofte
 member	genesis-charter attach_window_secs	keep		how old the newest counted Receipt may be at attach	
 member	group-roster transparency_services	new		the services a room's accountable streams register with	
 member	group-roster receipt_quorum	new		how many of a room's named services must register a head	
-member	membership-change witness_set	open		vouching key ids on a membership change	Not the witnessing sense, and the store refuses the member. Retire or rename under its own ruling.
-member	occurrence-revocation witness_set	open		vouching key ids on an occurrence revocation	As above.
+member	membership-change witness_set	keep		vouching key ids on a membership change	Not the witnessing sense: the keys that vouch for a revocation. A live member on both rows.
+member	occurrence-revocation witness_set	keep		vouching key ids on an occurrence revocation	Not the witnessing sense: the keys that vouch for a revocation. A live member on both rows.
 token	witness_members_partial	rename	transparency_members_partial	one of the charter's service members without the others	
 token	witness_quorum_mismatch	rename	receipt_quorum_mismatch	a stated quorum that is not the strict majority	
 token	trust_root_head_unwitnessed	rename	trust_root_head_unreceipted	a head with fewer Receipts than the quorum	
