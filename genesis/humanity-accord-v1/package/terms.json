@@ -1,0 +1,42 @@
+{
+  "asserted_at_ms": 1795302284535,
+  "bundle_object_id": "cb9ada31fbce34103a8b01acecc67bbb8cb0e96c1210bb83e40c5f34d8e6deb5",
+  "cites": [
+    "2536ec9c0319ab5371a6cf3f3db4a8587c9ba253ed63b48476626e564c441857",
+    "9d92564fba2de57b9a0fa54fbab2cf4b4e5242375f0e28a3c961ce908dd1b8a3",
+    "7d59a06f5befbd269177b9e904ef2ec1ccd824ed8dda4c45f838618a1fa130f5",
+    "2e36ed0a882df7955412d2abba7393891eb8e3643fa3d963828a54ab7beb8bf9",
+    "4c247146dc05b1cc38f6f20f8096c2a045209a64e4307eff1587bc04fa368cdb"
+  ],
+  "family_key_id": "humanity-accord",
+  "halt_fuse_secs": 86400,
+  "holders": [
+    {
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:mkABfy3E4WaNxm51g02c43ZODhR3EAxaPxpnZGSpMt0",
+      "name": "A1"
+    },
+    {
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:t22YNA-ICKYKWyyYJ8clnnufqynYg1KFoW0IVsTruAo",
+      "name": "B1"
+    },
+    {
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:lu4E9zfCraWxZAUp6akry3PzMJjGSAX9xvv-iktfqjk",
+      "name": "C1"
+    }
+  ],
+  "scope": [
+    "assure:age",
+    "infra:serve",
+    "infra:attest",
+    "infra:detect",
+    "assure:capacity",
+    "infra:attest_assurance"
+  ],
+  "seats": [
+    {
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:IiG-eTvirkDbYiqa-tuv3MxShjEDJen7FQMkiItujzQ",
+      "name": "canonical-1"
+    }
+  ],
+  "version": 1
+}
