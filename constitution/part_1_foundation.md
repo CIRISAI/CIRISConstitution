@@ -261,11 +261,11 @@ The opt-in boundary is drawn at GPA-unobservability. That is because GPA-unobser
 
 **What a person tells their own agent stays theirs (normative).** An agent a person owns is within that person's `self` for delivery ([CC 4.4.3.19](part_4_composition_governance.md#4.4.3.19)). What the person tells it is `self` content: held in that circle and scanned by no one.
 
-*Derived content keeps its circle.* What an agent derives from content may be shown only to those who may see every piece it was derived from. A summary of a `self` conversation is `self` content. What draws on two rooms may be shown only to those who are in both. A piece is shown more widely only by the act of the person whose content it is.
+*Derived content keeps its circle.* What an agent derives from content may be shown only to those who may see every piece it was derived from. A summary of a `self` conversation is `self` content. What draws on two rooms may be shown only to those who are in both. The rule is read each time the content is shown, not once when it was made. A piece is shown more widely only by the act of each person whose content it is.
 
 *The agent is not a witness against its owner.* An owned agent discloses its owner's `self` content to no one outside that `self`, whatever the owner has done. This rule governs what the agent tells. What the agent does is its conscience's: it still refuses to help with a harm, and it may defer to a human.
 
-*Nothing reaches inside.* No check runs on `self` content. The known-match check runs only where content leaves a private circle: at a promotion into the Commons, at a post into a `public` room, and in a group whose moderators enabled a list ([CC 4.5.7](part_4_composition_governance.md#4.5.7)). Lawful access that an affiliation has declared reaches that affiliation's own scope, is always logged and is never covert ([CC 4.4](part_4_composition_governance.md#4.4)). Neither reaches a person's `self`.
+*Nothing reaches inside.* No check runs on `self` content. A check reads the piece placed at its seam and nothing that piece names. The known-match check runs only where content leaves a private circle: at a promotion into the Commons, at a post into a `public` room, and in a group whose moderators enabled a list ([CC 4.5.7](part_4_composition_governance.md#4.5.7)). Lawful access that an affiliation has declared reaches that affiliation's own scope, is always logged and is never covert ([CC 4.4](part_4_composition_governance.md#4.4)). Neither reaches a person's `self`.
 
 The basis is that of the rule against compelled self-incrimination: an agent inside a person's `self` holds that person's own knowledge. It is not a privilege between two persons, since an agent is not a person ([CC 1.13.2](#1.13.2)).
 
