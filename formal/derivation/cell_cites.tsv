@@ -644,3 +644,74 @@ membership:{stage}	placement	agree	CC 3.1.3.2	A **proposal** is an invitation to
 group:roster	placement	agree	CC 3.2	every other roster is never enumerable outside its cohort
 census:member:partial	placement	agree	CC 6.1.9	The two publish `census:member:partial:v1` into the room
 ballot:tally:{poll_id}	placement	agree	CC 6.1.9	the result is `ballot:tally:{poll_id}:v1`, recomputed by every member
+approach:{goal_id}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+autonomy:{aspect}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+coherence_standing:{cohort}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+conscience:optimization_veto	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+dma:csdma:*	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+fidelity:explainability_sla:{tier}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+integrity:{aspect}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+moderation_track_record:{community_key_id}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+progress_measure:{method_id}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+ratchet:flag:density_anomaly	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+rollback_detected:{revision_field}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+vote:{contribution_id}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+bond_posted:{currency}	signer_rule	agree	CC 3.1.1	A bond posted for Sybil resistance (proof of bond); forfeited on revocation. | positive-only | No |
+attestation:license_validity	signer_rule	agree	CC 4.4.3.19	Anyone may be an authority under their own key, the fold keys on emitter-resolves-to-authority
+provenance:slsa:{level}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+conscience:coherence	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+dma:pdma:*	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+non_maleficence:{aspect}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+content_rating:{scheme}:{rating}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+locality:decision:{scale}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+ratchet:flag:out_of_distribution_voting	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+weighted_aggregate:{contribution_id}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+attestation:agent_integrity	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+benchmark:he300:{category}:{version}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+commitment_fulfillment:{prior_contribution_id}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+dma:dsdma:{domain}:*	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+fidelity:{aspect}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+judge_model:verdict:{model_id}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+multilateral_participation:{forum}:{kind}	signer_rule	agree	CC 3.1.1	`{kind}` ∈ `membership` \| `voting` \| `proposal_filing` \| `observer_status`. | signed | No |
+prohibited:{category}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+ratchet:flag:expertise_attestation_anomaly	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+seed_holder_voting_alignment:{cell}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+group:roster	cosign_rule	agree	CC 3.1.3	**Yes — cosigned under the group's `consensus_protocol`** (the founder quorum; the accord's roster-change threshold for the accord family)
+membership:{stage}	cosign_rule	agree	CC 3.1.3.2	the last three are the roster **events** as cosigned rows ([CC 2.4](part_2_the_grammar.md#2.4)): a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member
+takedown_notice:{basis}	cosign_rule	agree	CC 3.1.1	the quorum is evaluated over attester + cosigners under the root's `consensus_protocol`
+identity:canonical_binding:{canonical_hash}	subject_rule	agree	CC 3.3.14	`attesting_key_id = K` (the claiming federation key), naming the canonical hash `H` as the bound subject
+key:record	subject_rule	agree	CC 3.1.3	**A key's claim of itself**: `attesting_key_id` = `attested_key_id` = the key
+membership:{stage}	subject_rule	agree	CC 3.1.3.2	`subject_key_ids = [K]` (exactly one) and a required `expires_at`
+trace:{form}:{version}	subject_rule	agree	CC 3.4.5	**Pro-self** — `attesting_key_id` MUST be a member of `subject_key_ids`.
+cert_validity:{authority}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+conscience:epistemic_humility	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+cw_class:{class}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+expertise:{domain}:{language}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+identity:canonical_binding:{canonical_hash}	signer_rule	agree	CC 3.3.14	A second key claiming the same `H` is admitted too (competing claims surface to consumer policy / RATCHET, not a substrate verdict).
+method:{approach_id}:{substrate_rung}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+partner_role:{role}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+ratchet:flag:counter_rii:{layer}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+revocation:{entity_type}:{reason}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+transparency_log:inclusion	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+attestation:hardware_rooted	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+beneficence:{aspect}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+dma:idma:*	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+justice:{aspect}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+need:{domain}:{kind}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+provenance:skill_import:{source}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+ratchet:flag:harassment_pattern	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+settlement:*	signer_rule	agree	CC 3.1.3	the chain settles the value. | signed | No |
+activity_tier:{period}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+attestation:registry_consensus	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+build:registered:{target}	signer_rule	agree	CC 3.1.1	Build manifest registered against the directory (precondition for L4 attestation). | boolean-via-score | No |
+conscience:entropy	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+credits:{domain}:{language}:{subject}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+manifold_conformity:{cohort}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+objection:{state}	signer_rule	agree	CC 4.5.13	Members object by signing `objection:raised` rows that name the act. The act is lifted when a strict majority of the roster at the head the act names has objected
+ratchet:flag:coordinated_voting_cluster	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+transparency_log:consistency	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
+community:listing	subject_rule	agree	CC 3.1.1	signed by a current `moderate`-holder of the community it names; one live row per community
+custody:{kind}	subject_rule	agree	CC 3.1.3.3	`attesting_key_id` is the device the report is about; nobody reports custody for another device
+identity_amendment	subject_rule	agree	CC 3.1.5	Attester = the agent's occurrence key, subject = the agent's identity key.
+key_grant:{axis}	subject_rule	agree	CC 3.1.3	`attested_key_id` is the recipient occurrence; the envelope carries the key's identity on that axis
+session:{kind}	subject_rule	agree	CC 3.1.3.1	Emitter: **self-report** (`attesting_key_id` = `attested_key_id` = the claiming occurrence).

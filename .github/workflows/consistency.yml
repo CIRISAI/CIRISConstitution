@@ -56,6 +56,8 @@ jobs:
         run: python3 tools/check_stale_refs.py
       - name: Every name of the transparency plane has a fate in the name table
         run: python3 tools/check_scitt_names.py
+      - name: The text coverage of the family model is current, and no who-may-sign cell stands unread
+        run: python3 tools/family_text_coverage.py --check
       - name: Namespace registry and match vectors are regenerated (no drift)
         run: |
           python3 tools/build_cc_namespace.py
