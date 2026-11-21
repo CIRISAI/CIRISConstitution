@@ -25,8 +25,8 @@ group-roster = {
   ? "dissolved_at": ms-time,                ; POSIX milliseconds. (where the group is dissolved)
   ? "policy": { * tstr => ceg-value },      ; The members the record declares at creation beyond those above. (where the record carries the group's policy)
   ? "duty_holders": { + tstr => [+ identity-ref] }, ; A duty name (moderate, or one the record declares in policy.duties) to the set of members who hold it at founding. Each is a listed member who signed the record. On the first version of a community only: later seats move by conferral, withdrawal, resignation and election. (on a community's founding record that names who holds its duties)
-  ? "transparency_services": [2* identity-ref], ; The transparency services the room names: a set of at least two identity references, each resolved through its own key record. (where a community names the services its accountable streams register with)
-  ? "receipt_quorum": uint .ge 2,           ; How many of the named services must register a head: more than half of them, and at least two. (where transparency_services is present, and never without it)
+  ? "transparency_services": [2* identity-ref], ; The transparency services the room names: a set of at least two identity references, each resolved through its own key record. One of the two members without the other is refused, transparency_members_partial. (where a community names the services its accountable streams register with)
+  ? "receipt_quorum": uint .ge 2,           ; How many of the named services must register a head: exactly ⌊n/2⌋+1 of the n named. Any other value is refused, receipt_quorum_mismatch. (where transparency_services is present, and never without it)
   ? "refs": refs,                           ; The predecessor version in refs.head, and the trust:charter:v1 row in force under the also role cites. (on every version after the first)
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
