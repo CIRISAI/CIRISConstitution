@@ -72,6 +72,7 @@ COLUMNS = OrderedDict([
     ("replication", "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}"),
     ("projection", "{table, rebuild ∈ {byte_equal, none}}"),
     ("erasure_route", "dsar | purge | legal_hold | none"),
+    ("names_head", "roster | standing | none | by_placement: which head a row of the family names in refs.head (CC 2.4.1.1, CC 2.7.8); null where the placement is unread"),
     ("shape", "claim | content | consent | door | consent+door, the family's kernel shape (formal/derivation/family_shapes.tsv); null where none takes it"),
     ("descends_on_withdrawal", "bytes_and_words | row | nothing: what a holder other than the signer drops when a row of the family is withdrawn (CC 6.1.5 N5)"),
     ("blind", "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
@@ -454,6 +455,28 @@ def placement_text(default_value):
 SHAPES = os.path.join(ROOT, "formal/derivation/family_shapes.tsv")
 SHAPE_OF = {l.split("\t")[0]: l.split("\t")[1] for l in open(SHAPES, encoding="utf-8").read().split("\n")
             if l and not l.startswith("#") and not l.startswith("family\t")}
+def names_head(row):
+    """Which head a row of the family names in refs.head (CC 2.4.1.1, CC 2.7.8), from where it is placed and who signs it.
+    roster: placed only at a room's or a family's scope, so it names that roster's version. standing: signed under a seat, a grant
+    or a binding and placed outside any roster, so it names the record that seats the signer. none: a person's own row, exercising
+    no conferred standing. by_placement: the family is placed at several scopes; at a room or family it names that roster's version,
+    and at self it names none unless its signer signs as someone's node, agent or delegate, and then that binding or delegation."""
+    pl = row["placement"].get("value"); sr = row["signer_rule"].get("value")
+    places = set(pl) if isinstance(pl, list) else ({head_of(pl)} if isinstance(pl, str) else set())
+    places = {head_of(x) if isinstance(x, str) else x for x in places}
+    who = sr.get("who") if isinstance(sr, dict) else sr
+    who = " ".join(who) if isinstance(who, list) else (who or "")
+    seated = any(t in who for t in ("seat_role", "identity_type contains", "holder", "steward", "minter", "owner_of"))
+    rooms = {"targeted_room", "targeted_family"}
+    if not places or pl is None or (isinstance(pl, str) and pl.startswith("none")):
+        v, why = None, "the placement cell is unread or the family is never stored"
+    elif places <= rooms: v, why = "roster", "placed only at a room's or a family's scope"
+    elif places & rooms: v, why = "by_placement", "placed at a room or a family and elsewhere"
+    elif seated or "roster_member" in who: v, why = "standing", "signed under a seat, a grant or a binding, outside any roster"
+    else: v, why = "none", "a row of its signer's own, exercising no conferred standing"
+    return {"value": v, "source": "derived" if v else "gap", "from": "placement, signer_rule", "note": why, "cc_ref": "CC 2.4.1.1"}
+
+
 # What a holder other than the signer drops when a row of the family is withdrawn (CC 6.1.5 N5, CC 2.4.1.1): content is N5's object;
 # a claim leaves every audience; a consent or a door is structure, kept and read as retracted, since past acts are judged against it.
 DESCENDS = {"content": "bytes_and_words", "claim": "row", "consent": "nothing", "door": "nothing", "consent+door": "nothing", "none fits": "nothing"}
@@ -897,6 +920,7 @@ def main():
         row["emitter_class"] = emitter_class(row["signer_rule"])
         row["derived"], row["read_by"] = derived_text[fam], der_cells[fam]
         row["confers"], row["binds_segment"] = conf_cells[fam], seg_cells[fam]
+        row["names_head"] = names_head(row)
         shp = SHAPE_OF.get(fam)
         row["shape"] = {"value": None if shp == "none fits" else shp, "source": "kernel-table", "from": "formal/derivation/family_shapes.tsv"}
         if shp == "none fits": row["shape"]["note"] = "no kernel shape takes the family; it is read as structure"
