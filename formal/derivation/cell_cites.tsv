@@ -291,14 +291,14 @@ deferral:response:{outcome}	fold	agree	CC 4.3	**A decision that unseats a roster
 deferral:response:{outcome}	fold	agree	CC 4.3	Liveness-critical decisions (deferral-answering and symmetry rule 1 below, per CC 4.2.6) are exempt: there, presence-is-authority governs, because an absent WA freezes the agent.
 deferral:response:{outcome}	fold	agree	CC 4.3	computes its denominator over the **full seated roster**, never the live subset
 deferral:response:{outcome}	signer_rule	agree	CC 3.1.9.3	**A Wise Authority's answer to one deferral**, `{outcome}` ∈ `approved` \| `rejected`. Attester = a key that, at `asserted_at`, held a seat over the deferring party's deferrals in the live
-deferral:response:{outcome}	signer_rule	agree	CC 4.3	A `deferral:response:{outcome}` counts only when, at its `asserted_at`, its attester is the conferrer or sits on a live chain from the conferrer bearing `resolve_deferral` or the `resolve_deferral:{domain}` the request
+deferral:response:{outcome}	signer_rule	agree	CC 4.3	It counts only where, at that head, its attester is the conferrer or sits on a live chain from the conferrer bearing `resolve_deferral` or the `resolve_deferral:{domain}` the request names.
 deferral:response:{outcome}	signer_rule	agree	CC 4.3	A person confers the seat over their own deferrals under their own key. An agent's seat is conferred by its steward, the holder of its live owner-binding ([CC 3.2](part_3_the_namespace.md#3.2)); the
 deferral:response:{outcome}	signer_rule	agree	CC 4.3	A seat over one party's deferrals is conferred by that party in a signed row and by nobody else; there is no roster of permitted Wise Authorities and a substrate
 deferral:response:{outcome}	signer_rule	agree	CC 4.4.3.19	`resolve_deferral` takes the same test, with the conferrer of the seat as delegator ([CC 4.3](#4.3)).
 delivery:{class}	signer_rule	agree	CC 3.1.4	Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md#3.4.3).
 delivery_receipt:{stream_id}	signer_rule	agree	CC 3.1.4	subscriber-emitted, membership-gated, **not** a substrate-self-report. Polarity: signed.
 delivery_receipt:{stream_id}	signer_rule	agree	CC 3.4.6	`attesting_key_id` MUST be a current member of the community/stream the `{stream_id}` belongs to, per [CC 4.4.3.3](part_4_composition_governance.md#4.4.3.3) Policy M membership resolution. NOT substrate-self-report (distinct from CC 3.4.3 / CC 3.4.4 /
-delivery_receipt:{stream_id}	signer_rule	agree	CC 5.3.3.11	A `delivery_receipt:{stream_id}` Contribution is a subscriber's signed acknowledgement that they received chunk K under the named stream + epoch. **Best-effort default**; opt-in for **accountable** profiles (registry propagation, emergency).
+delivery_receipt:{stream_id}	signer_rule	agree	CC 5.3.3.11	A `delivery_ack:{stream_id}` Contribution is a subscriber's signed acknowledgement that they received chunk K under the named stream + epoch. **Best-effort default**; opt-in for **accountable** profiles (registry propagation, emergency).
 detection:correlated_action:{axis}	body	agree	CC 3.1.8.4	**Polarity carries the verdict**: positive scores indicate the structural pattern is present and strong on the named axis; negative scores indicate evidence of the inverse
 detection:correlated_action:{axis}	erasure_route	fills	CC 4.5.3	the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row
 detection:correlated_action:{axis}	fold	agree	CC 4.4.2	Detector dimensions (`detection:correlated_action:*`, `detection:distributive:access:*`, `ratchet:flag:*`)
@@ -360,7 +360,7 @@ group:roster	projection	agree	CC 3.2	A consumer's roster fold MUST drop such a s
 group:roster	projection	agree	CC 4.4.3.7	roster = fold(head, membership rows effective at now)
 group:roster	projection	agree	CC 4.4.3.8	the returned set is canonically ordered by `key_id` (lowercase-hex byte order) for any downstream hashing/iteration
 group:roster	projection	agree	CC 4.4.3.10	subscriber_set(C) = resolve_community(C.community_id, now)
-group:roster	projection	agree	CC 4.4.3.21	head = held, or the witnessed head where F's charter declares a receipt_quorum
+group:roster	projection	agree	CC 4.4.3.21	a family has one head, the roster version this node holds
 group:roster	projection	agree	CC 4.4.3.21	roster = fold(head, membership rows effective at now)
 group:roster	replication	fills	CC 2.4.1.1	roster-removal rows are addressed by `key_id` — they reach only the audience that already holds the roster
 hard_case:{kind}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
@@ -497,9 +497,9 @@ mesh_config:{key}	body	agree	CC 6.1.5.1	A `mesh_config` key MUST NOT make a node
 mesh_config:{key}	cosign_rule	fills	CC 4.2.1	**Durable** settings are earned by **quorum, never by having been exercised**. The root's own quorum MAY establish a durable setting directly (cold), or MAY ratify
 mesh_config:{key}	fold	agree	CC 3.1.9.2	relieve-never-expand; most-restrictive-across-roots
 mesh_config:{key}	signer_rule	agree	CC 3.1.9.2	Mesh-configuration row (CC 4.2.1): **trust-root-emitted, a `scores` row authored under a grant counted over the holders of the bundle in force** (a `delegates_to` needs a delegate; a configuration names none); relieve-never-expand; most-restrictive-across-roots; a
-mesh_config:{key}	signer_rule	agree	CC 4.2.1.4	A node MUST NOT author a `mesh_config` value: that plane is the trust root's and governs what other nodes carry.
+mesh_config:{key}	signer_rule	agree	CC 4.2.1.4	A node MUST NOT author a `mesh_config` value: that plane is the root's and governs what other nodes carry.
 mesh_config:{key}	signer_rule	agree	CC 4.2.1.4	A root MAY relieve across its nodes under rules (1)–(3) ([CC 4.2.1](#4.2.1)).
-mesh_config:{key}	signer_rule	agree	CC 4.2.1.4	`mesh_config:{key}` ([CC 4.2.1](#4.2.1)) | **the trust root**, on the [CC 3.2](part_3_the_namespace.md#3.2) delegation plane | *"nodes under me shall carry ≤ N"* — about **others**.
+mesh_config:{key}	signer_rule	agree	CC 4.2.1.4	`mesh_config:{key}` ([CC 4.2.1](#4.2.1)) | **the root**: a strict majority of the holders of the bundle in force, or one holder for emergency relief | *"nodes under me shall carry ≤ N"* — about **others**.
 model_3d:*	signer_rule	agree	CC 3.1.9	None is reserved: all are open-vocabulary content claims under ordinary [CC 4.4](part_4_composition_governance.md#4.4) consumer policy.
 moderation:{allegation_type}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 moderation:{allegation_type}	governance	fills	CC 4.5.13	a present moderator acts, and on the moderators' absence the live community governs its own content
