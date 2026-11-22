@@ -179,7 +179,7 @@ refs-members = {
 also-role = "ack" / "cites" / "under"
 nonempty-map = { + any => any }
 
-; The statement id (RFC 9943 statement identity): SHA-256 over the deterministic encoding of this
+; The CEG statement id (a name of this profile; RFC 9943 defines no statement identifier): SHA-256 over the deterministic encoding of this
 ; labelled structure. It names a statement, one voice; the row id names the row.
 statement-id-input = ["CEG-statement-id/2", protected: bstr, payload: bstr]
 statement-id = hash-digest

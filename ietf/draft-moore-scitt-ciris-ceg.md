@@ -563,6 +563,20 @@ A statement's own id is SHA-256 over the deterministic encoding of
 `protected` and `payload` are the byte strings of the statement.  It
 names one voice; the row id names the row.
 
+This is the CEG statement id, a name of this profile: {{RFC9943}}
+defines no statement identifier.  It covers the protected header and
+the payload.  It leaves out the signature and the unprotected header,
+so a receipt or a disclosure added later does not change it.  The
+`external_aad` of a CEG statement is the empty byte string
+({{object}}), so a CEG statement id and a reference to the COSE
+`Sig_structure` of the same statement select the same statements,
+though the two encoded inputs differ.
+
+A match on a statement id, a row id or an object id says that two
+parties name the same bytes.  It says nothing of who signed them.
+That a statement's key is a key of its `iss`, and that its signature
+verifies, are steps of verification ({{verify}}).
+
 ## What a Row Names {#refs}
 
 Every row a row names stands in one payload member, `refs`, by
