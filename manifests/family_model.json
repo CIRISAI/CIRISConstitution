@@ -482,8 +482,8 @@
     "witnesses: a witnessed lineage's charter"
    ],
    "members_from_text": {
-    "in_cddl": 101,
-    "named_by_the_text_alone": 147
+    "in_cddl": 99,
+    "named_by_the_text_alone": 145
    }
   },
   "fold": {
