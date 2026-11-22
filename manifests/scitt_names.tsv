@@ -47,3 +47,5 @@ token	witness_diversity	keep		the family's stem
 token	witnesses	rename	transparency_services	the charter member, as the text names it	
 token	witness_quorum	rename	receipt_quorum	the charter member, as the text names it	
 token	witness_cadence_secs	rename	receipt_cadence_secs	the charter member, as the text names it	
+member	attestation-envelope receipter	new		who acknowledges the acts exercised under an offer	A receipt here is the kernel's: a voice's acknowledgement of an act (CC 2.7.5), not the Receipt of RFC 9943.
+token	receipter	new		the offer's member, as the text names it	As above.

@@ -1648,7 +1648,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 123 of 189 families.
+A family with no card states none of these beyond the default row. Cards: 124 of 190 families.
 
 **`accord:*`** — Rules, thing
 
@@ -1757,6 +1757,16 @@ In time:
 - [confirmed] landing of `fuse`: each node for itself, nothing signed; a late answer does not count (CC 4.2.1.1, CC 4.2.1.3)
 
 Body: `accord_root`, `invocation_id`, `nonce`, `dimension`, `target`
+
+**`act:ack`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | selfAct | false | true (always) | none |
+
+Count: `act=group => cosigned_act@signer_group ; none` (CC 3.1.3)
+
+Authorship: `act=group => counted ; authored` (CC 3.1.3)
 
 **`admission:unit`** — Rules, thing
 

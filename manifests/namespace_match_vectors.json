@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc22",
-    "registry_sha256": "23a4e129f09532b3b896f39522da88995e8453c4b15ba9d9012da1f75e9795c4",
+    "registry_sha256": "49d3a99d9822a8237a295a088d492ea4cfa5c7763c415d1e8a30cf6d553fd4d4",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -281,6 +281,42 @@
       "family": "accord:lifecycle:{kind}",
       "refusal": "namespace_vocab_value_unregistered",
       "why": "a value outside a closed enumeration is unregistered"
+    },
+    {
+      "dimension": "act:ack:v1",
+      "family": "act:ack",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "act:ack:V1",
+      "family": "act:ack",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "act:ack:v1:v2",
+      "family": "act:ack",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "act:ack:v1beta",
+      "family": "act:ack",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Act:ack:v1",
+      "family": "act:ack",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "act:ack",
+      "family": "act:ack",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
       "dimension": "activity_tier:sample:v1",
@@ -8274,7 +8310,7 @@
       "why": "points are points, never intervals"
     },
     {
-      "family": "admission:unit",
+      "family": "act:ack",
       "score": 0.0,
       "admissible": false,
       "class": "positive-only",

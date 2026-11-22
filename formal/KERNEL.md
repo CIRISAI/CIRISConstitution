@@ -222,12 +222,12 @@ delegate only with the delegate's own signature (CC 4.4.3.19), and a custodian h
 need none and say why: a node in an infrastructure community, a key of a person's own roster, and a device
 under its owner. **open**: how the second signature travels and from when a delegation without it stops
 seating are not settled. **measured** (`manifests/family_model.json`, `formal/derivation/confers_text.tsv`): what a family confers is
-stated for 164 of 189 families. 138 claim and content families take one default, that a claim seats no one
+stated for 165 of 190 families. 139 claim and content families take one default, that a claim seats no one
 (CC 3.4.5.1). Twenty-one consents take their seat from `family_shapes.tsv`, and five families have a sentence of
 their own. **open**: 24 families confer nothing that a sentence states: 21 doors, two consents the shape
 table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 156
 families; 29 have a segment that names another row and no word yet says so, a limit CC 8.3.4 names. Which answers read a family's
-rows is filled for all 189 from the expression language: every family is read by **state** and **stands**
+rows is filled for all 190 from the expression language: every family is read by **state** and **stands**
 through the default fold, a default checked for none of the 83 that take it, and 42 are also read by another
 answer. A row that must equal its own recomputation is stated for three families (CC 6.1.9) and for no other.
 
@@ -252,7 +252,7 @@ signed both (CC 5.2). No member carries another member's signed row out. **prove
 `nothing_leaves`, `others_elsewhere_change_nothing`, `author_carries`, `same_room_unchanged`. The cost: a cut
 that names a row of another room waits until that row's signer carries it. What must not travel is proof of
 who said it or of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): no placement cell
-is empty. Of 189 families, 147 take the one default, the scope each row carries with the audience CC 5.2 gives
+is empty. Of 190 families, 148 take the one default, the scope each row carries with the audience CC 5.2 gives
 it, and 21 are placed by a sentence of their own. **open**: the default is stated once for all families and is
 checked for none of the 147. CC 8.3.4 names this as a limit. The copy rule is a row of that table.
 
@@ -335,7 +335,7 @@ most one lease against that person's other devices.
 
 Every row family is one of four shapes: a **consent**, a **door**, a **claim** or **content**. A roster is a
 consent given by a count, and an acknowledgement is a claim. **measured**
-(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 189 families, 114 are
+(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 190 families, 115 are
 claims, 24 content, 25 doors, 16 consents and 7 both a consent and a door. Three fit none.
 
 The four are labels over two mechanisms. Removing the shapes in order, three orders leave the same two:

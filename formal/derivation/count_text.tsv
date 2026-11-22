@@ -47,3 +47,5 @@ admission:unit	act=group	cosigned_act@subject_group	CC 3.1.3	under the group's p
 admission:unit	*	none	CC 3.1.3	any other row MAY carry `author`
 stream:head	*	none	CC 3.1.3	nobody else writes its head
 contribution:{subject_kind}	*	none	CC 3.1.9.3	The node signs it under its own key, at federation scope.
+act:ack	act=group	cosigned_act@signer_group	CC 3.1.3	One voice signs it, or a body's count does.
+act:ack	*	none	CC 3.1.3	One voice signs it, or a body's count does.

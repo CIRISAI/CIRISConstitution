@@ -334,6 +334,20 @@ The four structural composers act on the attestation graph itself, not as score-
 
 A `withdraws` row retires its target as a cut does ([CC 2.7.7](#2.7.7)). An act under the target that the withdrawal has among its ancestors stands. One that has the withdrawal in its own past, or is concurrent with it, does not count. It does not say the target was false. The rule below widens who may retract a row; the primitive itself does not change.
 
+**The end of a standing (normative).** The two sentences above are read as follows, and a node reads no instant to decide any of it.
+
+*An act names its head.* A row signed in exercise of a standing names the head it is at, in `refs.head`. The head is the newest its signer holds of the record that seats the standing. For a seat in a room or a family it is the roster version ([CC 2.7.8](#2.7.8)). For a grant from a root it is the bundle in force. Where one row between two keys is the whole record, as an owner-binding is, that row is the head. A row that exercises a standing and names no head concludes nothing, `act_names_no_head`.
+
+*An end names the head it acts from.* A row that ends a standing carries `refs.head` beside its target: a withdrawal of an acceptance or of an offer, an unseating, a resignation. That head is the newest its signer holds, and an end with a newer head in its own past concludes nothing, `end_names_old_head`. The end concludes under its signer's own standing at that head, so one's own acceptance is withdrawn by one's own signature. It reaches the acts exercised under its target, a deputy's among them. It never reaches the members counted at any head ([CC 2.7.8](#2.7.8)).
+
+*What the end does to an act.* An act with the end in its past does not count. An act at the end's head, at an older head or at a concurrent one counts at its own head, and from the end's head on it is not in force. The end never undoes that count. An act at a later head finds the standing ended and does not count. Where the ender holds a clean receipt of such an act concurrent with the end, the act counts at its own head ([CC 2.7.7](#2.7.7) rule 6).
+
+*What stays in force.* An act stays in force after the end where a clean receipt of it is held that does not have the end in its past ([CC 2.7.5](#2.7.5)). The receipt is the conferrer's, another holder's of the body the act was done for, or that of a receipter the offer names in `receipter`. It is never the act's own signer's and never a node's. A count that ends a standing MAY state `lifts`, and then only the count's own receipts keep an act in force. One's own end lifts nothing, and `lifts` on it is refused, `lifts_on_own_end`. A receipter's receipt made after the body ended its role keeps nothing. A receipt changes what is in force, never what counted, and it revives no act.
+
+*Another standing.* An act that another live standing of its signer authorises at its head stands on that standing. So one grantor's end does not reach what another still consents to.
+
+*The limit.* A device that has not seen the end may sign an act at an older head. That act counts there and is never in force after the end. No reader can tell it from an honest earlier act, and no rule here tries. Where the record is one row, an act from such a device counts at that row and is never in force after the end.
+
 A node MUST admit a `withdraws` against a target row `T` when one line of this table holds. It MUST also admit the key a `retirement:decided` row names in `decided_by`, against that row ([CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5)). It MUST refuse any other with `federation_withdraws_not_admitted`.
 
 | Rule | Who signs the withdrawal | Condition |
@@ -638,6 +652,8 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `expires_at` | `"expires_at"` | payload | `ms-time` | where the family states it | [2.6.2](#2.6.2) | POSIX milliseconds. |
 | `reason` | `"reason"` | payload | `uint` | where the family carries a reason | [2.6.1.10](#2.6.1.10) | A code from a closed registry; 0 is unspecified. |
 | `salt` | `"salt"` | payload | `bstr .size 16` | where the content is low-entropy | [2.6.1.3](#2.6.1.3) | Sixteen random bytes bound by every signer, so neither the row id nor a statement id confirms a guess. |
+| — | `"lifts"` | payload | `true` | on a counted row that ends a standing, where the count lifts single receipts | [2.4.1.1](#2.4.1.1) | Present only as true. On an end signed by one voice it is refused, lifts_on_own_end. |
+| — | `"receipter"` | payload | `identity-ref` | on an offer that names who acknowledges the acts exercised under it | [2.4.1.1](#2.4.1.1) [3.4.7.3](part_3_the_namespace.md#3.4.7.3) | A person or an agent, never a node. Its receipts keep an act in force after the standing ends. |
 | — | `redacted_claim_keys` | payload | `[+ bstr .size 32]` | where a member of the payload was minted blind | [2.6.1.10](#2.6.1.10) | SD-CWT simple(59): the digests of the payload's blinded members, in mint order: a sequence. |
 | — | `"body"` | payload | `body` | where the family carries a body | [2.6.1.10](#2.6.1.10) | The family's body. |
 | `context` | `"note"` | payload:body | `tstr .size (0..2048)` | where the row carries a note | [2.6.1.10](#2.6.1.10) | At most 2,048 bytes; blinded first where the family's erasure route is a subject request or a purge. |
@@ -649,13 +665,13 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
-| — | `"head"` | payload:refs | `row-ref` | on a counted row, and on a roster version | [2.6.1.9](#2.6.1.9) | The roster head the row is counted over, inside what every voice signs. |
+| — | `"head"` | payload:refs | `row-ref` | on a counted row, on a roster version, and on a row that exercises or ends a standing | [2.6.1.9](#2.6.1.9) [2.4.1.1](#2.4.1.1) | The head the row is at: the roster head a counted row is counted over, inside what every voice signs; the head an act is exercised at; the head an end acts from. |
 | — | `"further_heads"` | payload:refs | `row-ref-set` | where a row names further tips | [2.6.1.9](#2.6.1.9) [2.6.1.2](#2.6.1.2) | Further tips beside head: a set. |
 | — | `"prev"` | payload:refs | `row-ref` | where a signer's own series names its predecessor | [2.6.1.11](#2.6.1.11) | The predecessor in a signer's own series. |
 | — | `"answers"` | payload:refs | `row-ref` | where the row answers a row | [2.6.1.3](#2.6.1.3) | The proposal voted on or accepted, the window opened, the row replied to. |
 | — | `"target"` | payload:refs | `row-ref` | on a supersession, withdrawal, recantation, cut or removal | [2.6.1.3](#2.6.1.3) | The row superseded, withdrawn, recanted, cut or removed. |
 | — | `"trusted_through"` | payload:refs | `row-ref-set` | on a key revocation that names rows held good | [2.6.1.11](#2.6.1.11) [2.6.1.2](#2.6.1.2) | The last rows of the revoked key held good: a set. |
-| — | `"also"` | payload:refs | `{ + also-role => row-ref-set }` | where the row names any other row | [2.6.1.3](#2.6.1.3) [2.6.1.2](#2.6.1.2) | Any other named row, under a role of the closed registry: ack or cites; each list a set. |
+| — | `"also"` | payload:refs | `{ + also-role => row-ref-set }` | where the row names any other row | [2.6.1.3](#2.6.1.3) [2.6.1.2](#2.6.1.2) | Any other named row, under a role of the closed registry: ack, cites or under; each list a set, and under a set of exactly one. |
 
 **The row id and the names it is built from**
 
@@ -1654,7 +1670,7 @@ A group's roster is a lineage. Each version names the heads it extends and is co
 
 Two versions of one head wait as tips. The roster is then the members common to all tips, until a version naming the tips makes one head again. The members at a head are a function of the head, its signatures and its past. A removal is a later counted version and changes the members there, not at the old head. A member's own leaving binds the same way, by causal past ([CC 3.3.4](part_3_the_namespace.md#3.3.4)).
 
-Where the count asks two or more, one key's rows remove nobody, and a removed key counts again only after a version lists it again ([CC 4.5.13](part_4_composition_governance.md#4.5.13), the floor of two voices). A reader that has acknowledged a head holds void every counted act that names an older head and is not in that head's past, however many rows it has. Its signer acts again, forward, at the newer head ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). That voiding is the reader's own and binds nobody else. Anything that binds others rests on receipts, a row that names a blocking set ([CC 2.7.5](#2.7.5)), never on one reader's own closure. Keys that met the count of an old head can sign a valid version alone; a witnessed lineage answers that ([CC 3.2](part_3_the_namespace.md#3.2) T6).
+Where the count asks two or more, one key's rows remove nobody, and a removed key counts again only after a version lists it again ([CC 4.5.13](part_4_composition_governance.md#4.5.13), the floor of two voices). A reader that has acknowledged a head holds void every counted act that names an older head and is not in that head's past, however many rows it has. Its signer acts again, forward, at the newer head ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). This line is for counted rows: a version, a vote, a cut and the end of a standing. It does not reach an authored act that names its head, which counts at that head whatever head a reader has acknowledged. That voiding is the reader's own and binds nobody else. Anything that binds others rests on receipts, a row that names a blocking set ([CC 2.7.5](#2.7.5)), never on one reader's own closure. Keys that met the count of an old head can sign a valid version alone; a witnessed lineage answers that ([CC 3.2](part_3_the_namespace.md#3.2) T6).
 
 A person's keys, a voice's room keys, a room, the accord and an infrastructure community are this one roster, with parameters read from the policy table and the text. A public room's roster is public, so an audience is the members of a roster, everyone, or one named key ([CC 3.2](part_3_the_namespace.md#3.2)). It is read by asking a member's node, and every other roster is never enumerable outside its cohort.
 

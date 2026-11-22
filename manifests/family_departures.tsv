@@ -9,6 +9,15 @@ accord:invoke:drill:{drill_id}	subject_rule	accord_named	{"attested_party": ["Ta
 accord:invoke:notify:{notify_id}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle:{kind}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
+act:ack	placement	unbuilt	null
+act:ack	subject_rule	unbuilt	null
+act:ack	cosign_rule	unbuilt	null
+act:ack	freshness	unbuilt	null
+act:ack	lifecycle	unbuilt	null
+act:ack	replication	unbuilt	null
+act:ack	projection	unbuilt	null
+act:ack	erasure_route	unbuilt	null
+act:ack	governance	unbuilt	null
 admission:unit	placement	unbuilt	null
 admission:unit	subject_rule	unbuilt	null
 admission:unit	cosign_rule	unbuilt	null

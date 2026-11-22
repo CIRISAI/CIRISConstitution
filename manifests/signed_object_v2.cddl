@@ -111,6 +111,8 @@ attestation-envelope = {
   ? "expires_at": ms-time,
   ? "reason": uint,                ; a code from a closed registry, 0 = unspecified
   ? "salt": bstr .size 16,         ; required where the content is low-entropy (a ballot, a census cell); bound by every signer
+  ? "lifts": true,                 ; on a counted row that ends a standing: only the count's own receipts keep an act in force
+  ? "receipter": identity-ref,     ; on an offer: whose receipts keep in force the acts exercised under it
   ? redacted_claim_keys => [+ bstr .size 32],   ; SD-CWT simple(59): digests of the blinded members, in mint order (a sequence)
   ? "body": body,
   * tstr => ceg-value,             ; the members a family names, under the logical names of the CC 2.6.1 table
@@ -171,10 +173,10 @@ refs-members = {
   ? "trusted_through": row-ref-set,; on a key revocation: the last rows of the revoked key held good
   ? "also": { + also-role => row-ref-set },   ; any other named row, under a role of the closed registry
 }
-; The also roles, closed: "ack" names an acknowledgement (a revocation snapshot's);
-; "cites" names the row a row cites, as a build attestation names its manifest contribution. Any other
-; role is a later registration.
-also-role = "ack" / "cites"
+; The also roles, closed: "ack" names a row acknowledged (a revocation snapshot's scope head, the acts a receipt
+; acknowledges); "cites" names the row a row cites, as a build attestation names its manifest contribution;
+; "under" names the one row a deputy's edge hangs from, a set of exactly one. Any other role is a later registration.
+also-role = "ack" / "cites" / "under"
 nonempty-map = { + any => any }
 
 ; The statement id (RFC 9943 statement identity): SHA-256 over the deterministic encoding of this

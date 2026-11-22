@@ -161,6 +161,7 @@ def more(s):
     # 12. a count nobody can read alone
     one("census:return", "census:share:{class}", "node:bob", ["self"], "Bob's node returns its share of the census to a serve seat")
     one("head:1", "stream:head", "dave", ["self"], "Dave's stream publishes its signed head")
+    one("actack:1", "act:ack", "carol", ["member", "registered"], "Carol, a member of the room, acknowledges an act done there")
     one("ageband:1", "age_self_declared:band:{band}:{version}", "dave", ["self"], "Dave declares his own age band")
     one("hwcustody:1", "hardware_custody:{platform}", "dave", ["self"], "Dave's key reports where its seed lives")
     one("selfverify:1", "attestation:self_verify", "node:bob", ["self"], "Bob's node attests the verifier it runs")

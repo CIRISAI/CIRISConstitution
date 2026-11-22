@@ -10,6 +10,7 @@ accord:invoke:notify:{notify_id}	attest	none	admitted	holder	selfAct	true	withdr
 accord:lifecycle	attest	none	admitted	holder	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 accord:lifecycle	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 accord:lifecycle:{kind}	attest	none	admitted	holder	mirror	true	withdraw	cosigned	true	derived	cc-table	derived
+act:ack	attest	none	admitted	member	selfAct	false	none		true	derived	cc-table	cc-table
 activity_tier:{period}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 activity_tier:{period}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 admission:unit	attest	none	admitted	author,member	cosigned	true	withdraw	selfAct	true	cc-table	cc-table	cc-table

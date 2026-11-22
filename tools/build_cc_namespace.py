@@ -259,6 +259,9 @@ def _reserved_rules():
         # CC 5.3.3.8: a stream's signed head, written by whoever produces the stream.
         (lambda p, c: p == "stream:head",
          "self: the signer is the row's author and the stream's producer, a member's key and never a node's; sub is stream: and the stream's id; no second signer", "CC 5.3.3.8"),
+        # CC 2.7.5 / CC 2.4.1.1: a receipt of acts, by a voice at the head the acts name.
+        (lambda p, c: p == "act:ack",
+         "a voice at the head the acts name: the conferrer, another holder of the body the acts were done for, or a receipter an offer names; never the signer of an act it names, and never a node; one voice or the body's count", "CC 2.4.1.1"),
         (lambda p, c: p.startswith("cosign:"),
          "per-leaf: pending = the event's primary signer, an active member of the group at the roster head the event names; signature = the member whose signature it carries; served to the group's active members only; only the proposer withdraws a pending row; a signature row is never withdrawn", "CC 3.1.3"),
         (lambda p, c: p.startswith("membership:"),
