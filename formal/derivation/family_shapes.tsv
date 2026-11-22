@@ -1,5 +1,5 @@
 # The shape of every row family of manifests/family_model.json: consent (binds = signer | signer+holder | body+holder), door, claim or content;
-# consent+door where a family is both; `none fits` where no shape takes it. One row per family, all 186.
+# consent+door where a family is both; `none fits` where no shape takes it. One row per family, all 189.
 # parameters: name=value joined by ' ; '. sources: the same names in the same order, each `<- SOURCE`: a table cell (cell:<file>#<row>.<column>),
 #   a row of a kernel table (row:<file>#<key>), a sentence of the text (quote:CC <section> "<verbatim>", the section the nearest numbered heading above it),
 #   or `guessed`. A door= value names rows of formal/causal_kernel/doors.tsv, or `none` where the family's door has no row there.

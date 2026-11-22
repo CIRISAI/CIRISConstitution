@@ -18,6 +18,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CC = os.path.join(ROOT, "formal/derivation/family_kind_verb.tsv")
 CENSUS = os.path.join(ROOT, "formal/derivation/census_v61.tsv")
 SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
+# Cells where a reading found the text states another rule than the store enforced (formal/derivation/text_review.tsv, reading differs).
+# For these the table takes the text's rule and keeps the store's reading beside it as `code`.
+TEXT_OVER_CODE = {tuple(l.split("\t")[:2]) for l in open(os.path.join(ROOT, "formal/derivation/text_review.tsv"), encoding="utf-8").read().split("\n")
+                  if l and not l.startswith("#") and l.split("\t")[2:3] == ["differs"]}
 CELL_TEXT = os.path.join(ROOT, "formal/derivation/cell_text.tsv")
 PLACEMENT_TEXT = os.path.join(ROOT, "formal/derivation/placement_text.tsv")
 SCOPES = ("self", "family", "community", "affiliations", "species", "biosphere", "federation")   # CC 2.1: the closed set of seven
@@ -68,6 +72,8 @@ COLUMNS = OrderedDict([
     ("replication", "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}"),
     ("projection", "{table, rebuild ∈ {byte_equal, none}}"),
     ("erasure_route", "dsar | purge | legal_hold | none"),
+    ("shape", "claim | content | consent | door | consent+door, the family's kernel shape (formal/derivation/family_shapes.tsv); null where none takes it"),
+    ("descends_on_withdrawal", "bytes_and_words | row | nothing: what a holder other than the signer drops when a row of the family is withdrawn (CC 6.1.5 N5)"),
     ("blind", "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
@@ -446,6 +452,11 @@ def placement_text(default_value):
 
 
 SHAPES = os.path.join(ROOT, "formal/derivation/family_shapes.tsv")
+SHAPE_OF = {l.split("\t")[0]: l.split("\t")[1] for l in open(SHAPES, encoding="utf-8").read().split("\n")
+            if l and not l.startswith("#") and not l.startswith("family\t")}
+# What a holder other than the signer drops when a row of the family is withdrawn (CC 6.1.5 N5, CC 2.4.1.1): content is N5's object;
+# a claim leaves every audience; a consent or a door is structure, kept and read as retracted, since past acts are judged against it.
+DESCENDS = {"content": "bytes_and_words", "claim": "row", "consent": "nothing", "door": "nothing", "consent+door": "nothing", "none fits": "nothing"}
 CONFERS_TEXT = os.path.join(ROOT, "formal/derivation/confers_text.tsv")
 RELATION = {"signer": "permission", "signer+holder": "seat", "body+holder": "seat"}   # formal/KERNEL.md 5: one voice bound is one row, two are a seat
 SEAT_PARAMS = ("role", "scope", "roster", "holders", "conferrer", "consent", "proposal", "ends", "revoker", "single", "closes", "door")
@@ -837,8 +848,8 @@ def main():
             row[col] = cell(col, z[zc]) if z else {"value": None, "source": "gap", "note": "not in the census"}
         if fam in signer_text:
             sts = signer_text.pop(fam); cur = row["signer_rule"]
-            if cur.get("source") != "gap" and cur.get("value") != HELD_SHUT:
-                print(f"signer_rule_text.tsv: {fam} has a closed census cell ({cur.get('source')}); remove the row"); return 1
+            if cur.get("source") != "gap" and cur.get("value") != HELD_SHUT and (fam, "signer_rule") not in TEXT_OVER_CODE:
+                print(f"signer_rule_text.tsv: {fam} has a closed census cell ({cur.get('source')}); remove the row, or list the cell in text_review.tsv as differs"); return 1
             parsed = []
             for st in sts:
                 txt = signer(st["signer_rule"])
@@ -865,7 +876,7 @@ def main():
             if col not in CENSUS_MAP or col == "signer_rule":
                 print(f"cell_text.tsv: {fam} names the column {col}, which is not one this table fills"); return 1
             cur = row[col]
-            if cur.get("source") not in ("gap", "generic"):
+            if cur.get("source") not in ("gap", "generic") and (fam, col) not in TEXT_OVER_CODE:
                 print(f"cell_text.tsv: {fam} {col} is closed by the census ({cur.get('source')}); a difference from the text is a departure with a reason, not a row here"); return 1
             span = section_span(ct["cc_ref"])
             if span is None or ct["quote"] not in span:
@@ -886,6 +897,10 @@ def main():
         row["emitter_class"] = emitter_class(row["signer_rule"])
         row["derived"], row["read_by"] = derived_text[fam], der_cells[fam]
         row["confers"], row["binds_segment"] = conf_cells[fam], seg_cells[fam]
+        shp = SHAPE_OF.get(fam)
+        row["shape"] = {"value": None if shp == "none fits" else shp, "source": "kernel-table", "from": "formal/derivation/family_shapes.tsv"}
+        if shp == "none fits": row["shape"]["note"] = "no kernel shape takes the family; it is read as structure"
+        row["descends_on_withdrawal"] = {"value": DESCENDS[shp], "source": "derived", "from": "shape", "cc_ref": "CC 6.1.5"}
         stmts = fold_text.pop(fam, [])
         if stmts:
             fc = fold_cell(fam, stmts)

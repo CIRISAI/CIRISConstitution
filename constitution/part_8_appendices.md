@@ -1786,7 +1786,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
@@ -1875,7 +1875,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 
 Count: `none`
@@ -2584,7 +2584,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:attest | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
@@ -2681,7 +2681,7 @@ Body: `group_kind`, `group`, `name`, `version`, `members`, `founded_at`, `consen
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
@@ -3438,7 +3438,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | cosigned `affiliation_member_action` | true (by_scope) | true (if_widens) | withdraw |
+| attest | slash | cosigned `affiliation_member_action` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 
 Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.12)
@@ -3634,7 +3634,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | moderate, takedown | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 

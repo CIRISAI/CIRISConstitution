@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "819865622aa82b15f4ea741ce4ec21d3059ff51cdfff13e8d7e18efbae735226",
-   "formal/derivation/signer_kind.tsv": "b71022be267384b366e11f1603f2b4ef258bba1bed4500af15e3a6bf10b67883"
+   "manifests/transitions.json": "019be5107972d6fb2e98ecbbb1327bc1149f03e86b8b1ed69c44b3cb869b482f",
+   "formal/derivation/signer_kind.tsv": "46a8c18fde8166a13923af1959a87ec6257d3160d895241c72091790b6e3bf6d"
   },
   "kinds": [
    "person",
@@ -567,7 +567,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "self"
    ],
    "kinds": [
     "agent",
@@ -938,7 +938,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "self"
    ],
    "kinds": [
     "agent",
@@ -4493,15 +4493,14 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "infra:attest"
    ],
    "kinds": [
-    "agent",
-    "person"
+    "node"
    ],
    "open": false,
    "question": null,
-   "rule": "actor_content",
+   "rule": "node_infra",
    "cc_ref": "CC 3.1.5.5 (registry); CC 3.4.7.3 Clause C, Clause E",
    "at": "P3:454, P3:2585, P3:2613"
   },
@@ -4514,12 +4513,11 @@
     "author"
    ],
    "kinds": [
-    "agent",
-    "person"
+    "node"
    ],
    "open": false,
    "question": null,
-   "rule": "actor_content",
+   "rule": "node_infra",
    "cc_ref": "CC 3.1.5.5 (registry); CC 3.4.7.3 Clause C, Clause E",
    "at": "P3:454, P3:2585, P3:2613"
   },
@@ -4533,12 +4531,11 @@
     "subject"
    ],
    "kinds": [
-    "agent",
-    "person"
+    "node"
    ],
    "open": false,
    "question": null,
-   "rule": "actor_content",
+   "rule": "node_infra",
    "cc_ref": "CC 3.1.5.5 (registry); CC 3.4.7.3 Clause C, Clause E",
    "at": "P3:454, P3:2585, P3:2613"
   },
@@ -5033,7 +5030,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "self"
    ],
    "kinds": [
     "agent",
@@ -8324,7 +8321,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "slash"
    ],
    "kinds": [
     "agent",
@@ -9145,7 +9142,8 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "moderate",
+    "takedown"
    ],
    "kinds": [
     "agent",
@@ -9462,9 +9460,6 @@
    "event:rsvp_count#attest:none>admitted",
    "event:rsvp_count#supersede:admitted>superseded",
    "event:rsvp_count#withdraw:admitted>withdrawn",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#attest:none>admitted",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#supersede:admitted>superseded",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#withdraw:admitted>withdrawn",
    "expertise:{domain}:{language}#attest:none>admitted",
    "expertise:{domain}:{language}#recant:admitted>recanted",
    "expertise:{domain}:{language}#withdraw:admitted>withdrawn",
@@ -9861,9 +9856,6 @@
    "event:rsvp_count#attest:none>admitted",
    "event:rsvp_count#supersede:admitted>superseded",
    "event:rsvp_count#withdraw:admitted>withdrawn",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#attest:none>admitted",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#supersede:admitted>superseded",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#withdraw:admitted>withdrawn",
    "expertise:{domain}:{language}#attest:none>admitted",
    "expertise:{domain}:{language}#recant:admitted>recanted",
    "expertise:{domain}:{language}#withdraw:admitted>withdrawn",
@@ -10136,6 +10128,9 @@
    "custody:{kind}#withdraw:admitted>withdrawn",
    "delivery:{class}#attest:none>admitted",
    "delivery:{class}#withdraw:admitted>withdrawn",
+   "evidence:{suite}:{kind}:{cell}:{prefix}#attest:none>admitted",
+   "evidence:{suite}:{kind}:{cell}:{prefix}#supersede:admitted>superseded",
+   "evidence:{suite}:{kind}:{cell}:{prefix}#withdraw:admitted>withdrawn",
    "federation_directory:replication_lag#attest:none>admitted",
    "federation_directory:replication_lag#supersede:admitted>superseded",
    "hard_case:{kind}#attest:none>admitted",

@@ -129,7 +129,7 @@ age_assurance:{level}:{band}:{version}	freshness	unstated	generic
 age_assurance:{level}:{band}:{version}	replication	unstated	mixed
 age_assurance:{level}:{band}:{version}	body	open	gap
 age_assurance:{level}:{band}:{version}	fold	text	cc-table
-age_self_declared:band:{band}:{version}	signer_rule	differs	code-v61
+age_self_declared:band:{band}:{version}	signer_rule	text	cc-table
 age_self_declared:band:{band}:{version}	cosign_rule	cited	code-v61
 age_self_declared:band:{band}:{version}	subject_rule	unstated	code-v61
 age_self_declared:band:{band}:{version}	polarity	text	code-v61
@@ -233,7 +233,7 @@ attestation:registry_consensus	freshness	unstated	generic
 attestation:registry_consensus	replication	unstated	mixed
 attestation:registry_consensus	body	text	prose
 attestation:registry_consensus	fold	text	cc-table
-attestation:self_verify	signer_rule	differs	code-v61
+attestation:self_verify	signer_rule	text	cc-table
 attestation:self_verify	cosign_rule	cited	code-v61
 attestation:self_verify	subject_rule	unstated	code-v61
 attestation:self_verify	polarity	text	code-v61
@@ -610,7 +610,7 @@ commitment_fulfillment:{prior_contribution_id}	freshness	unstated	generic
 commitment_fulfillment:{prior_contribution_id}	replication	unstated	mixed
 commitment_fulfillment:{prior_contribution_id}	body	open	gap
 commitment_fulfillment:{prior_contribution_id}	fold	unstated	generic
-community:listing	signer_rule	differs	code-v61
+community:listing	signer_rule	text	cc-table
 community:listing	cosign_rule	cited	code-v61
 community:listing	subject_rule	cited	code-v61
 community:listing	polarity	text	code-v61
@@ -1182,7 +1182,7 @@ event:rsvp_count	freshness	unstated	generic
 event:rsvp_count	replication	unstated	mixed
 event:rsvp_count	body	open	gap
 event:rsvp_count	fold	unstated	generic
-evidence:{suite}:{kind}:{cell}:{prefix}	signer_rule	differs	code-v61
+evidence:{suite}:{kind}:{cell}:{prefix}	signer_rule	text	cc-table
 evidence:{suite}:{kind}:{cell}:{prefix}	cosign_rule	cited	code-v61
 evidence:{suite}:{kind}:{cell}:{prefix}	subject_rule	unstated	code-v61
 evidence:{suite}:{kind}:{cell}:{prefix}	polarity	text	code-v61
@@ -1299,7 +1299,7 @@ group:roster	freshness	cited	generic
 group:roster	replication	unstated	mixed
 group:roster	body	text	cc-table
 group:roster	fold	text	cc-table
-hard_case:{kind}	signer_rule	text	prose
+hard_case:{kind}	signer_rule	open	prose
 hard_case:{kind}	cosign_rule	cited	code-v61
 hard_case:{kind}	subject_rule	unstated	code-v61
 hard_case:{kind}	polarity	text	code-v61
@@ -1312,7 +1312,7 @@ hard_case:{kind}	freshness	unstated	generic
 hard_case:{kind}	replication	unstated	mixed
 hard_case:{kind}	body	text	prose
 hard_case:{kind}	fold	unstated	generic
-hardware_custody:{platform}	signer_rule	differs	code-v61
+hardware_custody:{platform}	signer_rule	text	cc-table
 hardware_custody:{platform}	cosign_rule	cited	code-v61
 hardware_custody:{platform}	subject_rule	unstated	code-v61
 hardware_custody:{platform}	polarity	text	code-v61
@@ -2170,7 +2170,7 @@ settlement:*	freshness	unstated	generic
 settlement:*	replication	unstated	mixed
 settlement:*	body	text	prose
 settlement:*	fold	text	cc-table
-slashing:{outcome}	signer_rule	differs	code-v61
+slashing:{outcome}	signer_rule	text	cc-table
 slashing:{outcome}	cosign_rule	cited	code-v61
 slashing:{outcome}	subject_rule	unstated	code-v61
 slashing:{outcome}	polarity	text	code-v61
@@ -2417,7 +2417,7 @@ wa_adjudication:{state}	freshness	unstated	generic
 wa_adjudication:{state}	replication	unstated	mixed
 wa_adjudication:{state}	body	open	gap
 wa_adjudication:{state}	fold	text	cc-table
-watchlist:{id}	signer_rule	differs	code-v61
+watchlist:{id}	signer_rule	text	cc-table
 watchlist:{id}	cosign_rule	cited	code-v61
 watchlist:{id}	subject_rule	unstated	code-v61
 watchlist:{id}	polarity	text	code-v61

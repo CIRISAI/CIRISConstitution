@@ -161,6 +161,12 @@ def more(s):
     # 12. a count nobody can read alone
     one("census:return", "census:share:{class}", "node:bob", ["self"], "Bob's node returns its share of the census to a serve seat")
     one("head:1", "stream:head", "dave", ["self"], "Dave's stream publishes its signed head")
+    one("ageband:1", "age_self_declared:band:{band}:{version}", "dave", ["self"], "Dave declares his own age band")
+    one("hwcustody:1", "hardware_custody:{platform}", "dave", ["self"], "Dave's key reports where its seed lives")
+    one("selfverify:1", "attestation:self_verify", "node:bob", ["self"], "Bob's node attests the verifier it runs")
+    one("evidencerow:1", "evidence:{suite}:{kind}:{cell}:{prefix}", "node:bob", ["infra:attest"], "Bob's node, holding infra:attest, publishes an evidence row")
+    one("slashrow:1", "slashing:{outcome}", "frank", ["slash", "member"], "Frank, holding the slash duty, signs a slashing verdict")
+    one("watchrow:1", "watchlist:{id}", "frank", ["moderate", "member"], "Frank, the room's moderator, enables a watchlist for the room")
     one("contrib:1", "contribution:{subject_kind}", "node:bob", ["self"], "Bob's node files a Contribution for a vote to name")
     one("census:sum", "census:partial:{class}", "bob", ["self", "registered"], "Bob tries to publish a seat's sum: refused, a sum is a serve seat's")
     one("census:sum", "census:partial:{class}", "seat:1", ["serve"], "A serve seat publishes the sum of the shares it accepted")

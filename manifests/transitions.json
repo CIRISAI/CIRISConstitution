@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "6749922415f8e431724ec834c2fa37d1c971e8d48e18f74da35c046e765b2b96",
+  "source_sha256": "961ff5839be379556dbabd38c90f263fa26b5343e52f961554086dd35eaeb0b0",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -999,7 +999,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "self"
       ],
       "source": "derived"
      },
@@ -1878,7 +1878,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "self"
       ],
       "source": "derived"
      },
@@ -10401,7 +10401,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "infra:attest"
       ],
       "source": "derived"
      },
@@ -11834,7 +11834,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "self"
       ],
       "source": "derived"
      },
@@ -19408,7 +19408,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "slash"
       ],
       "source": "derived"
      },
@@ -21581,7 +21581,8 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "moderate",
+       "takedown"
       ],
       "source": "derived"
      },

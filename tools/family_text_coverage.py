@@ -30,12 +30,16 @@ def defaults():
     return out
 
 
+CONFLICT = set()
+
+
 def review():
     sys.path.insert(0, os.path.join(ROOT, "tools"))
     from build_family_model import section_span
     out = set()
     for l in [x for x in open(os.path.join(ROOT, "formal/derivation/text_review.tsv"), encoding="utf-8").read().split("\n") if x and not x.startswith("#")][1:]:
         fam, col, reading, ref, quote, _rule = l.split("\t")
+        if reading == "conflict": CONFLICT.add((fam, col)); continue
         if reading == "differs" and quote not in (section_span(ref) or ""): raise SystemExit(f"text_review.tsv: {fam} {col}: the quoted words do not stand in {ref}")
         out.add((fam, col))
     return out
@@ -62,6 +66,7 @@ def build():
             if st == "unstated" and (r["family"], c) in agreed: st = "cited"
             if st == "unstated" and c == "signer_rule" and (r["family"], c) not in listed: unlisted.append(r["family"])
             if st in ("unstated", "cited") and (r["family"], c) in listed: st = "differs"
+            if (r["family"], c) in CONFLICT: st = "open"
             count.setdefault(c, {}).setdefault(st, 0); count[c][st] += 1
             lines.append(f"{r['family']}\t{c}\t{st}\t{r[c].get('source')}")
     return "\n".join(lines) + "\n", count, unlisted

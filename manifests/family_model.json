@@ -23,6 +23,8 @@
    "replication": "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}",
    "projection": "{table, rebuild ∈ {byte_equal, none}}",
    "erasure_route": "dsar | purge | legal_hold | none",
+   "shape": "claim | content | consent | door | consent+door, the family's kernel shape (formal/derivation/family_shapes.tsv); null where none takes it",
+   "descends_on_withdrawal": "bytes_and_words | row | nothing: what a holder other than the signer drops when a row of the family is withdrawn (CC 6.1.5 N5)",
    "blind": "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
    "fold": "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)",
@@ -86,8 +88,8 @@
     "gap": 5
    },
    "signer_rule": {
-    "cc-table": 45,
-    "code-v61": 122,
+    "cc-table": 52,
+    "code-v61": 115,
     "generic": 0,
     "prose": 16,
     "mixed": 6,
@@ -204,6 +206,22 @@
     "prose": 0,
     "mixed": 0,
     "gap": 8
+   },
+   "shape": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
+   },
+   "descends_on_withdrawal": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
    },
    "blind": {
     "cc-table": 0,
@@ -1796,6 +1814,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -2218,6 +2247,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -2656,6 +2696,17 @@
     "parts": {},
     "note": "no sentence says which key slot {halt_id} holds"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -3053,6 +3104,17 @@
     "parts": {},
     "note": "no sentence says which key slot {drill_id} holds"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -3432,6 +3494,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {notify_id} holds"
+   },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -3816,6 +3889,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -4366,6 +4450,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -4754,6 +4849,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -4961,6 +5067,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -5388,6 +5505,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -5519,11 +5647,21 @@
    },
    "signer_rule": {
     "value": {
-     "who": "any_registered",
+     "who": "self",
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61",
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.11",
+    "code": {
+     "value": {
+      "who": "any_registered",
+      "via": "none",
+      "conditions": []
+     },
+     "source": "code-v61"
+    },
+    "qualifier": "the subject's own occurrence or an admitted occurrence of it",
     "cites": [
      {
       "cc_ref": "CC 3.1.2",
@@ -5732,7 +5870,7 @@
     "registry": "signed"
    },
    "emitter_class": {
-    "value": "person",
+    "value": "self",
     "source": "derived"
    },
    "derived": {
@@ -5765,6 +5903,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -6141,6 +6290,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -6491,6 +6651,17 @@
     "parts": {},
     "note": "no sentence says which key slot {goal_id} holds"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -6744,6 +6915,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -7147,6 +7329,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -7515,6 +7708,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -7887,6 +8091,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -8272,6 +8487,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -8401,11 +8627,21 @@
    },
    "signer_rule": {
     "value": {
-     "who": "any_registered",
+     "who": "self",
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.2.1",
+    "code": {
+     "value": {
+      "who": "any_registered",
+      "via": "none",
+      "conditions": []
+     },
+     "source": "code-v61"
+    },
+    "qualifier": "the running node about itself",
     "cites": [
      {
       "cc_ref": "CC 3.1.2",
@@ -8610,7 +8846,7 @@
     "registry": "boolean-via-score"
    },
    "emitter_class": {
-    "value": "person",
+    "value": "self",
     "source": "derived"
    },
    "derived": {
@@ -8655,6 +8891,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -9030,6 +9277,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -9373,6 +9631,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -9721,6 +9990,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -10036,6 +10316,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -10361,6 +10652,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent+door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -10818,6 +11120,17 @@
     "parts": {},
     "note": "no sentence says which key slot {poll_id} holds"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -11172,6 +11485,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -11519,6 +11843,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -11862,6 +12197,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -12218,6 +12564,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -12560,6 +12917,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {target} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -13037,6 +13405,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -13570,6 +13949,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -14054,6 +14444,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -14449,6 +14850,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -14822,6 +15234,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -15238,6 +15661,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -15723,6 +16157,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -16140,6 +16585,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -16543,6 +16999,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -16918,6 +17385,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -17322,6 +17800,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -17712,6 +18201,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -18069,6 +18569,17 @@
     "parts": {},
     "note": "no sentence says which key slot {authority} holds"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -18419,6 +18930,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -18758,6 +19280,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {cohort} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -19124,6 +19657,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -19494,6 +20038,17 @@
     "parts": {},
     "note": "no sentence says which key slot {prior_contribution_id} holds"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -19595,16 +20150,24 @@
    },
    "signer_rule": {
     "value": {
-     "who": [
-      "seat_role(moderate)",
-      "founder (founder: outside vocabulary)"
-     ],
-     "via": "none",
+     "who": "seat_role(moderate)",
+     "via": "delegates_to(moderate)",
      "conditions": []
     },
-    "source": "code-v61",
-    "closed": "seat_role(moderate) | founder",
-    "note": "seat_role(moderate) | founder (founder: outside vocabulary) x none x {}"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.7",
+    "code": {
+     "value": {
+      "who": [
+       "seat_role(moderate)",
+       "founder (founder: outside vocabulary)"
+      ],
+      "via": "none",
+      "conditions": []
+     },
+     "source": "code-v61"
+    },
+    "qualifier": "a holder of the community's moderate duty"
    },
    "subject_rule": {
     "value": {
@@ -19868,6 +20431,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -20275,6 +20849,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -20631,6 +21216,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -20973,6 +21569,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -21317,6 +21924,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -21659,6 +22277,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -22073,6 +22702,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -22524,6 +23164,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -22874,6 +23525,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -23304,6 +23966,17 @@
      "CC 3.3.1"
     ],
     "rule": "stated"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -23787,6 +24460,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -24280,6 +24964,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -24687,6 +25382,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -25100,6 +25806,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -25568,6 +26285,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -26011,6 +26739,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -26387,6 +27126,18 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": null,
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv",
+    "note": "no kernel shape takes the family; it is read as structure"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -26782,6 +27533,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -27155,6 +27917,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -27360,6 +28133,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -27712,6 +28496,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -27999,6 +28794,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -28372,6 +29178,17 @@
      "{language}": "none"
     },
     "note": "no sentence says which key slot {subject} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -28876,6 +29693,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -29235,6 +30063,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -29656,6 +30495,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -30103,6 +30953,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -30471,6 +31332,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -30898,6 +31770,17 @@
     "parts": {},
     "note": "no sentence says which key slot {stream_id} holds"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -31274,6 +32157,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -31682,6 +32576,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -32073,6 +32978,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -32455,6 +33371,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -32853,6 +33780,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -33244,6 +34182,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -33597,6 +34546,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -33944,6 +34904,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -34286,6 +35257,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -34630,6 +35612,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -34962,6 +35955,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -35320,6 +36324,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -35666,6 +36681,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -36018,6 +37044,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -36367,6 +37404,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -36471,11 +37519,21 @@
    },
    "signer_rule": {
     "value": {
-     "who": "any_registered",
+     "who": "seat_role(infra:attest)",
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.5.5",
+    "code": {
+     "value": {
+      "who": "any_registered",
+      "via": "none",
+      "conditions": []
+     },
+     "source": "code-v61"
+    },
+    "qualifier": "delegated by the root or conferred by an accord count over its key record",
     "cites": [
      {
       "cc_ref": "CC 3.1.5.5",
@@ -36677,7 +37735,7 @@
     "registry": "signed"
    },
    "emitter_class": {
-    "value": "person",
+    "value": "seat:infra:attest",
     "source": "derived"
    },
    "derived": {
@@ -36718,6 +37776,17 @@
      "{kind}": "none"
     },
     "note": "no sentence says which key slot {cell}, {prefix} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -37082,6 +38151,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -37431,6 +38511,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -37809,6 +38900,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -38155,6 +39257,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -38515,6 +39628,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -38858,6 +39982,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -39238,6 +40373,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -40008,6 +41154,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "consent+door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -40526,6 +41683,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -40650,11 +41818,21 @@
    },
    "signer_rule": {
     "value": {
-     "who": "any_registered",
+     "who": "self",
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5",
+    "code": {
+     "value": {
+      "who": "any_registered",
+      "via": "none",
+      "conditions": []
+     },
+     "source": "code-v61"
+    },
+    "qualifier": "a statement about the emitter itself"
    },
    "subject_rule": {
     "value": {
@@ -40854,7 +42032,7 @@
     "registry": "boolean-via-score"
    },
    "emitter_class": {
-    "value": "person",
+    "value": "self",
     "source": "derived"
    },
    "derived": {
@@ -40886,6 +42064,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -41253,6 +42442,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -41583,6 +42783,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {canonical_hash} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -42143,6 +43354,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "consent+door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -42626,6 +43848,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "consent+door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -43060,6 +44293,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -43416,6 +44660,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -43784,6 +45039,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -44131,6 +45397,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -44473,6 +45750,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {model_id} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -44820,6 +46108,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -45199,6 +46498,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -45664,6 +46974,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "consent+door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -46073,6 +47394,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -46648,6 +47980,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -46936,6 +48279,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -47329,6 +48683,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -47732,6 +49097,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -48102,6 +49478,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -48590,6 +49977,17 @@
      "CC 2.4.1.3"
     ],
     "rule": "stated"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -49087,6 +50485,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -49441,6 +50850,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -49656,6 +51076,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -50022,6 +51453,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {cohort} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -50788,6 +52230,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "consent+door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -51322,6 +52775,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -51685,6 +53149,17 @@
     },
     "note": "no sentence says which key slot {approach_id} holds"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -52044,6 +53519,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -52441,6 +53927,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -52814,6 +54311,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {community_key_id} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -53197,6 +54705,17 @@
     },
     "note": "no sentence says which key slot {forum} holds"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -53551,6 +55070,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -53901,6 +55431,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -54246,6 +55787,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -54645,6 +56197,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -55064,6 +56627,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -55405,6 +56979,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -55778,6 +57363,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -56196,6 +57792,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -56548,6 +58155,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -56790,6 +58408,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -57064,6 +58693,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -57463,6 +59103,17 @@
     "parts": {},
     "note": "no sentence says which key slot {method_id} holds"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -57814,6 +59465,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -58184,6 +59846,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {target} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -58562,6 +60235,17 @@
      "{lang_code}": "none"
     },
     "note": "no sentence says which key slot {target} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -58948,6 +60632,17 @@
     "parts": {},
     "note": "no sentence says which key slot {source} holds"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -59299,6 +60994,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -59675,6 +61381,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -60079,6 +61796,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -60441,6 +62169,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -60786,6 +62525,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -61133,6 +62883,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -61479,6 +63240,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -61824,6 +63596,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -62197,6 +63980,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -62544,6 +64338,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -62919,6 +64724,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -63261,6 +65077,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "consent+door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -63740,6 +65567,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -64110,6 +65948,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -64451,6 +66300,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {cell} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -64814,6 +66674,18 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": null,
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv",
+    "note": "no kernel shape takes the family; it is read as structure"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -65274,6 +67146,18 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": null,
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv",
+    "note": "no kernel shape takes the family; it is read as structure"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -65730,6 +67614,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -66135,6 +68030,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -66257,11 +68163,21 @@
    },
    "signer_rule": {
     "value": {
-     "who": "any_registered",
-     "via": "none",
+     "who": "seat_role(slash)",
+     "via": "delegates_to(slash)",
      "conditions": []
     },
-    "source": "code-v61",
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.7",
+    "code": {
+     "value": {
+      "who": "any_registered",
+      "via": "none",
+      "conditions": []
+     },
+     "source": "code-v61"
+    },
+    "qualifier": "any other signer concludes nothing",
     "cites": [
      {
       "cc_ref": "CC 4.5.5",
@@ -66464,7 +68380,7 @@
     "registry": "boolean-via-score"
    },
    "emitter_class": {
-    "value": "person",
+    "value": "seat:slash",
     "source": "derived"
    },
    "derived": {
@@ -66570,6 +68486,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -66812,6 +68739,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -67172,6 +69110,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -67749,6 +69698,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -68165,6 +70125,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -68507,6 +70478,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -68871,6 +70853,17 @@
      "CC 3.1.7"
     ],
     "rule": "class"
+   },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -69242,6 +71235,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -69583,6 +71587,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -69933,6 +71948,17 @@
     "parts": {},
     "note": "no sentence says which key slot {tree_size} holds"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -70274,6 +72300,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -70680,6 +72717,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -71072,6 +73120,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -71279,6 +73338,17 @@
     "source": "cc-table",
     "cc_ref": "CC 3.1.7",
     "rule": "class"
+   },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -71732,6 +73802,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "consent",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -72149,6 +74230,17 @@
     "parts": {},
     "note": "no sentence says which key slot {subject} holds"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -72537,6 +74629,17 @@
     "cc_ref": "CC 3.1.7",
     "rule": "class"
    },
+   "shape": {
+    "value": "content",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "bytes_and_words",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -72885,6 +74988,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {contribution_id} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [
@@ -73255,6 +75369,17 @@
     ],
     "rule": "class"
    },
+   "shape": {
+    "value": "door",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "nothing",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -73408,11 +75533,24 @@
    },
    "signer_rule": {
     "value": {
-     "who": "any_registered",
+     "who": [
+      "seat_role(moderate)",
+      "seat_role(takedown)"
+     ],
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.4",
+    "code": {
+     "value": {
+      "who": "any_registered",
+      "via": "none",
+      "conditions": []
+     },
+     "source": "code-v61"
+    },
+    "qualifier": "for the group the watchlist is enabled in",
     "cites": [
      {
       "cc_ref": "CC 3.1.9.4",
@@ -73624,7 +75762,7 @@
     "registry": "signed"
    },
    "emitter_class": {
-    "value": "person",
+    "value": "seat:moderate|seat:takedown",
     "source": "derived"
    },
    "derived": {
@@ -73678,6 +75816,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {id} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],
@@ -74032,6 +76181,17 @@
     "parts": {},
     "note": "no sentence says which key slot {contribution_id} holds"
    },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
    "fold": {
     "value": [
      {
@@ -74379,6 +76539,17 @@
     "source": "gap",
     "parts": {},
     "note": "no sentence says which key slot {contribution_id} holds"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
    },
    "fold": {
     "value": [],

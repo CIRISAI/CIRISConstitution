@@ -1,6 +1,6 @@
 # Cells of the family model where a reading of the text found a rule other than the cell's value, or found the text silent.
 # Each is a cell to settle: the table takes the text's rule, or the text is corrected, or the difference is recorded as a departure with its reason.
-# reading: differs (the quoted sentence states another rule; text_rule gives it) | silent (no sentence states the cell).
+# reading: differs (the quoted sentence states another rule; text_rule gives it) | silent (no sentence states the cell) | conflict (two sentences of the text state different rules; the cell is open until the text is settled).
 # A quote stands verbatim in the cited section; tools/family_text_coverage.py checks it, and that every unstated who-may-sign cell is listed here.
 family	column	reading	cc_ref	quote	text_rule
 accord:lifecycle	cosign_rule	differs	CC 4.2.1.3	**It is a counted row of a strict majority of the standing roster**	strict majority of the standing accord roster, M of N.
@@ -47,3 +47,4 @@ stream:head	subject_rule	differs	CC 3.1.3	Its `sub` is `stream:` and the stream'
 takedown_notice:{basis}	subject_rule	differs	CC 4.5.5	The action payload's `subject_key_ids` is, on the subject-authority path, **advisory only**	the target is the content named by content_sha256; its subject set is subject_of(content_sha256), the signed subject_key_ids of the establishing attestation; the notice's own subject_key_ids is advisory only
 trust:blessing	subject_rule	differs	CC 3.1.3	whose payload names the subject's key record by row id and carries the roles conferred	one subject key that must have a key record (the payload names it by row id); for a build pipeline, the CI pipeline's key record
 trust:{job}:{version}	subject_rule	differs	CC 3.4.5	`trust:charter:v1` MUST be self-referential — `attesting_key_id` = `attested_key_id` — so a charter is only ever a key's own declaration about itself.	Per job, on a delegates_to edge (source = attesting, target = attested). charter: attested = attester (self). confers: attested = the subject the root grants. accepts: attested = the root, never the accepting root itself.
+hard_case:{kind}	signer_rule	conflict	CC 3.4.4		CC 3.4.4 reserves the emitter to a key of identity_type substrate_persist; the CC 3.4.7 table gives the node that admitted or refused the row, holding infra:attest from its owner. The store admits a node's key.
