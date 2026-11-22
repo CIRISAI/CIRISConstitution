@@ -23,3 +23,10 @@ act:ack	*	by_placement	the head the acknowledged acts name
 stream:head	*	by_placement	the room's roster version where the head carries a room; none where it carries none
 admission:unit	act=group	roster	the roster version the row is counted over
 admission:unit	act=own	none	a person's own row at self scope
+membership:{stage}	leaf=proposal	roster	the roster version the proposer is a member at
+membership:{stage}	leaf=acceptance	none	the joiner's own consent; it names the proposal it answers, and that row names the head
+membership:{stage}	leaf=decline	none	the invitee's own answer; it names the proposal it answers
+membership:{stage}	leaf=widening	roster	the roster version the change is counted over
+membership:{stage}	leaf=removal	roster	the roster version the change is counted over
+membership:{stage}	leaf=resignation	roster	the roster version the leaving member acts from
+ballot:moderator_acceptance	*	none	the winner's own consent; it names the election and the ballot set it was counted over

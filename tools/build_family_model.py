@@ -466,7 +466,8 @@ def names_head(row):
     roster: placed only at a room's or a family's scope, so it names that roster's version. standing: signed under a seat, a grant
     or a binding and placed outside any roster, so it names the record that seats the signer. none: a person's own row, exercising
     no conferred standing. by_placement: the family is placed at several scopes; at a room or family it names that roster's version,
-    and at self it names none unless its signer signs as someone's node, agent or delegate, and then that binding or delegation."""
+    and at self, at federation or in the commons, where there is no roster, it names none unless its signer signs as someone's node,
+    agent or delegate or under a grant, and then that binding, delegation or bundle."""
     pl = row["placement"].get("value"); sr = row["signer_rule"].get("value")
     places = set(pl) if isinstance(pl, list) else ({head_of(pl)} if isinstance(pl, str) else set())
     places = {head_of(x) if isinstance(x, str) else x for x in places}

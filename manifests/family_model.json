@@ -11094,10 +11094,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "roster",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed only at a room's or a family's scope",
+    "value": "none",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the winner's own consent; it names the election and the ballot set it was counted over",
+    "derived": "roster",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -53395,10 +53396,26 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "roster",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed only at a room's or a family's scope",
+    "value": {
+     "leaf=proposal": "roster",
+     "leaf=acceptance": "none",
+     "leaf=decline": "none",
+     "leaf=widening": "roster",
+     "leaf=removal": "roster",
+     "leaf=resignation": "roster"
+    },
+    "source": "ruled",
+    "per_selector": true,
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": {
+     "leaf=proposal": "the roster version the proposer is a member at",
+     "leaf=acceptance": "the joiner's own consent; it names the proposal it answers, and that row names the head",
+     "leaf=decline": "the invitee's own answer; it names the proposal it answers",
+     "leaf=widening": "the roster version the change is counted over",
+     "leaf=removal": "the roster version the change is counted over",
+     "leaf=resignation": "the roster version the leaving member acts from"
+    },
+    "derived": "roster",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
