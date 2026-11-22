@@ -727,7 +727,7 @@ p2	868	2.6.7	kernel	freshness	window	*	MAY	states		Maximum tolerated attester-co
 p2	868	2.6.7	kernel	freshness	freshness	*	MUST	states		A consumer rejects with CLOCK_SKEW_VIOLATION an attestation whose asserted_at is more than 5 minutes in the future	
 p2	870	2.6.7	mechanism	transparency_log	none	*	MUST	states	5.3.1	A cosignature on an STH whose signed_at is more than 5 minutes from the STH's signed_at is rejected	
 p2	872	2.6.7	kernel	freshness	freshness	*	MUST	states		For a row with future valid_until, freshness holds when valid_until is unreached and the consumer's own clock is within 5 minutes of the known-good time source it synchronises to; a drifted consumer rejects	
-p2	874	2.6.7	kernel	freshness	freshness	key_grant,consent,licensure,deferral,membership	is	restates	2.4.1.3	A row whose admission walks a delegates_to chain (key wrap, consent, licence, deferral response, epoch-axis membership) is judged at its signed asserted_at	
+p2	874	2.6.7	kernel	freshness	freshness	key_grant,consent,licensure,deferral,membership	is	restates	2.4.1.3	A row whose admission walks a delegates_to chain is checked for its age at the node that first receives it	
 p2	874	2.6.7	kernel	freshness	window	key_grant,consent,licensure,deferral,membership	MUST	states	4.2.6	The substrate refuses a chain-judged row whose asserted_at precedes the receiver's clock by more than W = 72 hours with asserted_at_stale; well-formed, not admitted-as-stale; the remedy is re-signing	
 p2	874	2.6.7	family	cosign	cosign_rule	membership	is	states	3.3.4	A cosigned roster event is counted over the members at the roster head it names; its signed instant decides no one's standing	
 p2	874	2.6.7	kernel	freshness	window	*	is	exception		Rows not judged on a chain (traces, scores on the base) are not bound by W; the 5-minute future bound still applies	
@@ -4364,7 +4364,7 @@ p2	x	2.6.1.1	kernel	wire	none	*	is	states		A row's type is protected-header labe
 p2	x	2.6.1.1	kernel	wire	none	*	is	states		A row's family is protected-header label -70002, its family id, as a text string	
 p2	x	2.6.1.1	kernel	wire	none	*	MUST	states		A verifier refuses a row whose cty carries parameters or whose protected header lacks the type or the family label	
 p2	x	2.6.1.1	kernel	wire	none	*	is	states		A signed object that is not a row carries neither the type nor the family label, and one that does is refused	
-p2	x	2.6.1.3	kernel	wire	none	*	is	states		The roles of also in refs are a closed registry of two, ack and cites; any other role is a later registration	
+p2	x	2.6.1.3	kernel	wire	none	*	is	states		The roles of also in refs are a closed registry of three, ack, cites and under; any other role is a later registration	
 p2	x	2.6.1.7	kernel	signature	none	*	is	states		ML-DSA-65 signs the composite's message representative with the label bytes as its FIPS 204 context string, never the empty one; Ed25519 signs it as it is	
 p3	x	3.3.4	family	roster_fold	none	family	is	applies	2.7.8	For a node that has acknowledged a head, a sibling of that head is void too, since it names an older head outside that head's past	
 p2	x	2.7.8	kernel	roster_fold	none		is	states		A reader's voiding of acts that name an older head is its own and binds nobody else	

@@ -453,6 +453,12 @@ def placement_text(default_value):
 
 
 SHAPES = os.path.join(ROOT, "formal/derivation/family_shapes.tsv")
+NAMES_HEAD_TEXT = {}
+for _l in open(os.path.join(ROOT, "formal/derivation/names_head_text.tsv"), encoding="utf-8").read().split("\n"):
+    if _l and not _l.startswith("#") and not _l.startswith("family\t"):
+        _f, _sel, _v, _w = _l.split("\t")
+        if _v not in ("roster", "standing", "none", "by_placement"): raise SystemExit(f"names_head_text.tsv: {_f}: unknown value {_v}")
+        NAMES_HEAD_TEXT.setdefault(_f, []).append((_sel, _v, _w))
 SHAPE_OF = {l.split("\t")[0]: l.split("\t")[1] for l in open(SHAPES, encoding="utf-8").read().split("\n")
             if l and not l.startswith("#") and not l.startswith("family\t")}
 def names_head(row):
@@ -921,6 +927,14 @@ def main():
         row["derived"], row["read_by"] = derived_text[fam], der_cells[fam]
         row["confers"], row["binds_segment"] = conf_cells[fam], seg_cells[fam]
         row["names_head"] = names_head(row)
+        ruled = NAMES_HEAD_TEXT.pop(fam, None)
+        if ruled:
+            derived = row["names_head"].get("value")
+            if len(ruled) == 1 and ruled[0][0] == "*":
+                row["names_head"] = {"value": ruled[0][1], "source": "ruled", "from": "formal/derivation/names_head_text.tsv", "note": ruled[0][2], "derived": derived, "cc_ref": "CC 2.4.1.1"}
+            else:
+                row["names_head"] = {"value": OrderedDict((sel, v) for sel, v, _ in ruled), "source": "ruled", "per_selector": True, "from": "formal/derivation/names_head_text.tsv",
+                                     "note": OrderedDict((sel, w) for sel, _, w in ruled), "derived": derived, "cc_ref": "CC 2.4.1.1"}
         shp = SHAPE_OF.get(fam)
         row["shape"] = {"value": None if shp == "none fits" else shp, "source": "kernel-table", "from": "formal/derivation/family_shapes.tsv"}
         if shp == "none fits": row["shape"]["note"] = "no kernel shape takes the family; it is read as structure"
@@ -1082,6 +1096,8 @@ def main():
     if "*" in fold_text:
         fold_every = fold_cell("*", fold_text.pop("*"))
         if fold_every is None: return 1
+    if NAMES_HEAD_TEXT:
+        print("names_head_text.tsv names families outside the model: " + ", ".join(sorted(NAMES_HEAD_TEXT))); return 1
     if fold_text:
         print("fold_text.tsv names families outside the model: " + ", ".join(sorted(fold_text))); return 1
     if sum(fold_marks.values()) > FOLD_MARKS_MAX:

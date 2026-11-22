@@ -214,7 +214,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 11
+    "gap": 5
    },
    "shape": {
     "cc-table": 0,
@@ -4769,10 +4769,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
-    "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "value": "by_placement",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the head the acknowledged acts name",
+    "derived": null,
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -5394,10 +5395,18 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
-    "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "value": {
+     "act=group": "roster",
+     "act=own": "none"
+    },
+    "source": "ruled",
+    "per_selector": true,
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": {
+     "act=group": "the roster version the row is counted over",
+     "act=own": "a person's own row at self scope"
+    },
+    "derived": null,
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -8876,10 +8885,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "none",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "value": "roster",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the canonical room's roster version",
+    "derived": "none",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -16680,9 +16690,10 @@
    },
    "names_head": {
     "value": "standing",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "signed under a seat, a grant or a binding, outside any roster",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the seat's owner-binding row, or the bundle that seats it",
+    "derived": "standing",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -17930,9 +17941,10 @@
    },
    "names_head": {
     "value": "standing",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "signed under a seat, a grant or a binding, outside any roster",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the node's owner-binding row",
+    "derived": "standing",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -18351,9 +18363,10 @@
    },
    "names_head": {
     "value": "standing",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "signed under a seat, a grant or a binding, outside any roster",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the seat's owner-binding row, or the bundle that seats it",
+    "derived": "standing",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -18758,10 +18771,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "none",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "value": "standing",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the node's owner-binding row",
+    "derived": "none",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -21031,10 +21045,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "standing",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "signed under a seat, a grant or a binding, outside any roster",
+    "value": "roster",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the listed room's roster version",
+    "derived": "standing",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -28866,10 +28881,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
-    "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "value": "standing",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the owner-binding row of the node whose key signs it",
+    "derived": null,
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -30453,10 +30469,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "none",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "value": "standing",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the node's owner-binding row, wherever the blob is placed: a node's report about itself",
+    "derived": "none",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -35019,10 +35036,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "standing",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "signed under a seat, a grant or a binding, outside any roster",
+    "value": "none",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "an owner naming their own device acts as themselves",
+    "derived": "standing",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -36828,10 +36846,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "none",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "value": "by_placement",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "a duty exercised in a room names that room's roster version",
+    "derived": "none",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -52208,10 +52227,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
-    "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "value": "none",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the subject's own row",
+    "derived": null,
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -58600,10 +58620,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "standing",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "signed under a seat, a grant or a binding, outside any roster",
+    "value": "none",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "an owner binding their own key acts as themselves; a binding that names an affiliation names that affiliation's roster version",
+    "derived": "standing",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -70186,10 +70207,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
-    "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "value": "by_placement",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the room's roster version where the head carries a room; none where it carries none",
+    "derived": null,
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -74869,10 +74891,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
-    "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "value": "standing",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the bundle in force, by its object id",
+    "derived": null,
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -75339,10 +75362,20 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "by_placement",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed at a room or a family and elsewhere",
+    "value": {
+     "leaf=accepts": "none",
+     "leaf=confers": "standing",
+     "leaf=charter": "none"
+    },
+    "source": "ruled",
+    "per_selector": true,
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": {
+     "leaf=accepts": "an acceptance is the acceptor's own consent; the attached head stays the envelope member it is",
+     "leaf=confers": "the bundle in force, by its object id",
+     "leaf=charter": "a root's charter is its bundle's member"
+    },
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {

@@ -1,0 +1,25 @@
+# Which head a row of a family names in refs.head, where the derivation from the placement and signer cells does not give it.
+# Applied by tools/build_family_model.py over the derived value. selector: * for the whole family, or leaf=NAME / act=group / act=own
+# where one value does not describe the family. value: roster | standing | none | by_placement.
+# what: the record the head is, in words. Read by a store's payload builder and its door through one function.
+family	selector	value	what
+custody:{kind}	*	standing	the node's owner-binding row, wherever the blob is placed: a node's report about itself
+contribution:{subject_kind}	*	standing	the owner-binding row of the node whose key signs it
+census:share:{class}	*	standing	the node's owner-binding row
+census:member:share	*	standing	the node's owner-binding row
+census:composite:{class}	*	standing	the seat's owner-binding row, or the bundle that seats it
+census:partial:{class}	*	standing	the seat's owner-binding row, or the bundle that seats it
+device:label	*	none	an owner naming their own device acts as themselves
+ownership:{relation}:{target_kind}:{version}	*	none	an owner binding their own key acts as themselves; a binding that names an affiliation names that affiliation's roster version
+location_proof:{version}	*	none	the subject's own row
+trust:{job}:{version}	leaf=accepts	none	an acceptance is the acceptor's own consent; the attached head stays the envelope member it is
+trust:{job}:{version}	leaf=confers	standing	the bundle in force, by its object id
+trust:{job}:{version}	leaf=charter	none	a root's charter is its bundle's member
+trust:blessing	*	standing	the bundle in force, by its object id
+attestation:registry_consensus	*	roster	the canonical room's roster version
+community:listing	*	roster	the listed room's roster version
+duty:{kind}	*	by_placement	a duty exercised in a room names that room's roster version
+act:ack	*	by_placement	the head the acknowledged acts name
+stream:head	*	by_placement	the room's roster version where the head carries a room; none where it carries none
+admission:unit	act=group	roster	the roster version the row is counted over
+admission:unit	act=own	none	a person's own row at self scope
