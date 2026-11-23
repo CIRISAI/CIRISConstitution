@@ -64,7 +64,7 @@
 EXTENDS Naturals, FiniteSets, Sequences
 
 CONSTANTS PLANT, TIE, LINE, LINEACTS, RSCOPE, WHO, MaxB, MaxQ, WithH1, WithU, WithC, WithRm, WithA2, WithTie,
-          WithBEnder, WithRx
+          WithBEnder, WithRx, DUMPANS
 
 BNum == {"b1", "b2", "b3"}
 BId(i) == CASE i = 1 -> "b1" [] i = 2 -> "b2" [] OTHER -> "b3"
@@ -78,16 +78,22 @@ Null == [k |-> None, s |-> None, dev |-> 0, hd |-> "H0", un |-> None, nm |-> {},
          ack |-> {}, of |-> None, sub |-> FALSE, tgt |-> None, lifts |-> FALSE]
 Variants == {"full", "set", "weak", "weakR"}
 
-VARIABLES made, f, done, h1, ak, rk, latch
-vars == <<made, f, done, h1, ak, rk, latch>>
+VARIABLES made, f, done, h1, ak, rk, latch, ans
+vars == <<made, f, done, h1, ak, rk, latch, ans>>
 
 Made == made
 
 RECURSIVE Anc(_)
 Anc(x) == f[x].nm \cup UNION {Anc(y) : y \in f[x].nm}
-\* an act's past with no prev edge (the "set" and "weak" readings carry no prev)
+\* the past each reading's wire carries: the "set" reading carries no prev on acts (AncS); the weak readings
+\* carry no prev on acts and no ack on the end (AncW). A receipt's own series (its prev) is carried by all.
+\* (Found by tools/conferral_xcheck.py: the weak readings first read a receipt's past through act prev edges.)
+NoPrev(x) == f[x].nm \ (IF f[x].k = "act" THEN {f[x].prev} ELSE {})
 RECURSIVE AncS(_)
-AncS(x) == LET d == f[x].nm \ {f[x].prev} IN d \cup UNION {AncS(y) : y \in d}
+AncS(x) == LET d == NoPrev(x) IN d \cup UNION {AncS(y) : y \in d}
+RECURSIVE AncW(_)
+AncW(x) == LET d == NoPrev(x) \ (IF x = "E" THEN f[x].ack ELSE {}) IN d \cup UNION {AncW(y) : y \in d}
+AncV(x, v) == CASE v = "full" -> Anc(x) [] v = "set" -> AncS(x) [] OTHER -> AncW(x)
 
 \* heads: H0 < H1; an uncited act has no head ("none") and is never at a head later than h_e
 Later(h, he) == h = "H1" /\ he = "H0"
@@ -96,7 +102,9 @@ EndHd == f["E"].hd
 SubOf == IF \E y \in BNum : f[y].sub THEN CHOOSE y \in BNum : f[y].sub ELSE None
 
 \* ---- the answer ------------------------------------------------------------------------------------------
-KeyCut(y, S) == "Rm" \in S /\ f[y].s = f["Rm"].tgt /\ y \notin Anc("Rm")
+KeyCutV(y, S, v) == "Rm" \in S /\ f[y].s = f["Rm"].tgt /\ y \notin AncV("Rm", v)
+\* cut under some reading (an exclusion the invariants use)
+KeyCut(y, S) == \E v \in Variants : KeyCutV(y, S, v)
 RmV(S) == "E" \in S /\ KeyCut("E", S)
 \* the end counts for this reader: held, not voided by a concurrent removal of its signer's key, and not an
 \* old fork of a roster head the reader acknowledged (it names H0, and H1 names nothing)
@@ -112,8 +120,8 @@ KeyV(x, S) == KeyCut(x, S)
 LineAct(x, a) == LINEACTS /\ a /\ f[x].hd = "H0" /\ "H1" \notin Anc(x)
 Members(S, a) == IF PLANT = "members" /\ EL(S, a) THEN {"A", "C", "D"} ELSE {"A", "B", "C", "D"}
 \* one say: a clean receipt of the act by the ender, concurrent with the end
-Say(x, S) == PLANT # "say" /\ \E q \in Qs \cap S : f[q].of = x /\ f[q].s = f["E"].s /\ ~KeyCut(q, S)
-                                                  /\ "E" \notin Anc(q) /\ q \notin Anc("E")
+Say(x, S, v) == PLANT # "say" /\ \E q \in Qs \cap S : f[q].of = x /\ f[q].s = f["E"].s /\ ~KeyCutV(q, S, v)
+                                                     /\ "E" \notin AncV(q, v) /\ q \notin AncV("E", v)
 \* WHO RECEIPTS. A is the conferrer (for a root grant or a room's duty seat: the body's COUNT; its receipts
 \* are counted rows, a bulk receipt included), D a single co-holder, R a receipter the grant names (a seat or
 \* the worker's owner, conferred by the body and ended by it: Rx), B the grantee (never, for its own acts).
@@ -123,10 +131,10 @@ Say(x, S) == PLANT # "say" /\ \E q \in Qs \cap S : f[q].of = x /\ f[q].s = f["E"
 Lifted(pl) == f["E"].lifts /\ (f["E"].s = "A" \/ pl = "selflift")
 Elig(q, x, pl) == CASE f[q].s = "A" -> TRUE
                     [] f[q].s = "D" -> WHO = "all" /\ ~Lifted(pl)
-                    [] f[q].s = "R" -> WHO = "all" /\ ~Lifted(pl) /\ (pl = "after_rx" \/ "Rx" \notin Anc(q))
+                    [] f[q].s = "R" -> WHO = "all" /\ ~Lifted(pl) /\ (pl = "after_rx" \/ "Rx" \notin AncW(q))
                     [] OTHER -> pl = "self"
-KeptP(x, S, pl) == \E q \in Qs \cap S : f[q].of = x /\ Elig(q, x, pl) /\ ~KeyCut(q, S) /\
-                     (q \in Anc("E") \/ (RSCOPE = "any" /\ ("E" \notin Anc(q) \/ pl = "bulk_after")))
+KeptP(x, S, pl) == \E q \in Qs \cap S : f[q].of = x /\ Elig(q, x, pl) /\ ~KeyCutV(q, S, "weakR") /\
+                     (q \in AncW("E") \/ (RSCOPE = "any" /\ ("E" \notin AncW(q) \/ pl = "bulk_after")))
 Kept(x, S) == KeptP(x, S, PLANT)
 KeptH(x, S) == KeptP(x, S, "none")
 \* another live standing of the signer authorises the act: ANY-STANDING (always under the weak readings)
@@ -138,23 +146,23 @@ Seen(x, S, v) == CASE v \in {"full", "set"} -> x \in Anc("E")
                    [] v = "weakR" -> PLANT # "receipts" /\ Kept(x, S)
                    [] OTHER -> FALSE
 SeenH(x, S, v) == CASE v \in {"full", "set"} -> x \in Anc("E") [] v = "weakR" -> KeptH(x, S) [] OTHER -> FALSE
-NamesEnd(x, v) == IF v = "full" THEN "E" \in Anc(x) ELSE "E" \in AncS(x)
+NamesEnd(x, v) == "E" \in AncV(x, v)
 
 EndRule(x, S, a, v) ==
   IF ~EL(S, a) \/ ~Reached(x, v) \/ OtherAuth(x, S, v) THEN <<TRUE, TRUE>>
   ELSE IF NamesEnd(x, v) /\ PLANT # "naming" THEN <<FALSE, FALSE>>
-  ELSE IF Later(f[x].hd, EndHd) THEN <<Say(x, S), FALSE>>
+  ELSE IF Later(f[x].hd, EndHd) THEN <<Say(x, S, v), FALSE>>
   ELSE IF Seen(x, S, v) THEN <<TRUE, TRUE>>
   ELSE IF PLANT = "own_head" /\ f[x].hd = EndHd THEN <<FALSE, FALSE>>
   ELSE <<TRUE, FALSE>>
 
-Base(x, S, a) == f[x].s \in Members(S, a) /\ ~LineAct(x, a) /\ ~KeyV(x, S)
+Base(x, S, a, v) == f[x].s \in Members(S, a) /\ ~LineAct(x, a) /\ ~KeyCutV(x, S, v)
 
 RECURSIVE Ans(_, _, _, _)
 Ans(x, S, a, v) ==
   LET e == EndRule(x, S, a, v)
       up == IF x = "c1" THEN Ans(SubOf, S, a, v) ELSE <<TRUE, TRUE>>
-      b == Base(x, S, a)
+      b == Base(x, S, a, v)
   IN <<b /\ e[1] /\ up[1], b /\ e[1] /\ e[2] /\ up[2]>>
 
 \* node 1 takes the rows in any order the door allows (h1, ak); node 2 in one fixed order the door allows
@@ -166,6 +174,10 @@ IdNum(x) == CASE x = "H1" -> 1 [] x = "b1" -> 2 [] x = "b2" -> 3 [] x = "b3" -> 
 Rank(x) == Cardinality(Anc(x)) * 16 + IdNum(x)
 Pos(x) == 1 + Cardinality({y \in made : Rank(y) < Rank(x)})
 Prefix(k) == {y \in made : Pos(y) <= k}
+\* DUMPANS: carry the weakR answer of every held act in `ans`, so that a TLC state dump holds the model's own
+\* answers (tools/conferral_xcheck.py compares them with models/causal_kernel/conferral_end.py). A function
+\* of the other variables: it adds no distinct state.
+AnsOf(S, a) == IF DUMPANS THEN [x \in ActIds \cap S |-> Ans(x, S, a, "weakR")] ELSE <<>>
 Rep1(x) == IF PLANT = "arrival" THEN latch[x] ELSE Ans(x, h1, ak, "full")
 Rep2(k, x) == IF PLANT = "arrival" THEN Ans(x, Prefix(Pos(x)), FALSE, "full") ELSE Ans(x, Prefix(k), FALSE, "full")
 Without(S) == {y \in S : y # "E" /\ "E" \notin Anc(y)}
@@ -173,7 +185,7 @@ Without(S) == {y \in S : y # "E" /\ "E" \notin Anc(y)}
 \* ---- signing ---------------------------------------------------------------------------------------------
 Mk(id, r) == /\ ~done /\ id \notin Made
              /\ made' = made \cup {id} /\ f' = [f EXCEPT ![id] = r]
-             /\ UNCHANGED <<done, h1, ak, rk, latch>>
+             /\ UNCHANGED <<done, h1, ak, rk, latch, ans>>
 
 MakeH1 == WithH1 /\ Mk("H1", [Null EXCEPT !.k = "version", !.s = "count"])
 
@@ -240,17 +252,17 @@ Latched(S, x) == IF PLANT = "arrival" /\ x \in ActIds
                  THEN [latch EXCEPT ![x] = Ans(x, S, ak, "full")] ELSE latch
 
 Arrive(x) == /\ done /\ x \in Made \ h1 /\ f[x].nm \subseteq h1
-             /\ h1' = h1 \cup {x} /\ latch' = Latched(h1 \cup {x}, x)
+             /\ h1' = h1 \cup {x} /\ latch' = Latched(h1 \cup {x}, x) /\ ans' = AnsOf(h1 \cup {x}, ak)
              /\ UNCHANGED <<made, f, done, ak, rk>>
 AckH1 == /\ "H1" \in h1 /\ ~ak
-         /\ ak' = TRUE /\ UNCHANGED <<made, f, done, h1, rk, latch>>
+         /\ ak' = TRUE /\ ans' = AnsOf(h1, TRUE) /\ UNCHANGED <<made, f, done, h1, rk, latch>>
 AckTip(x) == /\ LINE = "tips" /\ x \in h1 \cap BNum /\ rk = None
-             /\ rk' = x /\ UNCHANGED <<made, f, done, h1, ak, latch>>
+             /\ rk' = x /\ UNCHANGED <<made, f, done, h1, ak, latch, ans>>
 
-Init == /\ made = {} /\ f = [i \in Ids |-> Null] /\ done = FALSE /\ h1 = {}
+Init == /\ made = {} /\ f = [i \in Ids |-> Null] /\ done = FALSE /\ h1 = {} /\ ans = <<>>
         /\ ak = FALSE /\ rk = None /\ latch = [i \in Ids |-> None]
 
-Close == ~done /\ done' = TRUE /\ UNCHANGED <<made, f, h1, ak, rk, latch>>
+Close == ~done /\ done' = TRUE /\ UNCHANGED <<made, f, h1, ak, rk, latch, ans>>
 
 Next == \/ Close
         \/ MakeH1
@@ -307,8 +319,8 @@ Inv_EndNeverUnmakes == ForAll(PUnmake)
 PSay(x, S, a, n) == \A v \in Variants :
   (EL(S, a) /\ x \in BNum /\ Static(x, S, a) /\ Reached(x, v) /\ ~OtherAuth(x, S, v)
      /\ ~NamesEnd(x, v) /\ Later(f[x].hd, EndHd)
-     /\ \E q \in Qs \cap S : f[q].of = x /\ f[q].s = f["E"].s /\ ~KeyCut(q, S) /\ "E" \notin Anc(q)
-                             /\ q \notin Anc("E"))
+     /\ \E q \in Qs \cap S : f[q].of = x /\ f[q].s = f["E"].s /\ ~KeyCutV(q, S, v) /\ "E" \notin AncV(q, v)
+                             /\ q \notin AncV("E", v))
     => Ans(x, S, a, v) = <<TRUE, FALSE>>
 Inv_OneSay == ForAll(PSay)
 
@@ -346,13 +358,13 @@ Inv_ReceiptsChangeOnlyForce == ForAll(PRCnt)
 \* RSCOPE = "any" (ConferralEnd_receipts_any.cfg): a co-holder's receipt the end does not have in its past
 \* keeps an act in force against the ender (fails there)
 PEnder(x, S, a, n) == (EL(S, a) /\ Reached(x, "weakR") /\ ~OtherAuth(x, S, "weakR") /\
-                       ~\E q \in Qs \cap S : q \in Anc("E") /\ f[q].of = x) => ~Ans(x, S, a, "weakR")[2]
+                       ~\E q \in Qs \cap S : q \in AncW("E") /\ f[q].of = x) => ~Ans(x, S, a, "weakR")[2]
 Inv_EnderDecidesForce == ForAll(PEnder)
 \* a resignation (the end by B) that does not name a co-holder's receipt held before it: is the act kept?
 \* (fails under RSCOPE = "past": ConferralEnd_receipts_resign.cfg)
 PResign(x, S, a, n) ==
   (WHO = "all" /\ EL(S, a) /\ f["E"].s = "B" /\ x \in BIds /\ Static(x, S, a) /\ ~NamesEnd(x, "weakR") /\
-   ~Later(f[x].hd, EndHd) /\ \E q \in Qs \cap S : f[q].of = x /\ f[q].s = "D" /\ ~KeyCut(q, S) /\ "E" \notin Anc(q))
+   ~Later(f[x].hd, EndHd) /\ \E q \in Qs \cap S : f[q].of = x /\ f[q].s = "D" /\ ~KeyCutV(q, S, "weakR") /\ "E" \notin AncW(q))
     => Ans(x, S, a, "weakR")[2]
 Inv_ResignNeedsNoCooperation == ForAll(PResign)
 \* (a) refined: a count end that lifts receipts leaves in force only what the count itself receipted
@@ -363,24 +375,24 @@ Inv_CountEndLiftsSingles == ForAll(PLifts)
 \* a rotation (a count end without `lifts`) keeps what a single co-holder receipted before it
 PRot(x, S, a, n) ==
   (EL(S, a) /\ f["E"].s = "A" /\ ~f["E"].lifts /\ x \in BIds /\ Static(x, S, a) /\ ~NamesEnd(x, "weakR") /\
-   ~Later(f[x].hd, EndHd) /\ \E q \in Qs \cap S : f[q].of = x /\ f[q].s = "D" /\ ~KeyCut(q, S) /\ "E" \notin Anc(q))
+   ~Later(f[x].hd, EndHd) /\ \E q \in Qs \cap S : f[q].of = x /\ f[q].s = "D" /\ ~KeyCutV(q, S, "weakR") /\ "E" \notin AncW(q))
     => Ans(x, S, a, "weakR")[2]
 Inv_RotationKeepsReceipted == ForAll(PRot)
 \* (b): the receipter's receipts made before the body ended its seat stand; one made after keeps nothing
 PRBefore(x, S, a, n) ==
   (WHO = "all" /\ EL(S, a) /\ ~Lifted("none") /\ x \in BIds /\ Static(x, S, a) /\ ~NamesEnd(x, "weakR") /\
    ~Later(f[x].hd, EndHd) /\ "Rx" \in S /\
-   \E q \in Qs \cap S : f[q].of = x /\ f[q].s = "R" /\ q \in Anc("Rx") /\ ~KeyCut(q, S) /\ "E" \notin Anc(q))
+   \E q \in Qs \cap S : f[q].of = x /\ f[q].s = "R" /\ q \in AncW("Rx") /\ ~KeyCutV(q, S, "weakR") /\ "E" \notin AncW(q))
     => Ans(x, S, a, "weakR")[2]
 Inv_ReceipterBeforeStands == ForAll(PRBefore)
 PRAfter(x, S, a, n) ==
   (EL(S, a) /\ Reached(x, "weakR") /\ ~OtherAuth(x, S, "weakR") /\
-   \A q \in Qs \cap S : f[q].of = x => (f[q].s = "R" /\ "Rx" \in Anc(q))) => ~Ans(x, S, a, "weakR")[2]
+   \A q \in Qs \cap S : f[q].of = x => (f[q].s = "R" /\ "Rx" \in AncW(q))) => ~Ans(x, S, a, "weakR")[2]
 Inv_ReceipterAfterItsEndNothing == ForAll(PRAfter)
 \* a receipt with the end in its past (a bulk receipt by the count after the end included) keeps nothing
 PBulk(x, S, a, n) ==
   (EL(S, a) /\ Reached(x, "weakR") /\ ~OtherAuth(x, S, "weakR") /\
-   \A q \in Qs \cap S : f[q].of = x => "E" \in Anc(q)) => ~Ans(x, S, a, "weakR")[2]
+   \A q \in Qs \cap S : f[q].of = x => "E" \in AncW(q)) => ~Ans(x, S, a, "weakR")[2]
 Inv_ReceiptAfterEndNothing == ForAll(PBulk)
 \* as-of: an act at its head stays counted for every reader whatever head the reader acknowledged
 \* (fails with LINEACTS: ConferralEnd_line_acts.cfg)
@@ -395,10 +407,14 @@ PSet(x, S, a, n) == ~PrevSticky(x) => Ans(x, S, a, "full") = Ans(x, S, a, "set")
 Inv_SetAgrees == ForAll(PSet)
 PSetAll(x, S, a, n) == Ans(x, S, a, "full") = Ans(x, S, a, "set")
 Inv_SetAgreesAll == ForAll(PSetAll)
-PWeak(x, S, a, n) == (~Seen(x, S, "full") /\ ~PrevSticky(x) /\ ~WeakOther(S) /\ ~WithTie) =>
+\* the end's ack puts an act in the past of a removal that names the end, under full only: a removal of the
+\* grantee's key then cuts the act under weak and not under full (the large run found it)
+RECURSIVE AckCut(_, _)
+AckCut(x, S) == KeyCutV(x, S, "full") # KeyCutV(x, S, "weak") \/ (x = "c1" /\ AckCut(SubOf, S))
+PWeak(x, S, a, n) == (~Seen(x, S, "full") /\ ~PrevSticky(x) /\ ~WeakOther(S) /\ ~WithTie /\ ~AckCut(x, S)) =>
                        Ans(x, S, a, "full") = Ans(x, S, a, "weak")
 Inv_WeakAgreesUnseen == ForAll(PWeak)
-PWeakCnt(x, S, a, n) == (~PrevSticky(x) /\ ~WeakOther(S) /\ ~WithTie) =>
+PWeakCnt(x, S, a, n) == (~PrevSticky(x) /\ ~WeakOther(S) /\ ~WithTie /\ ~AckCut(x, S)) =>
                           Ans(x, S, a, "full")[1] = Ans(x, S, a, "weak")[1]
 Inv_WeakAgreesOnCount == ForAll(PWeakCnt)
 PWeakSeen(x, S, a, n) == Ans(x, S, a, "full") = Ans(x, S, a, "weak")
