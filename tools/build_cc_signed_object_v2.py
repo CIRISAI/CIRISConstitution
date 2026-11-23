@@ -48,7 +48,7 @@ Checks (every run, before writing):
 
 stdlib only. Run:  python3 tools/build_cc_signed_object_v2.py [--check]
 """
-import csv, glob, hashlib, os, re, subprocess, sys, tempfile
+import base64, csv, glob, hashlib, os, re, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -94,6 +94,7 @@ OBJECTS = [
     ("rebind", "A canonical re-bind: the payload of a `transport:canonical_rebind` row"),
     ("binding", "The transport destination binding (`identity:occurrence`)"),
     ("room", "The seat commitment of a room key"),
+    ("group_id", "The id of a group: what its first version derives it from"),
     ("disclosure", "A disclosure of a blinded member"),
     ("logical", "Logical names with no member of their own"),
 ]
@@ -528,12 +529,12 @@ def family_payloads():
     members = sorted([{"key": iref(0), "joined_at": t, "role": "founder"}, {"key": iref(1), "joined_at": t}], key=cde)
     return {
         "group-roster": ("group:roster", {
-            "group_kind": "community", "group": iref(5), "name": "Austin", "version": 2, "members": members,
+            "group_kind": "community", "group": gref(5), "name": "Austin", "version": 2, "members": members,
             "founded_at": t, "consensus_protocol": "majority", "consensus_protocol_entrenched": False,
             "cohort_subkind": "geographic", "membership": "public",
             "refs": {"head": _ref(1), "also": {"cites": [_ref(2)]}}, "asserted_at": t}),
         "membership-change": ("membership:.stage", {
-            "dimension": "membership:widening:v1", "group_kind": "family", "group": iref(5), "member": iref(2),
+            "dimension": "membership:widening:v1", "group_kind": "family", "group": gref(5), "member": iref(2),
             "joined_at": t, "effective_at": t, "refs": {"head": _ref(1), "also": {"cites": [_ref(3)]}}, "asserted_at": t}),
         "occurrence-revocation": ("identity:occurrence_revocation", {
             "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "revoked_at": t, "effective_at": t,
@@ -550,7 +551,7 @@ def family_payloads():
             "asserted_at": t}),
         "key-grant": ("key_grant:.axis", {
             "author": iref(0), "dimension": "key_grant:epoch:v1", "axis": "epoch",
-            "wrap_algorithm": "x25519_mlkem768_aes256_gcm_hkdf_sha256", "wrapped_dek": bytes(40), "community": iref(5),
+            "wrap_algorithm": "x25519_mlkem768_aes256_gcm_hkdf_sha256", "wrapped_dek": bytes(40), "community": gref(5),
             "minter": iref(0), "epoch": 3, "asserted_at": t}),
         "identity-occurrence": ("identity:occurrence", {
             "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "device_class": "phone",
@@ -714,6 +715,8 @@ def family_payload_rule(root, p, family=None):
         return PAYLOAD_INVALID                            # counted over the bundle in force, named in refs.head
     if root == "group-roster" and (p.get("version") == 1) != ("head" not in p.get("refs", {})):
         return PAYLOAD_INVALID
+    if root == "group-roster" and group_id_rule(p) is not None:
+        return PAYLOAD_INVALID                            # a first version's id is derived from it (group_id_rule gives the token)
     return None
 
 
@@ -760,6 +763,72 @@ def admission_samples():
 def _receipt(service=b"ts-1"):
     """A schema-sample COSE receipt (RFC 9942): vds 1 (RFC9162_SHA256) protected, one inclusion proof under vdp."""
     return Tag(18, [cde({1: -7, 395: 1, 4: service}), {396: {-1: [bytes(32)]}}, None, bytes(64)])
+
+
+def group_id(group_kind, founders, founded_at, nonce):
+    """CC 3.3.4: a group's id, derived from its first version. founders: the key of every member it lists, a set."""
+    pre = cde(["CEG-group/2", group_kind, sorted(set(founders), key=cde), founded_at, nonce])
+    return "group-" + base64.urlsafe_b64encode(hashlib.sha256(pre).digest()).decode().rstrip("=")
+
+
+def gref(n):
+    """A schema-sample group id: the form of group_id, over placeholder bytes."""
+    return "group-" + chr(ord("A") + n) * 42 + "A"
+
+
+GROUP_ID_NOT_OF_FOUNDING = "group_id_not_of_founding"
+
+
+def group_id_rule(p):
+    """CC 3.3.4, the rule of a group:roster payload the CDDL cannot state: None, or its token. A first version (the one
+    that names no head) carries `nonce` and its `group` is the id derived from its own members; a later version
+    carries no `nonce` and is judged by its descent."""
+    first = "head" not in p.get("refs", {})
+    if not first:
+        return PAYLOAD_INVALID if "nonce" in p else None
+    n = p.get("nonce")
+    if not isinstance(n, bytes) or len(n) != 32:
+        return PAYLOAD_INVALID
+    want = group_id(p.get("group_kind"), [m["key"] for m in p.get("members", [])], p.get("founded_at"), n)
+    return None if p.get("group") == want else GROUP_ID_NOT_OF_FOUNDING
+
+
+def group_id_samples():
+    """(what, payload, expected): a founding and the ways it is refused."""
+    t = 1763078400000
+    mem = sorted([{"key": iref(0), "joined_at": t, "role": "founder"}, {"key": iref(1), "joined_at": t, "role": "founder"}], key=cde)
+    nonce = bytes(range(32))
+    base = {"group_kind": "community", "name": "Austin", "version": 1, "members": mem, "founded_at": t,
+            "consensus_protocol": "majority", "nonce": nonce, "asserted_at": t}
+    gid = group_id("community", [iref(0), iref(1)], t, nonce)
+    first = dict(base, group=gid)
+    later = dict(_without(first, "nonce"), version=2, refs={"head": _ref(1)})
+    return [
+        ("a founding whose id is derived from it", first, None),
+        ("the same founding with its members listed in the other order", dict(first, members=list(reversed(mem))), None),
+        ("a later version, which carries no nonce", later, None),
+        ("a founding under an id its founders chose", dict(first, group=gref(5)), GROUP_ID_NOT_OF_FOUNDING),
+        ("a founding under the id of another kind of group", dict(first, group_kind="family"), GROUP_ID_NOT_OF_FOUNDING),
+        ("a founding under the id of another founding instant", dict(first, founded_at=t + 1), GROUP_ID_NOT_OF_FOUNDING),
+        ("a founding that lists a member its id does not cover", dict(first, members=sorted(mem + [{"key": iref(2), "joined_at": t}], key=cde)), GROUP_ID_NOT_OF_FOUNDING),
+        ("a founding with no nonce", _without(first, "nonce"), PAYLOAD_INVALID),
+        ("a founding whose nonce is 16 bytes", dict(first, nonce=bytes(16)), PAYLOAD_INVALID),
+        ("a later version that carries a nonce", dict(later, nonce=nonce), PAYLOAD_INVALID),
+    ]
+
+
+def group_id_checks():
+    """(line, problems): every sample gives its expected answer; a planted rule that trusts the id as given must be
+    caught by at least one sample."""
+    S, bad = group_id_samples(), []
+    for what, p, want in S:
+        if group_id_rule(p) != want:
+            bad.append(f"group id sample: {what}: {group_id_rule(p)} where {want} was expected")
+    planted = lambda p: None if group_id_rule(p) == GROUP_ID_NOT_OF_FOUNDING else group_id_rule(p)
+    if all(planted(p) == want for _, p, want in S):
+        bad.append("deliberate break not caught: a rule that takes a group's id as given passed every sample")
+    return (f"group:roster id: {sum(w is None for *_, w in S)} samples pass, "
+            f"{sum(w is not None for *_, w in S)} refused, each with its token; the planted break is caught"), bad
 
 
 RECEIPT_MISSING = "admission_receipt_missing"
@@ -1768,6 +1837,9 @@ def main(argv):
     aline, abad = admission_checks()
     lines.append(aline)
     bad += abad
+    gline, gbad = group_id_checks()
+    lines.append(gline)
+    bad += gbad
     sline, sbad = second_row_checks()
     lines.append(sline)
     bad += sbad

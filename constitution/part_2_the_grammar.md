@@ -795,11 +795,12 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
 | — | `"group_kind"` | payload | `"family" / "community"` | always | [3.1.3](part_3_the_namespace.md#3.1.3) [3.2](part_3_the_namespace.md#3.2) | Which record the version is: a family's or a community's. |
-| `family_key_id`, `community_key_id` | `"group"` | payload | `identity-ref` | always | [3.1.3](part_3_the_namespace.md#3.1.3) [3.3.4](part_3_the_namespace.md#3.3.4) | The group's identity reference, equal to the CWT sub. |
+| `family_key_id`, `community_key_id` | `"group"` | payload | `group-ref` | always | [3.1.3](part_3_the_namespace.md#3.1.3) [3.3.4](part_3_the_namespace.md#3.3.4) | The group's id, equal to the CWT sub. It is derived from the first version (group-id-input), and nobody chooses it. |
 | `family_name`, `community_name` | `"name"` | payload | `tstr` | always | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) | Human-readable and not unique. |
 | — | `"version"` | payload | `uint` | always | [3.2](part_3_the_namespace.md#3.2) | The version's place in the lineage's chain; a consistency check, never ranked. |
 | `members` | `"members"` | payload | `[* roster-member]` | always | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.1.2](#2.6.1.2) | The roster at this version: a set. |
 | `founded_at` | `"founded_at"` | payload | `ms-time` | always | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| — | `"nonce"` | payload | `bstr .size 32` | on the first version, and on no other | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.2](#2.6.2) | Thirty-two fresh random bytes that the group's id covers. Absent on every later version. |
 | `consensus_protocol` | `"consensus_protocol"` | payload | `tstr` | always | [3.3.4](part_3_the_namespace.md#3.3.4) | One of the closed vocabulary of CC 3.3.4. |
 | `consensus_protocol_entrenched` | `"consensus_protocol_entrenched"` | payload | `bool` | where the group entrenches its protocol | [3.3.4](part_3_the_namespace.md#3.3.4) | Absent reads false. |
 | `cohort_subkind` | `"cohort_subkind"` | payload | `tstr` | on a community's record | [3.2](part_3_the_namespace.md#3.2) | The community's subkind: open vocabulary. |
@@ -822,7 +823,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 |---|---|---|---|---|---|---|
 | `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | membership:widening:v1 or membership:removal:v1. |
 | `group_kind` | `"group_kind"` | payload | `"family" / "community"` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | Which group the change is to. |
-| `family_key_id`, `community_key_id` | `"group"` | payload | `identity-ref` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The group's identity reference. |
+| `family_key_id`, `community_key_id` | `"group"` | payload | `group-ref` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The group's id. |
 | — | `"member"` | payload | `identity-ref` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The key seated or removed, equal to the CWT sub. |
 | `joined_at` | `"joined_at"` | payload | `ms-time` | on a widening | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) [2.6.2](#2.6.2) | POSIX milliseconds. |
 | — | `"removed_at"` | payload | `ms-time` | on a removal | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) [2.6.2](#2.6.2) | POSIX milliseconds. |
@@ -906,7 +907,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `wrapped_dek` | `"wrapped_dek"` | payload | `bstr` | always | [3.3.2](part_3_the_namespace.md#3.3.2) [2.6.1.2](#2.6.1.2) | The wrapped data-encryption key, as bytes. |
 | `at_rest_sha256` | `"at_rest_sha256"` | payload | `hash-digest` | on the content axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The content's at-rest digest. |
 | `owner_key_id` | `"owner"` | payload | `identity-ref` | on the content and stream axes | [3.3.2](part_3_the_namespace.md#3.3.2) | The owner of the content or the stream. |
-| `community_key_id` | `"community"` | payload | `identity-ref` | on the epoch axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The community whose epoch key is wrapped. |
+| `community_key_id` | `"community"` | payload | `group-ref` | on the epoch axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The community whose epoch key is wrapped. |
 | `minter_key_id` | `"minter"` | payload | `identity-ref` | on the epoch axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The epoch's minter. |
 | `epoch` | `"epoch"` | payload | `uint` | on the epoch and stream axes | [3.3.2](part_3_the_namespace.md#3.3.2) | The epoch index. |
 | `stream_id` | `"stream_id"` | payload | `tstr` | on the stream axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The stream. |
@@ -1036,6 +1037,15 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `room_key` | derived | `kid` | always | [2.6.1.11](#2.6.1.11) | The room key's thumbprint. |
 | — | `person` | derived | `identity-ref` | always | [2.6.1.11](#2.6.1.11) | The person's identity reference. |
 | — | `nonce` | derived | `bstr .size 32` | always | [2.6.1.11](#2.6.1.11) | Thirty-two fresh random bytes. |
+
+**The id of a group: what its first version derives it from**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| — | `group_kind` | derived | `"family" / "community"` | always | [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.1.2](#2.6.1.2) | The first version's group_kind. |
+| — | `first_members` | derived | `[+ identity-ref]` | always | [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.1.2](#2.6.1.2) | The key of every member the first version lists: a set. |
+| — | `founded_at` | derived | `ms-time` | always | [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.1.2](#2.6.1.2) | The first version's founded_at. |
+| — | `nonce` | derived | `bstr .size 32` | always | [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.1.2](#2.6.1.2) | The first version's nonce. |
 
 **A disclosure of a blinded member**
 

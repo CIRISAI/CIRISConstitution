@@ -127,11 +127,12 @@ accord	accord-lifecycle	"valid_until"	valid_until	payload	ms-time	always	4.2.1.3
 accord	accord-lifecycle-refs	"head"	-	payload:refs	row-ref	always	4.2.1.3 2.6.1.9	The bundle in force the row is counted over, by its object id.
 accord	accord-lifecycle-refs	"target"	-	payload:refs	row-ref	always	4.2.1.3	The halt row the lifecycle row confirms or ends; a statement counts for that halt only.
 roster	group-roster	"group_kind"	-	payload	"family" / "community"	always	3.1.3 3.2	Which record the version is: a family's or a community's.
-roster	group-roster	"group"	family_key_id, community_key_id	payload	identity-ref	always	3.1.3 3.3.4	The group's identity reference, equal to the CWT sub.
+roster	group-roster	"group"	family_key_id, community_key_id	payload	group-ref	always	3.1.3 3.3.4	The group's id, equal to the CWT sub. It is derived from the first version (group-id-input), and nobody chooses it.
 roster	group-roster	"name"	family_name, community_name	payload	tstr	always	3.2 3.3.4	Human-readable and not unique.
 roster	group-roster	"version"	-	payload	uint	always	3.2	The version's place in the lineage's chain; a consistency check, never ranked.
 roster	group-roster	"members"	members	payload	[* roster-member]	always	3.2 3.3.4 2.6.1.2	The roster at this version: a set.
 roster	group-roster	"founded_at"	founded_at	payload	ms-time	always	3.2 3.3.4 2.6.2	POSIX milliseconds.
+roster	group-roster	"nonce"	-	payload	bstr .size 32	on the first version, and on no other	3.2 3.3.4 2.6.2	Thirty-two fresh random bytes that the group's id covers. Absent on every later version.
 roster	group-roster	"consensus_protocol"	consensus_protocol	payload	tstr	always	3.3.4	One of the closed vocabulary of CC 3.3.4.
 roster	group-roster	"consensus_protocol_entrenched"	consensus_protocol_entrenched	payload	bool	where the group entrenches its protocol	3.3.4	Absent reads false.
 roster	group-roster	"cohort_subkind"	cohort_subkind	payload	tstr	on a community's record	3.2	The community's subkind: open vocabulary.
@@ -149,7 +150,7 @@ roster	roster-member	"joined_at"	joined_at	payload	ms-time	always	3.2 3.3.4 2.6.
 roster	roster-member	"role"	role	payload	tstr	where the record gives the member a role	3.3.4	founder or member; absent, never null.
 membership	membership-change	"dimension"	dimension	payload	tstr	always	3.1.3.2	membership:widening:v1 or membership:removal:v1.
 membership	membership-change	"group_kind"	group_kind	payload	"family" / "community"	always	3.1.3.2	Which group the change is to.
-membership	membership-change	"group"	family_key_id, community_key_id	payload	identity-ref	always	3.1.3.2	The group's identity reference.
+membership	membership-change	"group"	family_key_id, community_key_id	payload	group-ref	always	3.1.3.2	The group's id.
 membership	membership-change	"member"	-	payload	identity-ref	always	3.1.3.2	The key seated or removed, equal to the CWT sub.
 membership	membership-change	"joined_at"	joined_at	payload	ms-time	on a widening	3.1.3.2 2.6.2	POSIX milliseconds.
 membership	membership-change	"removed_at"	-	payload	ms-time	on a removal	3.1.3.2 2.6.2	POSIX milliseconds.
@@ -208,7 +209,7 @@ key_grant	key-grant	"wrap_algorithm"	wrap_algorithm	payload	"x25519_mlkem768_aes
 key_grant	key-grant	"wrapped_dek"	wrapped_dek	payload	bstr	always	3.3.2 2.6.1.2	The wrapped data-encryption key, as bytes.
 key_grant	key-grant	"at_rest_sha256"	at_rest_sha256	payload	hash-digest	on the content axis	3.3.2	The content's at-rest digest.
 key_grant	key-grant	"owner"	owner_key_id	payload	identity-ref	on the content and stream axes	3.3.2	The owner of the content or the stream.
-key_grant	key-grant	"community"	community_key_id	payload	identity-ref	on the epoch axis	3.3.2	The community whose epoch key is wrapped.
+key_grant	key-grant	"community"	community_key_id	payload	group-ref	on the epoch axis	3.3.2	The community whose epoch key is wrapped.
 key_grant	key-grant	"minter"	minter_key_id	payload	identity-ref	on the epoch axis	3.3.2	The epoch's minter.
 key_grant	key-grant	"epoch"	epoch	payload	uint	on the epoch and stream axes	3.3.2	The epoch index.
 key_grant	key-grant	"stream_id"	stream_id	payload	tstr	on the stream axis	3.3.2	The stream.
@@ -282,6 +283,10 @@ room	seat-commitment-input	room	-	derived	tstr	always	2.6.1.11	The room's id as 
 room	seat-commitment-input	room_key	-	derived	kid	always	2.6.1.11	The room key's thumbprint.
 room	seat-commitment-input	person	-	derived	identity-ref	always	2.6.1.11	The person's identity reference.
 room	seat-commitment-input	nonce	-	derived	bstr .size 32	always	2.6.1.11	Thirty-two fresh random bytes.
+group_id	group-id-input	group_kind	-	derived	"family" / "community"	always	3.3.4 2.6.1.2	The first version's group_kind.
+group_id	group-id-input	first_members	-	derived	[+ identity-ref]	always	3.3.4 2.6.1.2	The key of every member the first version lists: a set.
+group_id	group-id-input	founded_at	-	derived	ms-time	always	3.3.4 2.6.1.2	The first version's founded_at.
+group_id	group-id-input	nonce	-	derived	bstr .size 32	always	3.3.4 2.6.1.2	The first version's nonce.
 disclosure	salted-claim	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes; a blinded map member is disclosed as [salt, value, key].
 disclosure	salted-claim	value	-	object	ceg-value	always	2.6.1.10	The blinded member's value.
 disclosure	salted-claim	key	-	object	tstr	always	2.6.1.10	The blinded member's name; the digest is SHA-256 over the disclosure's bytes as sd_claims carries them.

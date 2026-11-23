@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "2f8ea2e29e67b12dd7b5a751e26c78ba442ff1f319ad88ecb05f58015b45f960",
+  "registry_sha256": "8d43a22c8be526f919d4d9faaa5caa78ad8f755cc3fa63269bd038db16cb2e76",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -41592,7 +41592,7 @@
       },
       {
        "member": "group",
-       "type": "identity-ref",
+       "type": "group-ref",
        "presence": "required",
        "when": "always",
        "in_cddl": true,
@@ -41627,6 +41627,14 @@
        "type": "ms-time",
        "presence": "required",
        "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.2"
+      },
+      {
+       "member": "nonce",
+       "type": "bstr .size 32",
+       "presence": "optional",
+       "when": "on the first version, and on no other",
        "in_cddl": true,
        "cc_ref": "CC 3.2"
       },
@@ -48754,7 +48762,7 @@
       },
       {
        "member": "community",
-       "type": "identity-ref",
+       "type": "group-ref",
        "presence": "optional",
        "when": "on the epoch axis",
        "in_cddl": true,
@@ -52428,7 +52436,7 @@
       },
       {
        "member": "group",
-       "type": "identity-ref",
+       "type": "group-ref",
        "presence": "required",
        "when": "always",
        "in_cddl": true,

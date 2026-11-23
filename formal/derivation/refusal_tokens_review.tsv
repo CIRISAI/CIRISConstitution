@@ -290,6 +290,7 @@ goal_meta_alignment_malformed	detail		reason carried with federation_malformed_r
 goal_typed_object_retired	detail		reason carried with federation_malformed_row
 goodhart_resistance	not_a_token		enumeration value, not a fault
 gr_no_dark_patterns	not_a_token		enum of another surface (shutdown severity, trace result, capability gate, guardrail)
+group_id_not_of_founding	refusal		the text says Invalid
 hard_case:admin_action	hard_case		record the substrate raises
 hard_case:community_consensus_protocol_change	hard_case		record the substrate raises
 hard_case:community_consensus_protocol_violation	hard_case		record the substrate raises

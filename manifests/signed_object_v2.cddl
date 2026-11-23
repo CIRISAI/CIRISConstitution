@@ -9,7 +9,7 @@
 ; Every top-level rule, so a generator exercises them all.
 ceg-anything = ceg-statement / ceg-object-statement / second-consent / row-id-input / row-id
              / statement-id-input / statement-id / object-id-input / ceg-key / key-record-members
-             / revocation-snapshot / ceg-genesis-bundle / recovery-commitment-input / seat-commitment-input
+             / revocation-snapshot / ceg-genesis-bundle / recovery-commitment-input / seat-commitment-input / group-id-input
              / hpke-info / ceg-typ / accord-invocation / accord-lifecycle / transport-destination-binding
 
 ; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
@@ -373,6 +373,13 @@ transport-destination = {
 ; id; the member that carries it waits on its owner's submission. `nonce` is 32 fresh random bytes. The binding key and the content-KEM keys
 ; of one identity are distinct bytes, refused at admission otherwise.
 seat-commitment-input = ["CEG-seat/2", room: tstr, room_key: kid, person: identity-ref, nonce: bstr .size 32]
+
+; A group's id (a family's, a community's, an affiliation's) is derived from its first version and chosen by nobody:
+; "group-" followed by the base64url, without padding, of SHA-256 over the deterministic encoding of group-id-input.
+; `first_members` is the key of every member the first version lists, a set. The form tells a group from a key: a key's
+; identity reference is a thumbprint URI, and a group's id is never one.
+group-ref = tstr .regexp "group-[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]"
+group-id-input = ["CEG-group/2", group_kind: "family" / "community", first_members: [+ identity-ref], founded_at: ms-time, nonce: bstr .size 32]
 ; The HPKE info strings of a binding and of an invitation. The KEM key, the binding's two
 ; encapsulations and the occurrence keys take their bytes from the X-Wing HPKE suite and are fixed
 ; with that suite's known-answer vectors, not in this file; so does the binding seed's derivation label.

@@ -733,7 +733,7 @@ Communities differ from families along three axes:
 
 ```
 community {
-  community_key_id: key_id // community's own federation key
+  community_key_id: group_ref // the community's id, derived from its first version (CC 3.3.4); nobody chooses it
   community_name: string // human-readable; non-unique
   cohort_subkind: string // open vocab; canonical: "geographic"
   members: [
@@ -772,7 +772,7 @@ geographic_constraint {
 
 ```
 community {
-  community_key_id: "austin-community",
+  community_key_id: "group-8ezU3QIqqrhTRYMAeKoBxdDL3mmvmAnKC1_wsrnJ3hI", // derived from the founding (CC 3.3.4)
   community_name: "Austin",
   cohort_subkind: "geographic",
   cohort_subkind_payload: {
@@ -858,7 +858,7 @@ The community primitive plus location proofs, identity authority, and cohort-sco
 | **Mass casualty incident coordination** | Authority emits `event_listing` for the incident; first responders join via `community` with `cohort_subkind: professional` (not yet codified) OR ad-hoc `cohort_subkind: custom:incident_response_X`; coordination uses `chat_message` scoped to the responder cohort; resource requests use the mutual-aid composition pattern above |
 | **Infrastructure failure notice** (boil-water / power outage / gas leak) | `news_article` from utility authority with `cohort_scope: community` scoped to affected geographic cells; `event:lifecycle:{state}` for advisory progression; FOIA-shape `consent_record` later for post-incident reports |
 | **Disaster recovery / mutual aid activation** | Federation of geographic communities; time-bound activation rides `event_listing` lifecycle states |
-| **CONSTITUTIONAL-level federation halt** | Per [CC 4.2.1](part_4_composition_governance.md#4.2.1) `EmergencyShutdown CONSTITUTIONAL` + `accord:invoke:notify:{notify_id}` / `accord:invoke:drill:{drill_id}`. The accord-holder triple is structurally a `family` under `consensus_protocol: majority`, a strict majority of its standing roster ([CC 4.2.6](part_4_composition_governance.md#4.2.6)), with `consensus_protocol_entrenched: true`; the halt fires on one holder's row ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)); the accord's roster-keyed halt rides existing primitives + scope-isolation rules. Distinct from operator-level emergency messaging (which is geographic-scoped + authority-emitted) — accord invocation is federation-wide-halt-level, not local-incident-level |
+| **CONSTITUTIONAL-level federation halt** | Per [CC 4.2.1](part_4_composition_governance.md#4.2.1) `EmergencyShutdown CONSTITUTIONAL` + `accord:invoke:notify:{notify_id}` / `accord:invoke:drill:{drill_id}`. The accord's holders are those of its bundle in force, and a strict majority of them decides ([CC 4.2.6](part_4_composition_governance.md#4.2.6)); the halt fires on one holder's row ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)); the accord's roster-keyed halt rides existing primitives + scope-isolation rules. Distinct from operator-level emergency messaging (which is geographic-scoped + authority-emitted) — accord invocation is federation-wide-halt-level, not local-incident-level |
 
 **No new structural primitives are needed for emergency messaging either.** The authority profile (who can emit emergency advisories) composes via `identity_occurrence` cross-attestation from licensed authorities + the geographic community's roster/admission gate (`partner_role: emergency_authority` is the typed authority dimension). The priority profile (urgency / immediacy) composes via the existing `oversight_mode` envelope field + per-cohort `consensus_protocol` (many emergency emitters bypass per-message consensus per their pre-cross-attested authority status — same shape as substrate-self-report `system:*` reservations from [CC 3.4.3](part_3_the_namespace.md#3.4.3)). The geographic propagation (cascade-by-containment) composes via [CC 2.6.6.2](part_2_the_grammar.md#2.6.6.2) containment semantics.
 
@@ -905,7 +905,7 @@ infrastructure_constraint {
 
 ```
 community {
-  community_key_id: "ciris-canonical",
+  community_key_id: <the id derived from its founding>, // CC 3.3.4; "ciris-canonical" is no id
   community_name: "CIRIS Canonical Services",
   cohort_subkind: "infrastructure",
   cohort_subkind_payload: {
@@ -915,7 +915,7 @@ community {
     }
   },
   members: [
-    // founders: the three HUMANITY_ACCORD holders, baked at genesis — human-held
+    // founders: the accord's three holders, as the genesis bundle seats them — human-held
     // accord_holder keys, founders directly. Each
     // signs the birth row once; every later change is 2-of-3. Not the installs' keys.
     {key_id: "A1", role: founder},
@@ -933,7 +933,7 @@ community {
 }
 ```
 
-A consumer reads the room by `community_key_id: ciris-canonical` and resolves the live member set via `resolve_community` ([CC 4.4.3.7](part_4_composition_governance.md#4.4.3.7), [CC 2.7.1](part_2_the_grammar.md#2.7.1)). It does NOT hard-pin per-install fingerprints. The Reticulum addressing dual: `community_key_id` is a CEG-directory binding (not a Reticulum destination) — resolve → path-request two of the three founders → verify the quorum attestation; reachability is never an attestation ([CC 5.3.3.9](part_5_transport_substrate.md#5.3.3.9) / [CC 3.4.4](part_3_the_namespace.md#3.4.4)).
+A consumer reads the room by its `community_key_id`, the id derived from its founding ([CC 3.3.4](#3.3.4)), and resolves the live member set via `resolve_community` ([CC 4.4.3.7](part_4_composition_governance.md#4.4.3.7), [CC 2.7.1](part_2_the_grammar.md#2.7.1)). It does NOT hard-pin per-install fingerprints. The Reticulum addressing dual: `community_key_id` is a CEG-directory binding (not a Reticulum destination) — resolve → path-request two of the three founders → verify the quorum attestation; reachability is never an attestation ([CC 5.3.3.9](part_5_transport_substrate.md#5.3.3.9) / [CC 3.4.4](part_3_the_namespace.md#3.4.4)).
 
 **Default trust, not forced root.** The shipped default root is the humanity accord's bundle (T5 below). It is **NOT a forced root**. A conformant consumer MUST be able to **re-root**: un-trust the default, accept another bundle instead or in addition, or run with none ([CC 2.7.1](part_2_the_grammar.md#2.7.1)). Whoever wants a root of their own mints a bundle by the same ceremony ([CC 4.2.1](part_4_composition_governance.md#4.2.1)). The accord's bundle carries no privileged wire status, only a shipped default. `ciris-canonical` is a room under that bundle. It is no root, and it confers nothing on a node that has not accepted the bundle. `infrastructure` is a **general primitive**: any operator MAY found such a room for the installs of a service. Membership grows by the community's own `consensus_protocol` (founder-quorum vote, above), never by fiat. A forced root is a walled garden; a default-plus-re-root is a federation — this is the autonomy/justice seam: unregulated standing without the steward's permission. *(All resolution is `key_id` → signed `transport_destination` → Reticulum, [CC 4.4.3.8](part_4_composition_governance.md#4.4.3.8); DNS is never part of the trust or addressing chain — a deployment's HTTPS hostname, if any, is operational convenience outside this spec.)*
 
@@ -1489,15 +1489,21 @@ location_proof {
 
 ### 3.3.4 `family-subject` — `family` subject_kind
 
-This entry says what a `family` is on the wire, how a member is added or removed and how the family's `consensus_protocol` is amended. It also says how a change short of signatures is held, over which head a roster event is counted, where a node takes a group's past from and what the substrate emits on a family event. The accord-holder family and a household are given as instances.
+This entry says what a `family` is on the wire, how a member is added or removed and how the family's `consensus_protocol` is amended. It also says how a change short of signatures is held, over which head a roster event is counted, where a node takes a group's past from and what the substrate emits on a family event. A household is given as an instance.
 
 A `family` is a **group of trusted nodes** — each node being a distinct identity (which itself may have multiple `identity_occurrence`s per CC 3.3.6). Families are the wire-format primitive for `cohort_scope: family` visibility scoping. The integrity guarantee they encode is intimacy. Content scoped to a family is admitted into substrate, sealed under a fresh per-write DEK wrapped to the family's members ([CC 4.4.3.16](part_4_composition_governance.md#4.4.3.16)), and delivered to all current members. It never emits a holding claim to non-members ([CC 5.2](part_5_transport_substrate.md#5.2)), so the federation cannot even discover the content exists.
 
 **More than one family.** One identity MAY belong to multiple families. Each family has its own membership roster, and its content DEKs are wrapped to that roster.
 
+**A group's id is derived from its founding (normative).** The id of a family, a community or an affiliation is chosen by nobody. It is `group-` followed by the base64url, without padding, of a SHA-256 digest. The digest is over the deterministic encoding of `["CEG-group/2", group_kind, first_members, founded_at, nonce]` ([CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2)). `first_members` is the key of every member the first version lists, as a set. `nonce` is 32 fresh random bytes that the first version carries and no later version does. It keeps a party that guesses those members from learning that the group exists.
+
+A first version is the version that names no head. A first version whose `group` is not the id derived from its own members is Invalid, `group_id_not_of_founding`. A later version is judged by its descent from a first version the reader holds, and it waits while that one is not held ([CC 2.7.8](part_2_the_grammar.md#2.7.8)). Two first versions under one id are the same members' two records, and they wait as tips. A reader that has acknowledged neither reads no roster from them.
+
+The form tells a group from a key. A key's identity reference is a thumbprint URI, and a group's id is never one. A group's name is its `name`: human-readable, not unique and never an id. The name of a root's lineage is no group id either ([CC 3.2](part_3_the_namespace.md#3.2) T5).
+
 ```
 family {
-  family_key_id: key_id // the family's own federation_keys identity
+  family_key_id: group_ref // the family's id, derived from its first version; nobody chooses it
   family_name: string // human-readable; non-unique
   members: [
     {
@@ -1507,11 +1513,12 @@ family {
     },...
   ]
   founded_at: rfc3339_canonical
+  nonce: bytes32 // on the first version only; the id covers it
   consensus_protocol: ConsensusProtocol // REQUIRED — see below
   consensus_protocol_entrenched: bool // if true, consensus_protocol may not be
     // amended even via the protocol's own rules;
     // replacement requires out-of-band ceremony
-    // (see CC 4.2 HUMANITY_ACCORD canonical instance)
+    // (CC 3.3.4, the amendment rule below)
 }
 ```
 
@@ -1530,7 +1537,7 @@ The `ConsensusProtocol` kinds are the five below and `open:self_admit` ([CC 4.5.
 |---|---|
 | `founder_only` | **A family's and a publication's protocol, not a community's** ([CC 4.5.13](part_4_composition_governance.md#4.5.13)). Founders are the sole admission authority — a founder **active at the instant of the act** ([CC 3.1.3.2](#3.1.3.2)): a founder who has resigned holds no admission authority and cannot re-seat itself alone; new members proposed-and-admitted by any active founder. Suits private households / small trust circles. |
 | `unanimous` | Every current member must sign the admission Contribution. For a **removal**, every member other than the target signs *and* those signers are a strict majority of the roster ([CC 3.1.3.2](#3.1.3.2), the two readings the model fixes): a two-member group therefore removes nobody by this door, and resignation is the exit. Suits very small high-trust groups. |
-| `majority` | > 50% of the members at the roster head the row names must sign. Suits medium groups where blocking-minority concerns matter. The canonical entrenched form: the accord-holder family per [CC 4.2](part_4_composition_governance.md#4.2) decides by a strict majority of its standing roster ([CC 4.2.6](part_4_composition_governance.md#4.2.6)) with `consensus_protocol_entrenched: true`. |
+| `majority` | > 50% of the members at the roster head the row names must sign. Suits medium groups where blocking-minority concerns matter. A family MAY entrench it with `consensus_protocol_entrenched: true`. |
 | `quorum:{m}/{n}` | Any `m` members must sign, `m` an absolute count ([CC 4.4.3.18](part_4_composition_governance.md#4.4.3.18)); `n` is documentary — the roster size at adoption, never recomputed against the live roster. The entrenched exemplar is the canonical `infrastructure` community of [CC 3.2](#3.2), whose founders sign under `quorum:2/3` with `consensus_protocol_entrenched: true`. |
 | `weighted:{rubric}` | The sum of the signing members' weights must reach a threshold. Each weight and the threshold is a whole number carried on the group's signed record, so every node computes the same sum. Suits formal organisations with weighted voting. |
 
@@ -1569,7 +1576,7 @@ changes the consensus_protocol field counts ONLY IF:
 
 If consensus_protocol_entrenched == true, the amendment concludes
 nothing. Protocol replacement requires an out-of-band ceremony
-(documented per family; for HUMANITY_ACCORD see CC 4.2.1).
+(documented per family).
 ```
 
 **Substrate emissions on family events**:
@@ -1579,23 +1586,7 @@ nothing. Protocol replacement requires an out-of-band ceremony
 
 All three are `hard_case` kinds emitted by the substrate under [CC 3.4.4](part_3_the_namespace.md#3.4.4).
 
-**HUMANITY_ACCORD as canonical entrenched-`family`**: the accord-holder triple at [CC 4.2](part_4_composition_governance.md#4.2) is structurally an instance of this primitive:
-
-```
-family {
-  family_key_id: "humanity-accord",
-  family_name: "Humanity Accord",
-  members: [
-    {key_id: "holder-1-key", role: "founder"},
-    {key_id: "holder-2-key", role: "founder"},
-    {key_id: "holder-3-key", role: "founder"}
-  ],
-  consensus_protocol: "majority", // a strict majority of the standing roster (CC 4.2.6)
-  consensus_protocol_entrenched: true // replacement only via CC 4.2.1 ceremony
-}
-```
-
-CC 4.2 remains load-bearing for the *role-recognition policy* + the `AccordCarrier` priority authority + the substrate-protective semantics. The structural shape of `HUMANITY_ACCORD` is a `family` subject_kind instance, generalizing the primitive across the federation.
+**The accord's holders are no family record (normative).** The accord is the lineage of a genesis bundle ([CC 3.2](part_3_the_namespace.md#3.2) T5, [CC 2.6.1.11](part_2_the_grammar.md#2.6.1.11)). Its holders are the bundle's `holders`, and a strict majority of the holders of the bundle in force decides ([CC 4.2.6](part_4_composition_governance.md#4.2.6)). The bundle's `family_key_id` is the lineage's name. It is no group id, and no group is founded under it.
 
 **Worked example — household with self-devices and family-devices**:
 
@@ -1617,7 +1608,7 @@ Alice's agent: alice_agent_key, its own identity, owned by
   her self for delivery unless she excludes it (CC 4.4.3.19).
 
 Alice's household (a family subject_kind instance):
-  family_key_id: "acme-household"
+  family_key_id: <the id derived from its founding>
   family_name: "Acme Household"
   members: [
     {key_id: alice_root_key, role: founder},  -+

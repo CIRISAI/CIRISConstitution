@@ -12,11 +12,12 @@
 ; group:roster: a counted row, with no author; sub is the group's identity reference.
 group-roster = {
   "group_kind": "family" / "community",     ; Which record the version is: a family's or a community's.
-  "group": identity-ref,                    ; The group's identity reference, equal to the CWT sub.
+  "group": group-ref,                       ; The group's id, equal to the CWT sub. It is derived from the first version (group-id-input), and nobody chooses it.
   "name": tstr,                             ; Human-readable and not unique.
   "version": uint,                          ; The version's place in the lineage's chain; a consistency check, never ranked.
   "members": [* roster-member],             ; The roster at this version: a set.
   "founded_at": ms-time,                    ; POSIX milliseconds.
+  ? "nonce": bstr .size 32,                 ; Thirty-two fresh random bytes that the group's id covers. Absent on every later version. (on the first version, and on no other)
   "consensus_protocol": tstr,               ; One of the closed vocabulary of CC 3.3.4.
   ? "consensus_protocol_entrenched": bool,  ; Absent reads false. (where the group entrenches its protocol)
   ? "cohort_subkind": tstr,                 ; The community's subkind: open vocabulary. (on a community's record)
@@ -43,7 +44,7 @@ roster-member = {
 membership-change = {
   "dimension": tstr,                        ; membership:widening:v1 or membership:removal:v1.
   "group_kind": "family" / "community",     ; Which group the change is to.
-  "group": identity-ref,                    ; The group's identity reference.
+  "group": group-ref,                       ; The group's id.
   "member": identity-ref,                   ; The key seated or removed, equal to the CWT sub.
   ? "joined_at": ms-time,                   ; POSIX milliseconds. (on a widening)
   ? "removed_at": ms-time,                  ; POSIX milliseconds. (on a removal)
@@ -139,7 +140,7 @@ key-grant = {
   "wrapped_dek": bstr,                      ; The wrapped data-encryption key, as bytes.
   ? "at_rest_sha256": hash-digest,          ; The content's at-rest digest. (on the content axis)
   ? "owner": identity-ref,                  ; The owner of the content or the stream. (on the content and stream axes)
-  ? "community": identity-ref,              ; The community whose epoch key is wrapped. (on the epoch axis)
+  ? "community": group-ref,                 ; The community whose epoch key is wrapped. (on the epoch axis)
   ? "minter": identity-ref,                 ; The epoch's minter. (on the epoch axis)
   ? "epoch": uint,                          ; The epoch index. (on the epoch and stream axes)
   ? "stream_id": tstr,                      ; The stream. (on the stream axis)
