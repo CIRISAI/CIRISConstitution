@@ -49,7 +49,7 @@ refs	refs-members	"further_prev"	-	payload:refs	row-ref-set	where a content row 
 refs	refs-members	"answers"	-	payload:refs	row-ref	where the row answers a row	2.6.1.3	The proposal voted on or accepted, the window opened, the row replied to.
 refs	refs-members	"target"	-	payload:refs	row-ref	on a supersession, withdrawal, recantation, cut or removal	2.6.1.3	The row superseded, withdrawn, recanted, cut or removed.
 refs	refs-members	"trusted_through"	-	payload:refs	row-ref-set	on a key revocation that names rows held good; on a row that ends a member's seat and on a keeps row	2.6.1.11 3.1.3.2 2.6.1.2	The last rows of the revoked key held good, or the newest content rows of the member held good: a set of at most 64.
-refs	refs-members	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names any other row	2.6.1.3 2.6.1.2	Any other named row, under a role of the closed registry: ack, cites or under; each list a set, and under a set of exactly one.
+refs	refs-members	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names any other row	2.6.1.3 2.6.1.2	Any other named row, under a role of the closed registry: ack, cites, under or stands_on; each list a set, and under and stands_on each a set of exactly one.
 row_id	row-id-input	type	attestation_type	derived	row-type	always	2.6.1.3	The type of label -70001, one of the five, as a text string.
 row_id	row-id-input	family	-	derived	family-id	always	2.6.1.3	The family id of label -70002, as a text string.
 row_id	row-id-input	sub	-	derived	tstr	always	2.6.1.3	The CWT sub.

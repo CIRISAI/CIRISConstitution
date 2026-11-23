@@ -177,8 +177,9 @@ refs-members = {
 }
 ; The also roles, closed: "ack" names a row acknowledged (a revocation snapshot's scope head, the acts a receipt
 ; acknowledges); "cites" names the row a row cites, as a build attestation names its manifest contribution;
-; "under" names the one row a deputy's edge hangs from, a set of exactly one. Any other role is a later registration.
-also-role = "ack" / "cites" / "under"
+; "under" names the one row a deputy's edge hangs from, a set of exactly one; "stands_on" names the one acceptance a
+; row signed under a root grant stands on, a set of exactly one. Any other role is a later registration.
+also-role = "ack" / "cites" / "under" / "stands_on"
 nonempty-map = { + any => any }
 
 ; The CEG statement id (a name of this profile; RFC 9943 defines no statement identifier): SHA-256 over the deterministic encoding of this

@@ -604,7 +604,7 @@ def family_payloads():
         "build-manifest-row": ("provenance:build_manifest:.target", {
             "author": iref(4), "dimension": "provenance:build_manifest:x86_64-unknown-linux-gnu:v1",
             "build": {"project": "ciris-verify", "version": "1.2.3", "manifest_hash": dig, "manifest_size": 2048},
-            "evidence_refs": [dig], "refs": {"head": _ref(9)}, "asserted_at": t}),
+            "evidence_refs": [dig], "refs": {"head": _ref(9), "also": {"stands_on": [_ref(15)]}}, "asserted_at": t}),
         "trust-confers": ("trust:.job:.version", {
             "dimension": "trust:confers:v1", "scope": [PIPELINE_SCOPE],
             "projects": sorted(["ciris-agent", "ciris-verify"], key=cde), "refs": {"head": _ref(9)}, "asserted_at": t}),
@@ -625,7 +625,7 @@ def family_payloads():
 def grant_reply(**change):
     """The reply to a grant (CC 3.1.2.1): the membership-reply payload with no group members, by the grantee's owner."""
     p = _without(family_payloads()["membership-reply"][1], "group_kind", "group", "role")
-    return dict(dict(p, author=iref(0), refs={"answers": _ref(15)}), **change)
+    return dict(dict(p, author=iref(0), refs={"answers": _ref(15), "also": {"cites": [_ref(20)]}}), **change)
 
 
 def _without(p, *keys):
@@ -818,6 +818,8 @@ def family_payload_rule(root, p, family=None):
     if root == "build-manifest-row":
         if dim.split(":")[:2] != ["provenance", "build_manifest"] or "head" not in refs:
             return PAYLOAD_INVALID                        # the bundle in force when the row is signed, in refs.head
+        if len(refs.get("also", {}).get("stands_on", [])) != 1:
+            return PAYLOAD_INVALID                        # the one acceptance of the grant the row stands on (CC 2.4.1.1)
         if p.get("build", {}).get("manifest_hash") not in p.get("evidence_refs", []):
             return PAYLOAD_INVALID                        # the blob the descriptor names is the blob the row cites
     if root == "trust-confers":
