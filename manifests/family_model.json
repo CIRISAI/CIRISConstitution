@@ -73621,27 +73621,27 @@
    "confers": {
     "value": {
      "relation": "permission|seat",
-     "binds": "signer|signer+holder|body+holder",
+     "binds": "signer|signer+holder",
      "scope": "root|moderate",
      "roster": "infra",
      "conferrer": "self:object|group:cosigned_act",
      "consent": "accept_row",
      "ends": "withdraw:conferrer,withdraw:holder,unseat:cosigned_act",
-     "binds_by_leaf": "accepts=signer (a reader's trust edge); confers=signer+holder (a duty); charter=body+holder (witnesses)"
+     "binds_by_leaf": "accepts=signer (a reader's trust edge); confers=signer+holder (a duty)"
     },
     "source": "cc-table",
     "cc_ref": [
      "CC 3.2",
-     "CC 3.4.5",
+     "CC 4.2.1",
      "CC 4.4.3.19",
      "CC 4.5.4"
     ],
     "rule": "shape",
     "from": "formal/derivation/family_shapes.tsv",
     "sources": {
-     "binds": "quote:CC 3.4.5 \"Rootness is a claim a key makes about itself and a person accepts about the root\"",
+     "binds": "quote:CC 3.2 \"The acceptance edge is a person's row\"",
      "scope": "cell:manifests/family_model.json#trust:{job}:{version}.signer_rule",
-     "roster": "quote:CC 3.2 \"A witness is someone else's node, so the conferring roster MUST NOT list a key without a live `lineage_witness:acceptance:v1` from that node's owner\"",
+     "roster": "quote:CC 4.2.1 \"Every grant from a root is a row counted over the holders of the bundle in force\"",
      "conferrer": "quote:CC 4.5.4 \"A conferral carries the voices of a strict majority of the duty holders\"",
      "consent": "quote:CC 4.4.3.19 \"seats its delegate only with the delegate's own consent\"",
      "ends": "cell:manifests/family_model.json#trust:{job}:{version}.lifecycle"
