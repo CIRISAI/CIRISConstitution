@@ -3542,7 +3542,7 @@ Authorship: `act=group => counted ; authored` (CC 3.4.5)
 Second signers: `delegate` by `sub` when `leaf=confers` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` when `leaf=confers` (CC 4.4.3.19)
 
 Guard:
-- authorize: `when(leaf=charter) each(val:witnesses) (not founder(key,object) else exclude & not member(key,object) else exclude)` (CC 2.1)
+- authorize: `when(leaf=accepts) one *@named[id=ref:attached_head_digest] else void(trust_root_head_unreceipted)` (CC 3.2)
 
 Change:
 - supersede: `replace: by=cosigned_prior` (CC 2.1)

@@ -33,3 +33,4 @@ ballot:moderator_acceptance	*	none	the winner's own consent; it names the electi
 accord:invoke:constitutional:{halt_id}	*	none	a halt fires at each node on receipt, under the roster that node holds; its payload is closed and names no head
 accord:invoke:notify:{notify_id}	*	none	as the halt: read on receipt, under the roster the node holds
 accord:invoke:drill:{drill_id}	*	none	as the halt: read on receipt, under the roster the node holds
+provenance:build_manifest:{target}	*	standing	the bundle in force when the row is signed: the one the pipeline's grant names or a later bundle of the same lineage

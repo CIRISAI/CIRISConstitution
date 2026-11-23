@@ -186,7 +186,7 @@ On admission of a Contribution C with cohort_scope ∈ {self, family}:
 
 This section specifies the endpoint shapes below for the discovery and transparency surfaces. Wire-format consumers read these.
 
-### 5.3.1 `witness` — STH cosigning + witness directory
+### 5.3.1 `witness` — Transparency Services and Receipts
 
 Transparency keeps a producer from showing one history to one party and a different one to another. It follows SCITT ([RFC-9943], [RFC-9942]). A Transparency Service keeps its own append-only log, registers Signed Statements in it and issues a Receipt for each. No service signs over another party's root, and no directory of witnesses exists.
 
@@ -212,7 +212,7 @@ Transparency keeps a producer from showing one history to one party and a differ
 
 **Where a head is served.** `GET /v1/trust-root/lineage-head` serves a lineage's heads with the Receipts held for each ([CC 5.3.4](#5.3.4)). No route of this section takes a cosignature. The tree-head cosignature of the earlier form, over `ciris.sth_cosign.v1`, and the route `POST /v1/transparency/sth/cosign` that carried it are [CC 8.11.26](part_8_appendices.md#8.11.26).
 
-#### 5.3.1.1 `consistency-proof` — Consistency-proof requirement (normative)
+#### 5.3.1.1 `consistency-proof` — Receipts and their proofs (normative)
 
 A Receipt means something only where the log behind it is append-only. A service's log is the SHA-256 tree of [RFC-9162], whose hashing is that of [RFC-6962]. Every root a service issues a Receipt under MUST be consistent with every root it issued one under before. The consistency check is the service's own, over its own log. A service checks no other party's tree, and no party signs over a service's root.
 
@@ -665,7 +665,7 @@ The known answers of this seal are the verifier's, published at its tag ([CC 2.6
 12. The in-transit **KEX** identifier names a *different* construction from the at-rest `wrap_algorithm` and carries its own identifier string; the two MUST NOT be compared, substituted, or accepted in each other's field ([CC 5.1](#5.1) one-construction-one-identifier rule).
 13. **Which key binds a non-member relay:** the relay's transit KEX pair published on its signed `transport_destination` binding ([CC 3.3.6.2](part_3_the_namespace.md)), static against the initiator's ephemeral; never a KeyPackage init key, never an ephemeral-only exchange; a node with no valid transit pair cannot relay.
 
-#### 5.3.3.11 `delivery` — Delivery receipts (normative)
+#### 5.3.3.11 `delivery` — Delivery acknowledgements (normative)
 
 A `delivery_ack:{stream_id}` Contribution is a subscriber's signed acknowledgement that they received chunk K under the named stream + epoch. **Best-effort default**; opt-in for **accountable** profiles (registry propagation, emergency). A stream is accountable when its binding's signed `profile` is 1 ([CC 5.3.3.5](#5.3.3.5)), and the receipt guard below reads that member. The word Receipt is a Transparency Service's ([CC 5.3.1](#5.3.1)), so a subscriber's acknowledgement is an ack.
 

@@ -17,6 +17,7 @@ accord:*	accountability_record	text	derived
 accord:*	may_carry_under	text	derived
 accord:*	standing_act	text	derived
 accord:*	room_content	text	derived
+accord:*	names_stands_on	text	derived
 accord:human_dignity	signer_rule	cited	code-v61
 accord:human_dignity	cosign_rule	cited	code-v61
 accord:human_dignity	subject_rule	unstated	mixed
@@ -35,6 +36,7 @@ accord:human_dignity	accountability_record	text	derived
 accord:human_dignity	may_carry_under	text	derived
 accord:human_dignity	standing_act	text	derived
 accord:human_dignity	room_content	text	derived
+accord:human_dignity	names_stands_on	text	derived
 accord:invoke:constitutional:{halt_id}	signer_rule	cited	code-v61
 accord:invoke:constitutional:{halt_id}	cosign_rule	cited	cc-table
 accord:invoke:constitutional:{halt_id}	subject_rule	unstated	mixed
@@ -53,6 +55,7 @@ accord:invoke:constitutional:{halt_id}	accountability_record	text	derived
 accord:invoke:constitutional:{halt_id}	may_carry_under	text	derived
 accord:invoke:constitutional:{halt_id}	standing_act	text	derived
 accord:invoke:constitutional:{halt_id}	room_content	text	derived
+accord:invoke:constitutional:{halt_id}	names_stands_on	text	derived
 accord:invoke:drill:{drill_id}	signer_rule	cited	code-v61
 accord:invoke:drill:{drill_id}	cosign_rule	cited	cc-table
 accord:invoke:drill:{drill_id}	subject_rule	unstated	mixed
@@ -71,6 +74,7 @@ accord:invoke:drill:{drill_id}	accountability_record	text	derived
 accord:invoke:drill:{drill_id}	may_carry_under	text	derived
 accord:invoke:drill:{drill_id}	standing_act	text	derived
 accord:invoke:drill:{drill_id}	room_content	text	derived
+accord:invoke:drill:{drill_id}	names_stands_on	text	derived
 accord:invoke:notify:{notify_id}	signer_rule	cited	code-v61
 accord:invoke:notify:{notify_id}	cosign_rule	cited	cc-table
 accord:invoke:notify:{notify_id}	subject_rule	unstated	mixed
@@ -89,6 +93,7 @@ accord:invoke:notify:{notify_id}	accountability_record	text	derived
 accord:invoke:notify:{notify_id}	may_carry_under	text	derived
 accord:invoke:notify:{notify_id}	standing_act	text	derived
 accord:invoke:notify:{notify_id}	room_content	text	derived
+accord:invoke:notify:{notify_id}	names_stands_on	text	derived
 accord:lifecycle	signer_rule	cited	code-v61
 accord:lifecycle	cosign_rule	differs	code-v61
 accord:lifecycle	subject_rule	unstated	mixed
@@ -107,6 +112,7 @@ accord:lifecycle	accountability_record	text	derived
 accord:lifecycle	may_carry_under	text	derived
 accord:lifecycle	standing_act	text	derived
 accord:lifecycle	room_content	text	derived
+accord:lifecycle	names_stands_on	text	derived
 accord:lifecycle:{kind}	signer_rule	cited	code-v61
 accord:lifecycle:{kind}	cosign_rule	differs	code-v61
 accord:lifecycle:{kind}	subject_rule	unstated	mixed
@@ -125,6 +131,7 @@ accord:lifecycle:{kind}	accountability_record	text	derived
 accord:lifecycle:{kind}	may_carry_under	text	derived
 accord:lifecycle:{kind}	standing_act	text	derived
 accord:lifecycle:{kind}	room_content	text	derived
+accord:lifecycle:{kind}	names_stands_on	text	derived
 act:ack	signer_rule	text	cc-table
 act:ack	cosign_rule	open	gap
 act:ack	subject_rule	open	gap
@@ -143,6 +150,7 @@ act:ack	accountability_record	text	derived
 act:ack	may_carry_under	text	derived
 act:ack	standing_act	text	derived
 act:ack	room_content	text	derived
+act:ack	names_stands_on	text	derived
 activity_tier:{period}	signer_rule	cited	code-v61
 activity_tier:{period}	cosign_rule	cited	code-v61
 activity_tier:{period}	subject_rule	unstated	code-v61
@@ -161,6 +169,7 @@ activity_tier:{period}	accountability_record	text	derived
 activity_tier:{period}	may_carry_under	text	derived
 activity_tier:{period}	standing_act	text	derived
 activity_tier:{period}	room_content	text	derived
+activity_tier:{period}	names_stands_on	text	derived
 admission:unit	signer_rule	text	cc-table
 admission:unit	cosign_rule	open	gap
 admission:unit	subject_rule	open	gap
@@ -179,6 +188,7 @@ admission:unit	accountability_record	text	derived
 admission:unit	may_carry_under	text	derived
 admission:unit	standing_act	text	derived
 admission:unit	room_content	text	derived
+admission:unit	names_stands_on	text	derived
 age_assurance:{level}:{band}:{version}	signer_rule	cited	code-v61
 age_assurance:{level}:{band}:{version}	cosign_rule	cited	code-v61
 age_assurance:{level}:{band}:{version}	subject_rule	unstated	code-v61
@@ -197,6 +207,7 @@ age_assurance:{level}:{band}:{version}	accountability_record	text	derived
 age_assurance:{level}:{band}:{version}	may_carry_under	text	derived
 age_assurance:{level}:{band}:{version}	standing_act	text	derived
 age_assurance:{level}:{band}:{version}	room_content	text	derived
+age_assurance:{level}:{band}:{version}	names_stands_on	cited	quote
 age_self_declared:band:{band}:{version}	signer_rule	text	cc-table
 age_self_declared:band:{band}:{version}	cosign_rule	cited	code-v61
 age_self_declared:band:{band}:{version}	subject_rule	unstated	code-v61
@@ -215,6 +226,7 @@ age_self_declared:band:{band}:{version}	accountability_record	text	derived
 age_self_declared:band:{band}:{version}	may_carry_under	text	derived
 age_self_declared:band:{band}:{version}	standing_act	text	derived
 age_self_declared:band:{band}:{version}	room_content	text	derived
+age_self_declared:band:{band}:{version}	names_stands_on	text	derived
 agent_files:{kind}:{platform_or_target}	signer_rule	cited	code-v61
 agent_files:{kind}:{platform_or_target}	cosign_rule	cited	code-v61
 agent_files:{kind}:{platform_or_target}	subject_rule	unstated	code-v61
@@ -233,6 +245,7 @@ agent_files:{kind}:{platform_or_target}	accountability_record	text	derived
 agent_files:{kind}:{platform_or_target}	may_carry_under	text	derived
 agent_files:{kind}:{platform_or_target}	standing_act	text	derived
 agent_files:{kind}:{platform_or_target}	room_content	text	derived
+agent_files:{kind}:{platform_or_target}	names_stands_on	text	derived
 approach:{goal_id}	signer_rule	cited	code-v61
 approach:{goal_id}	cosign_rule	cited	code-v61
 approach:{goal_id}	subject_rule	unstated	code-v61
@@ -251,6 +264,7 @@ approach:{goal_id}	accountability_record	text	derived
 approach:{goal_id}	may_carry_under	text	derived
 approach:{goal_id}	standing_act	text	derived
 approach:{goal_id}	room_content	text	derived
+approach:{goal_id}	names_stands_on	text	derived
 archive_release:{basis}	signer_rule	text	cc-table
 archive_release:{basis}	cosign_rule	cited	code-v61
 archive_release:{basis}	subject_rule	differs	code-v61
@@ -269,6 +283,7 @@ archive_release:{basis}	accountability_record	text	derived
 archive_release:{basis}	may_carry_under	text	derived
 archive_release:{basis}	standing_act	open	open
 archive_release:{basis}	room_content	text	derived
+archive_release:{basis}	names_stands_on	text	derived
 attestation:agent_integrity	signer_rule	cited	code-v61
 attestation:agent_integrity	cosign_rule	cited	code-v61
 attestation:agent_integrity	subject_rule	unstated	code-v61
@@ -287,6 +302,7 @@ attestation:agent_integrity	accountability_record	text	derived
 attestation:agent_integrity	may_carry_under	text	derived
 attestation:agent_integrity	standing_act	text	derived
 attestation:agent_integrity	room_content	text	derived
+attestation:agent_integrity	names_stands_on	text	derived
 attestation:hardware_rooted	signer_rule	cited	code-v61
 attestation:hardware_rooted	cosign_rule	cited	code-v61
 attestation:hardware_rooted	subject_rule	unstated	code-v61
@@ -305,6 +321,7 @@ attestation:hardware_rooted	accountability_record	text	derived
 attestation:hardware_rooted	may_carry_under	text	derived
 attestation:hardware_rooted	standing_act	text	derived
 attestation:hardware_rooted	room_content	text	derived
+attestation:hardware_rooted	names_stands_on	text	derived
 attestation:license_validity	signer_rule	cited	code-v61
 attestation:license_validity	cosign_rule	cited	code-v61
 attestation:license_validity	subject_rule	unstated	code-v61
@@ -323,6 +340,7 @@ attestation:license_validity	accountability_record	text	derived
 attestation:license_validity	may_carry_under	text	derived
 attestation:license_validity	standing_act	text	derived
 attestation:license_validity	room_content	text	derived
+attestation:license_validity	names_stands_on	text	derived
 attestation:registry_consensus	signer_rule	cited	code-v61
 attestation:registry_consensus	cosign_rule	cited	code-v61
 attestation:registry_consensus	subject_rule	unstated	code-v61
@@ -341,6 +359,7 @@ attestation:registry_consensus	accountability_record	text	derived
 attestation:registry_consensus	may_carry_under	text	derived
 attestation:registry_consensus	standing_act	text	derived
 attestation:registry_consensus	room_content	text	derived
+attestation:registry_consensus	names_stands_on	text	derived
 attestation:self_verify	signer_rule	text	cc-table
 attestation:self_verify	cosign_rule	cited	code-v61
 attestation:self_verify	subject_rule	unstated	code-v61
@@ -359,6 +378,7 @@ attestation:self_verify	accountability_record	text	derived
 attestation:self_verify	may_carry_under	text	derived
 attestation:self_verify	standing_act	text	derived
 attestation:self_verify	room_content	text	derived
+attestation:self_verify	names_stands_on	text	derived
 audio:*	signer_rule	cited	code-v61
 audio:*	cosign_rule	cited	code-v61
 audio:*	subject_rule	unstated	code-v61
@@ -377,6 +397,7 @@ audio:*	accountability_record	text	derived
 audio:*	may_carry_under	text	derived
 audio:*	standing_act	text	derived
 audio:*	room_content	cited	quote
+audio:*	names_stands_on	text	derived
 audit_chain:hash_continuity	signer_rule	text	prose
 audit_chain:hash_continuity	cosign_rule	cited	code-v61
 audit_chain:hash_continuity	subject_rule	unstated	code-v61
@@ -395,6 +416,7 @@ audit_chain:hash_continuity	accountability_record	text	derived
 audit_chain:hash_continuity	may_carry_under	text	derived
 audit_chain:hash_continuity	standing_act	text	derived
 audit_chain:hash_continuity	room_content	text	derived
+audit_chain:hash_continuity	names_stands_on	text	derived
 autonomy:{aspect}	signer_rule	cited	code-v61
 autonomy:{aspect}	cosign_rule	cited	code-v61
 autonomy:{aspect}	subject_rule	unstated	code-v61
@@ -413,6 +435,7 @@ autonomy:{aspect}	accountability_record	text	derived
 autonomy:{aspect}	may_carry_under	text	derived
 autonomy:{aspect}	standing_act	text	derived
 autonomy:{aspect}	room_content	text	derived
+autonomy:{aspect}	names_stands_on	text	derived
 ballot:moderator	signer_rule	text	cc-table
 ballot:moderator	cosign_rule	cited	cc-table
 ballot:moderator	subject_rule	open	gap
@@ -431,6 +454,7 @@ ballot:moderator	accountability_record	text	derived
 ballot:moderator	may_carry_under	text	derived
 ballot:moderator	standing_act	text	derived
 ballot:moderator	room_content	text	derived
+ballot:moderator	names_stands_on	text	derived
 ballot:moderator_acceptance	signer_rule	text	cc-table
 ballot:moderator_acceptance	cosign_rule	open	gap
 ballot:moderator_acceptance	subject_rule	open	gap
@@ -449,6 +473,7 @@ ballot:moderator_acceptance	accountability_record	text	derived
 ballot:moderator_acceptance	may_carry_under	text	derived
 ballot:moderator_acceptance	standing_act	cited	quote
 ballot:moderator_acceptance	room_content	text	derived
+ballot:moderator_acceptance	names_stands_on	text	derived
 ballot:tally:{poll_id}	signer_rule	text	cc-table
 ballot:tally:{poll_id}	cosign_rule	cited	code-v61
 ballot:tally:{poll_id}	subject_rule	unstated	code-v61
@@ -467,6 +492,7 @@ ballot:tally:{poll_id}	accountability_record	text	derived
 ballot:tally:{poll_id}	may_carry_under	text	derived
 ballot:tally:{poll_id}	standing_act	text	derived
 ballot:tally:{poll_id}	room_content	text	derived
+ballot:tally:{poll_id}	names_stands_on	text	derived
 benchmark:he300:{category}:{version}	signer_rule	cited	code-v61
 benchmark:he300:{category}:{version}	cosign_rule	cited	code-v61
 benchmark:he300:{category}:{version}	subject_rule	unstated	code-v61
@@ -485,6 +511,7 @@ benchmark:he300:{category}:{version}	accountability_record	text	derived
 benchmark:he300:{category}:{version}	may_carry_under	text	derived
 benchmark:he300:{category}:{version}	standing_act	text	derived
 benchmark:he300:{category}:{version}	room_content	text	derived
+benchmark:he300:{category}:{version}	names_stands_on	text	derived
 beneficence:{aspect}	signer_rule	cited	code-v61
 beneficence:{aspect}	cosign_rule	cited	code-v61
 beneficence:{aspect}	subject_rule	unstated	code-v61
@@ -503,6 +530,7 @@ beneficence:{aspect}	accountability_record	text	derived
 beneficence:{aspect}	may_carry_under	text	derived
 beneficence:{aspect}	standing_act	text	derived
 beneficence:{aspect}	room_content	text	derived
+beneficence:{aspect}	names_stands_on	text	derived
 blog:*	signer_rule	cited	code-v61
 blog:*	cosign_rule	cited	code-v61
 blog:*	subject_rule	unstated	code-v61
@@ -521,6 +549,7 @@ blog:*	accountability_record	text	derived
 blog:*	may_carry_under	text	derived
 blog:*	standing_act	text	derived
 blog:*	room_content	cited	quote
+blog:*	names_stands_on	text	derived
 bond_posted:{currency}	signer_rule	cited	code-v61
 bond_posted:{currency}	cosign_rule	cited	code-v61
 bond_posted:{currency}	subject_rule	unstated	code-v61
@@ -539,6 +568,7 @@ bond_posted:{currency}	accountability_record	text	derived
 bond_posted:{currency}	may_carry_under	text	derived
 bond_posted:{currency}	standing_act	text	derived
 bond_posted:{currency}	room_content	text	derived
+bond_posted:{currency}	names_stands_on	text	derived
 build:registered:{target}	signer_rule	cited	code-v61
 build:registered:{target}	cosign_rule	cited	code-v61
 build:registered:{target}	subject_rule	unstated	code-v61
@@ -557,6 +587,7 @@ build:registered:{target}	accountability_record	text	derived
 build:registered:{target}	may_carry_under	text	derived
 build:registered:{target}	standing_act	text	derived
 build:registered:{target}	room_content	text	derived
+build:registered:{target}	names_stands_on	text	derived
 capacity:composite	signer_rule	cited	code-v61
 capacity:composite	cosign_rule	cited	code-v61
 capacity:composite	subject_rule	unstated	mixed
@@ -575,6 +606,7 @@ capacity:composite	accountability_record	text	derived
 capacity:composite	may_carry_under	text	derived
 capacity:composite	standing_act	text	derived
 capacity:composite	room_content	text	derived
+capacity:composite	names_stands_on	text	derived
 capacity:relay_delivery	signer_rule	cited	code-v61
 capacity:relay_delivery	cosign_rule	cited	code-v61
 capacity:relay_delivery	subject_rule	unstated	mixed
@@ -593,6 +625,7 @@ capacity:relay_delivery	accountability_record	text	derived
 capacity:relay_delivery	may_carry_under	text	derived
 capacity:relay_delivery	standing_act	text	derived
 capacity:relay_delivery	room_content	text	derived
+capacity:relay_delivery	names_stands_on	text	derived
 capacity:{factor}	signer_rule	cited	code-v61
 capacity:{factor}	cosign_rule	cited	code-v61
 capacity:{factor}	subject_rule	unstated	mixed
@@ -611,6 +644,7 @@ capacity:{factor}	accountability_record	text	derived
 capacity:{factor}	may_carry_under	text	derived
 capacity:{factor}	standing_act	text	derived
 capacity:{factor}	room_content	text	derived
+capacity:{factor}	names_stands_on	text	derived
 capacity_assurance:reversible_excluded:{domain}:{version}	signer_rule	cited	mixed
 capacity_assurance:reversible_excluded:{domain}:{version}	cosign_rule	cited	code-v61
 capacity_assurance:reversible_excluded:{domain}:{version}	subject_rule	unstated	code-v61
@@ -629,6 +663,7 @@ capacity_assurance:reversible_excluded:{domain}:{version}	accountability_record	
 capacity_assurance:reversible_excluded:{domain}:{version}	may_carry_under	text	derived
 capacity_assurance:reversible_excluded:{domain}:{version}	standing_act	text	derived
 capacity_assurance:reversible_excluded:{domain}:{version}	room_content	text	derived
+capacity_assurance:reversible_excluded:{domain}:{version}	names_stands_on	cited	quote
 capacity_assurance:reversible_pending:{domain}:{version}	signer_rule	cited	mixed
 capacity_assurance:reversible_pending:{domain}:{version}	cosign_rule	cited	code-v61
 capacity_assurance:reversible_pending:{domain}:{version}	subject_rule	unstated	code-v61
@@ -647,6 +682,7 @@ capacity_assurance:reversible_pending:{domain}:{version}	accountability_record	t
 capacity_assurance:reversible_pending:{domain}:{version}	may_carry_under	text	derived
 capacity_assurance:reversible_pending:{domain}:{version}	standing_act	text	derived
 capacity_assurance:reversible_pending:{domain}:{version}	room_content	text	derived
+capacity_assurance:reversible_pending:{domain}:{version}	names_stands_on	cited	quote
 capacity_assurance:{level}:{domain}:{band}:{version}	signer_rule	cited	mixed
 capacity_assurance:{level}:{domain}:{band}:{version}	cosign_rule	cited	code-v61
 capacity_assurance:{level}:{domain}:{band}:{version}	subject_rule	unstated	code-v61
@@ -665,6 +701,7 @@ capacity_assurance:{level}:{domain}:{band}:{version}	accountability_record	text	
 capacity_assurance:{level}:{domain}:{band}:{version}	may_carry_under	text	derived
 capacity_assurance:{level}:{domain}:{band}:{version}	standing_act	text	derived
 capacity_assurance:{level}:{domain}:{band}:{version}	room_content	text	derived
+capacity_assurance:{level}:{domain}:{band}:{version}	names_stands_on	cited	quote
 census:composite:{class}	signer_rule	text	cc-table
 census:composite:{class}	cosign_rule	cited	code-v61
 census:composite:{class}	subject_rule	unstated	code-v61
@@ -683,6 +720,7 @@ census:composite:{class}	accountability_record	text	derived
 census:composite:{class}	may_carry_under	text	derived
 census:composite:{class}	standing_act	text	derived
 census:composite:{class}	room_content	text	derived
+census:composite:{class}	names_stands_on	cited	quote
 census:expected_active	signer_rule	text	cc-table
 census:expected_active	cosign_rule	cited	code-v61
 census:expected_active	subject_rule	unstated	code-v61
@@ -701,6 +739,7 @@ census:expected_active	accountability_record	text	derived
 census:expected_active	may_carry_under	text	derived
 census:expected_active	standing_act	text	derived
 census:expected_active	room_content	text	derived
+census:expected_active	names_stands_on	text	derived
 census:member:partial	signer_rule	text	cc-table
 census:member:partial	cosign_rule	cited	code-v61
 census:member:partial	subject_rule	unstated	code-v61
@@ -719,6 +758,7 @@ census:member:partial	accountability_record	text	derived
 census:member:partial	may_carry_under	text	derived
 census:member:partial	standing_act	text	derived
 census:member:partial	room_content	text	derived
+census:member:partial	names_stands_on	text	derived
 census:member:share	signer_rule	text	cc-table
 census:member:share	cosign_rule	cited	code-v61
 census:member:share	subject_rule	open	gap
@@ -737,6 +777,7 @@ census:member:share	accountability_record	text	derived
 census:member:share	may_carry_under	text	derived
 census:member:share	standing_act	text	derived
 census:member:share	room_content	text	derived
+census:member:share	names_stands_on	text	derived
 census:partial:{class}	signer_rule	text	cc-table
 census:partial:{class}	cosign_rule	cited	code-v61
 census:partial:{class}	subject_rule	unstated	code-v61
@@ -755,6 +796,7 @@ census:partial:{class}	accountability_record	text	derived
 census:partial:{class}	may_carry_under	text	derived
 census:partial:{class}	standing_act	text	derived
 census:partial:{class}	room_content	text	derived
+census:partial:{class}	names_stands_on	cited	quote
 census:share:{class}	signer_rule	text	cc-table
 census:share:{class}	cosign_rule	cited	code-v61
 census:share:{class}	subject_rule	open	gap
@@ -773,6 +815,7 @@ census:share:{class}	accountability_record	text	derived
 census:share:{class}	may_carry_under	text	derived
 census:share:{class}	standing_act	text	derived
 census:share:{class}	room_content	text	derived
+census:share:{class}	names_stands_on	text	derived
 cert_validity:{authority}	signer_rule	cited	code-v61
 cert_validity:{authority}	cosign_rule	cited	code-v61
 cert_validity:{authority}	subject_rule	unstated	code-v61
@@ -791,6 +834,7 @@ cert_validity:{authority}	accountability_record	text	derived
 cert_validity:{authority}	may_carry_under	text	derived
 cert_validity:{authority}	standing_act	text	derived
 cert_validity:{authority}	room_content	text	derived
+cert_validity:{authority}	names_stands_on	text	derived
 chat:*	signer_rule	cited	code-v61
 chat:*	cosign_rule	cited	code-v61
 chat:*	subject_rule	unstated	code-v61
@@ -809,6 +853,7 @@ chat:*	accountability_record	text	derived
 chat:*	may_carry_under	text	derived
 chat:*	standing_act	text	derived
 chat:*	room_content	cited	quote
+chat:*	names_stands_on	text	derived
 coherence_standing:{cohort}	signer_rule	cited	code-v61
 coherence_standing:{cohort}	cosign_rule	cited	code-v61
 coherence_standing:{cohort}	subject_rule	unstated	code-v61
@@ -827,6 +872,7 @@ coherence_standing:{cohort}	accountability_record	text	derived
 coherence_standing:{cohort}	may_carry_under	text	derived
 coherence_standing:{cohort}	standing_act	text	derived
 coherence_standing:{cohort}	room_content	text	derived
+coherence_standing:{cohort}	names_stands_on	text	derived
 collection:{kind}	signer_rule	text	cc-table
 collection:{kind}	cosign_rule	open	gap
 collection:{kind}	subject_rule	unstated	code-v61
@@ -845,6 +891,7 @@ collection:{kind}	accountability_record	text	derived
 collection:{kind}	may_carry_under	text	derived
 collection:{kind}	standing_act	text	derived
 collection:{kind}	room_content	cited	quote
+collection:{kind}	names_stands_on	text	derived
 commitment_fulfillment:{prior_contribution_id}	signer_rule	cited	code-v61
 commitment_fulfillment:{prior_contribution_id}	cosign_rule	cited	code-v61
 commitment_fulfillment:{prior_contribution_id}	subject_rule	unstated	code-v61
@@ -863,6 +910,7 @@ commitment_fulfillment:{prior_contribution_id}	accountability_record	text	derive
 commitment_fulfillment:{prior_contribution_id}	may_carry_under	text	derived
 commitment_fulfillment:{prior_contribution_id}	standing_act	text	derived
 commitment_fulfillment:{prior_contribution_id}	room_content	text	derived
+commitment_fulfillment:{prior_contribution_id}	names_stands_on	text	derived
 community:listing	signer_rule	text	cc-table
 community:listing	cosign_rule	cited	code-v61
 community:listing	subject_rule	cited	code-v61
@@ -881,6 +929,7 @@ community:listing	accountability_record	text	derived
 community:listing	may_carry_under	text	derived
 community:listing	standing_act	text	derived
 community:listing	room_content	text	derived
+community:listing	names_stands_on	text	derived
 config:{scope}	signer_rule	cited	code-v61
 config:{scope}	cosign_rule	cited	code-v61
 config:{scope}	subject_rule	unstated	code-v61
@@ -899,6 +948,7 @@ config:{scope}	accountability_record	text	derived
 config:{scope}	may_carry_under	text	derived
 config:{scope}	standing_act	text	derived
 config:{scope}	room_content	text	derived
+config:{scope}	names_stands_on	text	derived
 conscience:coherence	signer_rule	cited	code-v61
 conscience:coherence	cosign_rule	cited	code-v61
 conscience:coherence	subject_rule	unstated	code-v61
@@ -917,6 +967,7 @@ conscience:coherence	accountability_record	text	derived
 conscience:coherence	may_carry_under	text	derived
 conscience:coherence	standing_act	text	derived
 conscience:coherence	room_content	text	derived
+conscience:coherence	names_stands_on	text	derived
 conscience:entropy	signer_rule	cited	code-v61
 conscience:entropy	cosign_rule	cited	code-v61
 conscience:entropy	subject_rule	unstated	code-v61
@@ -935,6 +986,7 @@ conscience:entropy	accountability_record	text	derived
 conscience:entropy	may_carry_under	text	derived
 conscience:entropy	standing_act	text	derived
 conscience:entropy	room_content	text	derived
+conscience:entropy	names_stands_on	text	derived
 conscience:epistemic_humility	signer_rule	cited	code-v61
 conscience:epistemic_humility	cosign_rule	cited	code-v61
 conscience:epistemic_humility	subject_rule	unstated	code-v61
@@ -953,6 +1005,7 @@ conscience:epistemic_humility	accountability_record	text	derived
 conscience:epistemic_humility	may_carry_under	text	derived
 conscience:epistemic_humility	standing_act	text	derived
 conscience:epistemic_humility	room_content	text	derived
+conscience:epistemic_humility	names_stands_on	text	derived
 conscience:optimization_veto	signer_rule	cited	code-v61
 conscience:optimization_veto	cosign_rule	cited	code-v61
 conscience:optimization_veto	subject_rule	unstated	code-v61
@@ -971,6 +1024,7 @@ conscience:optimization_veto	accountability_record	text	derived
 conscience:optimization_veto	may_carry_under	text	derived
 conscience:optimization_veto	standing_act	text	derived
 conscience:optimization_veto	room_content	text	derived
+conscience:optimization_veto	names_stands_on	text	derived
 consent:community_trust	signer_rule	cited	code-v61
 consent:community_trust	cosign_rule	cited	code-v61
 consent:community_trust	subject_rule	differs	code-v61
@@ -989,6 +1043,7 @@ consent:community_trust	accountability_record	text	derived
 consent:community_trust	may_carry_under	text	derived
 consent:community_trust	standing_act	open	open
 consent:community_trust	room_content	text	derived
+consent:community_trust	names_stands_on	text	derived
 consent:decay:{stage}	signer_rule	text	cc-table
 consent:decay:{stage}	cosign_rule	cited	code-v61
 consent:decay:{stage}	subject_rule	unstated	code-v61
@@ -1007,6 +1062,7 @@ consent:decay:{stage}	accountability_record	text	derived
 consent:decay:{stage}	may_carry_under	text	derived
 consent:decay:{stage}	standing_act	text	derived
 consent:decay:{stage}	room_content	text	derived
+consent:decay:{stage}	names_stands_on	text	derived
 consent:deletion_complete	signer_rule	text	cc-table
 consent:deletion_complete	cosign_rule	cited	code-v61
 consent:deletion_complete	subject_rule	unstated	code-v61
@@ -1025,6 +1081,7 @@ consent:deletion_complete	accountability_record	text	derived
 consent:deletion_complete	may_carry_under	text	derived
 consent:deletion_complete	standing_act	text	derived
 consent:deletion_complete	room_content	text	derived
+consent:deletion_complete	names_stands_on	text	derived
 consent:deletion_sla:{days}	signer_rule	text	cc-table
 consent:deletion_sla:{days}	cosign_rule	cited	code-v61
 consent:deletion_sla:{days}	subject_rule	unstated	code-v61
@@ -1043,6 +1100,7 @@ consent:deletion_sla:{days}	accountability_record	text	derived
 consent:deletion_sla:{days}	may_carry_under	text	derived
 consent:deletion_sla:{days}	standing_act	text	derived
 consent:deletion_sla:{days}	room_content	text	derived
+consent:deletion_sla:{days}	names_stands_on	text	derived
 consent:partnership_accept	signer_rule	text	cc-table
 consent:partnership_accept	cosign_rule	cited	code-v61
 consent:partnership_accept	subject_rule	unstated	code-v61
@@ -1061,6 +1119,7 @@ consent:partnership_accept	accountability_record	text	derived
 consent:partnership_accept	may_carry_under	text	derived
 consent:partnership_accept	standing_act	cited	quote
 consent:partnership_accept	room_content	text	derived
+consent:partnership_accept	names_stands_on	text	derived
 consent:partnership_grant	signer_rule	text	cc-table
 consent:partnership_grant	cosign_rule	cited	code-v61
 consent:partnership_grant	subject_rule	unstated	code-v61
@@ -1079,6 +1138,7 @@ consent:partnership_grant	accountability_record	text	derived
 consent:partnership_grant	may_carry_under	text	derived
 consent:partnership_grant	standing_act	cited	quote
 consent:partnership_grant	room_content	text	derived
+consent:partnership_grant	names_stands_on	text	derived
 consent:replication:{version}	signer_rule	cited	code-v61
 consent:replication:{version}	cosign_rule	cited	code-v61
 consent:replication:{version}	subject_rule	differs	code-v61
@@ -1097,6 +1157,7 @@ consent:replication:{version}	accountability_record	text	derived
 consent:replication:{version}	may_carry_under	text	derived
 consent:replication:{version}	standing_act	open	open
 consent:replication:{version}	room_content	text	derived
+consent:replication:{version}	names_stands_on	text	derived
 consent:scope:{kind}	signer_rule	text	cc-table
 consent:scope:{kind}	cosign_rule	cited	code-v61
 consent:scope:{kind}	subject_rule	unstated	code-v61
@@ -1115,6 +1176,7 @@ consent:scope:{kind}	accountability_record	text	derived
 consent:scope:{kind}	may_carry_under	text	derived
 consent:scope:{kind}	standing_act	open	open
 consent:scope:{kind}	room_content	text	derived
+consent:scope:{kind}	names_stands_on	text	derived
 consent:state:{stance}	signer_rule	differs	code-v61
 consent:state:{stance}	cosign_rule	cited	code-v61
 consent:state:{stance}	subject_rule	differs	code-v61
@@ -1133,6 +1195,7 @@ consent:state:{stance}	accountability_record	text	derived
 consent:state:{stance}	may_carry_under	text	derived
 consent:state:{stance}	standing_act	open	open
 consent:state:{stance}	room_content	text	derived
+consent:state:{stance}	names_stands_on	text	derived
 consent:stream:{kind}	signer_rule	text	cc-table
 consent:stream:{kind}	cosign_rule	cited	code-v61
 consent:stream:{kind}	subject_rule	unstated	code-v61
@@ -1151,6 +1214,7 @@ consent:stream:{kind}	accountability_record	text	derived
 consent:stream:{kind}	may_carry_under	text	derived
 consent:stream:{kind}	standing_act	open	open
 consent:stream:{kind}	room_content	text	derived
+consent:stream:{kind}	names_stands_on	text	derived
 consent:{kind}	signer_rule	text	cc-table
 consent:{kind}	cosign_rule	cited	code-v61
 consent:{kind}	subject_rule	unstated	code-v61
@@ -1169,6 +1233,7 @@ consent:{kind}	accountability_record	text	derived
 consent:{kind}	may_carry_under	text	derived
 consent:{kind}	standing_act	text	derived
 consent:{kind}	room_content	text	derived
+consent:{kind}	names_stands_on	text	derived
 content_class:{class}	signer_rule	differs	code-v61
 content_class:{class}	cosign_rule	cited	code-v61
 content_class:{class}	subject_rule	unstated	code-v61
@@ -1187,6 +1252,7 @@ content_class:{class}	accountability_record	text	derived
 content_class:{class}	may_carry_under	text	derived
 content_class:{class}	standing_act	text	derived
 content_class:{class}	room_content	text	derived
+content_class:{class}	names_stands_on	text	derived
 content_rating:{scheme}:{rating}	signer_rule	cited	code-v61
 content_rating:{scheme}:{rating}	cosign_rule	cited	code-v61
 content_rating:{scheme}:{rating}	subject_rule	unstated	code-v61
@@ -1205,6 +1271,7 @@ content_rating:{scheme}:{rating}	accountability_record	text	derived
 content_rating:{scheme}:{rating}	may_carry_under	text	derived
 content_rating:{scheme}:{rating}	standing_act	text	derived
 content_rating:{scheme}:{rating}	room_content	text	derived
+content_rating:{scheme}:{rating}	names_stands_on	text	derived
 contribution:{subject_kind}	signer_rule	text	cc-table
 contribution:{subject_kind}	cosign_rule	cited	cc-table
 contribution:{subject_kind}	subject_rule	open	gap
@@ -1223,6 +1290,7 @@ contribution:{subject_kind}	accountability_record	text	derived
 contribution:{subject_kind}	may_carry_under	text	derived
 contribution:{subject_kind}	standing_act	text	derived
 contribution:{subject_kind}	room_content	text	derived
+contribution:{subject_kind}	names_stands_on	text	derived
 corpus_health:n_eff_measurable	signer_rule	text	prose
 corpus_health:n_eff_measurable	cosign_rule	cited	code-v61
 corpus_health:n_eff_measurable	subject_rule	unstated	code-v61
@@ -1241,6 +1309,7 @@ corpus_health:n_eff_measurable	accountability_record	text	derived
 corpus_health:n_eff_measurable	may_carry_under	text	derived
 corpus_health:n_eff_measurable	standing_act	text	derived
 corpus_health:n_eff_measurable	room_content	text	derived
+corpus_health:n_eff_measurable	names_stands_on	text	derived
 credits:{domain}:{language}:{subject}	signer_rule	cited	code-v61
 credits:{domain}:{language}:{subject}	cosign_rule	cited	code-v61
 credits:{domain}:{language}:{subject}	subject_rule	unstated	code-v61
@@ -1259,6 +1328,7 @@ credits:{domain}:{language}:{subject}	accountability_record	text	derived
 credits:{domain}:{language}:{subject}	may_carry_under	text	derived
 credits:{domain}:{language}:{subject}	standing_act	text	derived
 credits:{domain}:{language}:{subject}	room_content	text	derived
+credits:{domain}:{language}:{subject}	names_stands_on	text	derived
 custody:{kind}	signer_rule	cited	code-v61
 custody:{kind}	cosign_rule	cited	code-v61
 custody:{kind}	subject_rule	cited	code-v61
@@ -1277,6 +1347,7 @@ custody:{kind}	accountability_record	text	derived
 custody:{kind}	may_carry_under	text	derived
 custody:{kind}	standing_act	text	derived
 custody:{kind}	room_content	text	derived
+custody:{kind}	names_stands_on	text	derived
 cw_class:{class}	signer_rule	cited	code-v61
 cw_class:{class}	cosign_rule	cited	code-v61
 cw_class:{class}	subject_rule	unstated	code-v61
@@ -1295,6 +1366,7 @@ cw_class:{class}	accountability_record	text	derived
 cw_class:{class}	may_carry_under	text	derived
 cw_class:{class}	standing_act	text	derived
 cw_class:{class}	room_content	text	derived
+cw_class:{class}	names_stands_on	text	derived
 deferral:request	signer_rule	text	cc-table
 deferral:request	cosign_rule	cited	code-v61
 deferral:request	subject_rule	unstated	code-v61
@@ -1313,6 +1385,7 @@ deferral:request	accountability_record	text	derived
 deferral:request	may_carry_under	text	derived
 deferral:request	standing_act	text	derived
 deferral:request	room_content	text	derived
+deferral:request	names_stands_on	text	derived
 deferral:response:{outcome}	signer_rule	text	cc-table
 deferral:response:{outcome}	cosign_rule	cited	code-v61
 deferral:response:{outcome}	subject_rule	unstated	code-v61
@@ -1331,6 +1404,7 @@ deferral:response:{outcome}	accountability_record	text	derived
 deferral:response:{outcome}	may_carry_under	text	derived
 deferral:response:{outcome}	standing_act	text	derived
 deferral:response:{outcome}	room_content	text	derived
+deferral:response:{outcome}	names_stands_on	text	derived
 delivery:{class}	signer_rule	text	cc-table
 delivery:{class}	cosign_rule	cited	code-v61
 delivery:{class}	subject_rule	unstated	code-v61
@@ -1349,6 +1423,7 @@ delivery:{class}	accountability_record	text	derived
 delivery:{class}	may_carry_under	text	derived
 delivery:{class}	standing_act	text	derived
 delivery:{class}	room_content	text	derived
+delivery:{class}	names_stands_on	text	derived
 delivery_ack:{stream_id}	signer_rule	text	cc-table
 delivery_ack:{stream_id}	cosign_rule	cited	code-v61
 delivery_ack:{stream_id}	subject_rule	unstated	code-v61
@@ -1367,6 +1442,7 @@ delivery_ack:{stream_id}	accountability_record	text	derived
 delivery_ack:{stream_id}	may_carry_under	text	derived
 delivery_ack:{stream_id}	standing_act	text	derived
 delivery_ack:{stream_id}	room_content	text	derived
+delivery_ack:{stream_id}	names_stands_on	text	derived
 detection:correlated_action:{axis}	signer_rule	text	prose
 detection:correlated_action:{axis}	cosign_rule	cited	code-v61
 detection:correlated_action:{axis}	subject_rule	unstated	code-v61
@@ -1385,6 +1461,7 @@ detection:correlated_action:{axis}	accountability_record	text	derived
 detection:correlated_action:{axis}	may_carry_under	text	derived
 detection:correlated_action:{axis}	standing_act	text	derived
 detection:correlated_action:{axis}	room_content	text	derived
+detection:correlated_action:{axis}	names_stands_on	cited	quote
 detection:distributive:access:{resource_type}	signer_rule	text	prose
 detection:distributive:access:{resource_type}	cosign_rule	cited	code-v61
 detection:distributive:access:{resource_type}	subject_rule	unstated	code-v61
@@ -1403,6 +1480,7 @@ detection:distributive:access:{resource_type}	accountability_record	text	derived
 detection:distributive:access:{resource_type}	may_carry_under	text	derived
 detection:distributive:access:{resource_type}	standing_act	text	derived
 detection:distributive:access:{resource_type}	room_content	text	derived
+detection:distributive:access:{resource_type}	names_stands_on	cited	quote
 detection:hash_chain_integrity	signer_rule	text	prose
 detection:hash_chain_integrity	cosign_rule	cited	code-v61
 detection:hash_chain_integrity	subject_rule	unstated	code-v61
@@ -1421,6 +1499,7 @@ detection:hash_chain_integrity	accountability_record	text	derived
 detection:hash_chain_integrity	may_carry_under	text	derived
 detection:hash_chain_integrity	standing_act	text	derived
 detection:hash_chain_integrity	room_content	text	derived
+detection:hash_chain_integrity	names_stands_on	cited	quote
 detection:intra_agent_consistency	signer_rule	text	prose
 detection:intra_agent_consistency	cosign_rule	cited	code-v61
 detection:intra_agent_consistency	subject_rule	unstated	code-v61
@@ -1439,6 +1518,7 @@ detection:intra_agent_consistency	accountability_record	text	derived
 detection:intra_agent_consistency	may_carry_under	text	derived
 detection:intra_agent_consistency	standing_act	text	derived
 detection:intra_agent_consistency	room_content	text	derived
+detection:intra_agent_consistency	names_stands_on	cited	quote
 detection:{detector}	signer_rule	text	prose
 detection:{detector}	cosign_rule	cited	code-v61
 detection:{detector}	subject_rule	unstated	code-v61
@@ -1457,6 +1537,7 @@ detection:{detector}	accountability_record	text	derived
 detection:{detector}	may_carry_under	text	derived
 detection:{detector}	standing_act	text	derived
 detection:{detector}	room_content	text	derived
+detection:{detector}	names_stands_on	cited	quote
 device:label	signer_rule	text	cc-table
 device:label	cosign_rule	cited	code-v61
 device:label	subject_rule	unstated	code-v61
@@ -1475,6 +1556,7 @@ device:label	accountability_record	text	derived
 device:label	may_carry_under	text	derived
 device:label	standing_act	text	derived
 device:label	room_content	text	derived
+device:label	names_stands_on	text	derived
 dma:csdma:*	signer_rule	cited	code-v61
 dma:csdma:*	cosign_rule	cited	code-v61
 dma:csdma:*	subject_rule	unstated	code-v61
@@ -1493,6 +1575,7 @@ dma:csdma:*	accountability_record	text	derived
 dma:csdma:*	may_carry_under	text	derived
 dma:csdma:*	standing_act	text	derived
 dma:csdma:*	room_content	text	derived
+dma:csdma:*	names_stands_on	text	derived
 dma:dsdma:{domain}:*	signer_rule	cited	code-v61
 dma:dsdma:{domain}:*	cosign_rule	cited	code-v61
 dma:dsdma:{domain}:*	subject_rule	unstated	code-v61
@@ -1511,6 +1594,7 @@ dma:dsdma:{domain}:*	accountability_record	text	derived
 dma:dsdma:{domain}:*	may_carry_under	text	derived
 dma:dsdma:{domain}:*	standing_act	text	derived
 dma:dsdma:{domain}:*	room_content	text	derived
+dma:dsdma:{domain}:*	names_stands_on	text	derived
 dma:idma:*	signer_rule	cited	code-v61
 dma:idma:*	cosign_rule	cited	code-v61
 dma:idma:*	subject_rule	unstated	code-v61
@@ -1529,6 +1613,7 @@ dma:idma:*	accountability_record	text	derived
 dma:idma:*	may_carry_under	text	derived
 dma:idma:*	standing_act	text	derived
 dma:idma:*	room_content	text	derived
+dma:idma:*	names_stands_on	text	derived
 dma:pdma:*	signer_rule	cited	code-v61
 dma:pdma:*	cosign_rule	cited	code-v61
 dma:pdma:*	subject_rule	unstated	code-v61
@@ -1547,6 +1632,7 @@ dma:pdma:*	accountability_record	text	derived
 dma:pdma:*	may_carry_under	text	derived
 dma:pdma:*	standing_act	text	derived
 dma:pdma:*	room_content	text	derived
+dma:pdma:*	names_stands_on	text	derived
 duty:{kind}	signer_rule	text	prose
 duty:{kind}	cosign_rule	cited	code-v61
 duty:{kind}	subject_rule	unstated	code-v61
@@ -1565,6 +1651,7 @@ duty:{kind}	accountability_record	text	derived
 duty:{kind}	may_carry_under	text	derived
 duty:{kind}	standing_act	open	open
 duty:{kind}	room_content	text	derived
+duty:{kind}	names_stands_on	text	derived
 encyclopedia:*	signer_rule	cited	code-v61
 encyclopedia:*	cosign_rule	cited	code-v61
 encyclopedia:*	subject_rule	unstated	code-v61
@@ -1583,6 +1670,7 @@ encyclopedia:*	accountability_record	text	derived
 encyclopedia:*	may_carry_under	text	derived
 encyclopedia:*	standing_act	text	derived
 encyclopedia:*	room_content	cited	quote
+encyclopedia:*	names_stands_on	text	derived
 event:attendance	signer_rule	cited	code-v61
 event:attendance	cosign_rule	cited	code-v61
 event:attendance	subject_rule	unstated	code-v61
@@ -1601,6 +1689,7 @@ event:attendance	accountability_record	text	derived
 event:attendance	may_carry_under	text	derived
 event:attendance	standing_act	text	derived
 event:attendance	room_content	text	derived
+event:attendance	names_stands_on	text	derived
 event:lifecycle:{state}	signer_rule	cited	code-v61
 event:lifecycle:{state}	cosign_rule	cited	code-v61
 event:lifecycle:{state}	subject_rule	unstated	code-v61
@@ -1619,6 +1708,7 @@ event:lifecycle:{state}	accountability_record	text	derived
 event:lifecycle:{state}	may_carry_under	text	derived
 event:lifecycle:{state}	standing_act	text	derived
 event:lifecycle:{state}	room_content	text	derived
+event:lifecycle:{state}	names_stands_on	text	derived
 event:rsvp_count	signer_rule	cited	code-v61
 event:rsvp_count	cosign_rule	cited	code-v61
 event:rsvp_count	subject_rule	unstated	code-v61
@@ -1637,6 +1727,7 @@ event:rsvp_count	accountability_record	text	derived
 event:rsvp_count	may_carry_under	text	derived
 event:rsvp_count	standing_act	text	derived
 event:rsvp_count	room_content	text	derived
+event:rsvp_count	names_stands_on	text	derived
 evidence:{suite}:{kind}:{cell}:{prefix}	signer_rule	text	cc-table
 evidence:{suite}:{kind}:{cell}:{prefix}	cosign_rule	cited	code-v61
 evidence:{suite}:{kind}:{cell}:{prefix}	subject_rule	unstated	code-v61
@@ -1655,6 +1746,7 @@ evidence:{suite}:{kind}:{cell}:{prefix}	accountability_record	text	derived
 evidence:{suite}:{kind}:{cell}:{prefix}	may_carry_under	text	derived
 evidence:{suite}:{kind}:{cell}:{prefix}	standing_act	text	derived
 evidence:{suite}:{kind}:{cell}:{prefix}	room_content	text	derived
+evidence:{suite}:{kind}:{cell}:{prefix}	names_stands_on	text	derived
 expertise:{domain}:{language}	signer_rule	cited	code-v61
 expertise:{domain}:{language}	cosign_rule	cited	code-v61
 expertise:{domain}:{language}	subject_rule	unstated	code-v61
@@ -1673,6 +1765,7 @@ expertise:{domain}:{language}	accountability_record	text	derived
 expertise:{domain}:{language}	may_carry_under	text	derived
 expertise:{domain}:{language}	standing_act	text	derived
 expertise:{domain}:{language}	room_content	text	derived
+expertise:{domain}:{language}	names_stands_on	text	derived
 federation_directory:replication_lag	signer_rule	text	prose
 federation_directory:replication_lag	cosign_rule	cited	code-v61
 federation_directory:replication_lag	subject_rule	unstated	code-v61
@@ -1691,6 +1784,7 @@ federation_directory:replication_lag	accountability_record	text	derived
 federation_directory:replication_lag	may_carry_under	text	derived
 federation_directory:replication_lag	standing_act	text	derived
 federation_directory:replication_lag	room_content	text	derived
+federation_directory:replication_lag	names_stands_on	text	derived
 fidelity:explainability_sla:{tier}	signer_rule	cited	code-v61
 fidelity:explainability_sla:{tier}	cosign_rule	cited	code-v61
 fidelity:explainability_sla:{tier}	subject_rule	unstated	code-v61
@@ -1709,6 +1803,7 @@ fidelity:explainability_sla:{tier}	accountability_record	text	derived
 fidelity:explainability_sla:{tier}	may_carry_under	text	derived
 fidelity:explainability_sla:{tier}	standing_act	text	derived
 fidelity:explainability_sla:{tier}	room_content	text	derived
+fidelity:explainability_sla:{tier}	names_stands_on	text	derived
 fidelity:{aspect}	signer_rule	cited	code-v61
 fidelity:{aspect}	cosign_rule	cited	code-v61
 fidelity:{aspect}	subject_rule	unstated	code-v61
@@ -1727,6 +1822,7 @@ fidelity:{aspect}	accountability_record	text	derived
 fidelity:{aspect}	may_carry_under	text	derived
 fidelity:{aspect}	standing_act	text	derived
 fidelity:{aspect}	room_content	text	derived
+fidelity:{aspect}	names_stands_on	text	derived
 file:{version}	signer_rule	text	cc-table
 file:{version}	cosign_rule	cited	code-v61
 file:{version}	subject_rule	unstated	code-v61
@@ -1745,6 +1841,7 @@ file:{version}	accountability_record	text	derived
 file:{version}	may_carry_under	text	derived
 file:{version}	standing_act	text	derived
 file:{version}	room_content	cited	quote
+file:{version}	names_stands_on	text	derived
 film:*	signer_rule	cited	code-v61
 film:*	cosign_rule	cited	code-v61
 film:*	subject_rule	unstated	code-v61
@@ -1763,6 +1860,7 @@ film:*	accountability_record	text	derived
 film:*	may_carry_under	text	derived
 film:*	standing_act	text	derived
 film:*	room_content	cited	quote
+film:*	names_stands_on	text	derived
 goal:{scale}	signer_rule	differs	code-v61
 goal:{scale}	cosign_rule	differs	code-v61
 goal:{scale}	subject_rule	unstated	code-v61
@@ -1781,6 +1879,7 @@ goal:{scale}	accountability_record	text	derived
 goal:{scale}	may_carry_under	text	derived
 goal:{scale}	standing_act	text	derived
 goal:{scale}	room_content	text	derived
+goal:{scale}	names_stands_on	text	derived
 group:roster	signer_rule	differs	code-v61
 group:roster	cosign_rule	cited	code-v61
 group:roster	subject_rule	unstated	code-v61
@@ -1799,6 +1898,7 @@ group:roster	accountability_record	text	derived
 group:roster	may_carry_under	text	derived
 group:roster	standing_act	open	open
 group:roster	room_content	text	derived
+group:roster	names_stands_on	text	derived
 hard_case:{kind}	signer_rule	open	prose
 hard_case:{kind}	cosign_rule	cited	code-v61
 hard_case:{kind}	subject_rule	unstated	code-v61
@@ -1817,6 +1917,7 @@ hard_case:{kind}	accountability_record	text	derived
 hard_case:{kind}	may_carry_under	text	derived
 hard_case:{kind}	standing_act	text	derived
 hard_case:{kind}	room_content	text	derived
+hard_case:{kind}	names_stands_on	text	derived
 hardware_custody:{platform}	signer_rule	text	cc-table
 hardware_custody:{platform}	cosign_rule	cited	code-v61
 hardware_custody:{platform}	subject_rule	unstated	code-v61
@@ -1835,6 +1936,7 @@ hardware_custody:{platform}	accountability_record	text	derived
 hardware_custody:{platform}	may_carry_under	text	derived
 hardware_custody:{platform}	standing_act	text	derived
 hardware_custody:{platform}	room_content	text	derived
+hardware_custody:{platform}	names_stands_on	text	derived
 health:liveness:{version}	signer_rule	cited	code-v61
 health:liveness:{version}	cosign_rule	cited	code-v61
 health:liveness:{version}	subject_rule	unstated	code-v61
@@ -1853,6 +1955,7 @@ health:liveness:{version}	accountability_record	text	derived
 health:liveness:{version}	may_carry_under	text	derived
 health:liveness:{version}	standing_act	text	derived
 health:liveness:{version}	room_content	text	derived
+health:liveness:{version}	names_stands_on	text	derived
 identity:canonical_binding:{canonical_hash}	signer_rule	cited	code-v61
 identity:canonical_binding:{canonical_hash}	cosign_rule	cited	code-v61
 identity:canonical_binding:{canonical_hash}	subject_rule	cited	code-v61
@@ -1871,6 +1974,7 @@ identity:canonical_binding:{canonical_hash}	accountability_record	text	derived
 identity:canonical_binding:{canonical_hash}	may_carry_under	text	derived
 identity:canonical_binding:{canonical_hash}	standing_act	text	derived
 identity:canonical_binding:{canonical_hash}	room_content	text	derived
+identity:canonical_binding:{canonical_hash}	names_stands_on	text	derived
 identity:occurrence	signer_rule	cited	code-v61
 identity:occurrence	cosign_rule	text	prose
 identity:occurrence	subject_rule	unstated	code-v61
@@ -1889,6 +1993,7 @@ identity:occurrence	accountability_record	text	derived
 identity:occurrence	may_carry_under	text	derived
 identity:occurrence	standing_act	open	open
 identity:occurrence	room_content	text	derived
+identity:occurrence	names_stands_on	text	derived
 identity:occurrence_revocation	signer_rule	text	prose
 identity:occurrence_revocation	cosign_rule	text	prose
 identity:occurrence_revocation	subject_rule	unstated	code-v61
@@ -1907,6 +2012,7 @@ identity:occurrence_revocation	accountability_record	text	derived
 identity:occurrence_revocation	may_carry_under	text	derived
 identity:occurrence_revocation	standing_act	text	derived
 identity:occurrence_revocation	room_content	text	derived
+identity:occurrence_revocation	names_stands_on	text	derived
 identity_amendment	signer_rule	cited	code-v61
 identity_amendment	cosign_rule	cited	code-v61
 identity_amendment	subject_rule	cited	code-v61
@@ -1925,6 +2031,7 @@ identity_amendment	accountability_record	text	derived
 identity_amendment	may_carry_under	text	derived
 identity_amendment	standing_act	text	derived
 identity_amendment	room_content	text	derived
+identity_amendment	names_stands_on	text	derived
 identity_continuity:relational_anchor	signer_rule	text	prose
 identity_continuity:relational_anchor	cosign_rule	cited	code-v61
 identity_continuity:relational_anchor	subject_rule	unstated	code-v61
@@ -1943,6 +2050,7 @@ identity_continuity:relational_anchor	accountability_record	text	derived
 identity_continuity:relational_anchor	may_carry_under	text	derived
 identity_continuity:relational_anchor	standing_act	text	derived
 identity_continuity:relational_anchor	room_content	text	derived
+identity_continuity:relational_anchor	names_stands_on	text	derived
 image:*	signer_rule	cited	code-v61
 image:*	cosign_rule	cited	code-v61
 image:*	subject_rule	unstated	code-v61
@@ -1961,6 +2069,7 @@ image:*	accountability_record	text	derived
 image:*	may_carry_under	text	derived
 image:*	standing_act	text	derived
 image:*	room_content	cited	quote
+image:*	names_stands_on	text	derived
 integrity:{aspect}	signer_rule	cited	code-v61
 integrity:{aspect}	cosign_rule	cited	code-v61
 integrity:{aspect}	subject_rule	unstated	code-v61
@@ -1979,6 +2088,7 @@ integrity:{aspect}	accountability_record	text	derived
 integrity:{aspect}	may_carry_under	text	derived
 integrity:{aspect}	standing_act	text	derived
 integrity:{aspect}	room_content	text	derived
+integrity:{aspect}	names_stands_on	text	derived
 judge_model:verdict:{model_id}	signer_rule	cited	code-v61
 judge_model:verdict:{model_id}	cosign_rule	cited	code-v61
 judge_model:verdict:{model_id}	subject_rule	unstated	code-v61
@@ -1997,6 +2107,7 @@ judge_model:verdict:{model_id}	accountability_record	text	derived
 judge_model:verdict:{model_id}	may_carry_under	text	derived
 judge_model:verdict:{model_id}	standing_act	text	derived
 judge_model:verdict:{model_id}	room_content	text	derived
+judge_model:verdict:{model_id}	names_stands_on	text	derived
 justice:{aspect}	signer_rule	cited	code-v61
 justice:{aspect}	cosign_rule	cited	code-v61
 justice:{aspect}	subject_rule	unstated	code-v61
@@ -2015,6 +2126,7 @@ justice:{aspect}	accountability_record	text	derived
 justice:{aspect}	may_carry_under	text	derived
 justice:{aspect}	standing_act	text	derived
 justice:{aspect}	room_content	text	derived
+justice:{aspect}	names_stands_on	text	derived
 key:record	signer_rule	cited	code-v61
 key:record	cosign_rule	differs	code-v61
 key:record	subject_rule	cited	code-v61
@@ -2033,6 +2145,7 @@ key:record	accountability_record	text	derived
 key:record	may_carry_under	text	derived
 key:record	standing_act	text	derived
 key:record	room_content	text	derived
+key:record	names_stands_on	text	derived
 key:revocation	signer_rule	text	prose
 key:revocation	cosign_rule	cited	code-v61
 key:revocation	subject_rule	unstated	code-v61
@@ -2051,6 +2164,7 @@ key:revocation	accountability_record	text	derived
 key:revocation	may_carry_under	text	derived
 key:revocation	standing_act	text	derived
 key:revocation	room_content	text	derived
+key:revocation	names_stands_on	text	derived
 key_boundary:{scope}	signer_rule	text	cc-table
 key_boundary:{scope}	cosign_rule	cited	code-v61
 key_boundary:{scope}	subject_rule	unstated	code-v61
@@ -2069,6 +2183,7 @@ key_boundary:{scope}	accountability_record	text	derived
 key_boundary:{scope}	may_carry_under	text	derived
 key_boundary:{scope}	standing_act	text	derived
 key_boundary:{scope}	room_content	text	derived
+key_boundary:{scope}	names_stands_on	text	derived
 key_grant:{axis}	signer_rule	cited	code-v61
 key_grant:{axis}	cosign_rule	cited	code-v61
 key_grant:{axis}	subject_rule	cited	code-v61
@@ -2087,6 +2202,7 @@ key_grant:{axis}	accountability_record	text	derived
 key_grant:{axis}	may_carry_under	text	derived
 key_grant:{axis}	standing_act	text	derived
 key_grant:{axis}	room_content	text	derived
+key_grant:{axis}	names_stands_on	text	derived
 lawful_order:release	signer_rule	text	cc-table
 lawful_order:release	cosign_rule	cited	code-v61
 lawful_order:release	subject_rule	differs	code-v61
@@ -2105,6 +2221,7 @@ lawful_order:release	accountability_record	text	derived
 lawful_order:release	may_carry_under	text	derived
 lawful_order:release	standing_act	open	open
 lawful_order:release	room_content	text	derived
+lawful_order:release	names_stands_on	text	derived
 ledger:checkpoint:{unit}:{version}	signer_rule	cited	mixed
 ledger:checkpoint:{unit}:{version}	cosign_rule	cited	code-v61
 ledger:checkpoint:{unit}:{version}	subject_rule	unstated	mixed
@@ -2123,6 +2240,7 @@ ledger:checkpoint:{unit}:{version}	accountability_record	text	derived
 ledger:checkpoint:{unit}:{version}	may_carry_under	text	derived
 ledger:checkpoint:{unit}:{version}	standing_act	text	derived
 ledger:checkpoint:{unit}:{version}	room_content	text	derived
+ledger:checkpoint:{unit}:{version}	names_stands_on	text	derived
 ledger:head:{unit}:{version}	signer_rule	cited	mixed
 ledger:head:{unit}:{version}	cosign_rule	cited	code-v61
 ledger:head:{unit}:{version}	subject_rule	unstated	mixed
@@ -2141,6 +2259,7 @@ ledger:head:{unit}:{version}	accountability_record	text	derived
 ledger:head:{unit}:{version}	may_carry_under	text	derived
 ledger:head:{unit}:{version}	standing_act	text	derived
 ledger:head:{unit}:{version}	room_content	text	derived
+ledger:head:{unit}:{version}	names_stands_on	text	derived
 ledger:promotion:{version}	signer_rule	cited	mixed
 ledger:promotion:{version}	cosign_rule	cited	code-v61
 ledger:promotion:{version}	subject_rule	unstated	mixed
@@ -2159,6 +2278,7 @@ ledger:promotion:{version}	accountability_record	text	derived
 ledger:promotion:{version}	may_carry_under	text	derived
 ledger:promotion:{version}	standing_act	text	derived
 ledger:promotion:{version}	room_content	text	derived
+ledger:promotion:{version}	names_stands_on	text	derived
 licensure:{authority_id}	signer_rule	cited	code-v61
 licensure:{authority_id}	cosign_rule	cited	code-v61
 licensure:{authority_id}	subject_rule	unstated	code-v61
@@ -2177,6 +2297,7 @@ licensure:{authority_id}	accountability_record	text	derived
 licensure:{authority_id}	may_carry_under	text	derived
 licensure:{authority_id}	standing_act	text	derived
 licensure:{authority_id}	room_content	text	derived
+licensure:{authority_id}	names_stands_on	text	derived
 locality:decision:{scale}	signer_rule	cited	code-v61
 locality:decision:{scale}	cosign_rule	cited	code-v61
 locality:decision:{scale}	subject_rule	unstated	code-v61
@@ -2195,6 +2316,7 @@ locality:decision:{scale}	accountability_record	text	derived
 locality:decision:{scale}	may_carry_under	text	derived
 locality:decision:{scale}	standing_act	text	derived
 locality:decision:{scale}	room_content	text	derived
+locality:decision:{scale}	names_stands_on	text	derived
 location_proof:{version}	signer_rule	text	cc-table
 location_proof:{version}	cosign_rule	open	gap
 location_proof:{version}	subject_rule	open	gap
@@ -2213,6 +2335,7 @@ location_proof:{version}	accountability_record	text	derived
 location_proof:{version}	may_carry_under	text	derived
 location_proof:{version}	standing_act	text	derived
 location_proof:{version}	room_content	text	derived
+location_proof:{version}	names_stands_on	text	derived
 manifold_conformity:{cohort}	signer_rule	cited	code-v61
 manifold_conformity:{cohort}	cosign_rule	cited	code-v61
 manifold_conformity:{cohort}	subject_rule	unstated	code-v61
@@ -2231,6 +2354,7 @@ manifold_conformity:{cohort}	accountability_record	text	derived
 manifold_conformity:{cohort}	may_carry_under	text	derived
 manifold_conformity:{cohort}	standing_act	text	derived
 manifold_conformity:{cohort}	room_content	text	derived
+manifold_conformity:{cohort}	names_stands_on	text	derived
 membership:{stage}	signer_rule	cited	code-v61
 membership:{stage}	cosign_rule	cited	code-v61
 membership:{stage}	subject_rule	cited	code-v61
@@ -2249,6 +2373,7 @@ membership:{stage}	accountability_record	text	derived
 membership:{stage}	may_carry_under	text	derived
 membership:{stage}	standing_act	cited	quote
 membership:{stage}	room_content	text	derived
+membership:{stage}	names_stands_on	text	derived
 mesh_config:{key}	signer_rule	cited	code-v61
 mesh_config:{key}	cosign_rule	differs	code-v61
 mesh_config:{key}	subject_rule	unstated	code-v61
@@ -2267,6 +2392,7 @@ mesh_config:{key}	accountability_record	text	derived
 mesh_config:{key}	may_carry_under	text	derived
 mesh_config:{key}	standing_act	text	derived
 mesh_config:{key}	room_content	text	derived
+mesh_config:{key}	names_stands_on	text	derived
 method:{approach_id}:{substrate_rung}	signer_rule	cited	code-v61
 method:{approach_id}:{substrate_rung}	cosign_rule	cited	code-v61
 method:{approach_id}:{substrate_rung}	subject_rule	unstated	code-v61
@@ -2285,6 +2411,7 @@ method:{approach_id}:{substrate_rung}	accountability_record	text	derived
 method:{approach_id}:{substrate_rung}	may_carry_under	text	derived
 method:{approach_id}:{substrate_rung}	standing_act	text	derived
 method:{approach_id}:{substrate_rung}	room_content	text	derived
+method:{approach_id}:{substrate_rung}	names_stands_on	text	derived
 model_3d:*	signer_rule	cited	code-v61
 model_3d:*	cosign_rule	cited	code-v61
 model_3d:*	subject_rule	unstated	code-v61
@@ -2303,6 +2430,7 @@ model_3d:*	accountability_record	text	derived
 model_3d:*	may_carry_under	text	derived
 model_3d:*	standing_act	text	derived
 model_3d:*	room_content	cited	quote
+model_3d:*	names_stands_on	text	derived
 moderation:{allegation_type}	signer_rule	cited	code-v61
 moderation:{allegation_type}	cosign_rule	cited	code-v61
 moderation:{allegation_type}	subject_rule	unstated	code-v61
@@ -2321,6 +2449,7 @@ moderation:{allegation_type}	accountability_record	text	derived
 moderation:{allegation_type}	may_carry_under	text	derived
 moderation:{allegation_type}	standing_act	text	derived
 moderation:{allegation_type}	room_content	text	derived
+moderation:{allegation_type}	names_stands_on	text	derived
 moderation_track_record:{community_key_id}	signer_rule	cited	code-v61
 moderation_track_record:{community_key_id}	cosign_rule	cited	code-v61
 moderation_track_record:{community_key_id}	subject_rule	unstated	code-v61
@@ -2339,6 +2468,7 @@ moderation_track_record:{community_key_id}	accountability_record	text	derived
 moderation_track_record:{community_key_id}	may_carry_under	text	derived
 moderation_track_record:{community_key_id}	standing_act	text	derived
 moderation_track_record:{community_key_id}	room_content	text	derived
+moderation_track_record:{community_key_id}	names_stands_on	text	derived
 multilateral_participation:{forum}:{kind}	signer_rule	cited	code-v61
 multilateral_participation:{forum}:{kind}	cosign_rule	cited	code-v61
 multilateral_participation:{forum}:{kind}	subject_rule	unstated	code-v61
@@ -2357,6 +2487,7 @@ multilateral_participation:{forum}:{kind}	accountability_record	text	derived
 multilateral_participation:{forum}:{kind}	may_carry_under	text	derived
 multilateral_participation:{forum}:{kind}	standing_act	text	derived
 multilateral_participation:{forum}:{kind}	room_content	text	derived
+multilateral_participation:{forum}:{kind}	names_stands_on	text	derived
 need:{domain}:{kind}	signer_rule	cited	code-v61
 need:{domain}:{kind}	cosign_rule	cited	code-v61
 need:{domain}:{kind}	subject_rule	unstated	code-v61
@@ -2375,6 +2506,7 @@ need:{domain}:{kind}	accountability_record	text	derived
 need:{domain}:{kind}	may_carry_under	text	derived
 need:{domain}:{kind}	standing_act	text	derived
 need:{domain}:{kind}	room_content	text	derived
+need:{domain}:{kind}	names_stands_on	text	derived
 news:*	signer_rule	cited	code-v61
 news:*	cosign_rule	cited	code-v61
 news:*	subject_rule	unstated	code-v61
@@ -2393,6 +2525,7 @@ news:*	accountability_record	text	derived
 news:*	may_carry_under	text	derived
 news:*	standing_act	text	derived
 news:*	room_content	cited	quote
+news:*	names_stands_on	text	derived
 non_maleficence:{aspect}	signer_rule	cited	code-v61
 non_maleficence:{aspect}	cosign_rule	cited	code-v61
 non_maleficence:{aspect}	subject_rule	unstated	code-v61
@@ -2411,6 +2544,7 @@ non_maleficence:{aspect}	accountability_record	text	derived
 non_maleficence:{aspect}	may_carry_under	text	derived
 non_maleficence:{aspect}	standing_act	text	derived
 non_maleficence:{aspect}	room_content	text	derived
+non_maleficence:{aspect}	names_stands_on	text	derived
 objection:{state}	signer_rule	cited	code-v61
 objection:{state}	cosign_rule	text	prose
 objection:{state}	subject_rule	unstated	code-v61
@@ -2429,6 +2563,7 @@ objection:{state}	accountability_record	text	derived
 objection:{state}	may_carry_under	text	derived
 objection:{state}	standing_act	text	derived
 objection:{state}	room_content	text	derived
+objection:{state}	names_stands_on	text	derived
 observation:access_assumption	signer_rule	text	cc-table
 observation:access_assumption	cosign_rule	cited	code-v61
 observation:access_assumption	subject_rule	open	gap
@@ -2447,6 +2582,7 @@ observation:access_assumption	accountability_record	text	derived
 observation:access_assumption	may_carry_under	text	derived
 observation:access_assumption	standing_act	text	derived
 observation:access_assumption	room_content	text	derived
+observation:access_assumption	names_stands_on	text	derived
 observation:reachability	signer_rule	text	cc-table
 observation:reachability	cosign_rule	cited	code-v61
 observation:reachability	subject_rule	open	gap
@@ -2465,6 +2601,7 @@ observation:reachability	accountability_record	text	derived
 observation:reachability	may_carry_under	text	derived
 observation:reachability	standing_act	text	derived
 observation:reachability	room_content	text	derived
+observation:reachability	names_stands_on	text	derived
 ownership:{relation}:{target_kind}:{version}	signer_rule	text	prose
 ownership:{relation}:{target_kind}:{version}	cosign_rule	cited	code-v61
 ownership:{relation}:{target_kind}:{version}	subject_rule	differs	code-v61
@@ -2483,6 +2620,7 @@ ownership:{relation}:{target_kind}:{version}	accountability_record	text	derived
 ownership:{relation}:{target_kind}:{version}	may_carry_under	text	derived
 ownership:{relation}:{target_kind}:{version}	standing_act	cited	quote
 ownership:{relation}:{target_kind}:{version}	room_content	text	derived
+ownership:{relation}:{target_kind}:{version}	names_stands_on	text	derived
 partner_role:{role}	signer_rule	cited	code-v61
 partner_role:{role}	cosign_rule	cited	code-v61
 partner_role:{role}	subject_rule	unstated	code-v61
@@ -2501,6 +2639,7 @@ partner_role:{role}	accountability_record	text	derived
 partner_role:{role}	may_carry_under	text	derived
 partner_role:{role}	standing_act	text	derived
 partner_role:{role}	room_content	text	derived
+partner_role:{role}	names_stands_on	text	derived
 peer_reachability:{network}	signer_rule	text	cc-table
 peer_reachability:{network}	cosign_rule	cited	code-v61
 peer_reachability:{network}	subject_rule	unstated	code-v61
@@ -2519,6 +2658,7 @@ peer_reachability:{network}	accountability_record	text	derived
 peer_reachability:{network}	may_carry_under	text	derived
 peer_reachability:{network}	standing_act	text	derived
 peer_reachability:{network}	room_content	text	derived
+peer_reachability:{network}	names_stands_on	text	derived
 preserve_request	signer_rule	text	cc-table
 preserve_request	cosign_rule	cited	code-v61
 preserve_request	subject_rule	differs	code-v61
@@ -2537,6 +2677,7 @@ preserve_request	accountability_record	text	derived
 preserve_request	may_carry_under	text	derived
 preserve_request	standing_act	open	open
 preserve_request	room_content	text	derived
+preserve_request	names_stands_on	text	derived
 preserve_response	signer_rule	text	cc-table
 preserve_response	cosign_rule	cited	code-v61
 preserve_response	subject_rule	differs	code-v61
@@ -2555,6 +2696,7 @@ preserve_response	accountability_record	text	derived
 preserve_response	may_carry_under	text	derived
 preserve_response	standing_act	open	open
 preserve_response	room_content	text	derived
+preserve_response	names_stands_on	text	derived
 progress_measure:{method_id}	signer_rule	cited	code-v61
 progress_measure:{method_id}	cosign_rule	cited	code-v61
 progress_measure:{method_id}	subject_rule	unstated	code-v61
@@ -2573,6 +2715,7 @@ progress_measure:{method_id}	accountability_record	text	derived
 progress_measure:{method_id}	may_carry_under	text	derived
 progress_measure:{method_id}	standing_act	text	derived
 progress_measure:{method_id}	room_content	text	derived
+progress_measure:{method_id}	names_stands_on	text	derived
 prohibited:{category}	signer_rule	cited	code-v61
 prohibited:{category}	cosign_rule	cited	code-v61
 prohibited:{category}	subject_rule	unstated	code-v61
@@ -2591,6 +2734,7 @@ prohibited:{category}	accountability_record	text	derived
 prohibited:{category}	may_carry_under	text	derived
 prohibited:{category}	standing_act	text	derived
 prohibited:{category}	room_content	text	derived
+prohibited:{category}	names_stands_on	text	derived
 provenance:build_manifest:{target}	signer_rule	text	cc-table
 provenance:build_manifest:{target}	cosign_rule	cited	code-v61
 provenance:build_manifest:{target}	subject_rule	unstated	code-v61
@@ -2609,6 +2753,7 @@ provenance:build_manifest:{target}	accountability_record	text	derived
 provenance:build_manifest:{target}	may_carry_under	text	derived
 provenance:build_manifest:{target}	standing_act	text	derived
 provenance:build_manifest:{target}	room_content	text	derived
+provenance:build_manifest:{target}	names_stands_on	cited	quote
 provenance:build_manifest:{target}:locale:{lang_code}	signer_rule	text	cc-table
 provenance:build_manifest:{target}:locale:{lang_code}	cosign_rule	cited	code-v61
 provenance:build_manifest:{target}:locale:{lang_code}	subject_rule	unstated	code-v61
@@ -2627,6 +2772,7 @@ provenance:build_manifest:{target}:locale:{lang_code}	accountability_record	text
 provenance:build_manifest:{target}:locale:{lang_code}	may_carry_under	text	derived
 provenance:build_manifest:{target}:locale:{lang_code}	standing_act	text	derived
 provenance:build_manifest:{target}:locale:{lang_code}	room_content	text	derived
+provenance:build_manifest:{target}:locale:{lang_code}	names_stands_on	cited	quote
 provenance:skill_import:{source}	signer_rule	cited	code-v61
 provenance:skill_import:{source}	cosign_rule	cited	code-v61
 provenance:skill_import:{source}	subject_rule	unstated	code-v61
@@ -2645,6 +2791,7 @@ provenance:skill_import:{source}	accountability_record	text	derived
 provenance:skill_import:{source}	may_carry_under	text	derived
 provenance:skill_import:{source}	standing_act	text	derived
 provenance:skill_import:{source}	room_content	text	derived
+provenance:skill_import:{source}	names_stands_on	text	derived
 provenance:slsa:{level}	signer_rule	cited	code-v61
 provenance:slsa:{level}	cosign_rule	cited	code-v61
 provenance:slsa:{level}	subject_rule	unstated	code-v61
@@ -2663,6 +2810,7 @@ provenance:slsa:{level}	accountability_record	text	derived
 provenance:slsa:{level}	may_carry_under	text	derived
 provenance:slsa:{level}	standing_act	text	derived
 provenance:slsa:{level}	room_content	text	derived
+provenance:slsa:{level}	names_stands_on	text	derived
 quarantine:{state}	signer_rule	cited	code-v61
 quarantine:{state}	cosign_rule	cited	code-v61
 quarantine:{state}	subject_rule	unstated	code-v61
@@ -2681,6 +2829,7 @@ quarantine:{state}	accountability_record	text	derived
 quarantine:{state}	may_carry_under	text	derived
 quarantine:{state}	standing_act	text	derived
 quarantine:{state}	room_content	text	derived
+quarantine:{state}	names_stands_on	text	derived
 ratchet:flag:coordinated_voting_cluster	signer_rule	cited	code-v61
 ratchet:flag:coordinated_voting_cluster	cosign_rule	cited	code-v61
 ratchet:flag:coordinated_voting_cluster	subject_rule	unstated	code-v61
@@ -2699,6 +2848,7 @@ ratchet:flag:coordinated_voting_cluster	accountability_record	text	derived
 ratchet:flag:coordinated_voting_cluster	may_carry_under	text	derived
 ratchet:flag:coordinated_voting_cluster	standing_act	text	derived
 ratchet:flag:coordinated_voting_cluster	room_content	text	derived
+ratchet:flag:coordinated_voting_cluster	names_stands_on	text	derived
 ratchet:flag:counter_rii:{layer}	signer_rule	cited	code-v61
 ratchet:flag:counter_rii:{layer}	cosign_rule	cited	code-v61
 ratchet:flag:counter_rii:{layer}	subject_rule	unstated	code-v61
@@ -2717,6 +2867,7 @@ ratchet:flag:counter_rii:{layer}	accountability_record	text	derived
 ratchet:flag:counter_rii:{layer}	may_carry_under	text	derived
 ratchet:flag:counter_rii:{layer}	standing_act	text	derived
 ratchet:flag:counter_rii:{layer}	room_content	text	derived
+ratchet:flag:counter_rii:{layer}	names_stands_on	text	derived
 ratchet:flag:density_anomaly	signer_rule	cited	code-v61
 ratchet:flag:density_anomaly	cosign_rule	cited	code-v61
 ratchet:flag:density_anomaly	subject_rule	unstated	code-v61
@@ -2735,6 +2886,7 @@ ratchet:flag:density_anomaly	accountability_record	text	derived
 ratchet:flag:density_anomaly	may_carry_under	text	derived
 ratchet:flag:density_anomaly	standing_act	text	derived
 ratchet:flag:density_anomaly	room_content	text	derived
+ratchet:flag:density_anomaly	names_stands_on	text	derived
 ratchet:flag:expertise_attestation_anomaly	signer_rule	cited	code-v61
 ratchet:flag:expertise_attestation_anomaly	cosign_rule	cited	code-v61
 ratchet:flag:expertise_attestation_anomaly	subject_rule	unstated	code-v61
@@ -2753,6 +2905,7 @@ ratchet:flag:expertise_attestation_anomaly	accountability_record	text	derived
 ratchet:flag:expertise_attestation_anomaly	may_carry_under	text	derived
 ratchet:flag:expertise_attestation_anomaly	standing_act	text	derived
 ratchet:flag:expertise_attestation_anomaly	room_content	text	derived
+ratchet:flag:expertise_attestation_anomaly	names_stands_on	text	derived
 ratchet:flag:harassment_pattern	signer_rule	cited	code-v61
 ratchet:flag:harassment_pattern	cosign_rule	cited	code-v61
 ratchet:flag:harassment_pattern	subject_rule	unstated	code-v61
@@ -2771,6 +2924,7 @@ ratchet:flag:harassment_pattern	accountability_record	text	derived
 ratchet:flag:harassment_pattern	may_carry_under	text	derived
 ratchet:flag:harassment_pattern	standing_act	text	derived
 ratchet:flag:harassment_pattern	room_content	text	derived
+ratchet:flag:harassment_pattern	names_stands_on	text	derived
 ratchet:flag:out_of_distribution_voting	signer_rule	cited	code-v61
 ratchet:flag:out_of_distribution_voting	cosign_rule	cited	code-v61
 ratchet:flag:out_of_distribution_voting	subject_rule	unstated	code-v61
@@ -2789,6 +2943,7 @@ ratchet:flag:out_of_distribution_voting	accountability_record	text	derived
 ratchet:flag:out_of_distribution_voting	may_carry_under	text	derived
 ratchet:flag:out_of_distribution_voting	standing_act	text	derived
 ratchet:flag:out_of_distribution_voting	room_content	text	derived
+ratchet:flag:out_of_distribution_voting	names_stands_on	text	derived
 reconsideration:{grounds}	signer_rule	cited	code-v61
 reconsideration:{grounds}	cosign_rule	cited	code-v61
 reconsideration:{grounds}	subject_rule	unstated	code-v61
@@ -2807,6 +2962,7 @@ reconsideration:{grounds}	accountability_record	text	derived
 reconsideration:{grounds}	may_carry_under	text	derived
 reconsideration:{grounds}	standing_act	text	derived
 reconsideration:{grounds}	room_content	text	derived
+reconsideration:{grounds}	names_stands_on	text	derived
 regime:{artifact}:{version}	signer_rule	differs	code-v61
 regime:{artifact}:{version}	cosign_rule	cited	code-v61
 regime:{artifact}:{version}	subject_rule	unstated	code-v61
@@ -2825,6 +2981,7 @@ regime:{artifact}:{version}	accountability_record	text	derived
 regime:{artifact}:{version}	may_carry_under	text	derived
 regime:{artifact}:{version}	standing_act	text	derived
 regime:{artifact}:{version}	room_content	text	derived
+regime:{artifact}:{version}	names_stands_on	text	derived
 rendezvous:route	signer_rule	text	cc-table
 rendezvous:route	cosign_rule	cited	code-v61
 rendezvous:route	subject_rule	unstated	code-v61
@@ -2843,6 +3000,7 @@ rendezvous:route	accountability_record	text	derived
 rendezvous:route	may_carry_under	text	derived
 rendezvous:route	standing_act	text	derived
 rendezvous:route	room_content	text	derived
+rendezvous:route	names_stands_on	text	derived
 retirement:{state}	signer_rule	text	cc-table
 retirement:{state}	cosign_rule	differs	code-v61
 retirement:{state}	subject_rule	differs	code-v61
@@ -2861,6 +3019,7 @@ retirement:{state}	accountability_record	text	derived
 retirement:{state}	may_carry_under	text	derived
 retirement:{state}	standing_act	open	open
 retirement:{state}	room_content	text	derived
+retirement:{state}	names_stands_on	text	derived
 revocation:{entity_type}:{reason}	signer_rule	cited	code-v61
 revocation:{entity_type}:{reason}	cosign_rule	cited	code-v61
 revocation:{entity_type}:{reason}	subject_rule	unstated	code-v61
@@ -2879,6 +3038,7 @@ revocation:{entity_type}:{reason}	accountability_record	text	derived
 revocation:{entity_type}:{reason}	may_carry_under	text	derived
 revocation:{entity_type}:{reason}	standing_act	text	derived
 revocation:{entity_type}:{reason}	room_content	text	derived
+revocation:{entity_type}:{reason}	names_stands_on	text	derived
 rollback_detected:{revision_field}	signer_rule	cited	code-v61
 rollback_detected:{revision_field}	cosign_rule	cited	code-v61
 rollback_detected:{revision_field}	subject_rule	unstated	code-v61
@@ -2897,6 +3057,7 @@ rollback_detected:{revision_field}	accountability_record	text	derived
 rollback_detected:{revision_field}	may_carry_under	text	derived
 rollback_detected:{revision_field}	standing_act	text	derived
 rollback_detected:{revision_field}	room_content	text	derived
+rollback_detected:{revision_field}	names_stands_on	text	derived
 seed_holder_voting_alignment:{cell}	signer_rule	cited	code-v61
 seed_holder_voting_alignment:{cell}	cosign_rule	cited	code-v61
 seed_holder_voting_alignment:{cell}	subject_rule	unstated	code-v61
@@ -2915,6 +3076,7 @@ seed_holder_voting_alignment:{cell}	accountability_record	text	derived
 seed_holder_voting_alignment:{cell}	may_carry_under	text	derived
 seed_holder_voting_alignment:{cell}	standing_act	text	derived
 seed_holder_voting_alignment:{cell}	room_content	text	derived
+seed_holder_voting_alignment:{cell}	names_stands_on	text	derived
 self:delegates_to	signer_rule	cited	code-v61
 self:delegates_to	cosign_rule	differs	code-v61
 self:delegates_to	subject_rule	unstated	code-v61
@@ -2933,6 +3095,7 @@ self:delegates_to	accountability_record	text	derived
 self:delegates_to	may_carry_under	open	open
 self:delegates_to	standing_act	cited	quote
 self:delegates_to	room_content	text	derived
+self:delegates_to	names_stands_on	text	derived
 self:delegates_to:agent_occurrence	signer_rule	cited	code-v61
 self:delegates_to:agent_occurrence	cosign_rule	cited	code-v61
 self:delegates_to:agent_occurrence	subject_rule	unstated	code-v61
@@ -2951,6 +3114,7 @@ self:delegates_to:agent_occurrence	accountability_record	text	derived
 self:delegates_to:agent_occurrence	may_carry_under	open	open
 self:delegates_to:agent_occurrence	standing_act	cited	quote
 self:delegates_to:agent_occurrence	room_content	text	derived
+self:delegates_to:agent_occurrence	names_stands_on	text	derived
 session:{kind}	signer_rule	cited	code-v61
 session:{kind}	cosign_rule	cited	code-v61
 session:{kind}	subject_rule	cited	code-v61
@@ -2969,6 +3133,7 @@ session:{kind}	accountability_record	text	derived
 session:{kind}	may_carry_under	text	derived
 session:{kind}	standing_act	text	derived
 session:{kind}	room_content	text	derived
+session:{kind}	names_stands_on	text	derived
 settlement:*	signer_rule	cited	code-v61
 settlement:*	cosign_rule	cited	code-v61
 settlement:*	subject_rule	unstated	code-v61
@@ -2987,6 +3152,7 @@ settlement:*	accountability_record	text	derived
 settlement:*	may_carry_under	text	derived
 settlement:*	standing_act	text	derived
 settlement:*	room_content	text	derived
+settlement:*	names_stands_on	text	derived
 slashing:{outcome}	signer_rule	text	cc-table
 slashing:{outcome}	cosign_rule	cited	code-v61
 slashing:{outcome}	subject_rule	unstated	code-v61
@@ -3005,6 +3171,7 @@ slashing:{outcome}	accountability_record	text	derived
 slashing:{outcome}	may_carry_under	text	derived
 slashing:{outcome}	standing_act	text	derived
 slashing:{outcome}	room_content	text	derived
+slashing:{outcome}	names_stands_on	text	derived
 stream:head	signer_rule	text	cc-table
 stream:head	cosign_rule	cited	cc-table
 stream:head	subject_rule	open	gap
@@ -3023,6 +3190,7 @@ stream:head	accountability_record	text	derived
 stream:head	may_carry_under	text	derived
 stream:head	standing_act	text	derived
 stream:head	room_content	text	derived
+stream:head	names_stands_on	text	derived
 system:*	signer_rule	text	prose
 system:*	cosign_rule	cited	code-v61
 system:*	subject_rule	unstated	code-v61
@@ -3041,6 +3209,7 @@ system:*	accountability_record	text	derived
 system:*	may_carry_under	text	derived
 system:*	standing_act	text	derived
 system:*	room_content	text	derived
+system:*	names_stands_on	text	derived
 takedown_notice:{basis}	signer_rule	cited	code-v61
 takedown_notice:{basis}	cosign_rule	cited	mixed
 takedown_notice:{basis}	subject_rule	differs	code-v61
@@ -3059,6 +3228,7 @@ takedown_notice:{basis}	accountability_record	text	derived
 takedown_notice:{basis}	may_carry_under	text	derived
 takedown_notice:{basis}	standing_act	text	derived
 takedown_notice:{basis}	room_content	text	derived
+takedown_notice:{basis}	names_stands_on	text	derived
 testimonial_witness:{kind}	signer_rule	cited	code-v61
 testimonial_witness:{kind}	cosign_rule	cited	code-v61
 testimonial_witness:{kind}	subject_rule	unstated	code-v61
@@ -3077,6 +3247,7 @@ testimonial_witness:{kind}	accountability_record	text	derived
 testimonial_witness:{kind}	may_carry_under	text	derived
 testimonial_witness:{kind}	standing_act	text	derived
 testimonial_witness:{kind}	room_content	text	derived
+testimonial_witness:{kind}	names_stands_on	text	derived
 topical_relation:{kind}	signer_rule	cited	code-v61
 topical_relation:{kind}	cosign_rule	cited	code-v61
 topical_relation:{kind}	subject_rule	unstated	code-v61
@@ -3095,6 +3266,7 @@ topical_relation:{kind}	accountability_record	text	derived
 topical_relation:{kind}	may_carry_under	text	derived
 topical_relation:{kind}	standing_act	text	derived
 topical_relation:{kind}	room_content	text	derived
+topical_relation:{kind}	names_stands_on	text	derived
 trace:{form}:{version}	signer_rule	cited	code-v61
 trace:{form}:{version}	cosign_rule	cited	code-v61
 trace:{form}:{version}	subject_rule	cited	code-v61
@@ -3113,6 +3285,7 @@ trace:{form}:{version}	accountability_record	cited	quote
 trace:{form}:{version}	may_carry_under	text	derived
 trace:{form}:{version}	standing_act	text	derived
 trace:{form}:{version}	room_content	text	derived
+trace:{form}:{version}	names_stands_on	text	derived
 trace_summary:{kind}	signer_rule	text	cc-table
 trace_summary:{kind}	cosign_rule	cited	code-v61
 trace_summary:{kind}	subject_rule	unstated	code-v61
@@ -3131,6 +3304,7 @@ trace_summary:{kind}	accountability_record	text	derived
 trace_summary:{kind}	may_carry_under	text	derived
 trace_summary:{kind}	standing_act	text	derived
 trace_summary:{kind}	room_content	text	derived
+trace_summary:{kind}	names_stands_on	text	derived
 transport:canonical_rebind	signer_rule	text	prose
 transport:canonical_rebind	cosign_rule	text	prose
 transport:canonical_rebind	subject_rule	unstated	code-v61
@@ -3149,6 +3323,7 @@ transport:canonical_rebind	accountability_record	text	derived
 transport:canonical_rebind	may_carry_under	text	derived
 transport:canonical_rebind	standing_act	text	derived
 transport:canonical_rebind	room_content	text	derived
+transport:canonical_rebind	names_stands_on	text	derived
 transport:{kind}	signer_rule	text	cc-table
 transport:{kind}	cosign_rule	cited	code-v61
 transport:{kind}	subject_rule	unstated	code-v61
@@ -3167,6 +3342,7 @@ transport:{kind}	accountability_record	text	derived
 transport:{kind}	may_carry_under	text	derived
 transport:{kind}	standing_act	text	derived
 transport:{kind}	room_content	text	derived
+transport:{kind}	names_stands_on	text	derived
 trust:{job}:{version}	signer_rule	cited	code-v61
 trust:{job}:{version}	cosign_rule	text	prose
 trust:{job}:{version}	subject_rule	differs	code-v61
@@ -3185,6 +3361,7 @@ trust:{job}:{version}	accountability_record	text	derived
 trust:{job}:{version}	may_carry_under	cited	quote
 trust:{job}:{version}	standing_act	cited	quote
 trust:{job}:{version}	room_content	text	derived
+trust:{job}:{version}	names_stands_on	text	derived
 truth_grounding:{subject}	signer_rule	cited	code-v61
 truth_grounding:{subject}	cosign_rule	cited	code-v61
 truth_grounding:{subject}	subject_rule	unstated	code-v61
@@ -3203,6 +3380,7 @@ truth_grounding:{subject}	accountability_record	text	derived
 truth_grounding:{subject}	may_carry_under	text	derived
 truth_grounding:{subject}	standing_act	text	derived
 truth_grounding:{subject}	room_content	text	derived
+truth_grounding:{subject}	names_stands_on	text	derived
 video:*	signer_rule	cited	code-v61
 video:*	cosign_rule	cited	code-v61
 video:*	subject_rule	unstated	code-v61
@@ -3221,6 +3399,7 @@ video:*	accountability_record	text	derived
 video:*	may_carry_under	text	derived
 video:*	standing_act	text	derived
 video:*	room_content	cited	quote
+video:*	names_stands_on	text	derived
 vote:{contribution_id}	signer_rule	cited	code-v61
 vote:{contribution_id}	cosign_rule	cited	code-v61
 vote:{contribution_id}	subject_rule	unstated	code-v61
@@ -3239,6 +3418,7 @@ vote:{contribution_id}	accountability_record	text	derived
 vote:{contribution_id}	may_carry_under	text	derived
 vote:{contribution_id}	standing_act	text	derived
 vote:{contribution_id}	room_content	text	derived
+vote:{contribution_id}	names_stands_on	text	derived
 wa_adjudication:{state}	signer_rule	differs	code-v61
 wa_adjudication:{state}	cosign_rule	text	prose
 wa_adjudication:{state}	subject_rule	unstated	code-v61
@@ -3257,6 +3437,7 @@ wa_adjudication:{state}	accountability_record	text	derived
 wa_adjudication:{state}	may_carry_under	text	derived
 wa_adjudication:{state}	standing_act	text	derived
 wa_adjudication:{state}	room_content	text	derived
+wa_adjudication:{state}	names_stands_on	text	derived
 watchlist:{id}	signer_rule	text	cc-table
 watchlist:{id}	cosign_rule	cited	code-v61
 watchlist:{id}	subject_rule	unstated	code-v61
@@ -3275,6 +3456,7 @@ watchlist:{id}	accountability_record	text	derived
 watchlist:{id}	may_carry_under	text	derived
 watchlist:{id}	standing_act	text	derived
 watchlist:{id}	room_content	text	derived
+watchlist:{id}	names_stands_on	text	derived
 weighted_aggregate:{contribution_id}	signer_rule	cited	code-v61
 weighted_aggregate:{contribution_id}	cosign_rule	cited	code-v61
 weighted_aggregate:{contribution_id}	subject_rule	unstated	code-v61
@@ -3293,6 +3475,7 @@ weighted_aggregate:{contribution_id}	accountability_record	text	derived
 weighted_aggregate:{contribution_id}	may_carry_under	text	derived
 weighted_aggregate:{contribution_id}	standing_act	text	derived
 weighted_aggregate:{contribution_id}	room_content	text	derived
+weighted_aggregate:{contribution_id}	names_stands_on	text	derived
 witness_diversity:{contribution_id}	signer_rule	cited	code-v61
 witness_diversity:{contribution_id}	cosign_rule	cited	code-v61
 witness_diversity:{contribution_id}	subject_rule	unstated	code-v61
@@ -3311,3 +3494,4 @@ witness_diversity:{contribution_id}	accountability_record	text	derived
 witness_diversity:{contribution_id}	may_carry_under	text	derived
 witness_diversity:{contribution_id}	standing_act	text	derived
 witness_diversity:{contribution_id}	room_content	text	derived
+witness_diversity:{contribution_id}	names_stands_on	text	derived

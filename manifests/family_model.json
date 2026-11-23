@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "892a14f087c9046ea70b9dde318b410b844fc2074b4b77a7f98f6850a1b5f42a",
+  "registry_sha256": "202b1188c11bbe1297c2a4ee3fbe98720c3961159793cfa48ad9fe0f05b5bfcf",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -63,6 +63,7 @@
    "may_carry_under": "true | false | a map by selector | null where open: a row of the family may be a deputy's edge and carry refs.also.under, a set of exactly one (CC 4.5.5)",
    "standing_act": "offer | end | acceptance | exercise | none | a map by selector | null where open: what a row of the family is with respect to a standing; receipter is admitted only on an offer and lifts only on a counted end (CC 2.4.1.1)",
    "room_content": "true | false | a map by selector: a row of the family placed at a room or a family scope is the room's content, read by the tips rule after its author's seat ends; a leaf a map does not name is false (CC 3.1.3.2)",
+   "names_stands_on": "true | false | a map by selector: a row of the family signed under a root grant names in refs.also.stands_on the one acceptance of that grant it stands on, beside the bundle in refs.head; true for the reserved families whose duty a root confers (CC 2.4.1.1, CC 3.4.7)",
    "blind": "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
    "fold": "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)",
@@ -302,6 +303,14 @@
     "gap": 0
    },
    "room_content": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
+   },
+   "names_stands_on": {
     "cc-table": 0,
     "code-v61": 0,
     "generic": 0,
@@ -560,7 +569,7 @@
    ],
    "members_from_text": {
     "in_cddl": 99,
-    "named_by_the_text_alone": 144
+    "named_by_the_text_alone": 143
    }
   },
   "fold": {
@@ -882,7 +891,8 @@
     "accountability_record",
     "may_carry_under",
     "standing_act",
-    "room_content"
+    "room_content",
+    "names_stands_on"
    ],
    "rules": {
     "subject_may_withdraw.default": {
@@ -1004,6 +1014,50 @@
        "quote": "An offer conferred by a count is ended by its holder or by a count, never by its proposer alone."
       }
      ]
+    },
+    "standing_act.withdraws_head": {
+     "statement": "a withdraws whose target's standing_act is offer or acceptance ends a standing, so it names in refs.head the head it acts from, beside its target",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "A row that ends a standing carries `refs.head` beside its target: a withdrawal of an acceptance or of an offer, an unseating, a resignation."
+      }
+     ]
+    },
+    "names_head.by_placement.room_or_family": {
+     "statement": "a by_placement row placed at targeted_room or targeted_family names that roster's version: roster",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "For a seat in a room or a family it is the roster version ([CC 2.7.8](#2.7.8))."
+      }
+     ]
+    },
+    "names_head.by_placement.elsewhere": {
+     "statement": "a by_placement row placed at self_collective or commons (self scope, federation scope, the commons) names a head only where its signer signs under a standing, and then the binding, the delegation or the bundle: standing; otherwise none",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "At federation scope and in the commons there is no roster, so a row there names a head only where its signer signs under a standing."
+      },
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "Where one row between two keys is the whole record, as an owner-binding is, that row is the head."
+      }
+     ]
+    },
+    "names_stands_on.rule": {
+     "statement": "true for a reserved family whose duty a root confers: a row of it signed under a root grant names the bundle in refs.head and, in refs.also.stands_on, the one acceptance of that grant it stands on; false for every other family",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "A row signed under a root grant names that bundle, and names in `refs.also.stands_on` the acceptance of that grant it stands on."
+      },
+      {
+       "cc_ref": "CC 3.4.7",
+       "quote": "A reader's trusted root confers a capability under that root."
+      }
+     ]
     }
    },
    "cells": {
@@ -1050,8 +1104,8 @@
       "acceptance": 2,
       "by_selector": 3,
       "end": 2,
-      "exercise": 149,
-      "none": 11,
+      "exercise": 150,
+      "none": 10,
       "offer": 4,
       "open": 13
      },
@@ -1074,8 +1128,56 @@
       "ruling": 0,
       "open": 0
      }
+    },
+    "names_stands_on": {
+     "by_value": {
+      "false": 171,
+      "true": 13
+     },
+     "by_source": {
+      "derived": 171,
+      "quote": 13,
+      "ruling": 0,
+      "open": 0
+     }
     }
    },
+   "names_head_by_placement": [
+    {
+     "placed_at": [
+      "targeted_room",
+      "targeted_family"
+     ],
+     "names": "roster",
+     "rule": "names_head.by_placement.room_or_family",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "For a seat in a room or a family it is the roster version ([CC 2.7.8](#2.7.8))."
+      }
+     ]
+    },
+    {
+     "placed_at": [
+      "self_collective",
+      "commons"
+     ],
+     "names": "standing",
+     "when": "the signer signs under a standing: the binding, the delegation or the bundle",
+     "otherwise": "none",
+     "rule": "names_head.by_placement.elsewhere",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "At federation scope and in the commons there is no roster, so a row there names a head only where its signer signs under a standing."
+      },
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "Where one row between two keys is the whole record, as an owner-binding is, that row is the head."
+      }
+     ]
+    }
+   ],
    "reading": "source derived: the cell follows from the other columns by the rule of that name in rules; quote: a row of the table whose words stand verbatim in cc_ref; ruling: a ruled reading the text does not yet state for the family by name; open: no value, and needs states the sentence the text would need. A cell with per_selector gives its value by leaf or by act, `*` taking every other row. Two rules of subject_may_withdraw hold in every family and are no cell: affiliation_subject and legal_weight_act. withdraws is a composer row and no family: rules.`standing_act.withdraws` states how an end is recognised"
   },
   "default_row": {
@@ -2157,6 +2259,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -2629,6 +2737,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -3118,6 +3232,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -3566,6 +3686,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -3996,6 +4122,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -4430,6 +4562,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -5030,6 +5168,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -5370,6 +5514,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -5802,6 +5952,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -6075,6 +6231,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -6552,6 +6714,14 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `age_assurance:*` | an age assessor who is not the subject | `assure:age` | a root the reader trusts |",
+    "derived": false
+   },
    "fold": {
     "value": [
      {
@@ -6990,6 +7160,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -7415,6 +7591,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -7815,6 +7997,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -8118,6 +8306,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -8571,6 +8765,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -8989,6 +9189,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -9411,6 +9617,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -9846,6 +10058,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -10291,6 +10509,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -10717,6 +10941,12 @@
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -11110,6 +11340,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -11508,6 +11744,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -11873,6 +12115,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -12250,6 +12498,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -12757,6 +13011,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -13161,6 +13421,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -13558,6 +13824,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -13953,6 +14225,12 @@
     "cc_ref": "CC 3.1.3.2",
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -14359,6 +14637,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -14751,6 +15035,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -15279,6 +15569,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -15863,6 +16159,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -16398,6 +16700,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -16843,6 +17151,14 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `capacity_assurance:*` | a capacity assessor who is neither the subject nor the proposed steward | `assure:capacity` | a root the reader trusts |",
+    "derived": false
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -17266,6 +17582,14 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `capacity_assurance:*` | a capacity assessor who is neither the subject nor the proposed steward | `assure:capacity` | a root the reader trusts |",
+    "derived": false
    },
    "fold": {
     "value": [],
@@ -17732,6 +18056,14 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `capacity_assurance:*` | a capacity assessor who is neither the subject nor the proposed steward | `assure:capacity` | a root the reader trusts |",
+    "derived": false
    },
    "fold": {
     "value": [
@@ -18268,6 +18600,14 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `census:partial:{class}`, `census:composite:{class}` | a serve seat of the period | `infra:serve` | a root the reader trusts |",
+    "derived": false
+   },
    "fold": {
     "value": [
      {
@@ -18735,6 +19075,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -19188,6 +19534,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -19614,6 +19966,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -20069,6 +20427,14 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `census:partial:{class}`, `census:composite:{class}` | a serve seat of the period | `infra:serve` | a root the reader trusts |",
+    "derived": false
+   },
    "fold": {
     "value": [
      {
@@ -20510,6 +20876,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -20916,6 +21288,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -21333,6 +21711,12 @@
     },
     "derived": false
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -21722,6 +22106,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -22145,6 +22535,12 @@
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -22563,6 +22959,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -22997,6 +23399,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -23454,6 +23862,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -23860,6 +24274,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -24252,6 +24672,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -24646,6 +25072,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -25038,6 +25470,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -25503,6 +25941,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -26004,6 +26448,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -26404,6 +26854,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -26884,6 +27340,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -27418,6 +27880,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -27962,6 +28430,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -28420,6 +28894,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -28884,6 +29364,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -29403,6 +29889,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -29897,6 +30389,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -30324,6 +30822,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -30769,6 +31273,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -31192,6 +31702,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -31448,6 +31964,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -31850,6 +32372,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -32247,6 +32775,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -32802,6 +33336,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -33211,6 +33751,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -33682,6 +34228,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -34179,6 +34731,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -34597,6 +35155,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -35074,6 +35638,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -35501,6 +36071,14 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `detection:*` | a detector | `infra:detect` | a root the reader trusts |",
+    "derived": false
    },
    "fold": {
     "value": [
@@ -35960,6 +36538,14 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `detection:*` | a detector | `infra:detect` | a root the reader trusts |",
+    "derived": false
+   },
    "fold": {
     "value": [
      {
@@ -36402,6 +36988,14 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `detection:*` | a detector | `infra:detect` | a root the reader trusts |",
+    "derived": false
+   },
    "fold": {
     "value": [
      {
@@ -36835,6 +37429,14 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `detection:*` | a detector | `infra:detect` | a root the reader trusts |",
+    "derived": false
    },
    "fold": {
     "value": [
@@ -37284,6 +37886,14 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.4.7",
+    "quote": "| `detection:*` | a detector | `infra:detect` | a root the reader trusts |",
+    "derived": false
+   },
    "fold": {
     "value": [
      {
@@ -37726,6 +38336,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -38129,6 +38745,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -38526,6 +39148,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -38918,6 +39546,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -39312,6 +39946,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -39696,6 +40336,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -40106,6 +40752,12 @@
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -40502,6 +41154,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -40904,6 +41562,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -41302,6 +41966,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -41714,6 +42384,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -42128,6 +42804,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -42527,6 +43209,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -42955,6 +43643,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -43351,6 +44045,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -43763,6 +44463,12 @@
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -44158,6 +44864,12 @@
     "cc_ref": "CC 3.1.3.2",
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -44588,6 +45300,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -45448,6 +46166,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -46017,6 +46741,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -46438,6 +47168,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -46854,6 +47590,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -47234,6 +47976,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -47845,6 +48593,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -48382,6 +49136,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -48866,6 +49626,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -49272,6 +50038,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -49692,6 +50464,12 @@
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -50089,6 +50867,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -50481,6 +51265,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -50878,6 +51668,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -51311,6 +52107,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -51827,6 +52629,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -52286,6 +53094,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -52912,6 +53726,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -53250,6 +54070,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -53693,6 +54519,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -54146,6 +54978,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -54566,6 +55404,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -55109,6 +55953,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -55614,6 +56464,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -55880,6 +56736,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -56296,6 +57158,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -57244,6 +58112,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -57828,6 +58702,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -58241,6 +59121,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -58652,6 +59538,12 @@
     "cc_ref": "CC 3.1.3.2",
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -59100,6 +59992,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -59524,6 +60422,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -59957,6 +60861,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -60361,6 +61271,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -60763,6 +61679,12 @@
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -61158,6 +62080,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -61633,6 +62561,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -62101,6 +63035,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -62492,6 +63432,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -62917,6 +63863,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -63385,6 +64337,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -63787,6 +64745,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -64080,6 +65044,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -64405,6 +65375,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -64854,6 +65830,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -65256,6 +66238,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -65627,10 +66615,11 @@
     "note": "no sentence says which key slot {target} holds"
    },
    "names_head": {
-    "value": "none",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "value": "standing",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the bundle in force when the row is signed: the one the pipeline's grant names or a later bundle of the same lineage",
+    "derived": "none",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -65664,10 +66653,10 @@
     "cc_ref": "CC 4.5.5"
    },
    "standing_act": {
-    "value": "none",
+    "value": "exercise",
     "source": "derived",
     "from": "names_head",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "note": "its rows name a head (standing)",
     "cc_ref": "CC 2.4.1.1"
    },
    "room_content": {
@@ -65675,6 +66664,14 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.2.1",
+    "quote": "The row MUST also name in `refs.also.stands_on` the acceptance of the grant it stands on",
+    "derived": false
    },
    "fold": {
     "value": [
@@ -66103,6 +67100,14 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.2.1",
+    "quote": "A build pipeline's scope token is `infra:attest:provenance:build_manifest`: the capability, sub-scoped to this family's stem",
+    "derived": false
    },
    "fold": {
     "value": [
@@ -66539,6 +67544,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -66940,6 +67951,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -67370,6 +68387,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -67824,6 +68847,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -68236,6 +69265,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -68631,6 +69666,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -69028,6 +70069,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -69424,6 +70471,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -69819,6 +70872,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -70242,6 +71301,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -70639,6 +71704,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -71064,6 +72135,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -71460,6 +72537,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -71990,6 +73073,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -72410,6 +73499,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -72801,6 +73896,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -73222,6 +74323,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -73736,6 +74843,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -74242,6 +75355,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -74696,6 +75815,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -75197,6 +76322,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -75489,6 +76620,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -75899,6 +77036,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -76531,6 +77674,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -76997,6 +78146,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -77389,6 +78544,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -77806,6 +78967,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -78226,6 +79393,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -78682,6 +79855,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -79124,6 +80303,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -79527,10 +80712,9 @@
     "by": [
      {
       "grammar": "guard",
-      "cell": "formal/derivation/guard_text.tsv#trust:{job}:{version} (CC 2.1)",
+      "cell": "formal/derivation/guard_text.tsv#trust:{job}:{version} (CC 3.2)",
       "answers": [
        "state",
-       "stands",
        "may"
       ]
      },
@@ -79714,6 +80898,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -80182,6 +81372,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -80622,6 +81818,12 @@
     "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
     "derived": false
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -81020,6 +82222,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -81443,6 +82651,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -81931,6 +83145,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -82334,6 +83554,12 @@
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
    },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -82731,6 +83957,12 @@
     "source": "derived",
     "note": "the family is not among those CC 3.1.3.2 names as a room's content",
     "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],

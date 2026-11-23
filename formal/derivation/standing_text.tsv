@@ -1,11 +1,12 @@
 # What a row of a family is with respect to withdrawal and standing, where the derivation from the other columns does not give it:
-# four read-only columns of manifests/family_model.json (subject_may_withdraw, accountability_record, may_carry_under, standing_act).
+# six read-only columns of manifests/family_model.json (subject_may_withdraw, accountability_record, may_carry_under, standing_act,
+# room_content, names_stands_on), and the rules of the names_head column where it reads by_placement.
 # Applied by tools/build_family_model.py over the derived value. family: a family's name, or a stem ending in a colon that takes every
 # family under it. selector: * for the whole family, or leaf=NAME where one value does not describe the family.
 # source: quote (words stands verbatim in cc_ref, and the build fails when it no longer does) | ruling (a ruled reading the text does
 # not yet state for this family by name; words is the note) | open (no value; words is the sentence the text would need).
 # column _meta: a rule or a note that is no family's cell, keyed in the family field, its statement in value; every such row quotes.
-# value: true | false for the three boolean columns; offer | end | acceptance | exercise | none for standing_act; - where open.
+# value: true | false for the five boolean columns; offer | end | acceptance | exercise | none for standing_act; - where open.
 column	family	selector	value	source	cc_ref	words
 _meta	subject_may_withdraw.default	*	true	quote	CC 2.4.1.1	Consent can be taken back, so a named party may retire a row about itself.
 _meta	subject_may_withdraw.counted	*	false	quote	CC 2.4.1.1	Rules 1 to 4 do not reach `T`: a quorum's act is undone only by a quorum.
@@ -22,6 +23,12 @@ _meta	standing_act.receipter	*	the payload member receipter is admitted only on 
 _meta	standing_act.lifts	*	the payload member lifts is admitted only on a counted end: a row whose standing_act is end and whose authorship arm is counted, or a counted withdraws whose target's standing_act is offer	quote	CC 2.4.1.1	A count that ends a standing MAY state `lifts`, and then only the count's own receipts keep an act in force.
 _meta	standing_act.own_end	*	an end signed by one voice (a resignation, a withdraws by the signer of its target, an end whose authorship arm is authored) is no counted end, and lifts on it is refused lifts_on_own_end	quote	CC 2.4.1.1	An end by the one whose standing it is lifts nothing: a withdrawal of one's own acceptance, or a resignation. `lifts` on such an end is refused, `lifts_on_own_end`. A conferrer that ends its own offer MAY lift.
 _meta	standing_act.withdraws	*	withdraws is a composer row type and no family, so it has no cell: a withdraws is an end where its target's standing_act is offer or acceptance, and a counted end where it is itself counted (CC 2.4.1.1 rule 0) and its target's standing_act is offer	quote	CC 2.7.7	An offer conferred by a count is ended by its holder or by a count, never by its proposer alone.
+_meta	standing_act.withdraws_head	*	a withdraws whose target's standing_act is offer or acceptance ends a standing, so it names in refs.head the head it acts from, beside its target	quote	CC 2.4.1.1	A row that ends a standing carries `refs.head` beside its target: a withdrawal of an acceptance or of an offer, an unseating, a resignation.
+_meta	names_head.by_placement.room_or_family	*	a by_placement row placed at targeted_room or targeted_family names that roster's version: roster	quote	CC 2.4.1.1	For a seat in a room or a family it is the roster version ([CC 2.7.8](#2.7.8)).
+_meta	names_head.by_placement.elsewhere	*	a by_placement row placed at self_collective or commons (self scope, federation scope, the commons) names a head only where its signer signs under a standing, and then the binding, the delegation or the bundle: standing; otherwise none	quote	CC 2.4.1.1	At federation scope and in the commons there is no roster, so a row there names a head only where its signer signs under a standing.
+_meta	names_head.by_placement.elsewhere	*	a by_placement row placed at self_collective or commons (self scope, federation scope, the commons) names a head only where its signer signs under a standing, and then the binding, the delegation or the bundle: standing; otherwise none	quote	CC 2.4.1.1	Where one row between two keys is the whole record, as an owner-binding is, that row is the head.
+_meta	names_stands_on.rule	*	true for a reserved family whose duty a root confers: a row of it signed under a root grant names the bundle in refs.head and, in refs.also.stands_on, the one acceptance of that grant it stands on; false for every other family	quote	CC 2.4.1.1	A row signed under a root grant names that bundle, and names in `refs.also.stands_on` the acceptance of that grant it stands on.
+_meta	names_stands_on.rule	*	true for a reserved family whose duty a root confers: a row of it signed under a root grant names the bundle in refs.head and, in refs.also.stands_on, the one acceptance of that grant it stands on; false for every other family	quote	CC 3.4.7	A reader's trusted root confers a capability under that root.
 subject_may_withdraw	capacity:	*	false	quote	CC 2.4.1.1	a `capacity:*` or `detection:*` finding made by someone else
 subject_may_withdraw	detection:	*	false	quote	CC 2.4.1.1	a `capacity:*` or `detection:*` finding made by someone else
 subject_may_withdraw	licensure:	*	false	quote	CC 2.4.1.1	a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`
@@ -81,3 +88,10 @@ room_content	blog:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of
 room_content	news:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
 room_content	encyclopedia:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
 subject_may_withdraw	act:ack	*	false	quote	CC 2.4.1.1	an occurrence revocation, a key grant, a cosignature already sent and a receipt are never withdrawn either
+names_stands_on	detection:	*	true	quote	CC 3.4.7	| `detection:*` | a detector | `infra:detect` | a root the reader trusts |
+names_stands_on	age_assurance:	*	true	quote	CC 3.4.7	| `age_assurance:*` | an age assessor who is not the subject | `assure:age` | a root the reader trusts |
+names_stands_on	capacity_assurance:	*	true	quote	CC 3.4.7	| `capacity_assurance:*` | a capacity assessor who is neither the subject nor the proposed steward | `assure:capacity` | a root the reader trusts |
+names_stands_on	census:partial:{class}	*	true	quote	CC 3.4.7	| `census:partial:{class}`, `census:composite:{class}` | a serve seat of the period | `infra:serve` | a root the reader trusts |
+names_stands_on	census:composite:{class}	*	true	quote	CC 3.4.7	| `census:partial:{class}`, `census:composite:{class}` | a serve seat of the period | `infra:serve` | a root the reader trusts |
+names_stands_on	provenance:build_manifest:{target}	*	true	quote	CC 3.1.2.1	The row MUST also name in `refs.also.stands_on` the acceptance of the grant it stands on
+names_stands_on	provenance:build_manifest:{target}:locale:{lang_code}	*	true	quote	CC 3.1.2.1	A build pipeline's scope token is `infra:attest:provenance:build_manifest`: the capability, sub-scoped to this family's stem

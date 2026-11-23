@@ -300,7 +300,7 @@ A cosigned act is named by its row id ([CC 2.6.1.3](#2.6.1.3)), the digest of wh
 
 What this brings onto the base, each as a registered family in [CC 3.1.3](part_3_the_namespace.md#3.1.3):
 
-- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` in `refs`, [CC 3.1.3](part_3_the_namespace.md#3.1.3)),
+- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` in `refs`, [CC 3.1.3](part_3_the_namespace.md#3.1.3)),
 - **membership events** (`membership:widening:v1` / `removal:v1`, cosigned, and `resignation:v1`, signed by the leaving member alone ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)), beside the single-signer proposal, acceptance and decline), and
 - the **key plane**:
   - a key claim (`key:record:v1`, attester = the key, admitted by **proof of possession** against the keys it carries, the one stated exception to resolve-the-attester). Renewal is a `supersedes` by the same key and rotation a record of the next key cosigned by the old one, each bounded as [CC 2.4.1.1](#2.4.1.1) states; an anchor scrub or accord co-scrub is a cosignature),
@@ -1486,7 +1486,7 @@ What the H3 rule does NOT do:
 
 This entry says which clock every stated instant refers to, and how far that instant may stand from the instant it is checked against. The window differs by case, and the table gives each one.
 
-**The clock.** Every `signed_at`, `asserted_at`, `valid_until`, `delegation_valid_from`, `delegation_valid_until`, and `cosigned_at` in this specification refers to **wall-clock UTC** at the asserting peer's clock. Producers SHOULD synchronize via [NTPv4 (RFC 5905)](https://www.rfc-editor.org/rfc/rfc5905) or [Roughtime](https://datatracker.ietf.org/doc/draft-ietf-ntp-roughtime/) to a known-good time source.
+**The clock.** Every `asserted_at`, `valid_until`, `delegation_valid_from` and `delegation_valid_until` in this specification refers to **wall-clock UTC** at the asserting peer's clock. Producers SHOULD synchronize via [NTPv4 (RFC 5905)](https://www.rfc-editor.org/rfc/rfc5905) or [Roughtime](https://datatracker.ietf.org/doc/draft-ietf-ntp-roughtime/) to a known-good time source.
 
 **The skew bound.** The maximum tolerated skew between attester clock and consumer clock for a freshness check is **±5 minutes** by default. Tighter thresholds MAY be applied by per-application consumer policy.
 

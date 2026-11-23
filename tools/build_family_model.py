@@ -85,6 +85,7 @@ COLUMNS = OrderedDict([
     ("may_carry_under", "true | false | a map by selector | null where open: a row of the family may be a deputy's edge and carry refs.also.under, a set of exactly one (CC 4.5.5)"),
     ("standing_act", "offer | end | acceptance | exercise | none | a map by selector | null where open: what a row of the family is with respect to a standing; receipter is admitted only on an offer and lifts only on a counted end (CC 2.4.1.1)"),
     ("room_content", "true | false | a map by selector: a row of the family placed at a room or a family scope is the room's content, read by the tips rule after its author's seat ends; a leaf a map does not name is false (CC 3.1.3.2)"),
+    ("names_stands_on", "true | false | a map by selector: a row of the family signed under a root grant names in refs.also.stands_on the one acceptance of that grant it stands on, beside the bundle in refs.head; true for the reserved families whose duty a root confers (CC 2.4.1.1, CC 3.4.7)"),
     ("blind", "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
@@ -497,12 +498,19 @@ def names_head(row):
 # What a holder other than the signer drops when a row of the family is withdrawn (CC 6.1.5 N5, CC 2.4.1.1): content is N5's object;
 # a claim leaves every audience; a consent or a door is structure, kept and read as retracted, since past acts are judged against it.
 DESCENDS = {"content": "bytes_and_words", "claim": "row", "consent": "nothing", "door": "nothing", "consent+door": "nothing", "none fits": "nothing"}
-# Four read-only columns on withdrawal and standing (CC 2.4.1.1, CC 3.1.5, CC 4.5.5): each cell is derived by a stated rule from
+# Six read-only columns on withdrawal and standing (CC 2.4.1.1, CC 3.1.5, CC 4.5.5, CC 3.1.3.2, CC 3.4.7): each cell is derived by a stated rule from
 # the other columns, and a row of formal/derivation/standing_text.tsv replaces it for one family or one leaf, quoting its sentence.
 STANDING_TEXT = os.path.join(ROOT, "formal/derivation/standing_text.tsv")
 STANDING_VALUES = OrderedDict([("subject_may_withdraw", ("true", "false")), ("accountability_record", ("true", "false")),
                                ("may_carry_under", ("true", "false")), ("standing_act", ("offer", "end", "acceptance", "exercise", "none")),
-                               ("room_content", ("true", "false"))])
+                               ("room_content", ("true", "false")), ("names_stands_on", ("true", "false"))])
+# The two branches of a names_head cell that reads by_placement, as data: where the row is placed decides which head it names.
+# Each branch takes its sentences from the `_meta` rule of standing_text.tsv it names, so a branch with no quoted rule fails the build.
+NAMES_HEAD_BRANCHES = (
+    OrderedDict([("placed_at", ["targeted_room", "targeted_family"]), ("names", "roster"), ("rule", "names_head.by_placement.room_or_family")]),
+    OrderedDict([("placed_at", ["self_collective", "commons"]), ("names", "standing"), ("when", "the signer signs under a standing: the binding, the delegation or the bundle"),
+                 ("otherwise", "none"), ("rule", "names_head.by_placement.elsewhere")]),
+)
 STANDING_RANK = ("derived", "quote", "ruling", "open")   # a cell of several selectors takes the last of these any selector has
 
 
@@ -537,7 +545,7 @@ def standing_text():
 
 
 def standing_cells(row, text):
-    """The four cells of one family. Derived first: subject_may_withdraw is true, and false on each arm the authorship column gives
+    """The six cells of one family; room_content and names_stands_on are false unless a row of the table says otherwise. Derived first: subject_may_withdraw is true, and false on each arm the authorship column gives
     as counted (CC 2.4.1.1 rule 0); accountability_record and may_carry_under are false; standing_act is end where the confers cell
     is an ending, acceptance where its role is acceptance, else exercise where names_head is roster, standing or by_placement, none
     where it is none, and open where names_head is unread. Then the family's rows of standing_text.tsv replace the derived value,
@@ -559,6 +567,8 @@ def standing_cells(row, text):
             c = OrderedDict([("value", False), ("source", "derived"), ("note", "no row of the family is a deputy's edge"), ("cc_ref", "CC 4.5.5")])
         elif col == "room_content":
             c = OrderedDict([("value", False), ("source", "derived"), ("note", "the family is not among those CC 3.1.3.2 names as a room's content"), ("cc_ref", "CC 3.1.3.2")])
+        elif col == "names_stands_on":
+            c = OrderedDict([("value", False), ("source", "derived"), ("note", "no root confers the family's duty, so no row of it stands on an acceptance of a root grant"), ("cc_ref", "CC 2.4.1.1")])
         else:
             act = lambda h: "none" if h == "none" else "exercise"
             if isinstance(cf, dict) and cf.get("relation") == "ending": v, src, frm, why = "end", "derived", "confers", "the family's rows end a standing"
@@ -1250,7 +1260,7 @@ def main():
     for r in rows:
         fam, items = r["family"], list(r.items()); k = [x[0] for x in items].index("count") + 1
         r.clear(); r.update(items[:k] + [("authorship", auth[fam]), ("second_signers", second[fam])] + items[k:])
-    # Withdrawal and standing: four cells a family, placed after descends_on_withdrawal (formal/derivation/standing_text.tsv).
+    # Withdrawal and standing: six cells a family, placed after descends_on_withdrawal (formal/derivation/standing_text.tsv).
     st_text, st_meta, serrs = standing_text()
     if serrs:
         [print(e) for e in serrs]; return 1
@@ -1261,6 +1271,11 @@ def main():
     unused = [f"{c} {t['family']} {t['selector']}" for c, ts in st_text.items() for t in ts if not t["used"]]
     if unused:
         print("standing_text.tsv names families outside the model: " + ", ".join(unused)); return 1
+    nh_branches = []
+    for b in NAMES_HEAD_BRANCHES:
+        if b["rule"] not in st_meta:
+            print(f"standing_text.tsv: no _meta rule {b['rule']} for the by_placement branch at {', '.join(b['placed_at'])}"); return 1
+        nh_branches.append(OrderedDict(list(b.items()) + [("cites", st_meta[b["rule"]]["cites"])]))
     st_key = lambda v: "by_selector" if isinstance(v, dict) else ("open" if v is None else str(v).lower())
     st_counts = OrderedDict((c, OrderedDict([("by_value", OrderedDict(sorted(Counter(st_key(r[c]["value"]) for r in rows).items()))),
                                              ("by_source", OrderedDict((s, sum(1 for r in rows if r[c]["source"] == s)) for s in STANDING_RANK))]))
@@ -1334,7 +1349,7 @@ def main():
                                                                     ("roles", sum(len(c["value"]) for c in second.values())), ("roles_without_member", len(second_gap))])),
                                     ("reading", "authorship gives each family's rows as authored (one party authors; the payload carries author), subject (authored, and the author is the attested key: a statement whose iss is not the sub is refused) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)")])),
         ("standing", OrderedDict([("source", "formal/derivation/standing_text.tsv"), ("columns", list(STANDING_VALUES)),
-                                  ("rules", st_meta), ("cells", st_counts),
+                                  ("rules", st_meta), ("cells", st_counts), ("names_head_by_placement", nh_branches),
                                   ("reading", "source derived: the cell follows from the other columns by the rule of that name in rules; quote: a row of the table whose words stand verbatim in cc_ref; ruling: a ruled reading the text does not yet state for the family by name; open: no value, and needs states the sentence the text would need. A cell with per_selector gives its value by leaf or by act, `*` taking every other row. Two rules of subject_may_withdraw hold in every family and are no cell: affiliation_subject and legal_weight_act. withdraws is a composer row and no family: rules.`standing_act.withdraws` states how an end is recognised")])),
         ("default_row", OrderedDict([("columns", default), ("families_on_it", by_count.get(0, 0)),
                                      ("families_by_departures", OrderedDict((str(k), by_count[k]) for k in sorted(by_count))),

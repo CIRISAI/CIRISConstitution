@@ -20,7 +20,7 @@ COLS = ["signer_rule", "cosign_rule", "subject_rule", "polarity", "placement", "
         "projection", "governance", "freshness", "replication", "body", "fold"]
 # The most cells of a column that may stand unstated. The number only falls.
 CEILING = {"signer_rule": 0}
-STANDING_COLS = ["subject_may_withdraw", "accountability_record", "may_carry_under", "standing_act", "room_content"]
+STANDING_COLS = ["subject_may_withdraw", "accountability_record", "may_carry_under", "standing_act", "room_content", "names_stands_on"]
 STANDING_STATUS = {"derived": "text", "quote": "cited", "ruling": "ruling", "open": "open"}
 
 

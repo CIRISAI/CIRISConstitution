@@ -22,6 +22,7 @@ SUBSTRATE_LAGGING	http_code		wire error code of the HTTP surface
 TPM_2_0	not_a_token		enumeration value, not a fault
 acceptance_by_grantee	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 acceptance_not_by_owner	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+acceptance_other_binding	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 acceptance_other_grant	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 acceptance_other_grantee	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 acceptance_withdrawn	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
@@ -139,6 +140,7 @@ build_manifest_unknown_member	refusal		the table of the blob's refusals
 build_manifest_withdrawn	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 build_manifest_wrong_format	refusal		the table of the blob's refusals
 build_row_other_head	refusal		the text says refused
+build_row_stands_on_nothing	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 bundle_fingerprint	not_a_token		charter or bundle member
 by_rule	not_a_token		enumeration value, not a fault
 call_argument_unrepresentable	refusal		the text says refused
