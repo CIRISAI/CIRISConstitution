@@ -266,8 +266,8 @@ progress_measure:{method_id}	computation	unstated	required	no	CC 3.1.9.7	Require
 progress_measure:{method_id}	goodhart_resistance	unstated	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
 progress_measure:{method_id}	tracks	[* any]	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
 progress_measure:{method_id}	validity_window	unstated	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
-provenance:build_manifest:{target}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	A build manifest is published as **one** claim: a `scores` Contribution on `provenance:build_manifest:{target}`, signed by the pipeline that built it, citing the manifest's bytes from
-provenance:build_manifest:{target}:locale:{lang_code}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	A build manifest is published as **one** claim: a `scores` Contribution on `provenance:build_manifest:{target}`, signed by the pipeline that built it, citing the manifest's bytes from
+provenance:build_manifest:{target}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	The row MUST cite the blob by its digest in `evidence_refs[]`.
+provenance:build_manifest:{target}:locale:{lang_code}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	The row MUST cite the blob by its digest in `evidence_refs[]`.
 provenance:skill_import:{source}	capability_declaration	unstated	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.
 provenance:skill_import:{source}	import_timestamp	unstated	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.
 provenance:skill_import:{source}	signer_identity	unstated	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.

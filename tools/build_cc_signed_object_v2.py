@@ -86,6 +86,10 @@ OBJECTS = [
     ("key_grant", "A key grant: the payload of a `key_grant:{axis}` row"),
     ("delivery_ack", "A delivery ack: the payload of a `delivery_ack:{stream_id}` row"),
     ("trust_accepts", "An acceptance edge: the members this form names of a `trust:accepts` row"),
+    ("build_manifest", "A build manifest: the payload of a `provenance:build_manifest:{target}` row"),
+    ("grant", "A grant: the members this form names of a `trust:confers` row"),
+    ("grant_acceptance", "The acceptance of a grant: the payload of a `membership:acceptance` row that answers a grant"),
+    ("grant_withdrawal", "The holders' withdrawal of a grant: the payload of a counted `withdraws` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
     ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
     ("admission", "An admission of a unit: the members of an `admission:unit` row"),
@@ -580,6 +584,17 @@ def family_payloads():
         "delivery-ack": ("delivery_ack:.stream_id", {
             "author": iref(1), "dimension": "delivery_ack:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
             "chunk_root": dig, "asserted_at": t}),
+        "build-manifest-row": ("provenance:build_manifest:.target", {
+            "author": iref(4), "dimension": "provenance:build_manifest:x86_64-unknown-linux-gnu:v1",
+            "build": {"project": "ciris-verify", "version": "1.2.3", "manifest_hash": dig, "manifest_size": 2048},
+            "evidence_refs": [dig], "refs": {"head": _ref(9)}, "asserted_at": t}),
+        "trust-confers": ("trust:.job:.version", {
+            "dimension": "trust:confers:v1", "scope": [PIPELINE_SCOPE],
+            "projects": sorted(["ciris-agent", "ciris-verify"], key=cde), "refs": {"head": _ref(9)}, "asserted_at": t}),
+        "grant-acceptance": ("membership:.stage", {
+            "author": iref(0), "dimension": "membership:acceptance:v1", "refs": {"answers": _ref(15)}, "asserted_at": t}),
+        "grant-withdrawal": ("trust:.job:.version", {
+            "refs": {"head": _ref(9), "target": _ref(15)}, "lifts": True, "asserted_at": t}),
     }
 
 
@@ -671,6 +686,26 @@ def family_payload_samples():
         ("delivery-ack", "delivery_ack:{stream_id} payload", cde(P["delivery-ack"]), [
             ("an ack with no chunk index", D("delivery-ack", "k")),
             ("a chunk root as bare bytes", W("delivery-ack", chunk_root=bytes(32)))]),
+        ("build-manifest-row", "provenance:build_manifest:{target} payload", cde(P["build-manifest-row"]), [
+            ("a build manifest with no build descriptor", D("build-manifest-row", "build")),
+            ("a descriptor with no project", W("build-manifest-row", build=_without(P["build-manifest-row"]["build"], "project"))),
+            ("a descriptor with no version", W("build-manifest-row", build=_without(P["build-manifest-row"]["build"], "version"))),
+            ("a manifest hash as bare bytes", W("build-manifest-row", build=dict(P["build-manifest-row"]["build"], manifest_hash=bytes(32)))),
+            ("a manifest size as text", W("build-manifest-row", build=dict(P["build-manifest-row"]["build"], manifest_size="2048"))),
+            ("a descriptor with a fifth member", W("build-manifest-row", build=dict(P["build-manifest-row"]["build"], generated_at=1763078400000))),
+            ("a build manifest citing no blob", D("build-manifest-row", "evidence_refs")),
+            ("a build manifest naming no bundle", D("build-manifest-row", "refs"))]),
+        ("trust-confers", "trust:confers payload of a build pipeline's grant", cde(P["trust-confers"]), [
+            ("a grant with no scope", D("trust-confers", "scope")),
+            ("a scope as a bare token", W("trust-confers", scope=PIPELINE_SCOPE)),
+            ("an empty projects set", W("trust-confers", projects=[])),
+            ("a grant naming no bundle", D("trust-confers", "refs"))]),
+        ("grant-acceptance", "membership:acceptance payload answering a grant", cde(P["grant-acceptance"]), [
+            ("an acceptance with no author", D("grant-acceptance", "author")),
+            ("an acceptance naming no grant", D("grant-acceptance", "refs"))]),
+        ("grant-withdrawal", "the payload of a counted withdraws of a grant", cde(P["grant-withdrawal"]), [
+            ("a withdrawal naming nothing", D("grant-withdrawal", "refs")),
+            ("lifts written as false", W("grant-withdrawal", lifts=False))]),
     ]
 
 
@@ -717,6 +752,22 @@ def family_payload_rule(root, p, family=None):
         return PAYLOAD_INVALID
     if root == "group-roster" and group_id_rule(p) is not None:
         return PAYLOAD_INVALID                            # a first version's id is derived from it (group_id_rule gives the token)
+    refs = p.get("refs", {})
+    if root == "build-manifest-row":
+        if dim.split(":")[:2] != ["provenance", "build_manifest"] or "head" not in refs:
+            return PAYLOAD_INVALID                        # the bundle the pipeline's grant names, in refs.head
+        if p.get("build", {}).get("manifest_hash") not in p.get("evidence_refs", []):
+            return PAYLOAD_INVALID                        # the blob the descriptor names is the blob the row cites
+    if root == "trust-confers":
+        if dim != "trust:confers:v1" or "head" not in refs or "author" in p:
+            return PAYLOAD_INVALID                        # counted over the bundle in force, with no author
+        for m in ("scope", "projects"):
+            if m in p and p[m] != sorted(set(p[m]), key=cde):
+                return PAYLOAD_INVALID                    # each a set (CC 2.6.1.2)
+    if root == "grant-acceptance" and (dim != "membership:acceptance:v1" or "answers" not in refs or "head" in refs):
+        return PAYLOAD_INVALID                            # names the one grant it accepts, and no head
+    if root == "grant-withdrawal" and ("target" not in refs or "head" not in refs or "author" in p):
+        return PAYLOAD_INVALID                            # the grant withdrawn and the head the count acts from
     return None
 
 
@@ -907,6 +958,17 @@ def family_payload_rule_checks():
         ("membership-change", P["membership-change"][1], "cosign:.state"),
         ("canonical-rebind", dict(P["canonical-rebind"][1], refs={"also": {"cites": [_ref(9)]}}), None),
         ("deferral-response", dict(P["deferral-response"][1], reason_digest=[-16, bytes([7]) * 32]), None),
+        ("build-manifest-row", dict(P["build-manifest-row"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+        ("build-manifest-row", dict(P["build-manifest-row"][1], evidence_refs=[[-16, bytes([8]) * 32]]), None),
+        ("build-manifest-row", dict(P["build-manifest-row"][1], dimension="provenance:slsa:3:v1"), None),
+        ("trust-confers", dict(P["trust-confers"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+        ("trust-confers", dict(P["trust-confers"][1], author=iref(0)), None),
+        ("trust-confers", dict(P["trust-confers"][1], projects=["ciris-verify", "ciris-verify"]), None),
+        ("trust-confers", dict(P["trust-confers"][1], dimension="trust:accepts:v1"), None),
+        ("grant-acceptance", dict(P["grant-acceptance"][1], refs={"answers": _ref(15), "head": _ref(9)}), None),
+        ("grant-acceptance", dict(P["grant-acceptance"][1], refs={"also": {"cites": [_ref(15)]}}), None),
+        ("grant-withdrawal", dict(P["grant-withdrawal"][1], refs={"target": _ref(15)}), None),
+        ("grant-withdrawal", dict(P["grant-withdrawal"][1], refs={"head": _ref(9)}), None),
     ]
     caught = 0
     for root, p, fam in breaks:
@@ -954,7 +1016,8 @@ def family_cddl_checks(text, ftext):
 
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
 FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "delivery_ack",
-                  "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts")
+                  "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts",
+                  "build_manifest", "grant", "grant_acceptance", "grant_withdrawal")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
@@ -969,6 +1032,11 @@ FAMILY_RULE_HEAD = {
     "key-grant": "key_grant:{axis}: authored by the sealer; sub is the recipient.",
     "delivery-ack": "delivery_ack:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
     "trust-accepts": "trust:accepts (CC 4.4.3.34, CC 2.7.11): the reader's own edge; the members this form names, its further members are the store's.",
+    "build-manifest-row": "provenance:build_manifest:{target} (CC 3.1.2.1): authored by the pipeline's key; one claim, type scores; the manifest blob is unsigned and cited by its digest.",
+    "build-descriptor": "The descriptor of a manifest blob (CC 3.1.2.1, CC 5.3.2.11): a closed map of exactly four members.",
+    "trust-confers": "trust:confers (CC 3.1.2.1, CC 4.2.1): a delegates_to row counted over the holders of the bundle in force, with no author; sub is the key the grant names.",
+    "grant-acceptance": "membership:acceptance answering a grant (CC 3.1.2.1): authored by the owner of the key the grant names, at federation scope.",
+    "grant-withdrawal": "The withdraws row that ends a grant (CC 4.2.1, CC 2.4.1.1): counted over the holders of the bundle in force, with no author.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",
     "deferral-request": "deferral:request (CC 3.1.9.3, CC 4.3): authored by the deferring party; the request's further members are the store's.",
@@ -977,7 +1045,7 @@ FAMILY_RULE_HEAD = {
     "deferral-response": "deferral:response:{outcome} (CC 3.1.9.3, CC 4.3): the members this form names; the response's further members are the store's.",
     "admission-unit": "admission:unit (CC 2.7.11, CC 3.1.3): authored by one person, or counted over refs.head with no author; one person's row naming an effect admits only on that person's own host; sub is the unit's digest as canonical:sha256:{hex}.",
 }
-FAMILY_CLOSED = {"roster-member", "encryption-pubkeys", "self-roster-refs", "eviction-refs", "eviction-proof"}            # every other family rule keeps a member it does not name (CC 2.1.1)
+FAMILY_CLOSED = {"roster-member", "encryption-pubkeys", "self-roster-refs", "eviction-refs", "eviction-proof", "build-descriptor"}            # every other family rule keeps a member it does not name (CC 2.1.1)
 FAMILY_EXTRA = {"admission-unit": [
     "; The capabilities of CC 2.7.11: a closed set; the last five are effects.",
     'capability = "compute" / "read" / "net_send" / "submit" / "sign" / "store_write" / "actuate"'],
@@ -1120,6 +1188,158 @@ def second_row_checks():
             bad.append(f"occurrence rule: {why} gives {occurrence_rule(p, types)}, the text gives {want}")
     return (f"rules over a second row: {len(cases)} amendment cases ({AMENDMENT_MISMATCH} on a differing and on an absent digest), "
             f"{len(ocases)} occurrence cases ({OCCURRENCE_MIXED} on an agent key or device_class agent under a person)"), bad
+
+
+# ---------------------------------------------------------------- a build pipeline's standing (CC 3.1.2.1, CC 4.2.1)
+ATTEST, PIPELINE_SCOPE = "infra:attest", "infra:attest:provenance:build_manifest"
+GRANT_OUT_OF_ROLE = "pipeline_grant_out_of_role"
+PROJECT_NOT_GRANTED = "build_manifest_project_not_granted"
+MANIFEST_EQUIVOCATION = "build_manifest_equivocation"
+DESCRIPTOR_MISMATCH = "build_manifest_descriptor_mismatch"
+BLOB_FORMAT = "ciris-binary-manifest/1"
+
+
+def pipeline_grant_rule(p, sub_roles=()):
+    """CC 4.2.1 bound (1), decided by the grant's payload alone: None, or its token. A grant is a pipeline's where it
+    carries `projects` (no key record states a pipeline role); its scope holds the attest capability, whole or
+    sub-scoped to the build-manifest family, and no other token. An unrecognised sub-scope is not widened to its
+    parent (CC 4.5.5). `sub_roles` is the kind of the key named, which decides nothing."""
+    if "projects" not in p:
+        return None
+    return None if set(p.get("scope", [])) <= {ATTEST, PIPELINE_SCOPE} else GRANT_OUT_OF_ROLE
+
+
+def build_manifest_rule(row, grant):
+    """CC 3.1.2.1, over two rows: a build-manifest row and the grant its pipeline stands on. None, or the token. A grant
+    with no `projects` member confers a build manifest for no project."""
+    return None if row["build"]["project"] in grant.get("projects", []) else PROJECT_NOT_GRANTED
+
+
+def build_target(row):
+    """The target of a build-manifest row: its dimension less the family's two literals and the version segment."""
+    return ":".join(row["dimension"].split(":")[2:-1])
+
+
+def descriptor_rule(row, blob):
+    """CC 3.1.2.1, over a row and the blob it cites (`blob` is the map; its bytes are its deterministic encoding): None,
+    or the one token for any disagreement of length, digest, project, version or target."""
+    raw, b = cde(blob), row["build"]
+    if b["manifest_size"] != len(raw) or b["manifest_hash"] != [-16, hashlib.sha256(raw).digest()]:
+        return DESCRIPTOR_MISMATCH
+    if (b["project"], b["version"], build_target(row)) != (blob.get("project"), blob.get("version"), blob.get("target")):
+        return DESCRIPTOR_MISMATCH
+    return None
+
+
+def equivocation_rule(a, b, supersedes=False):
+    """CC 3.1.2.1, over two build-manifest rows: None, or the token where one pipeline states two descriptors for one
+    project, version and target and neither row supersedes the other."""
+    key = lambda r: (r["author"], r["build"]["project"], r["build"]["version"], build_target(r))
+    return MANIFEST_EQUIVOCATION if key(a) == key(b) and a["build"] != b["build"] and not supersedes else None
+
+
+def functions_root(functions):
+    """CC 3.1.2.1: the Merkle root over a function table. Leaves in the byte order of the function names, each the
+    deterministic encoding of {name, offset, size, hash} under the leaf prefix 0x00; the last leaf repeated to the next
+    power of two; a parent is SHA-256 over 0x01, left, right."""
+    level = [hashlib.sha256(b"\x00" + cde(f)).digest() for f in sorted(functions, key=lambda f: f["name"].encode("utf-8"))]
+    while len(level) & (len(level) - 1):
+        level.append(level[-1])
+    while len(level) > 1:
+        level = [hashlib.sha256(b"\x01" + level[i] + level[i + 1]).digest() for i in range(0, len(level), 2)]
+    return level[0]
+
+
+def build_blob(row_target="x86_64-unknown-linux-gnu", **change):
+    """A schema-sample manifest blob: exactly the members CC 3.1.2.1 lists, its digests plain 32-byte strings."""
+    fns = [{"name": n, "offset": 4096 * (i + 1), "size": 512, "hash": bytes([i + 1]) * 32} for i, n in enumerate(("main", "init", "verify"))]
+    blob = {"format": BLOB_FORMAT, "project": "ciris-verify", "version": "1.2.3", "target": row_target,
+            "binary_hash": bytes([9]) * 32, "functions_root": functions_root(fns), "functions": fns, "tool": "ciris-manifest-tool 1.0.0"}
+    return dict(blob, **change)
+
+
+def row_for(blob, **change):
+    """The build-manifest sample row, its descriptor that of `blob`."""
+    row, raw = family_payloads()["build-manifest-row"][1], cde(blob)
+    dig = [-16, hashlib.sha256(raw).digest()]
+    row = dict(row, evidence_refs=[dig], build={"project": blob["project"], "version": blob["version"],
+                                                "manifest_hash": dig, "manifest_size": len(raw)})
+    return dict(row, **change)
+
+
+def build_manifest_checks():
+    """(line, problems): the pipeline's grant, the manifest against its grant, the descriptor against its blob, two
+    manifests of one build, and the function table's root; every sample gives the answer the text gives, and a planted
+    fault of each rule must be caught by at least one sample."""
+    bad, P = [], family_payloads()
+    grant, blob = P["trust-confers"][1], build_blob()
+    row = row_for(blob)
+    plain = _without(grant, "projects")
+    gcases = [("a pipeline's grant under the sub-scope", grant, (), None),
+              ("a pipeline's grant under the bare capability", dict(grant, scope=[ATTEST]), (), None),
+              ("a pipeline's grant that also carries infra:serve", dict(grant, scope=sorted([PIPELINE_SCOPE, "infra:serve"], key=cde)), (), GRANT_OUT_OF_ROLE),
+              ("a pipeline's grant under another family's sub-scope", dict(grant, scope=["infra:attest:licensure:X"]), (), GRANT_OUT_OF_ROLE),
+              ("a pipeline's grant under a narrower sub-scope nobody registered", dict(grant, scope=[PIPELINE_SCOPE + ":x86"]), (), GRANT_OUT_OF_ROLE),
+              ("a grant of infra:serve to a key that is no pipeline", dict(plain, scope=["infra:serve"]), ("node",), None),
+              ("a grant of infra:serve with no projects, which is no pipeline's grant", dict(plain, scope=["infra:serve"]), ("agent",), None)]
+    for why, g, roles, want in gcases:
+        if pipeline_grant_rule(g, roles) != want:
+            bad.append(f"pipeline grant: {why} gives {pipeline_grant_rule(g, roles)}, the text gives {want}")
+    prefix = lambda g, roles=(): None if all(s.startswith(ATTEST) for s in g.get("scope", [])) else pipeline_grant_rule(g, roles)
+    if all(prefix(g, r) == want for _, g, r, want in gcases):
+        bad.append("deliberate break not caught: a prefix test on a pipeline's scope passed every grant sample")
+    pcases = [("a manifest of a listed project", row, grant, None),
+              ("a manifest of a project the grant does not list", dict(row, build=dict(row["build"], project="ciris-node")), grant, PROJECT_NOT_GRANTED),
+              ("a manifest under a grant with no projects member", row, plain, PROJECT_NOT_GRANTED)]
+    for why, r, g, want in pcases:
+        if build_manifest_rule(r, g) != want:
+            bad.append(f"build manifest and grant: {why} gives {build_manifest_rule(r, g)}, the text gives {want}")
+    lax = lambda r, g: None if "projects" not in g else build_manifest_rule(r, g)
+    if all(lax(r, g) == want for _, r, g, want in pcases):
+        bad.append("deliberate break not caught: a rule reading an absent projects member as every project passed every sample")
+    dcases = [("a row whose descriptor is its blob's", row, blob, None),
+              ("a size one byte short", dict(row, build=dict(row["build"], manifest_size=row["build"]["manifest_size"] - 1)), blob, DESCRIPTOR_MISMATCH),
+              ("a digest of another blob", dict(row, build=dict(row["build"], manifest_hash=[-16, bytes([8]) * 32])), blob, DESCRIPTOR_MISMATCH),
+              ("a project the blob does not state", row_for(blob, build=dict(row["build"], project="ciris-agent")), blob, DESCRIPTOR_MISMATCH),
+              ("a version the blob does not state", row_for(blob, build=dict(row["build"], version="1.2.4")), blob, DESCRIPTOR_MISMATCH),
+              ("a row on another target's family", dict(row, dimension="provenance:build_manifest:aarch64-apple-darwin:v1"), blob, DESCRIPTOR_MISMATCH)]
+    for why, r, b, want in dcases:
+        if descriptor_rule(r, b) != want:
+            bad.append(f"descriptor: {why} gives {descriptor_rule(r, b)}, the text gives {want}")
+    bytes_only = lambda r, b: None if (r["build"]["manifest_size"], r["build"]["manifest_hash"]) == (len(cde(b)), [-16, hashlib.sha256(cde(b)).digest()]) else DESCRIPTOR_MISMATCH
+    if all(bytes_only(r, b) == want for _, r, b, want in dcases):
+        bad.append("deliberate break not caught: a rule comparing size and digest alone passed every descriptor sample")
+    other = row_for(build_blob(binary_hash=bytes([10]) * 32))
+    ecases = [("the same row twice", row, row, False, None),
+              ("two descriptors for one project, version and target", row, other, False, MANIFEST_EQUIVOCATION),
+              ("a rebuild that supersedes the first", row, other, True, None),
+              ("another pipeline's manifest of the same build", row, dict(other, author=iref(6)), False, None),
+              ("the next version", row, row_for(build_blob(version="1.2.4")), False, None),
+              ("another target", row, row_for(build_blob("aarch64-apple-darwin"), dimension="provenance:build_manifest:aarch64-apple-darwin:v1"), False, None)]
+    for why, a, b, sup, want in ecases:
+        if equivocation_rule(a, b, sup) != want:
+            bad.append(f"equivocation: {why} gives {equivocation_rule(a, b, sup)}, the text gives {want}")
+    if all(want is None for *_, want in ecases):
+        bad.append("deliberate break not caught: a rule that never reports an equivocation passed every sample")
+    fns = blob["functions"]
+    if functions_root(fns) != functions_root(list(reversed(fns))):
+        bad.append("function table: the root depends on the order the table is listed in")
+    last = max(fns, key=lambda f: f["name"].encode())
+    four = [hashlib.sha256(b"\x00" + cde(f)).digest() for f in sorted(fns, key=lambda f: f["name"].encode())] + [hashlib.sha256(b"\x00" + cde(last)).digest()]
+    want_root = hashlib.sha256(b"\x01" + hashlib.sha256(b"\x01" + four[0] + four[1]).digest() + hashlib.sha256(b"\x01" + four[2] + four[3]).digest()).digest()
+    if functions_root(fns) != want_root:
+        bad.append("function table: three leaves are not padded by repeating the last to four")
+    if functions_root(fns) == functions_root([dict(f, size=f["size"] + 1) if f is last else f for f in fns]):
+        bad.append("deliberate break not caught: a function's changed size leaves the root unchanged")
+    if set(blob) != {"format", "project", "version", "target", "binary_hash", "functions_root", "functions", "tool"}:
+        bad.append("the sample blob's members are not those the text lists")
+    import cc_namespace_match as NM
+    got = NM.match_family(NM.load_manifest(), row["dimension"])
+    if not got or got[0] != "provenance:build_manifest:{target}" or got[2] is not None:
+        bad.append(f"sample dimension {row['dimension']} does not match its family: {got}")
+    return (f"a build pipeline's standing: {len(gcases)} grants ({GRANT_OUT_OF_ROLE}), {len(pcases)} manifests against a grant "
+            f"({PROJECT_NOT_GRANTED}), {len(dcases)} descriptors against a blob ({DESCRIPTOR_MISMATCH}), {len(ecases)} pairs "
+            f"({MANIFEST_EQUIVOCATION}), the function table's root over three leaves padded to four; the planted faults are caught"), bad
 
 
 # ---------------------------------------------------------------- the bundle's prose rules, as a reference reader
@@ -1850,6 +2070,9 @@ def main(argv):
     lines.append(rline2)
     bad += rbad2
     sys.path.insert(0, HERE)
+    bline, bbad = build_manifest_checks()
+    lines.append(bline)
+    bad += bbad
     fline, fbad = family_checks()
     lines.append(fline)
     bad += fbad

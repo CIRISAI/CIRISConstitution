@@ -32,14 +32,14 @@
    "invariants": 247,
    "claims": 610,
    "entries": 20,
-   "refusal_tokens": 112
+   "refusal_tokens": 117
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "adda1487c8f45e5faeb26078a1b0337c71ccb1d1fd0969c3bd175af9fce06ac9"
+  "chain_sha256": "07a2e8fb1657a3648f5736f38d6ec7647aa91c111fac5b0a3f3a2260834482e0"
  },
  "chain": [
   {
@@ -54022,6 +54022,18 @@
   "breach_notification": {
    "4.4.3.12": "bold"
   },
+  "build_manifest_descriptor_mismatch": {
+   "3.1.2.1": "after_refusal"
+  },
+  "build_manifest_equivocation": {
+   "3.1.2.1": "after_refusal"
+  },
+  "build_manifest_functions_root_mismatch": {
+   "3.1.2.1": "after_refusal"
+  },
+  "build_manifest_project_not_granted": {
+   "3.1.2.1": "after_refusal"
+  },
   "bundle_fingerprint": {
    "8.11.24": "bold"
   },
@@ -54190,9 +54202,6 @@
   "location_proof": {
    "4.5.9.1": "after_refusal"
   },
-  "manifest_size": {
-   "3.1.2.1": "bold"
-  },
   "mass_commitment": {
    "6.1.2.3": "bold"
   },
@@ -54234,6 +54243,9 @@
   },
   "onion_hop_x25519_reuse": {
    "3.3.6.2": "after_refusal"
+  },
+  "pipeline_grant_out_of_role": {
+   "4.2.1": "after_refusal"
   },
   "preserve_response": {
    "8.10": "bold"
@@ -54318,6 +54330,9 @@
   "under_13": {
    "3.1.2": "after_refusal",
    "3.3.12": "after_refusal"
+  },
+  "write_author_has_no_wrap_target": {
+   "5.2": "after_refusal"
   },
   "x25519_mlkem768_aes256_gcm_hkdf_sha256": {
    "5.1": "bold"

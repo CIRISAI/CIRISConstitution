@@ -176,7 +176,7 @@ trace:{form}:{version}	read by a rule	1	0	-	-	B131	1	consent:community_trust.cha
 trace_summary:{kind}	nothing shown	0	0	-	-	B132	1	-
 transport:canonical_rebind	read by a rule	2	0	count change	-	B133	1	identity:occurrence.change transport:{kind}.guard
 transport:{kind}	acts of its own	0	0	guard	transport:canonical_rebind	B134	1	-
-trust:{job}:{version}	read by a rule	6	1	fold change guard react expiry	-	B135	1	accord:*.fold group:roster.change group:roster.guard key:record.reaction membership:{stage}.guard mesh_config:{key}.signer_rule
+trust:{job}:{version}	read by a rule	5	1	fold change guard react expiry	-	B135	1	accord:*.fold group:roster.change group:roster.guard membership:{stage}.guard mesh_config:{key}.signer_rule
 truth_grounding:{subject}	read by a rule	1	0	-	-	B001	17	moderation_track_record:{community_key_id}.fold
 video:*	nothing shown	0	0	-	-	B002	10	-
 vote:{contribution_id}	read by a rule	1	0	fold	-	B136	1	weighted_aggregate:{contribution_id}.fold

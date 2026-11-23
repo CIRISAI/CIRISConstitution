@@ -386,10 +386,6 @@
     {
      "event": "admitted",
      "of": "key:revocation"
-    },
-    {
-     "event": "withdrawn",
-     "of": "trust:accepts"
     }
    ],
    "effects": [
