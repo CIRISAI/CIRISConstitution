@@ -272,7 +272,7 @@ canonical-rebind = {
 trust-accepts = {
   "author": identity-ref,                   ; The owner whose edge it is: a person, and any live key of their roster signs it. A node's own edge is read only while its owner has signed none.
   "dimension": tstr,                        ; trust:accepts:v1. The CWT sub is the lineage's name, the bundle's family_key_id. The edge names no refs.head and carries no scope.
-  ? "attached_head_digest": hash-digest,    ; The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). A new edge without it is refused, trust_root_head_unnamed. (on a new edge)
+  "attached_head_digest": hash-digest,      ; The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). A new edge without it is refused, trust_root_head_unnamed.
   ? "trust_classes": [+ tstr],              ; A set of class ids; absent, every class the charter declares. (where the edge narrows its classes)
   ? "trust_depth": 0..5,                    ; Absent reads 0. (where the edge reaches further)
   ? "service_key": { 1: int, 3: int, * int => any } / identity-ref, ; The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record. (on an edge of the class transparency)
