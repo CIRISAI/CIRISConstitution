@@ -29,3 +29,6 @@ membership:{stage}	leaf=widening	roster	the roster version the change is counted
 membership:{stage}	leaf=removal	roster	the roster version the change is counted over
 membership:{stage}	leaf=resignation	roster	the roster version the leaving member acts from
 ballot:moderator_acceptance	*	none	the winner's own consent; it names the election and the ballot set it was counted over
+accord:invoke:constitutional:{halt_id}	*	none	a halt fires at each node on receipt, under the roster that node holds; its payload is closed and names no head
+accord:invoke:notify:{notify_id}	*	none	as the halt: read on receipt, under the roster the node holds
+accord:invoke:drill:{drill_id}	*	none	as the halt: read on receipt, under the roster the node holds

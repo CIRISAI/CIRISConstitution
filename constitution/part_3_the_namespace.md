@@ -1963,6 +1963,10 @@ This entry sets out the key roster of a self: one fedID, its keys, who may act a
 
 A vote from an evicted key is void.
 
+**The proposer's own withdrawal (normative).** The proposer MAY withdraw its own open proposal, an addition or an eviction, since the proposal is its own row ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1) rule 1). The withdrawal counts at a node only where that node holds it before the proposal lands there. A landed eviction is a revocation, and nobody withdraws it.
+
+*A stated limit.* A lone-path landing is each node's own verdict, and no row carries it. An objection, the target's own act or the proposer's withdrawal can reach one node inside its window and another node after it. Those two nodes then read different rosters, and this entry does not close that. A client shows a lone-path proposal as pending or landed at its own node, and never as a fact about the identity.
+
 **Three readings the model fixes.**
 
 - The window is measured by each node from the instant *it* first held the proposal, never from the proposer's signed `asserted_at` (the purge-dwell rule of [CC 4.5.3](part_4_composition_governance.md#4.5.3); the model's age is per holder and it has no shared clock). So a landing is a node's own verdict in the way a root's standing is.

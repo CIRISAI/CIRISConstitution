@@ -336,7 +336,7 @@ A `withdraws` row retires its target as a cut does ([CC 2.7.7](#2.7.7)). An act 
 
 **The end of a standing (normative).** The two sentences above are read as follows, and a node reads no instant to decide any of it.
 
-*An act names its head.* A row signed in exercise of a standing names the head it is at, in `refs.head`. The head is the newest its signer holds of the record that seats the standing. For a seat in a room or a family it is the roster version ([CC 2.7.8](#2.7.8)). For a grant from a root it is the bundle in force. Where one row between two keys is the whole record, as an owner-binding is, that row is the head. A row that exercises a standing and names no head concludes nothing, `act_names_no_head`.
+*An act names its head.* A row signed in exercise of a standing names the head it is at, in `refs.head`. The head is the newest its signer holds of the record that seats the standing. For a seat in a room or a family it is the roster version ([CC 2.7.8](#2.7.8)). For a grant from a root it is the bundle in force. Where one row between two keys is the whole record, as an owner-binding is, that row is the head. A row that exercises a standing and names no head concludes nothing, `act_names_no_head`. An acceptance or a decline names none: it names the row it answers, and that row names the head. An accord invocation names none, since it fires at each node on receipt, under the roster that node holds ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)). At federation scope and in the commons there is no roster, so a row there names a head only where its signer signs under a standing.
 
 *An end names the head it acts from.* A row that ends a standing carries `refs.head` beside its target: a withdrawal of an acceptance or of an offer, an unseating, a resignation. That head is the newest its signer holds, and an end with a newer head in its own past concludes nothing, `end_names_old_head`. The end concludes under its signer's own standing at that head, so one's own acceptance is withdrawn by one's own signature. It reaches the acts exercised under its target, a deputy's among them. It never reaches the members counted at any head ([CC 2.7.8](#2.7.8)).
 
@@ -366,12 +366,16 @@ A node MUST admit a `withdraws` against a target row `T` when one line of this t
 
 - a `capacity:*` or `detection:*` finding made by someone else;
 - a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`;
-- a duty-holder's record on the accountability trail: a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker ([CC 4.5.5](part_4_composition_governance.md#4.5.5));
+- a duty-holder's record on the accountability trail: a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker ([CC 4.5.5](part_4_composition_governance.md#4.5.5));
 - an act of a body under a declared legal-weight class, such as a conviction or a licence ([CC 2.4.1.3](#2.4.1.3), [CC 4.4.3.12](part_4_composition_governance.md#4.4.3.12));
 - a `takedown_notice:*`, where the path is the counter-notice its basis names ([CC 3.3.2](part_3_the_namespace.md#3.3.2));
-- an agent's own `trace:*`, where the path of a person named in it is withdrawing consent ([CC 3.1.5](part_3_the_namespace.md#3.1.5)).
+- a producer's own `trace:*`, where the path of a person named in it is withdrawing consent ([CC 3.1.5](part_3_the_namespace.md#3.1.5)).
 
-An affiliation withdraws no statement about itself, whatever the statement. Its path is reconsideration and the reader's composition. A named party contests a kept row by `reconsideration:{grounds}`, and it holds standing there ([CC 4.5.5](part_4_composition_governance.md#4.5.5)). The consent and scoring context of this list is [CC 3.4.5](part_3_the_namespace.md#3.4.5).
+An affiliation withdraws no statement about itself, whatever the statement. Its path is reconsideration and the reader's composition. The test is the row's subject: where it is an affiliation's own id, nobody acting for that affiliation withdraws the row under rules 2 to 4.
+
+*An act under a declared class.* A row is such an act where three things hold. Its emitter resolves to the body at the head the row names. The row carries `class`. The body's record declares that class with `legal_weight` true ([CC 4.4.3.12](part_4_composition_governance.md#4.4.3.12)). A row with no `class` is under no class. Where the record that decides either test is not held, the withdrawal waits ([CC 2.7.3](#2.7.3)).
+
+*A trace.* Only the key that signed a trace withdraws it under rule 1. Its owner does not, since the trace is the record of what that key did ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). A named party contests a kept row by `reconsideration:{grounds}`, and it holds standing there ([CC 4.5.5](part_4_composition_governance.md#4.5.5)). The consent and scoring context of this list is [CC 3.4.5](part_3_the_namespace.md#3.4.5).
 
 **Why the list exists.** Consent can be taken back, so a named party may retire a row about itself. A finding is not consent. A party that could retire the adverse rows about itself and keep the rest would launder its reputation.
 
