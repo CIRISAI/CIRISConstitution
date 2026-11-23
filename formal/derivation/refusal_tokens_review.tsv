@@ -681,6 +681,7 @@ witness_relation	not_a_token		payload or envelope member
 worker_impact_assessment	not_a_token		payload or envelope member
 wrap_algorithm	not_a_token		payload or envelope member
 wrapped_dek	not_a_token		payload or envelope member
+write_author_has_no_wrap_target	refusal		the text says the sealer refuses the write and stores nothing
 x25519_base64	not_a_token		payload or envelope member
 x_private	not_a_token		family or row-type name
 yubi_hsm	not_a_token		enumeration value, not a fault
