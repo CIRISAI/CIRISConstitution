@@ -18,7 +18,7 @@ trust:{job}:{version}	leaf=charter	none	a root's charter is its bundle's member
 attestation:registry_consensus	*	roster	the canonical room's roster version
 community:listing	*	roster	the listed room's roster version
 duty:{kind}	*	by_placement	a duty exercised in a room names that room's roster version
-act:ack	*	by_placement	the head the acknowledged acts name
+act:ack	*	none	a receipt names the acts it acknowledges and no head; it is read by its causal past alone
 stream:head	*	by_placement	the room's roster version where the head carries a room; none where it carries none
 admission:unit	act=group	roster	the roster version the row is counted over
 admission:unit	act=own	none	a person's own row at self scope

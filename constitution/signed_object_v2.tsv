@@ -34,7 +34,7 @@ payload	attestation-envelope	"valid_until"	valid_until	payload	ms-time	where the
 payload	attestation-envelope	"expires_at"	expires_at	payload	ms-time	where the family states it	2.6.2	POSIX milliseconds.
 payload	attestation-envelope	"reason"	reason	payload	uint	where the family carries a reason	2.6.1.10	A code from a closed registry; 0 is unspecified.
 payload	attestation-envelope	"salt"	salt	payload	bstr .size 16	where the content is low-entropy	2.6.1.3	Sixteen random bytes bound by every signer, so neither the row id nor a statement id confirms a guess.
-payload	attestation-envelope	"lifts"	-	payload	true	on a counted row that ends a standing, where the count lifts single receipts	2.4.1.1	Present only as true. On an end signed by one voice it is refused, lifts_on_own_end.
+payload	attestation-envelope	"lifts"	-	payload	true	on a counted row that ends a standing, where the count lifts single receipts	2.4.1.1	Present only as true. On one's own end it is refused, lifts_on_own_end.
 payload	attestation-envelope	"receipter"	-	payload	identity-ref	on an offer that names who acknowledges the acts exercised under it	2.4.1.1 3.4.7.3	A person or an agent, never a node. Its receipts keep an act in force after the standing ends.
 payload	attestation-envelope	redacted_claim_keys	-	payload	[+ bstr .size 32]	where a member of the payload was minted blind	2.6.1.10	SD-CWT simple(59): the digests of the payload's blinded members, in mint order: a sequence.
 payload	attestation-envelope	"body"	-	payload	body	where the family carries a body	2.6.1.10	The family's body.

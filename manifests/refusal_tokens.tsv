@@ -12,6 +12,7 @@ RESERVED_PREFIX_VIOLATION	http_code	5.3.6.1	p5:830	403 | `RESERVED_PREFIX_VIOLAT
 SIGNATURE_VERIFICATION_FAILED	http_code	5.3.6.1	p5:833	422 | `SIGNATURE_VERIFICATION_FAILED` | The composite signature failed to verify; it is one signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7))
 SUBSTRATE_LAGGING	http_code	5.3.6.1	p5:839	503 | `SUBSTRATE_LAGGING` | Substrate replication lag exceeds liveness bound
 accord_invocation_replayed	concludes_nothing	4.2.1.1	p4:153	A second row of one kind with an `invocation_id` or a `nonce` already held within `valid_until` is kept and changes nothing, reason `accord_invocation_replayed`.
+ack_names_too_many	refusal	3.1.3	p3:180	A receipt with more is refused, `ack_names_too_many`.
 act_names_no_head	concludes_nothing	2.4.1.1	p2:338	A row that exercises a standing and names no head concludes nothing, `act_names_no_head`.
 action_approval_mismatch	refusal	2.7.11	p2:1871	`action_approval_mismatch` | not dispatched | the approval names another fingerprint
 action_not_reviewed	refusal	2.7.11	p2:1867	`action_not_reviewed` | not dispatched | no record names this fingerprint in this thought

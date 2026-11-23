@@ -326,7 +326,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "8bd03c3bfca6e59c35851817e0dc9938000ab0eafc99586e86ee438b50a0288d",
+    "registry_sha256": "af0ac06dc87116601df02a063fa41e43e8be05be80ee19e149088aa295de416e",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -341,7 +341,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "8f8f1ed3f6dc90a0526a75bcb6f8682cf959cbaa925628397dbcfb8741223862"
+    "source_sha256": "570b5e70c25346839cc81651c3f9f23e4f026c8ec278d618c8359df151051d54"
   },
   "families": [
     {
@@ -550,7 +550,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "A receipt of one or more acts (registered under CC 3.1.7 R2(a); CC 2.7.5, CC 2.4.1.1): the signer acknowledges the acts it names under refs.also ack, at the head it names in refs.head.",
+      "description": "A receipt of one or more acts (registered under CC 3.1.7 R2(a); CC 2.7.5, CC 2.4.1.1): the signer acknowledges the acts it names under refs.also ack, at most 256 of them, and names no head.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",

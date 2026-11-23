@@ -25,6 +25,7 @@ accord_holder	not_a_token		enumeration value, not a fault
 accord_invocation_replayed	concludes_nothing		kept and changes nothing
 accord_root	not_a_token		charter or bundle member
 accountable_root	not_a_token		function, predicate or rule name
+ack_names_too_many	refusal		the text says a receipt with more is refused
 act_names_no_head	concludes_nothing		the text says concludes nothing
 act_on_behalf	not_a_token		scope, duty or role name
 action_approval_mismatch	refusal		not dispatched

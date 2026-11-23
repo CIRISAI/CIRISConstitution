@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "aa7705d4fea4feba719c94fb056f3cf3f6e993892514d7f8613e00f6d1f548ca",
+  "registry_sha256": "91a75b7ba182f7dd22dc3c67d15fc4a21c068f91fac0bb7eab9a849fc2112f7d",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -1050,8 +1050,8 @@
       "acceptance": 2,
       "by_selector": 3,
       "end": 2,
-      "exercise": 150,
-      "none": 10,
+      "exercise": 149,
+      "none": 11,
       "offer": 4,
       "open": 13
      },
@@ -5175,7 +5175,7 @@
      "value": null,
      "source": "gap"
     },
-    "qualifier": "a voice at the head the acts name, never the signer of an act it names"
+    "qualifier": "the conferrer (a count where the conferrer is one), another holder of the body the acts were done for, or the receipter the offer names; never the signer of an act it names"
    },
    "subject_rule": {
     "value": null,
@@ -5280,10 +5280,10 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "by_placement",
+    "value": "none",
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
-    "note": "the head the acknowledged acts name",
+    "note": "a receipt names the acts it acknowledges and no head; it is read by its causal past alone",
     "derived": null,
     "cc_ref": "CC 2.4.1.1"
    },
@@ -5322,10 +5322,10 @@
     "cc_ref": "CC 4.5.5"
    },
    "standing_act": {
-    "value": "exercise",
+    "value": "none",
     "source": "derived",
     "from": "names_head",
-    "note": "its rows name a head (by_placement)",
+    "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
    },
    "room_content": {
