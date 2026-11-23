@@ -2613,7 +2613,7 @@ ownership:{relation}:{target_kind}:{version}	projection	unstated	code-v61
 ownership:{relation}:{target_kind}:{version}	governance	unstated	code-v61
 ownership:{relation}:{target_kind}:{version}	freshness	text	prose
 ownership:{relation}:{target_kind}:{version}	replication	unstated	mixed
-ownership:{relation}:{target_kind}:{version}	body	open	gap
+ownership:{relation}:{target_kind}:{version}	body	text	cc-table
 ownership:{relation}:{target_kind}:{version}	fold	text	cc-table
 ownership:{relation}:{target_kind}:{version}	subject_may_withdraw	text	derived
 ownership:{relation}:{target_kind}:{version}	accountability_record	text	derived

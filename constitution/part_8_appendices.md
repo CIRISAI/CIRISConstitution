@@ -3117,6 +3117,8 @@ Fold:
 - `key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less` (CC 3.2)
 - `reads=own` (CC 3.2)
 
+Body: `author`, `dimension`, `delegation_purpose`, `scope`, `delegation_valid_from`, `delegation_valid_until`, `cohort_scope`, `community_id`, `family_id`, `on_behalf_of`, `refs`, `asserted_at`
+
 **`preserve_response`** — Process, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -3483,7 +3485,7 @@ In time:
 - [OsaIllegalContent] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
 - [CommunityStandards] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
 
-Body: `author`, `dimension`, `legal_basis`, `claimant`, `content_sha256`, `content_holders`, `jurisdiction`, `good_faith_statement`, `claim_text`, `evidence_refs`, `perceptual_hash`, `counter_notice_channel`, `selection_counts`, `expires_at`, `asserted_at`
+Body: `author`, `dimension`, `legal_basis`, `claimant`, `content_sha256`, `content_holders`, `jurisdiction`, `good_faith_statement`, `claim_text`, `evidence_refs`, `perceptual_hash`, `counter_notice_channel`, `selection_counts`, `expires_at`, `refs`, `asserted_at`
 
 **`topical_relation:{kind}`** — Identity, thing
 

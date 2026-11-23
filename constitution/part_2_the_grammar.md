@@ -889,7 +889,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `attesting_key_id` | `"author"` | payload | `identity-ref` | iff the notice is authored | [3.1.1](part_3_the_namespace.md#3.1.1) [3.3.2](part_3_the_namespace.md#3.3.2) | A steward purge is counted and carries none. |
 | `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.1](part_3_the_namespace.md#3.1.1) | takedown_notice:{basis} with its version. |
 | `legal_basis` | `"legal_basis"` | payload | `legal-basis` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | The wire string of the closed set; the basis leaf names the same. |
-| `claimant_key_id` | `"claimant"` | payload | `identity-ref` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | The identity issuing the notice. |
+| `claimant_key_id` | `"claimant"` | payload | `identity-ref` | iff the notice is authored | [3.3.2](part_3_the_namespace.md#3.3.2) | The identity issuing the notice. A steward purge is counted and carries none; its sub is the lineage's name. |
 | `content_sha256` | `"content_sha256"` | payload | `hash-digest` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | SHA-256 of the content; on a steward purge, the selection digest. |
 | `content_holder_key_ids` | `"content_holders"` | payload | `[* identity-ref]` | always | [3.3.2](part_3_the_namespace.md#3.3.2) [2.6.1.2](#2.6.1.2) | Peers known to hold the bytes: a set. |
 | `jurisdiction` | `"jurisdiction"` | payload | `tstr` | always | [3.3.2](part_3_the_namespace.md#3.3.2) | ISO 3166-1 alpha-2 with an optional subdivision. |
@@ -900,6 +900,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `counter_notice_channel` | `"counter_notice_channel"` | payload | `tstr` | where the notice names one | [3.3.2](part_3_the_namespace.md#3.3.2) | A URI where counter-notices may be filed. |
 | — | `"selection_counts"` | payload | `{ * tstr => ceg-value }` | on a steward purge that states its counts | [3.3.2](part_3_the_namespace.md#3.3.2) | The counts of the purge's selection by plane. |
 | `expires_at` | `"expires_at"` | payload | `ms-time` | where the notice states its own end | [3.3.2](part_3_the_namespace.md#3.3.2) [2.6.2](#2.6.2) | POSIX milliseconds. |
+| — | `"refs"` | payload | `refs` | on a steward purge | [2.4.1.1](#2.4.1.1) [3.1.1](part_3_the_namespace.md#3.1.1) | The bundle in force, under head: the purge is counted over its holders. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
 **A custody report: the payload of a `custody:{kind}` row**
@@ -1006,6 +1007,23 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `cohort_key_id` | `"cohort_key_id"` | payload | `tstr` | always | [3.1.9.2](part_3_the_namespace.md#3.1.9.2) [3.3.6.4](part_3_the_namespace.md#3.3.6.4) | The standing set the vote is cast in; for the self-roster door the fedID. |
 | `grounds` | `"grounds"` | payload | `tstr` | where the vote states its grounds | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) | The voter's grounds. |
 | — | `"refs"` | payload | `refs` | always | [3.1.9.2](part_3_the_namespace.md#3.1.9.2) [2.6.1.3](#2.6.1.3) | Exactly one row, under answers: the proposal answered or the act objected to. A vote that carries objects_to_attestation_id or dismisses_objection_id is refused. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**An owner-binding: the payload of an `ownership:{relation}:{target_kind}:{version}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.2](part_3_the_namespace.md#3.2) [2.7.5](#2.7.5) | The owner: an adult person, and any live key of their roster signs. The CWT sub is the key owned, an identity reference; that key's own statement over the same payload is the first-binding cosign. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.2](part_3_the_namespace.md#3.2) [2.4.1.2](#2.4.1.2) | ownership:responsible_party:node:v1 or ownership:responsible_party:agent:v1; the row's type is delegates_to. |
+| `delegation_purpose` | `"delegation_purpose"` | payload | `"owner_binding"` | always | [3.2](part_3_the_namespace.md#3.2) [2.4.1.2](#2.4.1.2) | The one single-valued purpose; a row of this family with another purpose is refused. |
+| `scope` | `"scope"` | payload | `[+ tstr]` | where the owner confers scopes | [2.1](#2.1) [3.2](part_3_the_namespace.md#3.2) | A set of scope tokens: a node's binding carries its infra tokens. Absent on an agent's binding, whose role is its template's (CC 2.7.11). |
+| `delegation_valid_from` | `"delegation_valid_from"` | payload | `ms-time` | where the binding states a start | [2.4.1](#2.4.1) [2.6.2](#2.6.2) | POSIX milliseconds; absent reads asserted_at. |
+| `delegation_valid_until` | `"delegation_valid_until"` | payload | `ms-time` | where the binding states its end | [3.2](part_3_the_namespace.md#3.2) [2.4.1](#2.4.1) | POSIX milliseconds, later than the start; the binding lapses at this instant. |
+| `cohort_scope` | `"cohort_scope"` | payload | `"self" / "family" / "community" / "affiliations" / "species" / "biosphere" / "federation"` | always | [2.1](#2.1) [3.2](part_3_the_namespace.md#3.2) | Where the row is placed: self on the first row, and a row re-signed at a wider scope stands beside it. |
+| `community_id` | `"community_id"` | payload | `group-ref` | iff cohort_scope is community or affiliations | [2.1](#2.1) [3.3.4](part_3_the_namespace.md#3.3.4) | The group the row is placed in. It places the row and says nothing of who answers for the key. |
+| `family_id` | `"family_id"` | payload | `group-ref` | iff cohort_scope is family | [2.1](#2.1) [3.3.4](part_3_the_namespace.md#3.3.4) | The family the row is placed in. |
+| `on_behalf_of` | `"on_behalf_of"` | payload | `group-ref` | where the owner holds the key for an organisation | [3.2](part_3_the_namespace.md#3.2) [2.4](#2.4) | The organisation's affiliation, which answers alongside the owner. One that names no affiliation is refused, owner_binding_not_an_affiliation. |
+| — | `"refs"` | payload | `refs` | iff the row carries on_behalf_of | [3.2](part_3_the_namespace.md#3.2) [2.6.1.3](#2.6.1.3) | The affiliation's roster version, under head, and no other role; the affiliation's voices are further statements counted at that head. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
 **An occurrence: the payload of an `identity:occurrence` row**
@@ -1704,7 +1722,7 @@ Nine answers, each a composition of the operators. Each role, window, policy and
 
 That pair is the **seat**. It is two consents and no other object, and it stands the same whichever was signed first. Nobody is bound by the rows of others. Any bound voice ends the relation alone, and no third key ends it without a cut ([CC 4.5.4](part_4_composition_governance.md#4.5.4)).
 
-Where a body places a duty, the body is one party, and its consent is a count of its members' signatures on the row. One voice is not a count. A count once met is final: no member's later row lowers it, and only the holder's own withdrawal or a cut ends the duty. The members are those at the head the row names, and no key admits itself ([CC 3.3.4](part_3_the_namespace.md#3.3.4)).
+Where a body places a duty, the body is one party, and its consent is a count of its members' signatures on the row. One voice is not a count. A count once met is final: no member's later row lowers it, and only the holder's own withdrawal or a cut ends the duty. The members are those at the head the row names, and no key admits itself ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). A member the row removes is a voice of its own removal, except where the group's policy states otherwise ([CC 3.3.4](part_3_the_namespace.md#3.3.4), [CC 4.5.13](part_4_composition_governance.md#4.5.13)).
 
 Who may place a duty is one of three: the object's own key, a key holding a seat that may confer, or a group whose count is met. A key stands when a bounded walk of live seats leads to it from a root. For what a row means to a node, the root is that node's own key ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34)). An onward hop counts only from the authority's own acceptance edges. At each hop the remaining depth is the lesser of what is left and the edge's own, the classes intersect, and a cycle is visited once. A scope stands at the end of a walk only if every seat on it carries the scope, so nothing amplifies.
 

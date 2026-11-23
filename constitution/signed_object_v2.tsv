@@ -198,7 +198,7 @@ revocation	entity-revocation	"asserted_at"	asserted_at	payload	ms-time	always	2.
 takedown	takedown-notice	"author"	attesting_key_id	payload	identity-ref	iff the notice is authored	3.1.1 3.3.2	A steward purge is counted and carries none.
 takedown	takedown-notice	"dimension"	dimension	payload	tstr	always	3.1.1	takedown_notice:{basis} with its version.
 takedown	takedown-notice	"legal_basis"	legal_basis	payload	legal-basis	always	3.3.2	The wire string of the closed set; the basis leaf names the same.
-takedown	takedown-notice	"claimant"	claimant_key_id	payload	identity-ref	always	3.3.2	The identity issuing the notice.
+takedown	takedown-notice	"claimant"	claimant_key_id	payload	identity-ref	iff the notice is authored	3.3.2	The identity issuing the notice. A steward purge is counted and carries none; its sub is the lineage's name.
 takedown	takedown-notice	"content_sha256"	content_sha256	payload	hash-digest	always	3.3.2	SHA-256 of the content; on a steward purge, the selection digest.
 takedown	takedown-notice	"content_holders"	content_holder_key_ids	payload	[* identity-ref]	always	3.3.2 2.6.1.2	Peers known to hold the bytes: a set.
 takedown	takedown-notice	"jurisdiction"	jurisdiction	payload	tstr	always	3.3.2	ISO 3166-1 alpha-2 with an optional subdivision.
@@ -209,6 +209,7 @@ takedown	takedown-notice	"perceptual_hash"	perceptual_hash	payload	ceg-value	whe
 takedown	takedown-notice	"counter_notice_channel"	counter_notice_channel	payload	tstr	where the notice names one	3.3.2	A URI where counter-notices may be filed.
 takedown	takedown-notice	"selection_counts"	-	payload	{ * tstr => ceg-value }	on a steward purge that states its counts	3.3.2	The counts of the purge's selection by plane.
 takedown	takedown-notice	"expires_at"	expires_at	payload	ms-time	where the notice states its own end	3.3.2 2.6.2	POSIX milliseconds.
+takedown	takedown-notice	"refs"	-	payload	refs	on a steward purge	2.4.1.1 3.1.1	The bundle in force, under head: the purge is counted over its holders.
 takedown	takedown-notice	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 custody	custody-ack	"author"	attesting_key_id	payload	identity-ref	always	3.1.3.3	The device the report is about, equal to iss and the CWT sub.
 custody	custody-ack	"dimension"	dimension	payload	tstr	always	3.1.3.3	custody:ack:v1.
@@ -353,3 +354,15 @@ logical	-	none	original_content_hash	none	-	-	2.6.1.3	The earlier form's content
 logical	-	none	row	none	-	-	2.6.1.1	The protected header carries type, family and kid; the CWT claims carry iss and sub.
 logical	-	body.note	context	none	-	-	2.6.1.10	Bounded; no free text outside it.
 logical	-	a co-signature of these families	cosignatures, quorum_signatures	none	-	-	2.6.1.9	A further statement over the same payload, counted; never a payload member.
+owner_binding	owner-binding	"author"	attesting_key_id	payload	identity-ref	always	3.2 2.7.5	The owner: an adult person, and any live key of their roster signs. The CWT sub is the key owned, an identity reference; that key's own statement over the same payload is the first-binding cosign.
+owner_binding	owner-binding	"dimension"	dimension	payload	tstr	always	3.2 2.4.1.2	ownership:responsible_party:node:v1 or ownership:responsible_party:agent:v1; the row's type is delegates_to.
+owner_binding	owner-binding	"delegation_purpose"	delegation_purpose	payload	"owner_binding"	always	3.2 2.4.1.2	The one single-valued purpose; a row of this family with another purpose is refused.
+owner_binding	owner-binding	"scope"	scope	payload	[+ tstr]	where the owner confers scopes	2.1 3.2	A set of scope tokens: a node's binding carries its infra tokens. Absent on an agent's binding, whose role is its template's (CC 2.7.11).
+owner_binding	owner-binding	"delegation_valid_from"	delegation_valid_from	payload	ms-time	where the binding states a start	2.4.1 2.6.2	POSIX milliseconds; absent reads asserted_at.
+owner_binding	owner-binding	"delegation_valid_until"	delegation_valid_until	payload	ms-time	where the binding states its end	3.2 2.4.1	POSIX milliseconds, later than the start; the binding lapses at this instant.
+owner_binding	owner-binding	"cohort_scope"	cohort_scope	payload	"self" / "family" / "community" / "affiliations" / "species" / "biosphere" / "federation"	always	2.1 3.2	Where the row is placed: self on the first row, and a row re-signed at a wider scope stands beside it.
+owner_binding	owner-binding	"community_id"	community_id	payload	group-ref	iff cohort_scope is community or affiliations	2.1 3.3.4	The group the row is placed in. It places the row and says nothing of who answers for the key.
+owner_binding	owner-binding	"family_id"	family_id	payload	group-ref	iff cohort_scope is family	2.1 3.3.4	The family the row is placed in.
+owner_binding	owner-binding	"on_behalf_of"	on_behalf_of	payload	group-ref	where the owner holds the key for an organisation	3.2 2.4	The organisation's affiliation, which answers alongside the owner. One that names no affiliation is refused, owner_binding_not_an_affiliation.
+owner_binding	owner-binding	"refs"	-	payload	refs	iff the row carries on_behalf_of	3.2 2.6.1.3	The affiliation's roster version, under head, and no other role; the affiliation's voices are further statements counted at that head.
+owner_binding	owner-binding	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.

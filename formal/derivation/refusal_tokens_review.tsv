@@ -498,6 +498,8 @@ org_membership	not_a_token		retired token, named as refused by spelling
 org_type	not_a_token		payload or envelope member
 oversight_mode	not_a_token		payload or envelope member
 owner_binding	not_a_token		enumeration value, not a fault
+on_behalf_of	not_a_token		a payload member
+owner_binding_not_an_affiliation	refusal		the text says refused
 owner_binding_other_key	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 owner_of	not_a_token		function, predicate or rule name
 parent_org_id	not_a_token		payload or envelope member

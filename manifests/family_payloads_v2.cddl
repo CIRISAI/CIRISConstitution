@@ -118,12 +118,12 @@ entity-revocation = {
   * tstr => ceg-value,
 }
 
-; takedown_notice:{basis}: authored, or counted on a steward purge; sub is the claimant.
+; takedown_notice:{basis}: authored, with sub the claimant; or on a steward purge counted over the holders of the bundle in force, with no author and no claimant, sub the lineage's name and the bundle in refs.head.
 takedown-notice = {
   ? "author": identity-ref,                 ; A steward purge is counted and carries none. (iff the notice is authored)
   "dimension": tstr,                        ; takedown_notice:{basis} with its version.
   "legal_basis": legal-basis,               ; The wire string of the closed set; the basis leaf names the same.
-  "claimant": identity-ref,                 ; The identity issuing the notice.
+  ? "claimant": identity-ref,               ; The identity issuing the notice. A steward purge is counted and carries none; its sub is the lineage's name. (iff the notice is authored)
   "content_sha256": hash-digest,            ; SHA-256 of the content; on a steward purge, the selection digest.
   "content_holders": [* identity-ref],      ; Peers known to hold the bytes: a set.
   "jurisdiction": tstr,                     ; ISO 3166-1 alpha-2 with an optional subdivision.
@@ -134,6 +134,7 @@ takedown-notice = {
   ? "counter_notice_channel": tstr,         ; A URI where counter-notices may be filed. (where the notice names one)
   ? "selection_counts": { * tstr => ceg-value }, ; The counts of the purge's selection by plane. (on a steward purge that states its counts)
   ? "expires_at": ms-time,                  ; POSIX milliseconds. (where the notice states its own end)
+  ? "refs": refs,                           ; The bundle in force, under head: the purge is counted over its holders. (on a steward purge)
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }
@@ -334,6 +335,23 @@ objection-vote = {
   "cohort_key_id": tstr,                    ; The standing set the vote is cast in; for the self-roster door the fedID.
   ? "grounds": tstr,                        ; The voter's grounds. (where the vote states its grounds)
   "refs": refs,                             ; Exactly one row, under answers: the proposal answered or the act objected to. A vote that carries objects_to_attestation_id or dismisses_objection_id is refused.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; ownership:{relation}:{target_kind}:{version} (CC 3.2): the owner-binding, a delegates_to row authored by the owner; sub is the key owned, whose own statement over the same payload is the first-binding cosign. Its placement is cohort_scope with the group member that scope asks; a key held for an organisation names its affiliation in on_behalf_of.
+owner-binding = {
+  "author": identity-ref,                   ; The owner: an adult person, and any live key of their roster signs. The CWT sub is the key owned, an identity reference; that key's own statement over the same payload is the first-binding cosign.
+  "dimension": tstr,                        ; ownership:responsible_party:node:v1 or ownership:responsible_party:agent:v1; the row's type is delegates_to.
+  "delegation_purpose": "owner_binding",    ; The one single-valued purpose; a row of this family with another purpose is refused.
+  ? "scope": [+ tstr],                      ; A set of scope tokens: a node's binding carries its infra tokens. Absent on an agent's binding, whose role is its template's (CC 2.7.11). (where the owner confers scopes)
+  ? "delegation_valid_from": ms-time,       ; POSIX milliseconds; absent reads asserted_at. (where the binding states a start)
+  ? "delegation_valid_until": ms-time,      ; POSIX milliseconds, later than the start; the binding lapses at this instant. (where the binding states its end)
+  "cohort_scope": "self" / "family" / "community" / "affiliations" / "species" / "biosphere" / "federation", ; Where the row is placed: self on the first row, and a row re-signed at a wider scope stands beside it.
+  ? "community_id": group-ref,              ; The group the row is placed in. It places the row and says nothing of who answers for the key. (iff cohort_scope is community or affiliations)
+  ? "family_id": group-ref,                 ; The family the row is placed in. (iff cohort_scope is family)
+  ? "on_behalf_of": group-ref,              ; The organisation's affiliation, which answers alongside the owner. One that names no affiliation is refused, owner_binding_not_an_affiliation. (where the owner holds the key for an organisation)
+  ? "refs": refs,                           ; The affiliation's roster version, under head, and no other role; the affiliation's voices are further statements counted at that head. (iff the row carries on_behalf_of)
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }

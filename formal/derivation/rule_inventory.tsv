@@ -831,8 +831,8 @@ p3	30	3.1.1	family	reserved_prefix	none	device	is	states		The device: stem is cl
 p3	31	3.1.1	family	row_shape	body	takedown_notice	is	states	3.3.2	A takedown notice is a scores row whose envelope is the takedown_notice payload, subject_kind takedown_notice, so every notice has an attestation_id.	table
 p3	31	3.1.1	family	moderation	projection	takedown_notice,reconsideration	is	states	4.5.5	A tombstone cites the notice's attestation_id and a reconsideration row targets it.	table
 p3	31	3.1.1	family	row_shape	body	takedown_notice	is	states		takedown_notice basis is the closed LegalBasis set (dmca512 ... steward_purge).	table
-p3	31	3.1.1	family	cosign	cosign_rule	takedown_notice	is	states	2.4,3.4.7	A steward_purge notice is a cosigned row: any seat proposes as attesting_key_id, other seats ride in additional_scrubs over the same bytes, quorum evaluated under the root's consensus_protocol.	table
-p3	31	3.1.1	family	signer	signer_rule	takedown_notice	MUST	states	3.4.7	The steward_purge family derived from the verified signers MUST resolve to the claimant_key_id root.	table
+p3	31	3.1.1	family	cosign	cosign_rule	takedown_notice	is	states	2.4,3.4.7	A steward_purge notice is voiced by each holder of the bundle in force, a statement over the same payload, counted under the bundle's protocol.	table
+p3	31	3.1.1	family	signer	signer_rule	takedown_notice	MUST	states	3.4.7	A steward_purge notice is a counted row with no author and no claimant; its sub is the lineage's name and refs.head names the bundle in force.	table
 p3	31	3.1.1	family	signature	body	takedown_notice	is	states		A steward purge's signing payload is the takedown_notice row's canonical bytes.	table
 p3	31	3.1.1	family	reserved_prefix	none	takedown_notice	is	states		The takedown_notice: stem is closed to this family.	table
 p3	31	3.1.1	family	signer	signer_rule	takedown_notice	is	states	4.5.5	For the legal bases a takedown_notice is signed by the duty holder under the 4.5.5 enforced-admission rule; steward_purge is cosigned by the trust root.	table
@@ -1425,9 +1425,9 @@ p3	831	3.2	kernel	delegation	subject_rule	delegates_to	is	restates	3.2	A capabil
 p3	831	3.2	kernel	delegation	signer_rule	delegates_to	MAY	applies	4.5.5,2.7.5	A quorum may confer a duty scope or any delegation-plane capability on an adult user key; the write gate never refuses it as a stewardship act	
 p3	831	3.2	kernel	owner_binding	subject_rule	delegates_to	MUST_NOT	restates	3.4.12	Steward-binding an adult is forbidden	
 p3	831	3.2	kernel	licensure	governance		MUST	states	4.5.5,3.4.11	A duty scope needing an age or assurance floor declares it on its own 4.5.5 row, never inherited from a custody rule	
-p3	833	3.2	kernel	owner_binding	cosign_rule	delegates_to	is	states	2.1,2.4,2.4.1.3	An owner-binding of an agent key held for an organisation names the affiliation in community_id and is cosigned under the affiliation's protocol	
+p3	833	3.2	kernel	owner_binding	cosign_rule	delegates_to	is	states	2.1,2.4,2.4.1.3	An owner-binding of an agent key held for an organisation names the affiliation in on_behalf_of and is cosigned under the affiliation's protocol	
 p3	833	3.2	kernel	settlement	none	delegates_to,slashing,quarantine	is	states	3.1.9.2	slash and quarantine on an organisation-bonded agent reach the affiliation's keys as well as the steward's; the record names the organisation first	
-p3	833	3.2	kernel	owner_binding	body	delegates_to	is	states		An owner-binding without community_id is a personal steward's	
+p3	833	3.2	kernel	owner_binding	body	delegates_to	is	states		An owner-binding without on_behalf_of is a personal steward's	
 p3	835	3.2	kernel	owner_binding	subject_rule	delegates_to	is	states	2.4.1.2,4.5.13	A node or agent key is owner-bound by at most one steward at a time; only the owner_binding purpose is single-valued, other delegations remain multi-parent	
 p3	837	3.2	kernel	audience	replication		is	restates	1.13.3.4,5.2	The self cohort is the nodes sharing one owner; an outsider is a node not owner-bound to my owner	
 p3	837	3.2	kernel	owner_binding	projection	delegates_to	MUST	states		Ownership is resolved by purpose-filtered owner_of(K) over live owner_binding edges, resolving to at most one key	

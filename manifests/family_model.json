@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "202b1188c11bbe1297c2a4ee3fbe98720c3961159793cfa48ad9fe0f05b5bfcf",
+  "registry_sha256": "aaccb76f168538c22c4debe5fd240b1c59514ab0375b2226b95a340cc4d00f1e",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -175,12 +175,12 @@
     "gap": 0
    },
    "body": {
-    "cc-table": 58,
+    "cc-table": 59,
     "code-v61": 0,
     "generic": 0,
     "prose": 26,
     "mixed": 0,
-    "gap": 100
+    "gap": 99
    },
    "freshness": {
     "cc-table": 0,
@@ -534,7 +534,7 @@
   },
   "body": {
    "source": "constitution/signed_object.tsv",
-   "families_with_members": 58,
+   "families_with_members": 59,
    "presence_in_words": [
     "accord_root: accord:* rows",
     "confidence: scores",
@@ -63566,8 +63566,110 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "rule": "owner-binding",
+     "members": [
+      {
+       "member": "author",
+       "type": "identity-ref",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.2"
+      },
+      {
+       "member": "dimension",
+       "type": "tstr",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.2"
+      },
+      {
+       "member": "delegation_purpose",
+       "type": "\"owner_binding\"",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.2"
+      },
+      {
+       "member": "scope",
+       "type": "[+ tstr]",
+       "presence": "optional",
+       "when": "where the owner confers scopes",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "delegation_valid_from",
+       "type": "ms-time",
+       "presence": "optional",
+       "when": "where the binding states a start",
+       "in_cddl": true,
+       "cc_ref": "CC 2.4.1"
+      },
+      {
+       "member": "delegation_valid_until",
+       "type": "ms-time",
+       "presence": "optional",
+       "when": "where the binding states its end",
+       "in_cddl": true,
+       "cc_ref": "CC 3.2"
+      },
+      {
+       "member": "cohort_scope",
+       "type": "\"self\" / \"family\" / \"community\" / \"affiliations\" / \"species\" / \"biosphere\" / \"federation\"",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "community_id",
+       "type": "group-ref",
+       "presence": "optional",
+       "when": "iff cohort_scope is community or affiliations",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "family_id",
+       "type": "group-ref",
+       "presence": "optional",
+       "when": "iff cohort_scope is family",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "on_behalf_of",
+       "type": "group-ref",
+       "presence": "optional",
+       "when": "where the owner holds the key for an organisation",
+       "in_cddl": true,
+       "cc_ref": "CC 3.2"
+      },
+      {
+       "member": "refs",
+       "type": "refs",
+       "presence": "optional",
+       "when": "iff the row carries on_behalf_of",
+       "in_cddl": true,
+       "cc_ref": "CC 3.2"
+      },
+      {
+       "member": "asserted_at",
+       "type": "ms-time",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.2"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.4",
+    "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4"
    },
    "freshness": {
     "value": {
@@ -77225,8 +77327,8 @@
       {
        "member": "claimant",
        "type": "identity-ref",
-       "presence": "required",
-       "when": "always",
+       "presence": "optional",
+       "when": "iff the notice is authored",
        "in_cddl": true,
        "cc_ref": "CC 3.3.2"
       },
@@ -77309,6 +77411,14 @@
        "when": "where the notice states its own end",
        "in_cddl": true,
        "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "refs",
+       "type": "refs",
+       "presence": "optional",
+       "when": "on a steward purge",
+       "in_cddl": true,
+       "cc_ref": "CC 2.4.1.1"
       },
       {
        "member": "asserted_at",

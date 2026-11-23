@@ -50,6 +50,9 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The age rules are model-checked in the kernel's repository and vendored (`MinorVoid`, `MinorSuspend`, `StandingProtection`): no expiry and no clock; between assured rows at one level the later stands, and at one instant the younger band; nodes holding the same rows agree outright.
 - The rule that derived content keeps its circle is proved in the kernel's repository and vendored (`DerivedCircle.lean`): an output's audience is within the intersection of its sources' audiences unless each owner releases, over any chain of derivations.
 - Three proofs from the kernel's repository are vendored by commit and hash (`formal/vendor/kernel`, CIRISKernel 7f4fb7cbcae5): the three admissions as one walk, the void rule for a minor's duty appointment in every order of arrival, and the key-of-issuer check. The first closes rc21's note that the admission proofs were run and not proved. The second showed that an expiry clause on the adult proof would let a backdated appointment escape the rule, so the rule carries none.
+- The owner-binding has a payload rule (3.2, 2.6.1.4 `owner-binding`): the owner authors it, the key owned cosigns it, and it carries its purpose, an optional scope set, an optional term and its placement. A key held for an organisation names the organisation's affiliation in `on_behalf_of` and is counted under that affiliation's protocol; `community_id` places the row and names no organisation.
+- A steward purge is counted over the holders of the bundle in force (3.1.1, 2.4.1.1): it carries no author and no `claimant`, its `sub` is the lineage's name, and it names the bundle in `refs.head`.
+- A member a row removes is a voice of its own removal, except where the group's policy states otherwise (2.7.5).
 
 ## 1.0-rc21 (released 2026-11-19, tag v1.0-rc21)
 

@@ -93,6 +93,7 @@ OBJECTS = [
     ("grant_withdrawal", "The holders' withdrawal of a grant: the payload of a counted `withdraws` row"),
     ("receipt", "A receipt: the payload of an `act:ack` row"),
     ("objection", "An objection vote: the payload of an `objection:{state}` row"),
+    ("owner_binding", "An owner-binding: the payload of an `ownership:{relation}:{target_kind}:{version}` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
     ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
     ("admission", "An admission of a unit: the members of an `admission:unit` row"),
@@ -619,7 +620,26 @@ def family_payloads():
         "objection-vote": ("objection:.state", {
             "author": iref(1), "dimension": "objection:raised:v1", "cohort": "self", "cohort_key_id": "fed-1",
             "grounds": "sample", "refs": {"answers": _ref(23)}, "asserted_at": t}),
+        "owner-binding": ("ownership:.relation:.target_kind:.version", {
+            "author": iref(0), "dimension": "ownership:responsible_party:node:v1", "delegation_purpose": "owner_binding",
+            "scope": sorted(["infra:attest", "infra:serve"], key=cde), "delegation_valid_until": t + 86400000,
+            "cohort_scope": "self", "asserted_at": t}),
     }
+
+
+def purge_notice():
+    """A steward purge (CC 2.4.1.1): counted over the holders of the bundle in force, with no author and no claimant."""
+    p = _without(family_payloads()["takedown-notice"][1], "author", "claimant")
+    return dict(p, dimension="takedown_notice:steward_purge:v1", legal_basis="steward_purge", content_holders=[],
+                refs={"head": _ref(9)})
+
+
+def org_binding(**change):
+    """An owner-binding of a key held for an organisation (CC 3.2): an agent's, placed in a community, naming the
+    organisation's affiliation and that affiliation's roster version."""
+    p = _without(family_payloads()["owner-binding"][1], "scope")
+    return dict(dict(p, dimension="ownership:responsible_party:agent:v1", cohort_scope="community", community_id=gref(5),
+                     on_behalf_of=gref(6), refs={"head": _ref(24)}), **change)
 
 
 def grant_reply(**change):
@@ -667,7 +687,9 @@ def family_payload_samples():
         ("takedown-notice", "takedown_notice:{basis} payload", cde(P["takedown-notice"]), [
             ("a notice on an unlisted basis", W("takedown-notice", legal_basis="DMCA512")),
             ("a content digest in hex", W("takedown-notice", content_sha256="00" * 32)),
-            ("a notice with no claimant", D("takedown-notice", "claimant"))]),
+            ("a claimant that is a key id", W("takedown-notice", claimant="A1"))]),
+        ("takedown-notice", "takedown_notice:steward_purge payload", cde(purge_notice()), [
+            ("a purge whose refs are a bare reference", cde(dict(purge_notice(), refs=_ref(9))))]),
         ("custody-ack", "custody:{kind} payload", cde(P["custody-ack"]), [
             ("a report on two blobs", W("custody-ack", evidence_refs=[[-16, bytes([7]) * 32], [-16, bytes([8]) * 32]])),
             ("a custody_state outside the two", W("custody-ack", custody_state="lost"))]),
@@ -753,6 +775,18 @@ def family_payload_samples():
             ("a receipt with no dimension", D("act-ack", "dimension")),
             ("acts as one bare reference", W("act-ack", refs={"also": {"ack": _ref(21)}})),
             ("an empty set of acts", W("act-ack", refs={"also": {"ack": []}}))]),
+        ("owner-binding", "ownership:responsible_party:node payload", cde(P["owner-binding"]), [
+            ("a binding with no author", D("owner-binding", "author")),
+            ("a binding with no purpose", D("owner-binding", "delegation_purpose")),
+            ("a purpose other than owner_binding", W("owner-binding", delegation_purpose="act_on_behalf")),
+            ("a scope as a bare token", W("owner-binding", scope="infra:attest")),
+            ("an empty scope", W("owner-binding", scope=[])),
+            ("a binding with no cohort_scope", D("owner-binding", "cohort_scope")),
+            ("a cohort_scope outside the seven", W("owner-binding", cohort_scope="room")),
+            ("an end as text", W("owner-binding", delegation_valid_until="2027-01-01T00:00:00.000Z"))]),
+        ("owner-binding", "ownership:responsible_party:agent payload of a key held for an organisation", cde(org_binding()), [
+            ("an organisation named by a key id", cde(org_binding(on_behalf_of="A1"))),
+            ("a community named by a key id", cde(org_binding(community_id="A1")))]),
         ("objection-vote", "objection:{state} payload", cde(P["objection-vote"]), [
             ("a vote with no author", D("objection-vote", "author")),
             ("a vote with no cohort", D("objection-vote", "cohort")),
@@ -804,8 +838,13 @@ def family_payload_rule(root, p, family=None):
     if root == "delivery-ack" and _segment(dim, 1) != p.get("stream_id"):
         return PAYLOAD_INVALID
     if root == "takedown-notice":
-        if _segment(dim, 1) != p.get("legal_basis") or (p.get("legal_basis") == "steward_purge" and "author" in p):
+        if _segment(dim, 1) != p.get("legal_basis"):
             return PAYLOAD_INVALID
+        purge = p.get("legal_basis") == "steward_purge"
+        if purge and ("author" in p or "claimant" in p or "head" not in p.get("refs", {})):
+            return PAYLOAD_INVALID                        # counted over the holders of the bundle in force (CC 2.4.1.1)
+        if not purge and ("author" not in p or "claimant" not in p):
+            return PAYLOAD_INVALID                        # a legal basis is one identity's notice
     if root == "deferral-response" and "reason_digest" in p:
         return PAYLOAD_INVALID                            # the reason is the request's; a response carries none
     if root == "canonical-rebind" and "head" not in p.get("refs", {}):
@@ -835,6 +874,18 @@ def family_payload_rule(root, p, family=None):
             return PAYLOAD_INVALID                        # names the one row it answers and nothing else (CC 3.1.3.2)
     if root == "trust-accepts" and ("head" in refs or "scope" in p):
         return PAYLOAD_INVALID                            # the edge names no head and carries no scope (CC 3.2 T4a)
+    if root == "owner-binding":
+        if not dim.startswith("ownership:"):
+            return PAYLOAD_INVALID
+        if "scope" in p and p["scope"] != sorted(set(p["scope"]), key=cde):
+            return PAYLOAD_INVALID                        # a set (CC 2.6.1.2)
+        if "delegation_valid_until" in p and p["delegation_valid_until"] <= p.get("delegation_valid_from", p["asserted_at"]):
+            return PAYLOAD_INVALID                        # the end is later than the start
+        cs = p.get("cohort_scope")
+        if ("community_id" in p) != (cs in ("community", "affiliations")) or ("family_id" in p) != (cs == "family"):
+            return PAYLOAD_INVALID                        # the group member the placement asks, and no other (CC 2.1)
+        if ("on_behalf_of" in p) != ("refs" in p) or (refs and set(refs) != {"head"}):
+            return PAYLOAD_INVALID                        # an organisation's binding names that affiliation's head, and no row else
     if root == "act-ack":
         acks = refs.get("also", {}).get("ack", [])
         if len(acks) > ACK_MAX:
@@ -1053,6 +1104,9 @@ def family_payload_rule_checks():
         ("delivery-ack", dict(P["delivery-ack"][1], stream_id="s2"), None),
         ("takedown-notice", dict(P["takedown-notice"][1], dimension="takedown_notice:steward_purge:v1",
                                  legal_basis="steward_purge"), None),
+        ("takedown-notice", dict(purge_notice(), claimant=iref(0)), None),
+        ("takedown-notice", _without(purge_notice(), "refs"), None),
+        ("takedown-notice", _without(P["takedown-notice"][1], "claimant"), None),
         ("group-roster", dict(P["group-roster"][1], version=1), None),
         ("canonical-rebind", dict(P["canonical-rebind"][1], refs={"also": {"cites": [_ref(9)]}}), None),
         ("deferral-response", dict(P["deferral-response"][1], reason_digest=[-16, bytes([7]) * 32]), None),
@@ -1072,6 +1126,16 @@ def family_payload_rule_checks():
         ("membership-reply", grant_reply(refs={"also": {"cites": [_ref(15)]}}), None),
         ("trust-accepts", dict(P["trust-accepts"][1], refs={"head": _ref(9)}), None),
         ("trust-accepts", dict(P["trust-accepts"][1], scope=["infra:serve"]), None),
+        ("owner-binding", dict(P["owner-binding"][1], dimension="self:delegates_to:v1"), None),
+        ("owner-binding", dict(P["owner-binding"][1], scope=["infra:serve", "infra:attest", "infra:serve"]), None),
+        ("owner-binding", dict(P["owner-binding"][1], delegation_valid_until=P["owner-binding"][1]["asserted_at"]), None),
+        ("owner-binding", dict(P["owner-binding"][1], delegation_valid_from=P["owner-binding"][1]["asserted_at"] + 2 * 86400000), None),
+        ("owner-binding", dict(P["owner-binding"][1], community_id=gref(5)), None),
+        ("owner-binding", dict(P["owner-binding"][1], cohort_scope="family"), None),
+        ("owner-binding", dict(P["owner-binding"][1], refs={"head": _ref(24)}), None),
+        ("owner-binding", org_binding(refs={"head": _ref(24), "also": {"cites": [_ref(9)]}}), None),
+        ("owner-binding", _without(org_binding(), "refs"), None),
+        ("owner-binding", _without(org_binding(), "community_id"), None),
         ("act-ack", dict(P["act-ack"][1], refs={"also": {"cites": [_ref(21)]}}), None),
         ("act-ack", dict(P["act-ack"][1], refs=dict(P["act-ack"][1]["refs"], head=_ref(1))), None),
         ("objection-vote", dict(P["objection-vote"][1], refs={"also": {"cites": [_ref(23)]}}), None),
@@ -1150,7 +1214,7 @@ def family_cddl_checks(text, ftext):
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
 FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "delivery_ack",
                   "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts",
-                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection")
+                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
@@ -1161,7 +1225,7 @@ FAMILY_RULE_HEAD = {
     "eviction-refs": "The refs of an eviction (CC 2.6.1.7, CC 3.3.6.4): the head, and the proof of its signers, both required; a closed map.",
     "eviction-proof": "The proof an eviction carries (CC 2.6.1.7): the rows that resolve its voices; a closed map.",
     "entity-revocation": "revocation:{entity_type}:{reason}: authored by the revoker; sub is the revoked entity.",
-    "takedown-notice": "takedown_notice:{basis}: authored, or counted on a steward purge; sub is the claimant.",
+    "takedown-notice": "takedown_notice:{basis}: authored, with sub the claimant; or on a steward purge counted over the holders of the bundle in force, with no author and no claimant, sub the lineage's name and the bundle in refs.head.",
     "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
     "key-grant": "key_grant:{axis}: authored by the sealer; sub is the recipient.",
     "delivery-ack": "delivery_ack:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
@@ -1172,6 +1236,7 @@ FAMILY_RULE_HEAD = {
     "membership-reply": "membership:acceptance and membership:decline (CC 3.1.3.2, CC 3.1.2.1): authored by the invitee, or on the reply to a grant by the owner of the key the grant names, at federation scope. It names the one row it answers in refs.answers, and no head and no target.",
     "grant-withdrawal": "The withdraws row that ends a grant (CC 4.2.1, CC 2.4.1.1): counted over the holders of the bundle in force, with no author.",
     "act-ack": "act:ack (CC 3.1.3, CC 2.7.5): a receipt, type scores; one voice's, or a body's count with no author. It names 1 to 256 acts under refs.also ack, and no head.",
+    "owner-binding": "ownership:{relation}:{target_kind}:{version} (CC 3.2): the owner-binding, a delegates_to row authored by the owner; sub is the key owned, whose own statement over the same payload is the first-binding cosign. Its placement is cohort_scope with the group member that scope asks; a key held for an organisation names its affiliation in on_behalf_of.",
     "objection-vote": "objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",
