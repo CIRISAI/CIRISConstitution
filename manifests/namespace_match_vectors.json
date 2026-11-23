@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc22",
-    "registry_sha256": "b20ef0bf0e1b456fdc209e7d0945db14c4636d6930ed084434d947c8ca9cc64a",
+    "registry_sha256": "31930428f84a4fcc8ab3f115ec43a22afc4adb83e5ba6eb410bae218918e4eaa",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -5377,46 +5377,58 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
-      "dimension": "objection:proposal:v1",
+      "dimension": "objection:assent:v1",
       "family": "objection:{state}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "objection:proposal:V1",
+      "dimension": "objection:assent:V1",
       "family": "objection:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "objection:proposal:v1:v2",
+      "dimension": "objection:assent:v1:v2",
       "family": "objection:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "objection:proposal:v1beta",
+      "dimension": "objection:assent:v1beta",
       "family": "objection:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
     },
     {
-      "dimension": "Objection:proposal:v1",
+      "dimension": "Objection:assent:v1",
       "family": "objection:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
-      "dimension": "objection:proposal",
+      "dimension": "objection:assent",
       "family": "objection:{state}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "objection:PROPOSAL:v1",
+      "dimension": "objection:ASSENT:v1",
       "family": "objection:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "objection:raised:v1",
+      "family": "objection:{state}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "objection:not_a_listed_value:v1",
+      "family": "objection:{state}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "observation:access_assumption:v1",

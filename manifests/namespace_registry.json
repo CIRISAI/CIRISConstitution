@@ -326,7 +326,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "b20ef0bf0e1b456fdc209e7d0945db14c4636d6930ed084434d947c8ca9cc64a",
+    "registry_sha256": "31930428f84a4fcc8ab3f115ec43a22afc4adb83e5ba6eb410bae218918e4eaa",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -341,7 +341,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "7e9e253235044e35a7d78637882737f505add19f5369af3487aeadbff010d95b"
+    "source_sha256": "1a09bc3c02a8a2bda819276c1d3569c20a946433c9f53575acab725e63281687"
   },
   "families": [
     {
@@ -3661,10 +3661,9 @@
         },
         {
           "class": "vocab",
-          "open": true,
+          "open": false,
           "segment": "{state}",
           "values": [
-            "proposal",
             "assent",
             "raised"
           ]
