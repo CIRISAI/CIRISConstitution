@@ -833,7 +833,7 @@ All error responses MUST conform to:
 | 422 | `SIGNATURE_VERIFICATION_FAILED` | The composite signature failed to verify; it is one signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)) |
 | 422 | `CLOCK_SKEW_VIOLATION` | `asserted_at` or `signed_at` exceeds [CC 2.6.7](part_2_the_grammar.md#2.6.7) ±5 minute tolerance |
 | 422 | `RECEIPT_QUORUM_NOT_MET` | Fewer counted Receipts are held for the head than its `receipt_quorum` ([CC 5.3.1](#5.3.1)) |
-| 413 | `ENVELOPE_TOO_LARGE` | A payload's deterministic encoding exceeds the [CC 2.6.1.6](part_2_the_grammar.md#2.6.1.6) 1 MiB bound, or the octets buffered reach the write path's intake ceiling before the parse completes. Raised at **every** write path (HTTP body, capsule, FFI, tier-ingest), not only at an HTTP gate — the CC 2.6.1.6 rule is an admission bound, not a transport limit. The storage-layer spelling `federation_envelope_too_large` maps to this wire code; the wire code is the conformance surface. |
+| 413 | `ENVELOPE_TOO_LARGE` | A payload's deterministic encoding exceeds the [CC 2.6.1.6](part_2_the_grammar.md#2.6.1.6) 1 MiB bound, or the octets buffered reach the write path's intake ceiling before the parse completes. Raised at **every** write path (HTTP body, capsule, FFI, tier-ingest), not only at an HTTP gate — the CC 2.6.1.6 rule is an admission bound, not a transport limit. The reason of the refusal is `envelope_too_large` on every write path ([CC 2.6.1.6](part_2_the_grammar.md#2.6.1.6)), and this code is how the HTTP surface carries it. |
 | 429 | `RATE_LIMITED` | `X-RateLimit-*` headers set; `Retry-After` honored |
 | 500 | `INTERNAL_ERROR` | Server-side fault; request_id usable for support |
 | 503 | `SUBSTRATE_LAGGING` | Substrate replication lag exceeds liveness bound |

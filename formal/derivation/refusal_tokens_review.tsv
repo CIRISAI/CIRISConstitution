@@ -249,6 +249,7 @@ end_names_old_head	concludes_nothing		the text says concludes nothing
 entity_kind	not_a_token		payload or envelope member
 entity_type	not_a_token		segment of a family's name (revocation:{entity_type}:{reason})
 envelope_member_null	detail		reason carried with federation_malformed_row
+envelope_too_large	refusal		the text says refuse; the reason of the size refusal on every write path
 epistemic_mode	not_a_token		payload or envelope member
 epoch_be8	not_a_token		constant or parameter name
 erasure_exempt	not_a_token		payload or envelope member
@@ -286,7 +287,6 @@ federation_accord_dimension_requires_accord_holder	refusal		reason column of the
 federation_addressed_not_recipient	refusal		the text says refused
 federation_community_consensus_protocol_violation	refusal		the text says refused
 federation_delegated_scope_unauthorized	refusal		reason column of the reserved-family table
-federation_envelope_too_large	refusal		storage-layer spelling of the too-large refusal
 federation_keys	not_a_token		registry or manifest member, or a file name
 federation_malformed_row	refusal		the text says refused
 federation_membership	not_a_token		enumeration value, not a fault

@@ -165,7 +165,7 @@ row-ref-set = [+ row-ref]          ; a set: sorted by the bytewise order of each
 ; refused: absence is its one encoding.
 refs = refs-members .and nonempty-map
 refs-members = {
-  ? "head": row-ref,               ; the roster head this row is counted over, or a version extends
+  ? "head": row-ref,               ; the roster head this row is counted over, or a version extends; the head an act is exercised at; the head an end acts from
   ? "further_heads": row-ref-set,  ; further tips named beside `head`
   ? "prev": row-ref,               ; the predecessor in a signer's own series; on a content row, a content row its author signed in the same room
   ? "further_prev": row-ref-set,   ; on a content row: further content rows of the same author in the same room, beside `prev` (CC 3.1.3.2)
@@ -205,7 +205,7 @@ ceg-key = { 1: 7, 3: composite-alg, -1: bstr .size 1984 }
 ; a SET of roles (CC 4.5.8). The end rule reads "contains", in prose (CC 2.4.1.1): a set mixing
 ; user or accord_holder with node or agent is refused; a record whose set contains user or
 ; accord_holder carries no valid_until; one whose set contains node or agent carries one, unless it
-; is a room key of a private room; a role outside both groups takes no end rule of its own; asserted_at <= valid_until <= asserted_at +
+; is a room key of a private room; a role outside both groups takes no end rule of its own; asserted_at < valid_until <= asserted_at +
 ; key_record_max_secs * 1000; refused key_record_out_of_window otherwise.
 key-record-members = {
   "key": ceg-key,
@@ -286,11 +286,11 @@ revoked-entry = [key: kid, revocation: row-ref, trusted_through: [* row-ref]]   
 ;  recovery key's thumbprint; it counts only where prev's recovery_commitments[iss] equals the commitment over the
 ;  recovery key (constant time). refs.also "cites" names the recovery key's key:record and the holder's new
 ;  signing-key record; recovery_commitments[iss] is the next commitment.
-; Checked in prose, not here: version is 1 iff refs has no prev; holders, serve_nodes and witnesses are
+; Checked in prose, not here: version is 1 iff refs has no prev; holders, serve_nodes and transparency_services are
 ; pairwise disjoint;
 ; the keys of recovery_commitments are exactly holders; scope holds infra:attest and infra:serve; the
-; three witness members are present together or not at all, and receipt_quorum is
-; floor(|witnesses| / 2) + 1; each statement's iat is floor(asserted_at / 1000).
+; three transparency members are present together or not at all, and receipt_quorum is
+; floor(|transparency_services| / 2) + 1; each statement's iat is floor(asserted_at / 1000).
 ceg-genesis-bundle = {
   "refs": genesis-refs,
   "version": 1..4294967295,
@@ -310,8 +310,8 @@ genesis-charter = {
   "scope": [+ tstr],               ; a set; holds infra:attest and infra:serve (CC 3.2 Rooted)
   ? "halt_fuse_secs": 1..4294967295,       ; absent means 86400 (CC 4.2.1.1)
   ? "attach_window_secs": 1..4294967295,   ; absent: attachable by an out-of-band anchor only (CC 3.2 T4a)
-  ? "receipt_cadence_secs": 1..4294967295, ; witnessed mode: the three witness members together
-  ? "receipt_quorum": 2..4294967295,       ; absence is witnessed mode off; 0 is never written
+  ? "receipt_cadence_secs": 1..4294967295, ; where the charter names services: the three transparency members together
+  ? "receipt_quorum": 2..4294967295,       ; absent where the charter names no services; 0 is never written
   ? "transparency_services": [+ identity-ref],         ; a set; each one's key:record stands in refs.also "cites"
 }
 
@@ -390,8 +390,8 @@ hpke-info = "CEG-binding/2" / "CEG-invitation/2"
 ; Verification has three answers, returned by a verifier and never on the wire: Valid; Invalid(reason);
 ; Waiting{missing key refs}. Invalid under a held key is final. A structural fault is Invalid whatever
 ; keys are held. A statement whose key record is Waiting is Waiting, naming the deepest missing key; a
-; key record Invalid makes the statement Invalid. A key held in part is Waiting on the missing half. Waiting is never counted.
+; key record Invalid makes the statement Invalid. A key is one composite key: a statement whose signer's key record is not held is Waiting on it. Waiting is never counted.
 
-; Receipts over the provenance log and each stream's log are COSE Receipts (RFC 9942) with
-; vds = 1 (RFC9162_SHA256); each witness issues its own receipt over the same root, with its
-; instant in the protected header; a receipt is issued per batch of a stream, never per chunk.
+; Receipts are COSE Receipts (RFC 9942) with vds = 1 (RFC9162_SHA256); each Transparency Service
+; registers a statement in its own log and issues its own receipt over that log's root, with its
+; instant of issue; a receipt is issued per batch of a stream, never per chunk.

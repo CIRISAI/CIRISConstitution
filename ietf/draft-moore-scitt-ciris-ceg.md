@@ -85,12 +85,12 @@ informative:
     seriesinfo:
       Internet-Draft: draft-moore-scitt-ciris-trace-context-00
   CC-VECTORS:
-    title: "CIRISVerify v23.3.0"
+    title: "CIRISVerify v23.4.1"
     author:
       org: CIRIS L3C
     date: false
-    target: https://github.com/CIRISAI/CIRISVerify/tree/v23.3.0
-    annotation: "The tag v23.3.0 is commit ffd7af1f1b53."
+    target: https://github.com/CIRISAI/CIRISVerify/tree/v23.4.1
+    annotation: "The tag v23.4.1 is commit 732c44847cc8d0e3bd2779fd186b504478584623."
   I-D.aylward-aiga:
     title: "Artificial Intelligence Governance Architecture (AIGA)"
     author:
@@ -153,8 +153,10 @@ SCITT {{RFC9943}} defines an architecture for registering signed
 statements with a Transparency Service and returning receipts that
 prove registration.  Each CEG statement is a COSE_Sign1 with an
 issuer and a subject in its protected header, so it has the shape of
-a SCITT Signed Statement.  CEG runs no Transparency Service of its
-own, and its admission checks need none.  A host that runs code a row
+a SCITT Signed Statement.  CEG fixes no Transparency Service, and its
+admission checks need none.  A trust root's genesis bundle may name
+the services its heads are registered with, and a room may name them
+for its accountable streams ({{heads}}).  A host that runs code a row
 admits first requires a SCITT receipt from a Transparency Service it
 trusts ({{receipts}}).  {{scitt}} describes the relationship and what
 still differs.
@@ -429,8 +431,9 @@ An optional member is unset by being absent, never by null.  A
 Substrate MUST refuse a payload with null for an optional member,
 with `federation_malformed_row` and the reason `envelope_member_null`.
 No value a family names, at any depth, is a float, a null, an
-undefined value, a tag or a simple value.  The one exception is the
-redaction marks of {{erasable}}.
+undefined value, a tag or a simple value.  The exceptions are the
+redaction marks of {{erasable}} and the decimal fraction of
+{{numbers}}.
 
 A Substrate, relay or Consumer that stores or forwards a statement
 MUST forward the octets it received.  It never strips an emitted
@@ -479,7 +482,7 @@ fraction: CBOR tag 4 {{RFC8949}} over `[exponent, mantissa]`, with a
 negative exponent and a mantissa in CBOR's integer range that is not
 divisible by 10.  An integral number is a plain integer.  A number
 that cannot be so written is refused
-`body_number_unrepresentable` (CC 2.6.1.4).
+`body_number_unrepresentable` (CC 2.6.1.2).
 
 A fold sums in signed 64-bit integers, and its arithmetic is checked:
 a fold that would overflow is refused, and never wraps.  A derived
@@ -585,19 +588,27 @@ the row id.  `refs` is a map with these members:
 
 | Member | What it names |
 |---|---|
-| head | The head a count is over ({{counted}}) |
+| head | The head the row is at: the head a count is over ({{counted}}), the head an act is exercised at, or the head an end acts from ({{standing-end}}) |
 | further_heads | Further tips beside `head` |
-| prev | A predecessor |
-| answers | The row this row answers |
+| prev | The predecessor in a signer's own series; on a content row, a content row its author signed in the same room |
+| further_prev | Further content rows of the same author in the same room, beside `prev` |
+| answers | The row this row answers: the proposal voted on or accepted, the window opened, the row replied to |
 | target | The row a `supersedes`, `withdraws` or `recants` row names, the act a cut ends or the member a removal removes, and, on a halt's confirmation or resumption, that halt ({{halt}}) |
-| trusted_through | On a key revocation, the last rows of the key held good |
-| also | A map from a role, `ack` or `cites`, to a set of references |
+| trusted_through | On a key revocation, the last rows of the key held good; on a row that ends a member's seat and on a `keeps` row, the member's newest content rows held good.  At most 64 |
+| also | A map from a role, `ack`, `cites` or `under`, to a set of references |
 {: title="Members of refs"}
 
 A holder reads the set of named rows from `refs` alone, without
 knowing the family.  The roles of `also` are a closed registry of
-two.  `ack` names an acknowledgement.  `cites` names a row the row
-cites.
+three.  `ack` names a row acknowledged, as a receipt of acts does
+({{standing-end}}).  `cites` names a row the row cites.  `under`
+names the one edge a deputy's edge hangs from, and is a set of
+exactly one.
+
+A row waits for the rows it names, with two exceptions that are named
+for the fold alone: `prev` and `further_prev` on a content row, and
+`trusted_through` on a row that ends a seat or a `keeps` row (CC
+2.7.3).
 
 Every array inside `refs` is a set, and a set out of order is
 refused.  An empty `refs` is refused: absence is its one encoding.
@@ -640,9 +651,13 @@ halves, so neither half verifies alone.
 
 The encoding is the ML-DSA-65 signature (3309 bytes) followed by the
 Ed25519 signature (64 bytes), 3373 bytes in all.  The algorithm
-identifier is -70100, a private-use value, until one is assigned.
-Only the identifier changes then.  ML-DSA-65 alone is COSE algorithm
--49 {{RFC9964}}; CEG does not use it alone.
+identifier is -70100, a private-use value.  A key's thumbprint covers
+the identifier, so `kid` and `iss` carry it, and a new identifier
+would rename every identity.  A lineage therefore keeps -70100 for
+its keys.  A move to an assigned identifier is a planned migration,
+by a later genesis bundle that seats the renamed keys (CC 2.6.1.7).
+ML-DSA-65 alone is COSE algorithm -49 {{RFC9964}}; CEG does not use
+it alone.
 
 ## Keys {#keys}
 
@@ -721,8 +736,8 @@ a reason, or Waiting on the keys it names as missing.
 - A statement whose key record is Waiting is Waiting, naming the
   deepest missing key.  A statement whose key record is Invalid is
   Invalid.
-- A key held in part is Waiting on the missing half.  A key never
-  verifies on one half.
+- A key is one composite key.  A statement whose signer's key record
+  is not held is Waiting on it, and a key never verifies on one half.
 - Waiting never becomes Valid by default and is never counted.  A
   waiting statement is held inert until the key it names is held.
 
@@ -734,8 +749,10 @@ A verifier proceeds in this order:
    2; `cty` the constant; a row's type and family labels present, an
    object's absent.
 3. Check the payload against the schema: no float or null, the sets,
-   the ranges, and `dimension` resolving to the header's family.
-4. Check `iat`, `nbf` and `exp` against the payload.
+   the ranges, `passed` and `total`, `dimension` resolving to the
+   header's family, and the family's own payload rule.
+4. Check `iat`, `nbf` and `exp` against the payload, and that a
+   `valid_until` is later than `asserted_at`.
 5. Run the family's static checks, the key record's end among them.
 6. Read `kid`; resolve the key record, or answer Waiting on it.
 7. Verify the composite signature over the bytes received.
@@ -771,8 +788,24 @@ a row id, it is the same for every voice of a counted object.
 
 ## The Genesis Bundle
 
-The genesis bundle seats the holders of a trust root and its serve
-nodes.  It is counted: one statement for each holder, over one
+A trust root is the lineage of a genesis bundle, named by the
+bundle's `family_key_id`, and that is the only kind of root (CC 3.2).
+A key that signs a charter about itself is no root.
+
+The bundle's payload is a closed map.  `holders` is the root's roster
+and `serve_nodes` its seats, each a set of identity references.
+`charter` carries the root's parameters, which no row carries: the
+recovery commitment of each holder, the scope, `attach_window_secs`,
+`halt_fuse_secs` and, where the root names Transparency Services,
+`transparency_services`, `receipt_quorum` and `receipt_cadence_secs`
+({{heads}}).  Every row the bundle seats stands in `refs.also` under
+`cites`, by row id: the key record of each holder, seat and named
+service, and the transport binding of each seat.  `holders`,
+`serve_nodes` and `transparency_services` are disjoint.  A seat
+stands by the bundle that names it, and the end of the seat's key
+record does not unseat it (CC 2.6.1.11).
+
+The bundle is counted: one statement for each holder, over one
 payload.  Each statement carries `iat`, equal to the payload's
 `asserted_at` divided by 1000 and rounded down.
 
@@ -805,14 +838,56 @@ device is refused `holder_device_shared`.  Two holders' chains may
 share an intermediate or an attestation key, and the leaf's device
 decides (CC 4.2.3).
 
+A malformed bundle is Invalid, `genesis_bundle_malformed`, with a
+detail.  Two of the details concern the transparency members.  A
+charter that carries only some of the three is
+`transparency_members_partial`.  A `receipt_quorum` that is not
+floor(n/2) + 1 of the n services named is `receipt_quorum_mismatch`
+(CC 2.6.1.11).
+
+## The Node Code {#nodecode}
+
+A key's displayed identity is its thumbprint ({{keys}}).  The code a
+person hands over is `CIRIS-V4-` followed by the unpadded base32
+{{RFC4648}} of a payload and its CRC.  The payload is a version byte
+of 4, a kind, and the 32-byte thumbprint of the identity's key.  A
+`user` code may also name up to four of its owner's nodes, and a
+`node` code names one node.  For each node the code gives the node's
+transport identity and an ordered list of up to eight hints for
+reaching it.
+
+A hint is a type, a length and a body.  The eight assigned types are
+1 `tcp`, 2 `udp`, 3 `auto`, 4 `rnode`, 5 `http`, 6 `i2p`, 7 `kiss`
+and 8 `ble`.  A decoder carries a hint of any other type as unknown,
+and a dialler skips it.  A hint of a known type whose body is
+malformed is refused.  A hint is unsigned and is only a place to
+dial.  A minter writes hints from the node's configured, stable
+reachability, and never an observed address mapping.
+
+A code is unsigned and confers no authority.  First contact is a
+route request made before the link is sealed, anchored on the node
+thumbprint the code carries: the dialler keeps the key record it
+receives only where that record's thumbprint equals the code's.  A
+decoder of this form refuses the codes of the earlier forms by their
+prefix (CC 2.6.8).
+
+The same hints stand in a signed row as `dial_hints` on a node's
+transport binding: a sequence of one to eight, each a type and a
+body, byte for byte those of the code.  The binding of a serve seat
+in a genesis bundle carries at least one `tcp` hint, and a bundle
+whose seat lacks one is refused with the detail
+`seat_dial_hints_missing` (CC 2.6.1.11).
+
 ## Receipts {#receipts}
 
-Receipts over the provenance log and each stream's log are COSE
-Receipts {{RFC9942}} over the SHA-256 tree of {{RFC9162}}.  Its
-hashing is that of {{RFC6962}}, so roots already published stay
-valid.  Each witness issues its own receipt over the same root, with
-its instant in the protected header.  A stream's receipts cover
-batches, never single chunks.
+A receipt is a COSE Receipt {{RFC9942}} over the SHA-256 tree of
+{{RFC9162}}.  Its hashing is that of {{RFC6962}}.  A Transparency
+Service keeps its own append-only log, registers a Signed Statement
+in it as one leaf, and issues a Receipt for that leaf under its own
+key.  The Receipt states the service's identity, the subject of the
+registered statement and the service's own instant of issue.  No
+service signs over another party's root.  A stream's receipts cover
+batches, never single chunks (CC 2.6.1.11, CC 5.3.1).
 
 A holder may add a receipt to a statement's unprotected header.  The
 receipt is outside the signature and outside the row id.
@@ -841,6 +916,70 @@ their own key, and no list of services ships with anything.  A
 receipt adds no authority: it witnesses that the statement was
 registered, which closes a release seen only by those it was sent to
 (CC 2.7.11, CC 4.4.3.34).
+
+## Registered Heads {#heads}
+
+A signer of a head could show one history to one party and another
+to a second.  Registration with Transparency Services exposes that:
+each service keeps its own log, and two heads at one position that
+are both registered leave two Receipts under one service's key.
+
+Lineage heads.
+: A root's charter may name `transparency_services`, a set of at
+  least two identity references, each to a composite key.
+  `receipt_quorum` is exactly floor(n/2) + 1 of the n services named.
+  `receipt_cadence_secs` is how often a named service issues a
+  Receipt again for an unchanged head.  The three members are present
+  together or not at all.  A lineage's head is the bundle in force,
+  and a holder's statement over the bundle is the Signed Statement a
+  service registers.  A service registers one head for each lineage
+  and position, and refuses a second.
+
+: A head is receipted when Receipts for it are held from
+  `receipt_quorum` distinct independent services.  The services are
+  those the charter of the head's predecessor names, and for a first
+  bundle its own charter.  A service is independent of a lineage when
+  it is none of the lineage's holders or seats and none of them owns
+  it.  Two heads of one lineage at one position that each hold a
+  receipt quorum are equivocation: at least one service registered
+  both, and its two Receipts name it.
+
+: A Consumer attaches to a root only on a receipted head whose newest
+  counted Receipt was issued within the charter's
+  `attach_window_secs` before the acceptance edge's own signed
+  instant.  A root already attached stays valid until revoked,
+  whatever the age of its Receipts.
+
+: A charter that carries none of the three members names no services.
+  Its head is current when the holders have counted it and it
+  descends from a head the reader holds out of band.  A holder
+  majority that shows two heads to two nodes is then not detectable
+  on the wire until a row crosses between them.  Naming a service
+  confers no standing on it and places no duty on anyone (CC 3.2, CC
+  5.3.1).
+
+Stream heads.
+: A stream is its own log, and its chunks are the leaves.  A stream's
+  head is a signed row of the family `stream:head`, authored by the
+  stream's producer.  It carries the stream's epoch, its tree size
+  and its root.  A stream's id is `av-` or `file-` followed by 64
+  lowercase hexadecimal digits.  An inline blob's one-leaf log is
+  named by 64 hexadecimal digits alone, and an inline file publishes
+  no head.
+
+: A head that carries `room` is accountable, and one without it is
+  best-effort.  A room may name `transparency_services` and
+  `receipt_quorum` in its record, for its accountable streams only,
+  with the quorum again floor(n/2) + 1.  An accountable head counts
+  as published when `receipt_quorum` distinct services of the room
+  have registered it.  A service the producer or the producer's owner
+  runs does not count.  A service registers one head for each stream
+  and tree size, and each later head is offered with a consistency
+  proof {{RFC9162}} from the head it last registered.  A room keeps
+  no attach window, cadence or quorum for its roster (CC 5.3.3.8).
+
+A node's own audit log of its rows is no Transparency Service: it
+issues no Receipt and takes none.
 
 # Admission as a Registration Policy {#admission}
 
@@ -871,6 +1010,7 @@ of {{vectors}} carry the same strings.
 | 3 | `dimension` is claimed by a registered family | `dimension_unregistered` |
 | 3 | `dimension` resolves to the header's family | `dimension_family` |
 | 3 | `dimension` passes the namespace rules of {{CC}} | `dimension_refused:<token>` |
+| 3 | The payload meets its family's own rule | `edition2_payload_invalid` |
 | 4 | `iat`, `nbf` and `exp` equal the payload's instants | `time:<claim>` |
 | 4 | `valid_until` is later than `asserted_at` | `valid_until_not_after_asserted_at` |
 | 5 | A key record meets its end rule ({{keys}}) | `key_record_out_of_window` |
@@ -902,15 +1042,19 @@ that verified.  Each refuses with one token.
 | Withdrawal meets {{withdraw-rule}} | `federation_withdraws_not_admitted` |
 {: #tab-admit title="Admission checks and their tokens"}
 
-The two tables are the complete list for a row statement.  The
-reasons of {{tab-verify}} are those the verifier's vectors carry at
-the commit {{vectors}} pins.  {{CC}} 1.0-rc21 names `kid_not_of_iss`,
-`key_record_out_of_window` and the last three tokens of {{tab-admit}}
-in its own text.  It states the remaining checks without a name, and
-it spells the size refusal in upper case, as the HTTP error code of
-its write path.  Its next edition adopts the reasons and tokens as
-written here.  The HTTP error codes of {{CC}}'s write path are
-transport status and are not reasons of this document.
+The two tables are the complete list for a row statement read alone.
+What a fold concludes from several rows has its own names, such as
+those of {{standing-end}}, and {{CC}} lists them.  The reasons of
+{{tab-verify}} are those the verifier's vectors carry at the commits
+{{vectors}} pins.  {{CC}} names `kid_not_of_iss`,
+`key_record_out_of_window`, `valid_until_not_after_asserted_at`,
+`body_number_unrepresentable`, `edition2_payload_invalid` and the
+four tokens of {{tab-admit}} in its own text.  It states the
+remaining checks without a name.  The HTTP error codes of {{CC}}'s
+write path are transport status and are not reasons of this document.
+A refusal for size is `envelope_too_large` on every write path, and
+over HTTP it is carried as status 413 with the error code
+`ENVELOPE_TOO_LARGE` (CC 2.6.1.6, CC 5.3.6.1).
 
 Admission has a third outcome besides admit and refuse.  A row signed
 by a key whose record is not yet held is Waiting ({{verify}}).  It is
@@ -948,16 +1092,80 @@ Rule 4:
 
 Where T names several parties, an admitted withdrawal from one
 retires T for all of them.  A withdrawal reaches forward only: acts
-that have it among their ancestors still stand.
+under T that the withdrawal has among its ancestors still stand
+({{standing-end}}).
 
 The kept list stops a named party from withdrawing a third party's
 adverse finding about itself, such as a detection, a licensing
 decision or a moderation record.  {{CC}} lists the families it
-covers.  The named party's route is to contest the row.  A key
-revocation is never withdrawn.
+covers.  The named party's route is to contest the row.
+
+A key revocation is never withdrawn.  An entity revocation, an
+occurrence revocation, a key grant and a cosignature already sent are
+never withdrawn either.
 
 Recantation is not covered by these rules.  Only T's signer can
 recant T.
+
+## The End of a Standing {#standing-end}
+
+A standing is what a row confers on a key: a seat, a grant, an
+owner's binding.  A withdrawal or a cut can end it while its holder
+is still signing.  No instant decides which of the holder's acts
+count.  The rows name heads, and a node reads those (CC 2.4.1.1).
+
+An act names its head.
+: A row signed in exercise of a standing names the head it is at, in
+  `refs.head`.  The head is the newest its signer holds of the record
+  that seats the standing: the roster version for a seat in a room or
+  a family, and the bundle in force for a grant from a root.  Where
+  one row between two keys is the whole record, as an owner's binding
+  is, that row is the head.  A row that exercises a standing and
+  names no head concludes nothing, `act_names_no_head`.  An
+  acceptance or a decline names none, since it names the row it
+  answers.  A halt names none, since it fires at each node on receipt
+  ({{halt}}).
+
+An end names the head it acts from.
+: A row that ends a standing carries `refs.head` beside its target.
+  That head is the newest its signer holds.  An end with a newer head
+  in its own past concludes nothing, `end_names_old_head`.
+
+Counted, and in force.
+: An act with the end in its past does not count under the ended
+  standing.  An act at the end's head, at an older head or at a
+  concurrent one counts at its own head, and from the end's head on
+  it is not in force.  The end never undoes that count.
+
+Receipts.
+: Such an act stays in force after the end where a clean receipt of
+  it is held that does not have the end in its past.  A receipt is a
+  row of the family `act:ack`.  It names each act it acknowledges
+  under the `also` role `ack`, at most 256 of them, and it names no
+  head.  It has those acts in its past, and it is clean when that
+  past holds no cut of them by its own key.  The receipt is the conferrer's, another holder's of the
+  body the act was done for, or that of a receipter the offer names
+  in `receipter`.  It is never the act's own signer's and never a
+  node's.  A receipt changes what is in force, never what counted.
+
+Lifting.
+: A counted row that ends a standing may state `lifts`.  Then only
+  the count's own receipts keep an act in force.  An end by the one
+  whose standing it is lifts nothing, and `lifts` on such an end is
+  refused, `lifts_on_own_end`.
+
+Another standing.
+: An act that another live standing of its signer authorises at its
+  head stands on that standing.
+
+A device that has not seen the end may sign an act at an older head.
+That act counts there and is never in force after the end.  No reader
+can tell it from an honest earlier act, and no rule tries.
+
+A key's revocation is read differently, by signed instant: a
+statement by a revoked key stands where its `asserted_at` precedes
+the revocation's `revoked_after`, and a revocation without that
+member revokes all (CC 2.4.1.1).
 
 # The Safety Model the Rows Carry {#safety}
 
@@ -1001,7 +1209,7 @@ the signature.
 
 A Consumer accepts a row only if it trusts the signer's root or has
 consented to receive from the signer, and a row reaches no one else
-(CC 4.4.3.8).  A row defaults to the smallest scope that fits its
+(CC 4.4.3.34).  A row defaults to the smallest scope that fits its
 purpose; `federation` scope, the public commons, is an explicit choice
 (CC 1.13.3.4).  Consent is itself a row, and a subject can withdraw a
 row about itself ({{withdraw-rule}}).  Content in a private scope is
@@ -1029,10 +1237,11 @@ each of them a named human:
 - A minor has one or more guardians, each bound by a signed row of
   their own (CC 3.2, CC 3.4.13).
 
-- A community has at least one holder of its moderation duty at all
-  times.  A seat is two consents, the placer's and the holder's.  If
-  no duty holder is left, the community locks and its members elect
-  one (CC 4.5.4).
+- A community names the holders of its moderation duty in its
+  founding record.  A seat is two consents, the placer's and the
+  holder's, and it goes only to a member.  If no duty holder is left,
+  the community locks to read-only and its members elect one (CC
+  4.5.4).
 
 ## A Bounded Human Halt {#halt}
 
@@ -1065,8 +1274,10 @@ agents they make.  Consent that cannot be withdrawn was never
 consent, and withdrawal needs a halt outside the system halted (CC
 1.13.2).  A root can tell a node to
 share less, never more.  A node that never accepted the root is not
-affected.  Any node can leave a root by withdrawing one row; a halt
-that has already reached it still binds it (CC 4.2.1).
+affected.  Acceptance of a root is a person's row, and a node reads
+its owner's.  An owner leaves a root by withdrawing that one row, for
+every node and agent the owner holds (CC 3.2); a halt that has
+already reached a node still binds it (CC 4.2.1).
 
 ## What Is Not Claimed
 
@@ -1117,8 +1328,8 @@ This section is informative.
 | Issuer | The signer, named by `iss`. |
 | Signed Statement | A statement: one COSE_Sign1 by one signer. |
 | Registration Policy | The admission checks of {{admission}}. |
-| Transparency Service | Any service a host trusts by its owner's acceptance edge; CEG runs none of its own ({{receipts}}, {{deltas}}). |
-| Receipt | A COSE Receipt {{RFC9942}}: over a provenance or stream log, or the receipt a host requires before it runs admitted code ({{receipts}}). |
+| Transparency Service | A service a root's charter or a room's record names for its heads, or one a host trusts by its owner's acceptance edge; CEG fixes none ({{receipts}}, {{heads}}, {{deltas}}). |
+| Receipt | A COSE Receipt {{RFC9942}} from a service's own log: for a registered head, or the receipt a host requires before it runs admitted code ({{receipts}}, {{heads}}). |
 | Transparent Statement | A statement with a receipt in its unprotected header. |
 | Relying Party | A Consumer. |
 {: title="SCITT roles and their CEG counterparts"}
@@ -1146,12 +1357,15 @@ Registered values.
   registration.  This document requests no IANA action for them.
 
 Transparency Service.
-: CEG runs no Transparency Service and no registrar of its own.  A
-  node admits a row by its own checks, and what it serves is decided
-  by trust the reader chose.  A host does register-and-wait in one
-  place: it runs code a row admits only once it holds a receipt from a
-  service its owner trusts.  The service is SCITT's own, chosen per
-  host, and its receipt confers no standing.
+: CEG fixes no Transparency Service and no registrar.  A node admits
+  a row by its own checks, and what it serves is decided by trust the
+  reader chose.  Registration is asked for in three places.  A root's
+  charter may name the services its lineage heads are registered
+  with, a room's record may name them for its accountable streams
+  ({{heads}}), and a host runs code a row admits only once it holds a
+  receipt from a service its owner trusts ({{receipts}}).  Each
+  service is SCITT's own and keeps its own log.  Its receipt shows
+  registration and confers no standing.
 
 Registration Policy.
 : {{RFC9943}} has the Transparency Service evaluate its policy and
@@ -1162,19 +1376,23 @@ Registration Policy.
   row and the checks, but the checks are not themselves on a log.
 
 Receipts.
-: A SCITT Receipt is issued at registration by the service.  A CEG
-  log receipt is issued by a witness over a log root, and each witness
-  issues its own.  Nothing requires a receipt when a row is admitted.
-  Running the code a row admits does require one, from a service the
-  host trusts ({{receipts}}).  A holder may add a receipt to a
+: A SCITT Receipt is issued at registration by the service, and a
+  CEG receipt is the same: each service issues its own, from its own
+  log.  Nothing requires a receipt when a row is admitted.  Attaching
+  to a root that names services requires a receipt quorum for its
+  head, an accountable stream head is published by one, and running
+  the code a row admits requires a receipt from a service the host
+  trusts ({{heads}}, {{receipts}}).  A holder may add a receipt to a
   statement's unprotected header.
 
-Witnesses.
-: {{CC}} defines witness cosignature of log heads and of trust-root
-  lineages.  A lineage that runs with witnessed mode off has a single
-  signer.  That signer can show different histories to different
-  peers until a peer compares heads.  {{loghead}} proposes a way to
-  close this with a Transparency Service.
+Quorums of services.
+: {{RFC9943}} leaves to a Relying Party how many Receipts it asks
+  for.  {{CC}} fixes a count: a head is receipted at a
+  strict majority of the services named for it, and only services
+  independent of the lineage count ({{heads}}).  A lineage whose
+  charter names no services has no such check.  Its holders can show
+  different heads to different peers until a row crosses between
+  them.
 
 Statement content.
 : SCITT leaves the meaning of a statement to its issuer.  CEG fixes
@@ -1187,28 +1405,19 @@ Waiting.
   hold the statement inert ({{verify}}).  A SCITT Registration Policy
   admits or refuses.
 
-## Registering a Log Head (Proposed) {#loghead}
+## Registering a Head {#loghead}
 
-This subsection is a proposal for review.  It is not in {{CC}}
-1.0-rc21 and no implementation has it.
+Revision -03 of this document proposed that the signer of a log's
+head register each head with a Transparency Service as a Signed
+Statement.  {{CC}} states that rule, and {{heads}} describes it.  A
+stream's head is a `stream:head` row, a lineage's head is the bundle
+in force, and each is a Signed Statement a service registers as it
+stands.  The services are named in signed bytes: by a root's charter
+for its lineage, and by a room's record for its accountable streams.
 
-A single-signer log can show different histories to different peers.
-A Transparency Service closes that gap without any change to the row
-format.  The node that signs a log's head registers each head with a
-Transparency Service as a Signed Statement.  The statement carries
-the log's identifier, the tree size and the root hash, and is signed
-by the key that signs the head.  The service returns a Receipt.
-
-Two peers that hold receipts for heads of the same log can then
-compare them.  A consistency proof {{RFC9162}} between the two
-registered roots shows that the later log extends the earlier one.
-Two registered heads of one size with different roots are proof of
-equivocation, signed by the equivocating key and held by a third
-party.
-
-A reader would name the service it accepts by the same trust edge
-that {{receipts}} uses for admitted code.  A node that registers no
-head is as it is today: its log is single-signer and its readers
+Two registered heads at one position are proof of equivocation,
+signed by the equivocating keys and held by a third party.  A head
+that is registered with no service is single-signer, and its readers
 compare heads themselves.
 
 This is the method of Section 8 of {{I-D.sparysh-pala-audit}}, where
@@ -1246,19 +1455,21 @@ Note to the RFC Editor: please remove this section before publication.
   drafts that define it may still change ({{deltas}}).
 
 - Several encodings are open in {{CC}}, each waiting on its owner.
-  They include the payload rule of `ceg-boot-manifest/2`, the family
-  of an agent's text manifest statement, and the layout of the short
-  displayed form of a key's thumbprint.  {{CC}} lists them in its
-  table of open encodings (CC 2.6.1.12).
+  They include the payload rule of `ceg-boot-manifest/2` and the
+  family of an agent's text manifest statement.  {{CC}} lists them in
+  its table of open encodings (CC 2.6.1.12).
 
-- {{CC}} 1.0-rc21 names only some of the reasons of {{admission}} in
-  its own text.  Its next edition adopts the rest as written here.
+- {{CC}} names only some of the reasons of {{admission}} in its own
+  text ({{admission}} says which).  It is to adopt the rest as
+  written here.
 
-- The log-head profile of {{loghead}} is a proposal.
+- The reference to {{CC}} and the CDDL of {{cddl}} are those of
+  revision -03.  The text of this revision follows {{CC}} as it
+  stands after that tag, and both move to the next tag of {{CC}}
+  when this revision is cut.
 
 - Known-answer vectors of the revocation snapshot and the boot
-  manifest are not yet published.  Those of the admission receipt are
-  not yet published at a tag.
+  manifest are not yet published.
 
 - No second implementation exists ({{implementation-status}}).
 
@@ -1306,8 +1517,9 @@ What the signature covers.
 Composite signature.
 : Both halves sign one representative that names the composite
   label, so neither half verifies alone.  A forger must break both ML-DSA-65 and
-  Ed25519.  A verifier MUST NOT accept a statement on one half, and a
-  key held in part is Waiting, never Valid.
+  Ed25519.  A verifier MUST NOT accept a statement on one half.  A key
+  is one composite key, and a statement whose signer's key record is
+  not held is Waiting, never Valid.
 
 Identity references.
 : `kid` and `iss` carry full 32-byte thumbprints, not short
@@ -1320,10 +1532,11 @@ Withdrawal.
   adverse findings about itself, and stop any single key from undoing
   a quorum's act.
 
-Single-signer logs.
-: Where witness cosignature is off, a log head is signed by one key.
-  A Substrate can then show different histories to different peers
-  until the heads are compared ({{deltas}}).
+Unregistered heads.
+: A head that is registered with no Transparency Service stands on
+  its signers alone.  They can show different histories to different
+  peers until the heads are compared.  A root whose charter names no
+  services, and a best-effort stream, are in this case ({{heads}}).
 
 Clock-dependent readings.
 : A window closed on one node's clock, such as the halt's fuse, is
@@ -1418,6 +1631,36 @@ mldsa65_ed25519_draft_kats.json  (v23.1.1)
 The first six files are under `src/ciris-verify-core/tests/vectors/`,
 and the last under `src/ciris-crypto/tests/vectors/composite/`.
 
+{{CC}} pins nine further files at the tag v23.4.1, commit
+732c44847cc8d0e3bd2779fd186b504478584623 (CC 2.6.5).  They are the
+known answers for the trust root of {{objects}}, the node code of
+{{nodecode}}, and the receipts and stream heads of {{heads}}:
+
+~~~
+edition2/genesis/genesis_bundles_v6.json
+  82778bc136e33af7c3c6eaf9fde763b74096868a5186f931f69c3e969bb97be9
+edition2/genesis/genesis_holder_device_v2.json
+  0c9a4514cdbaf19633116295bfeb1d49689dcee13e8dee0bb85c3dd99da9463d
+edition2/genesis/genesis_commitments_v2.json
+  b4220cc7bd61653f795b819c88d0ebf6499e1ab1df8f136798407c4fecd9ab82
+edition2/genesis/genesis_reseat_v4.json
+  f95e69d1dc79530266f953344c53d62274b885e3610d22a9033ac98f36e44f90
+fedcode/fedcode_e2_v1.json
+  f00bae960c2a498171b7eb3ff461cb09624c72832af001bdfd7590511db3b386
+edition2/receipts/receipts_v1.json
+  d7e8cb35191c2094fa1cac744d8b28a0aa650e8d786e78be7689cbd8dbe474e8
+edition2/receipts/stream_heads_v1.json
+  a8e88d02039c3631244ad191b482b59a601d0ac2e8470098d42883c077df3da2
+edition2/composer_v1.json
+  a795e8a8cb0200d87d913882ce90dfcf9ce349232602f085036922bc9f0b6d08
+stream_key_binding_v2_composite_v3.json
+  4f2c4dd780fc19b428a693ed01022893cc721bc1f5f82bc17878ad0c4984740f
+~~~
+
+The first eight are under `src/ciris-verify-core/tests/vectors/`, and
+the last under `src/ciris-crypto/tests/vectors/composite/`.  The
+composer file holds withdrawals and recantations.
+
 The row statements file holds four valid statements and 42 refusals,
 with 17 key records.  Each refusal carries its reason of
 {{admission}}.  The key-of-issuer file holds 24 cases of the check of
@@ -1474,6 +1717,39 @@ Ed25519 and an ML-DSA-65 signature.  Revision -00 of this document
 described it.  {{CC}} keeps it as an annex (CC 8.11).  No node of the
 current edition reads it, and no row of the current form names an
 object of it.
+
+# Changes since draft-moore-scitt-ciris-ceg-03
+{:numbered="false"}
+
+Note to the RFC Editor: please remove this section before publication.
+
+- The statement id is named the CEG statement id, a name of this
+  profile, and a match on an id is said to show nothing of who signed
+  ({{names}}).
+- A trust root is the lineage of a genesis bundle, and the bundle's
+  `charter` carries its parameters ({{objects}}).
+- Transparency follows SCITT throughout.  A service keeps its own
+  log and issues its own Receipt; a root's charter and a room's
+  record name the services heads are registered with, at a receipt
+  quorum.  The log-head proposal of -03 is replaced by the rule
+  ({{heads}}, {{scitt}}).
+- The end of a standing is described: an act names its head, an end
+  names the head it acts from, what counts and what stays in force,
+  and receipts ({{standing-end}}).
+- `refs` gains `further_prev` and the `also` role `under`, and
+  `head`, `answers` and `trusted_through` are stated in full
+  ({{refs}}).
+- The node code `CIRIS-V4-` and its eight hint types are described
+  ({{nodecode}}).
+- The composite algorithm identifier stays -70100 for a lineage's
+  keys ({{sig}}).
+- The verification steps name the family's payload rule and its
+  reason, `edition2_payload_invalid` ({{verify}}, {{admission}}).
+- A node's owner, not the node, accepts and leaves a root, and a
+  community names its duty holders ({{safety}}).
+- Cross-references to {{CC}} are corrected, and the vectors for the
+  trust root, the node code, receipts and stream heads are pinned
+  ({{vectors}}).
 
 # Changes since draft-moore-scitt-ciris-ceg-02
 {:numbered="false"}

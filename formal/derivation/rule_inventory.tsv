@@ -210,20 +210,20 @@ p2	41	2.1	kernel	cosign	cosign_rule	*	is	states		the family declares which conse
 p2	41	2.1	kernel	withdraw	lifecycle	*	is	restates	2.4.1.1	a cosigned row is retracted only by a cosigned withdraws	table
 p2	42	2.1	family	subject	body	moderation	is	states	8.11.11,2.4.1.1	a moderation:* score may name its subject by subject_sha256_ed25519_raw, the SHA-256 of the raw Ed25519 key in lowercase hex; a malformed value is refused	table
 p2	43	2.1	family	row_shape	body	trust	MUST	states	8.11.11,3.2	attached_head_digest is required on trust:accepts:v1: the SHA-256 of the lineage head the edge attaches on	table
-p2	43	2.1	family	admission_order	freshness	trust	is	states	3.2	attached_head_digest is checked at first admission only, against the head's witness cosignatures and attach_window_secs; never re-checked on restore	table
+p2	43	2.1	family	admission_order	freshness	trust	is	states	3.2	attached_head_digest is checked at first admission only, against the Receipts held for the head and attach_window_secs; never re-checked on restore	table
 p2	43	2.1	family	trust_fold	none	trust	is	states	3.2	an acceptance edge whose digest is un-headed by a lowered revoked_after is read as naming that head's nearest verifying ancestor	table
 p2	44	2.1	family	transparency_log	body	trust	MUST	states	3.2,2.6.7	attach_window_secs on a charter MUST exceed receipt_cadence_secs plus the skew tolerance	table
 p2	44	2.1	family	trust_fold	none	trust	is	states	3.2	a charter declaring no attach_window_secs makes its root attachable only through an out-of-band anchor to a specific head	table
 p2	44	2.1	family	trust_fold	none	trust	is	states	3.2	attach_window_secs is never a validity leg for a root already attached	table
-p2	45	2.1	family	transparency_log	window	trust	MUST	states	3.2	receipt_cadence_secs is required on a witnessed lineage's charter; each witness MUST re-cosign the current head that often, unchanged	table
+p2	45	2.1	family	transparency_log	window	trust	MUST	states	3.2	receipt_cadence_secs is required on a charter that names services; each named service issues a Receipt again for the head in force that often, unchanged	table
 p2	46	2.1	family	halt	window	trust,accord	is	restates	4.2.1.1	a constitutional halt signed by one holder lapses after halt_fuse_secs unless a strict majority of the standing roster confirms it	table
 p2	46	2.1	family	halt	body	trust,accord	is	states		halt_fuse_secs absent means 86400, a constant of this document read by the verifier; an explicit value overrides by re-scrub	table
 p2	47	2.1	family	row_shape	body	trust,accord	MUST	states	4.2.6,3.2	recovery_commitments is required on the accord's charter: per holder a SHA-256 over the committed recovery key's composite COSE key, binding key material	table
 p2	47	2.1	family	key_plane	lifecycle	trust,accord	is	states		an accord holder rotates lost signing-key material by a self-supersedes under a key whose record hashes to its commitment entry	table
 p2	48	2.1	family	transparency_log	body	trust	MUST	states	3.2	receipt_quorum MUST equal floor(|witnesses|/2)+1 and be at least 2, or be 0 (witnessed mode off); any other value is refused at admission	table
-p2	49	2.1	family	row_shape	body	trust	MUST	states	3.2,5.3.4	witnesses is required on a witnessed lineage's charter: a set of identity references naming each witness's key record by row id, inside the signed bytes, so inside the genesis bundle	table
+p2	49	2.1	family	row_shape	body	trust	MUST	states	3.2,5.3.4	transparency_services is required on a charter that names services: a set of identity references naming each service's key record by row id, inside the bundle's signed bytes	table
 p2	49	2.1	family	transparency_log	subject_rule	trust	MUST	states	3.2	each witness MUST have identity_type including witness and be independent of the lineage: not a founder, member seat, or owner- or steward-bound to a founder	table
-p2	49	2.1	family	supersede	lifecycle	trust	is	states		a change to the witness directory is a later bundle, an amend, witnessed by the directory before it	table
+p2	49	2.1	family	supersede	lifecycle	trust	is	states		a change to the named services is a later bundle, an amend, receipted by the set before it	table
 p2	50	2.1	family	supersede	body	consent	is	restates	3.3.1	consent_supersedes names the prior consent-state row this one supersedes (a renewal or the substrate's expired row)	table
 p2	51	2.1	family	erasure	window	consent	is	states	3.3.1	deletion_window on a grant is the deadline to delete the consented payload once consent ends; absent means the family's default	table
 p2	52	2.1	family	row_shape	body	membership	MUST	states	2.6.7,4.4.3.14	widened_at is required on a widening supersedes; it is the scrub_timestamp of the widening's signature	table
@@ -274,7 +274,7 @@ p2	99	2.2	kernel	trust_fold	none	*	MUST	restates	4.4.3.34,4.4.2	a conforming con
 p2	99	2.2	kernel	accord	none	*	MUST	restates	4.2.2	a conforming consumer MUST honor rejection of null placeholder or dev hardware class	
 p2	100	2.2	mechanism	transport	none	*	MUST	restates	5.3.2,5.3.1	a conforming substrate implements idempotent replication	
 p2	100	2.2	mechanism	media	none	*	MUST	restates	5.3.2	a conforming substrate verifies a blob's full SHA before consumption	
-p2	100	2.2	mechanism	transparency_log	none	*	MUST	restates	5.3.1	a conforming substrate implements witness-quorum multi-party admission	
+p2	100	2.2	mechanism	transparency_log	none	*	MUST	restates	5.3.1	a conforming substrate implements receipt-quorum counting of registered heads	
 p2	102	2.2	kernel	conformance	none	*	MAY	states		later sections MAY add per-feature conformance subsections; the three profiles are the minimums	
 p2	106	2.3	kernel	subject	subject_rule	*	is	states		attesting_key_id carries producer authority; subject_key_ids carries subject authority over a row where the subject is not the producer	
 p2	110	2.3.1	family	subject	subject_rule	observed,epistemic,consent,agent_files	MUST	restates	4.5.2	a dimension whose namespace pattern names a subject MUST carry subject_key_ids containing that subject	
@@ -291,7 +291,7 @@ p2	133	2.3.2.1	mechanism	wire	none	*	MUST_NOT	states	2.6.8	a bare untagged hex s
 p2	133	2.3.2.1	mechanism	wire	none	*	is	exception	2.6.3	the canonical:{hashalg}: prefix is a tagged-union discriminator outside 2.6.3 and exempt from its no-separators rule	
 p2	133	2.3.2.1	kernel	registration	none	*	is	states	3.3.6.4	a consumer verifies a key_id's fingerprint suffix against the public key it obtains at registration and at pairing, for fedIDs and roster keys	
 p2	133	2.3.2.1	kernel	registration	none	*	is	states		a held key registered under a non-matching id is not re-keyed or refused; it cannot be re-registered or introduced at pairing under that id	
-p2	133	2.3.2.1	stewardship	steward	none	*	is	exception	5.3.4	bundle-pinned anchors and family ids are not fingerprint-suffixed; they are verified by the genesis bundle pin	
+p2	133	2.3.2.1	stewardship	steward	none	*	is	exception	5.3.4	a bundle's family_key_id and a group's id are not fingerprint-suffixed and are not checked by the fingerprint rule; the reader's anchor verifies a bundle	
 p2	133	2.3.2.1	kernel	roster_fold	none	*	is	restates	3.3.6.4	a device-<hex>-<fp> id passes the fingerprint check and is refused by the roster door for its form, on the roster door's schedule	
 p2	135	2.3.2.1	mechanism	wire	none	*	MUST	states		the canonical-hash preimage MUST be {platform}:{entity_kind}:{id}; hex is lowercase sha256 of its UTF-8 bytes	
 p2	142	2.3.2.1	mechanism	wire	none	*	is	states		the preimage parses by split on the first two colons; {id} is everything after and may contain colons	
@@ -355,7 +355,7 @@ p2	267	2.4	family	supersede	lifecycle	key	is	states		key renewal is a supersedes
 p2	267	2.4	family	signer	signer_rule	identity	is	states		identity:occurrence:v1 is signed by the identity or a live occurrence	
 p2	267	2.4	family	withdraw	lifecycle	key	MUST_NOT	states		key:revocation:v1 is never withdrawn; its subject is the key digest; revoked_after only ever lowers	
 p2	267	2.4	kernel	admission_order	none	*	is	applies	2.7.3	a row is admitted only once its signer's key-claim row is held; a row signed by a key not yet held is retryable	
-p2	267	2.4	kernel	row_shape	none	*	is	states	5.3.1	off the plane: payload bytes and A/V symbols, transparency-log heads and cosigns, the wholeness corpus, node-local derived state, an agent's private runtime	
+p2	267	2.4	kernel	row_shape	none	*	is	states	5.3.1	off the plane: payload bytes and A/V symbols, a Transparency Service's Receipts, the wholeness corpus, node-local derived state, an agent's private runtime	
 p2	267	2.4	family	halt	none	accord	MUST	states	4.2	accord evidence is not on the base; an invocation's domain-separated canonical bytes MUST travel inside the envelope unchanged	
 p2	267	2.4	family	halt	none	accord	MUST_NOT	states	4.2	the kill switch MUST NOT depend on any plane gate beyond verifying the invocation bytes and the holder roster	
 p2	275	2.4.1	kernel	row_shape	body		is	states		delegates_to carries scope[], delegation_purpose, delegation_valid_from, delegation_valid_until; A authorizes B to sign for A within a bounded scope	table
@@ -457,7 +457,7 @@ p2	339	2.4.1.3	family	cosign	cosign_rule	licensure	is	states	3.2,3.3.9	by quorum
 p2	339	2.4.1.3	family	licensure	projection	licensure	is	states		the licensure:{A} status set folds only rows whose emitter resolves to A; other rows are testimony about A's licensure, outside the fold, composed at consumer confidence	
 p2	339	2.4.1.3	family	delegation	signer_rule	licensure	MUST_NOT	states		an issuance whose license delegator chain does not resolve to A concludes nothing, reason licensure_delegator_not_authority	
 p2	339	2.4.1.3	family	signer	signer_rule	licensure	is	states		there is no bootstrap: A's first licensure:{A} row is signed by A, or for a keyless affiliation cosigned by its quorum	
-p2	339	2.4.1.3	family	freshness	freshness	licensure	is	states		licence authority is judged over the issuance's own causal past, never at receipt; a withdraws of a chain link stops every issuance that has it in its past or is concurrent with it, and does not reclassify licences the withdrawal has among its ancestors	
+p2	339	2.4.1.3	family	freshness	freshness	licensure	is	states		licence authority is judged over the issuance's own causal past, never at receipt; a withdraws of a chain link stops every issuance that has it in its past, an issuance concurrent with it counts at its own head and is not in force from the withdrawal's head on, and it does not reclassify licences the withdrawal has among its ancestors	
 p2	339	2.4.1.3	family	placement	placement	licensure	is	states	1.13.3.4	a licence has no public default; its cohort_scope is the authority's declared choice per licence class in the affiliation's charter, the smallest that fits	
 p2	339	2.4.1.3	family	audience	replication	licensure	MUST_NOT	states		licence and authority head travel together; where not public they are re-emitted as new cosigned rows, each addressed to one validating reader by for_key_id and naming no reader in subject_key_ids, never at the wrong scope or by roster widening	
 p2	339	2.4.1.3	family	cosign	cosign_rule	licensure	is	states	4.4.3.12,2.4	an organisation-named authority is its community_key_id; a licensure:{community_key_id} row is cosigned under the affiliation's current consensus_protocol, the protocol source being the authority in the dimension	
@@ -682,7 +682,7 @@ p2	637	2.6.1.10	kernel	audience	replication	*	is	states		A disclosure set is byt
 p2	639	2.6.1.10	kernel	erasure	erasure_route	*	is	states	3.1	Which members are blind is a family-model column checked at vendoring; a row sealing a member its family blinds is refused; no fold or admission reads a blindable member	planned
 p2	639	2.6.1.10	kernel	erasure	erasure_route	*	MUST	states		A family whose erasure route is subject request or purge mints every free-text or other-authored member as blinded, body.note first; identifiers, instants, references and digests stay sealed	planned
 p2	639	2.6.1.10	kernel	erasure	erasure_route	*	is	states		A family whose erasure route is none or legal hold seals its members; its body.note is bounded and carries nothing a subject request could reach	planned
-p2	650	2.6.1.11	mechanism	transparency_log	none	*	is	states		Receipts over the provenance log and stream logs are COSE receipts over the RFC 9162 tree; published roots stay valid; each witness issues its own receipt; stream receipts cover batches	planned
+p2	650	2.6.1.11	mechanism	transparency_log	none	*	is	states		Receipts are COSE receipts over the RFC 9162 tree; published roots stay valid; each Transparency Service registers a statement in its own log and issues its own receipt over that log's root; stream receipts cover batches	planned
 p2	652	2.6.1.11	mechanism	media	none	*	is	states	5.3.3.5	The per-chunk media trailer stays a raw signature over fixed big-endian fields, and its preimage never parses as a COSE structure	planned
 p2	660	2.6.1.11	mechanism	key_plane	none	*	is	states	5.4.6,5.3.3.10	One hybrid KEM, X-Wing, serves every key wrap and onion hop, under HPKE where a wrap is single-shot; the transit handshake is KEM-authenticated with X-Wing inside	planned
 p2	946	2.6.1.11	kernel	wire	none	*	is	states		Every non-row signed object is a COSE_Sign1 whose typ is from one closed list, refused otherwise; the chunk trailer and the CC 6.1.3 substrate objects are the exceptions	planned
@@ -724,7 +724,6 @@ p2	868	2.6.7	kernel	freshness	freshness	*	is	states		Every signed_at, asserted_a
 p2	868	2.6.7	kernel	freshness	none	*	SHOULD	states		Producers synchronize clocks via NTPv4 or Roughtime to a known-good source	
 p2	868	2.6.7	kernel	freshness	window	*	MAY	states		Maximum tolerated attester-consumer skew for a freshness check is +-5 minutes by default; tighter thresholds may be applied by consumer policy	
 p2	868	2.6.7	kernel	freshness	freshness	*	MUST	states		A consumer rejects with CLOCK_SKEW_VIOLATION an attestation whose asserted_at is more than 5 minutes in the future	
-p2	870	2.6.7	mechanism	transparency_log	none	*	MUST	states	5.3.1	A cosignature on an STH whose signed_at is more than 5 minutes from the STH's signed_at is rejected	
 p2	872	2.6.7	kernel	freshness	freshness	*	MUST	states		For a row with future valid_until, freshness holds when valid_until is unreached and the consumer's own clock is within 5 minutes of the known-good time source it synchronises to; a drifted consumer rejects	
 p2	874	2.6.7	kernel	freshness	freshness	key_grant,consent,licensure,deferral,membership	is	restates	2.4.1.3	A row whose admission walks a delegates_to chain is checked for its age at the node that first receives it	
 p2	874	2.6.7	kernel	freshness	window	key_grant,consent,licensure,deferral,membership	MUST	states	4.2.6	The substrate refuses a chain-judged row whose asserted_at precedes the receiver's clock by more than W = 72 hours with asserted_at_stale; well-formed, not admitted-as-stale; the remedy is re-signing	
@@ -3661,7 +3660,7 @@ p5	635	5.3.6.1	mechanism	transparency_log	none		is	states		409 IDEMPOTENT_CONFLI
 p5	636	5.3.6.1	mechanism	signature	none		is	states		422 SIGNATURE_VERIFICATION_FAILED: the composite signature failed to verify; it is one signature.	table
 p5	637	5.3.6.1	mechanism	freshness	none		is	applies	2.6.7	422 CLOCK_SKEW_VIOLATION: asserted_at or signed_at exceeds the ±5 minute tolerance.	table
 p5	638	5.3.6.1	mechanism	transparency_log	none		is	states		422 RECEIPT_QUORUM_NOT_MET: fewer counted Receipts are held for the head than its receipt_quorum.	table
-p5	641	5.3.6.1	kernel	row_shape	body	*	is	applies	8.11.5	413 ENVELOPE_TOO_LARGE: a payload's deterministic encoding exceeds 1 MiB; raised at every write path (HTTP, capsule, FFI, tier-ingest) as an admission bound; storage spelling federation_envelope_too_large maps to this wire code.	table
+p5	641	5.3.6.1	kernel	row_shape	body	*	is	applies	8.11.5	413 ENVELOPE_TOO_LARGE: a payload's deterministic encoding exceeds 1 MiB; raised at every write path (HTTP, capsule, FFI, tier-ingest) as an admission bound; the reason of the refusal is envelope_too_large and this code is how the HTTP surface carries it.	table
 p5	642	5.3.6.1	mechanism	endpoint	none		is	states		429 RATE_LIMITED: X-RateLimit-* headers set; Retry-After honored.	table
 p5	643	5.3.6.1	mechanism	endpoint	none		is	states		500 INTERNAL_ERROR: server-side fault; request_id usable for support.	table
 p5	644	5.3.6.1	mechanism	endpoint	none		is	states		503 SUBSTRATE_LAGGING: substrate replication lag exceeds liveness bound.	table
@@ -4462,7 +4461,7 @@ p3	x	3.3.7	family	audience	replication	consent	is	states	6.1.5.3	A cohorts entry
 p4	x	4.4.3.19	family	owner_binding	replication	identity_occurrence	is	states	3.2	An owned agent shares its owner's Self DEK by ownership, its owner-binding, never as an occurrence; the owner may exclude it from self by its node's allow list	
 p4	x	4.4.3.33	family	admission_order	none	agent_files	is	states	2.7.11	An agent_files attestation records which files an agent carries and admits nothing to execute; execution is admitted only by CC 2.7.11	
 p2	x	2.7.11	kernel	trust_fold	none	admission:unit	is	states	4.4.3.34	anyone may run a Transparency Service under their own key; a host trusts one by an acceptance edge with the class transparency; no list ships; an untrusted service's receipt counts for nothing	
-p2	x	2.6.1.11	kernel	transparency_log	none	*	is	states	2.7.11	no transparency service or registrar stands in the middle; anyone may run one under their own key, and its receipt witnesses registration and confers nothing	
+p2	x	2.6.1.11	kernel	transparency_log	none	*	is	states	2.7.11	no Transparency Service or registrar decides what a node admits or serves; anyone may run one under their own key, and its receipt shows registration and confers nothing	
 p4	x	4.4.3.34	kernel	trust_fold	none	trust	is	states	2.7.11	admission and transparency are acceptance classes that name no licence: an admission standing at a host, a Transparency Service's receipts a host trusts; no charter declares either	
 p2	x	2.7.11	kernel	transparency_log	none	admission:unit	is	states	2.6.1.11	a Transparency Service registers the statement's deterministic COSE_Sign1 with an empty unprotected header, leaf hash SHA-256(0x00 || leaf) per RFC 9162; a malformed receipt is ignored, never a fault of the statement	
 p2	x	2.7.11	kernel	trust_fold	none	admission:unit	is	states	4.4.3.34	a host trusts a Transparency Service by its owner's own transparency edge, one hop at self scope; the edge carries the service's key, a COSE key or an identity reference, and a receipt under another alg does not verify	
