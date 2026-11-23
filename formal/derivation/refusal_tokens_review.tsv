@@ -291,6 +291,7 @@ fold_source_count_exceeded	refusal		the text says refused
 for_key_id	not_a_token		payload or envelope member
 founder_only	not_a_token		enumeration value, not a fault
 functions_root	not_a_token		payload or envelope member
+further_prev	not_a_token		a refs role
 gcp_cloud_hsm	not_a_token		enumeration value, not a fault
 genesis_bundle_count_unmet	hold		the count is not met and the bundle is held
 genesis_bundle_malformed	refusal		the text says Invalid
@@ -668,6 +669,7 @@ trust_depth	not_a_token		payload or envelope member
 trust_root_head_stale	concludes_nothing		the text says concludes nothing
 trust_root_head_unnamed	refusal		the text says refused
 trust_root_head_unreceipted	concludes_nothing		the text says concludes nothing
+trusted_through	not_a_token		a refs role
 trusted_through_too_many	refusal		the text says a row with more is refused
 truth_grounding	not_a_token		family or row-type name
 tvec_terrorist	not_a_token		enumeration value, not a fault

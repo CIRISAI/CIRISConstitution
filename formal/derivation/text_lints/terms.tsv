@@ -1,16 +1,16 @@
 part	section	line	text	finding
-p3	3.2	956	- `M ≥ 2`, and the founder set MUST be founded at **N ≥ M + 1** active human founders; a charter or admission floor that raises the effective `M` MUST be refused rather than applied silently.	founder
-p3	3.2	956	A resignation that leaves exactly `M` founders stalls the room, loudly and by design.	founder
-p3	3.2	956	Recovery is the conferring body's naming of an added founder seat, never a lowering of `M`.	founder
-p3	3.2	995	A consumer reads the room by its `community_key_id`, the id derived from its founding ([CC 3.3.4](#3.3.4)), and resolves the live member set via `resolve_community` ([CC 4.4.3.7](part_4_composition_governance.md#4.4.3.7), [CC 2.7.1](part_2_the_grammar.md#2.7.1)).	founder
-p3	3.2	995	The Reticulum addressing dual: `community_key_id` is a CEG-directory binding (not a Reticulum destination) — resolve → path-request two of the three founders → verify the quorum attestation; reachability is never an attestation ([CC 5.3.3.9](part_5_transport_substrate.md#5.3.3.9) / [CC 3.4.4](part_…	founder
-p3	3.2	1003	The worked-example member list above is the *founder/member* set of the room.	founder
-p3	3.2	1279	*The active founder set.	founder
-p3	3.2	1281	- *f* was seated as founder by the base row or an admitted widening whose `effective_at ≤ t`.	founder
-p3	3.2	1292	A stalled room is **valid but non-admitting**, and *non-admitting* means exactly this: no roster widening or removal by the founders' count until the margin is restored.	founder
-p3	3.2	1294	It is never by the members, and never by the remaining founders lowering M (entrenchment, [CC 4.5.1.2](part_4_composition_governance.md#4.5.1.2)).	founder
-p3	3.2	1294	The founders' count cannot admit the row that would restore it.	founder
-p3	3.2	1294	So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat.	founder
-p3	3.2	1347	A mechanized model of this machine, checked for (i)–(viii) over bounded founder sets and instant orderings, is the standing-verdict model, pinned by the register as `CLM-standing-verdict`.	founder
-p3	3.3.4	1557	**A group's id is derived from its founding (normative).	founder
-p3	3.3.4	1607	An active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key.	founder
+p3	3.2	958	- `M ≥ 2`, and the founder set MUST be founded at **N ≥ M + 1** active human founders; a charter or admission floor that raises the effective `M` MUST be refused rather than applied silently.	founder
+p3	3.2	958	A resignation that leaves exactly `M` founders stalls the room, loudly and by design.	founder
+p3	3.2	958	Recovery is the conferring body's naming of an added founder seat, never a lowering of `M`.	founder
+p3	3.2	997	A consumer reads the room by its `community_key_id`, the id derived from its founding ([CC 3.3.4](#3.3.4)), and resolves the live member set via `resolve_community` ([CC 4.4.3.7](part_4_composition_governance.md#4.4.3.7), [CC 2.7.1](part_2_the_grammar.md#2.7.1)).	founder
+p3	3.2	997	The Reticulum addressing dual: `community_key_id` is a CEG-directory binding (not a Reticulum destination) — resolve → path-request two of the three founders → verify the quorum attestation; reachability is never an attestation ([CC 5.3.3.9](part_5_transport_substrate.md#5.3.3.9) / [CC 3.4.4](part_…	founder
+p3	3.2	1005	The worked-example member list above is the *founder/member* set of the room.	founder
+p3	3.2	1281	*The active founder set.	founder
+p3	3.2	1283	- *f* was seated as founder by the base row or an admitted widening whose `effective_at ≤ t`.	founder
+p3	3.2	1294	A stalled room is **valid but non-admitting**, and *non-admitting* means exactly this: no roster widening or removal by the founders' count until the margin is restored.	founder
+p3	3.2	1296	It is never by the members, and never by the remaining founders lowering M (entrenchment, [CC 4.5.1.2](part_4_composition_governance.md#4.5.1.2)).	founder
+p3	3.2	1296	The founders' count cannot admit the row that would restore it.	founder
+p3	3.2	1296	So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat.	founder
+p3	3.2	1349	A mechanized model of this machine, checked for (i)–(viii) over bounded founder sets and instant orderings, is the standing-verdict model, pinned by the register as `CLM-standing-verdict`.	founder
+p3	3.3.4	1559	**A group's id is derived from its founding (normative).	founder
+p3	3.3.4	1609	An active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key.	founder
