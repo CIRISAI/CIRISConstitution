@@ -5,10 +5,10 @@ CC — one CSD/4 catalogue entry, every plane model's constants (CIRISConstituti
 Reads a catalogue entry (CIRISServer FSD/TOPOLOGY.md shape; vendored copies under
 formal/cewp_node/catalog/) and writes, under formal/cewp_node/generated/<Tn>/:
 
-  trust_root_<root>.cfg      TrustRootVerdict constants for each infrastructure root
-                             (Founders / NodeKeys / Witnesses / M / K / AttachWindow / MaxT);
-                             a root with no witness directory is witnessed-mode-off, which the
-                             model does not cover (residual E): the cfg is still written, marked.
+  trust_root_<root>.cfg      TrustRootVerdict constants for each root's bundle lineage
+                             (Holders / NServices / Named / AttachWindow / MaxT); a root that
+                             names no services is checked on the holders' count from the
+                             anchored genesis, and the cfg says so.
   accord_halt_<root>.cfg     AccordHalt (row mode) and accord_fuse_<root>.cfg AccordHaltFuse:
                              Holders = the seated holders, Nodes = the entry's nodes, Subscribed =
                              the nodes that accept the root.
@@ -81,24 +81,24 @@ def gen(entry_path):
         if r.get("kind") == "infrastructure":
             f = r.get("founders", {})
             seated, conf, nb = int(f.get("seated", 0)), int(f.get("conferrable", 0)), int(f.get("node_bearing", 0))
-            humans = [f"f{i}" for i in range(1, seated + conf + 1)]
-            nkeys = [f"n{i}" for i in range(1, nb + 1)]
-            M = int(r.get("quorum", 2))
-            wit = r.get("witnesses", {}) or {}
-            wn = int(wit.get("n", 0))
-            K = wn // 2 + 1 if wn else 0
+            # The model's holders are the bundle's holders: the seated keys. A conferrable key and a
+            # node-bearing seat are no input of the verdict (CC 3.2 T7, T8 i). A root that names no
+            # services still carries two in the model, whose Receipts are held and do not count.
+            svc = r.get("transparency_services") or r.get("witnesses") or {}
+            wn = int(svc.get("n", 0))
             ch = r.get("charter", {}) or {}
-            aw = ch.get("attach_window_secs"); cad = ch.get("witness_cadence_secs")
-            attach = math.ceil(aw / cad) if aw and cad else 2
-            witnesses = [f"w{i}" for i in range(1, wn + 1)]
-            mark = "" if wn else "\\* witnessed mode OFF (no witness directory declared): TrustRootVerdict needs K >= 1\n"
-            if not wn:
-                notes.append(f"root {r['id']}: witnessed mode off; trust_root model not applicable until extended (residual E)")
+            aw = ch.get("attach_window_secs"); cad = ch.get("receipt_cadence_secs") or ch.get("witness_cadence_secs")
+            attach = max(1, min(2, math.ceil(aw / cad))) if aw and cad else 1
+            mark = "" if wn else "\\* no services named: a head is current on the holders' count, from the anchored genesis\n"
             txt = (f"\\* generated from {os.path.basename(entry_path)} root {r['id']} by tools/topology_to_cfg.py\n{mark}"
                    "SPECIFICATION Spec\nSYMMETRY Symm\nCONSTANTS\n"
-                   f"    Founders = {tla_set(humans + nkeys)}\n    NodeKeys = {tla_set(nkeys)}\n"
-                   f"    Witnesses = {tla_set(witnesses)}\n    M = {M}\n    K = {K}\n    MaxT = 3\n    AttachWindow = {attach}\n"
-                   "INVARIANTS\n    TypeOK\n    Inv_i\n    Inv_vi\n    Inv_viii\n    Inv_T7\n    Inv_RecoverEnabled\nPROPERTIES\n    Prop_ii\n    Prop_iv\n")
+                   f"    Holders = {tla_set([f'h{i}' for i in range(1, seated + 1)])}\n    NServices = {wn or 2}\n"
+                   f"    Named = {'TRUE' if wn else 'FALSE'}\n    Faulty = 0\n    Uncountable = FALSE\n    Fork = TRUE\n    Deep = {'FALSE' if wn else 'TRUE'}\n"
+                   f"    MaxT = 2\n    AttachWindow = {attach}\n    Skew = 1\n    MaxRevs = 2\n    Plant = \"none\"\n"
+                   "INVARIANTS\n    TypeOK\n    Inv_i\n    Inv_ii\n    Inv_iii\n    Inv_v\n    Inv_vi\n    Inv_vii\n    Inv_viii\n    Inv_T7\n    Inv_T4\n"
+                   "    Inv_Stalled\n    Inv_RecoverEnabled\n    Inv_EndNoInstant\n    Inv_PredecessorSet\n    Inv_ForkNeverFreezes\n"
+                   "    Inv_FreezeAdoptionOnly\n    Inv_NoServicesNoReceipt\n"
+                   "PROPERTIES\n    Prop_ii\n    Prop_iv\n    Prop_vi\n    Prop_T4\n    Prop_PredecessorSet\n    Prop_FreezeAdoptionOnly\n")
             w(f"trust_root_{rid}.cfg", txt)
             holders = [f"h{i}" for i in range(1, seated + 1)]
             subscribed = [ident(n["id"]) for n in topo.get("nodes", []) if n.get("accepts") == r["id"]]

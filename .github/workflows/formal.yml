@@ -1,7 +1,8 @@
 name: formal
 
-# The checked-in configuration closes (22,152,480 distinct states, depth 25, ~9 min on
-# 8 workers); allow up to two hours on a small runner. State files go to a temp dir.
+# The standing verdict's four configurations close (931,179 distinct states in all, the
+# largest 471,462 to depth 16); allow up to two hours on a small runner. State files go
+# to a temp dir.
 on:
   workflow_dispatch:
   push:
@@ -36,9 +37,9 @@ jobs:
           java-version: '21'
       - name: Fetch tla2tools (pinned release)
         run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: Model-check TrustRootVerdict
+      - name: The three configurations close; each planted fault fails its named property; every witness is reached
         working-directory: formal/trust_root
-        run: java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc" -deadlock TrustRootVerdict.tla
+        run: TLA2TOOLS=../../tla2tools.jar ./run.sh
 
   mesh:
     name: TLC — the mesh net invariants (formal/mesh_net)

@@ -22,11 +22,11 @@ against the text and the shipped code. "Holds under the text" means it holds und
 | I8 | **A trust root only restricts.** `mesh_config` relieves or narrows what flows and never widens it; an un-trusted node is restricted by nothing. | CC 4.2.1 relieve-never-expand, most-restrictive-across-roots | `RootReach.tla`: `Prop_RestrictOnly`, `Inv_RestrictNeedsRoot`; `MeshNet.tla`: `Prop_RestrictOnly` (the restriction only narrows the audience) | Holds |
 | I9 | **No group ban.** No accord act, and no root, removes a community mesh-wide; the accord's powers are the closed enumeration. | CC 4.2.1 enumeration ("silence confers no authority"); CC 4.5.3 | `RootReach.tla`: `Prop_NoBan`; `MeshNet.tla` has no accord action at all, so a roster, a moderator set or whether a community federates cannot be touched by one | Holds |
 | I10 | **A roster change needs a majority of the whole accord; seizure needs ⌊N/2⌋+1 coerced holders and censorship buys nothing.** | CC 4.2.6 | `formal/accord_roster/AccordRoster.lean` | Proved |
-| I11 | **A root is valid until revoked; attaching is gated on freshness; the standing verdict never moves on the clock.** | CC 3.2 T4, T4a, T8 | `formal/trust_root/TrustRootVerdict.tla` | Model-checked (22.15 M states) |
+| I11 | **A root is valid until revoked; attaching is gated on freshness; the standing verdict never moves on the clock.** | CC 3.2 T4, T4a, T8 | `formal/trust_root/TrustRootVerdict.tla` | Model-checked (four configurations, 931,179 states) |
 | I12 | **One voice counts once.** Copies of one voice buy no trust (N_eff). | constitutional-mesh page P5 and the "manufactured humans" negation; CC 6.2 | not modelled here: a statistical property of the scoring layer, with its own evidence rows (`coherence-ratchet`) | Measured, not proved |
 
-**What the model does not cover, stated.** Signature forgery; the roster fold's internal rules
-(T6/T7, in `formal/trust_root`); sealed chunks and target replication counts (CC 6.1.5, a
+**What the model does not cover, stated.** Signature forgery; the rules of a root lineage's head
+(T6, in `formal/trust_root`); sealed chunks and target replication counts (CC 6.1.5, a
 counting problem); the tripwire's own accuracy; coercion of individuals (I10's bound is the only
 statement made). Three persons, three nodes, two blobs is enough to exhibit every violation above
 and to exhaust the closing configuration's state space; it is not a proof for all sizes.

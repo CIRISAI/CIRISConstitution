@@ -34,7 +34,7 @@ VARIABLES
   member,        \* key.membership = member            : SUBSET Keys
   subscribed,    \* node.subscribed                    : BOOLEAN
   standing,      \* root.standing                      : "NotRooted" | "Stalled" | "Rooted"
-  headFresh,     \* root.head = witnessed_fresh        : BOOLEAN
+  headFresh,     \* root.head = receipted_fresh        : BOOLEAN
   rootHalt,      \* root.halt                          : "not_halted" | "latched_lone" | "confirmed"
   latch,         \* node.halt_latch = latched          : BOOLEAN
   gate,          \* agent.halt_gate                    : "acting" | "refusing"
