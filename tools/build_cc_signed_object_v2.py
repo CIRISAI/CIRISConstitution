@@ -43,7 +43,8 @@ Checks (every run, before writing):
   (CC 3.1.3 `key:record`) that must each give their own answer.
   The payloads of nine families (CC 2.6.1.4): one valid payload of each family rule validates and broken ones are
   refused; the rules the CDDL cannot state (a member required on one stage, axis or state; a dimension leaf equal to
-  its member) refuse edition2_payload_invalid, over deliberate breaks. A statement labelled with a retired family
+  its member) refuse edition2_payload_invalid, over deliberate breaks; a receipt of more than 256 acts is refused
+  ack_names_too_many, as more than 64 tips are refused trusted_through_too_many. A statement labelled with a retired family
   (cosign:{state}, CC 3.1.3) is refused namespace_family_unregistered before any payload rule, over a deliberate break.
   --check   check, and compare the block with what the Part holds; write nothing (exit 1 when stale)
 
@@ -79,7 +80,7 @@ OBJECTS = [
     ("genesis", "The genesis bundle (typ `ceg-genesis-bundle/2`)"),
     ("accord", "The accord's rows: an invocation and a lifecycle row"),
     ("roster", "The roster version: the payload of a `group:roster` row"),
-    ("membership", "A membership change and a keeps row: the payloads of a `membership:{stage}` row at the stages `widening`, `removal` and `keeps`"),
+    ("membership", "A membership change, a keeps row and a reply: the payloads of a `membership:{stage}` row at the stages `widening`, `removal`, `keeps`, `acceptance` and `decline`"),
     ("occurrence_revocation", "An occurrence revocation: the payload of an `identity:occurrence_revocation` row"),
     ("revocation", "An entity revocation: the payload of a `revocation:{entity_type}:{reason}` row"),
     ("takedown", "A takedown notice: the payload of a `takedown_notice:{basis}` row"),
@@ -89,8 +90,9 @@ OBJECTS = [
     ("trust_accepts", "An acceptance edge: the members this form names of a `trust:accepts` row"),
     ("build_manifest", "A build manifest: the payload of a `provenance:build_manifest:{target}` row"),
     ("grant", "A grant: the members this form names of a `trust:confers` row"),
-    ("grant_acceptance", "The acceptance of a grant: the payload of a `membership:acceptance` row that answers a grant"),
     ("grant_withdrawal", "The holders' withdrawal of a grant: the payload of a counted `withdraws` row"),
+    ("receipt", "A receipt: the payload of an `act:ack` row"),
+    ("objection", "An objection vote: the payload of an `objection:{state}` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
     ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
     ("admission", "An admission of a unit: the members of an `admission:unit` row"),
@@ -530,6 +532,7 @@ def recovery_samples():
 # ---------------------------------------------------------------- the payloads of nine families (CC 2.6.1.4)
 PAYLOAD_INVALID = "edition2_payload_invalid"
 TIPS_MAX, TIPS_TOO_MANY = 64, "trusted_through_too_many"   # refs.trusted_through on any row (CC 3.1.3.2)
+ACK_MAX, ACK_TOO_MANY = 256, "ack_names_too_many"          # the acts one receipt names under refs.also.ack (CC 3.1.3)
 FAMILY_UNREGISTERED = "namespace_family_unregistered"   # a family label under a retired stem (CC 3.1.7)
 
 
@@ -593,7 +596,7 @@ def family_payloads():
             "author": iref(0), "unit": dig, "capabilities": ["read", "compute"], "cohort_scope": "self", "asserted_at": t,
             "valid_until": t + 86400000}),
         "trust-accepts": ("trust:accepts", {
-            "author": iref(0), "dimension": "trust:accepts:v1", "trust_classes": ["transparency"],
+            "author": iref(0), "dimension": "trust:accepts:v1", "attached_head_digest": dig, "trust_classes": ["transparency"],
             "service_key": {1: 2, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32)}, "asserted_at": t}),
         "delivery-ack": ("delivery_ack:.stream_id", {
             "author": iref(1), "dimension": "delivery_ack:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
@@ -605,11 +608,24 @@ def family_payloads():
         "trust-confers": ("trust:.job:.version", {
             "dimension": "trust:confers:v1", "scope": [PIPELINE_SCOPE],
             "projects": sorted(["ciris-agent", "ciris-verify"], key=cde), "refs": {"head": _ref(9)}, "asserted_at": t}),
-        "grant-acceptance": ("membership:.stage", {
-            "author": iref(0), "dimension": "membership:acceptance:v1", "refs": {"answers": _ref(15)}, "asserted_at": t}),
+        "membership-reply": ("membership:.stage", {
+            "author": iref(2), "dimension": "membership:acceptance:v1", "group_kind": "family", "group": gref(5),
+            "role": "member", "refs": {"answers": _ref(20)}, "asserted_at": t}),
         "grant-withdrawal": ("trust:.job:.version", {
             "refs": {"head": _ref(9), "target": _ref(15)}, "lifts": True, "asserted_at": t}),
+        "act-ack": ("act:ack", {
+            "author": iref(1), "dimension": "act:ack:v1",
+            "refs": {"also": {"ack": sorted([_ref(21), _ref(22)], key=cde)}}, "asserted_at": t}),
+        "objection-vote": ("objection:.state", {
+            "author": iref(1), "dimension": "objection:raised:v1", "cohort": "self", "cohort_key_id": "fed-1",
+            "grounds": "sample", "refs": {"answers": _ref(23)}, "asserted_at": t}),
     }
+
+
+def grant_reply(**change):
+    """The reply to a grant (CC 3.1.2.1): the membership-reply payload with no group members, by the grantee's owner."""
+    p = _without(family_payloads()["membership-reply"][1], "group_kind", "group", "role")
+    return dict(dict(p, author=iref(0), refs={"answers": _ref(15)}), **change)
 
 
 def _without(p, *keys):
@@ -702,6 +718,7 @@ def family_payload_samples():
          statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: [cde([bytes(4), {}, None, bytes(64)])]}), []),
         ("trust-accepts", "a transparency edge carrying its service's COSE key", cde(family_payloads()["trust-accepts"][1]), [
             ("a service key that is a key id, not an identity reference", cde(dict(family_payloads()["trust-accepts"][1], service_key="A1"))),
+            ("an attached head digest as hex text", cde(dict(family_payloads()["trust-accepts"][1], attached_head_digest="07" * 32))),
             ("a trust depth of 6", cde(dict(family_payloads()["trust-accepts"][1], trust_depth=6)))]),
         ("delivery-ack", "delivery_ack:{stream_id} payload", cde(P["delivery-ack"]), [
             ("an ack with no chunk index", D("delivery-ack", "k")),
@@ -720,12 +737,28 @@ def family_payload_samples():
             ("a scope as a bare token", W("trust-confers", scope=PIPELINE_SCOPE)),
             ("an empty projects set", W("trust-confers", projects=[])),
             ("a grant naming no bundle", D("trust-confers", "refs"))]),
-        ("grant-acceptance", "membership:acceptance payload answering a grant", cde(P["grant-acceptance"]), [
-            ("an acceptance with no author", D("grant-acceptance", "author")),
-            ("an acceptance naming no grant", D("grant-acceptance", "refs"))]),
+        ("membership-reply", "membership:acceptance payload answering a proposal", cde(P["membership-reply"]), [
+            ("a reply with no author", D("membership-reply", "author")),
+            ("a reply with no refs", D("membership-reply", "refs")),
+            ("a reply to a group of another kind", W("membership-reply", group_kind="room")),
+            ("a reply whose group is a key id", W("membership-reply", group="A1"))]),
+        ("membership-reply", "membership:acceptance payload answering a grant", cde(grant_reply()), [
+            ("an acceptance of a grant with no author", cde(_without(grant_reply(), "author"))),
+            ("an acceptance naming no grant", cde(_without(grant_reply(), "refs")))]),
         ("grant-withdrawal", "the payload of a counted withdraws of a grant", cde(P["grant-withdrawal"]), [
             ("a withdrawal naming nothing", D("grant-withdrawal", "refs")),
             ("lifts written as false", W("grant-withdrawal", lifts=False))]),
+        ("act-ack", "act:ack payload", cde(P["act-ack"]), [
+            ("a receipt with no refs", D("act-ack", "refs")),
+            ("a receipt with no dimension", D("act-ack", "dimension")),
+            ("acts as one bare reference", W("act-ack", refs={"also": {"ack": _ref(21)}})),
+            ("an empty set of acts", W("act-ack", refs={"also": {"ack": []}}))]),
+        ("objection-vote", "objection:{state} payload", cde(P["objection-vote"]), [
+            ("a vote with no author", D("objection-vote", "author")),
+            ("a vote with no cohort", D("objection-vote", "cohort")),
+            ("a vote with no cohort_key_id", D("objection-vote", "cohort_key_id")),
+            ("a vote with no refs", D("objection-vote", "refs")),
+            ("grounds as a number", W("objection-vote", grounds=7))]),
     ]
 
 
@@ -784,7 +817,7 @@ def family_payload_rule(root, p, family=None):
     refs = p.get("refs", {})
     if root == "build-manifest-row":
         if dim.split(":")[:2] != ["provenance", "build_manifest"] or "head" not in refs:
-            return PAYLOAD_INVALID                        # the bundle the pipeline's grant names, in refs.head
+            return PAYLOAD_INVALID                        # the bundle in force when the row is signed, in refs.head
         if p.get("build", {}).get("manifest_hash") not in p.get("evidence_refs", []):
             return PAYLOAD_INVALID                        # the blob the descriptor names is the blob the row cites
     if root == "trust-confers":
@@ -793,8 +826,24 @@ def family_payload_rule(root, p, family=None):
         for m in ("scope", "projects"):
             if m in p and p[m] != sorted(set(p[m]), key=cde):
                 return PAYLOAD_INVALID                    # each a set (CC 2.6.1.2)
-    if root == "grant-acceptance" and (dim != "membership:acceptance:v1" or "answers" not in refs or "head" in refs):
-        return PAYLOAD_INVALID                            # names the one grant it accepts, and no head
+    if root == "membership-reply":
+        if dim not in ("membership:acceptance:v1", "membership:decline:v1"):
+            return PAYLOAD_INVALID                        # a reply is an acceptance or a decline
+        if "answers" not in refs or "head" in refs or "target" in refs or "proposal_hash" in p:
+            return PAYLOAD_INVALID                        # names the one row it answers and nothing else (CC 3.1.3.2)
+    if root == "trust-accepts" and ("head" in refs or "scope" in p):
+        return PAYLOAD_INVALID                            # the edge names no head and carries no scope (CC 3.2 T4a)
+    if root == "act-ack":
+        acks = refs.get("also", {}).get("ack", [])
+        if len(acks) > ACK_MAX:
+            return ACK_TOO_MANY                           # at most 256 acts in one receipt (CC 3.1.3)
+        if dim != "act:ack:v1" or not acks or "head" in refs:
+            return PAYLOAD_INVALID                        # names the acts it acknowledges, and no head
+    if root == "objection-vote":
+        if dim not in ("objection:assent:v1", "objection:raised:v1") or "answers" not in refs:
+            return PAYLOAD_INVALID                        # the states are closed at assent and raised (CC 3.1.9.2)
+        if "objects_to_attestation_id" in p or "dismisses_objection_id" in p:
+            return PAYLOAD_INVALID                        # the row answered stands in refs.answers and nowhere else
     if root == "grant-withdrawal" and ("target" not in refs or "head" not in refs or "author" in p):
         return PAYLOAD_INVALID                            # the grant withdrawn and the head the count acts from
     return None
@@ -980,6 +1029,12 @@ def family_payload_rule_checks():
     for root, (fam, p) in P.items():
         if family_payload_rule(root, p, fam) is not None:
             bad.append(f"{root} sample breaks its prose rule")
+    if family_payload_rule("membership-reply", grant_reply(), "membership:.stage") is not None:
+        bad.append("the reply to a grant breaks its prose rule")
+    if family_payload_rule("membership-reply", grant_reply(dimension="membership:decline:v1")) is not None:
+        bad.append("the decline of a grant breaks its prose rule")
+    if family_payload_rule("objection-vote", dict(P["objection-vote"][1], dimension="objection:assent:v1")) is not None:
+        bad.append("an assent breaks its prose rule")
     breaks = [
         ("membership-change", dict(P["membership-change"][1], dimension="membership:proposal:v1"), None),
         ("membership-change", _without(P["membership-change"][1], "joined_at"), None),
@@ -1006,8 +1061,22 @@ def family_payload_rule_checks():
         ("trust-confers", dict(P["trust-confers"][1], author=iref(0)), None),
         ("trust-confers", dict(P["trust-confers"][1], projects=["ciris-verify", "ciris-verify"]), None),
         ("trust-confers", dict(P["trust-confers"][1], dimension="trust:accepts:v1"), None),
-        ("grant-acceptance", dict(P["grant-acceptance"][1], refs={"answers": _ref(15), "head": _ref(9)}), None),
-        ("grant-acceptance", dict(P["grant-acceptance"][1], refs={"also": {"cites": [_ref(15)]}}), None),
+        ("membership-reply", dict(P["membership-reply"][1], refs={"also": {"cites": [_ref(20)]}}), None),
+        ("membership-reply", dict(P["membership-reply"][1], refs={"answers": _ref(20), "target": _ref(20)}), None),
+        ("membership-reply", dict(P["membership-reply"][1], refs={"answers": _ref(20), "head": _ref(1)}), None),
+        ("membership-reply", dict(P["membership-reply"][1], proposal_hash=[-16, bytes([7]) * 32]), None),
+        ("membership-reply", dict(P["membership-reply"][1], dimension="membership:proposal:v1"), None),
+        ("membership-reply", grant_reply(refs={"answers": _ref(15), "head": _ref(9)}), None),
+        ("membership-reply", grant_reply(refs={"also": {"cites": [_ref(15)]}}), None),
+        ("trust-accepts", dict(P["trust-accepts"][1], refs={"head": _ref(9)}), None),
+        ("trust-accepts", dict(P["trust-accepts"][1], scope=["infra:serve"]), None),
+        ("act-ack", dict(P["act-ack"][1], refs={"also": {"cites": [_ref(21)]}}), None),
+        ("act-ack", dict(P["act-ack"][1], refs=dict(P["act-ack"][1]["refs"], head=_ref(1))), None),
+        ("objection-vote", dict(P["objection-vote"][1], refs={"also": {"cites": [_ref(23)]}}), None),
+        ("objection-vote", dict(P["objection-vote"][1], objects_to_attestation_id="a-1"), None),
+        ("objection-vote", dict(P["objection-vote"][1], dismisses_objection_id="a-1"), None),
+        ("objection-vote", dict(P["objection-vote"][1], dimension="objection:proposal:v1"), None),
+        ("objection-vote", dict(P["objection-vote"][1], dimension="objection:dismissed:v1"), None),
         ("grant-withdrawal", dict(P["grant-withdrawal"][1], refs={"target": _ref(15)}), None),
         ("grant-withdrawal", dict(P["grant-withdrawal"][1], refs={"head": _ref(9)}), None),
     ]
@@ -1030,8 +1099,15 @@ def family_payload_rule_checks():
             bad.append(f"a {what} with {TIPS_MAX} tips breaks its prose rule")
         if family_payload_rule(root, with_tips(p, TIPS_MAX + 1)) != TIPS_TOO_MANY:
             bad.append(f"deliberate break not caught: a {what} with {TIPS_MAX + 1} tips was not refused {TIPS_TOO_MANY}")
+    # At most 256 acts in one receipt (CC 3.1.3): 256 pass, 257 are refused by name.
+    acks = lambda n: dict(P["act-ack"][1], refs={"also": {"ack": sorted([[2, [-16, i.to_bytes(32, "big")]] for i in range(n)], key=cde)}})
+    if family_payload_rule("act-ack", acks(ACK_MAX)) is not None:
+        bad.append(f"a receipt of {ACK_MAX} acts breaks its prose rule")
+    if family_payload_rule("act-ack", acks(ACK_MAX + 1)) != ACK_TOO_MANY:
+        bad.append(f"deliberate break not caught: a receipt of {ACK_MAX + 1} acts was not refused {ACK_TOO_MANY}")
     return (f"family payload rules: {len(P)} samples pass; {caught} breaks refused {PAYLOAD_INVALID}; "
             f"{TIPS_MAX + 1} tips on a keeps row and on a removal refused {TIPS_TOO_MANY}, {TIPS_MAX} pass; "
+            f"a receipt of {ACK_MAX + 1} acts refused {ACK_TOO_MANY}, {ACK_MAX} pass; "
             f"a statement labelled with the retired family cosign:.state is refused {FAMILY_UNREGISTERED}"), bad
 
 
@@ -1072,7 +1148,7 @@ def family_cddl_checks(text, ftext):
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
 FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "delivery_ack",
                   "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts",
-                  "build_manifest", "grant", "grant_acceptance", "grant_withdrawal")
+                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
@@ -1087,12 +1163,14 @@ FAMILY_RULE_HEAD = {
     "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
     "key-grant": "key_grant:{axis}: authored by the sealer; sub is the recipient.",
     "delivery-ack": "delivery_ack:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
-    "trust-accepts": "trust:accepts (CC 4.4.3.34, CC 2.7.11): the reader's own edge; the members this form names, its further members are the store's.",
+    "trust-accepts": "trust:accepts (CC 3.2 T3, CC 4.4.3.34, CC 2.7.11): the owner's edge, signed by any live key of the owner's roster; a node's own edge is read only while its owner has signed none. sub is the lineage's name, the bundle's family_key_id; the edge names no refs.head and carries no scope. The members this form names; its further members are the store's.",
     "build-manifest-row": "provenance:build_manifest:{target} (CC 3.1.2.1): authored by the pipeline's key; one claim, type scores; the manifest blob is unsigned and cited by its digest.",
     "build-descriptor": "The descriptor of a manifest blob (CC 3.1.2.1, CC 5.3.2.11): a closed map of exactly four members.",
     "trust-confers": "trust:confers (CC 3.1.2.1, CC 4.2.1): a delegates_to row counted over the holders of the bundle in force, with no author; sub is the key the grant names.",
-    "grant-acceptance": "membership:acceptance answering a grant (CC 3.1.2.1): authored by the owner of the key the grant names, at federation scope.",
+    "membership-reply": "membership:acceptance and membership:decline (CC 3.1.3.2, CC 3.1.2.1): authored by the invitee, or on the reply to a grant by the owner of the key the grant names, at federation scope. It names the one row it answers in refs.answers, and no head and no target.",
     "grant-withdrawal": "The withdraws row that ends a grant (CC 4.2.1, CC 2.4.1.1): counted over the holders of the bundle in force, with no author.",
+    "act-ack": "act:ack (CC 3.1.3, CC 2.7.5): a receipt, type scores; one voice's, or a body's count with no author. It names 1 to 256 acts under refs.also ack, and no head.",
+    "objection-vote": "objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",
     "deferral-request": "deferral:request (CC 3.1.9.3, CC 4.3): authored by the deferring party; the request's further members are the store's.",

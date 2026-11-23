@@ -68,6 +68,18 @@ membership-keeps = {
   * tstr => ceg-value,
 }
 
+; membership:acceptance and membership:decline (CC 3.1.3.2, CC 3.1.2.1): authored by the invitee, or on the reply to a grant by the owner of the key the grant names, at federation scope. It names the one row it answers in refs.answers, and no head and no target.
+membership-reply = {
+  "author": identity-ref,                   ; The invitee; on the reply to a grant, the owner of the key the grant names: a person, never the grantee's own key.
+  "dimension": tstr,                        ; membership:acceptance:v1 or membership:decline:v1.
+  ? "group_kind": "family" / "community",   ; Which group the proposal is to. (where the reply answers a membership proposal)
+  ? "group": group-ref,                     ; The group's id, the group the proposal targets. (where the reply answers a membership proposal)
+  ? "role": tstr,                           ; The role the proposal offered. (on an acceptance that restates the role offered)
+  "refs": refs,                             ; The one row answered, under answers: the proposal, or the grant. A reply names no head and no target. One that carries proposal_hash is refused.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
 ; identity:occurrence_revocation: authored by the revoker, or counted over a user self's roster at the head refs names.
 occurrence-revocation = {
   ? "author": identity-ref,                 ; The revoker; a user self's revocation is counted over its roster at the head refs names and carries none. (unless the occurrence is of a user self)
@@ -256,10 +268,11 @@ canonical-rebind = {
   * tstr => ceg-value,
 }
 
-; trust:accepts (CC 4.4.3.34, CC 2.7.11): the reader's own edge; the members this form names, its further members are the store's.
+; trust:accepts (CC 3.2 T3, CC 4.4.3.34, CC 2.7.11): the owner's edge, signed by any live key of the owner's roster; a node's own edge is read only while its owner has signed none. sub is the lineage's name, the bundle's family_key_id; the edge names no refs.head and carries no scope. The members this form names; its further members are the store's.
 trust-accepts = {
-  "author": identity-ref,                   ; The reader whose edge it is.
-  "dimension": tstr,                        ; trust:accepts:v1.
+  "author": identity-ref,                   ; The owner whose edge it is: a person, and any live key of their roster signs it. A node's own edge is read only while its owner has signed none.
+  "dimension": tstr,                        ; trust:accepts:v1. The CWT sub is the lineage's name, the bundle's family_key_id. The edge names no refs.head and carries no scope.
+  ? "attached_head_digest": hash-digest,    ; The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). A new edge without it is refused, trust_root_head_unnamed. (on a new edge)
   ? "trust_classes": [+ tstr],              ; A set of class ids; absent, every class the charter declares. (where the edge narrows its classes)
   ? "trust_depth": 0..5,                    ; Absent reads 0. (where the edge reaches further)
   ? "service_key": { 1: int, 3: int, * int => any } / identity-ref, ; The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record. (on an edge of the class transparency)
@@ -273,7 +286,7 @@ build-manifest-row = {
   "dimension": tstr,                        ; provenance:build_manifest:{target} with its version.
   "build": build-descriptor,                ; The descriptor of the manifest blob the row cites.
   "evidence_refs": [+ hash-digest],         ; The manifest blob, by its digest: the digest of build.manifest_hash is among them.
-  "refs": refs,                             ; The bundle the pipeline's grant names, in refs.head.
+  "refs": refs,                             ; The bundle in force when the row is signed, in refs.head: the one the pipeline's grant names or a later bundle of the same lineage.
   "asserted_at": ms-time,                   ; POSIX milliseconds: the signed instant of the manifest, which the blob does not state.
   * tstr => ceg-value,
 }
@@ -296,19 +309,31 @@ trust-confers = {
   * tstr => ceg-value,
 }
 
-; membership:acceptance answering a grant (CC 3.1.2.1): authored by the owner of the key the grant names, at federation scope.
-grant-acceptance = {
-  "author": identity-ref,                   ; The owner of the key the grant names: a person, never the grantee's own key.
-  "dimension": tstr,                        ; membership:acceptance:v1.
-  "refs": refs,                             ; The one grant accepted, under answers; an acceptance names no head.
-  "asserted_at": ms-time,                   ; POSIX milliseconds.
-  * tstr => ceg-value,
-}
-
 ; The withdraws row that ends a grant (CC 4.2.1, CC 2.4.1.1): counted over the holders of the bundle in force, with no author.
 grant-withdrawal = {
   "refs": refs,                             ; The grant withdrawn, under target; the head the withdrawal acts from, under head.
   ? "lifts": true,                          ; Present only as true. (where the count lifts single receipts)
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; act:ack (CC 3.1.3, CC 2.7.5): a receipt, type scores; one voice's, or a body's count with no author. It names 1 to 256 acts under refs.also ack, and no head.
+act-ack = {
+  ? "author": identity-ref,                 ; The one voice that acknowledges; a body's receipt is counted and carries none. (unless a body's count receipts)
+  "dimension": tstr,                        ; act:ack:v1; the row's type is scores.
+  "refs": refs,                             ; The acts acknowledged, under the also role ack: 1 to 256 of them. A receipt names no head; one that names more than 256 acts is refused, ack_names_too_many.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.
+objection-vote = {
+  "author": identity-ref,                   ; The voter.
+  "dimension": tstr,                        ; objection:assent:v1 or objection:raised:v1; the states are closed at these two.
+  "cohort": tstr,                           ; The scope of the standing set the vote is cast in; self for the self-roster door.
+  "cohort_key_id": tstr,                    ; The standing set the vote is cast in; for the self-roster door the fedID.
+  ? "grounds": tstr,                        ; The voter's grounds. (where the vote states its grounds)
+  "refs": refs,                             ; Exactly one row, under answers: the proposal answered or the act objected to. A vote that carries objects_to_attestation_id or dismisses_objection_id is refused.
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }

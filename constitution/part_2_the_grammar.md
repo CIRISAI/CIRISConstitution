@@ -821,7 +821,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `joined_at` | `"joined_at"` | payload | `ms-time` | always | [3.2](part_3_the_namespace.md#3.2) [3.3.4](part_3_the_namespace.md#3.3.4) [2.6.2](#2.6.2) | POSIX milliseconds. |
 | `role` | `"role"` | payload | `tstr` | where the record gives the member a role | [3.3.4](part_3_the_namespace.md#3.3.4) | founder or member; absent, never null. |
 
-**A membership change and a keeps row: the payloads of a `membership:{stage}` row at the stages `widening`, `removal` and `keeps`**
+**A membership change, a keeps row and a reply: the payloads of a `membership:{stage}` row at the stages `widening`, `removal`, `keeps`, `acceptance` and `decline`**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
@@ -843,6 +843,13 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `family_key_id`, `community_key_id` | `"group"` | payload | `group-ref` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The group's id. |
 | — | `"member"` | payload | `identity-ref` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The member whose content the row keeps. |
 | — | `"refs"` | payload | `refs` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) [2.6.1.9](#2.6.1.9) | The roster head the row is counted over in refs.head; exactly one end of that member's seat under the also role cites; 1 to 64 tips in trusted_through. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | The invitee; on the reply to a grant, the owner of the key the grant names: a person, never the grantee's own key. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | membership:acceptance:v1 or membership:decline:v1. |
+| `group_kind` | `"group_kind"` | payload | `"family" / "community"` | where the reply answers a membership proposal | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | Which group the proposal is to. |
+| `family_key_id`, `community_key_id` | `"group"` | payload | `group-ref` | where the reply answers a membership proposal | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The group's id, the group the proposal targets. |
+| `role` | `"role"` | payload | `tstr` | on an acceptance that restates the role offered | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) | The role the proposal offered. |
+| — | `"refs"` | payload | `refs` | always | [3.1.3.2](part_3_the_namespace.md#3.1.3.2) [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [2.6.1.3](#2.6.1.3) | The one row answered, under answers: the proposal, or the grant. A reply names no head and no target. One that carries proposal_hash is refused. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
 **An occurrence revocation: the payload of an `identity:occurrence_revocation` row**
@@ -939,8 +946,9 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
-| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | The reader whose edge it is. |
-| `dimension` | `"dimension"` | payload | `tstr` | always | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | trust:accepts:v1. |
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) [3.2](part_3_the_namespace.md#3.2) | The owner whose edge it is: a person, and any live key of their roster signs it. A node's own edge is read only while its owner has signed none. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) [3.2](part_3_the_namespace.md#3.2) | trust:accepts:v1. The CWT sub is the lineage's name, the bundle's family_key_id. The edge names no refs.head and carries no scope. |
+| `attached_head_digest` | `"attached_head_digest"` | payload | `hash-digest` | on a new edge | [3.2](part_3_the_namespace.md#3.2) | The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). A new edge without it is refused, trust_root_head_unnamed. |
 | `trust_classes` | `"trust_classes"` | payload | `[+ tstr]` | where the edge narrows its classes | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) [2.6.1.2](#2.6.1.2) | A set of class ids; absent, every class the charter declares. |
 | `trust_depth` | `"trust_depth"` | payload | `0..5` | where the edge reaches further | [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | Absent reads 0. |
 | — | `"service_key"` | payload | `{ 1: int, 3: int, * int => any } / identity-ref` | on an edge of the class transparency | [2.7.11](#2.7.11) [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record. |
@@ -954,7 +962,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | provenance:build_manifest:{target} with its version. |
 | — | `"build"` | payload | `build-descriptor` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [5.3.2.11](part_5_transport_substrate.md#5.3.2.11) | The descriptor of the manifest blob the row cites. |
 | `evidence_refs` | `"evidence_refs"` | payload | `[+ hash-digest]` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [2.6.1.6](#2.6.1.6) | The manifest blob, by its digest: the digest of build.manifest_hash is among them. |
-| — | `"refs"` | payload | `refs` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [2.4.1.1](#2.4.1.1) | The bundle the pipeline's grant names, in refs.head. |
+| — | `"refs"` | payload | `refs` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [2.4.1.1](#2.4.1.1) | The bundle in force when the row is signed, in refs.head: the one the pipeline's grant names or a later bundle of the same lineage. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds: the signed instant of the manifest, which the blob does not state. |
 | — | `"project"` | payload | `tstr` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | The project, equal to the blob's project and listed by the pipeline's grant. |
 | — | `"version"` | payload | `tstr` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | The version, equal to the blob's version. |
@@ -971,21 +979,33 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `"refs"` | payload | `refs` | always | [4.2.1](part_4_composition_governance.md#4.2.1) [2.6.1.9](#2.6.1.9) | The bundle in force the grant is counted over, in refs.head. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
-**The acceptance of a grant: the payload of a `membership:acceptance` row that answers a grant**
-
-| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
-|---|---|---|---|---|---|---|
-| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [3.2](part_3_the_namespace.md#3.2) | The owner of the key the grant names: a person, never the grantee's own key. |
-| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | membership:acceptance:v1. |
-| — | `"refs"` | payload | `refs` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [2.6.1.3](#2.6.1.3) | The one grant accepted, under answers; an acceptance names no head. |
-| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
-
 **The holders' withdrawal of a grant: the payload of a counted `withdraws` row**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
 | — | `"refs"` | payload | `refs` | always | [4.2.1](part_4_composition_governance.md#4.2.1) [2.4.1.1](#2.4.1.1) | The grant withdrawn, under target; the head the withdrawal acts from, under head. |
 | — | `"lifts"` | payload | `true` | where the count lifts single receipts | [2.4.1.1](#2.4.1.1) | Present only as true. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**A receipt: the payload of an `act:ack` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | unless a body's count receipts | [3.1.3](part_3_the_namespace.md#3.1.3) [2.7.5](#2.7.5) | The one voice that acknowledges; a body's receipt is counted and carries none. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.3](part_3_the_namespace.md#3.1.3) | act:ack:v1; the row's type is scores. |
+| — | `"refs"` | payload | `refs` | always | [3.1.3](part_3_the_namespace.md#3.1.3) [2.7.5](#2.7.5) | The acts acknowledged, under the also role ack: 1 to 256 of them. A receipt names no head; one that names more than 256 acts is refused, ack_names_too_many. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**An objection vote: the payload of an `objection:{state}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.9.2](part_3_the_namespace.md#3.1.9.2) | The voter. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.9.2](part_3_the_namespace.md#3.1.9.2) | objection:assent:v1 or objection:raised:v1; the states are closed at these two. |
+| `cohort` | `"cohort"` | payload | `tstr` | always | [3.1.9.2](part_3_the_namespace.md#3.1.9.2) [3.3.6.4](part_3_the_namespace.md#3.3.6.4) | The scope of the standing set the vote is cast in; self for the self-roster door. |
+| `cohort_key_id` | `"cohort_key_id"` | payload | `tstr` | always | [3.1.9.2](part_3_the_namespace.md#3.1.9.2) [3.3.6.4](part_3_the_namespace.md#3.3.6.4) | The standing set the vote is cast in; for the self-roster door the fedID. |
+| `grounds` | `"grounds"` | payload | `tstr` | where the vote states its grounds | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) | The voter's grounds. |
+| — | `"refs"` | payload | `refs` | always | [3.1.9.2](part_3_the_namespace.md#3.1.9.2) [2.6.1.3](#2.6.1.3) | Exactly one row, under answers: the proposal answered or the act objected to. A vote that carries objects_to_attestation_id or dismisses_objection_id is refused. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
 **An occurrence: the payload of an `identity:occurrence` row**

@@ -29,21 +29,22 @@ SCOPES = ("self", "family", "community", "affiliations", "species", "biosphere",
 COUNT_TEXT = os.path.join(ROOT, "formal/derivation/count_text.tsv")
 POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
 SIGNED_OBJECT = os.path.join(ROOT, "constitution/signed_object.tsv")
-# Members of the earlier form's table (CC 8.11.9) that no row of this form carries. A reply names what it answers in
-# refs.answers, and one that carries proposal_hash is malformed and refused (CC 3.1.3.2).
-EARLIER_FORM_ONLY = {"proposal_hash"}
 SIGNED_OBJECT_V2 = os.path.join(ROOT, "constitution/signed_object_v2.tsv")
 # The families whose payload CC 2.6.1.4 states, by the schema rule that holds it (manifests/family_payloads_v2.cddl).
+# A family whose leaves have different payloads has one rule for each (membership:{stage}): each member then names its rule.
 FORWARD_PAYLOAD = OrderedDict([("group-roster", "group:roster"), ("membership-change", "membership:{stage}"),
+                               ("membership-reply", "membership:{stage}"),
                                ("occurrence-revocation", "identity:occurrence_revocation"),
                                ("entity-revocation", "revocation:{entity_type}:{reason}"),
                                ("takedown-notice", "takedown_notice:{basis}"), ("custody-ack", "custody:{kind}"),
                                ("key-grant", "key_grant:{axis}"), ("delivery-ack", "delivery_ack:{stream_id}"),
                                ("identity-occurrence", "identity:occurrence"), ("identity-amendment", "identity_amendment"),
                                ("deferral-response", "deferral:response:{outcome}"), ("deferral-request", "deferral:request"),
-                               ("canonical-rebind", "transport:canonical_rebind"), ("trust-accepts", "trust:accepts")])
-FORWARD_PARTIAL = {"deferral:response:{outcome}", "deferral:request", "transport:canonical_rebind", "trust:accepts"}   # the rule names some members; the cell's others stay
-FORWARD_LEAVES = {"membership:{stage}": ("widening", "removal")}   # the stages the rule states; the others keep their cell
+                               ("canonical-rebind", "transport:canonical_rebind"), ("trust-accepts", "trust:{job}:{version}"),
+                               ("act-ack", "act:ack"), ("objection-vote", "objection:{state}")])
+FORWARD_PARTIAL = {"deferral:response:{outcome}", "deferral:request", "transport:canonical_rebind", "trust:{job}:{version}"}   # the rule names some members; the cell's others stay
+FORWARD_LEAVES = {"membership:{stage}": ("widening", "removal", "acceptance", "decline"),   # the leaves the rules state; the others keep their cell
+                  "trust:{job}:{version}": ("accepts",)}
 CELL_CITES = os.path.join(ROOT, "formal/derivation/cell_cites.tsv")
 FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
 FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
@@ -1139,7 +1140,6 @@ def main():
     body_members, body_unread = OrderedDict(), []
     for so in csv.DictReader(open(SIGNED_OBJECT, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE):
         if so["object"] != "attestation_row": continue
-        if so["member"] in EARLIER_FORM_ONLY: continue
         for mode, lst in re.findall(r"(REQUIRED|OPTIONAL) on ([^;()]+)", so["presence"]):
             for name in [x.strip() for x in re.split(r",| and ", lst) if x.strip()]:
                 own = owners(name) if re.fullmatch(r"[a-z_]+(:[a-z_{}*0-9]+)+", name) else []
@@ -1175,10 +1175,13 @@ def main():
     for so in csv.DictReader(open(SIGNED_OBJECT_V2, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE):
         fam = FORWARD_PAYLOAD.get(so["rule"])
         if fam:
-            fwd.setdefault(fam, []).append(OrderedDict([
+            e = OrderedDict([
                 ("member", so["member"].strip('"')), ("type", so["type"]),
                 ("presence", "required" if so["required_when"] == "always" else "optional"),
-                ("when", so["required_when"]), ("in_cddl", True), ("cc_ref", "CC " + so["cc_ref"].split()[0])]))
+                ("when", so["required_when"]), ("in_cddl", True), ("cc_ref", "CC " + so["cc_ref"].split()[0])])
+            if list(FORWARD_PAYLOAD.values()).count(fam) > 1: e["rule"] = so["rule"]
+            if len(FORWARD_LEAVES.get(fam, ())) == 1: e["leaf"] = fam.split(":")[0] + ":" + FORWARD_LEAVES[fam][0]   # the one leaf the rule states
+            fwd.setdefault(fam, []).append(e)
     if set(fwd) != set(FORWARD_PAYLOAD.values()):
         print("signed_object_v2.tsv states no payload for: " + ", ".join(sorted(set(FORWARD_PAYLOAD.values()) - set(fwd)))); return 1
     for r in rows:
@@ -1188,11 +1191,12 @@ def main():
             named = {e["member"] for e in fwd[r["family"]]}
             keep = [e for e in old.get("members", []) if (leaves and e.get("leaf") and e["leaf"].split(":")[1] not in leaves)
                     or (r["family"] in FORWARD_PARTIAL and e.get("member") not in named)]
-            r["body"] = {"value": OrderedDict([("rule", next(k for k, v in FORWARD_PAYLOAD.items() if v == r["family"])),
+            its = [k for k, v in FORWARD_PAYLOAD.items() if v == r["family"]]
+            r["body"] = {"value": OrderedDict([("rule", its[0]) if len(its) == 1 else ("rules", its),
                                                ("members", fwd[r["family"]] + keep)]),
                          "source": "cc-table", "cc_ref": "CC 2.6.1.4",
                          "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4"
-                                 + (f"; stages {', '.join(leaves)}; the others keep the members the earlier cell gave" if leaves else "")}
+                                 + (f"; {'stages' if r['family'].startswith('membership') else 'leaves'} {', '.join(leaves)}; the others keep the members the earlier cell gave" if leaves else "")}
     # The sentences that state a closed cell: the cell gains the sections that say it, its value untouched.
     by_fam = {r["family"]: r for r in rows}
     cited = 0

@@ -1768,6 +1768,8 @@ Count: `act=group => cosigned_act@signer_group ; none` (CC 3.1.3)
 
 Authorship: `act=group => counted ; authored` (CC 3.1.3)
 
+Body: `author`, `dimension`, `refs`, `asserted_at`
+
 **`admission:unit`** — Rules, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2990,7 +2992,7 @@ In time:
 - [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
 - [proposal] while `expiry` is open: binds nobody until it lands (CC 3.1.3.2)
 
-Body: `dimension`, `group_kind`, `group`, `member`, `joined_at`, `removed_at`, `effective_at`, `role`, `witness_set`, `valid_until`, `reason`, `refs`, `asserted_at`
+Body: `dimension`, `group_kind`, `group`, `member`, `joined_at`, `removed_at`, `effective_at`, `role`, `witness_set`, `valid_until`, `reason`, `refs`, `asserted_at`, `author`
 
 **`mesh_config:{key}`** — Rules, thing
 
@@ -3063,7 +3065,7 @@ Fold:
 - `@state=assent: weight=1` (CC 3.1.9.2)
 - `@state=raised: weight=-1` (CC 3.1.9.2)
 
-Body: `cohort`, `cohort_key_id` (text only), `grounds` (text only)
+Body: `author`, `dimension`, `cohort`, `cohort_key_id`, `grounds`, `refs`, `asserted_at`
 
 **`observation:access_assumption`** — Premises, account
 
@@ -3556,7 +3558,7 @@ In time:
 - @affiliations expiry required `delegation_valid_until` default `delegation_term_max_secs` max `charter.role_term` (CC 4.4.3.12)
 - expiry required `delegation_valid_until` max `delegation_term_max_secs` (CC 2.4.1)
 
-Body: `attach_window_secs`, `attached_head_digest`, `pre_rotation_commitment`, `recovery_commitments`
+Body: `author`, `dimension`, `attached_head_digest`, `trust_classes`, `trust_depth`, `service_key`, `asserted_at`, `attach_window_secs`, `pre_rotation_commitment`, `recovery_commitments`
 
 **`video:*`** — Facts, account
 

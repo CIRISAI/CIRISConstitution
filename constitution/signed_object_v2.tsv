@@ -168,6 +168,13 @@ membership	membership-keeps	"group"	family_key_id, community_key_id	payload	grou
 membership	membership-keeps	"member"	-	payload	identity-ref	always	3.1.3.2	The member whose content the row keeps.
 membership	membership-keeps	"refs"	-	payload	refs	always	3.1.3.2 2.6.1.9	The roster head the row is counted over in refs.head; exactly one end of that member's seat under the also role cites; 1 to 64 tips in trusted_through.
 membership	membership-keeps	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+membership	membership-reply	"author"	attesting_key_id	payload	identity-ref	always	3.1.3.2 3.1.2.1	The invitee; on the reply to a grant, the owner of the key the grant names: a person, never the grantee's own key.
+membership	membership-reply	"dimension"	dimension	payload	tstr	always	3.1.3.2	membership:acceptance:v1 or membership:decline:v1.
+membership	membership-reply	"group_kind"	group_kind	payload	"family" / "community"	where the reply answers a membership proposal	3.1.3.2	Which group the proposal is to.
+membership	membership-reply	"group"	family_key_id, community_key_id	payload	group-ref	where the reply answers a membership proposal	3.1.3.2	The group's id, the group the proposal targets.
+membership	membership-reply	"role"	role	payload	tstr	on an acceptance that restates the role offered	3.1.3.2	The role the proposal offered.
+membership	membership-reply	"refs"	-	payload	refs	always	3.1.3.2 3.1.2.1 2.6.1.3	The one row answered, under answers: the proposal, or the grant. A reply names no head and no target. One that carries proposal_hash is refused.
+membership	membership-reply	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 occurrence_revocation	occurrence-revocation	"author"	attesting_key_id	payload	identity-ref	unless the occurrence is of a user self	3.1.3 3.3.6.4	The revoker; a user self's revocation is counted over its roster at the head refs names and carries none.
 occurrence_revocation	occurrence-revocation	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6.4	The identity whose occurrence is revoked.
 occurrence_revocation	occurrence-revocation	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6.4	The occurrence revoked, equal to the CWT sub.
@@ -299,8 +306,9 @@ disclosure	salted-claim	value	-	object	ceg-value	always	2.6.1.10	The blinded mem
 disclosure	salted-claim	key	-	object	tstr	always	2.6.1.10	The blinded member's name; the digest is SHA-256 over the disclosure's bytes as sd_claims carries them.
 disclosure	salted-element	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes; a blinded array element is disclosed as [salt, value].
 disclosure	salted-element	value	-	object	ceg-value	always	2.6.1.10	The blinded element's value.
-trust_accepts	trust-accepts	"author"	attesting_key_id	payload	identity-ref	always	4.4.3.34	The reader whose edge it is.
-trust_accepts	trust-accepts	"dimension"	dimension	payload	tstr	always	4.4.3.34	trust:accepts:v1.
+trust_accepts	trust-accepts	"author"	attesting_key_id	payload	identity-ref	always	4.4.3.34 3.2	The owner whose edge it is: a person, and any live key of their roster signs it. A node's own edge is read only while its owner has signed none.
+trust_accepts	trust-accepts	"dimension"	dimension	payload	tstr	always	4.4.3.34 3.2	trust:accepts:v1. The CWT sub is the lineage's name, the bundle's family_key_id. The edge names no refs.head and carries no scope.
+trust_accepts	trust-accepts	"attached_head_digest"	attached_head_digest	payload	hash-digest	on a new edge	3.2	The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). A new edge without it is refused, trust_root_head_unnamed.
 trust_accepts	trust-accepts	"trust_classes"	trust_classes	payload	[+ tstr]	where the edge narrows its classes	4.4.3.34 2.6.1.2	A set of class ids; absent, every class the charter declares.
 trust_accepts	trust-accepts	"trust_depth"	trust_depth	payload	0..5	where the edge reaches further	4.4.3.34	Absent reads 0.
 trust_accepts	trust-accepts	"service_key"	-	payload	{ 1: int, 3: int, * int => any } / identity-ref	on an edge of the class transparency	2.7.11 4.4.3.34	The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record.
@@ -309,7 +317,7 @@ build_manifest	build-manifest-row	"author"	attesting_key_id	payload	identity-ref
 build_manifest	build-manifest-row	"dimension"	dimension	payload	tstr	always	3.1.2.1	provenance:build_manifest:{target} with its version.
 build_manifest	build-manifest-row	"build"	-	payload	build-descriptor	always	3.1.2.1 5.3.2.11	The descriptor of the manifest blob the row cites.
 build_manifest	build-manifest-row	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	always	3.1.2.1 2.6.1.6	The manifest blob, by its digest: the digest of build.manifest_hash is among them.
-build_manifest	build-manifest-row	"refs"	-	payload	refs	always	3.1.2.1 2.4.1.1	The bundle the pipeline's grant names, in refs.head.
+build_manifest	build-manifest-row	"refs"	-	payload	refs	always	3.1.2.1 2.4.1.1	The bundle in force when the row is signed, in refs.head: the one the pipeline's grant names or a later bundle of the same lineage.
 build_manifest	build-manifest-row	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds: the signed instant of the manifest, which the blob does not state.
 build_manifest	build-descriptor	"project"	-	payload	tstr	always	3.1.2.1	The project, equal to the blob's project and listed by the pipeline's grant.
 build_manifest	build-descriptor	"version"	-	payload	tstr	always	3.1.2.1	The version, equal to the blob's version.
@@ -320,13 +328,20 @@ grant	trust-confers	"scope"	scope	payload	[+ tstr]	always	2.1 4.5.5	A set of sco
 grant	trust-confers	"projects"	-	payload	[+ tstr]	on a build pipeline's grant	3.1.2.1 2.6.1.2	A set of project names; absent, the grant confers a build manifest for no project.
 grant	trust-confers	"refs"	-	payload	refs	always	4.2.1 2.6.1.9	The bundle in force the grant is counted over, in refs.head.
 grant	trust-confers	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
-grant_acceptance	grant-acceptance	"author"	attesting_key_id	payload	identity-ref	always	3.1.2.1 3.2	The owner of the key the grant names: a person, never the grantee's own key.
-grant_acceptance	grant-acceptance	"dimension"	dimension	payload	tstr	always	3.1.2.1	membership:acceptance:v1.
-grant_acceptance	grant-acceptance	"refs"	-	payload	refs	always	3.1.2.1 2.6.1.3	The one grant accepted, under answers; an acceptance names no head.
-grant_acceptance	grant-acceptance	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 grant_withdrawal	grant-withdrawal	"refs"	-	payload	refs	always	4.2.1 2.4.1.1	The grant withdrawn, under target; the head the withdrawal acts from, under head.
 grant_withdrawal	grant-withdrawal	"lifts"	-	payload	true	where the count lifts single receipts	2.4.1.1	Present only as true.
 grant_withdrawal	grant-withdrawal	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+receipt	act-ack	"author"	attesting_key_id	payload	identity-ref	unless a body's count receipts	3.1.3 2.7.5	The one voice that acknowledges; a body's receipt is counted and carries none.
+receipt	act-ack	"dimension"	dimension	payload	tstr	always	3.1.3	act:ack:v1; the row's type is scores.
+receipt	act-ack	"refs"	-	payload	refs	always	3.1.3 2.7.5	The acts acknowledged, under the also role ack: 1 to 256 of them. A receipt names no head; one that names more than 256 acts is refused, ack_names_too_many.
+receipt	act-ack	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+objection	objection-vote	"author"	attesting_key_id	payload	identity-ref	always	3.1.9.2	The voter.
+objection	objection-vote	"dimension"	dimension	payload	tstr	always	3.1.9.2	objection:assent:v1 or objection:raised:v1; the states are closed at these two.
+objection	objection-vote	"cohort"	cohort	payload	tstr	always	3.1.9.2 3.3.6.4	The scope of the standing set the vote is cast in; self for the self-roster door.
+objection	objection-vote	"cohort_key_id"	cohort_key_id	payload	tstr	always	3.1.9.2 3.3.6.4	The standing set the vote is cast in; for the self-roster door the fedID.
+objection	objection-vote	"grounds"	grounds	payload	tstr	where the vote states its grounds	3.3.6.4	The voter's grounds.
+objection	objection-vote	"refs"	-	payload	refs	always	3.1.9.2 2.6.1.3	Exactly one row, under answers: the proposal answered or the act objected to. A vote that carries objects_to_attestation_id or dismisses_objection_id is refused.
+objection	objection-vote	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 logical	-	the row id	attestation_id	none	-	-	2.6.1.3	Computed by every holder from the statement; the same for every voice of a counted row.
 logical	-	kid, iss and author	attesting_key_id	none	-	-	2.6.1.7	kid names the signing key; iss the signer's stable identity; author the author of an authored row.
 logical	-	label -70001	attestation_type	none	-	-	2.6.1.1	One of the five.

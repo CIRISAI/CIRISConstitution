@@ -136,7 +136,7 @@ act:ack	projection	open	gap
 act:ack	governance	open	gap
 act:ack	freshness	open	gap
 act:ack	replication	open	gap
-act:ack	body	open	gap
+act:ack	body	text	cc-table
 act:ack	fold	unstated	generic
 act:ack	subject_may_withdraw	text	derived
 act:ack	accountability_record	text	derived

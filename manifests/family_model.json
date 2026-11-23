@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "91a75b7ba182f7dd22dc3c67d15fc4a21c068f91fac0bb7eab9a849fc2112f7d",
+  "registry_sha256": "31797f3442f527abd0643f3162c6f41f2fc0bd3468d4a1e42966037038cc1887",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -174,12 +174,12 @@
     "gap": 0
    },
    "body": {
-    "cc-table": 57,
+    "cc-table": 58,
     "code-v61": 0,
     "generic": 0,
     "prose": 26,
     "mixed": 0,
-    "gap": 101
+    "gap": 100
    },
    "freshness": {
     "cc-table": 0,
@@ -525,7 +525,7 @@
   },
   "body": {
    "source": "constitution/signed_object.tsv",
-   "families_with_members": 57,
+   "families_with_members": 58,
    "presence_in_words": [
     "accord_root: accord:* rows",
     "confidence: scores",
@@ -5188,9 +5188,46 @@
     "note": "not in the census"
    },
    "body": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": {
+     "rule": "act-ack",
+     "members": [
+      {
+       "member": "author",
+       "type": "identity-ref",
+       "presence": "optional",
+       "when": "unless a body's count receipts",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3"
+      },
+      {
+       "member": "dimension",
+       "type": "tstr",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3"
+      },
+      {
+       "member": "refs",
+       "type": "refs",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3"
+      },
+      {
+       "member": "asserted_at",
+       "type": "ms-time",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.2"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.4",
+    "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4"
    },
    "freshness": {
     "value": null,
@@ -56419,7 +56456,10 @@
    },
    "body": {
     "value": {
-     "rule": "membership-change",
+     "rules": [
+      "membership-change",
+      "membership-reply"
+     ],
      "members": [
       {
        "member": "dimension",
@@ -56427,7 +56467,8 @@
        "presence": "required",
        "when": "always",
        "in_cddl": true,
-       "cc_ref": "CC 3.1.3.2"
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-change"
       },
       {
        "member": "group_kind",
@@ -56435,7 +56476,8 @@
        "presence": "required",
        "when": "always",
        "in_cddl": true,
-       "cc_ref": "CC 3.1.3.2"
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-change"
       },
       {
        "member": "group",
@@ -56443,7 +56485,8 @@
        "presence": "required",
        "when": "always",
        "in_cddl": true,
-       "cc_ref": "CC 3.1.3.2"
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-change"
       },
       {
        "member": "member",
@@ -56451,7 +56494,8 @@
        "presence": "required",
        "when": "always",
        "in_cddl": true,
-       "cc_ref": "CC 3.1.3.2"
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-change"
       },
       {
        "member": "joined_at",
@@ -56459,7 +56503,8 @@
        "presence": "optional",
        "when": "on a widening",
        "in_cddl": true,
-       "cc_ref": "CC 3.1.3.2"
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-change"
       },
       {
        "member": "removed_at",
@@ -56467,7 +56512,8 @@
        "presence": "optional",
        "when": "on a removal",
        "in_cddl": true,
-       "cc_ref": "CC 3.1.3.2"
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-change"
       },
       {
        "member": "effective_at",
@@ -56475,7 +56521,8 @@
        "presence": "required",
        "when": "always",
        "in_cddl": true,
-       "cc_ref": "CC 3.4.4"
+       "cc_ref": "CC 3.4.4",
+       "rule": "membership-change"
       },
       {
        "member": "role",
@@ -56483,7 +56530,8 @@
        "presence": "optional",
        "when": "on a widening that assigns a role",
        "in_cddl": true,
-       "cc_ref": "CC 3.1.3.2"
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-change"
       },
       {
        "member": "witness_set",
@@ -56491,7 +56539,8 @@
        "presence": "optional",
        "when": "on a removal that names its witnesses",
        "in_cddl": true,
-       "cc_ref": "CC 3.1.3.2"
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-change"
       },
       {
        "member": "valid_until",
@@ -56499,7 +56548,8 @@
        "presence": "optional",
        "when": "on a time-boxed guest's widening",
        "in_cddl": true,
-       "cc_ref": "CC 3.3.4"
+       "cc_ref": "CC 3.3.4",
+       "rule": "membership-change"
       },
       {
        "member": "reason",
@@ -56507,7 +56557,8 @@
        "presence": "optional",
        "when": "where the change carries a reason",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.10"
+       "cc_ref": "CC 2.6.1.10",
+       "rule": "membership-change"
       },
       {
        "member": "refs",
@@ -56515,7 +56566,8 @@
        "presence": "required",
        "when": "always",
        "in_cddl": true,
-       "cc_ref": "CC 3.1.3.2"
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-change"
       },
       {
        "member": "asserted_at",
@@ -56523,7 +56575,71 @@
        "presence": "required",
        "when": "always",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.2"
+       "cc_ref": "CC 2.6.2",
+       "rule": "membership-change"
+      },
+      {
+       "member": "author",
+       "type": "identity-ref",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-reply"
+      },
+      {
+       "member": "dimension",
+       "type": "tstr",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-reply"
+      },
+      {
+       "member": "group_kind",
+       "type": "\"family\" / \"community\"",
+       "presence": "optional",
+       "when": "where the reply answers a membership proposal",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-reply"
+      },
+      {
+       "member": "group",
+       "type": "group-ref",
+       "presence": "optional",
+       "when": "where the reply answers a membership proposal",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-reply"
+      },
+      {
+       "member": "role",
+       "type": "tstr",
+       "presence": "optional",
+       "when": "on an acceptance that restates the role offered",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-reply"
+      },
+      {
+       "member": "refs",
+       "type": "refs",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3.2",
+       "rule": "membership-reply"
+      },
+      {
+       "member": "asserted_at",
+       "type": "ms-time",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.2",
+       "rule": "membership-reply"
       },
       {
        "member": "group_kind",
@@ -56541,7 +56657,7 @@
     },
     "source": "cc-table",
     "cc_ref": "CC 2.6.1.4",
-    "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4; stages widening, removal; the others keep the members the earlier cell gave",
+    "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4; stages widening, removal, acceptance, decline; the others keep the members the earlier cell gave",
     "cites": [
      {
       "cc_ref": "CC 3.1.3.2",
@@ -61208,37 +61324,69 @@
    },
    "body": {
     "value": {
+     "rule": "objection-vote",
      "members": [
       {
-       "member": "cohort",
-       "type": "\"self\"",
-       "presence": "unstated",
+       "member": "author",
+       "type": "identity-ref",
+       "presence": "required",
+       "when": "always",
        "in_cddl": true,
-       "cc_ref": "CC 3.3.6.4"
+       "cc_ref": "CC 3.1.9.2"
+      },
+      {
+       "member": "dimension",
+       "type": "tstr",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.9.2"
+      },
+      {
+       "member": "cohort",
+       "type": "tstr",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.9.2"
       },
       {
        "member": "cohort_key_id",
-       "type": "key-id",
-       "presence": "unstated",
-       "in_cddl": false,
+       "type": "tstr",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
        "cc_ref": "CC 3.1.9.2"
       },
       {
        "member": "grounds",
-       "type": "unstated",
-       "presence": "unstated",
-       "in_cddl": false,
+       "type": "tstr",
+       "presence": "optional",
+       "when": "where the vote states its grounds",
+       "in_cddl": true,
        "cc_ref": "CC 3.3.6.4"
+      },
+      {
+       "member": "refs",
+       "type": "refs",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.9.2"
+      },
+      {
+       "member": "asserted_at",
+       "type": "ms-time",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.2"
       }
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 8.11.9",
-    "code": {
-     "value": "none (no family body; SchemaResolver no-op by default)",
-     "source": "gap"
-    },
-    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
+    "cc_ref": "CC 2.6.1.4",
+    "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4"
    },
    "freshness": {
     "value": {
@@ -79107,18 +79255,76 @@
    },
    "body": {
     "value": {
+     "rule": "trust-accepts",
      "members": [
+      {
+       "member": "author",
+       "type": "identity-ref",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.34",
+       "leaf": "trust:accepts"
+      },
+      {
+       "member": "dimension",
+       "type": "tstr",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.34",
+       "leaf": "trust:accepts"
+      },
+      {
+       "member": "attached_head_digest",
+       "type": "hash-digest",
+       "presence": "optional",
+       "when": "on a new edge",
+       "in_cddl": true,
+       "cc_ref": "CC 3.2",
+       "leaf": "trust:accepts"
+      },
+      {
+       "member": "trust_classes",
+       "type": "[+ tstr]",
+       "presence": "optional",
+       "when": "where the edge narrows its classes",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.34",
+       "leaf": "trust:accepts"
+      },
+      {
+       "member": "trust_depth",
+       "type": "0..5",
+       "presence": "optional",
+       "when": "where the edge reaches further",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.34",
+       "leaf": "trust:accepts"
+      },
+      {
+       "member": "service_key",
+       "type": "{ 1: int, 3: int, * int => any } / identity-ref",
+       "presence": "optional",
+       "when": "on an edge of the class transparency",
+       "in_cddl": true,
+       "cc_ref": "CC 2.7.11",
+       "leaf": "trust:accepts"
+      },
+      {
+       "member": "asserted_at",
+       "type": "ms-time",
+       "presence": "required",
+       "when": "always",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.2",
+       "leaf": "trust:accepts"
+      },
       {
        "member": "attach_window_secs",
        "type": "uint",
        "presence": "optional",
        "leaf": "trust:charter"
-      },
-      {
-       "member": "attached_head_digest",
-       "type": "hex64",
-       "presence": "required",
-       "leaf": "trust:accepts"
       },
       {
        "member": "pre_rotation_commitment",
@@ -79137,12 +79343,8 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 8.11.9",
-    "code": {
-     "value": "none (no family body; SchemaResolver no-op by default)",
-     "source": "gap"
-    },
-    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
+    "cc_ref": "CC 2.6.1.4",
+    "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4; leaves accepts; the others keep the members the earlier cell gave",
     "cites": [
      {
       "cc_ref": "CC 2.1",
