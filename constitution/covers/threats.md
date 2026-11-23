@@ -1,6 +1,6 @@
 # The Threat Model
 
-**What this is.** What is trusted, why, and what happens when it is wrong: the adversary model of 1.13.3 with its conditioned cases, the transport, custody and privacy rules of Part 5 that answer it, and the trust assumptions a reviewer should attack first: the out-of-band anchor, the witness directory, the transparency logs where witnessed mode is off.
+**What this is.** What is trusted, why, and what happens when it is wrong: the adversary model of 1.13.3 with its conditioned cases, the transport, custody and privacy rules of Part 5 that answer it, and the trust assumptions a reviewer should attack first: the out-of-band anchor, the Transparency Services a charter names, and the lineage whose charter names none.
 
 **Whom it binds.** Security reviewers and red teams by invitation; implementers by consequence, because every assumption named here is a rule somewhere in *The Wire* or *The Constitution*.
 

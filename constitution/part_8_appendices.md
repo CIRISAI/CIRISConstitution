@@ -234,7 +234,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2) (deterministic CBOR and the omit rule); the earlier form's rule is [CC 8.11.1](#8.11.1) (JCS; omit-vs-materialize rule in [CC 8.11.2](#8.11.2); per-field catalog [CC 8.11.4](#8.11.4); worked attack [CC 8.11.6](#8.11.6)). |
 | Canonical-hash wire form + preimage convention unpinned | **CLOSED** by [CC 2.3.2.1](part_2_the_grammar.md#2.3.2.1)–[CC 2.3.2.4](part_2_the_grammar.md#2.3.2.4) (preimage `{platform}:{entity_kind}:{id}` + required `canonical:{hashalg}:{hex}` tag + conformance vectors). |
 | Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md#4.2.2.1)). |
-| Multi-party witness directory admission (M-of-N steward sign-off) | Committed at [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
+| Naming a lineage's Transparency Services (a bundle counted by a strict majority of the predecessor's holders) | Committed at [CC 3.2](part_3_the_namespace.md#3.2) T6 and [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
 | A machine-readable description of every endpoint | Committed at [CC 5.3.5](part_5_transport_substrate.md#5.3.5). |
 
 **Open or partial.** These are not settled. Each row names the gap, its present status, and the section where the open half is tracked.
