@@ -1,8 +1,5 @@
 # What check_shapes.py gives for every family of formal/derivation/family_shapes.tsv, each door it runs, each plant and the ordered removal.
 subject	what	verdict
-table	deferral:response:{outcome}: role: quote not in the text	defect
-table	trust:{job}:{version}: binds: quote not in the text	defect
-table	trust:{job}:{version}: roster: quote not in the text	defect
 accord:*	claim	sourced | runs
 accord:human_dignity	claim	sourced | runs
 accord:invoke:constitutional:{halt_id}	door	sourced | runs; accord_halt@node+late_closed breaks one holder cannot lift a confirmed halt alone
@@ -177,7 +174,7 @@ trace:{form}:{version}	content	sourced | runs
 trace_summary:{kind}	content	sourced | runs
 transport:canonical_rebind	door	sourced | runs
 transport:{kind}	claim	sourced | runs
-trust:{job}:{version}	consent binds=signer|signer+holder|body+holder	sourced | runs
+trust:{job}:{version}	consent binds=signer|signer+holder	sourced | runs
 truth_grounding:{subject}	claim	sourced | runs
 video:*	content	sourced | runs
 contribution:{subject_kind}	claim	sourced | runs

@@ -56,6 +56,8 @@ jobs:
         run: python3 tools/check_stale_refs.py
       - name: Every name of the transparency plane has a fate in the name table
         run: python3 tools/check_scitt_names.py
+      - name: Every refusal, hold and hard-case name the Parts state is in the token table, with its section
+        run: python3 tools/build_refusal_tokens.py --check && python3 tools/build_refusal_tokens.py --self-test
       - name: The genesis record is intact, and its trace holds every invariant of the ceremony
         run: |
           (cd genesis/humanity-accord-v1/package && sha256sum -c SHA256SUMS)

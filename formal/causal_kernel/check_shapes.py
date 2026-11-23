@@ -196,7 +196,7 @@ def run_consent(r):
     conf = P.get("conferrer", "self:holder").split("|")
     if binds == "signer":
         specs.append(dict(scope=scope, object="the key", conferrer="self:holder", consent="same_row", policy="-", ends=ends.replace("withdraw:conferrer", "withdraw:holder")))
-    elif binds == "signer|signer+holder|body+holder":            # trust: the reader's edge and the duty
+    elif binds == "signer|signer+holder":                        # trust: the reader's edge and the counted grant
         specs.append(dict(scope="root", object="the reader", conferrer="self:object", consent="accept_row", policy="-", ends="withdraw:conferrer"))
         specs.append(dict(scope="moderate", object="a community", conferrer="group", consent="accept_row", policy="cosigned_act", ends="withdraw:holder; unseat:cosigned_act"))
     else:
