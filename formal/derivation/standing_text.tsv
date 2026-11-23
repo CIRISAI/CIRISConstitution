@@ -53,6 +53,7 @@ standing_act	membership:{stage}	leaf=decline	acceptance	quote	CC 3.1.3.2	An **ac
 standing_act	membership:{stage}	leaf=widening	offer	quote	CC 3.1.3.2	The group decides on the **growth record**: a membership **widening**, the only door that adds anyone.
 standing_act	membership:{stage}	leaf=removal	end	quote	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member
 standing_act	membership:{stage}	leaf=resignation	end	quote	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member
+standing_act	membership:{stage}	leaf=keeps	exercise	quote	CC 3.1.3.2	A counted `membership:keeps` row names further tips for one end, which it cites in `refs.also.cites`, and it names the roster head it is counted over.
 standing_act	ballot:moderator_acceptance	*	acceptance	quote	CC 4.5.13	**The winner accepts by their own row**, as a member accepts an invitation
 standing_act	consent:partnership_grant	*	offer	quote	CC 4.4.3.19	the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`
 standing_act	consent:partnership_accept	*	acceptance	quote	CC 4.4.3.19	the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`
@@ -67,3 +68,15 @@ standing_act	group:roster	*	-	open	CC 2.7.8	a sentence saying what a roster vers
 standing_act	preserve_request	*	-	open	CC 3.1.5	a sentence saying which of the request and the operator's answer confers the custody standing and which accepts it
 standing_act	preserve_response	*	-	open	CC 3.1.5	a sentence saying which of the request and the operator's answer confers the custody standing and which accepts it
 standing_act	duty:{kind}	*	-	open	CC 3.1.1	a sentence saying whether an obligation attached to a permission is part of the offer it attaches to; the shapes table reads it as a term on an offer that moves no seat
+room_content	chat:*	leaf=message	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	chat:*	leaf=reaction	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	file:{version}	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	collection:{kind}	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	audio:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	image:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	video:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	film:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	model_3d:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	blog:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	news:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+room_content	encyclopedia:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.

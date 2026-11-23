@@ -84,8 +84,8 @@ provenance:build_manifest:{target}:locale:{lang_code}	reads=own&cap(infra:attest
 provenance:skill_import:{source}	reads=own&cap(infra:attest); by=reader	CC 3.1.2.1	The standing is a grant: a `delegates_to` row with the dimension `trust:confers:v1`
 provenance:slsa:{level}	reads=own&cap(infra:attest); by=reader	CC 3.1.2.1	The standing is a grant: a `delegates_to` row with the dimension `trust:confers:v1`
 capacity:relay_delivery	reads=own&has(relay_countersignature|chunk_commitment); by=reader	CC 3.1.4	a row of this leaf carries standing against a relay only when it binds the relay's own countersignature over the window measured, or a commitment
-objection:{state}	@state=proposal|assent: weight=1	CC 3.1.9.2	[CC 3.3.6.4](#3.3.6.4), is the first that uses them — `{state}` ∈ `proposal` \| `assent` \| `raised`: `proposal` is the proposer's own row and counts as
-objection:{state}	@state=raised: weight=-1	CC 3.1.9.2	[CC 3.3.6.4](#3.3.6.4), is the first that uses them — `{state}` ∈ `proposal` \| `assent` \| `raised`: `proposal` is the proposer's own row and counts as
+objection:{state}	@state=assent: weight=1	CC 3.1.9.2	`assent` counts +1 and `raised` counts −1.
+objection:{state}	@state=raised: weight=-1	CC 3.1.9.2	`assent` counts +1 and `raised` counts −1.
 moderation_track_record:{community_key_id}	feeds=ballot:moderator	CC 3.1.9.2	Orders the ballot of the [CC 4.5.4](part_4_composition_governance.md#4.5.4) moderator election (highest is listed first).
 weighted_aggregate:{contribution_id}	reads=vote:{contribution_id}&live; key=contribution_id,person; pick=agree; combine=sum(weight); by=node	CC 3.1.9.3	| `weighted_aggregate:{contribution_id}` | Rolling tally per Contribution (P7). | signed |
 observation:reachability	key=attested_key_id; pick=union; by=reader	CC 3.1.9.4	a keyed service *is alive*, which one vantage cannot know; this one says what one vantage *saw*, and a reader composes several vantages' observations into

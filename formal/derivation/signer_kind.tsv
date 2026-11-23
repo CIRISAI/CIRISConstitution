@@ -460,7 +460,7 @@ consent:state:{stance}	*	-	-	granted|revoked	any-of(agent,person)	consent_subjec
 consent:state:{stance}	*	-	-	expired	node	consent_expired	CC 3.3.1; CC 3.4.3	P3:1313, P3:2481	
 membership:{stage}	*	-	-	proposal	person	membership	CC 3.1.3.2; CC 3.3.4; CC 4.5.13 invite count, one voice a person	P3:228, P4:2178	
 membership:{stage}	*	-	-	acceptance|decline|resignation	any-of(agent,person)	membership	CC 3.1.3.2; CC 3.3.4	P3:228	
-membership:{stage}	*	-	-	widening|removal	person	vote	CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P1:199, P4:2178	
+membership:{stage}	*	-	-	widening|removal|keeps	person	vote	CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P1:199, P4:2178	
 identity:occurrence	*	-	-	user	person	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815, P3:1984	
 identity:occurrence	*	-	-	agent	person	occurrence_door	CC 3.3.6; CC 3.3.6.4; CC 3.3.6 (an agent's occurrence: its owner authors it)	P3:1815, P3:1984, P3:1821	
 identity:occurrence	*	-	-	node	node	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815, P3:1984	

@@ -167,10 +167,12 @@ refs = refs-members .and nonempty-map
 refs-members = {
   ? "head": row-ref,               ; the roster head this row is counted over, or a version extends
   ? "further_heads": row-ref-set,  ; further tips named beside `head`
-  ? "prev": row-ref,               ; the predecessor in a signer's own series
+  ? "prev": row-ref,               ; the predecessor in a signer's own series; on a content row, a content row its author signed in the same room
+  ? "further_prev": row-ref-set,   ; on a content row: further content rows of the same author in the same room, beside `prev` (CC 3.1.3.2)
   ? "answers": row-ref,            ; the proposal voted on or accepted, the window opened, the row replied to
   ? "target": row-ref,             ; the row superseded, withdrawn, recanted, cut or removed
-  ? "trusted_through": row-ref-set,; on a key revocation: the last rows of the revoked key held good
+  ? "trusted_through": row-ref-set,; on a key revocation: the last rows of the revoked key held good; on a row that ends a
+                                   ; member's seat and on a keeps row: the member's newest content rows held good; at most 64
   ? "also": { + also-role => row-ref-set },   ; any other named row, under a role of the closed registry
 }
 ; The also roles, closed: "ack" names a row acknowledged (a revocation snapshot's scope head, the acts a receipt

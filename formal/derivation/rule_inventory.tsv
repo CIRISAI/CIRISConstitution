@@ -1015,7 +1015,7 @@ p3	231	3.1.3.1	family	conformance	none	session	is	states		When to claim, renew a
 p3	236	3.1.3.2	kernel	roster_fold	cosign_rule	membership,family,community	is	states	4.4.3.6,4.4.3.17	Admission to a family or community is two consents: the group's under its consensus_protocol and the joiner's own; the admission predicates read both.	
 p3	236	3.1.3.2	kernel	roster_fold	cosign_rule	membership	is	states		The joiner's consent is the joiner's; no quorum stands in for it, so the rule binds every consensus_protocol, founder_only included.	
 p3	236	3.1.3.2	stewardship	conformance	none	membership	is	states		Persist enforces the joiner-consent rule at admission on the local door and the replicated apply alike.	
-p3	242	3.1.3.2	family	row_shape	body	membership	is	states		membership stage is closed to proposal, acceptance, decline, widening, removal, resignation.	table
+p3	242	3.1.3.2	family	row_shape	body	membership	is	states		membership stage is closed to proposal, acceptance, decline, widening, removal, resignation, keeps.	table
 p3	242	3.1.3.2	family	cosign	cosign_rule	membership	is	states	2.4,3.2	A widening or removal is cosigned under the group's consensus_protocol; a resignation is signed by the leaving member; each is covered by the next group:roster version.	table
 p3	242	3.1.3.2	family	row_shape	body	membership	is	states		A proposal is an invitation to one key K targeted at the group, carrying group_kind, nullable role, subject_key_ids exactly [K] and a required expires_at.	table
 p3	242	3.1.3.2	family	subject	subject_rule	membership	is	exception	3.2	On a public community declaring consensus_protocol open:self_admit a duty holder's standing proposal is to any requester and subject_key_ids resolves at acceptance.	table

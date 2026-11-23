@@ -52,7 +52,18 @@ membership-change = {
   ? "witness_set": [* identity-ref],        ; The keys that vouch for the removal, never signatures: a set. (on a removal that names its witnesses)
   ? "valid_until": ms-time,                 ; The seat lapses at this instant. (on a time-boxed guest's widening)
   ? "reason": uint,                         ; A code from the closed registry; free text stands in body.note. (where the change carries a reason)
-  "refs": refs,                             ; The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites.
+  "refs": refs,                             ; The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites; a removal MAY carry trusted_through, the member's content rows held good.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; membership:keeps (CC 3.1.3.2): counted over the roster head refs.head names, with no author; sub is the member whose content it keeps. It cites exactly one end of that member's seat and names 1 to 64 tips.
+membership-keeps = {
+  "dimension": tstr,                        ; membership:keeps:v1.
+  "group_kind": "family" / "community",     ; Which group the room is.
+  "group": group-ref,                       ; The group's id.
+  "member": identity-ref,                   ; The member whose content the row keeps.
+  "refs": refs,                             ; The roster head the row is counted over in refs.head; exactly one end of that member's seat under the also role cites; 1 to 64 tips in trusted_through.
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }

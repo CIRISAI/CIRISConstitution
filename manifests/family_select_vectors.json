@@ -1,7 +1,7 @@
 {
  "_meta": {
   "cc_version": "1.0-rc22",
-  "family_model_sha256": "8ed431316f3fd4885ff78864852829350bcac10bf68c3ed35536cc2c7a5cc436",
+  "family_model_sha256": "85714b5bcffefa8c8b51579d36de82b162862309f4fec1430ede23c5cb3d0718",
   "generator": "tools/cc_family_select.py",
   "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` equals ctx `sub`, false when it differs, `unknown` when either is absent. A vector with `voice` offers a statement in that role over the row: `admits` is true only when the second_signers answer names the role",
   "keys": {
@@ -1454,7 +1454,7 @@
    "expect": "counted",
    "decided_by": 0,
    "kind": "holds",
-   "why": "arm 0 (leaf=widening|removal) is the first that holds"
+   "why": "arm 0 (leaf=widening|removal|keeps) is the first that holds"
   },
   {
    "family": "membership:{stage}",
@@ -1466,7 +1466,7 @@
    "expect": "authored",
    "decided_by": 1,
    "kind": "not_holds",
-   "why": "arm 0 (leaf=widening|removal) does not hold; the answer is another arm's or none"
+   "why": "arm 0 (leaf=widening|removal|keeps) does not hold; the answer is another arm's or none"
   },
   {
    "family": "membership:{stage}",
@@ -1478,7 +1478,7 @@
    "expect": "unknown",
    "decided_by": "unknown",
    "kind": "unknown",
-   "why": "the dimension is not supplied, so arm 0 (leaf=widening|removal) is unknown and no later arm may decide"
+   "why": "the dimension is not supplied, so arm 0 (leaf=widening|removal|keeps) is unknown and no later arm may decide"
   },
   {
    "family": "membership:{stage}",
@@ -1507,9 +1507,9 @@
   {
    "family": "objection:{state}",
    "cell": "count",
-   "dimension": "objection:proposal:v1",
+   "dimension": "objection:assent:v1",
    "matcher_family": "objection:{state}",
-   "leaf": "proposal",
+   "leaf": "assent",
    "ctx": {},
    "expect": "none",
    "decided_by": 0,

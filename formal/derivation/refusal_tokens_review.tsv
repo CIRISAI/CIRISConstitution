@@ -376,6 +376,7 @@ k_eff	not_a_token		constant or parameter name
 k_i2r	not_a_token		key, suite or member name
 kat_outfox_xwing_v1	not_a_token		registry or manifest member, or a file name
 kat_split_and_seed_forms_agree	not_a_token		registry or manifest member, or a file name
+keeps_cites_no_end	concludes_nothing		the text says concludes nothing
 keff_saturation	not_a_token		registry or manifest member, or a file name
 key_grant	not_a_token		family or row-type name
 key_id	not_a_token		payload or envelope member
@@ -553,6 +554,7 @@ reversible_excluded	not_a_token		enumeration value, not a fault
 reversible_pending	not_a_token		enumeration value, not a fault
 revoked_after	not_a_token		payload or envelope member
 role_term	not_a_token		payload or envelope member
+room_content	not_a_token		a column of the family table
 room_key	not_a_token		payload or envelope member
 rotation_after_revocation	detail		detail of kid_not_of_iss
 rotation_chain	not_a_token		payload or envelope member
@@ -666,6 +668,7 @@ trust_depth	not_a_token		payload or envelope member
 trust_root_head_stale	concludes_nothing		the text says concludes nothing
 trust_root_head_unnamed	refusal		the text says refused
 trust_root_head_unreceipted	concludes_nothing		the text says concludes nothing
+trusted_through_too_many	refusal		the text says a row with more is refused
 truth_grounding	not_a_token		family or row-type name
 tvec_terrorist	not_a_token		enumeration value, not a fault
 u16_be	not_a_token		function, predicate or rule name

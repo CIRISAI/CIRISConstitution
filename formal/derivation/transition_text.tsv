@@ -33,6 +33,7 @@ membership:{stage}	attest	roles	acceptance	self	CC 3.1.3.2	an acceptance or decl
 membership:{stage}	attest	roles	decline	self	CC 3.1.3.2	an acceptance or decline is the invitee's only
 membership:{stage}	attest	roles	widening	member	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
 membership:{stage}	attest	roles	removal	member	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	attest	roles	keeps	member	CC 3.1.3.2	A `keeps` row is counted under the group's `consensus_protocol`
 membership:{stage}	attest	roles	resignation	self	CC 3.1.3.2	a resignation is signed by the leaving member
 preserve_request	attest	widens		true	CC 3.1.5
 preserve_request	withdraw	policy		selfAct	CC 2.4.1.1

@@ -2939,13 +2939,13 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | founder, member, self (proposal: founder, member; acceptance: self; decline: self; widening: member; removal: member; resignation: self) | cosigned `cosigned_act` | true (always) | true (always) | withdraw |
+| attest | founder, member, self (proposal: founder, member; acceptance: self; decline: self; widening: member; removal: member; keeps: member; resignation: self) | cosigned `cosigned_act` | true (always) | true (always) | withdraw |
 | withdraw | member | cosigned | false | false | attest |
 | supersede | member | cosigned | false | false | supersede |
 
 Count: `leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group` (CC 3.1.3.2, CC 4.4.3.12)
 
-Authorship: `leaf=widening|removal => counted ; authored` (CC 3.1.3.2)
+Authorship: `leaf=widening|removal|keeps => counted ; authored` (CC 3.1.3.2)
 
 Guard:
 - attest: `each(subject) when(leaf=widening) (one membership:acceptance@named[signer=key,object=object] as A & no membership:widening@named[ref:*=A.id] else void+community_consensus_protocol_violation)` (CC 3.1.3.2)
@@ -3060,7 +3060,7 @@ Fold:
 Count: `none` (CC 3.1.9.2)
 
 Fold:
-- `@state=proposal|assent: weight=1` (CC 3.1.9.2)
+- `@state=assent: weight=1` (CC 3.1.9.2)
 - `@state=raised: weight=-1` (CC 3.1.9.2)
 
 Body: `cohort`, `cohort_key_id` (text only), `grounds` (text only)

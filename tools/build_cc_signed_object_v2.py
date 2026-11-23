@@ -79,7 +79,7 @@ OBJECTS = [
     ("genesis", "The genesis bundle (typ `ceg-genesis-bundle/2`)"),
     ("accord", "The accord's rows: an invocation and a lifecycle row"),
     ("roster", "The roster version: the payload of a `group:roster` row"),
-    ("membership", "A membership change: the payload of a `membership:{stage}` row at the stages `widening` and `removal`"),
+    ("membership", "A membership change and a keeps row: the payloads of a `membership:{stage}` row at the stages `widening`, `removal` and `keeps`"),
     ("occurrence_revocation", "An occurrence revocation: the payload of an `identity:occurrence_revocation` row"),
     ("revocation", "An entity revocation: the payload of a `revocation:{entity_type}:{reason}` row"),
     ("takedown", "A takedown notice: the payload of a `takedown_notice:{basis}` row"),
@@ -529,6 +529,7 @@ def recovery_samples():
 
 # ---------------------------------------------------------------- the payloads of nine families (CC 2.6.1.4)
 PAYLOAD_INVALID = "edition2_payload_invalid"
+TIPS_MAX, TIPS_TOO_MANY = 64, "trusted_through_too_many"   # refs.trusted_through on any row (CC 3.1.3.2)
 FAMILY_UNREGISTERED = "namespace_family_unregistered"   # a family label under a retired stem (CC 3.1.7)
 
 
@@ -549,6 +550,10 @@ def family_payloads():
         "membership-change": ("membership:.stage", {
             "dimension": "membership:widening:v1", "group_kind": "family", "group": gref(5), "member": iref(2),
             "joined_at": t, "effective_at": t, "refs": {"head": _ref(1), "also": {"cites": [_ref(3)]}}, "asserted_at": t}),
+        "membership-keeps": ("membership:.stage", {
+            "dimension": "membership:keeps:v1", "group_kind": "community", "group": gref(5), "member": iref(2),
+            "refs": {"head": _ref(1), "also": {"cites": [_ref(16)]}, "trusted_through": sorted([_ref(17), _ref(18)], key=cde)},
+            "asserted_at": t}),
         "occurrence-revocation": ("identity:occurrence_revocation", {
             "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "revoked_at": t, "effective_at": t,
             "refs": {"head": _ref(10), "also": {"cites": sorted([_ref(13), _ref(14)], key=cde)}}, "asserted_at": t}),
@@ -627,6 +632,12 @@ def family_payload_samples():
             ("a widening with no refs", D("membership-change", "refs")),
             ("a change to a group of another kind", W("membership-change", group_kind="room")),
             ("a reason in free text", W("membership-change", reason="spam"))]),
+        ("membership-keeps", "membership:keeps payload", cde(P["membership-keeps"]), [
+            ("a keeps row naming no member", D("membership-keeps", "member")),
+            ("a keeps row with no refs", D("membership-keeps", "refs")),
+            ("a keeps row in a group of another kind", W("membership-keeps", group_kind="room")),
+            ("tips as one bare reference", W("membership-keeps", refs=dict(P["membership-keeps"]["refs"], trusted_through=_ref(17)))),
+            ("an empty set of tips", W("membership-keeps", refs=dict(P["membership-keeps"]["refs"], trusted_through=[])))]),
         ("occurrence-revocation", "identity:occurrence_revocation payload", cde(P["occurrence-revocation"]), [
             ("a revocation with no occurrence_key_id", D("occurrence-revocation", "occurrence_key_id")),
             ("an effective_at as text", W("occurrence-revocation", effective_at="2026-11-14T00:00:00Z")),
@@ -734,6 +745,14 @@ def family_payload_rule(root, p, family=None):
     if family is not None and any(family.startswith(stem) for stem in retired_stems()):
         return FAMILY_UNREGISTERED                        # no family stands under the stem: the payload is never read
     dim = p.get("dimension", "")
+    if len(p.get("refs", {}).get("trusted_through", [])) > TIPS_MAX:
+        return TIPS_TOO_MANY                              # at most 64 tips on any row (CC 3.1.3.2)
+    if root == "membership-keeps":
+        r = p.get("refs", {})
+        if dim != "membership:keeps:v1" or "author" in p or "head" not in r:
+            return PAYLOAD_INVALID                        # counted over the roster head refs.head names, with no author
+        if len(r.get("also", {}).get("cites", [])) != 1 or not r.get("trusted_through"):
+            return PAYLOAD_INVALID                        # exactly one end cited, and 1 to 64 tips
     if root == "membership-change":
         stage = _segment(dim, 1)
         if stage not in ("widening", "removal"):
@@ -965,6 +984,12 @@ def family_payload_rule_checks():
         ("membership-change", dict(P["membership-change"][1], dimension="membership:proposal:v1"), None),
         ("membership-change", _without(P["membership-change"][1], "joined_at"), None),
         ("membership-change", dict(P["membership-change"][1], refs={"also": {"cites": [_ref(3)]}}), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], author=iref(0)), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], refs=_without(P["membership-keeps"][1]["refs"], "head")), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], refs=dict(P["membership-keeps"][1]["refs"], also={"cites": sorted([_ref(16), _ref(19)], key=cde)})), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], refs=_without(P["membership-keeps"][1]["refs"], "also")), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], refs=_without(P["membership-keeps"][1]["refs"], "trusted_through")), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], dimension="membership:removal:v1"), None),
         ("custody-ack", _without(P["custody-ack"][1], "size"), None),
         ("key-grant", _without(P["key-grant"][1], "minter"), None),
         ("key-grant", dict(P["key-grant"][1], dimension="key_grant:content:v1"), None),
@@ -995,7 +1020,18 @@ def family_payload_rule_checks():
     # A retired family (CC 3.1.3): a valid payload under its label is refused by the label, before any payload rule.
     if family_payload_rule("membership-change", P["membership-change"][1], "cosign:.state") != FAMILY_UNREGISTERED:
         bad.append("deliberate break not caught: a statement labelled cosign:.state was not refused as an unregistered family")
+    # At most 64 tips on any row (CC 3.1.3.2): 64 pass, 65 are refused by name, on a keeps row and on a removal.
+    tips = lambda n: sorted([_ref(100 + i) for i in range(n)], key=cde)
+    keeps, change = P["membership-keeps"][1], P["membership-change"][1]
+    removal = dict(_without(change, "joined_at"), dimension="membership:removal:v1", removed_at=change["effective_at"])
+    with_tips = lambda p, n: dict(p, refs=dict(p["refs"], trusted_through=tips(n)))
+    for what, root, p in (("keeps row", "membership-keeps", keeps), ("removal", "membership-change", removal)):
+        if family_payload_rule(root, with_tips(p, TIPS_MAX)) is not None:
+            bad.append(f"a {what} with {TIPS_MAX} tips breaks its prose rule")
+        if family_payload_rule(root, with_tips(p, TIPS_MAX + 1)) != TIPS_TOO_MANY:
+            bad.append(f"deliberate break not caught: a {what} with {TIPS_MAX + 1} tips was not refused {TIPS_TOO_MANY}")
     return (f"family payload rules: {len(P)} samples pass; {caught} breaks refused {PAYLOAD_INVALID}; "
+            f"{TIPS_MAX + 1} tips on a keeps row and on a removal refused {TIPS_TOO_MANY}, {TIPS_MAX} pass; "
             f"a statement labelled with the retired family cosign:.state is refused {FAMILY_UNREGISTERED}"), bad
 
 
@@ -1041,6 +1077,7 @@ FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
     "membership-change": "membership:{stage}, the stages widening and removal: counted, with no author; sub is the member.",
+    "membership-keeps": "membership:keeps (CC 3.1.3.2): counted over the roster head refs.head names, with no author; sub is the member whose content it keeps. It cites exactly one end of that member's seat and names 1 to 64 tips.",
     "occurrence-revocation": "identity:occurrence_revocation: authored by the revoker, or counted over a user self's roster at the head refs names.",
     "self-roster-refs": "The refs of a self-roster row (CC 3.3.6.4): the head it stands on, required; a closed map.",
     "eviction-refs": "The refs of an eviction (CC 2.6.1.7, CC 3.3.6.4): the head, and the proof of its signers, both required; a closed map.",

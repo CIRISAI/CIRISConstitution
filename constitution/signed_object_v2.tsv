@@ -44,10 +44,11 @@ payload	body-decimal	exponent	-	payload:body	nint	always	2.6.1.2	A decimal fract
 payload	body-decimal	mantissa	-	payload:body	int	always	2.6.1.2	In CBOR's integer range and not divisible by 10; a number outside it is body_number_unrepresentable.
 refs	refs-members	"head"	-	payload:refs	row-ref	on a counted row, on a roster version, and on a row that exercises or ends a standing	2.6.1.9 2.4.1.1	The head the row is at: the roster head a counted row is counted over, inside what every voice signs; the head an act is exercised at; the head an end acts from.
 refs	refs-members	"further_heads"	-	payload:refs	row-ref-set	where a row names further tips	2.6.1.9 2.6.1.2	Further tips beside head: a set.
-refs	refs-members	"prev"	-	payload:refs	row-ref	where a signer's own series names its predecessor	2.6.1.11	The predecessor in a signer's own series.
+refs	refs-members	"prev"	-	payload:refs	row-ref	where a signer's own series names its predecessor	2.6.1.11 3.1.3.2	The predecessor in a signer's own series; on a content row, a content row its author signed in the same room.
+refs	refs-members	"further_prev"	-	payload:refs	row-ref-set	where a content row names further predecessors beside prev	3.1.3.2 2.6.1.3	Further content rows of the same author in the same room, beside prev: a set.
 refs	refs-members	"answers"	-	payload:refs	row-ref	where the row answers a row	2.6.1.3	The proposal voted on or accepted, the window opened, the row replied to.
 refs	refs-members	"target"	-	payload:refs	row-ref	on a supersession, withdrawal, recantation, cut or removal	2.6.1.3	The row superseded, withdrawn, recanted, cut or removed.
-refs	refs-members	"trusted_through"	-	payload:refs	row-ref-set	on a key revocation that names rows held good	2.6.1.11 2.6.1.2	The last rows of the revoked key held good: a set.
+refs	refs-members	"trusted_through"	-	payload:refs	row-ref-set	on a key revocation that names rows held good; on a row that ends a member's seat and on a keeps row	2.6.1.11 3.1.3.2 2.6.1.2	The last rows of the revoked key held good, or the newest content rows of the member held good: a set of at most 64.
 refs	refs-members	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names any other row	2.6.1.3 2.6.1.2	Any other named row, under a role of the closed registry: ack, cites or under; each list a set, and under a set of exactly one.
 row_id	row-id-input	type	attestation_type	derived	row-type	always	2.6.1.3	The type of label -70001, one of the five, as a text string.
 row_id	row-id-input	family	-	derived	family-id	always	2.6.1.3	The family id of label -70002, as a text string.
@@ -159,8 +160,14 @@ membership	membership-change	"role"	role	payload	tstr	on a widening that assigns
 membership	membership-change	"witness_set"	-	payload	[* identity-ref]	on a removal that names its witnesses	3.1.3.2 2.6.1.2	The keys that vouch for the removal, never signatures: a set.
 membership	membership-change	"valid_until"	valid_until	payload	ms-time	on a time-boxed guest's widening	3.3.4 2.6.2	The seat lapses at this instant.
 membership	membership-change	"reason"	reason	payload	uint	where the change carries a reason	2.6.1.10	A code from the closed registry; free text stands in body.note.
-membership	membership-change	"refs"	-	payload	refs	always	3.1.3.2 2.6.1.9	The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites.
+membership	membership-change	"refs"	-	payload	refs	always	3.1.3.2 2.6.1.9	The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites; a removal MAY carry trusted_through, the member's content rows held good.
 membership	membership-change	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+membership	membership-keeps	"dimension"	dimension	payload	tstr	always	3.1.3.2	membership:keeps:v1.
+membership	membership-keeps	"group_kind"	group_kind	payload	"family" / "community"	always	3.1.3.2	Which group the room is.
+membership	membership-keeps	"group"	family_key_id, community_key_id	payload	group-ref	always	3.1.3.2	The group's id.
+membership	membership-keeps	"member"	-	payload	identity-ref	always	3.1.3.2	The member whose content the row keeps.
+membership	membership-keeps	"refs"	-	payload	refs	always	3.1.3.2 2.6.1.9	The roster head the row is counted over in refs.head; exactly one end of that member's seat under the also role cites; 1 to 64 tips in trusted_through.
+membership	membership-keeps	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 occurrence_revocation	occurrence-revocation	"author"	attesting_key_id	payload	identity-ref	unless the occurrence is of a user self	3.1.3 3.3.6.4	The revoker; a user self's revocation is counted over its roster at the head refs names and carries none.
 occurrence_revocation	occurrence-revocation	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6.4	The identity whose occurrence is revoked.
 occurrence_revocation	occurrence-revocation	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6.4	The occurrence revoked, equal to the CWT sub.

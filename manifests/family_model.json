@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "3abfbc911a0ce769ceaca88fef853b7cad799e11e4c32ea952bd17f7c50fb443",
+  "registry_sha256": "b052080dd843472c87367f57ef39c495eb239417907586730025f642fae657e7",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -62,6 +62,7 @@
    "accountability_record": "bool: the row is kept as the record of its signer's own acts, so the signer's owner may not withdraw it (CC 3.1.5)",
    "may_carry_under": "true | false | a map by selector | null where open: a row of the family may be a deputy's edge and carry refs.also.under, a set of exactly one (CC 4.5.5)",
    "standing_act": "offer | end | acceptance | exercise | none | a map by selector | null where open: what a row of the family is with respect to a standing; receipter is admitted only on an offer and lifts only on a counted end (CC 2.4.1.1)",
+   "room_content": "true | false | a map by selector: a row of the family placed at a room or a family scope is the room's content, read by the tips rule after its author's seat ends; a leaf a map does not name is false (CC 3.1.3.2)",
    "blind": "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
    "fold": "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)",
@@ -293,6 +294,14 @@
     "gap": 0
    },
    "standing_act": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
+   },
+   "room_content": {
     "cc-table": 0,
     "code-v61": 0,
     "generic": 0,
@@ -872,7 +881,8 @@
     "subject_may_withdraw",
     "accountability_record",
     "may_carry_under",
-    "standing_act"
+    "standing_act",
+    "room_content"
    ],
    "rules": {
     "subject_may_withdraw.default": {
@@ -1050,6 +1060,19 @@
       "quote": 8,
       "ruling": 0,
       "open": 13
+     }
+    },
+    "room_content": {
+     "by_value": {
+      "by_selector": 1,
+      "false": 173,
+      "true": 10
+     },
+     "by_source": {
+      "derived": 173,
+      "quote": 11,
+      "ruling": 0,
+      "open": 0
      }
     }
    },
@@ -2128,6 +2151,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -2594,6 +2623,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -3077,6 +3112,12 @@
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -3519,6 +3560,12 @@
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -3943,6 +3990,12 @@
     "from": "names_head",
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -4371,6 +4424,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -4965,6 +5024,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -5262,6 +5327,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -5688,6 +5759,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -5955,6 +6032,12 @@
     "note": "by the head each selector names",
     "cc_ref": "CC 2.4.1.1",
     "per_selector": true
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -6426,6 +6509,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -6858,6 +6947,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -7277,6 +7372,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -7671,6 +7772,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -7968,6 +8075,12 @@
     "from": "names_head",
     "note": "the names_head cell is unread, so nothing says whether a row of the family exercises a standing",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -8415,6 +8528,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -8827,6 +8946,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -9243,6 +9368,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -9672,6 +9803,12 @@
     "from": "names_head",
     "note": "its rows name a head (roster)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -10111,6 +10248,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -10529,6 +10672,14 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -10916,6 +11067,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -11308,6 +11465,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -11667,6 +11830,12 @@
     "from": "names_head",
     "note": "its rows name a head (roster)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -12038,6 +12207,12 @@
     "cc_ref": "CC 4.5.13",
     "quote": "**The winner accepts by their own row**, as a member accepts an invitation",
     "derived": "none"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -12539,6 +12714,12 @@
     "note": "its rows name a head (roster)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -12937,6 +13118,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -13328,6 +13515,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -13715,6 +13908,14 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
    },
    "fold": {
     "value": [],
@@ -14115,6 +14316,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -14501,6 +14708,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -15023,6 +15236,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -15601,6 +15820,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -16130,6 +16355,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -16569,6 +16800,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -16986,6 +17223,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -17446,6 +17689,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -17976,6 +18225,12 @@
     "note": "its rows name a head (standing)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -18437,6 +18692,12 @@
     "note": "its rows name a head (roster)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -18884,6 +19145,12 @@
     "note": "its rows name a head (roster)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -19304,6 +19571,12 @@
     "from": "names_head",
     "note": "its rows name a head (standing)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -19753,6 +20026,12 @@
     "note": "its rows name a head (standing)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -20188,6 +20467,12 @@
     "note": "its rows name a head (standing)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -20589,6 +20874,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -20983,6 +21274,28 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": {
+     "leaf=message": true,
+     "leaf=reaction": true
+    },
+    "source": "quote",
+    "per_selector": true,
+    "from": "formal/derivation/standing_text.tsv",
+    "sources": {
+     "leaf=message": "quote",
+     "leaf=reaction": "quote"
+    },
+    "cc_ref": {
+     "leaf=message": "CC 3.1.3.2",
+     "leaf=reaction": "CC 3.1.3.2"
+    },
+    "words": {
+     "leaf=message": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+     "leaf=reaction": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families."
+    },
+    "derived": false
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -21366,6 +21679,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -21781,6 +22100,14 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -22193,6 +22520,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -22621,6 +22954,12 @@
     "from": "names_head",
     "note": "its rows name a head (roster)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -23072,6 +23411,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -23472,6 +23817,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -23858,6 +24209,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -24246,6 +24603,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -24632,6 +24995,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -25091,6 +25460,12 @@
     "cc_ref": "CC 2.7.5",
     "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
     "derived": "exercise"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -25586,6 +25961,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -25980,6 +26361,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -26454,6 +26841,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -26982,6 +27375,12 @@
     "cc_ref": "CC 4.4.3.19",
     "quote": "the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`",
     "derived": "exercise"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -27520,6 +27919,12 @@
     "quote": "the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`",
     "derived": "exercise"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -27972,6 +28377,12 @@
     "cc_ref": "CC 2.7.5",
     "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
     "derived": "exercise"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -28430,6 +28841,12 @@
     "cc_ref": "CC 2.7.5",
     "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
     "derived": "exercise"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -28943,6 +29360,12 @@
     "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
     "derived": "exercise"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -29431,6 +29854,12 @@
     "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
     "derived": "exercise"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -29852,6 +30281,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -30291,6 +30726,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -30708,6 +31149,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -30958,6 +31405,12 @@
     "from": "names_head",
     "note": "its rows name a head (standing)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -31354,6 +31807,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -31745,6 +32204,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -32294,6 +32759,12 @@
     "note": "its rows name a head (standing)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -32697,6 +33168,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -33162,6 +33639,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -33653,6 +34136,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -34065,6 +34554,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -34536,6 +35031,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -34957,6 +35458,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -35410,6 +35917,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -35846,6 +36359,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -36273,6 +36792,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -36716,6 +37241,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -37152,6 +37683,12 @@
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -37549,6 +38086,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -37940,6 +38483,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -38326,6 +38875,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -38714,6 +39269,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -39092,6 +39653,12 @@
     "cc_ref": "CC 3.1.1",
     "needs": "a sentence saying whether an obligation attached to a permission is part of the offer it attaches to; the shapes table reads it as a term on an offer that moves no seat",
     "derived": "exercise"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -39494,6 +40061,14 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -39884,6 +40459,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -40280,6 +40861,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -40672,6 +41259,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -41078,6 +41671,12 @@
     "from": "names_head",
     "note": "its rows name a head (standing)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -41486,6 +42085,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -41879,6 +42484,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -42301,6 +42912,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -42691,6 +43308,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -43095,6 +43718,14 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -43482,6 +44113,14 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
    },
    "fold": {
     "value": [],
@@ -43906,6 +44545,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -44760,6 +45405,12 @@
     "needs": "a sentence saying what a roster version is with respect to the seats it lists: it is the head acts name, and the text calls no roster version an offer or an end",
     "derived": "exercise"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -45323,6 +45974,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -45738,6 +46395,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -46148,6 +46811,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -46522,6 +47191,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -47127,6 +47802,12 @@
     "needs": "a sentence saying whether the row that adds a key to a self roster is an offer; its second consent is waived and the text names no offer there",
     "derived": "none"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -47658,6 +48339,12 @@
     "note": "the family's rows end a standing",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -48136,6 +48823,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -48536,6 +49229,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -48948,6 +49647,14 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -49339,6 +50046,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -49725,6 +50438,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -50116,6 +50835,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -50543,6 +51268,12 @@
     "from": "names_head",
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -51053,6 +51784,12 @@
     "note": "the family's rows end a standing",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -51506,6 +52243,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -52126,6 +52869,12 @@
     "note": "its rows name a head (standing)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -52458,6 +53207,12 @@
     "from": "names_head",
     "note": "the names_head cell is unread, so nothing says whether a row of the family exercises a standing",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -52895,6 +53650,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -53342,6 +54103,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -53756,6 +54523,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -54293,6 +55066,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -54792,6 +55571,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -55052,6 +55837,12 @@
     "from": "names_head",
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -55462,6 +56253,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -56223,7 +57020,8 @@
      "leaf=decline": "none",
      "leaf=widening": "roster",
      "leaf=removal": "roster",
-     "leaf=resignation": "roster"
+     "leaf=resignation": "roster",
+     "leaf=keeps": "roster"
     },
     "source": "ruled",
     "per_selector": true,
@@ -56234,7 +57032,8 @@
      "leaf=decline": "the invitee's own answer; it names the proposal it answers",
      "leaf=widening": "the roster version the change is counted over",
      "leaf=removal": "the roster version the change is counted over",
-     "leaf=resignation": "the roster version the leaving member acts from"
+     "leaf=resignation": "the roster version the leaving member acts from",
+     "leaf=keeps": "the roster version the keeps row is counted over"
     },
     "derived": "roster",
     "cc_ref": "CC 2.4.1.1"
@@ -56252,7 +57051,7 @@
    },
    "subject_may_withdraw": {
     "value": {
-     "leaf=widening|removal": false,
+     "leaf=widening|removal|keeps": false,
      "*": true
     },
     "source": "derived",
@@ -56280,7 +57079,8 @@
      "leaf=decline": "acceptance",
      "leaf=widening": "offer",
      "leaf=removal": "end",
-     "leaf=resignation": "end"
+     "leaf=resignation": "end",
+     "leaf=keeps": "exercise"
     },
     "source": "quote",
     "per_selector": true,
@@ -56291,7 +57091,8 @@
      "leaf=decline": "quote",
      "leaf=widening": "quote",
      "leaf=removal": "quote",
-     "leaf=resignation": "quote"
+     "leaf=resignation": "quote",
+     "leaf=keeps": "quote"
     },
     "cc_ref": {
      "leaf=proposal": "CC 3.1.3.2",
@@ -56299,7 +57100,8 @@
      "leaf=decline": "CC 3.1.3.2",
      "leaf=widening": "CC 3.1.3.2",
      "leaf=removal": "CC 3.1.3.2",
-     "leaf=resignation": "CC 3.1.3.2"
+     "leaf=resignation": "CC 3.1.3.2",
+     "leaf=keeps": "CC 3.1.3.2"
     },
     "words": {
      "leaf=proposal": "**The proposal is an invitation, not the group's decision.**",
@@ -56307,7 +57109,8 @@
      "leaf=decline": "An **acceptance** or **decline** is K's answer to exactly one proposal",
      "leaf=widening": "The group decides on the **growth record**: a membership **widening**, the only door that adds anyone.",
      "leaf=removal": "a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member",
-     "leaf=resignation": "a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member"
+     "leaf=resignation": "a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member",
+     "leaf=keeps": "A counted `membership:keeps` row names further tips for one end, which it cites in `refs.also.cites`, and it names the roster head it is counted over."
     },
     "derived": {
      "leaf=proposal": "exercise",
@@ -56315,8 +57118,15 @@
      "leaf=decline": "none",
      "leaf=widening": "exercise",
      "leaf=removal": "exercise",
-     "leaf=resignation": "exercise"
+     "leaf=resignation": "exercise",
+     "leaf=keeps": "exercise"
     }
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -56418,11 +57228,11 @@
     "source": "cc-table"
    },
    "authorship": {
-    "value": "leaf=widening|removal => counted ; authored",
+    "value": "leaf=widening|removal|keeps => counted ; authored",
     "source": "cc-table",
     "arms": [
      {
-      "when": "leaf=widening|removal",
+      "when": "leaf=widening|removal|keeps",
       "value": "counted",
       "cc_ref": [
        "CC 3.1.3.2"
@@ -56896,6 +57706,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -57303,6 +58119,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -57706,6 +58528,14 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
    },
    "fold": {
     "value": [],
@@ -58148,6 +58978,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -58566,6 +59402,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -58993,6 +59835,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -59391,6 +60239,12 @@
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -59785,6 +60639,14 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -60174,6 +61036,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -60611,10 +61479,16 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
-      "fold": "@state=proposal|assent: weight=1",
+      "fold": "@state=assent: weight=1",
       "cc_ref": [
        "CC 3.1.9.2"
       ]
@@ -61073,6 +61947,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -61458,6 +62338,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -61877,6 +62763,12 @@
     "cc_ref": "CC 2.4.1.1",
     "quote": "Where one row between two keys is the whole record, as an owner-binding is, that row is the head.",
     "derived": "none"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -62339,6 +63231,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -62735,6 +63633,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -63022,6 +63926,12 @@
     "cc_ref": "CC 3.1.5",
     "needs": "a sentence saying which of the request and the operator's answer confers the custody standing and which accepts it",
     "derived": null
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -63341,6 +64251,12 @@
     "cc_ref": "CC 3.1.5",
     "needs": "a sentence saying which of the request and the operator's answer confers the custody standing and which accepts it",
     "derived": "acceptance"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -63784,6 +64700,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -64179,6 +65101,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -64593,6 +65521,12 @@
     "from": "names_head",
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -65015,6 +65949,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -65445,6 +66385,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -65840,6 +66786,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -66264,6 +67216,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -66712,6 +67670,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -67118,6 +68082,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -67507,6 +68477,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -67898,6 +68874,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -68288,6 +69270,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -68677,6 +69665,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -69094,6 +70088,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -69485,6 +70485,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -69904,6 +70910,12 @@
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -70294,6 +71306,12 @@
     "from": "names_head",
     "note": "the names_head cell is unread, so nothing says whether a row of the family exercises a standing",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -70818,6 +71836,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -71232,6 +72256,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -71617,6 +72647,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -72032,6 +73068,12 @@
     "cc_ref": "CC 2.7.5",
     "quote": "A delegation that carries a scope seats its delegate only with the delegate's own signature",
     "derived": "exercise"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -72540,6 +73582,12 @@
     "quote": "a scoped act-on-behalf delegation, whose acts are the agent's own rows under its own `iss`",
     "derived": "exercise"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -73040,6 +74088,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -73488,6 +74542,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -73983,6 +75043,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -74269,6 +75335,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -74673,6 +75745,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -75299,6 +76377,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -75759,6 +76843,12 @@
     "note": "a row of its signer's own, exercising no conferred standing",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -76145,6 +77235,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -76556,6 +77652,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -76970,6 +78072,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -77420,6 +78528,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -77855,6 +78969,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],
@@ -78387,6 +79507,12 @@
      "leaf=charter": "none"
     }
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -78848,6 +79974,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -79280,6 +80412,14 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.",
+    "derived": false
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -79672,6 +80812,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -80089,6 +81235,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [
@@ -80571,6 +81723,12 @@
     "note": "its rows name a head (roster)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -80968,6 +82126,12 @@
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
    "fold": {
     "value": [
      {
@@ -81359,6 +82523,12 @@
     "from": "names_head",
     "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
    },
    "fold": {
     "value": [],

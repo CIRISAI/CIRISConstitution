@@ -83,6 +83,7 @@ COLUMNS = OrderedDict([
     ("accountability_record", "bool: the row is kept as the record of its signer's own acts, so the signer's owner may not withdraw it (CC 3.1.5)"),
     ("may_carry_under", "true | false | a map by selector | null where open: a row of the family may be a deputy's edge and carry refs.also.under, a set of exactly one (CC 4.5.5)"),
     ("standing_act", "offer | end | acceptance | exercise | none | a map by selector | null where open: what a row of the family is with respect to a standing; receipter is admitted only on an offer and lifts only on a counted end (CC 2.4.1.1)"),
+    ("room_content", "true | false | a map by selector: a row of the family placed at a room or a family scope is the room's content, read by the tips rule after its author's seat ends; a leaf a map does not name is false (CC 3.1.3.2)"),
     ("blind", "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
@@ -499,7 +500,8 @@ DESCENDS = {"content": "bytes_and_words", "claim": "row", "consent": "nothing", 
 # the other columns, and a row of formal/derivation/standing_text.tsv replaces it for one family or one leaf, quoting its sentence.
 STANDING_TEXT = os.path.join(ROOT, "formal/derivation/standing_text.tsv")
 STANDING_VALUES = OrderedDict([("subject_may_withdraw", ("true", "false")), ("accountability_record", ("true", "false")),
-                               ("may_carry_under", ("true", "false")), ("standing_act", ("offer", "end", "acceptance", "exercise", "none"))])
+                               ("may_carry_under", ("true", "false")), ("standing_act", ("offer", "end", "acceptance", "exercise", "none")),
+                               ("room_content", ("true", "false"))])
 STANDING_RANK = ("derived", "quote", "ruling", "open")   # a cell of several selectors takes the last of these any selector has
 
 
@@ -554,6 +556,8 @@ def standing_cells(row, text):
             c = OrderedDict([("value", False), ("source", "derived"), ("note", "no sentence keeps the family's rows from their signer's owner"), ("cc_ref", "CC 3.1.5")])
         elif col == "may_carry_under":
             c = OrderedDict([("value", False), ("source", "derived"), ("note", "no row of the family is a deputy's edge"), ("cc_ref", "CC 4.5.5")])
+        elif col == "room_content":
+            c = OrderedDict([("value", False), ("source", "derived"), ("note", "the family is not among those CC 3.1.3.2 names as a room's content"), ("cc_ref", "CC 3.1.3.2")])
         else:
             act = lambda h: "none" if h == "none" else "exercise"
             if isinstance(cf, dict) and cf.get("relation") == "ending": v, src, frm, why = "end", "derived", "confers", "the family's rows end a standing"

@@ -16,7 +16,8 @@ accord:lifecycle:{kind}	authorship	*	counted	CC 4.2.1.3	It is a counted row of a
 accord:*	authorship	leaf=lifecycle:{kind}	counted	CC 3.4.1	a strict majority of the standing roster, one cosigned row naming the halt
 accord:*	authorship	*	authored	CC 3.4.1	One accord holder's signed row
 accord:invoke:constitutional:{halt_id}	authorship	*	authored	CC 3.4.1	pre-signable, fired on receipt, no vote
-membership:{stage}	authorship	leaf=widening|removal	counted	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	authorship	leaf=widening|removal|keeps	counted	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	authorship	leaf=widening|removal|keeps	counted	CC 3.1.3.2	A `keeps` row is counted under the group's `consensus_protocol`
 membership:{stage}	authorship	*	authored	CC 3.1.3.2	The first three are single-signer (below)
 membership:{stage}	authorship	*	authored	CC 3.1.3.2	a resignation is signed by the leaving member
 identity:occurrence_revocation	authorship	identity=user	counted	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's roster at the head it names**

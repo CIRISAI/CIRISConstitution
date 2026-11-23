@@ -28,6 +28,7 @@ membership:{stage}	leaf=decline	none	the invitee's own answer; it names the prop
 membership:{stage}	leaf=widening	roster	the roster version the change is counted over
 membership:{stage}	leaf=removal	roster	the roster version the change is counted over
 membership:{stage}	leaf=resignation	roster	the roster version the leaving member acts from
+membership:{stage}	leaf=keeps	roster	the roster version the keeps row is counted over
 ballot:moderator_acceptance	*	none	the winner's own consent; it names the election and the ballot set it was counted over
 accord:invoke:constitutional:{halt_id}	*	none	a halt fires at each node on receipt, under the roster that node holds; its payload is closed and names no head
 accord:invoke:notify:{notify_id}	*	none	as the halt: read on receipt, under the roster the node holds

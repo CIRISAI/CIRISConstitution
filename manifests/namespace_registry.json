@@ -326,7 +326,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "31930428f84a4fcc8ab3f115ec43a22afc4adb83e5ba6eb410bae218918e4eaa",
+    "registry_sha256": "8bd03c3bfca6e59c35851817e0dc9938000ab0eafc99586e86ee438b50a0288d",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -341,7 +341,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "1a09bc3c02a8a2bda819276c1d3569c20a946433c9f53575acab725e63281687"
+    "source_sha256": "4550e729b856dd94792023553e4a7e9351349e6234e6a4045905502896e1b070"
   },
   "families": [
     {
@@ -3415,7 +3415,7 @@
     },
     {
       "cc_section": "3.1.3.2",
-      "description": "The membership ceremony, one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline | widening | removal | resignation \u2014 closed.",
+      "description": "The membership ceremony, one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline | widening | removal | resignation | keeps \u2014 closed.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -3423,7 +3423,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.3.2",
-        "rule": "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member"
+        "rule": "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member; keeps = counted under the group's consensus_protocol"
       },
       "segments": [
         {
@@ -3440,7 +3440,8 @@
             "decline",
             "widening",
             "removal",
-            "resignation"
+            "resignation",
+            "keeps"
           ]
         }
       ]

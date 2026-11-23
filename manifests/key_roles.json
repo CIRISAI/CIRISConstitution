@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "90e2d33c7fe20b407d60da9ee31950026123bb2190d93b6a375c86ec55833178",
-   "formal/derivation/signer_kind.tsv": "ef21c8795c21f7db3eaffd99dfb0db4570e45a71aec5e64a8dfb80ff67fa9fa0"
+   "manifests/transitions.json": "4e570869f50ebaf6b297fc99be2c675739b562dd119257d6aa7f9d2b9bd33cba",
+   "formal/derivation/signer_kind.tsv": "fd1c2b7675c0e36e8831332207310a19822fed8b214d9898bc0a9c36197efd25"
   },
   "kinds": [
    "person",
@@ -60,7 +60,7 @@
    ]
   },
   "counts": {
-   "uses": 496,
+   "uses": 499,
    "transitions": 458,
    "open_uses": 0,
    "open_questions": 0
@@ -6169,6 +6169,59 @@
    "at": "P3:228"
   },
   {
+   "use": "membership:{stage}[keeps]#attest",
+   "family": "membership:{stage}",
+   "verb": "attest",
+   "leaf": "keeps",
+   "roles": [
+    "founder",
+    "member",
+    "self"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "vote",
+   "cc_ref": "CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
+   "at": "P1:199, P4:2178"
+  },
+  {
+   "use": "membership:{stage}[keeps]#supersede",
+   "family": "membership:{stage}",
+   "verb": "supersede",
+   "leaf": "keeps",
+   "roles": [
+    "member"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "vote",
+   "cc_ref": "CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
+   "at": "P1:199, P4:2178"
+  },
+  {
+   "use": "membership:{stage}[keeps]#withdraw",
+   "family": "membership:{stage}",
+   "verb": "withdraw",
+   "leaf": "keeps",
+   "roles": [
+    "member"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "vote",
+   "cc_ref": "CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
+   "at": "P1:199, P4:2178"
+  },
+  {
    "use": "membership:{stage}[proposal]#attest",
    "family": "membership:{stage}",
    "verb": "attest",
@@ -9354,6 +9407,9 @@
    "membership:{stage}[decline]#attest",
    "membership:{stage}[decline]#supersede",
    "membership:{stage}[decline]#withdraw",
+   "membership:{stage}[keeps]#attest",
+   "membership:{stage}[keeps]#supersede",
+   "membership:{stage}[keeps]#withdraw",
    "membership:{stage}[proposal]#attest",
    "membership:{stage}[proposal]#supersede",
    "membership:{stage}[proposal]#withdraw",
