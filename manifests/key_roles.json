@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "e13fa4e0fb8d2303e30bf1b36061e89b20bc81984552364f1dda3bdb3ddee720",
-   "formal/derivation/signer_kind.tsv": "fd1c2b7675c0e36e8831332207310a19822fed8b214d9898bc0a9c36197efd25"
+   "manifests/transitions.json": "93dba32134f12439e0155ccf97f730ed424ebacbc4e3e674d0ca0d7ac2aa928b",
+   "formal/derivation/signer_kind.tsv": "6c83926e312ccc5bcce7a2f5b9be3d2cb983189db317febaedcff106e4a40234"
   },
   "kinds": [
    "person",
@@ -60,8 +60,8 @@
    ]
   },
   "counts": {
-   "uses": 499,
-   "transitions": 458,
+   "uses": 503,
+   "transitions": 462,
    "open_uses": 0,
    "open_questions": 0
   },
@@ -5123,6 +5123,82 @@
    "at": "P3:679"
   },
   {
+   "use": "holon:claim#attest:none>admitted",
+   "family": "holon:claim",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "registered"
+   ],
+   "kinds": [
+    "agent",
+    "node",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "machine_claim",
+   "cc_ref": "CC 3.1.11 (registry); the family's row: any key may sign under its own name",
+   "at": "P3:816"
+  },
+  {
+   "use": "holon:claim#recant:admitted>recanted",
+   "family": "holon:claim",
+   "verb": "recant",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "node",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "machine_claim",
+   "cc_ref": "CC 3.1.11 (registry); the family's row: any key may sign under its own name",
+   "at": "P3:816"
+  },
+  {
+   "use": "holon:claim#supersede:admitted>superseded",
+   "family": "holon:claim",
+   "verb": "supersede",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "node",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "machine_claim",
+   "cc_ref": "CC 3.1.11 (registry); the family's row: any key may sign under its own name",
+   "at": "P3:816"
+  },
+  {
+   "use": "holon:claim#withdraw:admitted>withdrawn",
+   "family": "holon:claim",
+   "verb": "withdraw",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "node",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "machine_claim",
+   "cc_ref": "CC 3.1.11 (registry); the family's row: any key may sign under its own name",
+   "at": "P3:816"
+  },
+  {
    "use": "identity:canonical_binding:{canonical_hash}#attest:none>admitted",
    "family": "identity:canonical_binding:{canonical_hash}",
    "verb": "attest",
@@ -9364,6 +9440,10 @@
    "health:liveness:{version}#attest:none>admitted",
    "health:liveness:{version}#supersede:admitted>superseded",
    "health:liveness:{version}#withdraw:admitted>withdrawn",
+   "holon:claim#attest:none>admitted",
+   "holon:claim#recant:admitted>recanted",
+   "holon:claim#supersede:admitted>superseded",
+   "holon:claim#withdraw:admitted>withdrawn",
    "identity:canonical_binding:{canonical_hash}#attest:none>admitted",
    "identity:canonical_binding:{canonical_hash}#withdraw:admitted>withdrawn",
    "identity:occurrence[agent]#attest",
@@ -9751,6 +9831,10 @@
    "health:liveness:{version}#attest:none>admitted",
    "health:liveness:{version}#supersede:admitted>superseded",
    "health:liveness:{version}#withdraw:admitted>withdrawn",
+   "holon:claim#attest:none>admitted",
+   "holon:claim#recant:admitted>recanted",
+   "holon:claim#supersede:admitted>superseded",
+   "holon:claim#withdraw:admitted>withdrawn",
    "identity:canonical_binding:{canonical_hash}#attest:none>admitted",
    "identity:canonical_binding:{canonical_hash}#withdraw:admitted>withdrawn",
    "identity:occurrence_revocation#attest:none>admitted",
@@ -10006,6 +10090,10 @@
    "health:liveness:{version}#attest:none>admitted",
    "health:liveness:{version}#supersede:admitted>superseded",
    "health:liveness:{version}#withdraw:admitted>withdrawn",
+   "holon:claim#attest:none>admitted",
+   "holon:claim#recant:admitted>recanted",
+   "holon:claim#supersede:admitted>superseded",
+   "holon:claim#withdraw:admitted>withdrawn",
    "identity:occurrence[node]#attest",
    "identity:occurrence[node]#supersede",
    "identity:occurrence[node]#withdraw",

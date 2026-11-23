@@ -184,6 +184,7 @@ weighted_aggregate:{contribution_id}	claim	sourced | runs
 witness_diversity:{contribution_id}	claim	sourced | runs
 location_proof:{version}	claim	sourced | runs
 admission:unit	claim	sourced | runs
+holon:claim	claim	sourced | runs
 door accord_halt@node+late_closed	72 worlds, 2 properties hold	breaks: one holder cannot lift a confirmed halt alone
 door accord_halt@node+late_closed	plant: its mutation (check_door.MUTATION)	caught
 door accord_majority	36 worlds, 1 properties hold	holds
@@ -260,8 +261,8 @@ mechanism claim	keeps the characteristic property of door	no
 mechanism consent	keeps the characteristic property of door	no
 mechanism content	keeps the characteristic property of door	no
 mechanism door	keeps the characteristic property of door	yes
-removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 155, e.g. accord:*)
-removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 155, e.g. accord:*) ; door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id})
+removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 156, e.g. accord:*)
+removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 156, e.g. accord:*) ; door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id})
 removal	order door > consent > content > claim	surviving consent,door | door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 19, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
-counts	families per shape	claim 112, consent 15, consent+door 7, content 24, door 23, none fits 3
-counts	status	cannot run 2, no shape, stated 9, sourced 173
+counts	families per shape	claim 113, consent 15, consent+door 7, content 24, door 23, none fits 3
+counts	status	cannot run 2, no shape, stated 9, sourced 174

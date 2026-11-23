@@ -135,6 +135,7 @@ old_number	old_anchor	old_slug	new_number	new_anchor	new_slug	title	moved	note
 3.1.9.6	#3.1.9.6	tier--tier-2	3.1.9.6	#3.1.9.6	tier--tier-2	Tier-1: Agent-state ledger prefixes	no	
 3.1.9.7	#3.1.9.7	tier--tier-3	3.1.9.7	#3.1.9.7	tier--tier-3	Tier-2: Decision-hierarchy prefixes (upward-only DAG)	no	
 3.1.10	#3.1.10	cirisbench	3.1.10	#3.1.10	cirisbench	CIRISBench — HE-300 benchmark outcomes	no	
+—	—	holon	3.1.11	#3.1.11	holon	CIRISHolon — claims over a declared holon	no	new in 1.0-rc22
 3.2	#3.2	community	3.2	#3.2	community	`community` subject_kind	no	
 3.3	#3.3	content-ingestion	3.3	#3.3	content-ingestion	Content-ingestion prefixes	no	
 3.3.1	#3.3.1	consent	3.3.1	#3.3.1	consent	Consent namespace family	no	

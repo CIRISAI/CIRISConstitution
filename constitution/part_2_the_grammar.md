@@ -1026,6 +1026,29 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `"refs"` | payload | `refs` | iff the row carries on_behalf_of | [3.2](part_3_the_namespace.md#3.2) [2.6.1.3](#2.6.1.3) | The affiliation's roster version, under head, and no other role; the affiliation's voices are further statements counted at that head. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
+**A holon claim: the payload of a `holon:claim` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | The signer, under its own name. The CWT sub is the holon's id as text. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | holon:claim:v1; the row's type is scores. |
+| — | `"spec"` | payload | `tstr .size (1..128)` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | The declaration format whose checks were run, as ciris/holon-decl/0. |
+| — | `"holon"` | payload | `tstr .size (1..128)` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | The holon's id: lower-case words joined by full stops, at most 128 bytes. |
+| — | `"view"` | payload | `tstr .size (1..128)` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | The view's id, in the form of the holon's id. |
+| — | `"consumer"` | payload | `tstr .size (1..128)` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | The consumer's id, in the form of the holon's id. |
+| — | `"kind"` | payload | `tstr .size (1..64)` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | A token of the declaration's vocabulary, read from the blob; this document closes no set of kinds. |
+| — | `"declaration"` | payload | `hash-digest` | always | [3.1.11](part_3_the_namespace.md#3.1.11) [2.6.1.6](#2.6.1.6) | The SHA-256 digest of the declaration blob's stored bytes; it is among evidence_refs. |
+| `evidence_refs` | `"evidence_refs"` | payload | `[+ hash-digest]` | always | [3.1.11](part_3_the_namespace.md#3.1.11) [2.6.1.6](#2.6.1.6) | The declaration and every file the claim cites, each by its digest: a sequence. |
+| `score` | `"score"` | payload | `fixed6-score` | always | [3.1.11](part_3_the_namespace.md#3.1.11) [2.6.1.5](#2.6.1.5) | +10^6 where the signer says the checks held; -10^6 where the signer ran them and they did not hold; no other value. |
+| `confidence` | `"confidence"` | payload | `fixed6-unit` | where the signer states a confidence | [2.6.1.5](#2.6.1.5) | fixed6 in [0, 10^6]. |
+| — | `"body"` | payload | `holon-claim-body` | where the claim states a bound | [3.1.11](part_3_the_namespace.md#3.1.11) [2.6.1.10](#2.6.1.10) | The bound the claim states; a claim of exact agreement carries no bound. |
+| — | `"refs"` | payload | `refs` | where the row follows an earlier row of its signer for the same claim | [3.1.11](part_3_the_namespace.md#3.1.11) [2.6.1.3](#2.6.1.3) | The row it follows, under prev, and further heads of the same group under further_prev; no head and no other role. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+| — | `"bound"` | payload:body | `body-decimal` | always | [3.1.11](part_3_the_namespace.md#3.1.11) [2.6.1.2](#2.6.1.2) | The bound, a decimal fraction (tag 4); it MAY be negative. |
+| — | `"realised"` | payload:body | `body-decimal` | iff basis is realised | [3.1.11](part_3_the_namespace.md#3.1.11) [2.6.1.2](#2.6.1.2) | The value realised, a decimal fraction (tag 4). |
+| — | `"unit"` | payload:body | `tstr .size (1..64)` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | The bound's unit: a token of the declaration's vocabulary, read from the blob. |
+| — | `"basis"` | payload:body | `"price" / "realised"` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | What the bound is stated on. |
+
 **An occurrence: the payload of an `identity:occurrence` row**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |

@@ -135,6 +135,7 @@ def more(s):
     one("probe:2", "observation:access_assumption", "monitor", ["self"], "The monitoring node records what its probe assumes about access")
     one("build:1", "provenance:build_manifest:{target}", "pipeline", ["registered"], "A build pipeline signs the manifest of what it built; the reader judges its standing")
     one("build:2", "provenance:build_manifest:{target}:locale:{lang_code}", "pipeline", ["registered"], "The pipeline signs the manifest of one language's build")
+    one("holon:1", "holon:claim", "dave", ["registered"], "Dave signs a claim that a holon declaration's checks held over the digests he cites; the reader's trust set weighs it")
     # 10. a deferral, and the seat that answers it
     one("defer:1", "deferral:request", "agent:bob", ["self"], "Bob's agent defers a question it should not decide alone")
     one("seat:grace", "trust:{job}:{version}", "bob", ["self", "steward"], "Bob, the agent's steward, seats Grace over the agent's deferrals: his own delegation, bearing the answering as its scope", verb="authorize")

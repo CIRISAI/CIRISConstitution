@@ -134,6 +134,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 3.1.9.6	tier--tier-2	Tier-1: Agent-state ledger prefixes	§5.6.1	0.00092	290	0.11	III	ceg	dictionary
 3.1.9.7	tier--tier-3	Tier-2: Decision-hierarchy prefixes (upward-only DAG)	§5.6.2	0.00092	291	0.11	III	ceg	dictionary
 3.1.10	cirisbench	CIRISBench — HE-300 benchmark outcomes	§5.8	0.00092	292	0.11	III	ceg	dictionary
+3.1.11	holon	CIRISHolon — claims over a declared holon	—	0.00050	467	0.3	III	ceg	dictionary
 3.2	community	`community` subject_kind	§5.6.8.10	0.00901	15	1.08	III	ceg	constitution
 3.3	content-ingestion	Content-ingestion prefixes	§5.6.8	0.00850	20	1.02	III	ceg	dictionary
 3.3.1	consent	Consent namespace family	§5.6.8.6	0.00749	24	0.9	III	ceg	dictionary

@@ -66,3 +66,4 @@ attestation:self_verify	self x none x {} ; the running node about itself	CC 3.1.
 hardware_custody:{platform}	self x none x {} ; a statement about the emitter itself	CC 3.4.5	
 watchlist:{id}	seat_role(moderate) | seat_role(takedown) x none x {} ; for the group the watchlist is enabled in	CC 3.1.9.4	
 act:ack	roster_member(at) x none x {} ; the conferrer (a count where the conferrer is one), another holder of the body the acts were done for, or the receipter the offer names; never the signer of an act it names	CC 3.1.3	
+holon:claim	any_registered x none x {} ; any key under its own name, whose claim the reader's trust set weighs	CC 3.1.11	

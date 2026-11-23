@@ -42,7 +42,8 @@ FORWARD_PAYLOAD = OrderedDict([("group-roster", "group:roster"), ("membership-ch
                                ("deferral-response", "deferral:response:{outcome}"), ("deferral-request", "deferral:request"),
                                ("canonical-rebind", "transport:canonical_rebind"), ("trust-accepts", "trust:{job}:{version}"),
                                ("act-ack", "act:ack"), ("objection-vote", "objection:{state}"),
-                               ("owner-binding", "ownership:{relation}:{target_kind}:{version}")])
+                               ("owner-binding", "ownership:{relation}:{target_kind}:{version}"),
+                               ("holon-claim", "holon:claim")])
 FORWARD_PARTIAL = {"deferral:response:{outcome}", "deferral:request", "transport:canonical_rebind", "trust:{job}:{version}"}   # the rule names some members; the cell's others stay
 FORWARD_LEAVES = {"membership:{stage}": ("widening", "removal", "acceptance", "decline"),   # the leaves the rules state; the others keep their cell
                   "trust:{job}:{version}": ("accepts",)}

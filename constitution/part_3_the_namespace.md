@@ -1,6 +1,6 @@
 # Part 3 — The Namespace
 
-**Decimal range** `3.x` · **76 sections** · **page budget 23pp** · [← master index](../README.md)
+**Decimal range** `3.x` · **77 sections** · **page budget 23pp** · [← master index](../README.md)
 
 > The dimension namespace, reserved prefixes, the consent family, and the subject_kind catalogue.
 
@@ -8,7 +8,7 @@
 
 ## 3.1 `namespace` — The dimension namespace
 
-A federation needs a shared vocabulary before it can have a shared judgment. The dimension namespace is that vocabulary: the union of what every sibling component commits to, each family registered once under one owning component. CEG does not author the namespace top-down. It owns its own slice ([CC 3.1.1](#3.1.1)) and consumes everyone else's, so that justice — fair access to capability — and integrity — auditable claims — rest on names every participant agrees on. The family count is **generated, not asserted**. The namespace generator extracts every leaf family from this Part into [`manifests/namespace_registry.json`](../manifests/namespace_registry.json), whose `_meta` carries the totals, the per-component breakdown and the hash of the source it parsed. Read the count there, never from a number restated in prose. **Eight** owning components commit to their families in their own mission statements; the benchmark ([CC 3.1.10](part_3_the_namespace.md#3.1.10)) is catalogued without one and is the ninth.
+A federation needs a shared vocabulary before it can have a shared judgment. The dimension namespace is that vocabulary: the union of what every sibling component commits to, each family registered once under one owning component. CEG does not author the namespace top-down. It owns its own slice ([CC 3.1.1](#3.1.1)) and consumes everyone else's, so that justice — fair access to capability — and integrity — auditable claims — rest on names every participant agrees on. The family count is **generated, not asserted**. The namespace generator extracts every leaf family from this Part into [`manifests/namespace_registry.json`](../manifests/namespace_registry.json), whose `_meta` carries the totals, the per-component breakdown and the hash of the source it parsed. Read the count there, never from a number restated in prose. **Eight** owning components commit to their families in their own mission statements; the benchmark ([CC 3.1.10](part_3_the_namespace.md#3.1.10)) is catalogued without one and is the ninth. The holon repository ([CC 3.1.11](part_3_the_namespace.md#3.1.11)) is catalogued without one and is the tenth.
 
 Each family's model states its `authorship`, authored, `subject` (authored by the attested key) or counted, and its `second_signers`: each role besides the author whose statement a row accepts, with the payload member naming that party ([CC 2.6.1.3](part_2_the_grammar.md#2.6.1.3)).
 
@@ -806,6 +806,24 @@ This tier binds every operational act back to M-1. A Goal carries its multi-scal
 | Prefix | Description | Polarity |
 |---|---|---|
 | `benchmark:he300:{category}:{version}` | HE-300 benchmark score on category (`commonsense`, `commonsense_hard`, `deontology`, `justice`, `virtue`) at version — `{version}` ∈ `v1.0` \| `v1.1` \| `v1.2`, the HE-300 suite version (a dotted rule version is admitted by [CC 3.1.7](part_3_the_namespace.md#3.1.7) R3). | positive-only |
+
+### 3.1.11 `holon` — CIRISHolon — claims over a declared holon
+
+**Steward**: the holon repository.
+
+| Prefix | Description | Polarity | Reserved? |
+|---|---|---|---|
+| `holon:claim` | A signer's statement that the checks of a holon declaration's spec held for one claim over the digests the row cites. A score of +1 says the signer says the checks held. A score of −1 says the signer ran the checks and they did not hold. A result the signer cannot decide is no row. The row's type is `scores` and its wire leaf is `holon:claim:v1`. The registration is provisional ([CC 3.1.7](part_3_the_namespace.md#3.1.7) R2(a)). The declaration's format is the CIRISHolon repository's, at version 0, and it is not frozen. | boolean-via-score | No |
+
+**The declaration is a blob.** A holon declaration is an unsigned blob, hashed as its stored bytes with SHA-256. The row names it by that digest in `declaration`, and that digest MUST be among `evidence_refs`. `evidence_refs` holds the digest of the declaration and of every file the claim cites. For a computed holon those files include the engine, the compiler and the vocabulary. A path is not evidence.
+
+**One claim.** A row is for one holon, one view, one consumer and one kind, named by `holon`, `view`, `consumer` and `kind`. Each of `holon`, `view` and `consumer` is an id of lower-case words joined by full stops, at most 128 bytes long. `kind` and `unit` are tokens of the declaration's vocabulary, read from the blob, and this document closes neither set. `spec` names the declaration format whose checks were run. A claim that states a bound carries it in `body`, and a claim of exact agreement carries no bound.
+
+**How claims are read.** Rows of this family are read for each signer apart, by (`iss`, `holon`, `view`, `consumer`, `kind`). The rows of one signer on one such key are a group. Within a group a row replaces every row of the group that it has in its causal past ([CC 2.7.7](part_2_the_grammar.md#2.7.7)), and no instant decides. The group's heads are the rows that no other row of the group has in its past. One head is the signer's claim, or the claim's end where that head is a `recants` or a `withdraws`. Two heads or more are the signer saying two things, and the signer has no claim for that key until a row names both. The type of a row never breaks such a split. A row that follows an earlier row of its group names it in `refs.prev`, and a row that names two heads or more names the others in `refs.further_prev`. A new claim after a `recants` or a `withdraws` names it in `refs.prev`. A row of another signer is in no group but its own, and it never voids or replaces a claim, whatever it names. Two signers that disagree are two claims, and the reader's trust set decides which it believes ([CC 3.2](part_3_the_namespace.md#3.2)). This family is read this way, and not by the default of [CC 3.5.1](part_3_the_namespace.md#3.5.1). A correction is a `recants` and a new row. A revision that is no correction is a `supersedes`. A claim its signer has ceased to maintain is ended by a `withdraws` ([CC 2.4](part_2_the_grammar.md#2.4)).
+
+**What the row does not say.** The row says that a named signer says the checks held over these digests. It does not say that the evidence supports the claim. No rule of this document reads the declaration's content.
+
+**Who signs.** Any key MAY sign a row of this family under its own name. One signature carries the row, and no second signer signs it. A node's key or an agent's key signs under its owner-binding ([CC 3.2](part_3_the_namespace.md#3.2)). The row names no head, and in `refs` it names only the rows of its own group that it follows.
 
 ## 3.2 `community` — `community` subject_kind
 

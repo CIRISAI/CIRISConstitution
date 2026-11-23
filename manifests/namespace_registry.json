@@ -251,17 +251,19 @@
     },
     "cc_version": "1.0-rc22",
     "components_outside_normative": [
-      "cirisbench"
+      "cirisbench",
+      "holon"
     ],
     "generator": "tools/build_cc_namespace.py",
-    "n_components": 9,
+    "n_components": 10,
     "n_components_normative": 8,
-    "n_families": 184,
+    "n_families": 185,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
       "attestation": 18,
       "cirisbench": 1,
+      "holon": 1,
       "lens": 9,
       "node": 51,
       "persist": 36,
@@ -326,7 +328,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "af0ac06dc87116601df02a063fa41e43e8be05be80ee19e149088aa295de416e",
+    "registry_sha256": "60ba665dd9a888589bf9a7c2a31268c842e176659c4dabe20615a03938c6bd34",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -341,7 +343,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "4e48b39f835f481fc4793eecf7d707baaed3dce70fe8ae0411fd9e951d7f6210"
+    "source_sha256": "fc5e75fb70b5e351f7c5c584aad005ab84799ad0c3e5e76890bc04bc8b1d233c"
   },
   "families": [
     {
@@ -2911,6 +2913,25 @@
         {
           "class": "vocab",
           "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.11",
+      "description": "A signer's statement that the checks of a holon declaration's spec held for one claim over the digests the row cites.",
+      "owning_component": "holon",
+      "owning_repo": "CIRISHolon",
+      "polarity": "boolean-via-score",
+      "prefix": "holon:claim",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "holon"
+        },
+        {
+          "class": "literal",
+          "segment": "claim"
         }
       ]
     },

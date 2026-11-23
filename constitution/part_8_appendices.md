@@ -1648,7 +1648,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 121 of 184 families.
+A family with no card states none of these beyond the default row. Cards: 122 of 185 families.
 
 **`accord:*`** — Rules, thing
 
@@ -2683,6 +2683,22 @@ Fold:
 - `feeds=accord:*` (CC 4.2.2.1)
 
 Body: `hardware_class` (text only)
+
+**`holon:claim`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | false | false | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+| supersede | author | selfAct | false | false | supersede |
+
+Count: `none` (CC 3.1.11)
+
+Fold:
+- `key=attesting_key_id,holon,view,consumer,kind; pick=tips; absent=none; by=reader` (CC 3.1.11)
+
+Body: `author`, `dimension`, `spec`, `holon`, `view`, `consumer`, `kind`, `declaration`, `evidence_refs`, `score`, `confidence`, `body`, `refs`, `asserted_at`
 
 **`identity:canonical_binding:{canonical_hash}`** — Identity, thing
 
