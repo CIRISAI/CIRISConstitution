@@ -239,6 +239,7 @@ dial_hint_malformed	refusal		the text says Invalid
 dial_hints	not_a_token		charter or bundle member
 differs_in	not_a_token		payload or envelope member
 digital_identity	not_a_token		enumeration value, not a fault
+dissolved_at	not_a_token		a payload member
 duty_holders	not_a_token		payload or envelope member
 ed25519_pubkey	not_a_token		registry or manifest member, or a file name
 edition2_payload_invalid	refusal		the text says refused
@@ -563,6 +564,8 @@ removable_offline	not_a_token		enumeration value, not a fault
 rendezvous_key_record	not_a_token		payload or envelope member
 rendezvous_node_key_id	not_a_token		payload or envelope member
 reserved_family_unseated	refusal		reason column of the reserved-family table
+resignation_not_a_member_at_head	refusal		the text says refused
+resignation_not_by_member	refusal		the text says refused
 resolution_time	hard_case		hard-case kind, spelt bare in the list of canonical kinds
 resolve_deferral	not_a_token		scope, duty or role name
 resolve_encryption_keys	not_a_token		function, predicate or rule name
