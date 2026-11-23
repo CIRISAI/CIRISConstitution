@@ -130,7 +130,7 @@ group:roster	projection	typed_view	{"rebuild": "byte_equal", "table": ["federati
 hard_case:{kind}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 hard_case:{kind}	projection	typed_view	{"rebuild": "byte_equal", "table": "hard_case_events"}
 hard_case:{kind}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
-holon:claim	placement	unbuilt	null
+holon:claim	placement	unbuilt	"commons"
 holon:claim	subject_rule	unbuilt	null
 holon:claim	freshness	unbuilt	null
 holon:claim	lifecycle	unbuilt	null

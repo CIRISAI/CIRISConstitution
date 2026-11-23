@@ -2688,7 +2688,7 @@ Body: `hardware_class` (text only)
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | false | false | withdraw |
+| attest | registered | selfAct | true | true (always) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 | supersede | author | selfAct | false | false | supersede |

@@ -1960,7 +1960,7 @@ holon:claim	signer_rule	text	cc-table
 holon:claim	cosign_rule	cited	cc-table
 holon:claim	subject_rule	open	gap
 holon:claim	polarity	text	cc-table
-holon:claim	placement	open	gap
+holon:claim	placement	text	cc-table
 holon:claim	lifecycle	open	gap
 holon:claim	erasure_route	open	gap
 holon:claim	projection	open	gap

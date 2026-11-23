@@ -43,8 +43,6 @@ FM = json.loads((ROOT / "manifests" / "family_model.json").read_text())
 PINNED = {
     ("duty:{kind}", "attest", "roles"):
         "CC 2.7.5 places a duty by the object's own key; which role token names the signer of the permission a duty attaches to?",
-    ("holon:claim", "attest", "widens"):
-        "CC 3.1.11 states no placement for a claim; at which scope is a holon:claim row placed, and so does signing one widen?",
 }
 
 

@@ -83,5 +83,6 @@ stream:head	attest	widens		false	CC 3.1.3
 contribution:{subject_kind}	attest	widens		false	CC 3.1.9.3
 act:ack	attest	widens		false	CC 3.1.3
 act:ack	attest	policy		selfAct	CC 3.1.3
+holon:claim	attest	widens		true	CC 3.1.11	Its `cohort_scope` is `federation`.
 holon:claim	withdraw	roles		author	CC 3.1.11	A claim its signer has ceased to maintain is ended by a `withdraws`
 holon:claim	withdraw	policy		selfAct	CC 3.1.11	A claim its signer has ceased to maintain is ended by a `withdraws`

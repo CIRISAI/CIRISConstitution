@@ -55,6 +55,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - A steward purge is counted over the holders of the bundle in force (3.1.1, 2.4.1.1): it carries no author and no `claimant`, its `sub` is the lineage's name, and it names the bundle in `refs.head`.
 - A member a row removes is a voice of its own removal, except where the group's policy states otherwise (2.7.5).
 - A claim of the CIRISHolon repository is a governed row (3.1.11): the family `holon:claim` is registered provisionally under the tenth component, `holon`, with the payload rule `holon-claim`. A row is one signer's statement that the checks of a holon declaration held for one holon, view, consumer and kind over the digests it cites; the declaration is an unsigned blob cited by digest. Claims are read for each signer apart by causal past: one head is the signer's claim, two heads are none, and a row of another signer never voids one. The registry counts 185 families and 10 components.
+- A holon claim is placed at `federation` scope, and its signer cites only digests whose blobs it holds for that scope (3.1.11). The crate that computes the kernel's rules is cited at `kernel-v0.2.2`.
 
 ## 1.0-rc21 (released 2026-11-19, tag v1.0-rc21)
 

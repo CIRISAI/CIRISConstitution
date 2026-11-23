@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "9722b034c6607962b00d86264ac9d531387013190984344e2300d158ed1b0d29",
+  "registry_sha256": "af96d459dec3575a614082dd973cfaf34acf70225ad8b217b8c732d7dfcd53d7",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -119,12 +119,12 @@
     "gap": 0
    },
    "placement": {
-    "cc-table": 163,
+    "cc-table": 164,
     "code-v61": 9,
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 6
+    "gap": 5
    },
    "signer_rule": {
     "cc-table": 51,
@@ -47686,9 +47686,13 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.11",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -47923,7 +47927,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "a claim names no head; in refs it names only the rows of its own group that it follows",
-    "derived": null,
+    "derived": "none",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
