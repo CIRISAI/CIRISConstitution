@@ -170,6 +170,11 @@ def receipt(i, of, signer, names=()):
     return {"id": i, "kind": "receipt", "signer": signer, "of": of, "names": sorted(set(names) | {of})}
 
 
+def withdrawal(i, of, signer):
+    """A row by `signer` that withdraws the receipt `of`. The text refuses it at the door; nothing reads it."""
+    return {"id": i, "kind": "withdrawal", "signer": signer, "of": of, "names": [of]}
+
+
 def removal(i, target, names=()):
     return {"id": i, "kind": "removal", "signer": "count", "target": target, "names": list(names)}
 
@@ -285,6 +290,14 @@ CASES = [
       receipt("q2", "c2", CONFERRER), receipt("q3", "s2", CONFERRER)], {},
      {"s1": (T, F, "E2.forward"), "c1": (T, F, "E6.upstream"),
       "s2": (T, T, "E8.receipt"), "c2": (T, T, "E8.receipt")}),
+    # a receipt is never withdrawn (the Constitution's ruling of 2026-11-23): a row withdrawing one is refused at
+    # the door, and the case is marked `refused`. The answers are what the model concludes if one were held:
+    # nothing reads it.
+    ("receipt_never_withdrawn", "a co-holder withdraws its receipt of b1 and the ender withdraws its receipt of "
+     "b2: neither row is read; b1 stays in force and b2, counted by the ender's one say, stays counted",
+     [H0, H1, act("b1", "H0"), act("b2", "H1"), end("H0"), receipt("q1", "b1", CO_HOLDER),
+      receipt("q2", "b2", CONFERRER), withdrawal("w1", "q1", CO_HOLDER), withdrawal("w2", "q2", CONFERRER)], {},
+     {"b1": (T, T, "E8.receipt"), "b2": (T, F, "E3.one_say")}),
     # deputies, the end's own validity, the reader's line, a removed grantee
     ("deputy", "a deputy edge at H1 (later than h_e) does not count, so its deputy's act does not either; one at "
      "H0 counts and its deputy's act at H0 counts too, neither in force",
@@ -342,8 +355,12 @@ def check_cases():
 
 def refused(rows):
     """The refusal the Constitution's text gives one of the case's rows at the door, or None. An act that
-    exercises a standing and names no head is refused (`act_names_no_head`, CC 2.4.1.1)."""
-    return "act_names_no_head" if any(r["kind"] == "act" and r.get("head") is None for r in rows) else None
+    exercises a standing and names no head is refused (`act_names_no_head`, CC 2.4.1.1). So is a row that
+    withdraws a receipt (`federation_withdraws_not_admitted`, the text's one refusal for a withdrawal no rule
+    admits: a receipt, once sent, is never withdrawn)."""
+    if any(r["kind"] == "act" and r.get("head") is None for r in rows):
+        return "act_names_no_head"
+    return "federation_withdraws_not_admitted" if any(r["kind"] == "withdrawal" for r in rows) else None
 
 
 def fixture():
@@ -364,7 +381,8 @@ def fixture():
             "roles": {"A": "the conferrer (for a count, the count)", "B": "the grantee", "C": "a deputy",
                       "D": "a single co-holder", "R": "a receipter the grant names", "count": "a counted row"},
             "refused": "a case's `refused` is null, or the refusal the Constitution's text gives one of its rows at "
-                       "the door (`act_names_no_head`: an act that exercises a standing and names no head). A "
+                       "the door (`act_names_no_head`: an act that exercises a standing and names no head; "
+                       "`federation_withdraws_not_admitted`: a row that withdraws a receipt). A "
                        "store that follows the text never holds such a row, so its witness for the case is the "
                        "refusal; `answers` is then what the model concludes if the row were admitted",
             "rules": __doc__.split("Rules, in the order they decide (the name a failing test reports):")[1].strip(),

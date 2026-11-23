@@ -70,6 +70,13 @@ The candidates compared (the four you asked me to choose among, and the two halv
   receipt never revives an act at a later head or one naming the end (`Inv_ReceiptForwardOnly`). It changes
   force only, never a count (`Inv_ReceiptsChangeOnlyForce`). A receipt by a key removed concurrently counts
   for nothing.
+  A receipt, once sent, is never withdrawn (the Constitution's ruling of 2026-11-23): a row withdrawing one is
+  refused at the door, and if one were held nothing reads it (case `receipt_never_withdrawn`). The ruling
+  rests on reading the rules, not on a run: the TLA+ spec has no such row. Read otherwise, the ender's
+  withdrawal of its own receipt would take back its one say (E3) and change a count, and a single receipter
+  could drop what only a count end with `lifts` may. A single key's mistaken receipt is undone by the count's
+  end with `lifts` or by a removal of that key concurrent with the receipt. A count's own mistaken receipt
+  has no undo in this rule.
 - **Not the line for authored acts.** CC 2.7.8's line voids counted acts naming an older head. It must not be
   applied to authored acts that name their head (section C).
 - **Exercised acts stay off the seat's slot** (section F).
@@ -383,7 +390,7 @@ Wire cost:
 ## H. Conformance fixtures for persist
 
 The fixture is `crates/ciris-kernel/tests/fixtures/conferral_end.json`, in the kernel's fixture format. It has
-34 cases and 49 act answers. Each act has `counted`, `in_force` and the `rule` that decides it, and 12 rules
+35 cases and 51 act answers. Each act has `counted`, `in_force` and the `rule` that decides it, and 12 rules
 appear.
 
 The same cases are a plain table, one line per act, in `conferral_end.tsv` next to it. That is the
@@ -593,6 +600,77 @@ of the proposal, and the reference keeps it apart (`shown_first_held`).
 
 **Not modelled here:** receipts together with tips; the reader's line on an end; key removals; more than two
 seats; more than one room.
+
+## J. One row that needs two standings
+
+A node that is its owner's by an owner binding and holds a duty by a root grant signs one row (a build row).
+CC 3.1.2.1 has it name the bundle in force, and says a new owner must accept the grant "before it confers for
+acts under the new binding". With one head named, nothing places the act against a re-binding.
+
+`models/causal_kernel/check_conferral_two.py` judges the act under each record with the reference of sections
+A to H and joins the answers bit by bit: the act counts for an owner when it counts under the grant and under
+a binding of that owner, and it is in force when it is in force under both.
+
+- The grant: head G0 (the bundle in force) and the count's end EG.
+- The binding: B0 (the node is O1's), B1 (a re-binding to O2, naming B0), B2 (a re-binding back to O1, naming
+  B1). Each re-binding ends the binding before it.
+- A0, A1, A2: the owner's acceptance of the grant under B0, B1, B2.
+
+Each history fixes, for every act, how far along B1, A1, B2, A2 its signer had got when it signed, which the
+graph does not show. An honest node names the newest row of its reading that it holds. A backdating node
+names what it would have named under an earlier binding. Every set of rows a reader may hold is judged: 1,344
+histories, 238,140 states over the five readings, about 12 s.
+
+| Reading | What the act names beside the grant's head | What an acceptance names | Result |
+|---|---|---|---|
+| `one` | nothing | its binding | breaks five properties |
+| `named` | the binding row it is under | its binding | breaks `consent` |
+| `named_acc` | B0, or under a re-binding the owner's acceptance | its binding | holds all seven |
+| `acc` | always the owner's acceptance | its binding | holds all seven |
+| `acc_bare` | always the owner's acceptance | the grant only | breaks four once an owner is bound a second time |
+
+The seven properties:
+- `old_owner`: an honest act signed holding a re-binding does not count under a binding before it. Under
+  `one` it does: the act does not name B1, so it is concurrent with the re-binding and counts at B0.
+- `consent`: an act counts under a binding only if its signer held that binding's acceptance when it signed.
+  Under `one` and `named`, an act signed before the acceptance counts for the new owner once the reader holds
+  the acceptance: a later acceptance adopts acts the new owner never saw.
+- `one_owner`: no act counts for both owners. Under `one` an act signed before the re-binding does.
+- `kept`: an honest act signed under an accepted binding counts under it once the reader holds what its
+  signer held.
+- `backdated`: a backdated act counts under no later binding than the one it names, and is in force under
+  that one only by its owner's own receipt. It still counts there, out of force: the limit section D states
+  for any two-key standing.
+- `ended`: an honest act, not receipted, is in force for nobody once the reader holds the re-binding that
+  ended its binding. A later binding to the same owner restores nothing.
+- `grant_end`: once the reader holds EG, an act the count did not receipt is in force for neither owner.
+
+**The rule the run supports (`acc`).** A row signed under a root grant names the bundle in force and the
+acceptance of that grant it stands on. The acceptance names the owner binding it is made under. An act that
+names a binding row itself, or the bundle alone, stands on no acceptance and counts for nobody. The
+Constitution has ruled that "before" is meant (2026-11-23), which excludes `named`.
+
+**Why the acceptance names its binding.** With one re-binding, `acc_bare` holds all seven properties: the two
+owners have different acceptances and the act names one of them. It breaks when O1 is bound again (B2). O1's
+one acceptance then serves both of its bindings, and a reader cannot tell an act signed before B1 from one
+signed after B2: the first comes back in force (`ended`), and so does a backdated one. If O1 instead signs a
+fresh acceptance that names no binding, no reader can say which of O1's two acceptances belongs to which
+binding without an order the graph does not give. That second point is an argument, not part of the run.
+
+"The binding in the act's causal past" is not a separate option. A row has in its past only what it, or a row
+it names, names. So the binding is in an act's past only when the act names it or names a row that does.
+
+**Fixture.** `crates/ciris-kernel/tests/fixtures/conferral_two.json` has 11 cases under `acc`, each with a
+hand-written answer per act and owner that the run must give. No Rust test reads it. It is for Verify's
+standing walk and an adopter's own code.
+
+**For the crate.** No new code: a caller runs `conferral::answers` once for the grant and once per binding,
+and joins the answers bit by bit.
+
+**Limits.** This is a Python run over the reference, not a TLA+ configuration. It has one grant head, two
+re-bindings, at most two acts, and one receipt per record (the first owner's, and the count's). Not modelled:
+the new owner declining or withdrawing its acceptance, a grant end concurrent with a new bundle version, a
+new bundle version at all, the reader's line, a receipt by the second owner.
 
 ## For the Constitution to vendor
 
