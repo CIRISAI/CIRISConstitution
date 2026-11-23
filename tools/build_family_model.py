@@ -29,6 +29,9 @@ SCOPES = ("self", "family", "community", "affiliations", "species", "biosphere",
 COUNT_TEXT = os.path.join(ROOT, "formal/derivation/count_text.tsv")
 POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
 SIGNED_OBJECT = os.path.join(ROOT, "constitution/signed_object.tsv")
+# Members of the earlier form's table (CC 8.11.9) that no row of this form carries. A reply names what it answers in
+# refs.answers, and one that carries proposal_hash is malformed and refused (CC 3.1.3.2).
+EARLIER_FORM_ONLY = {"proposal_hash"}
 SIGNED_OBJECT_V2 = os.path.join(ROOT, "constitution/signed_object_v2.tsv")
 # The families whose payload CC 2.6.1.4 states, by the schema rule that holds it (manifests/family_payloads_v2.cddl).
 FORWARD_PAYLOAD = OrderedDict([("group-roster", "group:roster"), ("membership-change", "membership:{stage}"),
@@ -1132,6 +1135,7 @@ def main():
     body_members, body_unread = OrderedDict(), []
     for so in csv.DictReader(open(SIGNED_OBJECT, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE):
         if so["object"] != "attestation_row": continue
+        if so["member"] in EARLIER_FORM_ONLY: continue
         for mode, lst in re.findall(r"(REQUIRED|OPTIONAL) on ([^;()]+)", so["presence"]):
             for name in [x.strip() for x in re.split(r",| and ", lst) if x.strip()]:
                 own = owners(name) if re.fullmatch(r"[a-z_]+(:[a-z_{}*0-9]+)+", name) else []

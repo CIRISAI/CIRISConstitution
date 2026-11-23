@@ -3010,7 +3010,7 @@ In time:
 - [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
 - [proposal] while `expiry` is open: binds nobody until it lands (CC 3.1.3.2)
 
-Body: `dimension`, `group_kind`, `group`, `member`, `joined_at`, `removed_at`, `effective_at`, `role`, `witness_set`, `valid_until`, `reason`, `refs`, `asserted_at`, `proposal_hash`
+Body: `dimension`, `group_kind`, `group`, `member`, `joined_at`, `removed_at`, `effective_at`, `role`, `witness_set`, `valid_until`, `reason`, `refs`, `asserted_at`
 
 **`mesh_config:{key}`** — Rules, thing
 

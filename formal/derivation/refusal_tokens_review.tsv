@@ -506,6 +506,7 @@ profile_contested	refusal		the profile does not load; best reading
 profile_digest_mismatch	refusal		the profile does not load; best reading
 profile_unanchored	report		the shipped template alone runs; best reading
 progress_measure	not_a_token		family or row-type name
+proposal_hash	not_a_token		a member of the earlier form; a reply that carries it is malformed
 protective_routing	not_a_token		enumeration value, not a fault
 purge_not_settled	refusal		the text says refused
 purge_retraction_inadmissible	refusal		aborts the purge; best reading
