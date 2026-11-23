@@ -1009,13 +1009,13 @@
    "cells": {
     "subject_may_withdraw": {
      "by_value": {
-      "by_selector": 10,
-      "false": 23,
+      "by_selector": 9,
+      "false": 24,
       "true": 151
      },
      "by_source": {
-      "derived": 164,
-      "quote": 20,
+      "derived": 163,
+      "quote": 21,
       "ruling": 0,
       "open": 0
      }
@@ -5336,15 +5336,15 @@
     "cc_ref": "CC 6.1.5"
    },
    "subject_may_withdraw": {
-    "value": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "an occurrence revocation, a key grant, a cosignature already sent and a receipt are never withdrawn either",
+    "derived": {
      "act=group": false,
      "*": true
-    },
-    "source": "derived",
-    "from": "authorship",
-    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
-    "cc_ref": "CC 2.4.1.1",
-    "per_selector": true
+    }
    },
    "accountability_record": {
     "value": false,
@@ -48351,7 +48351,7 @@
     "source": "quote",
     "from": "formal/derivation/standing_text.tsv",
     "cc_ref": "CC 2.4.1.1",
-    "quote": "an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either",
+    "quote": "an occurrence revocation, a key grant, a cosignature already sent and a receipt are never withdrawn either",
     "derived": {
      "identity=user": false,
      "*": true
@@ -52884,7 +52884,7 @@
     "source": "quote",
     "from": "formal/derivation/standing_text.tsv",
     "cc_ref": "CC 2.4.1.1",
-    "quote": "an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either",
+    "quote": "an occurrence revocation, a key grant, a cosignature already sent and a receipt are never withdrawn either",
     "derived": true
    },
    "accountability_record": {

@@ -33,8 +33,8 @@ subject_may_withdraw	quarantine:	*	false	quote	CC 2.4.1.1	a `moderation:*` repor
 subject_may_withdraw	takedown_notice:	*	false	quote	CC 2.4.1.1	a `takedown_notice:*`, where the path is the counter-notice its basis names
 subject_may_withdraw	trace:	*	false	quote	CC 2.4.1.1	a producer's own `trace:*`, where the path of a person named in it is withdrawing consent
 subject_may_withdraw	key:revocation	*	false	quote	CC 2.4.1.1	A `key:revocation:v1` row is withdrawn by nobody, because revocation is non-rollbackable
-subject_may_withdraw	identity:occurrence_revocation	*	false	quote	CC 2.4.1.1	an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either
-subject_may_withdraw	key_grant:	*	false	quote	CC 2.4.1.1	an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either
+subject_may_withdraw	identity:occurrence_revocation	*	false	quote	CC 2.4.1.1	an occurrence revocation, a key grant, a cosignature already sent and a receipt are never withdrawn either
+subject_may_withdraw	key_grant:	*	false	quote	CC 2.4.1.1	an occurrence revocation, a key grant, a cosignature already sent and a receipt are never withdrawn either
 subject_may_withdraw	moderation_track_record:	*	false	quote	CC 2.4.1.1	a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker
 accountability_record	trace:	*	true	quote	CC 3.1.5	An agent's trace is erased only by its signer's `withdraws` under [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1) rule 1
 may_carry_under	trust:{job}:{version}	leaf=confers	true	quote	CC 3.1.3	A delegation that claims a job rides `trust:{job}` ([CC 3.1.1](part_3_the_namespace.md#3.1.1)): a scope-carrying grant is `trust:confers:v1`.
@@ -80,3 +80,4 @@ room_content	model_3d:*	*	true	quote	CC 3.1.3.2	The content of a room is the row
 room_content	blog:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
 room_content	news:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
 room_content	encyclopedia:*	*	true	quote	CC 3.1.3.2	The content of a room is the rows of the families that the family table marks `room_content`: a chat message and a reaction, a file, a collection and the media families.
+subject_may_withdraw	act:ack	*	false	quote	CC 2.4.1.1	an occurrence revocation, a key grant, a cosignature already sent and a receipt are never withdrawn either
