@@ -2752,10 +2752,11 @@
     "note": "no sentence says which key slot {halt_id} holds"
    },
    "names_head": {
-    "value": "by_placement",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed at a room or a family and elsewhere",
+    "value": "none",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "a halt fires at each node on receipt, under the roster that node holds; its payload is closed and names no head",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -3167,10 +3168,11 @@
     "note": "no sentence says which key slot {drill_id} holds"
    },
    "names_head": {
-    "value": "by_placement",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed at a room or a family and elsewhere",
+    "value": "none",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "as the halt: read on receipt, under the roster the node holds",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -3565,10 +3567,11 @@
     "note": "no sentence says which key slot {notify_id} holds"
    },
    "names_head": {
-    "value": "by_placement",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed at a room or a family and elsewhere",
+    "value": "none",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "as the halt: read on receipt, under the roster the node holds",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {

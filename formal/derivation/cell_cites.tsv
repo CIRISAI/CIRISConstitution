@@ -364,7 +364,7 @@ group:roster	projection	agree	CC 4.4.3.21	a family has one head, the roster vers
 group:roster	projection	agree	CC 4.4.3.21	roster = fold(head, membership rows effective at now)
 group:roster	replication	fills	CC 2.4.1.1	roster-removal rows are addressed by `key_id` — they reach only the audience that already holds the roster
 hard_case:{kind}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
-hard_case:{kind}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict
+hard_case:{kind}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict
 hard_case:{kind}	lifecycle	fills	CC 2.4.1.1	The substrate that produced the proof withdraws it under rule 1, or recants a false one, and nobody else
 hard_case:{kind}	signer_rule	agree	CC 3.4.2	A row on these kinds from any other signer concludes nothing ([CC 3.4.7](#3.4.7)).
 hard_case:{kind}	signer_rule	agree	CC 3.4.2	The node that admitted or refused the row, holding `infra:attest` from its owner ([CC 3.4.7](#3.4.7)). A kind whose body names another party needs `infra:record_hard_case`.
@@ -502,7 +502,7 @@ mesh_config:{key}	signer_rule	agree	CC 4.2.1.4	`mesh_config:{key}` ([CC 4.2.1](#
 model_3d:*	signer_rule	agree	CC 3.1.9	None is reserved: all are open-vocabulary content claims under ordinary [CC 4.4](part_4_composition_governance.md#4.4) consumer policy.
 moderation:{allegation_type}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 moderation:{allegation_type}	governance	fills	CC 4.5.13	a present moderator acts, and on the moderators' absence the live community governs its own content
-moderation:{allegation_type}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict
+moderation:{allegation_type}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict
 moderation:{allegation_type}	lifecycle	fills	CC 4.5.5	The person named cannot withdraw that record and contests it by `reconsideration:{grounds}`.
 moderation:{allegation_type}	replication	fills	CC 4.5.5	The moderator's process MAY shield the reporter.
 moderation:{allegation_type}	signer_rule	agree	CC 4.4.3.19	`moderate` | a `moderation:{allegation_type}` ModerationEvent + the report→`scores` path + `age_assurance:*`/`content_class:*` gates
@@ -589,7 +589,7 @@ settlement:*	lifecycle	fills	CC 3.3.10	**Lifecycle**: `withdraws` against a `set
 settlement:*	placement	agree	CC 3.1.3	`cohort_scope` is the producer's choice
 settlement:*	placement	fills	CC 3.1.3	`cohort_scope` is the producer's choice
 slashing:{outcome}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
-slashing:{outcome}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict
+slashing:{outcome}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict
 slashing:{outcome}	signer_rule	fills	CC 4.5.5	`slashing:{outcome}` verdicts and the `quarantine:{state}` marker plane
 system:*	signer_rule	agree	CC 3.1.3	The `system:*` dimensions here are substrate-self-reports — emittable only by the running substrate itself ([CC 3.4.3](#3.4.3)), which is what makes them honest: the substrate cannot be made to lie about its own
 system:*	signer_rule	agree	CC 3.4.3	The signer is the node the row is about and holds `infra:attest` from its owner ([CC 3.4.7](#3.4.7)).
