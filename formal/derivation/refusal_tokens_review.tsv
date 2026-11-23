@@ -114,10 +114,21 @@ body_number_unrepresentable	refusal		the text says refused
 budget_bytes	not_a_token		payload or envelope member
 build_manifest	not_a_token		family or row-type name
 build_manifest_descriptor_mismatch	refusal		the text says refused
+build_manifest_duplicate_function	refusal		the table of the blob's refusals
+build_manifest_empty_functions	refusal		the table of the blob's refusals
 build_manifest_equivocation	refusal		the text says a reader refuses both
+build_manifest_float	refusal		the table of the blob's refusals
 build_manifest_functions_root_mismatch	refusal		the text says a reader MUST refuse the blob
 build_manifest_hash	not_a_token		payload or envelope member
+build_manifest_malformed	refusal		the table of the blob's refusals
+build_manifest_max_bytes	not_a_token		a constant: the blob's greatest length
+build_manifest_missing_member	refusal		the table of the blob's refusals
+build_manifest_not_a_map	refusal		the table of the blob's refusals
+build_manifest_not_deterministic	refusal		the table of the blob's refusals
+build_manifest_oversize	refusal		the table of the blob's refusals
 build_manifest_project_not_granted	refusal		the text says refused
+build_manifest_unknown_member	refusal		the table of the blob's refusals
+build_manifest_wrong_format	refusal		the table of the blob's refusals
 bundle_fingerprint	not_a_token		charter or bundle member
 by_rule	not_a_token		enumeration value, not a fault
 call_argument_unrepresentable	refusal		the text says refused

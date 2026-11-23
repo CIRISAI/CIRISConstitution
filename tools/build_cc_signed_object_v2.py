@@ -875,6 +875,13 @@ def group_id_checks():
     for what, p, want in S:
         if group_id_rule(p) != want:
             bad.append(f"group id sample: {what}: {group_id_rule(p)} where {want} was expected")
+    # The known answer three implementations agree on (this generator, the verifier's, the store's): CIRISVerify
+    # group_id_v1.json at commit 9518060, sha256 c796353db656a32110fdb7e9c429c9f3e015f396d992751d13030723e49c1249.
+    known = group_id("community", [iref(0), iref(1)], 1763078400000, bytes(range(32)))
+    if known != "group-8ezU3QIqqrhTRYMAeKoBxdDL3mmvmAnKC1_wsrnJ3hI":
+        bad.append(f"group id known answer: {known}")
+    if group_id("family", [iref(1), iref(0)], 1763078400000, bytes(range(32))) != "group-ODjNYdkE6CL7viHGk4mFJRvuPtXGic_pxf-1iMrufE0":
+        bad.append("group id known answer for a family differs")
     planted = lambda p: None if group_id_rule(p) == GROUP_ID_NOT_OF_FOUNDING else group_id_rule(p)
     if all(planted(p) == want for _, p, want in S):
         bad.append("deliberate break not caught: a rule that takes a group's id as given passed every sample")

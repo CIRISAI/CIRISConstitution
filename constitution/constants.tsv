@@ -53,3 +53,4 @@ sth_cadence_chunks, sth_cadence_secs	K = 64 chunks or T = 2 s, whichever comes f
 av_binding_max_bytes	8,192 bytes for the whole chunk-key binding encoding; trailing bytes are refused	5.3.3.5		
 av_binding_parts_max, av_binding_parts_in_flight	at most 64 parts per binding on the A/V link; at most four reassembling in flight per link	5.3.3.5		
 multiplicity_n_min	2 by default, substrate-side and pinned per corpus kind; never producer-settable	6.1.2.3		
+build_manifest_max_bytes	1,048,576 bytes (1 MiB): a build manifest blob is never longer, and its length is checked before it is decoded	3.1.2.1		
