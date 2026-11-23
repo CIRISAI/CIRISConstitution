@@ -178,6 +178,8 @@ def apply_text(name, spec):
         spec["unstated"] = [u for u in spec["unstated"] if not u.startswith(drop + move)]
         if t["parameter"] == "concluder" and t["value"] == "local" and not spec.get("landing_row"):
             spec["landing_row"] = "none: each node reads its own close (run as the key in '%s')" % spec["concluder"]
+        if t["parameter"] == "concluder" and " as " in t["value"] and not spec.get("landing_row"):
+            spec["landing_row"] = t["value"].split(" as ", 1)[1]      # `SEAT as FAMILY`: the seat that lands and the row it signs
     return spec
 
 

@@ -211,6 +211,7 @@ def more(s):
     one("unbind:1", "identity:occurrence_revocation", "bob", ["self", "owner"], "Bob tries to carry alone a framed revocation of his old phone: refused, a person's occurrence is revoked by a strict majority of the person's own roster", stage="user_self")
     one("unbind:1", "identity:occurrence_revocation", "bob", ["member"], "Bob's own roster carries the revocation of his old phone: a strict majority of his live keys", stage="user_self")
     one("unbind:2", "identity:occurrence_revocation", "bob", ["owner"], "Bob revokes the occurrence of his node: its owner", stage="node_or_agent")
+    one("window:1", "window:{state}", "bob", ["member"], "One key of Bob's roster says it holds his proposal to evict a lost phone, and a day later the same key lands it")
     # 20. the accord holders re-bind a seated serve node's transport destination
     one("rebind:1", "transport:canonical_rebind", "bob", ["owner", "registered"], "Bob tries to re-bind his serve node's transport destination: refused, a re-bind is the accord holders' act")
     one("rebind:1", "transport:canonical_rebind", "alice", ["holder"], "The accord holders re-bind the serve node's transport destination, cosigned at the charter's threshold")

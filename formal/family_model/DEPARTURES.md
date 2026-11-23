@@ -14,15 +14,15 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 | column | families |
 |---|---|
-| placement | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head` |
-| subject_rule | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head` |
+| placement | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `window:{state}` |
+| subject_rule | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `window:{state}` |
 | cosign_rule | `act:ack`, `admission:unit`, `ballot:moderator_acceptance`, `location_proof:{version}` |
-| freshness | `act:ack`, `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `location_proof:{version}`, `stream:head` |
-| lifecycle | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head` |
-| replication | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head` |
-| projection | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head` |
-| erasure_route | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head` |
-| governance | `act:ack`, `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `location_proof:{version}`, `stream:head` |
+| freshness | `act:ack`, `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `location_proof:{version}`, `stream:head`, `window:{state}` |
+| lifecycle | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `window:{state}` |
+| replication | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `window:{state}` |
+| projection | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `window:{state}` |
+| erasure_route | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `window:{state}` |
+| governance | `act:ack`, `admission:unit`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `location_proof:{version}`, `stream:head`, `window:{state}` |
 
 ## The family is a key
 

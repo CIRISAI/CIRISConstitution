@@ -268,6 +268,9 @@ def _reserved_rules():
         # CC 2.7.5 / CC 2.4.1.1: a receipt of acts, by a voice at the head the acts name.
         (lambda p, c: p == "act:ack",
          "a voice at the head the acts name: the conferrer, another holder of the body the acts were done for, or a receipter an offer names; never the signer of an act it names, and never a node; one voice or the body's count", "CC 2.4.1.1"),
+        # CC 2.7 / CC 3.3.6.4: the held row and the landing of a window that binds others.
+        (lambda p, c: p == "window:{state}",
+         "a key seated in the counted set at the head the opener names; for the self roster, a key of the roster; a landing by any other key concludes nothing", "CC 3.3.6.4"),
         (lambda p, c: p.startswith("membership:"),
          "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member; keeps = counted under the group's consensus_protocol", "CC 3.1.3.2"),
         # CC 3.4.6: a SUBSCRIBER's signed acknowledgement, membership-gated — the row says

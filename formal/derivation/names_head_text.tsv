@@ -35,3 +35,4 @@ accord:invoke:notify:{notify_id}	*	none	as the halt: read on receipt, under the 
 accord:invoke:drill:{drill_id}	*	none	as the halt: read on receipt, under the roster the node holds
 provenance:build_manifest:{target}	*	standing	the bundle in force when the row is signed: the one the pipeline's grant names or a later bundle of the same lineage
 holon:claim	*	none	a claim names no head; in refs it names only the rows of its own group that it follows
+window:{state}	*	none	a held row and a landing name no head; a landing is read over its own causal past

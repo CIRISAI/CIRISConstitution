@@ -256,3 +256,11 @@ trust:{job}:{version}	cosign_rule	quorum	"family charter witness quorum (check_c
 trust:{job}:{version}	freshness	standing_at_signing	{"W": "attach freshness window W (check_attach_freshness, CC 2.6.7); charter/cycle read received_at", "judged_at": "signed_instant_with_W"}
 wa_adjudication:{state}	cosign_rule	quorum	"WA quorum re-derived (no vocabulary value; CC moderator_quorum? no)"
 watchlist:{id}	placement	watchlist_per_group	"targeted_room"
+window:{state}	placement	unbuilt	null
+window:{state}	subject_rule	unbuilt	null
+window:{state}	freshness	unbuilt	null
+window:{state}	lifecycle	unbuilt	null
+window:{state}	replication	unbuilt	null
+window:{state}	projection	unbuilt	null
+window:{state}	erasure_route	unbuilt	null
+window:{state}	governance	unbuilt	null

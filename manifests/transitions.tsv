@@ -459,5 +459,6 @@ watchlist:{id}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	s
 watchlist:{id}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 weighted_aggregate:{contribution_id}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 weighted_aggregate:{contribution_id}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
+window:{state}	attest	none	admitted	member	selfAct	false	none		true	derived	cc-table	cc-table
 witness_diversity:{contribution_id}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 witness_diversity:{contribution_id}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived

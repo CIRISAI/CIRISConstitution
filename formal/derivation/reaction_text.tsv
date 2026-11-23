@@ -95,7 +95,7 @@ accord:invoke:constitutional:{halt_id}	land fuse local late closed	CC 4.2.1.3	A 
 accord:lifecycle:{kind}	[confirmed] land fuse local late closed	CC 4.2.1.1	A halt signed by one holder **lapses `halt_fuse_secs` after each node received it**
 accord:lifecycle:{kind}	[confirmed] land fuse local late closed	CC 4.2.1.3	A confirmation after the fuse has lapsed confirms nothing, and a fresh halt is fired instead.
 consent:deletion_sla:{days}	land sla by identity:substrate_persist as hard_case:deletion_window_breach	CC 3.3.1	emitted once, by the substrate at whose door the breached row first entered
-identity:occurrence	land window local	CC 3.3.6.4	So a landing is a node's own verdict in the way a root's standing is.
+identity:occurrence	land window by self as window:{state} late counts	CC 3.3.6.4	The same key signs a `window:landed` or a `window:refused` row, and that row is the landing.
 group:roster	@community land W by member as group:roster late counts	CC 3.3.4	Voices that arrive again start a fresh window on that node, and an event that arrives carrying its full count is admitted.
 group:roster	@community land W by member as group:roster late counts	CC 3.3.4	A voice is a statement of the event itself, under the event's own family and row id
 content_class:{class}	[reported] land window local	CC 4.5.13	Two nodes may therefore close a window at different moments, and nothing lands early at either.
@@ -124,3 +124,5 @@ takedown_notice:{basis}	[CommunityStandards] while withhold in_force	CC 4.5.3	So
 membership:{stage}	[proposal] while expiry pending	CC 3.1.3.2	The group decides on the **growth record**: a membership **widening**, the only door that adds anyone.
 identity:occurrence	while window pending	CC 3.3.6.4	An addition or an eviction is a proposal signed by a live roster key; one open proposal per proposer.
 group:roster	@community while W pending	CC 3.3.4	While the change is held, its voices are served to the members who were active at the roster head the event names and are members still, and to no one else.
+identity:occurrence	land window by self as window:{state} late counts	CC 3.3.6.4	Any key seated in the roster at the head the proposal names MAY sign a held row and a landing.
+identity:occurrence	land window by self as window:{state} late counts	CC 3.3.6.4	An answer concurrent with a landing is counted with the landing's past, and so is a row the target of an eviction signed

@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc22",
-    "registry_sha256": "60ba665dd9a888589bf9a7c2a31268c842e176659c4dabe20615a03938c6bd34",
+    "registry_sha256": "b9cc471f5427122410b4a5480a7d7a33d514c85f1d2393cf12f774680587fd06",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -7553,6 +7553,66 @@
       "family": "weighted_aggregate:{contribution_id}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "window:held:v1",
+      "family": "window:{state}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "window:held:V1",
+      "family": "window:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "window:held:v1:v2",
+      "family": "window:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "window:held:v1beta",
+      "family": "window:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Window:held:v1",
+      "family": "window:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "window:held",
+      "family": "window:{state}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "window:HELD:v1",
+      "family": "window:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "window:landed:v1",
+      "family": "window:{state}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "window:refused:v1",
+      "family": "window:{state}",
+      "refusal": null,
+      "why": "a listed value of a closed enumeration resolves to its row"
+    },
+    {
+      "dimension": "window:not_a_listed_value:v1",
+      "family": "window:{state}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "witness_diversity:id1:v1",

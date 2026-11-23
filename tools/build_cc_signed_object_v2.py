@@ -93,6 +93,7 @@ OBJECTS = [
     ("grant_withdrawal", "The holders' withdrawal of a grant: the payload of a counted `withdraws` row"),
     ("receipt", "A receipt: the payload of an `act:ack` row"),
     ("objection", "An objection vote: the payload of an `objection:{state}` row"),
+    ("window_step", "A step of a window: the payload of a `window:{state}` row"),
     ("owner_binding", "An owner-binding: the payload of an `ownership:{relation}:{target_kind}:{version}` row"),
     ("holon_claim", "A holon claim: the payload of a `holon:claim` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
@@ -621,6 +622,8 @@ def family_payloads():
         "objection-vote": ("objection:.state", {
             "author": iref(1), "dimension": "objection:raised:v1", "cohort": "self", "cohort_key_id": "fed-1",
             "grounds": "sample", "refs": {"answers": _ref(23)}, "asserted_at": t}),
+        "window-step": ("window:.state", {
+            "author": iref(1), "dimension": "window:held:v1", "refs": {"target": _ref(27)}, "asserted_at": t}),
         "owner-binding": ("ownership:.relation:.target_kind:.version", {
             "author": iref(0), "dimension": "ownership:responsible_party:node:v1", "delegation_purpose": "owner_binding",
             "scope": sorted(["infra:attest", "infra:serve"], key=cde), "delegation_valid_until": t + 86400000,
@@ -651,6 +654,12 @@ def org_binding(**change):
 def holon_follows(**change):
     """A holon claim that follows an earlier row of its signer for the same claim (CC 3.1.11): it names that row in refs.prev."""
     return dict(dict(family_payloads()["holon-claim"][1], refs={"prev": _ref(25)}), **change)
+
+
+def window_landing(**change):
+    """The landing of a window (CC 3.3.6.4): it names the opener, its signer's held row under prev and the rows it counted."""
+    return dict(dict(family_payloads()["window-step"][1], dimension="window:landed:v1", asserted_at=1763078400000 + 86400000,
+                     refs={"target": _ref(27), "prev": _ref(28), "also": {"cites": sorted([_ref(29), _ref(30)], key=cde)}}), **change)
 
 
 def grant_reply(**change):
@@ -833,6 +842,19 @@ def family_payload_samples():
             ("a vote with no cohort_key_id", D("objection-vote", "cohort_key_id")),
             ("a vote with no refs", D("objection-vote", "refs")),
             ("grounds as a number", W("objection-vote", grounds=7))]),
+        ("window-step", "window:{state} payload of a held row", cde(P["window-step"]), [
+            ("a held row with no author", D("window-step", "author")),
+            ("a held row with no refs", D("window-step", "refs")),
+            ("a held row with no dimension", D("window-step", "dimension")),
+            ("a held row with no instant", D("window-step", "asserted_at")),
+            ("an opener that is a bare digest", W("window-step", refs={"target": [-16, bytes([27]) * 32]}))]),
+        ("window-step", "window:{state} payload of a landing", cde(window_landing()), [
+            ("a held row named as a sequence", cde(window_landing(refs={"target": _ref(27), "prev": [_ref(28)]}))),
+            ("counted rows as one bare reference", cde(window_landing(refs={"target": _ref(27), "prev": _ref(28), "also": {"cites": _ref(29)}}))),
+            ("an instant as text", cde(window_landing(asserted_at="2026-11-14")))]),
+        ("window-step", "window:{state} payload of a landing that counted no row",
+         cde(window_landing(dimension="window:refused:v1", refs={"target": _ref(27), "prev": _ref(28)})), [
+            ("a landing with no author", cde(_without(window_landing(), "author")))]),
     ]
 
 
@@ -947,6 +969,13 @@ def family_payload_rule(root, p, family=None):
             return ACK_TOO_MANY                           # at most 256 acts in one receipt (CC 3.1.3)
         if dim != "act:ack:v1" or not acks or "head" in refs:
             return PAYLOAD_INVALID                        # names the acts it acknowledges, and no head
+    if root == "window-step":
+        if dim not in ("window:held:v1", "window:landed:v1", "window:refused:v1") or "target" not in refs:
+            return PAYLOAD_INVALID                        # the states are closed at held, landed and refused; the opener under target
+        if set(refs) != ({"target"} if dim == "window:held:v1" else {"target", "prev"} | ({"also"} & set(refs))):
+            return PAYLOAD_INVALID                        # a held row names the opener alone; a landing its held row too, and no head
+        if "also" in refs and (set(refs["also"]) != {"cites"} or not refs["also"]["cites"]):
+            return PAYLOAD_INVALID                        # the rows a landing counted stand under cites, and under no other role
     if root == "objection-vote":
         if dim not in ("objection:assent:v1", "objection:raised:v1") or "answers" not in refs:
             return PAYLOAD_INVALID                        # the states are closed at assent and raised (CC 3.1.9.2)
@@ -1149,6 +1178,10 @@ def family_payload_rule_checks():
         bad.append("a holon claim that supersedes the row it names breaks its prose rule")
     if family_payload_rule("objection-vote", dict(P["objection-vote"][1], dimension="objection:assent:v1")) is not None:
         bad.append("an assent breaks its prose rule")
+    if family_payload_rule("window-step", window_landing()) is not None:
+        bad.append("a landing breaks its prose rule")
+    if family_payload_rule("window-step", window_landing(dimension="window:refused:v1", refs={"target": _ref(27), "prev": _ref(28)})) is not None:
+        bad.append("a landing that counted no row breaks its prose rule")
     breaks = [
         ("membership-change", dict(P["membership-change"][1], dimension="membership:proposal:v1"), None),
         ("membership-change", _without(P["membership-change"][1], "joined_at"), None),
@@ -1220,6 +1253,21 @@ def family_payload_rule_checks():
         ("objection-vote", dict(P["objection-vote"][1], dismisses_objection_id="a-1"), None),
         ("objection-vote", dict(P["objection-vote"][1], dimension="objection:proposal:v1"), None),
         ("objection-vote", dict(P["objection-vote"][1], dimension="objection:dismissed:v1"), None),
+        ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "prev": _ref(28)}), None),
+        ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "also": {"cites": [_ref(29)]}}), None),
+        ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "head": _ref(9)}), None),
+        ("window-step", dict(P["window-step"][1], refs={"also": {"ack": [_ref(27)]}}), None),
+        ("window-step", dict(P["window-step"][1], dimension="window:open:v1"), None),
+        ("window-step", dict(P["window-step"][1], dimension="window:lapsed:v1"), None),
+        ("window-step", window_landing(dimension="window:confirmed:v1"), None),
+        ("window-step", window_landing(refs={"target": _ref(27)}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "also": {"cites": [_ref(29)]}}), None),
+        ("window-step", window_landing(refs={"prev": _ref(28)}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "head": _ref(9)}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "answers": _ref(29)}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "also": {"ack": [_ref(28)]}}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "also": {"cites": [_ref(29)], "ack": [_ref(28)]}}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "further_prev": [_ref(31)]}), None),
         ("grant-withdrawal", dict(P["grant-withdrawal"][1], refs={"target": _ref(15)}), None),
         ("grant-withdrawal", dict(P["grant-withdrawal"][1], refs={"head": _ref(9)}), None),
     ]
@@ -1291,7 +1339,7 @@ def family_cddl_checks(text, ftext):
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
 FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "delivery_ack",
                   "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts",
-                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding", "holon_claim")
+                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding", "holon_claim", "window_step")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
@@ -1316,6 +1364,7 @@ FAMILY_RULE_HEAD = {
     "owner-binding": "ownership:{relation}:{target_kind}:{version} (CC 3.2): the owner-binding, a delegates_to row authored by the owner; sub is the key owned, whose own statement over the same payload is the first-binding cosign. Its placement is cohort_scope with the group member that scope asks; a key held for an organisation names its affiliation in on_behalf_of.",
     "holon-claim": "holon:claim (CC 3.1.11): authored by the signer under its own name; one claim, type scores; sub is the holon's id as text. The declaration is an unsigned blob cited by its digest, which is among evidence_refs. In refs it names only rows of its own group: those it follows, under prev and further_prev, and on a supersedes the row it replaces, under target; no head.",
     "holon-claim-body": "The body of a holon:claim that states a bound (CC 3.1.11); a claim of exact agreement carries no body.",
+    "window-step": "window:{state}, the states held, landed and refused (CC 3.1.3, CC 3.3.6.4): authored by a key seated in the counted set at the head the opener names; type scores, with no score. It names the opener under refs.target. A held row names nothing else. A landing names its signer's held row under prev and every row it counted under the also role cites, and no head.",
     "objection-vote": "objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",

@@ -1009,6 +1009,15 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `"refs"` | payload | `refs` | always | [3.1.9.2](part_3_the_namespace.md#3.1.9.2) [2.6.1.3](#2.6.1.3) | Exactly one row, under answers: the proposal answered or the act objected to. A vote that carries objects_to_attestation_id or dismisses_objection_id is refused. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
+**A step of a window: the payload of a `window:{state}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) | The key that holds the opener, or that lands the window: a key seated in the counted set at the head the opener names. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.3](part_3_the_namespace.md#3.1.3) | window:held:v1, window:landed:v1 or window:refused:v1; the states are closed at these three. The row's type is scores. |
+| — | `"refs"` | payload | `refs` | always | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) [2.6.1.3](#2.6.1.3) | The opener, under target. A held row names nothing else. A landing names its signer's held row under prev, exactly one row, and every row it counted under the also role cites, absent where it counted none. No head and no other role. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) [2.6.2](#2.6.2) | POSIX milliseconds: the held row's instant, or the landing's. The window's length is read between the two. |
+
 **An owner-binding: the payload of an `ownership:{relation}:{target_kind}:{version}` row**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
@@ -1757,7 +1766,7 @@ A duty seat over a community is one seat with four scopes: `moderate`, `review`,
 
 **settled, and receipts.** A **receipt** names each act it acknowledges and names no head. It has those acts in its past, and no cut of them by its own key. Its family is `act:ack` ([CC 3.1.3](part_3_the_namespace.md#3.1.3)). An act is **settled** once receipts are held from n − t + 1 of the n members at its head, where t can cut it ([CC 2.7.7](#2.7.7) rule 6). **missing** names the voices whose receipts it lacks; a node MAY ask them under the copy rule above, and nobody owes one. An effect that cannot be undone, such as a key wrap or release, a disclosure, an external actuation or a deletion, names a blocking set of receipts of the act it rests on and waits for them. A section that requires such an effect without them says so ([CC 4.5.3](part_4_composition_governance.md#4.5.3)).
 
-**window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at the close. Where the outcome binds others, the concluder signs it as a landing row naming the acknowledgement by which it first held the opener, and its own head. Where it binds only the reader, each node reads the close on its own clock and signs nothing ([CC 4.5.13](part_4_composition_governance.md#4.5.13), the clock of a window).
+**window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at the close. Where the outcome binds others, the concluder signs it as a landing row. The landing names the held row by which its signer first said it holds the opener, and every row it counted. It names no head of its own. A held row is not a receipt and keeps no act in force ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)). Where it binds only the reader, each node reads the close on its own clock and signs nothing ([CC 4.5.13](part_4_composition_governance.md#4.5.13), the clock of a window).
 
 A landing that states an outcome its own past does not give concludes nothing. An answer concurrent with a landing is **recounted**: it is counted with the landing's past, and the landing stands only if the table still gives the outcome it stated. A landing that does not stand says nothing against one that does. A landing with a strict majority behind it is final where no key of that majority answers both ways, in two rows neither of which names the other; such a key has no say there ([CC 2.7.7](#2.7.7) rule 6).
 

@@ -257,7 +257,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 10,
     "n_components_normative": 8,
-    "n_families": 185,
+    "n_families": 186,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
@@ -266,7 +266,7 @@
       "holon": 1,
       "lens": 9,
       "node": 51,
-      "persist": 36,
+      "persist": 37,
       "registry": 20,
       "transport-delivery": 7
     },
@@ -328,7 +328,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "60ba665dd9a888589bf9a7c2a31268c842e176659c4dabe20615a03938c6bd34",
+    "registry_sha256": "b9cc471f5427122410b4a5480a7d7a33d514c85f1d2393cf12f774680587fd06",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -343,7 +343,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "92e557d829586067c6c214c788ef2eea16121f531e1043b451eb2ca6b2d46291"
+    "source_sha256": "1b5fbd4179889f73249e5c426d4504b57e61db2072a78c28e8da424fcd1c0c8d"
   },
   "families": [
     {
@@ -4811,6 +4811,35 @@
         {
           "class": "value",
           "segment": "{contribution_id}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "The two rows by which a window that binds others is closed (registered under CC 3.1.7 R2(a); CC 2.7, the window).",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "window:{state}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.3.6.4",
+        "rule": "a key seated in the counted set at the head the opener names; for the self roster, a key of the roster; a landing by any other key concludes nothing"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "window"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{state}",
+          "values": [
+            "held",
+            "landed",
+            "refused"
+          ]
         }
       ]
     },
