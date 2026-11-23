@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "bb1a2034501ffe10aed3ed2cf628ffb9370789d50ad776a2ecfe24cbf98b8d7b",
+  "registry_sha256": "eeddbd0d74754095d7f8123ce49bd464d11e48355c5c1746bd60e07355693ffb",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -56100,6 +56100,10 @@
     "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4; stages widening, removal; the others keep the members the earlier cell gave",
     "cites": [
      {
+      "cc_ref": "CC 3.1.3.2",
+      "reading": "agree"
+     },
+     {
       "cc_ref": "CC 2.1",
       "reading": "agree"
      },
@@ -56109,10 +56113,6 @@
      },
      {
       "cc_ref": "CC 8.11.9",
-      "reading": "agree"
-     },
-     {
-      "cc_ref": "CC 3.1.3.2",
       "reading": "agree"
      }
     ]

@@ -472,7 +472,7 @@ licensure:{authority_id}	signer_rule	agree	CC 4.4.3.19	`license` | a `licensure:
 licensure:{authority_id}	subject_rule	fills	CC 4.5.2.1	| `licensure:{authority_id}:{practitioner_key}` (when practitioner is named)
 locality:decision:{scale}	fold	agree	CC 4.4.3.2	When `cell_pool < min_pool(S)`, the consumer MUST take one of these explicit paths — there is no implicit fallback:
 manifold_conformity:{cohort}	projection	agree	CC 3.1.8	The lens observes; it does not adjudicate.
-membership:{stage}	body	agree	CC 2.1	With `references_attestation_id` it binds an answer to exactly one proposal ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)).
+membership:{stage}	body	agree	CC 3.1.3.2	naming it in `refs.answers`, which is the answer's whole binding to it
 membership:{stage}	body	agree	CC 2.1	`membership:proposal`, REQUIRED
 membership:{stage}	body	agree	CC 8.11.4	n/a (REQUIRED on a membership answer)
 membership:{stage}	body	agree	CC 8.11.4	n/a (REQUIRED on a membership proposal)
