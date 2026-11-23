@@ -8,7 +8,7 @@
 
 ## 2.1 `envelope` — The envelope
 
-The envelope is where a claim becomes accountable. Every `scores` Attestation carries it. Each member binds the claim to evidence, names who may take it back, or records the conditions it was made under. This entry says what each member in its tables means, once, and the rest of the document refers back to it. A member defined elsewhere has its home in the CC column of [CC 2.6.1.4](#2.6.1.4). A member's type, its place relative to the signed bytes and its presence rule are the table of [CC 2.6.1.4](#2.6.1.4).
+The envelope is where a claim becomes accountable. Every `scores` Attestation carries it. Each member binds the claim to evidence, names who may take it back, or records the conditions it was made under. This entry says what each member in its tables means, once, and the rest of the document refers back to it. A member defined elsewhere has its home in the CC column of [CC 2.6.1.4](#2.6.1.4). A member's place relative to the signed bytes is the table of [CC 2.6.1.4](#2.6.1.4), which also gives a type and a presence rule to each member it lists by name. Every other member of a claim is a payload member under its own name, with the presence rule and the values this entry states.
 
 The members fall into three groups: those every row carries, those any row may carry, and those one family requires. An optional member the producer leaves out is read as its default, and no party writes that default into the signed bytes ([CC 2.6.1.2](#2.6.1.2)).
 
@@ -80,7 +80,7 @@ The members fall into three groups: those every row carries, those any row may c
 | `amendment_digest` | `identity_amendment:v1`, REQUIRED; `deferral:response:approved:v1`, where it authorises an amendment | SHA-256 of the identity amendment as applied ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). |
 | `authorized_by` | `identity_amendment:v1`, REQUIRED | The `attestation_id` of the `deferral:response:approved:v1` row that authorised the amendment. |
 
-**Three axes that do not depend on each other.** `cohort_scope`, with `family_id` or `community_id`, is the visibility axis. `subject_key_ids` is the revocability axis. `delivery_mode` is the delivery axis. Each is orthogonal to the other two ([CC 2.3.3](#2.3.3)). `cohort_scope` is the one member a placement-touching re-sign may narrow; it is never re-authored ([CC 8.11.9](part_8_appendices.md#8.11.9)).
+**Three axes that do not depend on each other.** `cohort_scope`, with `family_id` or `community_id`, is the visibility axis. `subject_key_ids` is the revocability axis. `delivery_mode` is the delivery axis. Each is orthogonal to the other two ([CC 2.3.3](#2.3.3)). `cohort_scope` is the one member a placement-touching re-sign may narrow; it is never re-authored. The earlier form states the same of its mirror member at [CC 8.11.9](part_8_appendices.md#8.11.9).
 
 **The group id is read inside the group.** Community content is encrypted at rest under the per-community DEK. Its holding claims reach the community's members only, and the same holds at every bounded scope ([CC 5.2](part_5_transport_substrate.md#5.2)). So `family_id` is consulted in-substrate and never on the wire to non-members.
 
@@ -476,6 +476,7 @@ attesting_key_id: <attester's key_id>
 attested_key_id: <subject's key_id>
 attestation_envelope: {
   "dimension": "<canonical-namespace-prefix>:<scoped-leaf>",
+  "cohort_scope": "<self | family | community | affiliations | species | biosphere | federation>", // REQUIRED, no wire default
   "score": <integer ∈ [-10^6, 10^6], CC 2.6.1.5>,
   "confidence": <integer ∈ [0, 10^6], CC 2.6.1.5>,
   "context": "<free-form scoping detail>",
@@ -1396,7 +1397,7 @@ The verifier publishes fourteen files of them ([edition-2-vectors]). Its vectors
 | Open encoding | Section | Owner |
 |---|---|---|
 | The payload rule of `ceg-boot-manifest/2`. Its member `build_manifest_row`, a `row-ref`, is the server's and is fixed | [CC 2.6.1.11](#2.6.1.11), [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | server |
-| The CDDL and the known answers of a build manifest's blob | [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | verify |
+| The member of a stream key binding that states the head interval | [CC 5.3.3.8](part_5_transport_substrate.md#5.3.3.8) | edge |
 | The family of the agent text manifest statement | [CC 2.6.1.11](#2.6.1.11), [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | agent |
 | The member that carries a seat commitment's `room` | [CC 2.6.1.11](#2.6.1.11) | edge |
 | The derivation label of a room binding's seed | [CC 2.6.1.11](#2.6.1.11) | store |
@@ -1598,7 +1599,7 @@ The other refusals are `fedcode_prefix`, `fedcode_base32` (a non-canonical encod
 
 Federation `key_id`s are long opaque identifiers, unfit for a human to type or read aloud. **FedCode** is the **one** human-shareable shorthand: a compact, QR-able, checksummed render of a federation entity's identity for **bootstrap UX**. It is pinned here so **every implementation renders and parses the same code for the same key**. That is a cross-impl determinism requirement of the same class as [CC 2.6.3](#2.6.3) hex / [CC 2.6.1.2](#2.6.1.2) deterministic encoding. FedCode is a deterministic render of an existing `key_id`, **not** a new envelope field. It is additive on the frozen 1+4 surface. The `kind` byte is a payload discriminator of the same discipline as `subject_kind` riding the single `scores` shape ([CC 3.3.2](part_3_the_namespace.md#3.3.2)). Resolution is **DNS-free**. The reference implementation is the verifier; every other component decodes through it.
 
-**Tied to the user, not the node (the model).** The v1 **NodeCode** (`CIRIS-V1-`) renders a *node's* key and is retained as `kind: node`. The code is tied to the **entity** — five kinds, of which three are [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1) `identity_type` roles and two are rostered `subject_kind`s:
+**Tied to the user, not the node (the model).** In the earlier form the v1 **NodeCode** (`CIRIS-V1-`) renders a *node's* key and is retained as `kind: node`. The code is tied to the **entity** — five kinds, of which three are [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1) `identity_type` roles and two are rostered `subject_kind`s:
 
 ```
 kind(1): 1=user  2=agent  3=node  4=family  5=community
@@ -1606,7 +1607,7 @@ kind(1): 1=user  2=agent  3=node  4=family  5=community
 
 A `user` code is the owner's identity; the owner's **nodes and transport are optional**. A code that carries them resolves with no directory — pairing, a QR across a table, an air-gapped hand-off. A code that carries none resolves through the **federation directory**. The consumer walks `nodes_owned_by(U)` — the exact inverse of `owner_of` ([CC 3.2](part_3_the_namespace.md#3.2); `n ∈ nodes_owned_by(U)` iff `owner_of(n) == U`, held by construction) — to find the nodes to transport to, **as visible to the walker**. A peer outside `U`'s `self` cohort holds only the owner-bindings of `U` whose audience names it ([CC 5.2](part_5_transport_substrate.md#5.2) audience rule). Those are the federation-scoped ones, those re-signed at a group it shares with `U`, and one addressed to it as a contact ([CC 3.2](part_3_the_namespace.md#3.2)). So a stranger's directory walk yields exactly the announced roster of [CC 5.4.6](part_5_transport_substrate.md#5.4.6), while `U`'s own nodes see every binding. A node whose owner resolves ambiguous is **skipped, not fatal**: one poisoned node does not make its owner unroutable, while a direct query about that node still fails closed.
 
-**Wire format (normative).** Binary payload, then **CRC-16-CCITT** (polynomial `0x1021`, init `0xFFFF`, no final xor) appended as 2 bytes big-endian, then **RFC 4648 base32** (alphabet `A–Z2–7`, padding stripped on encode, re-padded on decode). The result is prefixed by the version token and grouped into 4-character dash-separated chunks for display; the QR form is ungrouped. Decoders normalize (drop whitespace, upper-case, strip dashes) and accept the undashed prefix. All length-prefixed fields are 1-byte length, ≤ 255 UTF-8 bytes; an overflow is malformed.
+**Wire format of the earlier form, v1 to v3 (normative for a reader of the earlier mesh).** A decoder of this form refuses these codes under rule 5 above. Binary payload, then **CRC-16-CCITT** (polynomial `0x1021`, init `0xFFFF`, no final xor) appended as 2 bytes big-endian, then **RFC 4648 base32** (alphabet `A–Z2–7`, padding stripped on encode, re-padded on decode). The result is prefixed by the version token and grouped into 4-character dash-separated chunks for display; the QR form is ungrouped. Decoders normalize (drop whitespace, upper-case, strip dashes) and accept the undashed prefix. All length-prefixed fields are 1-byte length, ≤ 255 UTF-8 bytes; an overflow is malformed.
 
 ```
 v2 payload  (prefix CIRIS-V2-)
@@ -1620,7 +1621,7 @@ v3 payload  (prefix CIRIS-V3-)  — all v2 fields byte-identical, then:
 
 `LP` = 1-byte length prefix + UTF-8; `hint` = `0x00` when absent, else `LP`. `group_key_id` is the family/community `*_key_id`, absent otherwise. `sha256(key_id)` binds the display `key_id` into the CRC-protected payload — a decoder MUST verify it against `key_id`. The v1 layout is retained unchanged: `version=0x01 | key_id_hash(32) | pubkey(32) | LP(key_id_str) | LP(transport_hint) | LP(alias_hint) | crc16` under `CIRIS-V1-`.
 
-**Constraints (each MUST be enforced at encoder AND decoder — a code minted by another implementation is exactly the case an encoder cannot police).**
+**Constraints of the earlier form (each MUST be enforced at encoder AND decoder — a code minted by another implementation is exactly the case an encoder cannot police).**
 
 1. **An embedded node key is the node's TRANSPORT Ed25519 — never the owner's federation key, never the node's federation key.**
 
@@ -1642,7 +1643,7 @@ v3 payload  (prefix CIRIS-V3-)  — all v2 fields byte-identical, then:
 
    v1 decodes as `kind: node`; v2 decodes unchanged; a v3 decoder accepts all three prefixes; a v2-only decoder MUST reject `CIRIS-V3-` outright rather than mis-parse it — the prefix differs before any payload byte is read.
 
-**The PQC commitment (normative).** A code names an Ed25519 key and nothing else, but the substrate takes `federation_keys` writes only at `algorithm: hybrid` (Ed25519 + ML-DSA-65; [CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)). So without more, a code-admitted key has no PQC half to register and pairing has no conformant path. The ML-DSA-65 public key is 1952 bytes, which would end the code's life as something a person can read aloud. The code therefore carries the **32-byte commitment** `sha256(raw ML-DSA-65 public key)`. Rules:
+**The PQC commitment of the earlier form (normative).** A code of the earlier form names an Ed25519 key and nothing else, but the substrate takes `federation_keys` writes only at `algorithm: hybrid` (Ed25519 + ML-DSA-65; [CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)). So without more, a code-admitted key has no PQC half to register and pairing has no conformant path. The ML-DSA-65 public key is 1952 bytes, which would end the code's life as something a person can read aloud. The code therefore carries the **32-byte commitment** `sha256(raw ML-DSA-65 public key)`. Rules:
 
 - **(a)** The host admits the classical half plus the commitment, fetches the ML-DSA body through the existing Key Pull, and verifies it against the commitment **before** writing a hybrid record. Nothing is registered until both halves are present and bound, so the hybrid-only rule is preserved, not weakened.
 - **(b)** The commitment applies to **any** kind of code — a plain `user` code with no nodes emits v3 with `node_count = 0`.

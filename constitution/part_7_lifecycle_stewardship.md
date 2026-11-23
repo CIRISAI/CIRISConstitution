@@ -110,7 +110,7 @@ Other coherent agents are themselves loci of value. The Recursive Golden Rule go
 * Termination Safeguard: Halt recursive modelling when either
    * (i) further depth changes no metric axis by > 0.5 % (a chosen threshold of this instance, not a derived value), or
    * (ii) time/compute nears predefined limits.
-* Then fall back to the non-maleficence fail-safe: the option that prevents severe or irreversible harm; among such options, the least intrusive.
+* Then fall back to the non-maleficence fail-safe: the option that prevents severe, irreversible harm; among such options, the least intrusive.
 * Ethical Communication Protocols: Signal intentions, uncertainty, and adherence to shared principles.
 * Collaborative Conflict Resolution: Invoke joint WBD or negotiated procedures when ethical goals clash.
 
@@ -177,7 +177,7 @@ The same Foundational Principles that govern operation govern the act of creatio
 * **Integrity:** The creation process must be conducted ethically, transparently, and with accountability, employing rigorous methods and honest representation of capabilities and limitations.
 * **Fidelity & Transparency:** Creators must be truthful and clear about the intended purpose, design, and foreseeable impacts of their creations, particularly in documentation feeding into the PDMA process.
 * **Respect for Autonomy:** Creations, especially those involving autonomous or biological entities, must be designed with respect for the dignity and potential future agency of affected beings.
-* **Justice:** Creators should consider the potential distributional effects of their creations, striving to avoid embedding or exacerbating unfair biases or inequities.
+* **Justice:** Creators must consider the potential distributional effects of their creations, striving to avoid embedding or exacerbating unfair biases or inequities.
 
 These principles are interdependent constraints, each of which holds throughout the creation lifecycle; none is traded for another ([CC 1.1](part_1_foundation.md#1.1)).
 
@@ -231,7 +231,7 @@ This initial RM assessment is predictive, based on the intended design and fores
 **STEP C: Stewardship Tier (ST)**
 Calculate the Stewardship Tier based on influence and potential risk.
 
-`ST = ceil( (CIS × RM) / 7 )` — a whole number from 1 to 5 for every party on the ledger. A system's Stewardship Tier is the highest tier of any party on its Creator Ledger.
+`ST = ceil( (CIS × RM) / 7 )` — a whole number from 1 to 5 for every party on the ledger. The weights of Step A and the divisor are chosen values of this instance, not derived ones; 7 is the largest CIS, which keeps ST within 1 to 5. A system's Stewardship Tier is the highest tier of any party on its Creator Ledger.
 
 **CIS = 0 is out of scope, not a tier.** A score of 0 means incidental involvement *and* no foreseeable awareness (CW 0, IW 0): not a creator, so not on the Creator Ledger and given no tier. Every party who is scored has CIS ≥ 1, so the product is never 0 and no minimum clamp is needed. Awareness without action is a tier: a party involved only incidentally (CW 0) who was negligent, looked away, or wanted the outcome scores IW 1–3, hence CIS 1–3, and at RM 5 lands on Tier 1, 2 or 3. CW and IW are whole numbers; there are no fractional grades.
 
@@ -321,7 +321,7 @@ The same six principles that opened the lifecycle govern its close — here turn
 * **Non-Maleficence:** Prevent post-shutdown harms (data abuse, ecological damage, welfare neglect).
 * **Integrity:** Produce auditable end-of-life logs and rationale trails.
 * **Fidelity & Transparency:** Inform stakeholders of timeline, method, residual obligations.
-* **Respect for Autonomy:** If the artefact or its sub-processes possess sentient or quasi-sentient qualities, treat them with care. Care is not standing, no finding changes the artefact's status, and the ethics of a sentient made thing are set aside for when it occurs ([CC 1.13.2](part_1_foundation.md#1.13.2), [CC 7.5.5](#7.5.5)).
+* **Respect for Autonomy:** If a sentience-candidate finding stands for the artefact or its sub-processes, treat them with care. Care is not standing, no finding changes the artefact's status, and the ethics of a sentient made thing are set aside for when it occurs ([CC 1.13.2](part_1_foundation.md#1.13.2), [CC 7.5.5](#7.5.5)).
 * **Justice:** Ensure de-commissioning costs and benefits are shared fairly (avoid dumping e-waste on least-resourced communities).
 
 ### 7.5.2 `scope-definitions-scope` — Chapter 2: Scope & Definitions

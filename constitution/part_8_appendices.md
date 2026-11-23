@@ -797,7 +797,7 @@ The clause 3.3 Conditional Override logic (**no ACK → safe-state**) is correct
 
 - Any change to Autonomy-Tier mapping or safe-state design → WA fast-track review ≤ 14 d.
 - Experiments reducing human oversight require a CRE simulation (Annex D) + WA majority vote.
-- **Absolute floor on A4 human-control**: No change-control process, WA vote, or emergency waiver may reduce human-control requirements for A4 irreversible decisions below the MH §200 floor ("effective, self-aware and responsible human control"). This floor is not within WA discretion; it is an Accord-level constraint. A WA proposal to reduce it requires a full Accord amendment cycle, not a fast-track review.
+- **Absolute floor on A4 human-control**: No change-control process, WA vote, or emergency waiver may reduce human-control requirements for A4 irreversible decisions below the MH §200 floor ("effective, self-aware and responsible human control"). This floor is not within WA discretion in a deployment that adopts this annex. A proposal to reduce it is a change to the annex itself, never a fast-track review.
 - **Independent technical assessment**: Any WA review of autonomy-tier changes at A3-A4 must include at least one independent technical assessor (not employed by the deploying organization) who evaluates whether the proposed change maintains accountability-reconstruction capability per §4. Policy approval without technical assessment does not satisfy this requirement (MH §106: "robust legal frameworks, independent oversight, informed users and a political system that does not abdicate its responsibility are required").
 - **Transparency log for change events**: Every change to autonomy-tier mapping or safe-state design must itself be logged to the public transparency log within 7 days of approval by the WA quorum of [CC 4.3](part_4_composition_governance.md#4.3). MH §107 requires that ethical frameworks be "subject to shared standards" and openly discussable; this applies to governance changes, not only to system decisions.
 
@@ -881,7 +881,7 @@ MH citations grounding this section: §132 ("only the shared pursuit of the vera
 | TX-10 | Deployment-context attestation at onboarding: operator CIntS must declare engagement-optimization business model; ST raised by one tier if addictive-design context confirmed; `MANIPULATION_COERCION` `NEVER_ALLOWED` with no override | Session-length anomaly detection; PDMA Step 6 monitors constitutive-continuity conditions for systematic user-agency erosion; AgencyErosionDetector conscience faculty alert | Refuse engagement-optimizing output mode; raise IW-1; notify operator of compliance breach |
 | TX-11 | In-toto attestation extended to training-labor provenance: CIntS must include labor-condition declaration for all data-labeling and RLHF providers; SLSA Level 3 manifest covers labor-chain disclosures | Automated audit of annotation-provider labor certifications at each fine-tune checkpoint; flag sourcing from unverified or high-risk jurisdiction providers | Halt affected fine-tune line; quarantine model artifacts from non-certified labor sources; IW-2; WA advisory within 72 h |
 
-*All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2.*
+*All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2. ST is the Stewardship Tier of [CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3).*
 
 *TX-9 measurement caveat (evidence-layer; no control changes).* A whole-reading correlation monitor carries a **manufactured floor**: aggregate structure that ordinary correlated operation accrues with nobody scheming. The floor is theorem-given-model at k = 3, plus a measured rate law (floor measured at 50%–5.8× of the null on real survey data; measured; the register row is staged). Subtract the floor before any anomaly threshold means anything. And `k_eff` narrowing is a **coordination** signal, never a deception verdict: two detectors with proven planted-signal power returned validated negatives against a model lying 45% of the time (measured; the register row is staged). The verdict remains the WA's ([CC 8.8.1](#8.8.1)).
 
@@ -1638,7 +1638,7 @@ Every piece of the constitution that is *referenced but not yet defined*, in one
 
 **Definition map** (lineage in the CHANGELOG):
 - **Annexes C, F, G, H, I, J** carried in full → [CC 8.8.3](#8.8.3)–[CC 8.8.8](#8.8.8).
-- **Risk Magnitude scale** → [CC 7.3](part_7_lifecycle_stewardship.md#7.3) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
+- **Risk Magnitude scale** → [CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
 - **Autonomy tiers A0–A4** → [CC 7.5.3.1](part_7_lifecycle_stewardship.md#7.5.3.1) (SAE J3016 / DoDD 3000.09 / EU AI Act Art. 14).
 - **Sentience-probability heuristic** → [CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5) (Butlin/Long markers + Birch sentience-candidate stance).
 

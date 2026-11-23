@@ -148,6 +148,7 @@ call_fingerprint	not_a_token		payload or envelope member
 canonical_binding	not_a_token		family or row-type name
 canonical_bytes_v3	not_a_token		registry or manifest member, or a file name
 canonical_hash	not_a_token		payload or envelope member
+canonical_rebind	not_a_token		family or row-type name
 cap_factor	not_a_token		constant or parameter name
 capacity_assurance	not_a_token		family or row-type name
 case_rule	not_a_token		registry or manifest member, or a file name

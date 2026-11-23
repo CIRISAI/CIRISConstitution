@@ -8,7 +8,7 @@ p1	27	1.1	foundation	principle	none		is	states		M-1 carries no aggregation rule;
 p1	27	1.1	foundation	principle	none		is	states		Lexical priority: a claim that is a precondition of M-1's goods is prior to other claims and cannot be traded against goods that presuppose it	
 p1	27	1.1	foundation	principle	none		is	states		Irreversibility: a foreclosure no later condition recovers is not commensurable with a recoverable loss	
 p1	29	1.1	foundation	principle	none		is	states	1.13.1	The six principles are constraints not weights: an act violating any one is unacceptable, no gain on the others buys it back, and M-1 is never traded against a principle	
-p1	29	1.1	stewardship	other:list-of-record	none		is	states	1.14.1	The six principles are listed once at 1.14.1; every other order the text names them in is reading order only	
+p1	29	1.1	stewardship	other:list-of-record	none		is	states	1.14.1	The six principles are listed at 1.14.1; every order the text names them in is reading order only	
 p1	31	1.1	foundation	conformance	none		is	states	3.1.5.2	The 3.1.5.2 accord-principle prefix listing is the wire-normative one; an implementer attests against those prefixes; both listings carry agent-layer meaning, not substrate properties	
 p1	35	1.2	stewardship	amendment	none		MUST	states	3.1,1.13.5	Every prefix admitted to the 3.1 namespace must pass the four tests T1 to T4	
 p1	39	1.2	stewardship	amendment	none		MUST	states		T1: an admitted prefix belongs to a published, hash-pinned, version-controlled rule set with rules kept separate from per-attestation verdicts	table
@@ -79,7 +79,7 @@ p1	209	1.13.3	foundation	conformance	none		MUST_NOT	states	8.1.1	"Privacy" means
 p1	213	1.13.3.1	foundation	conformance	none		is	states		The listed non-goals are out of scope at the base CEG/RET layer; treating them as provided is an error	
 p1	215	1.13.3.1	kernel	audience	none	hard_case	is	restates	3.4.2	Group existence and membership churn are observable: family_id and community_id ride the envelope and admission, removal and consensus changes emit hard_case rows into the log	
 p1	217	1.13.3.1	mechanism	transparency_log	none		is	restates	5.3.3.8,5.1	The per-stream STH cadence default is T = 2 s; STH cadence, key-cascade timing and chunk size are not padded or covered	
-p1	218	1.13.3.1	mechanism	transport	none		is	restates	5.4.6,1.13.3.4	Unobservability against a global passive adversary at federation scope is a separate opt-in (Anonymous Tier); below federation scope anonymity to outsiders is the default	
+p1	218	1.13.3.1	mechanism	transport	none		is	restates	5.4.6,1.13.3.4	Unobservability against a global passive adversary at federation scope is no property of the base transport; the opt-in Anonymous Tier works toward it; below federation scope anonymity to outsiders is the default	
 p1	219	1.13.3.1	kernel	key_plane	none		is	restates	4.5.12.1	Key cascade is forward-only: a member removed at epoch e cannot read epoch e+1; no post-compromise self-healing	
 p1	223	1.13.3.2	kernel	audience	replication		is	restates	5.2	Every holding claim stays inside its cohort: a non-member cannot discover or fetch self or family content; no holder is advertised; bytes go only to admitted members	
 p1	223	1.13.3.2	mechanism	key_plane	none		is	restates		Content confidentiality uses a per-epoch DEK (hybrid X25519+ML-KEM-768) and AES-256-GCM	
@@ -732,7 +732,7 @@ p2	874	2.6.7	kernel	freshness	window	*	is	exception		Rows not judged on a chain 
 p2	878	2.6.8	mechanism	wire	none		is	states	2.6.3,2.6.1.2	FedCode is the one human-shareable shorthand for a key_id; every implementation renders and parses the same code for the same key	
 p2	878	2.6.8	mechanism	wire	none		is	states	3.3.2	FedCode is a deterministic render of an existing key_id, not a new envelope field; its kind byte is a payload discriminator; resolution is DNS-free	
 p2	878	2.6.8	mechanism	conformance	none		is	states		CIRISVerify is the FedCode reference implementation; every other component decodes through it	
-p2	882	2.6.8	mechanism	wire	none		is	states	3.4.7.1	FedCode kinds are 1=user 2=agent 3=node 4=family 5=community, mapping 1:1 onto identity_type; NodeCode v1 is kind node	
+p2	882	2.6.8	mechanism	wire	none		is	states	3.4.7.1	FedCode kinds are 1=user 2=agent 3=node 4=family 5=community, mapping 1:1 onto identity_type; in the earlier form NodeCode v1 is kind node	
 p2	886	2.6.8	kernel	announce	none		is	states	3.2	A user code with no nodes resolves through the federation directory by walking nodes_owned_by(U); a code carrying nodes resolves with no directory	
 p2	886	2.6.8	kernel	owner_binding	none		is	restates	3.2	nodes_owned_by is the exact inverse of owner_of, held by construction	
 p2	886	2.6.8	kernel	audience	replication		is	restates	5.2,5.4.6	A peer outside U's self cohort holds only U's federation-scoped owner-bindings, so a directory walk yields exactly the announced roster; U's own nodes see every binding	
@@ -853,7 +853,7 @@ p3	38	3.1.1	family	row_shape	body	accord	is	states		accord:lifecycle kind is clo
 p3	38	3.1.1	family	halt	none	accord	is	restates	4.2.1.1,4.2.1.3	lifecycle:active is resumption from a constitutional halt; lifecycle:confirmed is a strict majority's confirmation of a one-holder halt within its fuse.	table
 p3	40	3.1.1	family	reserved_prefix	signer_rule	accord	is	states	3.4.1	accord:* may be emitted only by identity_type accord_holder.	table
 p3	40	3.1.1	family	reserved_prefix	none	accord	is	states		accord:* is closed: the catalogued rows are its whole leaf set.	table
-p3	40	3.1.1	family	accord	none	accord	is	states		The accord reservation is keyed by a closed roster slot, not a role on the delegation plane, so no root can confer it.	table
+p3	40	3.1.1	family	accord	none	accord	is	states		The accord reservation, with transport:canonical_rebind, is keyed by a closed roster slot, not a role on the delegation plane, so no root can confer it.	table
 p3	40	3.1.1	foundation	accord	none	accord	is	restates	1	The roster occupying the accord slot is an instance parameter under the Part 1 reading rule.	table
 p3	44	3.1.2	stewardship	other:family-registration	none	attestation,provenance,transparency_log	is	states		CIRISVerify stewards the attestation, provenance and transparency families.	
 p3	48	3.1.2	family	signer	signer_rule	attestation	is	states	4.4.3.32	attestation:self_verify is the running Verify binary attesting itself against its function manifest (ladder L1).	table
@@ -1907,7 +1907,7 @@ p3	1667	3.3.11	family	row_shape	body	news,encyclopedia,chat,blog	is	states		news
 p3	1671	3.3.11	family	reserved_prefix	none	topical_relation	is	states	4.5.1	topical_relation:{kind} is open vocabulary; canonical kinds references, corrects, supersedes_article, see_also, disambiguates, translation_of, replies_to, comments_on, cites_source, rsvps, vod_of; new kinds are documentation-only registry entries	table
 p3	1673	3.3.11	family	row_shape	projection	topical_relation	is	states		Threads and comment trees compose from chat_message plus topical_relation:replies_to and comments_on; no new primitive; traversal is consumer-side	
 p3	1676	3.3.12	family	reserved_prefix	none	content_class,cw_class,content_rating,age_assurance	is	states	3.1.9.2,3.1.9,3.1.7,3.1.2	content_class, cw_class, content_rating and the media-type families are NodeCore's; age_assurance:* is Verify's	
-p3	1679	3.3.12	family	reserved_prefix	none	content_rating,content_class,cw_class,age_assurance	is	states	4.5.1.1	The four multimedia families are open vocabulary; additions are documentation-only registry entries	
+p3	1679	3.3.12	family	reserved_prefix	none	content_rating,content_class,cw_class,age_assurance	is	states	4.5.1.1	The first three multimedia families are open vocabulary, with additions as documentation-only registry entries; age_assurance is closed	
 p3	1683	3.3.12	family	content_ingestion	body	content_rating	is	states		content_rating:{scheme}:{rating} scheme is mpaa, bbfc, pegi, esrb, ifco, csm or operator:{id}; polarity carries certifier confidence; not a slashing input	table
 p3	1684	3.3.12	family	content_ingestion	body	content_class	MUST	states	3.4.14	content_class generated and generated_modified are mandatory where they apply and are not multimedia-scoped: they apply to any Contribution carrying content, text included	table
 p3	1684	3.3.12	family	content_ingestion	signer_rule	content_class,cw_class	is	states		content_class is producer-declared production class; cw_class is community-applied content warning	table
@@ -2619,7 +2619,7 @@ p4	710	4.4.3.12	family	content_ingestion	body	affiliations	is	states		processor_
 p4	712	4.4.3.12	family	minor_floor	evidence_screen	affiliations,trust	MUST	states	3.4.13,8.8.7	Records bearing minor subject_key_ids require a live guardian consent chain delegates_to(parent to minor, scope consent_revocation or share) under the guardianship rule; minor-as-data-subject is distinct from minor-as-member	
 p4	712	4.4.3.12	family	minor_floor	body	affiliations	is	states		Where FERPA rights transfer to the student at 18 or on attending a postsecondary institution the institution is modelled as records custodian with the subject retaining rights (external_controller plus data_subject_access_grant), not as parent-to-minor stewardship	
 p4	714	4.4.3.12	family	expiry	lifecycle	affiliations	MAY	states		dissolves_at or sunset auto-winds-down an ephemeral affiliation riding supersedes and withdraws, leaving no zombie cohort or un-purged data; internal_normative_regime may reference bylaws	
-p4	716	4.4.3.12	family	row_shape	body	affiliations	is	states	8.8.3,8.8.7	regulatory_profile and jurisdiction are open lists loading the Annex I sector overlay and Annex C cross-walk and supplying defaults; the SI at least 0.6 Controller rule selects the accountable authority	
+p4	716	4.4.3.12	family	row_shape	body	affiliations	is	states	8.8.3,8.8.7	regulatory_profile and jurisdiction are open lists loading the Annex I sector overlay and Annex C cross-walk and supplying defaults; the Controller rule of Annex I selects the accountable authority	
 p4	745	4.4.3.13	kernel	trust_fold	projection	*	is	states		local_feed reads cohort_scope self only, steward-filtered, self-attested with no peer weighting	table
 p4	746	4.4.3.13	kernel	trust_fold	projection	*	is	states		community_feed reads family, community and affiliations scopes, cohort-weighted; cross-cohort attestations are downweighted unless explicitly invited	table
 p4	747	4.4.3.13	kernel	trust_fold	projection	*	is	states	4.4.1	global_feed reads species, biosphere and federation scopes with full federation expertise weighting, fact-checker weight, and Frickerian discipline applied	table
@@ -4165,7 +4165,7 @@ p7	159	7.3.1	foundation	principle	none		MUST	states		Creators must proactively i
 p7	160	7.3.1	foundation	principle	none		MUST	states		The creation process must be ethical, transparent and accountable with honest representation of capabilities and limits	
 p7	161	7.3.1	foundation	principle	none		MUST	states		Creators must be truthful about intended purpose, design and foreseeable impacts, especially in PDMA documentation	
 p7	162	7.3.1	foundation	principle	none		MUST	states		Creations must be designed with respect for the dignity and potential future agency of affected beings	
-p7	163	7.3.1	foundation	principle	none		SHOULD	states		Creators should consider distributional effects and avoid embedding or exacerbating unfair bias	
+p7	163	7.3.1	foundation	principle	none		SHOULD	states		Creators must consider distributional effects and avoid embedding or exacerbating unfair bias	
 p7	165	7.3.1	foundation	principle	none		is	restates	1.1	The principles are interdependent constraints holding throughout the creation lifecycle; none is traded for another	
 p7	169	7.3.2	foundation	principle	none		is	states		Creation means deliberately bringing into existence a tangible, informational, dynamic, biological or collective artefact expected to fall under this constitution	
 p7	175	7.3.2	foundation	minor_floor	none		is	restates	1.13.2,3.4.13	A human child is a person with unconditional standing, never a made thing; a person is never held and their standing is never reached	

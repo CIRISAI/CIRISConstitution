@@ -521,8 +521,8 @@ admit_community_change(C, proposed: community_record):
   protocol = record.consensus_protocol
   subkind = record.cohort_subkind
 
-  // every check below reads other rows: a failure is held and concludes nothing, never refused (CC 2.7.3);
-  // the door has already checked the row's own bytes and its signer's key plane
+  // every check below reads other rows: a failure is held and concludes nothing, never refused (CC 2.7.3).
+  // The door has already checked the row's own bytes and its signer's key plane
   signatures_ok = evaluate_consensus_protocol(protocol, current, proposed.signatures)
   if not signatures_ok:
     // CC 3.3.4: a shortfall of voices is held as the event's own voices, and nothing is counted
@@ -853,7 +853,7 @@ There is no merge and no split. A body that merges or splits founds the new reco
 
 **Lifecycle.** **`dissolves_at` / `sunset`** gives ephemeral institutions a first-class auto-wind-down (holiday committee → purge + dissolve after the event), riding `supersedes`/`withdraws` so a casual group leaves no zombie cohort or un-purged data. **`internal_normative_regime`** optionally references bylaws or a religious community's order — an internal normative order that is neither external statute nor corporate hierarchy.
 
-**Regulatory anchoring.** `regulatory_profile` and `jurisdiction[]` are **open lists** (not a closed HIPAA/SOX/FISA enum). Values load the relevant **Annex I §3.2 sector overlay** and **Annex C cross-walk** ([CC 8.8.3](part_8_appendices.md#8.8.3) / [CC 8.8.7](part_8_appendices.md#8.8.7)) and supply defaults. They equally admit `self-regulated/cooperative-light` (kibbutz under a Registrar) and `treaty / customary-IL / privileges-and-immunities` (IGO, largely exempt from the national statutes Annex I enumerates). The SI ≥ 0.6 Controller rule ([CC 8.8.7](part_8_appendices.md#8.8.7)) selects the accountable authority.
+**Regulatory anchoring.** `regulatory_profile` and `jurisdiction[]` are **open lists** (not a closed HIPAA/SOX/FISA enum). Values load the relevant **Annex I §3.2 sector overlay** and **Annex C cross-walk** ([CC 8.8.3](part_8_appendices.md#8.8.3) / [CC 8.8.7](part_8_appendices.md#8.8.7)) and supply defaults. They equally admit `self-regulated/cooperative-light` (kibbutz under a Registrar) and `treaty / customary-IL / privileges-and-immunities` (IGO, largely exempt from the national statutes Annex I enumerates). The Controller rule of [CC 8.8.7](part_8_appendices.md#8.8.7), the party that determines the purposes and means of the processing, selects the accountable authority.
 
 **Instantiation — smallest vs largest, same fields:**
 
@@ -1420,7 +1420,7 @@ A reader trusts a signed statement when the key that signed it (`attesting_key_i
 | The base | `attestation(user → user)` with no modifiers, written at first run | The user is their own root: "I trust my own attestations and service". This is the immutable identity floor. A node inherits it by the owner-binding `delegates_to(user → node)` ([CC 3.2](part_3_the_namespace.md#3.2)), an agent by the partnership object ([CC 4.4.3.19](#4.4.3.19)). |
 | An entry | an acceptance edge `delegates_to(reader → authority)` bearing `trust:accepts:v1` ([CC 3.2](part_3_the_namespace.md#3.2) T3) | The reader signs it, and adds and removes it freely. The base is untouched. The reader is a person, signing with any live key of their roster, and every node and agent that person owns reads the entry ([CC 3.2](part_3_the_namespace.md#3.2) T3). |
 | What an entry trusts the authority for | the edge's `trust_classes` | **As a licensor**: every class the authority's charter declares ([CC 2.4.1.3](part_2_the_grammar.md#2.4.1.3)). Or **for a class of licence**, such as medical, legal or financial: the classes listed on the edge, and no other. |
-| How far an entry reaches | the edge's `trust_depth` | `0` honours that authority's own licences. `n` honours the licensors that authority itself trusts for the class, to `n` further hops (licensors of licensors), within the cap of five hops ([CC 4.1.1](#4.1.1)). |
+| How far an entry reaches | the edge's `trust_depth` | `0` honours that authority's own licences. `n` honours the licensors that authority itself trusts for the class, to `n` further hops (licensors of licensors), within the default cap of five hops ([CC 4.1.1](#4.1.1)). |
 
 **The shipped root is one entry.** It is written at first run and is removable like any other. The recommended default is Policy A with one acceptance edge to the lineage of the shipped bundle, named by its `family_key_id` ([CC 3.2](part_3_the_namespace.md#3.2)). Its holders are read from the bundle in force, and the default never pins a serving install's key. `ciris-canonical` is a room and is no part of the pin. This is the shipped default root, never *the* root.
 
@@ -1510,7 +1510,7 @@ Consumer trusts an attestation if `attesting_key_id` has been vouched for by the
 
 #### 4.4.3.39 `policy-weighted` — Policy C — weighted graph
 
-Consumer applies transitive-trust propagation across the full attestation graph, weighted by canonical-bootstrap distance with confidence decay per hop, within the five-hop cap of [CC 4.1.1](#4.1.1). Requires more compute; less common in practice; needed for federated reputation across many partner orgs.
+Consumer applies transitive-trust propagation across the full attestation graph, weighted by canonical-bootstrap distance with confidence decay per hop, within the default five-hop cap of [CC 4.1.1](#4.1.1). Requires more compute; less common in practice; needed for federated reputation across many partner orgs.
 
 ### 4.4.4 `sovereign-registered` — Sovereign-Registered equivalence (wire-symmetric, policy-differentiated)
 
@@ -1952,7 +1952,7 @@ Substrate emits `hard_case:location_proof_resolution_violation` ([CC 3.4.2](part
 
 #### 4.5.9.3 `leaving` — Leaving is forward-only — the audit chain keeps the tombstone
 
-A withdrawal reaches forward only ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)), and departure is forward-secret ([CC 4.5.12.1](#4.5.12.1)). When a subject withdraws their location_proof (or leaves a geographic community):
+A withdrawal reaches forward only ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)), and departure is forward-secret ([CC 4.4.3.22](#4.4.3.22)). When a subject withdraws their location_proof (or leaves a geographic community):
 
 - Forward visibility evicts (consumer policy treats the subject as "no current location proof" for new admission decisions from withdrawal-time forward; [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1))
 - A withdrawn `location_proof` leaves serving like any row of the subject's own ([CC 4.5.3](#4.5.3)); the audit chain keeps the tombstone — that a proof existed and was withdrawn — and never the cell. What withdrawal and expiry govern is the present claim; the record that a claim was made is the tombstone, not the content.
@@ -2165,6 +2165,8 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 **The governance policy table is published as data with its decision function, its base law, its pin and its vectors** (the register's row CLM-governance-policy-table). The decision function is `(policy, base, approvals, objections, elapsed) → lands | pending | cancelled`, which an implementation replays rather than re-reading this paragraph. Every two-path row is also an instance of the two-path model, which the build regenerates and checks, so a row that breaks the machine's invariants fails the build.
 
 Enact is met by strictly more than its fraction of the base; cancel and floor by at least theirs, and never by one voice where the floor of two applies (the decision function above).
+
+The `accord_halt` row reads its two cells the other way round: Enact is the one holder's row that fires the halt at once, and Cancel is the count that confirms it ([CC 4.2.1.1](#4.2.1.1)).
 
 The rows are these, generated into this section from the table:
 
