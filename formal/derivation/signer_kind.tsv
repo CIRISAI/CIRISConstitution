@@ -476,3 +476,7 @@ identity:occurrence	*	-	-	node	node	occurrence_door	CC 3.3.6; CC 3.3.6.4	P3:1815
 @mls_keypackage	sign	-	-	*	any-of(agent,person,room)	use	CC 5.1 People, not infrastructure, join a room (a KeyPackage is signed by its leaf's key)	P5:80	
 @split_key_id	sign	-	-	*	any-of(agent,person)	use	CC 3.4.7.3 Clause F; CC 3.4.7.3 Clause F (the configured key is the actor's; the node key is minted fresh)	P3:2615, P3:2615	
 act:ack	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 2.7.5 receipts	P3:150, P3:150	
+holon:claim	attest	none	admitted	*	any-of(agent,node,person)	machine_claim	CC 3.1.11 (registry); the family's row: any key may sign under its own name	P3:816	
+holon:claim	withdraw	admitted	withdrawn	*	any-of(agent,node,person)	machine_claim	CC 3.1.11 (registry); the family's row: any key may sign under its own name	P3:816	
+holon:claim	recant	admitted	recanted	*	any-of(agent,node,person)	machine_claim	CC 3.1.11 (registry); the family's row: any key may sign under its own name	P3:816	
+holon:claim	supersede	admitted	superseded	*	any-of(agent,node,person)	machine_claim	CC 3.1.11 (registry); the family's row: any key may sign under its own name	P3:816	

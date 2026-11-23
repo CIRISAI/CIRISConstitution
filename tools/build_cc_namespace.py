@@ -7,7 +7,7 @@ Single-source-of-truth codegen. Parses CC Part 3 "The Namespace"
 catalog of every dimension prefix family to manifests/namespace_registry.json — the file
 downstream crates vendor.
 
-Section CC 3.1 (`### 3.1.1` … `### 3.1.10`, minus the 3.1.7 summary) catalogs the prefix
+Section CC 3.1 (`### 3.1.1` … `### 3.1.11`, minus the 3.1.7 summary) catalogs the prefix
 families by owning component; section CC 3.4 (`### 3.4.1` …) defines the reserved-emit
 rules that this generator cross-references onto each family.
 
@@ -41,7 +41,7 @@ EXPECTED_FAMILIES = None
 # it checks the claim the prose actually makes — the MISSION.md-committed set, not the
 # catalogued total, which is legitimately 9.
 EXPECTED_NORMATIVE_COMPONENTS = 8       # CC 3.1: components committed by a sibling MISSION.md
-CATALOGUED_NOT_NORMATIVE = {"cirisbench"}   # CC 3.1.10 — README-cited, the ninth
+CATALOGUED_NOT_NORMATIVE = {"cirisbench", "holon"}   # CC 3.1.10, CC 3.1.11 — catalogued without a MISSION.md: the ninth and the tenth
 
 # ---- owning components -------------------------------------------------------
 # Every top-level `### 3.1.N` heading (N != 7 summary) is one owning component.
@@ -56,6 +56,7 @@ COMPONENT_REPO = {
     "lens": "CIRISLensCore",
     "node": "CIRISNodeCore",
     "cirisbench": "CIRISBench",
+    "holon": "CIRISHolon",
 }
 # CC 3.1.7 R1 — a fold keeps the row and moves the owner. Previous owning repos per
 # component, oldest first; the row carries `owning_repo_history` only when non-empty,

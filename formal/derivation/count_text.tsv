@@ -46,3 +46,4 @@ stream:head	*	none	CC 3.1.3	nobody else writes its head
 contribution:{subject_kind}	*	none	CC 3.1.9.3	The node signs it under its own key, at federation scope.
 act:ack	act=group	cosigned_act@signer_group	CC 3.1.3	One voice signs it, or a body's count does.
 act:ack	*	none	CC 3.1.3	One voice signs it, or a body's count does.
+holon:claim	*	none	CC 3.1.11	One signature carries the row, and no second signer signs it.

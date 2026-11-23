@@ -118,12 +118,12 @@ entity-revocation = {
   * tstr => ceg-value,
 }
 
-; takedown_notice:{basis}: authored, with sub the claimant; or on a steward purge counted over the holders of the bundle in force, with no author and no claimant, sub the lineage's name and the bundle in refs.head.
+; takedown_notice:{basis}: authored, or counted where an affiliation has one deciding seat (CC 4.4.3.12), with sub the claimant; or on a steward purge counted over the holders of the bundle in force, with no author and no claimant, sub the lineage's name and the bundle in refs.head.
 takedown-notice = {
-  ? "author": identity-ref,                 ; A steward purge is counted and carries none. (iff the notice is authored)
+  ? "author": identity-ref,                 ; A steward purge is counted and carries none, and so is the notice of an affiliation with one deciding seat. (iff the notice is authored)
   "dimension": tstr,                        ; takedown_notice:{basis} with its version.
   "legal_basis": legal-basis,               ; The wire string of the closed set; the basis leaf names the same.
-  ? "claimant": identity-ref,               ; The identity issuing the notice. A steward purge is counted and carries none; its sub is the lineage's name. (iff the notice is authored)
+  ? "claimant": identity-ref,               ; The identity issuing the notice. A steward purge is counted and carries none; its sub is the lineage's name. (unless a steward purge)
   "content_sha256": hash-digest,            ; SHA-256 of the content; on a steward purge, the selection digest.
   "content_holders": [* identity-ref],      ; Peers known to hold the bytes: a set.
   "jurisdiction": tstr,                     ; ISO 3166-1 alpha-2 with an optional subdivision.
@@ -353,5 +353,33 @@ owner-binding = {
   ? "on_behalf_of": group-ref,              ; The organisation's affiliation, which answers alongside the owner. One that names no affiliation is refused, owner_binding_not_an_affiliation. (where the owner holds the key for an organisation)
   ? "refs": refs,                           ; The affiliation's roster version, under head, and no other role; the affiliation's voices are further statements counted at that head. (iff the row carries on_behalf_of)
   "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; holon:claim (CC 3.1.11): authored by the signer under its own name; one claim, type scores; sub is the holon's id as text. The declaration is an unsigned blob cited by its digest, which is among evidence_refs. In refs it names only rows of its own group: those it follows, under prev and further_prev, and on a supersedes the row it replaces, under target; no head.
+holon-claim = {
+  "author": identity-ref,                   ; The signer, under its own name. The CWT sub is the holon's id as text.
+  "dimension": tstr,                        ; holon:claim:v1; the row's type is scores.
+  "spec": tstr .size (1..128),              ; The declaration format whose checks were run, as ciris/holon-decl/0.
+  "holon": tstr .size (1..128),             ; The holon's id: lower-case words joined by full stops, at most 128 bytes.
+  "view": tstr .size (1..128),              ; The view's id, in the form of the holon's id.
+  "consumer": tstr .size (1..128),          ; The consumer's id, in the form of the holon's id.
+  "kind": tstr .size (1..64),               ; A token of the declaration's vocabulary, read from the blob; this document closes no set of kinds.
+  "declaration": hash-digest,               ; The SHA-256 digest of the declaration blob's stored bytes; it is among evidence_refs.
+  "evidence_refs": [+ hash-digest],         ; The declaration and every file the claim cites, each by its digest: a sequence.
+  "score": fixed6-score,                    ; +10^6 where the signer says the checks held; -10^6 where the signer ran them and they did not hold; no other value.
+  ? "confidence": fixed6-unit,              ; fixed6 in [0, 10^6]. (where the signer states a confidence)
+  ? "body": holon-claim-body,               ; The bound the claim states; a claim of exact agreement carries no bound. (where the claim states a bound)
+  ? "refs": refs,                           ; The row it follows, under prev, and further heads of the same group under further_prev; on a supersedes, a recants or a withdraws, the row acted on under target. No head and no other role. (where the row follows an earlier row of its signer for the same claim)
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; The body of a holon:claim that states a bound (CC 3.1.11); a claim of exact agreement carries no body.
+holon-claim-body = {
+  "bound": body-decimal,                    ; The bound, a decimal fraction (tag 4); it MAY be negative.
+  ? "realised": body-decimal,               ; The value realised, a decimal fraction (tag 4). (iff basis is realised)
+  "unit": tstr .size (1..64),               ; The bound's unit: a token of the declaration's vocabulary, read from the blob.
+  "basis": "price" / "realised",            ; What the bound is stated on.
   * tstr => ceg-value,
 }

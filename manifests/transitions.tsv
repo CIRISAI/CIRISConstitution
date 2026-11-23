@@ -261,6 +261,10 @@ hardware_custody:{platform}	supersede	admitted	superseded	author	selfAct	true	su
 health:liveness:{version}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 health:liveness:{version}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 health:liveness:{version}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
+holon:claim	attest	none	admitted	registered	selfAct	false	withdraw	selfAct	false	derived	cc-table	gap
+holon:claim	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
+holon:claim	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
+holon:claim	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
 identity:canonical_binding:{canonical_hash}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 identity:canonical_binding:{canonical_hash}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 identity:occurrence	attest	none	admitted	self	two_path	true	withdraw	selfAct	true	derived	cc-table	derived

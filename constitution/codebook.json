@@ -1,6 +1,6 @@
 {
   "_note": "The dual-ID codebook of the CIRIS Constitution (CC): decimal_id <-> key <-> semantic_id, one to one, and legacy references -> decimal_id. Maintained data: a section added to constitution/toc.tsv is added here under the key cc:<decimal>, and tools/check_claims.py fails when the two disagree.",
-  "n_concepts": 467,
+  "n_concepts": 468,
   "decimal_to_key": {
     "2.6": "0",
     "2.6.9": "0.1",
@@ -468,7 +468,8 @@
     "8.11.28": "cc:8.11.28",
     "8.11.29": "cc:8.11.29",
     "8.11.30": "cc:8.11.30",
-    "2.7.11": "cc:2.7.11"
+    "2.7.11": "cc:2.7.11",
+    "3.1.11": "cc:3.1.11"
   },
   "key_to_decimal": {
     "0": "2.6",
@@ -937,7 +938,8 @@
     "cc:8.11.28": "8.11.28",
     "cc:8.11.29": "8.11.29",
     "cc:8.11.30": "8.11.30",
-    "cc:2.7.11": "2.7.11"
+    "cc:2.7.11": "2.7.11",
+    "cc:3.1.11": "3.1.11"
   },
   "semantic_to_key": {
     "foreword": "0",
@@ -1406,7 +1408,8 @@
     "earlier-transit-pair": "cc:8.11.28",
     "earlier-accord-invocation": "cc:8.11.29",
     "earlier-delivery-receipt": "cc:8.11.30",
-    "kernel-admission": "cc:2.7.11"
+    "kernel-admission": "cc:2.7.11",
+    "holon": "cc:3.1.11"
   },
   "key_to_semantic": {
     "0": "foreword",
@@ -1875,7 +1878,8 @@
     "cc:8.11.28": "earlier-transit-pair",
     "cc:8.11.29": "earlier-accord-invocation",
     "cc:8.11.30": "earlier-delivery-receipt",
-    "cc:2.7.11": "kernel-admission"
+    "cc:2.7.11": "kernel-admission",
+    "cc:3.1.11": "holon"
   },
   "legacy_to_decimal": {
     "§0": "2.6",

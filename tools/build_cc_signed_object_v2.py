@@ -94,6 +94,7 @@ OBJECTS = [
     ("receipt", "A receipt: the payload of an `act:ack` row"),
     ("objection", "An objection vote: the payload of an `objection:{state}` row"),
     ("owner_binding", "An owner-binding: the payload of an `ownership:{relation}:{target_kind}:{version}` row"),
+    ("holon_claim", "A holon claim: the payload of a `holon:claim` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
     ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
     ("admission", "An admission of a unit: the members of an `admission:unit` row"),
@@ -624,6 +625,11 @@ def family_payloads():
             "author": iref(0), "dimension": "ownership:responsible_party:node:v1", "delegation_purpose": "owner_binding",
             "scope": sorted(["infra:attest", "infra:serve"], key=cde), "delegation_valid_until": t + 86400000,
             "cohort_scope": "self", "asserted_at": t}),
+        "holon-claim": ("holon:claim", {
+            "author": iref(1), "dimension": "holon:claim:v1", "spec": "ciris/holon-decl/0", "holon": "sample.holon",
+            "view": "sample.view", "consumer": "sample.consumer", "kind": "bound", "declaration": dig,
+            "evidence_refs": [dig, [-16, bytes([8]) * 32]], "score": 1000000, "confidence": 900000,
+            "body": {"bound": Tag(4, [-2, 5]), "unit": "ratio", "basis": "price"}, "asserted_at": t}),
     }
 
 
@@ -640,6 +646,11 @@ def org_binding(**change):
     p = _without(family_payloads()["owner-binding"][1], "scope")
     return dict(dict(p, dimension="ownership:responsible_party:agent:v1", cohort_scope="community", community_id=gref(5),
                      on_behalf_of=gref(6), refs={"head": _ref(24)}), **change)
+
+
+def holon_follows(**change):
+    """A holon claim that follows an earlier row of its signer for the same claim (CC 3.1.11): it names that row in refs.prev."""
+    return dict(dict(family_payloads()["holon-claim"][1], refs={"prev": _ref(25)}), **change)
 
 
 def grant_reply(**change):
@@ -787,6 +798,35 @@ def family_payload_samples():
         ("owner-binding", "ownership:responsible_party:agent payload of a key held for an organisation", cde(org_binding()), [
             ("an organisation named by a key id", cde(org_binding(on_behalf_of="A1"))),
             ("a community named by a key id", cde(org_binding(community_id="A1")))]),
+        ("holon-claim", "holon:claim payload", cde(P["holon-claim"]), [
+            ("a claim with no author", D("holon-claim", "author")),
+            ("a claim with no spec", D("holon-claim", "spec")),
+            ("a claim naming no holon", D("holon-claim", "holon")),
+            ("a claim naming no view", D("holon-claim", "view")),
+            ("a claim naming no consumer", D("holon-claim", "consumer")),
+            ("a claim with no kind", D("holon-claim", "kind")),
+            ("a kind of 65 bytes", W("holon-claim", kind="k" * 65)),
+            ("a holon id of 129 bytes", W("holon-claim", holon="h" * 129)),
+            ("a claim naming no declaration", D("holon-claim", "declaration")),
+            ("a declaration digest in hex", W("holon-claim", declaration="07" * 32)),
+            ("a claim citing no evidence", D("holon-claim", "evidence_refs")),
+            ("an empty evidence_refs", W("holon-claim", evidence_refs=[])),
+            ("a path as evidence", W("holon-claim", evidence_refs=["engine/holon.py"])),
+            ("a claim with no score", D("holon-claim", "score")),
+            ("a score as text", W("holon-claim", score="+1")),
+            ("a bound as an integer", W("holon-claim", body={"bound": 5, "unit": "ratio", "basis": "price"})),
+            ("a bound with no unit", W("holon-claim", body={"bound": Tag(4, [-2, 5]), "basis": "price"})),
+            ("a body with no bound", W("holon-claim", body={"unit": "ratio", "basis": "price"})),
+            ("a basis outside the two", W("holon-claim", body={"bound": Tag(4, [-2, 5]), "unit": "ratio", "basis": "model"})),
+            ("a realised value as an integer", W("holon-claim", body={"bound": Tag(4, [-2, 5]), "realised": 1, "unit": "ratio", "basis": "realised"}))]),
+        ("holon-claim", "holon:claim payload of a claim that did not hold, on a realised basis",
+         cde(dict(P["holon-claim"], score=-1000000, body={"bound": Tag(4, [-2, -5]), "realised": Tag(4, [-1, 3]), "unit": "ratio", "basis": "realised"})), [
+            ("a body that is a bare decimal", W("holon-claim", body=Tag(4, [-2, 5])))]),
+        ("holon-claim", "holon:claim payload of a claim that follows an earlier row of its signer", cde(holon_follows()), [
+            ("a prev that is a bare digest", cde(holon_follows(refs={"prev": [-16, bytes([25]) * 32]}))),
+            ("an empty refs", cde(holon_follows(refs={})))]),
+        ("holon-claim", "holon:claim payload of a claim of exact agreement", D("holon-claim", "body"), [
+            ("an exact claim with a score as a decimal", cde(dict(_without(P["holon-claim"], "body"), score=Tag(4, [-1, 5]))))]),
         ("objection-vote", "objection:{state} payload", cde(P["objection-vote"]), [
             ("a vote with no author", D("objection-vote", "author")),
             ("a vote with no cohort", D("objection-vote", "cohort")),
@@ -798,6 +838,9 @@ def family_payload_samples():
 
 def _strip_none(p):
     return {k: v for k, v in p.items() if v is not None}
+
+
+HOLON_ID = re.compile(r"[a-z0-9_]+(\.[a-z0-9_]+)*")   # a holon's, a view's or a consumer's id (CC 3.1.11)
 
 
 def _segment(dim, i):
@@ -843,8 +886,8 @@ def family_payload_rule(root, p, family=None):
         purge = p.get("legal_basis") == "steward_purge"
         if purge and ("author" in p or "claimant" in p or "head" not in p.get("refs", {})):
             return PAYLOAD_INVALID                        # counted over the holders of the bundle in force (CC 2.4.1.1)
-        if not purge and ("author" not in p or "claimant" not in p):
-            return PAYLOAD_INVALID                        # a legal basis is one identity's notice
+        if not purge and "claimant" not in p:
+            return PAYLOAD_INVALID                        # every other notice names the identity that issues it
     if root == "deferral-response" and "reason_digest" in p:
         return PAYLOAD_INVALID                            # the reason is the request's; a response carries none
     if root == "canonical-rebind" and "head" not in p.get("refs", {}):
@@ -886,6 +929,18 @@ def family_payload_rule(root, p, family=None):
             return PAYLOAD_INVALID                        # the group member the placement asks, and no other (CC 2.1)
         if ("on_behalf_of" in p) != ("refs" in p) or (refs and set(refs) != {"head"}):
             return PAYLOAD_INVALID                        # an organisation's binding names that affiliation's head, and no row else
+    if root == "holon-claim":
+        if dim != "holon:claim:v1" or not set(refs) <= {"prev", "further_prev", "target"} or ("further_prev" in refs and "prev" not in refs):
+            return PAYLOAD_INVALID                        # the one leaf; only rows of its own group: those it follows and the one it acts on; no head (CC 3.1.11)
+        if p.get("declaration") not in p.get("evidence_refs", []):
+            return PAYLOAD_INVALID                        # the declaration's digest is among evidence_refs
+        if p.get("score") not in (1000000, -1000000):
+            return PAYLOAD_INVALID                        # held, or run and not held; an undecided result is no row
+        if any(not HOLON_ID.fullmatch(p.get(k, "")) for k in ("holon", "view", "consumer")):
+            return PAYLOAD_INVALID                        # lower-case words joined by full stops
+        b = p.get("body", {})
+        if ("realised" in b) != (b.get("basis") == "realised"):
+            return PAYLOAD_INVALID                        # a realised value only on a realised basis, and always there
     if root == "act-ack":
         acks = refs.get("also", {}).get("ack", [])
         if len(acks) > ACK_MAX:
@@ -1086,6 +1141,12 @@ def family_payload_rule_checks():
         bad.append("the reply to a grant breaks its prose rule")
     if family_payload_rule("membership-reply", grant_reply(dimension="membership:decline:v1")) is not None:
         bad.append("the decline of a grant breaks its prose rule")
+    if family_payload_rule("holon-claim", holon_follows()) is not None:
+        bad.append("a holon claim that names the row it follows breaks its prose rule")
+    if family_payload_rule("holon-claim", holon_follows(refs={"prev": _ref(25), "further_prev": [_ref(26)]})) is not None:
+        bad.append("a holon claim that names two heads of its group breaks its prose rule")
+    if family_payload_rule("holon-claim", holon_follows(refs={"target": _ref(25)})) is not None:
+        bad.append("a holon claim that supersedes the row it names breaks its prose rule")
     if family_payload_rule("objection-vote", dict(P["objection-vote"][1], dimension="objection:assent:v1")) is not None:
         bad.append("an assent breaks its prose rule")
     breaks = [
@@ -1136,6 +1197,22 @@ def family_payload_rule_checks():
         ("owner-binding", org_binding(refs={"head": _ref(24), "also": {"cites": [_ref(9)]}}), None),
         ("owner-binding", _without(org_binding(), "refs"), None),
         ("owner-binding", _without(org_binding(), "community_id"), None),
+        ("holon-claim", dict(P["holon-claim"][1], dimension="holon:claim:v2"), None),
+        ("holon-claim", dict(P["holon-claim"][1], dimension="holon:declaration:v1"), None),
+        ("holon-claim", dict(P["holon-claim"][1], declaration=[-16, bytes([9]) * 32]), None),
+        ("holon-claim", dict(P["holon-claim"][1], score=0), None),
+        ("holon-claim", dict(P["holon-claim"][1], score=500000), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"head": _ref(9)}), None),
+        ("holon-claim", holon_follows(refs={"prev": _ref(25), "head": _ref(9)}), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"target": _ref(25), "head": _ref(9)}), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"answers": _ref(25)}), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"further_prev": [_ref(26)]}), None),
+        ("holon-claim", dict(P["holon-claim"][1], body=dict(P["holon-claim"][1]["body"], realised=Tag(4, [-1, 3]))), None),
+        ("holon-claim", dict(P["holon-claim"][1], body=dict(P["holon-claim"][1]["body"], basis="realised")), None),
+        ("holon-claim", dict(P["holon-claim"][1], holon="Sample.Holon"), None),
+        ("holon-claim", dict(P["holon-claim"][1], view="sample..view"), None),
+        ("holon-claim", dict(P["holon-claim"][1], consumer="engine/consumer"), None),
         ("act-ack", dict(P["act-ack"][1], refs={"also": {"cites": [_ref(21)]}}), None),
         ("act-ack", dict(P["act-ack"][1], refs=dict(P["act-ack"][1]["refs"], head=_ref(1))), None),
         ("objection-vote", dict(P["objection-vote"][1], refs={"also": {"cites": [_ref(23)]}}), None),
@@ -1214,7 +1291,7 @@ def family_cddl_checks(text, ftext):
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
 FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "delivery_ack",
                   "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts",
-                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding")
+                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding", "holon_claim")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
@@ -1225,7 +1302,7 @@ FAMILY_RULE_HEAD = {
     "eviction-refs": "The refs of an eviction (CC 2.6.1.7, CC 3.3.6.4): the head, and the proof of its signers, both required; a closed map.",
     "eviction-proof": "The proof an eviction carries (CC 2.6.1.7): the rows that resolve its voices; a closed map.",
     "entity-revocation": "revocation:{entity_type}:{reason}: authored by the revoker; sub is the revoked entity.",
-    "takedown-notice": "takedown_notice:{basis}: authored, with sub the claimant; or on a steward purge counted over the holders of the bundle in force, with no author and no claimant, sub the lineage's name and the bundle in refs.head.",
+    "takedown-notice": "takedown_notice:{basis}: authored, or counted where an affiliation has one deciding seat (CC 4.4.3.12), with sub the claimant; or on a steward purge counted over the holders of the bundle in force, with no author and no claimant, sub the lineage's name and the bundle in refs.head.",
     "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
     "key-grant": "key_grant:{axis}: authored by the sealer; sub is the recipient.",
     "delivery-ack": "delivery_ack:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
@@ -1237,6 +1314,8 @@ FAMILY_RULE_HEAD = {
     "grant-withdrawal": "The withdraws row that ends a grant (CC 4.2.1, CC 2.4.1.1): counted over the holders of the bundle in force, with no author.",
     "act-ack": "act:ack (CC 3.1.3, CC 2.7.5): a receipt, type scores; one voice's, or a body's count with no author. It names 1 to 256 acts under refs.also ack, and no head.",
     "owner-binding": "ownership:{relation}:{target_kind}:{version} (CC 3.2): the owner-binding, a delegates_to row authored by the owner; sub is the key owned, whose own statement over the same payload is the first-binding cosign. Its placement is cohort_scope with the group member that scope asks; a key held for an organisation names its affiliation in on_behalf_of.",
+    "holon-claim": "holon:claim (CC 3.1.11): authored by the signer under its own name; one claim, type scores; sub is the holon's id as text. The declaration is an unsigned blob cited by its digest, which is among evidence_refs. In refs it names only rows of its own group: those it follows, under prev and further_prev, and on a supersedes the row it replaces, under target; no head.",
+    "holon-claim-body": "The body of a holon:claim that states a bound (CC 3.1.11); a claim of exact agreement carries no body.",
     "objection-vote": "objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",

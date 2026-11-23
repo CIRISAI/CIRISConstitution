@@ -45,7 +45,7 @@ payload	body-decimal	mantissa	-	payload:body	int	always	2.6.1.2	In CBOR's intege
 refs	refs-members	"head"	-	payload:refs	row-ref	on a counted row, on a roster version, and on a row that exercises or ends a standing	2.6.1.9 2.4.1.1	The head the row is at: the roster head a counted row is counted over, inside what every voice signs; the head an act is exercised at; the head an end acts from.
 refs	refs-members	"further_heads"	-	payload:refs	row-ref-set	where a row names further tips	2.6.1.9 2.6.1.2	Further tips beside head: a set.
 refs	refs-members	"prev"	-	payload:refs	row-ref	where a signer's own series names its predecessor	2.6.1.11 3.1.3.2	The predecessor in a signer's own series; on a content row, a content row its author signed in the same room.
-refs	refs-members	"further_prev"	-	payload:refs	row-ref-set	where a content row names further predecessors beside prev	3.1.3.2 2.6.1.3	Further content rows of the same author in the same room, beside prev: a set.
+refs	refs-members	"further_prev"	-	payload:refs	row-ref-set	where a row names further predecessors beside prev	3.1.3.2 3.1.11 2.6.1.3	Further content rows of the same author in the same room, or further heads of a claim's group, beside prev: a set.
 refs	refs-members	"answers"	-	payload:refs	row-ref	where the row answers a row	2.6.1.3	The proposal voted on or accepted, the window opened, the row replied to.
 refs	refs-members	"target"	-	payload:refs	row-ref	on a supersession, withdrawal, recantation, cut or removal	2.6.1.3	The row superseded, withdrawn, recanted, cut or removed.
 refs	refs-members	"trusted_through"	-	payload:refs	row-ref-set	on a key revocation that names rows held good; on a row that ends a member's seat and on a keeps row	2.6.1.11 3.1.3.2 2.6.1.2	The last rows of the revoked key held good, or the newest content rows of the member held good: a set of at most 64.
@@ -195,10 +195,10 @@ revocation	entity-revocation	"effective_at"	effective_at	payload	ms-time	always	
 revocation	entity-revocation	"revoked_after"	revoked_after	payload	ms-time	where the revocation bounds what it ends	2.4.1.1 2.6.2	POSIX milliseconds.
 revocation	entity-revocation	"refs"	-	payload	refs	where the revoked entity is a row	2.6.1.3	The revoked row under target.
 revocation	entity-revocation	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
-takedown	takedown-notice	"author"	attesting_key_id	payload	identity-ref	iff the notice is authored	3.1.1 3.3.2	A steward purge is counted and carries none.
+takedown	takedown-notice	"author"	attesting_key_id	payload	identity-ref	iff the notice is authored	3.1.1 3.3.2 4.4.3.12	A steward purge is counted and carries none, and so is the notice of an affiliation with one deciding seat.
 takedown	takedown-notice	"dimension"	dimension	payload	tstr	always	3.1.1	takedown_notice:{basis} with its version.
 takedown	takedown-notice	"legal_basis"	legal_basis	payload	legal-basis	always	3.3.2	The wire string of the closed set; the basis leaf names the same.
-takedown	takedown-notice	"claimant"	claimant_key_id	payload	identity-ref	iff the notice is authored	3.3.2	The identity issuing the notice. A steward purge is counted and carries none; its sub is the lineage's name.
+takedown	takedown-notice	"claimant"	claimant_key_id	payload	identity-ref	unless a steward purge	3.3.2	The identity issuing the notice. A steward purge is counted and carries none; its sub is the lineage's name.
 takedown	takedown-notice	"content_sha256"	content_sha256	payload	hash-digest	always	3.3.2	SHA-256 of the content; on a steward purge, the selection digest.
 takedown	takedown-notice	"content_holders"	content_holder_key_ids	payload	[* identity-ref]	always	3.3.2 2.6.1.2	Peers known to hold the bytes: a set.
 takedown	takedown-notice	"jurisdiction"	jurisdiction	payload	tstr	always	3.3.2	ISO 3166-1 alpha-2 with an optional subdivision.
@@ -366,3 +366,21 @@ owner_binding	owner-binding	"family_id"	family_id	payload	group-ref	iff cohort_s
 owner_binding	owner-binding	"on_behalf_of"	on_behalf_of	payload	group-ref	where the owner holds the key for an organisation	3.2 2.4	The organisation's affiliation, which answers alongside the owner. One that names no affiliation is refused, owner_binding_not_an_affiliation.
 owner_binding	owner-binding	"refs"	-	payload	refs	iff the row carries on_behalf_of	3.2 2.6.1.3	The affiliation's roster version, under head, and no other role; the affiliation's voices are further statements counted at that head.
 owner_binding	owner-binding	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+holon_claim	holon-claim	"author"	attesting_key_id	payload	identity-ref	always	3.1.11	The signer, under its own name. The CWT sub is the holon's id as text.
+holon_claim	holon-claim	"dimension"	dimension	payload	tstr	always	3.1.11	holon:claim:v1; the row's type is scores.
+holon_claim	holon-claim	"spec"	-	payload	tstr .size (1..128)	always	3.1.11	The declaration format whose checks were run, as ciris/holon-decl/0.
+holon_claim	holon-claim	"holon"	-	payload	tstr .size (1..128)	always	3.1.11	The holon's id: lower-case words joined by full stops, at most 128 bytes.
+holon_claim	holon-claim	"view"	-	payload	tstr .size (1..128)	always	3.1.11	The view's id, in the form of the holon's id.
+holon_claim	holon-claim	"consumer"	-	payload	tstr .size (1..128)	always	3.1.11	The consumer's id, in the form of the holon's id.
+holon_claim	holon-claim	"kind"	-	payload	tstr .size (1..64)	always	3.1.11	A token of the declaration's vocabulary, read from the blob; this document closes no set of kinds.
+holon_claim	holon-claim	"declaration"	-	payload	hash-digest	always	3.1.11 2.6.1.6	The SHA-256 digest of the declaration blob's stored bytes; it is among evidence_refs.
+holon_claim	holon-claim	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	always	3.1.11 2.6.1.6	The declaration and every file the claim cites, each by its digest: a sequence.
+holon_claim	holon-claim	"score"	score	payload	fixed6-score	always	3.1.11 2.6.1.5	+10^6 where the signer says the checks held; -10^6 where the signer ran them and they did not hold; no other value.
+holon_claim	holon-claim	"confidence"	confidence	payload	fixed6-unit	where the signer states a confidence	2.6.1.5	fixed6 in [0, 10^6].
+holon_claim	holon-claim	"body"	-	payload	holon-claim-body	where the claim states a bound	3.1.11 2.6.1.10	The bound the claim states; a claim of exact agreement carries no bound.
+holon_claim	holon-claim	"refs"	-	payload	refs	where the row follows an earlier row of its signer for the same claim	3.1.11 2.6.1.3	The row it follows, under prev, and further heads of the same group under further_prev; on a supersedes, a recants or a withdraws, the row acted on under target. No head and no other role.
+holon_claim	holon-claim	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+holon_claim	holon-claim-body	"bound"	-	payload:body	body-decimal	always	3.1.11 2.6.1.2	The bound, a decimal fraction (tag 4); it MAY be negative.
+holon_claim	holon-claim-body	"realised"	-	payload:body	body-decimal	iff basis is realised	3.1.11 2.6.1.2	The value realised, a decimal fraction (tag 4).
+holon_claim	holon-claim-body	"unit"	-	payload:body	tstr .size (1..64)	always	3.1.11	The bound's unit: a token of the declaration's vocabulary, read from the blob.
+holon_claim	holon-claim-body	"basis"	-	payload:body	"price" / "realised"	always	3.1.11	What the bound is stated on.
