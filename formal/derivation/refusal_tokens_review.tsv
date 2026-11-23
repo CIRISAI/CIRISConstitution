@@ -723,7 +723,6 @@ window_end	not_a_token		payload or envelope member
 window_secs	not_a_token		constant or parameter name
 wise_authority	not_a_token		enumeration value, not a fault
 withdrawal_reason	not_a_token		payload or envelope member
-witness_cadence	not_a_token		charter or bundle member
 witness_relation	not_a_token		payload or envelope member
 worker_impact_assessment	not_a_token		payload or envelope member
 wrap_algorithm	not_a_token		payload or envelope member
