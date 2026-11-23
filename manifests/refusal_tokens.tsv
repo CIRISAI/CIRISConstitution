@@ -203,7 +203,7 @@ legal_hold_violation_attempt	hard_case	3.1.9.4	p3:730	Canonical kinds: `legal_ho
 licence_class_not_trusted	report	4.4.3.34	p4:1437	A licence that fails the walk is read, not refused: `licence_issuer_not_trusted` or `licence_class_not_trusted`.
 licence_issuer_not_trusted	report	4.4.3.34	p4:1437	A licence that fails the walk is read, not refused: `licence_issuer_not_trusted` or `licence_class_not_trusted`.
 licensure_delegator_not_authority	concludes_nothing	2.4.1.3	p2:452	The one failure on the `license` scope itself is an issuance whose delegator chain does not resolve to `A`: it concludes nothing, reason **`licensure_delegator_not_authority`**, and waits where a link is not held.
-lifts_on_own_end	refusal	2.4.1.1	p2:344	One's own end lifts nothing, and `lifts` on it is refused, `lifts_on_own_end`.
+lifts_on_own_end	refusal	2.4.1.1	p2:344	`lifts` on such an end is refused, `lifts_on_own_end`.
 lineage_head_lags_roster	report	3.2	p3:1236	- **(ii)** A key revocation of a holder or a seat that is older than one cadence, and that no later bundle answers, marks the lineage's head **lagging** (`lineage_head_lags_roster`).
 membership_acceptance_mismatch	concludes_nothing	3.1.3.2	p3:298	- terminal `membership_acceptance_mismatch` (group, hash or role);
 membership_acceptance_unresolved	hold	3.1.3.2	p3:294	- RETRYABLE `membership_acceptance_unresolved` (no acceptance held yet — rows arrive out of order);
