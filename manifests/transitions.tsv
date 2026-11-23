@@ -168,8 +168,6 @@ content_rating:{scheme}:{rating}	supersede	admitted	superseded	author	selfAct	tr
 contribution:{subject_kind}	attest	none	admitted	self	selfAct	false	none		true	derived	cc-table	cc-table
 corpus_health:n_eff_measurable	attest	none	admitted	identity:substrate_persist	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 corpus_health:n_eff_measurable	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
-cosign:{state}	attest	none	admitted	member	selfAct	true	withdraw	selfAct	true	derived	cc-table	cc-table
-cosign:{state}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 credits:{domain}:{language}:{subject}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 credits:{domain}:{language}:{subject}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 custody:{kind}	attest	none	admitted	self	selfAct	true	withdraw	selfAct	true	derived	derived	derived

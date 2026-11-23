@@ -72,7 +72,7 @@ LANDS = {
     "invitation": ("membership:{stage}", "proposal", "expiry"),
     "deferral": ("deferral:request", None, "expiry"),
 }
-HOLD = ("cosign:{state}", "pending", "hold")            # the close of a cosigned row's hold
+HOLD = ("group:roster", None, "hold")                  # the close of a counted row's hold (CC 3.3.4)
 
 
 def land_entry(family, leaf, name):
@@ -447,7 +447,7 @@ def door_specs():
             cells={"enact": "protocol: the founding row's consensus_protocol -> protocols.kinds[KIND].removal_rule over its removal_set, never fewer than two voices (CC 3.3.4, CC 4.5.13)",
                    "declared": "the world's founding row declares %s%s" % (kind, " with m = 2" if "quorum" in kind else ""),
                    "window": "window_secs %d (hold)" % f["window_secs"], "default": "at_window cancelled", "counted_at": "signed (the head the row names)"},
-            unstated=["concluder at the close: a node's own drop (cosign:{state} hold is local)"]))
+            unstated=["concluder at the close: a node's own drop (the hold's close is local, CC 3.3.4)"]))
     D["community_invite-invitee"] = dict(D["community_invite"], target_votes=False,
         contrast="not the table's reading: the invitee's own yes is not a voice (the row's target_voice cell read as no)")
     f = POLICY["moderation_action"]
@@ -590,7 +590,7 @@ def door_specs():
                "declared": "the world's founding row declares majority",
                "counted": "counted.count_set wa, voice person, counted_at named: the full seated roster the finding names",
                "window": "window_secs %d (hold)" % f["window_secs"], "default": "at_window cancelled"},
-        unstated=["concluder at the close: a node's own drop (cosign:{state} hold is local)"]))
+        unstated=["concluder at the close: a node's own drop (the hold's close is local, CC 3.3.4)"]))
     # ---- a deferral (CC 4.3): the request states its own end; no default answers it; at the end it goes up ----------
     D["deferral"] = stated(dict(policy="deferral:request", kind="extra", opener="deferring", counted="resolve_deferral", extra=(), target_votes=False,
         opener_says=None, kinds=("approved", "rejected"),

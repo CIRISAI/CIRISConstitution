@@ -220,6 +220,12 @@
           "kind": "retired",
           "rule": "renamed with no alias: the family is delivery_ack:{stream_id}",
           "stem": "delivery_receipt:"
+        },
+        {
+          "cc_ref": "CC 3.3.4",
+          "kind": "retired",
+          "rule": "retired: no family; a counted row short of its count is held as its own voices",
+          "stem": "cosign:"
         }
       ],
       "version_segment": {
@@ -250,7 +256,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 185,
+    "n_families": 184,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
@@ -258,7 +264,7 @@
       "cirisbench": 1,
       "lens": 9,
       "node": 51,
-      "persist": 37,
+      "persist": 36,
       "registry": 20,
       "transport-delivery": 7
     },
@@ -320,7 +326,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "1d236189ff90059188eea0344fb78a8df757ed45dbe57eac5d524e6685950742",
+    "registry_sha256": "b20ef0bf0e1b456fdc209e7d0945db14c4636d6930ed084434d947c8ca9cc64a",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -335,7 +341,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "6c10cf23dc17c6a855b1e8d0ff027afe7180042c4ac42ef56c81f91c9a5df181"
+    "source_sha256": "d78a6a565c137aa457b7a5c96b6e9dada69c9cd2c5cc3e1b4959b00f1ebfc66a"
   },
   "families": [
     {
@@ -2053,34 +2059,6 @@
         {
           "class": "literal",
           "segment": "n_eff_measurable"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.3",
-      "description": "The collection of cosignatures for an event its protocol has not yet admitted (registered under CC 3.1.7 R2(a); the hold of CC 3.3.4, general to any cosigned row of CC 2.4): {state} \u2208 pending | signature \u2014 closed; wire cosign:pending:v1, co",
-      "owning_component": "persist",
-      "owning_repo": "CIRISPersist",
-      "polarity": "positive-only",
-      "prefix": "cosign:{state}",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.1.3",
-        "rule": "per-leaf: pending = the event's primary signer, an active member of the group at the roster head the event names; signature = the member whose signature it carries; served to the group's active members only; only the proposer withdraws a pending row; a signature row is never withdrawn"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "cosign"
-        },
-        {
-          "class": "vocab",
-          "open": false,
-          "segment": "{state}",
-          "values": [
-            "pending",
-            "signature"
-          ]
         }
       ]
     },

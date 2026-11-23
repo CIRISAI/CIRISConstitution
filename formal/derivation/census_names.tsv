@@ -4,6 +4,9 @@
 #       renamed (the text registers the family under `family`; the census row is read as that family's)
 # Read by tools/build_family_model.py; a row whose census name is not in the census,
 # or whose name the registry still carries, fails the build.
+# cosign:{state} has no row here because the census carries none: the family is retired in the text (CC 3.1.3, CC 3.3.4),
+# and the shipped store still admits a peer-fed statement of it and counts nothing (manifests/divergences.json,
+# persist/cosign:{state}/family name).
 census_prefix	fate	family	reason
 delivery_receipt:{stream_id}	renamed	delivery_ack:{stream_id}	renamed in the text with no alias (CC 5.3.3.11); persist v61 still carries the old name
 lineage_witness:{stage}	retired		retired in the text (CC 3.2 T6: a charter names its Transparency Services); persist v61 still carries it

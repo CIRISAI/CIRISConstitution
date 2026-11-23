@@ -1648,7 +1648,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 122 of 185 families.
+A family with no card states none of these beyond the default row. Cards: 121 of 184 families.
 
 **`accord:*`** — Rules, thing
 
@@ -2059,9 +2059,9 @@ Guard:
 - attest: `no census:composite:{class}@admitted[object=object,leaf:class=leaf:class] else contested(census_composite_duplicate_period)` (CC 3.1.3)
 
 Fold:
+- `absent=refuse` (CC 6.1.2.3)
 - `key=class,period; pick=once(census_composite_duplicate_period)` (CC 3.1.3)
 - `combine=median(bucket); by=reader` (CC 6.1.9)
-- `absent=refuse` (CC 6.1.2.3)
 
 Body: `period`, `source_count`, `n_eff`, `max_source_multiplicity`, `mass_commitment_hex`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`, `noise_floor_descriptor`, `version`, `partial_a`, `partial_b`
 
@@ -2401,29 +2401,6 @@ In time:
 
 Count: `none` (CC 3.1.9.3)
 
-**`cosign:{state}`** — Process, thing
-
-| Transition | Who signs | Policy | Widens | Confirm | Way back |
-|---|---|---|---|---|---|
-| attest | member (pending: member; signature: member) | selfAct | true | true (always) | withdraw |
-| withdraw | author (pending: author; signature: ) | selfAct | false | false | attest |
-
-Count: `none` (CC 3.1.3)
-
-Guard:
-- attest: `when(leaf=pending) (one *@named[id=ref:*] as E else void & owner(E.signer,signer) else exclude)` (CC 3.1.3)
-
-Fold:
-- `key=event_row_id,attesting_key_id; pick=union` (CC 3.1.3)
-- `key=event_row_id,attesting_key_id; pick=union; by=node` (CC 3.3.4)
-
-In time:
-- [pending] clock `hold` = `group.hold_window_secs` (CC 3.1.3, CC 3.3.4)
-- [pending] on close(hold): do drop_held (CC 3.1.3, CC 3.3.4)
-- [pending] clock `age` = `group.hold_window_secs` (CC 3.1.3, CC 3.3.4)
-- [pending] on close(age): read closed (CC 3.1.3, CC 3.3.4)
-- [pending] landing of `hold`: each node for itself, nothing signed (CC 3.3.4)
-
 **`custody:{kind}`** — Facts, account
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2677,12 +2654,15 @@ In time:
 - [ephemeral] on fold(no_member): read withdrawn (CC 5.3.3.2)
 - @community clock `W` = `admission_freshness_window_secs` (CC 3.3.4)
 - @community on close(W) unless fold(policy_met): read lapsed (CC 3.3.4)
+- clock `hold` = `group.hold_window_secs` (CC 2.4, CC 3.3.4)
+- on close(hold): do drop_held (CC 2.4, CC 3.3.4)
 - on inert(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
 - clock `cover` = `charter.receipt_cadence_secs` (CC 3.2)
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
 - on fold(founder_quorum_restored): emit `hard_case:community_liveness_restored` by origin_door (CC 3.2)
-- @community landing of `W`: by member as `group:roster`; a late answer does not count (CC 3.3.4)
+- @community landing of `W`: by member as `group:roster`; a late answer counts (CC 3.3.4)
+- landing of `hold`: each node for itself, nothing signed (CC 3.3.4)
 - @community while `W` is open: binds nobody until it lands (CC 3.3.4)
 
 Body: `group_kind`, `group`, `name`, `version`, `members`, `founded_at`, `nonce`, `consensus_protocol`, `consensus_protocol_entrenched`, `cohort_subkind`, `cohort_subkind_payload`, `membership`, `dissolved_at`, `policy`, `duty_holders`, `transparency_services`, `receipt_quorum`, `refs`, `asserted_at`

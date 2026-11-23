@@ -1162,7 +1162,7 @@ def main():
                          "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"}
     # The forward payload (CC 2.6.1.4): where the signed-object table of this form states a family's payload rule, that rule
     # is the family's body, member for member, and the earlier form's cell gives way to it (a family whose rule covers
-    # some leaves only keeps its cell's members of the others). A cosign:{state} row has no payload of its own (CC 3.1.3).
+    # some leaves only keeps its cell's members of the others).
     fwd = OrderedDict()
     for so in csv.DictReader(open(SIGNED_OBJECT_V2, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE):
         fam = FORWARD_PAYLOAD.get(so["rule"])
@@ -1185,9 +1185,6 @@ def main():
                          "source": "cc-table", "cc_ref": "CC 2.6.1.4",
                          "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4"
                                  + (f"; stages {', '.join(leaves)}; the others keep the members the earlier cell gave" if leaves else "")}
-        elif r["family"] == "cosign:{state}":
-            r["body"] = {"value": "none: each state is a statement over the event's own payload, named by the event's row id",
-                         "source": "cc-table", "cc_ref": "CC 3.1.3"}
     # The sentences that state a closed cell: the cell gains the sections that say it, its value untouched.
     by_fam = {r["family"]: r for r in rows}
     cited = 0

@@ -56,8 +56,8 @@ moderator_election	voice	person	CC 4.5.13	There is **one ballot per person** how
 moderator_election	counted_at	named	CC 4.5.13	The electorate is the roster the election names
 moderator_election	voices	ballot	CC 4.5.13	A ballot names that id, and every ballot under it belongs to one election.
 cosigned_act	count_set	protocol	CC 3.3.4	Counts signatures on the row (via the `consensus_protocol` rule)
-cosigned_act	voices	scrubs	CC 3.3.4	hold the event as a `cosign:pending` row and collect the members' `cosign:signature` rows
-cosigned_act	counted_at	named	CC 3.1.3	the signer is a member at the roster head the event names
+cosigned_act	voices	scrubs	CC 3.3.4	A voice is a statement of the event itself, under the event's own family and row id
+cosigned_act	counted_at	named	CC 2.4	judged on the *receiver's own* fold over the members at the roster head the row names
 accord_majority	count_set	holder	CC 4.2.1.3	It is a counted row of a strict majority of the standing roster
 accord_majority	voice	person	CC 4.2.3	Each holder is a person.
 accord_majority	voices	scrubs	CC 4.2.1.3	It is a counted row of a strict majority of the standing roster

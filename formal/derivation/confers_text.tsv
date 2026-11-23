@@ -7,7 +7,6 @@
 # derived: a family whose row every holder recomputes from other rows, and the rows it must equal. A family with no row here is open.
 column	when	value	cc_ref	quote
 confers	shape=claim|content	nothing	CC 3.4.5.1	Anyone may claim anything; absent trust or consent, a claim reaches no one but its author.
-confers	cosign:{state}	nothing	CC 3.1.3	Nothing folds from them and no seat moves on them
 confers	objection:{state}	nothing	CC 4.5.13	It never admits anyone to a family or community and confers no consent on anyone's behalf
 confers	consent:decay:{stage}	nothing	CC 3.3.1	it confers no right to be believed, and a peer weighs it as testimony
 # self:delegates_to is armed, in the count column's style: an affiliation's counted appointment of an officer (act=group, CC 4.4.3.12)

@@ -166,8 +166,6 @@ content_rating:{scheme}:{rating}	withdraw	admitted	withdrawn	*	any-of(agent,pers
 content_rating:{scheme}:{rating}	supersede	admitted	superseded	*	any-of(agent,person)	actor_content	CC 3.1.9.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:649, P3:2585, P3:2613	
 corpus_health:n_eff_measurable	attest	none	admitted	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
 corpus_health:n_eff_measurable	withdraw	admitted	withdrawn	*	node	node_infra	CC 3.1.3 (registry); CC 3.4.3 reserved emitters	P3:2481	
-cosign:{state}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:148, P3:2585, P3:2613	
-cosign:{state}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E	P3:148, P3:2585, P3:2613	
 credits:{domain}:{language}:{subject}	attest	none	admitted	*	any-of(agent,person)	actor_content	CC 3.1.9.6 (registry); CC 3.4.7.3 Clause C, Clause E	P3:698, P3:2585, P3:2613	
 credits:{domain}:{language}:{subject}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_content	CC 3.1.9.6 (registry); CC 3.4.7.3 Clause C, Clause E	P3:698, P3:2585, P3:2613	
 custody:{kind}	attest	none	admitted	*	node	custody	CC 3.1.3.3 (registry); CC 3.1.3.3 holder self-report; CC 3.1.3.3 (bytes held are the node's)	P3:307, P3:307, P3:307	

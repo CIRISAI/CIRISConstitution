@@ -6,7 +6,7 @@
    "invariants_sha256": "c9990b9e4eb82a7f848d4e320182eab767e79f6c9db59129697c045398f43733",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "57be4cadadc2f1622011736d79ba50027060358256354b9f3fc30084d938e6c6",
+   "claims_sha256": "7e7011d648fb45544e6742a44360abd4fa51104ec3c7cbfea2d01590fcdb30b8",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "b7f1ac384aca17a2c7038acb0507c2d363b2c62557157928d168b9e276ba6e11"
+  "chain_sha256": "23e51441c8e8c762648399c90a57a1c2bea7ceaa6138507a5edf2a807e0d1f4f"
  },
  "chain": [
   {
@@ -17429,96 +17429,11 @@
     {
      "claim_id": "CLM-cosign-collection-held",
      "cc_ref": "3.3.4",
-     "status": "established",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/mod.rs",
-       "symbols": [
-        "roster_event_verdict"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "hold"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "quorum_key_of"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "signature_row"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "admit_row"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "execute_for"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "may_receive"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "check_withdraws_target"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "resolve_withdraws_target"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/wire_index.rs",
-       "symbols": [
-        "attestation_wire_hash"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/group_plane.rs",
-       "symbols": [
-        "apply_group_plane_row"
-       ]
+       "kind": "normative-only"
       }
      ]
     },

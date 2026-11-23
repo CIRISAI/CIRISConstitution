@@ -186,13 +186,6 @@ def more(s):
     one("seat:moderator", "ballot:moderator_acceptance", "frank", ["member", "winner"], "Frank, whom the count yields, accepts and binds the ballots he was seated on")
     one("listing:1", "community:listing", "dave", ["member"], "Dave tries to list the room: refused, a listing is signed by a holder of the room's moderate duty")
     one("listing:1", "community:listing", "frank", ["member", "moderate"], "Frank, who holds the moderate duty, lists the room")
-    # 14. a row that needs more than one signature
-    one("act:1", "cosign:{state}", "erin", [], "A stranger tries to open a cosigned act in the room: refused", stage="pending")
-    one("act:1", "cosign:{state}", "bob", ["member"], "Bob opens a cosigned act: his pending row, served to the room's active members", stage="pending")
-    one("act:1:dave", "cosign:{state}", "dave", ["member"], "Dave adds his signature", stage="signature")
-    one("act:1:dave", "cosign:{state}", "dave", ["author"], "Dave tries to take his signature back: refused, a signature given stays given", verb="withdraw", stage="signature")
-    one("act:2", "cosign:{state}", "bob", ["member"], "Bob opens another", stage="pending")
-    one("act:2", "cosign:{state}", "bob", ["author"], "Bob withdraws the pending act while it is still short", verb="withdraw", stage="pending")
     # 16. a key is revoked by itself
     one("revoke:dave", "key:revocation", "frank", ["moderate", "member"], "Frank tries to revoke Dave's key: refused, the key is not his", stage="self")
     one("revoke:dave", "key:revocation", "dave", ["self"], "Dave retires an old key under that key's own signature: recognised because the revoker is the key")

@@ -11,7 +11,7 @@ family	lineage_witness:{stage}	retire		the ceremony by which a node agreed to wi
 family	delivery_receipt:{stream_id}	rename	delivery_ack:{stream_id}	a subscriber's acknowledgement of a chunk	A name change and nothing else. Receipt is kept for the Receipt of RFC 9943.
 family	transparency_log:inclusion	retire		an inclusion proof as a row	An inclusion proof rides inside a Receipt. No component produces the row or has a door for it. A row of the family is refused at the door by name.
 family	transparency_log:consistency	retire		a consistency proof as a row	A consistency proof is submission material beside a head (RFC 9942 label 396). No component produces the row or has a door for it. A row of the family is refused at the door by name.
-family	cosign:{state}	keep		the collection of members' signatures for a counted row	Not the witnessing sense: a member's voice on a row of its own group.
+family	cosign:{state}	retire		the collection of members' signatures for a counted row	Not the witnessing sense. A counted row short of its count is held as its own voices (CC 3.3.4). A row of the family is refused at the door by name.
 family	testimonial_witness:{kind}	keep		an affected party's singular testimony	Not the witnessing sense.
 family	witness_diversity:{contribution_id}	keep		the diversity of a Contribution's reviewers	Not the witnessing sense.
 member	genesis-charter witnesses	rename	transparency_services	the services a lineage's heads are registered with	Identity references, composite keys only. Changes the bytes of a charter that carries it; the genesis charter carries none.
