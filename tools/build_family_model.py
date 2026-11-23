@@ -17,6 +17,7 @@ from collections import Counter, OrderedDict
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CC = os.path.join(ROOT, "formal/derivation/family_kind_verb.tsv")
 CENSUS = os.path.join(ROOT, "formal/derivation/census_v61.tsv")
+CENSUS_NAMES = os.path.join(ROOT, "formal/derivation/census_names.tsv")
 SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
 # Cells where a reading found the text states another rule than the store enforced (formal/derivation/text_review.tsv, reading differs).
 # For these the table takes the text's rule and keeps the store's reading beside it as `code`.
@@ -34,7 +35,7 @@ FORWARD_PAYLOAD = OrderedDict([("group-roster", "group:roster"), ("membership-ch
                                ("occurrence-revocation", "identity:occurrence_revocation"),
                                ("entity-revocation", "revocation:{entity_type}:{reason}"),
                                ("takedown-notice", "takedown_notice:{basis}"), ("custody-ack", "custody:{kind}"),
-                               ("key-grant", "key_grant:{axis}"), ("delivery-receipt", "delivery_receipt:{stream_id}"),
+                               ("key-grant", "key_grant:{axis}"), ("delivery-ack", "delivery_ack:{stream_id}"),
                                ("identity-occurrence", "identity:occurrence"), ("identity-amendment", "identity_amendment"),
                                ("deferral-response", "deferral:response:{outcome}"), ("deferral-request", "deferral:request"),
                                ("canonical-rebind", "transport:canonical_rebind"), ("trust-accepts", "trust:accepts")])
@@ -795,11 +796,39 @@ def read_by_cells(fams):
     return out, OrderedDict([("every_family", every), ("defaults", dflt), ("value", [a for a in ANSWERS if a in base])]), errs
 
 
+def census_names(census, registered):
+    """formal/derivation/census_names.tsv: the census rows whose name the text does not register, each retired (not
+    read) or renamed (read as the text's family). Returns (rows, errors); the census itself is never edited."""
+    rows, errs = [], []
+    for r in csv.DictReader([l for l in open(CENSUS_NAMES, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t"):
+        old, fate, new, why = r["census_prefix"], r["fate"], r["family"], r["reason"]
+        if old not in census: errs.append(f"census_names.tsv: {old} is not a row of the census")
+        if old in registered: errs.append(f"census_names.tsv: {old} is a registered family; remove the row")
+        if fate not in ("retired", "renamed") or (fate == "renamed") != bool(new): errs.append(f"census_names.tsv: {old}: fate {fate!r} with family {new!r}")
+        if new and new not in registered: errs.append(f"census_names.tsv: {old}: {new} is not a registered family")
+        if new and new in census: errs.append(f"census_names.tsv: {old}: the census already carries {new}")
+        if not why: errs.append(f"census_names.tsv: {old}: no reason")
+        rows.append(OrderedDict([("census_prefix", old), ("fate", fate)] + ([("family", new)] if new else []) + [("reason", why)]))
+    return rows, errs
+
+
+def read_census(registered):
+    """The vendored census keyed by the family each row is read as (census_names.tsv), with the table's rows."""
+    census_lines = [l for l in open(CENSUS, encoding="utf-8").read().split("\n") if not l.startswith("#")]
+    census = OrderedDict((r["prefix"], r) for r in csv.DictReader(census_lines, delimiter="\t"))
+    names, errs = census_names(census, registered)
+    for n in names:
+        row = census.pop(n["census_prefix"], None)
+        if row is not None and n["fate"] == "renamed": census[n["family"]] = row
+    return census, names, errs
+
+
 def main():
     cc = {r["family"]: r for r in csv.DictReader(open(CC, encoding="utf-8"), delimiter="\t")}
-    census_lines = [l for l in open(CENSUS, encoding="utf-8").read().split("\n") if not l.startswith("#")]
-    census = {r["prefix"]: r for r in csv.DictReader(census_lines, delimiter="\t")}
     reg = json.load(open(REG, encoding="utf-8"))
+    census, census_named, nerrs = read_census({f["prefix"] for f in reg.get("families", []) if isinstance(f, dict) and "prefix" in f})
+    if nerrs:
+        [print(e) for e in nerrs]; return 1
     pol = {}
     for f in reg.get("families", []):
         if isinstance(f, dict) and "prefix" in f: pol[f["prefix"]] = f.get("polarity")
@@ -1164,6 +1193,8 @@ def main():
         ("cc_section", "3.1 (the family model manifest, CIRISConstitution#189)"),
         ("version", "0-draft"), ("taxonomy_version", "11+1 v1"),
         ("registry_sha256", reg_sha), ("census", "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341"),
+        ("census_names", OrderedDict([("source", "formal/derivation/census_names.tsv"), ("rows", census_named),
+                                      ("reading", "a census row whose name the text does not register: retired is not read and makes no family row; renamed is read as the text's family")])),
         ("columns", COLUMNS), ("families", len(rows)), ("coverage", cov),
         ("cites", OrderedDict([("source", "formal/derivation/cell_cites.tsv"), ("cells_cited", sum(1 for r in rows for c in r.values() if isinstance(c, dict) and c.get("cites"))),
                                ("citations", cited), ("reading", "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds")])),

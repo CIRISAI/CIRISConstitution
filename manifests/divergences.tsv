@@ -22,7 +22,11 @@ persist/detection:distributive:access:{resource_type}/signer_rule	persist	signer
 persist/detection:hash_chain_integrity/signer_rule	persist	signer	runnable	detection:hash_chain_integrity	signer_rule	CC 3.4.7	admitted	concludes nothing	C564
 persist/detection:intra_agent_consistency/signer_rule	persist	signer	runnable	detection:intra_agent_consistency	signer_rule	CC 3.4.7	admitted	concludes nothing	C564
 persist/detection:{detector}/signer_rule	persist	signer	runnable	detection:{detector}	signer_rule	CC 3.4.7	admitted	concludes nothing	C564
-persist/transparency_log:cosigned:{tree_size}/signer_rule	persist	signer	runnable	transparency_log:cosigned:{tree_size}	signer_rule	CC 3.4.7	admitted	concludes nothing	C564
+persist/transparency_log:cosigned:{tree_size}/family name	persist	door	runnable	transparency_log:cosigned:{tree_size}	family name	CC 3.4.10	refused	admitted	CLM-witness-emitter
+persist/transparency_log:inclusion/family name	persist	door	runnable	transparency_log:inclusion	family name	CC 3.4.10	refused	admitted	CLM-witness-emitter
+persist/transparency_log:consistency/family name	persist	door	runnable	transparency_log:consistency	family name	CC 3.4.10	refused	admitted	CLM-witness-emitter
+persist/lineage_witness:{stage}/family name	persist	door	runnable	lineage_witness:{stage}	family name	CC 3.1.3	refused	admitted	CLM-lineage-witness-consent
+persist/delivery_receipt:{stream_id}/family name	persist	door	runnable	delivery_receipt:{stream_id}	family name	CC 3.1.7	refused	admitted	CLM-reservation-delivery
 persist/age_assurance:{level}:{band}:{version}/signer_rule	persist	signer	runnable	age_assurance:{level}:{band}:{version}	signer_rule	CC 3.4.7	concludes nothing	admitted	C423 C483 C564
 persist/capacity_assurance:{level}:{domain}:{band}:{version}/signer_rule	persist	signer	runnable	capacity_assurance:{level}:{domain}:{band}:{version}	signer_rule	CC 3.4.7	concludes nothing	admitted	C483 C564
 persist/capacity_assurance:reversible_excluded:{domain}:{version}/signer_rule	persist	signer	runnable	capacity_assurance:reversible_excluded:{domain}:{version}	signer_rule	CC 3.4.7	concludes nothing	admitted	C483 C564
@@ -67,9 +71,9 @@ agent/(agent conduct)/CC 7.4 stop	agent	door	stated	(agent conduct)	CC 7.4 stop	
 persist/moderation:{allegation_type}/replication.audience	persist	audience	stated	moderation:{allegation_type}	replication.audience	CC 4.5.5	-	-	C384
 tooling/membership:{stage}/guard[leaf=widening on a stalled roster]	tooling	door	stated	membership:{stage}	guard[leaf=widening on a stalled roster]	CC 3.2	-	-	C492
 persist/consent:partnership_grant, consent:partnership_accept/fold:ratified_pair	persist	fold	stated	consent:partnership_grant, consent:partnership_accept	fold:ratified_pair	CC 2.3.2.4	-	-	seven_rankings item 2
-persist/licensure:{authority_id}/freshness.judged_at	persist	freshness	stated	licensure:{authority_id}	freshness.judged_at	CC 2.6.7	-	-	C372
-persist/transparency_log:cosigned:{tree_size}/guard[accountable stream]	persist	door	stated	transparency_log:cosigned:{tree_size}	guard[accountable stream]	CC 5.3.3.11	-	-	C433
-edge/transparency_log:cosigned:{tree_size}/guard[accountable stream]	edge	door	stated	transparency_log:cosigned:{tree_size}	guard[accountable stream]	CC 5.3.3.11	-	-	C433
+persist/licensure:{authority_id}/freshness.W	persist	freshness	stated	licensure:{authority_id}	freshness.W	CC 2.6.7	-	-	C372
+persist/delivery_ack:{stream_id}/guard[accountable stream]	persist	door	stated	delivery_ack:{stream_id}	guard[accountable stream]	CC 5.3.3.11	-	-	C433
+edge/delivery_ack:{stream_id}/guard[accountable stream]	edge	door	stated	delivery_ack:{stream_id}	guard[accountable stream]	CC 5.3.3.11	-	-	C433
 edge/(link handshake)/transit handshake	edge	door	stated	(link handshake)	transit handshake	CC 5.3.3.10	-	-	CLM-transit-kem-handshake-planned
 persist/(occurrence revocation, cosign:signature)/attestation_id form	persist	door	stated	(occurrence revocation, cosign:signature)	attestation_id form	CC 8.11.17	-	-	C443
 persist/ledger:head:{unit}:{version}/reserved_rule	persist	wording-only	wording-only	ledger:head:{unit}:{version}	reserved_rule	CC 3.1.3	-	-	C363
@@ -81,7 +85,7 @@ persist/licensure:{authority_id}/cosign_rule[short of the count]	persist	cosign	
 persist/licensure:{authority_id}/cosign_rule[roster at the signed instant]	persist	count	runnable	licensure:{authority_id}	cosign_rule[roster at the signed instant]	CC 2.4	concludes nothing	admitted	CLM-licence-authority-quorum
 persist/group:roster/lifecycle.withdraws_by[rule 0]	persist	lifecycle	runnable	group:roster	lifecycle.withdraws_by[rule 0]	CC 2.4.1.1	admitted	withdrawn	CLM-cosigned-rows
 persist/licensure:{authority_id}/authority at issuance	persist	door	runnable	licensure:{authority_id}	authority at issuance	CC 2.4.1.3	concludes nothing	admitted	CLM-licence-judged-at-issuance
-persist/self:delegates_to/acts under a withdrawn delegates_to	persist	door	runnable	self:delegates_to	acts under a withdrawn delegates_to	CC 4.5.5	concludes nothing	admitted	CLM-licence-judged-at-issuance
+persist/self:delegates_to/acts under a withdrawn delegates_to	persist	door	runnable	self:delegates_to	acts under a withdrawn delegates_to	CC 2.4.1.1	concludes nothing	admitted	CLM-licence-judged-at-issuance
 persist/membership:{stage}/invitation expiry	persist	window	runnable	membership:{stage}	invitation expiry	CC 3.1.3.2	admitted	concludes nothing	CLM-membership-consent
 persist/self:delegates_to/admission refusal	persist	door	runnable	self:delegates_to	admission refusal	CC 4.1.1	admitted	refused	CLM-self-edge-not-cycle
 persist/licensure:{authority_id}/admission refusal	persist	door	runnable	licensure:{authority_id}	admission refusal	CC 4.4.3.19	concludes nothing	refused	CLM-issuance-scope

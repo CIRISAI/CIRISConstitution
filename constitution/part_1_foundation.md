@@ -295,7 +295,7 @@ Consumers walk attestation graphs and compose verdicts. The substrate stores; th
 | Priorities | `goal`, `approach`, `justice` (its vulnerability tie-break is a ranking rule), `conscience` (the optimization veto) |
 | Confidence | `conscience`, `witness_diversity`, `expertise`, `attestation`, and the envelope's own `confidence` / `epistemic_mode` |
 | Circumstances | `locality`, `reconsideration`, and the envelope fields (`cohort_scope`, `occurrence_*`, `valid_until`) |
-| Process | `method`, `conscience`, `reconsideration`, `moderation`, `transparency_log` |
+| Process | `method`, `conscience`, `reconsideration`, `moderation` |
 | Structure | `detection`, `witness_diversity`, `multilateral_participation`, `key_boundary`, the accountability chain, `credits` |
 | Model | `detection` (the ripple-counting instrument: the mean source correlation `ρ̄` and the effective source count `k_eff`, [CC 6.1.2.3](part_6_the_coherence_mathematics.md#6.1.2.3)), `provenance` (which model is running), `integrity`, `progress_measure` (`goodhart_resistance`) |
 | Premises | `goal`, `prohibited`, `approach`, `conscience`, and the principle families themselves |

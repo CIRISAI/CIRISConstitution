@@ -59,7 +59,7 @@ credits:{domain}:{language}:{subject}	node	Priorities	ACCOUNT	attest,withdraw	M	
 custody:{kind}	persist	Facts	ACCOUNT	attest,withdraw	H	holder's receipt that bytes are held (kind Facts; purgeable with what it receipts)	no	—
 cw_class:{class}	node	Manner	ACCOUNT	attest,withdraw	M	content warning shapes how it is presented	no	—
 delivery:{class}	transport-delivery	Facts	ACCOUNT	attest,withdraw	M	substrate self-report of delivery outcome	no	—
-delivery_receipt:{stream_id}	transport-delivery	Facts	ACCOUNT	attest	H	subscriber receipt: delivery stays provable (kind Facts; purgeable with what it receipts)	no	—
+delivery_ack:{stream_id}	transport-delivery	Facts	ACCOUNT	attest	H	subscriber receipt: delivery stays provable (kind Facts; purgeable with what it receipts)	no	—
 detection:correlated_action:{axis}	lens	Facts	ACCOUNT	attest,withdraw,recant	M	population-scale detector reading	no	—
 detection:distributive:access:{resource_type}	lens	Facts	ACCOUNT	attest,withdraw,recant	M	resource-concentration reading	no	—
 detection:hash_chain_integrity	lens	Facts	ACCOUNT	attest,withdraw,recant	M	detector on whether the chain still proves the past (kind Facts about the record; maintains the Record relation)	yes	—
@@ -102,7 +102,6 @@ ledger:head:{unit}:{version}	persist	Facts	ACCOUNT	attest,replace	H	the ledger h
 stream:head	persist	Facts	ACCOUNT	attest,replace	M	a stream's signed head: what its log holds at one instant (kind Facts about the record)	yes	—
 ledger:promotion:{version}	persist	Facts	ACCOUNT	attest,replace	M	carries the compliance proof to cohort visibility (kind Facts about the record; maintains the Record relation)	yes	—
 licensure:{authority_id}	registry	Rules	THING	attest,replace,withdraw	H	licence status under an authority	no	pre:Rules
-lineage_witness:{stage}	persist	Rules	THING	attest,withdraw	M	ceremony whose effect is a witness role; per-stage rows	no	—
 locality:decision:{scale}	node	Circumstances	THING	attest	M	the scale at which a decision happens to be made	no	—
 manifold_conformity:{cohort}	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	lens conformity score	no	—
 membership:{stage}	persist	Rules	THING	attest,replace,withdraw	M	ceremony whose effect is membership; removal cosigned	no	pre:Rules
@@ -149,9 +148,6 @@ testimonial_witness:{kind}	node	Facts	ACCOUNT	attest,withdraw,recant	M	singular 
 topical_relation:{kind}	node	Identity	THING	attest,withdraw	L	names how one content relates to another; open vocab	no	—
 trace:{form}:{version}	accord-agent	Facts	ACCOUNT	attest,withdraw	M	reasoning trace kept provable; carries Model/Process as record (kind Facts; purgeable with what it receipts)	no	—
 trace_summary:{kind}	accord-agent	Facts	ACCOUNT	attest,withdraw	M	scrubbed digest of a trace; carries the trace (kind Facts; purgeable with what it receipts)	no	—
-transparency_log:consistency	attestation	Facts	ACCOUNT	attest,withdraw	H	RFC 6962 consistency proof (kind Facts about the record; maintains the Record relation)	yes	—
-transparency_log:cosigned:{tree_size}	attestation	Facts	ACCOUNT	attest	H	witness cosignature on an STH (kind Facts about the record; maintains the Record relation)	yes	—
-transparency_log:inclusion	attestation	Facts	ACCOUNT	attest,withdraw	H	inclusion proof for an audit leaf (kind Facts about the record; maintains the Record relation)	yes	—
 transport:{kind}	transport-delivery	Circumstances	THING	attest,replace,withdraw	M	which transport is in play now	no	—
 trust:{job}:{version}	registry	Rules	THING	authorize,replace,withdraw	H	conferral/acceptance edges on delegates_to rows	no	—
 truth_grounding:{subject}	node	Facts	ACCOUNT	attest,withdraw,recant	H	per-subject ground-truth signal	no	—
@@ -187,5 +183,4 @@ ballot:moderator_acceptance	registry	Structure	THING	attest	M	the winner's accep
 cosign:{state}	persist	Process	THING	attest,withdraw	M	collection of cosignatures for an event short of its protocol; lapses at the hold window or resolves into the event	no	pre:any
 act:ack	persist	Facts	ACCOUNT	attest	M	a receipt of one or more acts: the signer acknowledges them at a head (kind Facts about the record)	no	—
 location_proof:{version}	persist	Circumstances	THING	attest,withdraw	M	the subject's own rough-location declaration, ended by its signer's withdraws	no	—
-trust:blessing	persist	Rules	THING	attest,withdraw	M	a conferring roster's counted conferral of roles on a key record; withdrawn only by a cosigned withdraws	no	pre:Identity
 admission:unit	persist	Rules	THING	attest,withdraw	M	a person's, or a counted group's, admission of one unit digest to execute with named capabilities until an instant; renewal is a later row	no	—

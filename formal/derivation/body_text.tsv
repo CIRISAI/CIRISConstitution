@@ -127,12 +127,12 @@ consent:state:{stance}	subject_key_id	unstated	unstated	no	CC 3.3.5	stance: Cons
 consent:state:{stance}	target_key_id	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	valid_until	unstated	optional	yes	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 deferral:request	domain	unstated	unstated	yes	CC 4.3	A deferral names its domain or none.
-delivery_receipt:{stream_id}	K	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
-delivery_receipt:{stream_id}	chunk_root	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
-delivery_receipt:{stream_id}	epoch	unstated	unstated	no	CC 3.4.6	Subscriber's signed acknowledgement that they received chunk K under the named stream + epoch.
-delivery_receipt:{stream_id}	epoch	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
-delivery_receipt:{stream_id}	stream_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
-delivery_receipt:{stream_id}	subscriber_key_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	K	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	chunk_root	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	epoch	unstated	unstated	no	CC 3.4.6	Subscriber's signed acknowledgement that they received chunk K under the named stream + epoch.
+delivery_ack:{stream_id}	epoch	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	stream_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	subscriber_key_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
 detection:correlated_action:{axis}	epistemic_mode	"derivative"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
 detection:correlated_action:{axis}	witness_relation	"derived"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
 detection:distributive:access:{resource_type}	epistemic_mode	"derivative"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.

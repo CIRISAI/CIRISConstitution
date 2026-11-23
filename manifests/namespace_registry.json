@@ -132,12 +132,6 @@
           "stem": "accord:"
         },
         {
-          "cc_ref": "CC 3.4.10",
-          "kind": "reserved",
-          "rule": "witness-emitter (identity_type contains witness)",
-          "stem": "transparency_log:cosigned:"
-        },
-        {
           "cc_ref": "CC 3.4.8",
           "kind": "reserved",
           "rule": "detector-only (identity_type contains lenscore_detector)",
@@ -196,6 +190,36 @@
           "kind": "gated",
           "rule": "closed: takedown_notice:{basis}:v1 is the only family",
           "stem": "takedown_notice:"
+        },
+        {
+          "cc_ref": "CC 3.4.10",
+          "kind": "retired",
+          "rule": "retired: no family; a Transparency Service's own signed act is its Receipt",
+          "stem": "transparency_log:cosigned:"
+        },
+        {
+          "cc_ref": "CC 3.4.10",
+          "kind": "retired",
+          "rule": "retired: no family; an inclusion proof rides in a Receipt",
+          "stem": "transparency_log:inclusion:"
+        },
+        {
+          "cc_ref": "CC 3.4.10",
+          "kind": "retired",
+          "rule": "retired: no family; a Transparency Service's Receipt carries the proof",
+          "stem": "transparency_log:consistency:"
+        },
+        {
+          "cc_ref": "CC 3.2",
+          "kind": "retired",
+          "rule": "retired: no family; a charter names its Transparency Services",
+          "stem": "lineage_witness:"
+        },
+        {
+          "cc_ref": "CC 3.4.6",
+          "kind": "retired",
+          "rule": "renamed with no alias: the family is delivery_ack:{stream_id}",
+          "stem": "delivery_receipt:"
         }
       ],
       "version_segment": {
@@ -226,15 +250,15 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 190,
+    "n_families": 185,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
-      "attestation": 21,
+      "attestation": 18,
       "cirisbench": 1,
       "lens": 9,
       "node": 51,
-      "persist": 39,
+      "persist": 37,
       "registry": 20,
       "transport-delivery": 7
     },
@@ -296,7 +320,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "49d3a99d9822a8237a295a088d492ea4cfa5c7763c415d1e8a30cf6d553fd4d4",
+    "registry_sha256": "1d236189ff90059188eea0344fb78a8df757ed45dbe57eac5d524e6685950742",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -311,7 +335,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "ad1464fed75a6f2d438ae1e202d62be53b5072ee07608eecbe578843f5b306c6"
+    "source_sha256": "b467f48b438748a9b01f95ac661c8891a1ca160c77f2463ee8618bbea675f6a5"
   },
   "families": [
     {
@@ -2217,7 +2241,7 @@
       "owning_component": "transport-delivery",
       "owning_repo": "CIRISEdge",
       "polarity": "signed",
-      "prefix": "delivery_receipt:{stream_id}",
+      "prefix": "delivery_ack:{stream_id}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.6",
@@ -2226,7 +2250,7 @@
       "segments": [
         {
           "class": "literal",
-          "segment": "delivery_receipt"
+          "segment": "delivery_ack"
         },
         {
           "class": "value",
@@ -2810,7 +2834,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "A family's or community's roster version: the signed roster record at a version that CC 3.2 T6 makes the lineage head, as a cosigned scores row.",
+      "description": "A family's or community's roster version: the signed roster record at a version, as a cosigned scores row.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -3340,35 +3364,6 @@
       ]
     },
     {
-      "cc_section": "3.1.3",
-      "description": "The ceremony by which a node becomes a witness of a trust-root lineage (CC 3.2 T6), one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline \u2014 closed.",
-      "owning_component": "persist",
-      "owning_repo": "CIRISPersist",
-      "polarity": "positive-only",
-      "prefix": "lineage_witness:{stage}",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.2",
-        "rule": "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "lineage_witness"
-        },
-        {
-          "class": "vocab",
-          "open": false,
-          "segment": "{stage}",
-          "values": [
-            "proposal",
-            "acceptance",
-            "decline"
-          ]
-        }
-      ]
-    },
-    {
       "cc_section": "3.1.9.5",
       "description": "Names the scale at which a decision is being made.",
       "owning_component": "node",
@@ -3474,7 +3469,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Mesh-configuration row (CC 4.2.1): trust-root-emitted, a scores row authored under the root's trust:confers:v1 edge on the delegation plane (a delegates_to needs a delegate; a configuration names none); relieve-never-expand; most-restrictiv",
+      "description": "Mesh-configuration row (CC 4.2.1): trust-root-emitted, a scores row authored under a grant counted over the holders of the bundle in force (a delegates_to needs a delegate; a configuration names none); relieve-never-expand; most-restrictive",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -4624,72 +4619,6 @@
       ]
     },
     {
-      "cc_section": "3.1.2",
-      "description": "RFC 6962 consistency proof between two STHs.",
-      "owning_component": "attestation",
-      "owning_repo": "CIRISVerify",
-      "polarity": "boolean-via-score",
-      "prefix": "transparency_log:consistency",
-      "reserved": false,
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "transparency_log"
-        },
-        {
-          "class": "literal",
-          "segment": "consistency"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.2",
-      "description": "Witness cosignature on an STH (substrate-conformance path; see CC 5.3.1 endpoints).",
-      "owning_component": "attestation",
-      "owning_repo": "CIRISVerify",
-      "polarity": "signed",
-      "prefix": "transparency_log:cosigned:{tree_size}",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.10",
-        "rule": "witness-emitter (identity_type contains witness)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "transparency_log"
-        },
-        {
-          "class": "literal",
-          "segment": "cosigned"
-        },
-        {
-          "class": "value",
-          "pattern": "^[0-9]+$",
-          "segment": "{tree_size}"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.2",
-      "description": "RFC 6962 inclusion proof for an audit leaf.",
-      "owning_component": "attestation",
-      "owning_repo": "CIRISVerify",
-      "polarity": "boolean-via-score",
-      "prefix": "transparency_log:inclusion",
-      "reserved": false,
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "transparency_log"
-        },
-        {
-          "class": "literal",
-          "segment": "inclusion"
-        }
-      ]
-    },
-    {
       "cc_section": "3.1.3",
       "description": "The holders' re-bind of a seated serve node's transport destination and transit pair (registered under CC 3.1.7 R2(a); the quorum act of CC 3.3.6.2 and CC 5.3.4): an attestation row about a seated serve node, a counted row the accord's hold",
       "owning_component": "persist",
@@ -4736,31 +4665,8 @@
       ]
     },
     {
-      "cc_section": "3.1.3",
-      "description": "A conferring roster's counted conferral on the ceremony plane (CC 3.2 T2): a scores row cosigned under the root's conferring family's consensus_protocol, whose payload names the subject's key record by row id and carries the roles conferred",
-      "owning_component": "persist",
-      "owning_repo": "CIRISPersist",
-      "polarity": "positive-only",
-      "prefix": "trust:blessing",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.1.3",
-        "rule": "cosigned under the conferring family's consensus_protocol (for the accord, a strict majority of the standing roster); withdrawn only by a cosigned withdraws"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "trust"
-        },
-        {
-          "class": "literal",
-          "segment": "blessing"
-        }
-      ]
-    },
-    {
       "cc_section": "3.1.1",
-      "description": "The trust-root conferral and acceptance edges, carried as dimension values on delegates_to rows \u2014 the wire type is unchanged, so 1+4 is untouched.",
+      "description": "The trust-root grant and acceptance edges, carried as dimension values on delegates_to rows \u2014 the wire type is unchanged, so 1+4 is untouched.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "positive-only",

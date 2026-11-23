@@ -213,13 +213,13 @@ key_grant	key-grant	"minter"	minter_key_id	payload	identity-ref	on the epoch axi
 key_grant	key-grant	"epoch"	epoch	payload	uint	on the epoch and stream axes	3.3.2	The epoch index.
 key_grant	key-grant	"stream_id"	stream_id	payload	tstr	on the stream axis	3.3.2	The stream.
 key_grant	key-grant	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
-receipt	delivery-receipt	"author"	attesting_key_id	payload	identity-ref	always	5.3.3.11	The subscriber, equal to iss and the CWT sub.
-receipt	delivery-receipt	"dimension"	dimension	payload	tstr	always	3.4.6	delivery_receipt:{stream_id} with its version.
-receipt	delivery-receipt	"stream_id"	stream_id	payload	tstr	always	5.3.3.11	The same stream as the leaf.
-receipt	delivery-receipt	"epoch"	epoch	payload	uint	always	5.3.3.11	The key-rotation index.
-receipt	delivery-receipt	"k"	K	payload	uint	always	5.3.3.11	The chunk index acknowledged.
-receipt	delivery-receipt	"chunk_root"	chunk_root	payload	hash-digest	always	5.3.3.11	The published tree root the subscriber signs over.
-receipt	delivery-receipt	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+delivery_ack	delivery-ack	"author"	attesting_key_id	payload	identity-ref	always	5.3.3.11	The subscriber, equal to iss and the CWT sub.
+delivery_ack	delivery-ack	"dimension"	dimension	payload	tstr	always	3.4.6	delivery_ack:{stream_id} with its version.
+delivery_ack	delivery-ack	"stream_id"	stream_id	payload	tstr	always	5.3.3.11	The same stream as the leaf.
+delivery_ack	delivery-ack	"epoch"	epoch	payload	uint	always	5.3.3.11	The key-rotation index.
+delivery_ack	delivery-ack	"k"	K	payload	uint	always	5.3.3.11	The chunk index acknowledged.
+delivery_ack	delivery-ack	"chunk_root"	chunk_root	payload	hash-digest	always	5.3.3.11	The published tree root the subscriber signs over.
+delivery_ack	delivery-ack	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 occurrence	identity-occurrence	"author"	attesting_key_id	payload	identity-ref	always	3.3.6	A live roster key's identity: the identity named by identity_key_id.
 occurrence	identity-occurrence	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6	The identity the occurrence speaks for: a person's, or an agent's own.
 occurrence	identity-occurrence	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6	The participant's key, equal to the CWT sub; its own statement over the payload is the second voice.

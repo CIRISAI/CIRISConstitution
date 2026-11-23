@@ -20,7 +20,9 @@ The check recomputes both tables from manifests/namespace_registry.json and fail
 
   1. a dimension id has no registered family under its stem and no structural anchor that exists;
   2. a family's section, or a structural anchor, is not a heading of Part 3;
-  3. a wire form that resolved in the committed table no longer resolves (a loss);
+  3. a wire form that resolved in the committed table no longer resolves (a loss), unless its note records
+     that the family it named is retired (`retired: ` and what carries the claim): such a form is counted
+     and printed, and a note of that kind on a form that still resolves or is open fails;
   4. any other answer differs from the committed table (regenerate with --write and review the diff).
 
   python3 tools/check_compliance_wire_forms.py                    # check
@@ -40,7 +42,11 @@ FORMS = os.path.join(ROOT, "formal", "derivation", "compliance_wire_forms.tsv")
 PART3 = os.path.join(ROOT, "constitution", "part_3_the_namespace.md")
 WORKS = OrderedDict([("v1.4", "MH"), ("EU_HLEG", "EU"), ("IEEE_EAD", "IEEE"), ("ASEAN", "ASEAN")])
 # A dimension whose evidence is a structure and not a family of its own stem names the family that carries it.
-STRUCTURAL = {"D23": "audit_chain:hash_continuity"}
+STRUCTURAL = {"D23": "audit_chain:hash_continuity",
+              # The transparency plane is Transparency Services with their own logs and Receipts (CC 3.2 T6, CC 5.3.1):
+              # no family stands under the stem, and the row a service registers and receipts is a stream's signed head.
+              "D17": "stream:head"}
+RETIRED = "retired: "   # a note that records the form's family is retired, and what carries the claim
 DIM_HDR = ["id", "prefix", "tier", "MH", "EU", "IEEE", "ASEAN", "families", "sections"]
 FORM_HDR = ["work", "wire_form", "lines", "family", "answer", "note"]   # note: where a mapped form was corrected, and why
 
@@ -141,12 +147,18 @@ def main(argv):
     for o, n in zip(old_forms, new_forms):
         if (o["family"], o["answer"]) == (n["family"], n["answer"]):
             continue
+        if o["answer"] == "resolves" and n["answer"] != "resolves" and (n.get("note") or "").startswith(RETIRED):
+            continue                                # a recorded retirement: counted and printed with the totals
         if o["answer"] == "resolves" and n["answer"] != "resolves":
             lost += 1
             errs.append(f"lost: {n['work']} {n['wire_form']} resolved to {o['family']} and now answers {n['answer']}")
         elif "--write" not in argv:
             changed += 1
             errs.append(f"changed: {n['work']} {n['wire_form']}: {o['family']} {o['answer']} -> {n['family']} {n['answer']}")
+    retired = [r for r in new_forms if (r.get("note") or "").startswith(RETIRED)]
+    for r in retired:
+        if r["answer"] in ("resolves", "open"):
+            errs.append(f"retired note on a form that answers {r['answer']}: {r['work']} {r['wire_form']}")
     if errs:
         print("compliance wire forms: FAIL")
         [print("  " + e) for e in errs]
@@ -157,7 +169,9 @@ def main(argv):
         tot[(r["work"], kind)] += int(r["lines"])
     n_lines = sum(tot.values())
     print(f"compliance wire forms: {len(new_dims)} dimensions, each with a registered family or a structural anchor; "
-          f"{len(new_forms)} wire forms on {n_lines} mapped lines; none lost")
+          f"{len(new_forms)} wire forms on {n_lines} mapped lines; "
+          + (f"{len(retired)} on {sum(int(r['lines']) for r in retired)} lines name a retired family and no longer resolve, each with its note; no other loss"
+             if retired else "none lost"))
     for w in WORKS.values():
         print(f"  {w:6s} resolves {tot[(w, 'resolves')]:4d}  open {tot[(w, 'open')]:4d}  refused {tot[(w, 'refused')]:4d}")
     return 0

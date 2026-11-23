@@ -296,9 +296,9 @@ deferral:response:{outcome}	signer_rule	agree	CC 4.3	A person confers the seat o
 deferral:response:{outcome}	signer_rule	agree	CC 4.3	A seat over one party's deferrals is conferred by that party in a signed row and by nobody else; there is no roster of permitted Wise Authorities and a substrate
 deferral:response:{outcome}	signer_rule	agree	CC 4.4.3.19	`resolve_deferral` takes the same test, with the conferrer of the seat as delegator ([CC 4.3](#4.3)).
 delivery:{class}	signer_rule	agree	CC 3.1.4	Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md#3.4.3).
-delivery_receipt:{stream_id}	signer_rule	agree	CC 3.1.4	subscriber-emitted, membership-gated, **not** a substrate-self-report. Polarity: signed.
-delivery_receipt:{stream_id}	signer_rule	agree	CC 3.4.6	`attesting_key_id` MUST be a current member of the community/stream the `{stream_id}` belongs to, per [CC 4.4.3.3](part_4_composition_governance.md#4.4.3.3) Policy M membership resolution. NOT substrate-self-report (distinct from CC 3.4.3 / CC 3.4.4 /
-delivery_receipt:{stream_id}	signer_rule	agree	CC 5.3.3.11	A `delivery_ack:{stream_id}` Contribution is a subscriber's signed acknowledgement that they received chunk K under the named stream + epoch. **Best-effort default**; opt-in for **accountable** profiles (registry propagation, emergency).
+delivery_ack:{stream_id}	signer_rule	agree	CC 3.1.4	subscriber-emitted, membership-gated, **not** a substrate-self-report. Polarity: signed.
+delivery_ack:{stream_id}	signer_rule	agree	CC 3.4.6	`attesting_key_id` MUST be a current member of the community/stream the `{stream_id}` belongs to, per [CC 4.4.3.3](part_4_composition_governance.md#4.4.3.3) Policy M membership resolution. NOT substrate-self-report (distinct from CC 3.4.3 / CC 3.4.4 /
+delivery_ack:{stream_id}	signer_rule	agree	CC 5.3.3.11	A `delivery_ack:{stream_id}` Contribution is a subscriber's signed acknowledgement that they received chunk K under the named stream + epoch. **Best-effort default**; opt-in for **accountable** profiles (registry propagation, emergency).
 detection:correlated_action:{axis}	body	agree	CC 3.1.8.4	**Polarity carries the verdict**: positive scores indicate the structural pattern is present and strong on the named axis; negative scores indicate evidence of the inverse
 detection:correlated_action:{axis}	erasure_route	fills	CC 4.5.3	the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row
 detection:correlated_action:{axis}	fold	agree	CC 4.4.2	Detector dimensions (`detection:correlated_action:*`, `detection:distributive:access:*`, `ratchet:flag:*`)
@@ -470,7 +470,6 @@ licensure:{authority_id}	signer_rule	agree	CC 3.4.9	`licensure:{authority_id}` i
 licensure:{authority_id}	signer_rule	agree	CC 4.4.3.12	Anyone may be an authority under their own key ([CC 4.4.3.19](#4.4.3.19)), a community included.
 licensure:{authority_id}	signer_rule	agree	CC 4.4.3.19	`license` | a `licensure:{authority_id}` / `attestation:license_validity` attestation, **on behalf of a delegator that itself holds licence authority** by quorum ([CC 3.3.9](part_3_the_namespace.md#3.3.9)).
 licensure:{authority_id}	subject_rule	fills	CC 4.5.2.1	| `licensure:{authority_id}:{practitioner_key}` (when practitioner is named)
-lineage_witness:{stage}	signer_rule	agree	CC 3.1.3	**Yes:** nobody emits it
 locality:decision:{scale}	fold	agree	CC 4.4.3.2	When `cell_pool < min_pool(S)`, the consumer MUST take one of these explicit paths — there is no implicit fallback:
 manifold_conformity:{cohort}	projection	agree	CC 3.1.8	The lens observes; it does not adjudicate.
 membership:{stage}	body	agree	CC 2.1	With `references_attestation_id` it binds an answer to exactly one proposal ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)).
@@ -612,7 +611,6 @@ trace:{form}:{version}	signer_rule	agree	CC 3.4.5	**Pro-self** — `attesting_ke
 trace:{form}:{version}	signer_rule	agree	CC 4.5.8.3	- **Reasoning-trace dimensions**: no reserved duty is required; reasoning-trace emission rides the agent role's open-vocabulary surface.
 trace_summary:{kind}	signer_rule	agree	CC 3.1.5	Same self-emission rule; carries no claim the full trace does not.
 trace_summary:{kind}	signer_rule	agree	CC 3.4.5	**Pro-self** — `attesting_key_id` MUST be a member of `subject_key_ids`. Third-party emission on the namespace is REQUIRED to be refused.
-transparency_log:cosigned:{tree_size}	signer_rule	agree	CC 3.1.2	`transparency_log:cosigned:{tree_size}` | Retired: a row of this family is refused by name.
 transport:canonical_rebind	body	agree	CC 3.1.3	It carries the node's new `transport_destination` and transit key in its payload.
 transport:canonical_rebind	signer_rule	agree	CC 3.1.3	**Yes — the accord holders, a strict majority of the bundle in force**; never a single holder, never the node itself
 transport:{kind}	signer_rule	agree	CC 3.1.4	Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md#3.4.3).
@@ -692,7 +690,6 @@ method:{approach_id}:{substrate_rung}	signer_rule	agree	CC 3.4	Most of the names
 partner_role:{role}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 ratchet:flag:counter_rii:{layer}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 revocation:{entity_type}:{reason}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
-transparency_log:inclusion	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 attestation:hardware_rooted	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 beneficence:{aspect}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 dma:idma:*	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
@@ -709,7 +706,6 @@ credits:{domain}:{language}:{subject}	signer_rule	agree	CC 3.4	Most of the names
 manifold_conformity:{cohort}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 objection:{state}	signer_rule	agree	CC 4.5.13	Members object by signing `objection:raised` rows that name the act. The act is lifted when a strict majority of the roster at the head the act names has objected
 ratchet:flag:coordinated_voting_cluster	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
-transparency_log:consistency	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 community:listing	subject_rule	agree	CC 3.1.1	signed by a current `moderate`-holder of the community it names; one live row per community
 custody:{kind}	subject_rule	agree	CC 3.1.3.3	`attesting_key_id` is the device the report is about; nobody reports custody for another device
 identity_amendment	subject_rule	agree	CC 3.1.5	Attester = the agent's occurrence key, subject = the agent's identity key.

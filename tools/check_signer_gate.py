@@ -38,7 +38,7 @@ SUBSTRATE = ("identity:substrate_persist", "identity:substrate_edge", "identity:
 STAGED = ("system:*", "audit_chain:hash_continuity", "corpus_health:n_eff_measurable", "federation_directory:replication_lag",
           "identity_continuity:relational_anchor", "hard_case:{kind}", "detection:correlated_action:{axis}",
           "detection:distributive:access:{resource_type}", "detection:hash_chain_integrity", "detection:intra_agent_consistency",
-          "detection:{detector}", "transparency_log:cosigned:{tree_size}", "age_assurance:{level}:{band}:{version}",
+          "detection:{detector}", "age_assurance:{level}:{band}:{version}",
           "capacity_assurance:reversible_excluded:{domain}:{version}", "capacity_assurance:reversible_pending:{domain}:{version}",
           "capacity_assurance:{level}:{domain}:{band}:{version}")
 KNOWN = {

@@ -15,7 +15,6 @@ location_proof:{version}	*	none	the subject's own row
 trust:{job}:{version}	leaf=accepts	none	an acceptance is the acceptor's own consent; the attached head stays the envelope member it is
 trust:{job}:{version}	leaf=confers	standing	the bundle in force, by its object id
 trust:{job}:{version}	leaf=charter	none	a root's charter is its bundle's member
-trust:blessing	*	standing	the bundle in force, by its object id
 attestation:registry_consensus	*	roster	the canonical room's roster version
 community:listing	*	roster	the listed room's roster version
 duty:{kind}	*	by_placement	a duty exercised in a room names that room's roster version

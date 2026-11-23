@@ -17,7 +17,6 @@ detection:distributive:access:{resource_type}	infra:detect	CC 3.4.7	a detector |
 detection:hash_chain_integrity	infra:detect	CC 3.4.7	a detector | `infra:detect`
 detection:intra_agent_consistency	infra:detect	CC 3.4.7	a detector | `infra:detect`
 detection:{detector}	infra:detect	CC 3.4.7	a detector | `infra:detect`
-transparency_log:cosigned:{tree_size}	infra:attest_assurance	CC 3.4.7	a log witness | `infra:attest_assurance`
 age_assurance:{level}:{band}:{version}	assure:age	CC 3.4.7	an age assessor who is not the subject | `assure:age`
 capacity_assurance:reversible_excluded:{domain}:{version}	assure:capacity	CC 3.4.7	a capacity assessor who is neither the subject nor the proposed steward | `assure:capacity`
 capacity_assurance:reversible_pending:{domain}:{version}	assure:capacity	CC 3.4.7	a capacity assessor who is neither the subject nor the proposed steward | `assure:capacity`

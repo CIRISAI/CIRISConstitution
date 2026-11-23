@@ -10,7 +10,7 @@ Rows (each a dict with `id`, `kind` and `t`, the instant the host first held it)
   edge       {by, to, classes}                 an acceptance edge, trust:accepts (CC 4.4.3.34)
   roster     {group, members, need}            a group's roster head and its declared count
   build      {units, blessed}                  an attested build: its manifest's units, and whether its pipeline's
-                                               counted trust:blessing is held (CC 3.1.2.1)
+                                               counted grant is held (CC 3.1.2.1)
   unit       {unit, caps, at, until, scope, author | head}   the admission:unit row (CC 3.1.3): authored or counted;
                                                scope is its cohort_scope (CC 2.1)
   stmt       {of, by}                          one voice's statement over a row's payload (CC 2.6.1.9)
@@ -154,7 +154,7 @@ def one(R, owner, digest, now, row):
 
 def built_in(R, digest):
     """A unit of the attested build runs under the build's own attestation: its manifest names the digest and the
-    pipeline's counted blessing is held (CC 3.1.2.1). It is outside admission:unit."""
+    pipeline's counted grant is held (CC 3.1.2.1). It is outside admission:unit."""
     for b in sel(R, kind="build"):
         if (b["blessed"] or "unblessed_build" in PLANTS) and (digest in b["units"] or "build_any_digest" in PLANTS):
             return True

@@ -11,7 +11,7 @@
    "fold": "the value the fold gives",
    "owed": "the effects owed, or nothing"
   },
-  "count": 71
+  "count": 75
  },
  "returns": "To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.",
  "vectors": [
@@ -1634,10 +1634,10 @@
    }
   },
   {
-   "id": "persist/transparency_log:cosigned:{tree_size}/signer_rule",
+   "id": "persist/transparency_log:cosigned:{tree_size}/family name",
    "family": "transparency_log:cosigned:{tree_size}",
-   "where": "signer_rule",
-   "kind": "signer",
+   "where": "family name",
+   "kind": "door",
    "case": {
     "rows": [
      {
@@ -1646,7 +1646,7 @@
       "signer": "W",
       "names": [],
       "family": "key:record",
-      "identity_type": "user"
+      "identity_type": "witness"
      },
      {
       "id": "rt",
@@ -1722,14 +1722,168 @@
      "target": "h"
     }
    },
-   "expect_kernel": "admitted",
-   "expect_shipped": "concludes nothing",
+   "expect_kernel": "refused",
+   "expect_shipped": "admitted",
    "kernel_parameter": {
     "family": "transparency_log:cosigned:{tree_size}",
-    "gate": [
-     [
-      "seat:infra:attest_assurance@root"
-     ]
+    "refuse": [
+     "family_unregistered"
+    ]
+   }
+  },
+  {
+   "id": "persist/transparency_log:inclusion/family name",
+   "family": "transparency_log:inclusion",
+   "where": "family name",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "ka",
+      "kind": "keyrec",
+      "signer": "A",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "ka"
+      ],
+      "family": "transparency_log:inclusion"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "refused",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "transparency_log:inclusion",
+    "refuse": [
+     "family_unregistered"
+    ]
+   }
+  },
+  {
+   "id": "persist/transparency_log:consistency/family name",
+   "family": "transparency_log:consistency",
+   "where": "family name",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "ka",
+      "kind": "keyrec",
+      "signer": "A",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "ka"
+      ],
+      "family": "transparency_log:consistency"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "refused",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "transparency_log:consistency",
+    "refuse": [
+     "family_unregistered"
+    ]
+   }
+  },
+  {
+   "id": "persist/lineage_witness:{stage}/family name",
+   "family": "lineage_witness:{stage}",
+   "where": "family name",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "ka",
+      "kind": "keyrec",
+      "signer": "A",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "ka"
+      ],
+      "family": "lineage_witness:{stage}"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "refused",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "lineage_witness:{stage}",
+    "refuse": [
+     "family_unregistered"
+    ]
+   }
+  },
+  {
+   "id": "persist/delivery_receipt:{stream_id}/family name",
+   "family": "delivery_receipt:{stream_id}",
+   "where": "family name",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "ka",
+      "kind": "keyrec",
+      "signer": "A",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "ka"
+      ],
+      "family": "delivery_receipt:{stream_id}"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_kernel": "refused",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "delivery_receipt:{stream_id}",
+    "refuse": [
+     "family_unregistered"
     ]
    }
   },
@@ -5155,18 +5309,18 @@
    "quote": "this predicate is **consumer policy**, NOT registry-normative"
   },
   {
-   "id": "persist/licensure:{authority_id}/freshness.judged_at",
+   "id": "persist/licensure:{authority_id}/freshness.W",
    "status": "stated",
-   "reason": "judging at a signed instant bounded by W is neither of the kernel's two notions of time (a row's own end, a window with a landing); KERNEL.md 5 leaves such clocks without a meaning",
+   "reason": "the text checks the row's age at the node that first receives it and refuses one older than W; the shipped door applies no W. A window timed from a signed instant and judged at receipt is neither of the kernel's two notions of time (a row's own end, a window with a landing); KERNEL.md 5 leaves such clocks without a meaning",
    "cc_ref": "CC 2.6.7",
-   "quote": "is judged at its signed `asserted_at`"
+   "quote": "The substrate MUST refuse such a row whose `asserted_at` precedes the receiver's clock by more than `W`"
   },
   {
-   "id": "persist/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
+   "id": "persist/delivery_ack:{stream_id}/guard[accountable stream]",
    "status": "stated",
    "reason": "the guard reads the binding's signed `profile` (CC 5.3.3.5); the shipped store reads no such member, and the kernel's rows carry no binding",
    "cc_ref": "CC 5.3.3.11",
-   "quote": "For accountable streams, \"published\" means **witness-cosigned**"
+   "quote": "For an accountable stream the head counts only once it is published"
   },
   {
    "id": "persist/(occurrence revocation, cosign:signature)/attestation_id form",

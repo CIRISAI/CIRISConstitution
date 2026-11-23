@@ -11,27 +11,27 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 90,
+  "total": 94,
   "by_status": {
-   "runnable": 74,
+   "runnable": 78,
    "stated": 12,
    "wording-only": 4
   },
   "by_implementer": {
    "agent": 1,
    "edge": 2,
-   "persist": 83,
+   "persist": 87,
    "tooling": 4
   },
   "by_kind": {
    "audience": 4,
    "cosign": 7,
    "count": 4,
-   "door": 19,
+   "door": 24,
    "fold": 9,
    "freshness": 1,
    "lifecycle": 10,
-   "signer": 29,
+   "signer": 28,
    "subject": 1,
    "window": 2,
    "wording-only": 4
@@ -2581,30 +2581,26 @@
    "order_dependent_shipped": false
   },
   {
-   "id": "persist/transparency_log:cosigned:{tree_size}/signer_rule",
+   "id": "persist/transparency_log:cosigned:{tree_size}/family name",
    "implementer": "persist",
    "family": "transparency_log:cosigned:{tree_size}",
-   "where": "signer_rule",
-   "kind": "signer",
+   "where": "family name",
+   "kind": "door",
    "status": "runnable",
    "sources": [
-    "C564"
+    "CLM-witness-emitter"
    ],
-   "claims": [],
+   "claims": [
+    "CLM-witness-emitter"
+   ],
    "text": {
-    "value": [
-     [
-      "seat:infra:attest_assurance@root"
-     ]
-    ],
-    "cc_ref": "CC 3.4.7",
-    "quote": "`infra:attest_assurance`",
+    "value": "refused by name: the registry carries no family of this name",
+    "cc_ref": "CC 3.4.10",
+    "quote": "A row of one of those names is refused `namespace_family_unregistered`",
     "param": {
      "family": "transparency_log:cosigned:{tree_size}",
-     "gate": [
-      [
-       "seat:infra:attest_assurance@root"
-      ]
+     "refuse": [
+      "family_unregistered"
      ]
     }
    },
@@ -2630,7 +2626,7 @@
       "signer": "W",
       "names": [],
       "family": "key:record",
-      "identity_type": "user"
+      "identity_type": "witness"
      },
      {
       "id": "rt",
@@ -2706,19 +2702,328 @@
      "target": "h"
     }
    },
-   "expect_shipped": "concludes nothing",
-   "expect_kernel": "admitted",
+   "expect_shipped": "admitted",
+   "expect_kernel": "refused",
    "orders": {
     "run": 120,
     "of": 120,
     "kernel": [
-     "admitted"
+     "refused"
     ],
     "shipped_judged_on_arrival": [
-     "concludes nothing"
+     "admitted"
     ]
    },
-   "order_dependent_shipped": false
+   "order_dependent_shipped": false,
+   "note": "formal/derivation/census_names.tsv records how the census row of this name is read"
+  },
+  {
+   "id": "persist/transparency_log:inclusion/family name",
+   "implementer": "persist",
+   "family": "transparency_log:inclusion",
+   "where": "family name",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-witness-emitter"
+   ],
+   "claims": [
+    "CLM-witness-emitter"
+   ],
+   "text": {
+    "value": "refused by name: the registry carries no family of this name",
+    "cc_ref": "CC 3.4.10",
+    "quote": "A row of one of those names is refused `namespace_family_unregistered`",
+    "param": {
+     "family": "transparency_log:inclusion",
+     "refuse": [
+      "family_unregistered"
+     ]
+    }
+   },
+   "shipped": {
+    "value": "any_registered x none x {}",
+    "source": "formal/derivation/census_v61.tsv transparency_log:inclusion 3_signer_rule",
+    "census_cell": "any_registered x none x {}",
+    "param": {
+     "family": "transparency_log:inclusion",
+     "gate": [
+      [
+       "registered"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ka",
+      "kind": "keyrec",
+      "signer": "A",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "ka"
+      ],
+      "family": "transparency_log:inclusion"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "refused",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "refused"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "formal/derivation/census_names.tsv records how the census row of this name is read"
+  },
+  {
+   "id": "persist/transparency_log:consistency/family name",
+   "implementer": "persist",
+   "family": "transparency_log:consistency",
+   "where": "family name",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-witness-emitter"
+   ],
+   "claims": [
+    "CLM-witness-emitter"
+   ],
+   "text": {
+    "value": "refused by name: the registry carries no family of this name",
+    "cc_ref": "CC 3.4.10",
+    "quote": "A row of one of those names is refused `namespace_family_unregistered`",
+    "param": {
+     "family": "transparency_log:consistency",
+     "refuse": [
+      "family_unregistered"
+     ]
+    }
+   },
+   "shipped": {
+    "value": "any_registered x none x {}",
+    "source": "formal/derivation/census_v61.tsv transparency_log:consistency 3_signer_rule",
+    "census_cell": "any_registered x none x {}",
+    "param": {
+     "family": "transparency_log:consistency",
+     "gate": [
+      [
+       "registered"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ka",
+      "kind": "keyrec",
+      "signer": "A",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "ka"
+      ],
+      "family": "transparency_log:consistency"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "refused",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "refused"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "formal/derivation/census_names.tsv records how the census row of this name is read"
+  },
+  {
+   "id": "persist/lineage_witness:{stage}/family name",
+   "implementer": "persist",
+   "family": "lineage_witness:{stage}",
+   "where": "family name",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-lineage-witness-consent"
+   ],
+   "claims": [
+    "CLM-lineage-witness-consent"
+   ],
+   "text": {
+    "value": "refused by name: the registry carries no family of this name",
+    "cc_ref": "CC 3.1.3",
+    "quote": "a row under the stem `lineage_witness:` is refused `namespace_family_unregistered`",
+    "param": {
+     "family": "lineage_witness:{stage}",
+     "refuse": [
+      "family_unregistered"
+     ]
+    }
+   },
+   "shipped": {
+    "value": "GAP: any_registered (family gate not built)",
+    "source": "formal/derivation/census_v61.tsv lineage_witness:{stage} 3_signer_rule",
+    "census_cell": "GAP: any_registered (family gate not built)",
+    "param": {
+     "family": "lineage_witness:{stage}",
+     "gate": [
+      [
+       "registered"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ka",
+      "kind": "keyrec",
+      "signer": "A",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "ka"
+      ],
+      "family": "lineage_witness:{stage}"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "refused",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "refused"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "formal/derivation/census_names.tsv records how the census row of this name is read"
+  },
+  {
+   "id": "persist/delivery_receipt:{stream_id}/family name",
+   "implementer": "persist",
+   "family": "delivery_receipt:{stream_id}",
+   "where": "family name",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-reservation-delivery"
+   ],
+   "claims": [
+    "CLM-reservation-delivery"
+   ],
+   "text": {
+    "value": "refused by name: the registry carries no family of this name",
+    "cc_ref": "CC 3.1.7",
+    "quote": "So is a stem marked `kind: retired`, under which no family stands",
+    "param": {
+     "family": "delivery_receipt:{stream_id}",
+     "refuse": [
+      "family_unregistered"
+     ]
+    }
+   },
+   "shipped": {
+    "value": "GAP: any_registered (CC reserves; no gate)",
+    "source": "formal/derivation/census_v61.tsv delivery_receipt:{stream_id} 3_signer_rule",
+    "census_cell": "GAP: any_registered (CC reserves; no gate)",
+    "param": {
+     "family": "delivery_receipt:{stream_id}",
+     "gate": [
+      [
+       "registered"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ka",
+      "kind": "keyrec",
+      "signer": "A",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "ka"
+      ],
+      "family": "delivery_receipt:{stream_id}"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "refused",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "refused"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "formal/derivation/census_names.tsv records how the census row of this name is read"
   },
   {
    "id": "persist/age_assurance:{level}:{band}:{version}/signer_rule",
@@ -6771,10 +7076,10 @@
    "gap": "no shipped value"
   },
   {
-   "id": "persist/licensure:{authority_id}/freshness.judged_at",
+   "id": "persist/licensure:{authority_id}/freshness.W",
    "implementer": "persist",
    "family": "licensure:{authority_id}",
-   "where": "freshness.judged_at",
+   "where": "freshness.W",
    "kind": "freshness",
    "status": "stated",
    "sources": [
@@ -6784,20 +7089,20 @@
    "text": {
     "value": null,
     "cc_ref": "CC 2.6.7",
-    "quote": "is judged at its signed `asserted_at`"
+    "quote": "The substrate MUST refuse such a row whose `asserted_at` precedes the receiver's clock by more than `W`"
    },
    "shipped": {
     "value": "receipt future-skew <=5 min, us resolution (check_instant_binding); no W",
     "source": "formal/derivation/census_v61.tsv licensure:{authority_id} 8_freshness",
     "census_cell": "GENERIC: receipt future-skew <=5 min, us resolution (check_instant_binding); no W; s3: signed instants .sssZ only (signed_instant_form_violation)"
    },
-   "reason": "judging at a signed instant bounded by W is neither of the kernel's two notions of time (a row's own end, a window with a landing); KERNEL.md 5 leaves such clocks without a meaning",
+   "reason": "the text checks the row's age at the node that first receives it and refuses one older than W; the shipped door applies no W. A window timed from a signed instant and judged at receipt is neither of the kernel's two notions of time (a row's own end, a window with a landing); KERNEL.md 5 leaves such clocks without a meaning",
    "gap": "time"
   },
   {
-   "id": "persist/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
+   "id": "persist/delivery_ack:{stream_id}/guard[accountable stream]",
    "implementer": "persist",
-   "family": "transparency_log:cosigned:{tree_size}",
+   "family": "delivery_ack:{stream_id}",
    "where": "guard[accountable stream]",
    "kind": "door",
    "status": "stated",
@@ -6808,7 +7113,7 @@
    "text": {
     "value": null,
     "cc_ref": "CC 5.3.3.11",
-    "quote": "For accountable streams, \"published\" means **witness-cosigned**"
+    "quote": "For an accountable stream the head counts only once it is published"
    },
    "shipped": {
     "value": "no reader of the binding's signed profile",
@@ -6819,9 +7124,9 @@
    "gap": "wire"
   },
   {
-   "id": "edge/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
+   "id": "edge/delivery_ack:{stream_id}/guard[accountable stream]",
    "implementer": "edge",
-   "family": "transparency_log:cosigned:{tree_size}",
+   "family": "delivery_ack:{stream_id}",
    "where": "guard[accountable stream]",
    "kind": "door",
    "status": "stated",
@@ -6832,7 +7137,7 @@
    "text": {
     "value": null,
     "cc_ref": "CC 5.3.3.11",
-    "quote": "For accountable streams, \"published\" means **witness-cosigned**"
+    "quote": "For an accountable stream the head counts only once it is published"
    },
    "shipped": {
     "value": "a binding with no profile member at the shipped release",
@@ -7900,8 +8205,8 @@
       "seat:moderate@authority"
      ]
     ],
-    "cc_ref": "CC 4.5.5",
-    "quote": "for every act that has the withdrawal in its own past or is concurrent with it",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "An act with the end in its past does not count",
     "param": {
      "family": "self:delegates_to",
      "gate": [

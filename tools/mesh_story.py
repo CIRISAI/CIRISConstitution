@@ -123,11 +123,11 @@ def more(s):
     one("boundary:bob", "key_boundary:{scope}", "edge:bob", ["infra:attest"], "The edge reports where its keys stop")
     one("label:bob", "device:label", "dave", ["member", "registered"], "Dave tries to name Bob's phone: refused, a device's name is its owner's")
     one("label:bob", "device:label", "bob", ["owner"], "Bob names his phone: the owner's row, and it stays in his own circle")
-    # 9. a person's own rows: a file, a folder, a route, an observation, a receipt
+    # 9. a person's own rows: a file, a folder, a route, an observation, an ack
     one("file:1", "file:{version}", "dave", ["self"], "Dave saves a file: its author's row")
     one("folder:1", "collection:{kind}", "dave", ["self"], "Dave makes a folder: its creator's row")
-    one("receipt:1", "delivery_receipt:{stream_id}", "erin", [], "A stranger tries to acknowledge a chunk of the room's stream: refused, a receipt is a member's")
-    one("receipt:1", "delivery_receipt:{stream_id}", "dave", ["member"], "Dave acknowledges a chunk of the room's stream: a current member's receipt")
+    one("ack:1", "delivery_ack:{stream_id}", "erin", [], "A stranger tries to acknowledge a chunk of the room's stream: refused, an ack is a member's")
+    one("ack:1", "delivery_ack:{stream_id}", "dave", ["member"], "Dave acknowledges a chunk of the room's stream: a current member's ack")
     one("grant:key", "key_grant:{axis}", "erin", [], "A stranger tries to wrap the room's key to herself: refused, a wrap is the sealer's")
     one("grant:key", "key_grant:{axis}", "bob", ["member", "owner"], "Bob wraps the room's key to Dave: the sealer's row")
     one("route:1", "rendezvous:route", "rendezvous:carol", ["self"], "A fresh rendezvous key publishes its own route: attester and subject are the one key")
@@ -193,11 +193,6 @@ def more(s):
     one("act:1:dave", "cosign:{state}", "dave", ["author"], "Dave tries to take his signature back: refused, a signature given stays given", verb="withdraw", stage="signature")
     one("act:2", "cosign:{state}", "bob", ["member"], "Bob opens another", stage="pending")
     one("act:2", "cosign:{state}", "bob", ["author"], "Bob withdraws the pending act while it is still short", verb="withdraw", stage="pending")
-    # 15. a node becomes a witness of the lineage
-    one("witness:ask", "lineage_witness:{stage}", "carol", ["owner"], "Carol tries to propose her own node as a witness: refused, a proposal is a founder's", stage="proposal")
-    one("witness:ask", "lineage_witness:{stage}", "alice", ["founder"], "Alice, a founder, proposes Carol's node as a witness of the lineage", stage="proposal")
-    one("witness:answer", "lineage_witness:{stage}", "alice", ["founder"], "Alice tries to accept for the node: refused, the answer is the owner's and never a founder's", stage="acceptance")
-    one("witness:answer", "lineage_witness:{stage}", "carol", ["owner"], "Carol, the node's owner, accepts", stage="acceptance")
     # 16. a key is revoked by itself
     one("revoke:dave", "key:revocation", "frank", ["moderate", "member"], "Frank tries to revoke Dave's key: refused, the key is not his", stage="self")
     one("revoke:dave", "key:revocation", "dave", ["self"], "Dave retires an old key under that key's own signature: recognised because the revoker is the key")
@@ -226,11 +221,11 @@ def more(s):
     one("rebind:1", "transport:canonical_rebind", "bob", ["owner", "registered"], "Bob tries to re-bind his serve node's transport destination: refused, a re-bind is the accord holders' act")
     one("rebind:1", "transport:canonical_rebind", "alice", ["holder"], "The accord holders re-bind the serve node's transport destination, cosigned at the charter's threshold")
     one("rebind:1", "transport:canonical_rebind", "alice", ["holder"], "A later re-bind by the holders supersedes the first: again their cosigned act, never one holder's", verb="supersede")
-    # 21. a rough location is the subject's own row; a blessing is the conferring roster's counted act
+    # 21. a rough location is the subject's own row; a pipeline's grant is the root holders' counted act
     one("loc:dave", "location_proof:{version}", "erin", [], "A stranger tries to publish Dave's rough location: refused, only the subject signs it")
     one("loc:dave", "location_proof:{version}", "dave", ["self"], "Dave publishes his own rough location to join a geographic community: the subject's own row")
-    one("bless:ci", "trust:blessing", "bob", ["owner", "registered"], "Bob tries to bless his build pipeline's key: refused, a blessing is the conferring roster's act")
-    one("bless:ci", "trust:blessing", "alice", ["holder", "member"], "The accord holders bless the pipeline's key with infra:attest, counted at a strict majority of their roster")
+    one("grant:ci", "trust:{job}:{version}", "bob", ["owner", "registered"], "Bob tries to grant his build pipeline's key the root's infra:attest: refused, a grant from the root is its holders' act", verb="authorize")
+    one("grant:ci", "trust:{job}:{version}", "alice", ["self", "holder"], "The accord holders grant the pipeline's key infra:attest: a trust:confers row counted at a strict majority of the holders of the bundle in force", verb="authorize")
     # 22. a unit runs only by a row naming its digest: one person's for computing, a group's count for an effect
     one("unit:1", "admission:unit", "erin", ["registered"], "Erin, no member of the reviewing group, tries to add her voice to its admission of a unit: refused")
     one("unit:2", "admission:unit", "bob", ["author"], "Bob admits a unit that only computes, for one day, under his own key")

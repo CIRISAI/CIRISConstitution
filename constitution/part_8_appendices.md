@@ -61,7 +61,7 @@ When a narrative reaches for a concept the wire does not name as a primitive, th
 | epistemic stake | `confidence` + `stake: reputational` |
 | dignitary stake | `harm_class:dignity_harm` (composition; not in stake axis) |
 | oversight: deferred / active / advisory | HITL / HITL+monitoring / HOTL respectively |
-| transparency:{kind} | `evidence_refs[]` of reasoning-chain hash + downstream `transparency_log:inclusion` |
+| transparency:{kind} | `evidence_refs[]` of reasoning-chain hash + a Transparency Service's Receipt for the statement ([CC 2.6.1.11](part_2_the_grammar.md#2.6.1.11)) |
 | provenance_walk | consumer-side composition (Portal/Verify dashboards) |
 | renamed capacity factors / benchmark categories | canonical wire form + the [CC 8.1.1](#8.1.1) glossary mapping |
 
@@ -1648,7 +1648,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 124 of 190 families.
+A family with no card states none of these beyond the default row. Cards: 122 of 185 families.
 
 **`accord:*`** — Rules, thing
 
@@ -2155,7 +2155,7 @@ Body: `for_key_id`, `period`, `return_token`, `share_index`
 Count: `none`
 
 Fold:
-- `reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader` (CC 4.4.3.37)
+- `reads=own+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader` (CC 4.4.3.37)
 
 **`coherence_standing:{cohort}`** — Confidence, account
 
@@ -2471,7 +2471,7 @@ Fold:
 
 Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `call_fingerprint`, `refs`, `asserted_at`
 
-**`delivery_receipt:{stream_id}`** — Facts, account
+**`delivery_ack:{stream_id}`** — Facts, account
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
@@ -2480,7 +2480,7 @@ Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `call_fingerprin
 Count: `none`
 
 Guard:
-- attest: `one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise` (CC 5.3.3.11)
+- attest: `one stream:head@admitted[attested=leaf:stream_id,val:root=val:chunk_root,val:tree_size>=val:k] else exclude` (CC 5.3.3.11)
 
 Body: `author`, `dimension`, `stream_id`, `epoch`, `k`, `chunk_root`, `asserted_at`
 
@@ -2796,7 +2796,7 @@ Body: `alt_text` (text only), `format` (text only)
 | attest | self | cosigned `accord_majority` | true (always) | true (always) | none |
 | supersede | author | selfAct | false | false | supersede |
 
-Count: `act=group => accord_majority@accord ; none` (CC 3.1.3, CC 4.2.1)
+Count: `act=group => accord_majority@accord ; none` (CC 3.1.3)
 
 Authorship: `act=group => counted ; authored` (CC 3.1.3)
 
@@ -2920,15 +2920,6 @@ Fold:
 In time:
 - on withdrawn(group:roster): read lapsed (CC 4.4.3.12)
 
-**`lineage_witness:{stage}`** — Rules, thing
-
-| Transition | Who signs | Policy | Widens | Confirm | Way back |
-|---|---|---|---|---|---|
-| attest | founder, owner (proposal: founder; acceptance: owner; decline: owner) | selfAct | true (by_scope) | true (if_widens) | withdraw |
-| withdraw | author, subject | selfAct | false | false | attest |
-
-Count: `none` (CC 3.4.10)
-
 **`locality:decision:{scale}`** — Circumstances, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2968,7 +2959,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | member, self (proposal: member; acceptance: self; decline: self; widening: member; removal: member; resignation: self) | cosigned `cosigned_act` | true (always) | true (always) | withdraw |
+| attest | founder, member, self (proposal: founder, member; acceptance: self; decline: self; widening: member; removal: member; resignation: self) | cosigned `cosigned_act` | true (always) | true (always) | withdraw |
 | withdraw | member | cosigned | false | false | attest |
 | supersede | member | cosigned | false | false | supersede |
 
@@ -2982,7 +2973,7 @@ Guard:
 - attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.6)
 - attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
 - attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.6, CC 4.4.3.9, CC 4.4.3.17)
-- attest: `each(subject) when(leaf=widening,type(key,node)) one trust:blessing@landed[attested=key] else exclude` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,type(key,node)) one trust:confers@landed[attested=key] else exclude` (CC 3.1.3.2)
 - attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
 
 Change:
@@ -3553,17 +3544,6 @@ Count: `none`
 
 Guard:
 - supersede: `when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else exclude(serve_transit_pair_rotation_before_rebind)` (CC 3.1.3)
-
-**`trust:blessing`** — Rules, thing
-
-| Transition | Who signs | Policy | Widens | Confirm | Way back |
-|---|---|---|---|---|---|
-| attest | member | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
-| withdraw | member | cosigned `cosigned_act` | false | false | attest |
-
-Count: `cosigned_act@conferrer` (CC 3.1.3)
-
-Authorship: `counted` (CC 3.1.3)
 
 **`trust:{job}:{version}`** — Rules, thing
 

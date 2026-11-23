@@ -147,10 +147,10 @@ key-grant = {
   * tstr => ceg-value,
 }
 
-; delivery_receipt:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.
-delivery-receipt = {
+; delivery_ack:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.
+delivery-ack = {
   "author": identity-ref,                   ; The subscriber, equal to iss and the CWT sub.
-  "dimension": tstr,                        ; delivery_receipt:{stream_id} with its version.
+  "dimension": tstr,                        ; delivery_ack:{stream_id} with its version.
   "stream_id": tstr,                        ; The same stream as the leaf.
   "epoch": uint,                            ; The key-rotation index.
   "k": uint,                                ; The chunk index acknowledged.

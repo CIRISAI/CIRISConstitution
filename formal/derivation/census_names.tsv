@@ -1,0 +1,12 @@
+# Families the vendored census (census_v61.tsv) carries under a name the text does not register.
+# The census is a record of what the shipped store does and is not edited: this table says how each such row is read.
+# fate: retired (the text registers no family of that name; the census row is not read and no family row is made)
+#       renamed (the text registers the family under `family`; the census row is read as that family's)
+# Read by tools/build_family_model.py; a row whose census name is not in the census,
+# or whose name the registry still carries, fails the build.
+census_prefix	fate	family	reason
+delivery_receipt:{stream_id}	renamed	delivery_ack:{stream_id}	renamed in the text with no alias (CC 5.3.3.11); persist v61 still carries the old name
+lineage_witness:{stage}	retired		retired in the text (CC 3.2 T6: a charter names its Transparency Services); persist v61 still carries it
+transparency_log:consistency	retired		retired in the text (CC 3.4.10: a Transparency Service's Receipt carries the proof); persist v61 still carries it
+transparency_log:cosigned:{tree_size}	retired		retired in the text (CC 3.4.10: a Transparency Service's own signed act is its Receipt); persist v61 still carries it
+transparency_log:inclusion	retired		retired in the text (CC 3.4.10: an inclusion proof rides in a Receipt); persist v61 still carries it

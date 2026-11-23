@@ -10,7 +10,7 @@ the rows a host holds, the host owner's key and the host's clock:
 | Function | Answers | CC |
 |---|---|---|
 | `admit` | whether a unit's digest is admitted at a host (whose owner its owner-binding names), with which capabilities, or why not | 2.7.11, 3.1.3, 3.2 |
-| `built_in` | whether a unit runs under the attested build: its manifest names the digest and its pipeline's blessing is held | 2.7.11, 3.1.2.1 |
+| `built_in` | whether a unit runs under the attested build: its manifest names the digest and its pipeline's grant is held | 2.7.11, 3.1.2.1 |
 | `may` | whether an admitted unit may use a capability now: the parent's capabilities, the halt | 2.7.11, 4.2.1.1 |
 | `submit` | whether a host runs a unit another host submitted | 2.7.11 |
 | `halted` | the accord's halt at a host: one holder latches, the fuse, a majority confirms or resumes | 4.2.1.1, 4.2.1.3 |
