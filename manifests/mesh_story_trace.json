@@ -1,10 +1,10 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "f1ff2a0469fe8bd07fe3cb2d21538eb0f5ff6b83a897e635bff291e8e7291598",
+  "transitions_sha256": "9d46f9e328bef848227a3cf7493cbcce3634eaa0a2909ec4b12c746ebc6b5b54",
   "policy_sha256": "96edc650156b080724037c9ac7b6cf42a8386a577fd935713b02b77bd8554eaf",
-  "steps": 120,
-  "rows": 86,
+  "steps": 116,
+  "rows": 84,
   "errors": []
  },
  "steps": [
@@ -711,12 +711,12 @@
   },
   {
    "n": 26,
-   "note": "A stranger tries to acknowledge a chunk of the room's stream: refused, a receipt is a member's",
+   "note": "A stranger tries to acknowledge a chunk of the room's stream: refused, an ack is a member's",
    "actor": "erin",
    "standing": [],
    "view": {
-    "object": "receipt:1",
-    "family": "delivery_receipt:{stream_id}",
+    "object": "ack:1",
+    "family": "delivery_ack:{stream_id}",
     "state_before": null,
     "state_after": "none",
     "atoms": {}
@@ -728,14 +728,14 @@
   },
   {
    "n": 27,
-   "note": "Dave acknowledges a chunk of the room's stream: a current member's receipt",
+   "note": "Dave acknowledges a chunk of the room's stream: a current member's ack",
    "actor": "dave",
    "standing": [
     "member"
    ],
    "view": {
-    "object": "receipt:1",
-    "family": "delivery_receipt:{stream_id}",
+    "object": "ack:1",
+    "family": "delivery_ack:{stream_id}",
     "state_before": "none",
     "state_after": "admitted",
     "atoms": {
@@ -749,10 +749,10 @@
    "refused": false,
    "row": {
     "id": "row22",
-    "family": "delivery_receipt:{stream_id}",
+    "family": "delivery_ack:{stream_id}",
     "verb": "attest",
     "signer": "dave",
-    "object": "receipt:1"
+    "object": "ack:1"
    }
   },
   {
@@ -2381,108 +2381,6 @@
   },
   {
    "n": 88,
-   "note": "Carol tries to propose her own node as a witness: refused, a proposal is a founder's",
-   "actor": "carol",
-   "standing": [
-    "owner"
-   ],
-   "view": {
-    "object": "witness:ask",
-    "family": "lineage_witness:{stage}",
-    "state_before": null,
-    "state_after": "none",
-    "atoms": {
-     "stage": "proposal"
-    }
-   },
-   "queue": [],
-   "chosen": null,
-   "refused": true,
-   "row": null
-  },
-  {
-   "n": 89,
-   "note": "Alice, a founder, proposes Carol's node as a witness of the lineage",
-   "actor": "alice",
-   "standing": [
-    "founder"
-   ],
-   "view": {
-    "object": "witness:ask",
-    "family": "lineage_witness:{stage}",
-    "state_before": "none",
-    "state_after": "admitted",
-    "atoms": {
-     "stage": "proposal",
-     "last_attest_by": "alice"
-    }
-   },
-   "queue": [
-    "attest"
-   ],
-   "chosen": "attest",
-   "refused": false,
-   "row": {
-    "id": "row69",
-    "family": "lineage_witness:{stage}",
-    "verb": "attest",
-    "signer": "alice",
-    "object": "witness:ask"
-   }
-  },
-  {
-   "n": 90,
-   "note": "Alice tries to accept for the node: refused, the answer is the owner's and never a founder's",
-   "actor": "alice",
-   "standing": [
-    "founder"
-   ],
-   "view": {
-    "object": "witness:answer",
-    "family": "lineage_witness:{stage}",
-    "state_before": null,
-    "state_after": "none",
-    "atoms": {
-     "stage": "acceptance"
-    }
-   },
-   "queue": [],
-   "chosen": null,
-   "refused": true,
-   "row": null
-  },
-  {
-   "n": 91,
-   "note": "Carol, the node's owner, accepts",
-   "actor": "carol",
-   "standing": [
-    "owner"
-   ],
-   "view": {
-    "object": "witness:answer",
-    "family": "lineage_witness:{stage}",
-    "state_before": "none",
-    "state_after": "admitted",
-    "atoms": {
-     "stage": "acceptance",
-     "last_attest_by": "carol"
-    }
-   },
-   "queue": [
-    "attest"
-   ],
-   "chosen": "attest",
-   "refused": false,
-   "row": {
-    "id": "row70",
-    "family": "lineage_witness:{stage}",
-    "verb": "attest",
-    "signer": "carol",
-    "object": "witness:answer"
-   }
-  },
-  {
-   "n": 92,
    "note": "Frank tries to revoke Dave's key: refused, the key is not his",
    "actor": "frank",
    "standing": [
@@ -2504,7 +2402,7 @@
    "row": null
   },
   {
-   "n": 93,
+   "n": 89,
    "note": "Dave retires an old key under that key's own signature: recognised because the revoker is the key",
    "actor": "dave",
    "standing": [
@@ -2526,7 +2424,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row71",
+    "id": "row69",
     "family": "key:revocation",
     "verb": "attest",
     "signer": "dave",
@@ -2534,7 +2432,7 @@
    }
   },
   {
-   "n": 94,
+   "n": 90,
    "note": "Bob tries to sign the agent's retirement row: refused, up to retired the row is the agent's own",
    "actor": "bob",
    "standing": [
@@ -2555,7 +2453,7 @@
    "row": null
   },
   {
-   "n": 95,
+   "n": 91,
    "note": "The agent signs its own retirement row",
    "actor": "agent:bob",
    "standing": [
@@ -2577,7 +2475,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row72",
+    "id": "row70",
     "family": "retirement:{state}",
     "verb": "attest",
     "signer": "agent:bob",
@@ -2585,7 +2483,7 @@
    }
   },
   {
-   "n": 96,
+   "n": 92,
    "note": "The agent signs the request to preserve its record, naming the operator and the period",
    "actor": "agent:bob",
    "standing": [
@@ -2607,7 +2505,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row73",
+    "id": "row71",
     "family": "preserve_request",
     "verb": "attest",
     "signer": "agent:bob",
@@ -2615,7 +2513,7 @@
    }
   },
   {
-   "n": 97,
+   "n": 93,
    "note": "The agent tries to answer its own request: refused, the answer is the operator's",
    "actor": "agent:bob",
    "standing": [
@@ -2634,7 +2532,7 @@
    "row": null
   },
   {
-   "n": 98,
+   "n": 94,
    "note": "Heidi, the operator the request names, accepts",
    "actor": "heidi",
    "standing": [
@@ -2655,7 +2553,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row74",
+    "id": "row72",
     "family": "preserve_response",
     "verb": "attest",
     "signer": "heidi",
@@ -2663,7 +2561,7 @@
    }
   },
   {
-   "n": 99,
+   "n": 95,
    "note": "After retired, the agent's key tries a custody row: refused, those are the listed custodian's",
    "actor": "agent:bob",
    "standing": [
@@ -2684,7 +2582,7 @@
    "row": null
   },
   {
-   "n": 100,
+   "n": 96,
    "note": "Ivan, the custodian the retired row lists, signs the custody row",
    "actor": "ivan",
    "standing": [
@@ -2706,7 +2604,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row75",
+    "id": "row73",
     "family": "retirement:{state}",
     "verb": "attest",
     "signer": "ivan",
@@ -2714,7 +2612,7 @@
    }
   },
   {
-   "n": 101,
+   "n": 97,
    "note": "Ivan revises the request: after retired, revisions are the custodian's",
    "actor": "ivan",
    "standing": [
@@ -2736,7 +2634,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row76",
+    "id": "row74",
     "family": "preserve_request",
     "verb": "attest",
     "signer": "ivan",
@@ -2744,7 +2642,7 @@
    }
   },
   {
-   "n": 102,
+   "n": 98,
    "note": "Ivan tries to name his own successor: refused, a replacement is the operator's and the Wise Authority's",
    "actor": "ivan",
    "standing": [
@@ -2765,7 +2663,7 @@
    "row": null
   },
   {
-   "n": 103,
+   "n": 99,
    "note": "Heidi and Grace name a successor in one cosigned row",
    "actor": "heidi",
    "standing": [
@@ -2787,7 +2685,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row77",
+    "id": "row75",
     "family": "retirement:{state}",
     "verb": "attest",
     "signer": "heidi",
@@ -2795,7 +2693,7 @@
    }
   },
   {
-   "n": 104,
+   "n": 100,
    "note": "Heidi tries to open the seal: refused, only a Wise Authority's row opens it",
    "actor": "heidi",
    "standing": [
@@ -2814,7 +2712,7 @@
    "row": null
   },
   {
-   "n": 105,
+   "n": 101,
    "note": "Grace opens the seal for one person's request",
    "actor": "grace",
    "standing": [
@@ -2835,7 +2733,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row78",
+    "id": "row76",
     "family": "archive_release:{basis}",
     "verb": "attest",
     "signer": "grace",
@@ -2843,7 +2741,7 @@
    }
   },
   {
-   "n": 106,
+   "n": 102,
    "note": "Grace tries to record a lawful order to release: refused, that record is the steward's",
    "actor": "grace",
    "standing": [
@@ -2862,7 +2760,7 @@
    "row": null
   },
   {
-   "n": 107,
+   "n": 103,
    "note": "Bob records the order under his own name",
    "actor": "bob",
    "standing": [
@@ -2883,7 +2781,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row79",
+    "id": "row77",
     "family": "lawful_order:release",
     "verb": "attest",
     "signer": "bob",
@@ -2891,7 +2789,7 @@
    }
   },
   {
-   "n": 108,
+   "n": 104,
    "note": "Bob tries to state a duty: refused, the family names no signer, so the transition is shut to everyone",
    "actor": "bob",
    "standing": [
@@ -2911,7 +2809,7 @@
    "row": null
   },
   {
-   "n": 109,
+   "n": 105,
    "note": "Bob tries to carry alone a framed revocation of his old phone: refused, a person's occurrence is revoked by a strict majority of the person's own roster",
    "actor": "bob",
    "standing": [
@@ -2933,7 +2831,7 @@
    "row": null
   },
   {
-   "n": 110,
+   "n": 106,
    "note": "Bob's own roster carries the revocation of his old phone: a strict majority of his live keys",
    "actor": "bob",
    "standing": [
@@ -2955,7 +2853,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row80",
+    "id": "row78",
     "family": "identity:occurrence_revocation",
     "verb": "attest",
     "signer": "bob",
@@ -2963,7 +2861,7 @@
    }
   },
   {
-   "n": 111,
+   "n": 107,
    "note": "Bob revokes the occurrence of his node: its owner",
    "actor": "bob",
    "standing": [
@@ -2985,7 +2883,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row81",
+    "id": "row79",
     "family": "identity:occurrence_revocation",
     "verb": "attest",
     "signer": "bob",
@@ -2993,7 +2891,7 @@
    }
   },
   {
-   "n": 112,
+   "n": 108,
    "note": "Bob tries to re-bind his serve node's transport destination: refused, a re-bind is the accord holders' act",
    "actor": "bob",
    "standing": [
@@ -3013,7 +2911,7 @@
    "row": null
   },
   {
-   "n": 113,
+   "n": 109,
    "note": "The accord holders re-bind the serve node's transport destination, cosigned at the charter's threshold",
    "actor": "alice",
    "standing": [
@@ -3034,7 +2932,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row82",
+    "id": "row80",
     "family": "transport:canonical_rebind",
     "verb": "attest",
     "signer": "alice",
@@ -3042,7 +2940,7 @@
    }
   },
   {
-   "n": 114,
+   "n": 110,
    "note": "A later re-bind by the holders supersedes the first: again their cosigned act, never one holder's",
    "actor": "alice",
    "standing": [
@@ -3064,7 +2962,7 @@
    "chosen": "supersede",
    "refused": false,
    "row": {
-    "id": "row83",
+    "id": "row81",
     "family": "transport:canonical_rebind",
     "verb": "supersede",
     "signer": "alice",
@@ -3072,7 +2970,7 @@
    }
   },
   {
-   "n": 115,
+   "n": 111,
    "note": "A stranger tries to publish Dave's rough location: refused, only the subject signs it",
    "actor": "erin",
    "standing": [],
@@ -3089,7 +2987,7 @@
    "row": null
   },
   {
-   "n": 116,
+   "n": 112,
    "note": "Dave publishes his own rough location to join a geographic community: the subject's own row",
    "actor": "dave",
    "standing": [
@@ -3110,7 +3008,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row84",
+    "id": "row82",
     "family": "location_proof:{version}",
     "verb": "attest",
     "signer": "dave",
@@ -3118,16 +3016,16 @@
    }
   },
   {
-   "n": 117,
-   "note": "Bob tries to bless his build pipeline's key: refused, a blessing is the conferring roster's act",
+   "n": 113,
+   "note": "Bob tries to grant his build pipeline's key the root's infra:attest: refused, a grant from the root is its holders' act",
    "actor": "bob",
    "standing": [
     "owner",
     "registered"
    ],
    "view": {
-    "object": "bless:ci",
-    "family": "trust:blessing",
+    "object": "grant:ci",
+    "family": "trust:{job}:{version}",
     "state_before": null,
     "state_after": "none",
     "atoms": {}
@@ -3138,37 +3036,37 @@
    "row": null
   },
   {
-   "n": 118,
-   "note": "The accord holders bless the pipeline's key with infra:attest, counted at a strict majority of their roster",
+   "n": 114,
+   "note": "The accord holders grant the pipeline's key infra:attest: a trust:confers row counted at a strict majority of the holders of the bundle in force",
    "actor": "alice",
    "standing": [
-    "holder",
-    "member"
+    "self",
+    "holder"
    ],
    "view": {
-    "object": "bless:ci",
-    "family": "trust:blessing",
+    "object": "grant:ci",
+    "family": "trust:{job}:{version}",
     "state_before": "none",
     "state_after": "admitted",
     "atoms": {
-     "last_attest_by": "alice"
+     "last_authorize_by": "alice"
     }
    },
    "queue": [
-    "attest"
+    "authorize"
    ],
-   "chosen": "attest",
+   "chosen": "authorize",
    "refused": false,
    "row": {
-    "id": "row85",
-    "family": "trust:blessing",
-    "verb": "attest",
+    "id": "row83",
+    "family": "trust:{job}:{version}",
+    "verb": "authorize",
     "signer": "alice",
-    "object": "bless:ci"
+    "object": "grant:ci"
    }
   },
   {
-   "n": 119,
+   "n": 115,
    "note": "Erin, no member of the reviewing group, tries to add her voice to its admission of a unit: refused",
    "actor": "erin",
    "standing": [
@@ -3187,7 +3085,7 @@
    "row": null
   },
   {
-   "n": 120,
+   "n": 116,
    "note": "Bob admits a unit that only computes, for one day, under his own key",
    "actor": "bob",
    "standing": [
@@ -3208,7 +3106,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row86",
+    "id": "row84",
     "family": "admission:unit",
     "verb": "attest",
     "signer": "bob",

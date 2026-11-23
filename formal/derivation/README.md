@@ -53,9 +53,9 @@ pointing elsewhere is a row of its own, so the table counts repeats.
 The cut-candidates table gives `file`, `line_start`, `line_end`, `kind` (`rationale`,
 `restated_block`, `informative`, `example`, `duplicate_table`, `history`), `bytes` and a note.
 
-Headline numbers: 4,503 statements (Part 3 1,543, Part 4 959, Part 5 659, Part 2 570, Part 6 227,
-Part 8 232, Part 1 155, Part 7 158); by scope family 1,896, kernel 1,426, mechanism 757, foundation 218,
-stewardship 206; by role states 3,492, restates 697, applies 246, exception 67, reason 1. 206 cut-candidate
+Headline numbers: 4,488 statements (Part 3 1,534, Part 4 958, Part 5 654, Part 2 570, Part 6 227,
+Part 8 232, Part 1 155, Part 7 158); by scope family 1,887, kernel 1,425, mechanism 752, foundation 218,
+stewardship 206; by role states 3,481, restates 695, applies 244, exception 67, reason 1. 206 cut-candidate
 blocks, about 260 KB.
 
 Caveats: twelve readers each took one line range, so a rule stated in two ranges may carry two
@@ -118,13 +118,17 @@ Part 3 heading, a resolving form stops resolving, or any answer changes. `--writ
 changed answer once it has been read; `--extract <dir>` rebuilds both tables from a checkout of
 the mapping.
 
-Readings: 26 of the 27 stems have registered families; the 27th (`accountability`) is structural
-and its evidence is the audit chain. Of 1,344 mapped lines 1,027 resolve (*Magnifica Humanitas*
-295, EU 208, IEEE 348, ASEAN 176). The 317 that do not are forms the mapping wrote to an earlier
-arity or case: a `method:` form without its rung or version segment, a `transparency_log:` or
-`attestation:` leaf beyond the registered ones, an upper-case segment, a `consent:` or
-`prohibited:` leaf the closed vocabularies do not carry. Those are for the mapping to relabel;
-the check holds them at their present answer so a change in either direction is seen.
+Readings: 25 of the 27 stems have registered families. Two are structural: `accountability`,
+whose evidence is the audit chain, and `transparency_log`, whose evidence is a Transparency
+Service's Receipt and whose anchor is the signed head a service registers (`stream:head`). Of
+1,344 mapped lines 1,024 resolve (*Magnifica Humanitas* 293, EU 207, IEEE 348, ASEAN 176). The
+320 that do not are forms the mapping wrote to an earlier arity or case: a `method:` form
+without its rung or version segment, a `transparency_log:` or `attestation:` leaf beyond the
+registered ones, an upper-case segment, a `consent:` or `prohibited:` leaf the closed
+vocabularies do not carry. Three of them name a retired `transparency_log` family
+(`inclusion`, `consistency`), and each carries a note that says what carries the claim. Those
+are for the mapping to relabel; the check holds them at their present answer so a change in
+either direction is seen.
 
 ## Consolidation findings and text conflicts
 

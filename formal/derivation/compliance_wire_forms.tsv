@@ -151,8 +151,8 @@ MH	testimonial_witness:displaced_person	1	testimonial_witness:{kind}	resolves
 MH	testimonial_witness:displaced_worker	4	testimonial_witness:{kind}	resolves	
 MH	testimonial_witness:historical_moral_transformation	1	testimonial_witness:{kind}	resolves	
 MH	testimonial_witness:war_victim	2	testimonial_witness:{kind}	resolves	
-MH	transparency_log:consistency	1	transparency_log:consistency	resolves	
-MH	transparency_log:inclusion	1	transparency_log:inclusion	resolves	
+MH	transparency_log:consistency	1		namespace_family_unregistered	retired: a consistency proof is a Transparency Service's own material beside a head (CC 5.3.1), which is no row and has no dimension
+MH	transparency_log:inclusion	1		namespace_family_unregistered	retired: an inclusion proof rides in a Transparency Service's Receipt for the statement (CC 2.6.1.11), which is no row and has no dimension
 MH	witness_diversity:<catholicity-contribution-id>	1	witness_diversity:{contribution_id}	resolves	
 MH	witness_diversity:<signs-of-times-contribution-id>	1	witness_diversity:{contribution_id}	resolves	
 MH	witness_diversity:species-discernment-on-AI	1	witness_diversity:{contribution_id}	resolves	
@@ -348,7 +348,7 @@ EU	testimonial_witness:impacted_worker	1	testimonial_witness:{kind}	resolves
 EU	transparency_log:business_model_disclosure	1		open	
 EU	transparency_log:data_lifecycle_documentation	1		open	
 EU	transparency_log:external_feedback_channel	1		open	
-EU	transparency_log:inclusion	1	transparency_log:inclusion	resolves	
+EU	transparency_log:inclusion	1		namespace_family_unregistered	retired: an inclusion proof rides in a Transparency Service's Receipt for the statement (CC 2.6.1.11), which is no row and has no dimension
 EU	transparency_log:scoring_process_disclosure	1		open	
 EU	witness_diversity:stakeholder_consultation	1	witness_diversity:{contribution_id}	resolves	
 EU	witness_diversity:stakeholder_panels	1	witness_diversity:{contribution_id}	resolves	

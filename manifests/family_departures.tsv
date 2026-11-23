@@ -251,15 +251,6 @@ trace:{form}:{version}	subject_rule	own_record	{"kind": "cardinality >= 1, subje
 trace:{form}:{version}	projection	trace_store_columns	{"rebuild": "none", "table": "trace_events + trace_llm_calls"}
 trace:{form}:{version}	erasure_route	trace_signer_erases	["dsar (trace corpus hard delete)", "purge"]
 transport:canonical_rebind	cosign_rule	quorum	"holder quorum (CC 5.3.4)"
-trust:blessing	placement	unbuilt	null
-trust:blessing	subject_rule	unbuilt	null
-trust:blessing	cosign_rule	unbuilt	null
-trust:blessing	freshness	unbuilt	null
-trust:blessing	lifecycle	unbuilt	null
-trust:blessing	replication	unbuilt	null
-trust:blessing	projection	unbuilt	null
-trust:blessing	erasure_route	unbuilt	null
-trust:blessing	governance	unbuilt	null
 trust:{job}:{version}	subject_rule	trust_edge_is_a_delegation	"delegation term required, no cycle, node agency scopes infra-only"
 trust:{job}:{version}	cosign_rule	quorum	"family charter witness quorum (check_charter_witness_quorum)"
 trust:{job}:{version}	freshness	standing_at_signing	{"W": "attach freshness window W (check_attach_freshness, CC 2.6.7); charter/cycle read received_at", "judged_at": "signed_instant_with_W"}

@@ -13,15 +13,18 @@ FATES = {"rename", "retire", "keep", "new", "open"}
 PARTS = ["part_2_the_grammar", "part_3_the_namespace", "part_4_composition_governance", "part_5_transport_substrate"]
 
 
-def found():
+def found(every=False):
+    """The names of the three surfaces that carry one of the plane's words; with `every`, all the names of those
+    surfaces, which is where a rename's new name is looked for (a new name need not carry one of the words)."""
     out = set()
+    keep = (lambda name: True) if every else WORDS.search
     reg = json.load(open(os.path.join(ROOT, "manifests", "namespace_registry.json"), encoding="utf-8"))
-    out |= {("family", f["prefix"]) for f in reg["families"] if WORDS.search(f["prefix"])}
+    out |= {("family", f["prefix"]) for f in reg["families"] if keep(f["prefix"])}
     for l in open(os.path.join(ROOT, "constitution", "signed_object_v2.tsv"), encoding="utf-8"):
         c = l.rstrip("\n").split("\t")
-        if len(c) > 3 and c[2].startswith('"') and WORDS.search(c[2]): out.add(("member", f"{c[1]} {c[2].strip(chr(34))}"))
+        if len(c) > 3 and c[2].startswith('"') and keep(c[2]): out.add(("member", f"{c[1]} {c[2].strip(chr(34))}"))
     text = "".join(open(os.path.join(ROOT, "constitution", p + ".md"), encoding="utf-8").read() for p in PARTS)
-    out |= {("token", t) for t in re.findall(r"`([a-z][a-z0-9_]{5,})`", text) if WORDS.search(t)}
+    out |= {("token", t) for t in re.findall(r"`([a-z][a-z0-9_]{5,})`", text) if keep(t)}
     return out
 
 
@@ -36,7 +39,7 @@ def main():
         if fate not in FATES: errs.append(f"{surface} {name}: unknown fate {fate}")
         if (fate == "rename") != bool(new): errs.append(f"{surface} {name}: a rename names its new name, and nothing else does")
         if not sense: errs.append(f"{surface} {name}: no sense given")
-    seen = found()
+    seen, stands = found(), found(every=True)
     news = {(s2, new) for (s2, n), (fate, new) in table.items() if fate == "rename"}
     for k in sorted(seen - set(table)):
         if (k[0], k[1].split(" ")[-1]) in news: continue   # the new name of a rename that has landed
@@ -45,7 +48,7 @@ def main():
         fate, new = table[k]
         if fate == "retire": continue                      # a retired name is gone from every surface once the retirement lands
         if fate == "rename":                               # a renamed name is gone once its new name stands on the same surface
-            if any(s2 == k[0] and n.split(" ")[-1] == new for (s2, n) in seen): continue
+            if any(s2 == k[0] and n.split(" ")[-1] == new for (s2, n) in stands): continue
             errs.append(f"{k[0]} {k[1]}: gone from every surface and its new name {new} stands on none"); continue
         errs.append(f"{k[0]} {k[1]}: the table names it and no surface carries it")
     for (surface, name), (fate, new) in table.items():

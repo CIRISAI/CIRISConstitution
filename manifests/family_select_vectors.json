@@ -1,7 +1,7 @@
 {
  "_meta": {
   "cc_version": "1.0-rc22",
-  "family_model_sha256": "51d4b30b02c0269a8e0706beec3434c138c08b15d21e7eb1c137eeba552cc0a8",
+  "family_model_sha256": "e62e45ae9cb765b1761179db5fa8e6448cc5880fbdf8115dc74108106e15e98e",
   "generator": "tools/cc_family_select.py",
   "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` equals ctx `sub`, false when it differs, `unknown` when either is absent. A vector with `voice` offers a statement in that role over the row: `admits` is true only when the second_signers answer names the role",
   "keys": {
@@ -16,7 +16,7 @@
   },
   "counts": {
    "false_beats_unknown": 8,
-   "holds": 90,
+   "holds": 87,
    "no_arm": 2,
    "not_holds": 68,
    "order": 2,
@@ -1198,18 +1198,6 @@
    "decided_by": 0,
    "kind": "not_holds",
    "why": "the `*` arm holds for every row, and an earlier arm decides first"
-  },
-  {
-   "family": "lineage_witness:{stage}",
-   "cell": "count",
-   "dimension": "lineage_witness:proposal:v1",
-   "matcher_family": "lineage_witness:{stage}",
-   "leaf": "proposal",
-   "ctx": {},
-   "expect": "none",
-   "decided_by": 0,
-   "kind": "holds",
-   "why": "arm 0 (*) is the first that holds"
   },
   {
    "family": "location_proof:{version}",
@@ -2857,30 +2845,6 @@
    "cell": "authorship",
    "dimension": "transport:canonical_rebind:v1",
    "matcher_family": "transport:canonical_rebind",
-   "leaf": "",
-   "ctx": {},
-   "expect": "counted",
-   "decided_by": 0,
-   "kind": "holds",
-   "why": "arm 0 (*) is the first that holds"
-  },
-  {
-   "family": "trust:blessing",
-   "cell": "count",
-   "dimension": "trust:blessing:v1",
-   "matcher_family": "trust:blessing",
-   "leaf": "",
-   "ctx": {},
-   "expect": "cosigned_act@conferrer",
-   "decided_by": 0,
-   "kind": "holds",
-   "why": "arm 0 (*) is the first that holds"
-  },
-  {
-   "family": "trust:blessing",
-   "cell": "authorship",
-   "dimension": "trust:blessing:v1",
-   "matcher_family": "trust:blessing",
    "leaf": "",
    "ctx": {},
    "expect": "counted",

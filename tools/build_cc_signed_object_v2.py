@@ -84,7 +84,7 @@ OBJECTS = [
     ("takedown", "A takedown notice: the payload of a `takedown_notice:{basis}` row"),
     ("custody", "A custody report: the payload of a `custody:{kind}` row"),
     ("key_grant", "A key grant: the payload of a `key_grant:{axis}` row"),
-    ("receipt", "A delivery receipt: the payload of a `delivery_receipt:{stream_id}` row"),
+    ("delivery_ack", "A delivery ack: the payload of a `delivery_ack:{stream_id}` row"),
     ("trust_accepts", "An acceptance edge: the members this form names of a `trust:accepts` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
     ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
@@ -576,8 +576,8 @@ def family_payloads():
         "trust-accepts": ("trust:accepts", {
             "author": iref(0), "dimension": "trust:accepts:v1", "trust_classes": ["transparency"],
             "service_key": {1: 2, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32)}, "asserted_at": t}),
-        "delivery-receipt": ("delivery_receipt:.stream_id", {
-            "author": iref(1), "dimension": "delivery_receipt:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
+        "delivery-ack": ("delivery_ack:.stream_id", {
+            "author": iref(1), "dimension": "delivery_ack:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
             "chunk_root": dig, "asserted_at": t}),
     }
 
@@ -667,9 +667,9 @@ def family_payload_samples():
         ("trust-accepts", "a transparency edge carrying its service's COSE key", cde(family_payloads()["trust-accepts"][1]), [
             ("a service key that is a key id, not an identity reference", cde(dict(family_payloads()["trust-accepts"][1], service_key="A1"))),
             ("a trust depth of 6", cde(dict(family_payloads()["trust-accepts"][1], trust_depth=6)))]),
-        ("delivery-receipt", "delivery_receipt:{stream_id} payload", cde(P["delivery-receipt"]), [
-            ("a receipt with no chunk index", D("delivery-receipt", "k")),
-            ("a chunk root as bare bytes", W("delivery-receipt", chunk_root=bytes(32)))]),
+        ("delivery-ack", "delivery_ack:{stream_id} payload", cde(P["delivery-ack"]), [
+            ("an ack with no chunk index", D("delivery-ack", "k")),
+            ("a chunk root as bare bytes", W("delivery-ack", chunk_root=bytes(32)))]),
     ]
 
 
@@ -703,7 +703,7 @@ def family_payload_rule(root, p, family=None):
                 "stream": ("stream_id", "epoch", "owner")}.get(p.get("axis"), ())
         if _segment(dim, 1) != p.get("axis") or any(m not in p for m in need):
             return PAYLOAD_INVALID
-    if root == "delivery-receipt" and _segment(dim, 1) != p.get("stream_id"):
+    if root == "delivery-ack" and _segment(dim, 1) != p.get("stream_id"):
         return PAYLOAD_INVALID
     if root == "takedown-notice":
         if _segment(dim, 1) != p.get("legal_basis") or (p.get("legal_basis") == "steward_purge" and "author" in p):
@@ -831,7 +831,7 @@ def family_payload_rule_checks():
         ("custody-ack", _without(P["custody-ack"][1], "size"), None),
         ("key-grant", _without(P["key-grant"][1], "minter"), None),
         ("key-grant", dict(P["key-grant"][1], dimension="key_grant:content:v1"), None),
-        ("delivery-receipt", dict(P["delivery-receipt"][1], stream_id="s2"), None),
+        ("delivery-ack", dict(P["delivery-ack"][1], stream_id="s2"), None),
         ("takedown-notice", dict(P["takedown-notice"][1], dimension="takedown_notice:steward_purge:v1",
                                  legal_basis="steward_purge"), None),
         ("group-roster", dict(P["group-roster"][1], version=1), None),
@@ -884,7 +884,7 @@ def family_cddl_checks(text, ftext):
 
 
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
-FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "receipt",
+FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "delivery_ack",
                   "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
@@ -898,7 +898,7 @@ FAMILY_RULE_HEAD = {
     "takedown-notice": "takedown_notice:{basis}: authored, or counted on a steward purge; sub is the claimant.",
     "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
     "key-grant": "key_grant:{axis}: authored by the sealer; sub is the recipient.",
-    "delivery-receipt": "delivery_receipt:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
+    "delivery-ack": "delivery_ack:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
     "trust-accepts": "trust:accepts (CC 4.4.3.34, CC 2.7.11): the reader's own edge; the members this form names, its further members are the store's.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",

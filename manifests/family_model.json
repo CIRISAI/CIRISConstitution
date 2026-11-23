@@ -3,8 +3,40 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "a9a34e01253978bb3151c7cf916039770e03d93e7953a967aeb1576f307f981d",
+  "registry_sha256": "2f8ea2e29e67b12dd7b5a751e26c78ba442ff1f319ad88ecb05f58015b45f960",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
+  "census_names": {
+   "source": "formal/derivation/census_names.tsv",
+   "rows": [
+    {
+     "census_prefix": "delivery_receipt:{stream_id}",
+     "fate": "renamed",
+     "family": "delivery_ack:{stream_id}",
+     "reason": "renamed in the text with no alias (CC 5.3.3.11); persist v61 still carries the old name"
+    },
+    {
+     "census_prefix": "lineage_witness:{stage}",
+     "fate": "retired",
+     "reason": "retired in the text (CC 3.2 T6: a charter names its Transparency Services); persist v61 still carries it"
+    },
+    {
+     "census_prefix": "transparency_log:consistency",
+     "fate": "retired",
+     "reason": "retired in the text (CC 3.4.10: a Transparency Service's Receipt carries the proof); persist v61 still carries it"
+    },
+    {
+     "census_prefix": "transparency_log:cosigned:{tree_size}",
+     "fate": "retired",
+     "reason": "retired in the text (CC 3.4.10: a Transparency Service's own signed act is its Receipt); persist v61 still carries it"
+    },
+    {
+     "census_prefix": "transparency_log:inclusion",
+     "fate": "retired",
+     "reason": "retired in the text (CC 3.4.10: an inclusion proof rides in a Receipt); persist v61 still carries it"
+    }
+   ],
+   "reading": "a census row whose name the text does not register: retired is not read and makes no family row; renamed is read as the text's family"
+  },
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
    "side": "thing | account (a function of kind)",
@@ -38,10 +70,10 @@
    "binds_segment": "placeholder → signer | subject | group | none; a segment of class literal, vocab or external names no key (formal/derivation/confers_text.tsv)",
    "evidence": "{claim_ids, refusal tokens}"
   },
-  "families": 190,
+  "families": 185,
   "coverage": {
    "kind": {
-    "cc-table": 190,
+    "cc-table": 185,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -49,7 +81,7 @@
     "gap": 0
    },
    "side": {
-    "cc-table": 190,
+    "cc-table": 185,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -57,7 +89,7 @@
     "gap": 0
    },
    "verbs": {
-    "cc-table": 190,
+    "cc-table": 185,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -65,7 +97,7 @@
     "gap": 0
    },
    "maintains_record": {
-    "cc-table": 190,
+    "cc-table": 185,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -73,7 +105,7 @@
     "gap": 0
    },
    "reference": {
-    "cc-table": 190,
+    "cc-table": 185,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -81,16 +113,16 @@
     "gap": 0
    },
    "placement": {
-    "cc-table": 168,
+    "cc-table": 164,
     "code-v61": 9,
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 6
+    "gap": 5
    },
    "signer_rule": {
-    "cc-table": 53,
-    "code-v61": 115,
+    "cc-table": 51,
+    "code-v61": 112,
     "generic": 0,
     "prose": 16,
     "mixed": 6,
@@ -106,14 +138,14 @@
    },
    "subject_rule": {
     "cc-table": 0,
-    "code-v61": 164,
+    "code-v61": 160,
     "generic": 0,
     "prose": 0,
     "mixed": 13,
-    "gap": 13,
+    "gap": 12,
     "sub_cells": {
      "cc-table": 0,
-     "code-v61": 941,
+     "code-v61": 917,
      "generic": 0,
      "prose": 13,
      "mixed": 0,
@@ -121,16 +153,16 @@
     }
    },
    "cosign_rule": {
-    "cc-table": 8,
-    "code-v61": 169,
+    "cc-table": 7,
+    "code-v61": 166,
     "generic": 0,
     "prose": 6,
     "mixed": 1,
-    "gap": 6
+    "gap": 5
    },
    "polarity": {
-    "cc-table": 9,
-    "code-v61": 181,
+    "cc-table": 8,
+    "code-v61": 177,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
@@ -142,26 +174,26 @@
     "generic": 0,
     "prose": 26,
     "mixed": 0,
-    "gap": 106
+    "gap": 101
    },
    "freshness": {
     "cc-table": 0,
     "code-v61": 0,
-    "generic": 174,
+    "generic": 170,
     "prose": 7,
     "mixed": 0,
-    "gap": 9
+    "gap": 8
    },
    "lifecycle": {
     "cc-table": 0,
-    "code-v61": 181,
+    "code-v61": 177,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 9,
+    "gap": 8,
     "sub_cells": {
      "cc-table": 0,
-     "code-v61": 880,
+     "code-v61": 860,
      "generic": 0,
      "prose": 0,
      "mixed": 0,
@@ -173,27 +205,27 @@
     "code-v61": 5,
     "generic": 0,
     "prose": 0,
-    "mixed": 176,
-    "gap": 9,
+    "mixed": 172,
+    "gap": 8,
     "sub_cells": {
      "cc-table": 0,
-     "code-v61": 522,
+     "code-v61": 510,
      "generic": 0,
      "prose": 6,
      "mixed": 0,
-     "gap": 176
+     "gap": 172
     }
    },
    "projection": {
     "cc-table": 0,
-    "code-v61": 181,
+    "code-v61": 177,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 9,
+    "gap": 8,
     "sub_cells": {
      "cc-table": 0,
-     "code-v61": 352,
+     "code-v61": 344,
      "generic": 0,
      "prose": 0,
      "mixed": 0,
@@ -202,11 +234,11 @@
    },
    "erasure_route": {
     "cc-table": 0,
-    "code-v61": 181,
+    "code-v61": 177,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 9
+    "gap": 8
    },
    "names_head": {
     "cc-table": 0,
@@ -238,36 +270,36 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 9
+    "gap": 8
    },
    "governance": {
     "cc-table": 1,
-    "code-v61": 181,
+    "code-v61": 177,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 8
+    "gap": 7
    },
    "fold": {
     "cc-table": 76,
     "code-v61": 0,
-    "generic": 114,
+    "generic": 109,
     "prose": 0,
     "mixed": 0,
     "gap": 0
    },
    "count": {
-    "cc-table": 26,
+    "cc-table": 24,
     "code-v61": 0,
-    "generic": 160,
+    "generic": 157,
     "prose": 0,
     "mixed": 0,
     "gap": 4
    },
    "authorship": {
-    "cc-table": 26,
+    "cc-table": 25,
     "code-v61": 0,
-    "generic": 164,
+    "generic": 160,
     "prose": 0,
     "mixed": 0,
     "gap": 0
@@ -275,7 +307,7 @@
    "second_signers": {
     "cc-table": 8,
     "code-v61": 0,
-    "generic": 182,
+    "generic": 177,
     "prose": 0,
     "mixed": 0,
     "gap": 0
@@ -286,10 +318,10 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 187
+    "gap": 182
    },
    "read_by": {
-    "cc-table": 190,
+    "cc-table": 185,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -297,34 +329,34 @@
     "gap": 0
    },
    "confers": {
-    "cc-table": 165,
-    "code-v61": 0,
-    "generic": 0,
-    "prose": 0,
-    "mixed": 0,
-    "gap": 25
-   },
-   "binds_segment": {
     "cc-table": 161,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 29
+    "gap": 24
    },
-   "evidence": {
-    "cc-table": 0,
-    "code-v61": 57,
+   "binds_segment": {
+    "cc-table": 157,
+    "code-v61": 0,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 133
+    "gap": 28
+   },
+   "evidence": {
+    "cc-table": 0,
+    "code-v61": 55,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 130
    }
   },
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
-   "cells_cited": 393,
-   "citations": 567,
+   "cells_cited": 389,
+   "citations": 563,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "placement": {
@@ -443,7 +475,7 @@
      "quote": "A row carries its audience to the rows it names, when it is concluded, sits in the same room as the row it names, and its signer is already in that row's audience."
     }
    ],
-   "families_on_the_default": 147,
+   "families_on_the_default": 143,
    "reading": "a placement cell with rule default is the scope each row carries, chosen by its emitter; the audience of a row is the scopes entry for its cohort_scope; copy states whose audience a row joins because another row names it"
   },
   "body": {
@@ -616,23 +648,23 @@
   },
   "conferral": {
    "confers": {
-    "default": 139,
-    "gap": 25,
-    "shape": 21,
+    "default": 136,
+    "gap": 24,
+    "shape": 20,
     "stated": 5
    },
    "binds_segment": {
-    "class": 159,
-    "gap": 29,
+    "class": 155,
+    "gap": 28,
     "stated": 2
    },
    "derived": {
-    "gap": 187,
+    "gap": 182,
     "stated": 3
    },
    "read_by": {
-    "cells": 108,
-    "default": 82
+    "cells": 106,
+    "default": 79
    },
    "read_by_default": {
     "every_family": [
@@ -784,15 +816,15 @@
   "authorship": {
    "source": "formal/derivation/authorship_text.tsv",
    "families": {
-    "authored": 170,
+    "authored": 166,
     "subject": 1,
-    "counted": 4,
+    "counted": 3,
     "mixed": 15,
     "gap": 0
    },
    "second_signers": {
     "families_with_roles": 8,
-    "families_author_only": 182,
+    "families_author_only": 177,
     "roles": 11,
     "roles_without_member": 0
    },
@@ -846,9 +878,9 @@
     "erasure_route": "purge (steward purge on a cosigned notice); legal_hold: none in code",
     "governance": "none"
    },
-   "families_on_it": 99,
+   "families_on_it": 95,
    "families_by_departures": {
-    "0": 99,
+    "0": 95,
     "1": 43,
     "2": 9,
     "3": 16,
@@ -857,7 +889,7 @@
     "6": 7,
     "7": 1,
     "8": 4,
-    "9": 5
+    "9": 4
    },
    "reading": "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone"
   },
@@ -869,7 +901,7 @@
      "when": "The store holds no rows of the family: the census read no cell for it, or the family is held shut.",
      "why": "Its cells are unread, not different. When the family is built each cell sits on the default or takes a reason of its own.",
      "basis": "census",
-     "cells": 107
+     "cells": 98
     },
     {
      "id": "key",
@@ -19168,7 +19200,7 @@
    "fold": {
     "value": [
      {
-      "fold": "reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader",
+      "fold": "reads=own+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader",
       "cc_ref": [
        "CC 4.4.3.37"
       ]
@@ -32218,7 +32250,7 @@
    "because": {}
   },
   {
-   "family": "delivery_receipt:{stream_id}",
+   "family": "delivery_ack:{stream_id}",
    "kind": {
     "value": "Facts",
     "source": "cc-table",
@@ -32335,7 +32367,7 @@
    },
    "body": {
     "value": {
-     "rule": "delivery-receipt",
+     "rule": "delivery-ack",
      "members": [
       {
        "member": "author",
@@ -32554,7 +32586,7 @@
     "by": [
      {
       "grammar": "guard",
-      "cell": "formal/derivation/guard_text.tsv#delivery_receipt:{stream_id} (CC 5.3.3.11)",
+      "cell": "formal/derivation/guard_text.tsv#delivery_ack:{stream_id} (CC 5.3.3.11)",
       "answers": [
        "state",
        "may"
@@ -47601,7 +47633,7 @@
      {
       "when": "act=group",
       "doors": "accord_majority@accord",
-      "cc_ref": "CC 4.2.1"
+      "cc_ref": "CC 3.1.3"
      },
      {
       "when": "*",
@@ -51292,419 +51324,6 @@
      "adverse"
     ]
    }
-  },
-  {
-   "family": "lineage_witness:{stage}",
-   "kind": {
-    "value": "Rules",
-    "source": "cc-table",
-    "confidence": "M"
-   },
-   "side": {
-    "value": "thing",
-    "source": "cc-table"
-   },
-   "verbs": {
-    "value": [
-     "attest",
-     "withdraw"
-    ],
-    "source": "cc-table"
-   },
-   "maintains_record": {
-    "value": false,
-    "source": "cc-table"
-   },
-   "reference": {
-    "value": null,
-    "source": "cc-table"
-   },
-   "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "cc-table",
-    "cc_ref": "CC 3.4.5.1",
-    "rule": "default",
-    "code": {
-     "value": [
-      "self_collective",
-      "targeted_family",
-      "targeted_room",
-      "commons"
-     ],
-     "source": "gap",
-     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
-    }
-   },
-   "signer_rule": {
-    "value": {
-     "proposal": "founder x none x {}",
-     "acceptance": "owner_of_subject x none x {}",
-     "decline": "owner_of_subject x none x {}"
-    },
-    "source": "cc-table",
-    "per_stage": true,
-    "closed": "proposal: founder x none x {}; acceptance: owner_of_subject x none x {}; decline: owner_of_subject x none x {}",
-    "cc_ref": {
-     "proposal": "CC 3.1.3",
-     "acceptance": "CC 3.1.3",
-     "decline": "CC 3.1.3"
-    },
-    "code": {
-     "value": "any_registered (family gate not built)",
-     "source": "gap"
-    },
-    "qualifier": {
-     "proposal": "an active founder of the lineage named",
-     "acceptance": "the owner of the node named, never the node and never a founder",
-     "decline": "the owner of the node named, never the node and never a founder"
-    },
-    "cites": [
-     {
-      "cc_ref": "CC 3.1.3",
-      "reading": "agree"
-     }
-    ]
-   },
-   "subject_rule": {
-    "value": {
-     "kind": "any",
-     "cardinality": "any",
-     "must_be_registered": "attested yes, subjects no",
-     "for_key_id": "none",
-     "in_audience": "no",
-     "attested_party": "Targeted only"
-    },
-    "source": "code-v61",
-    "parts": {
-     "kind": {
-      "value": "any",
-      "source": "code-v61"
-     },
-     "cardinality": {
-      "value": "any",
-      "source": "code-v61"
-     },
-     "must_be_registered": {
-      "value": "attested yes, subjects no",
-      "source": "code-v61"
-     },
-     "for_key_id": {
-      "value": "none",
-      "source": "code-v61"
-     },
-     "in_audience": {
-      "value": "no",
-      "source": "code-v61"
-     },
-     "attested_party": {
-      "value": "Targeted only",
-      "source": "code-v61",
-      "note": "Targeted only (AV-84, cohort_standing_core)"
-     }
-    }
-   },
-   "cosign_rule": {
-    "value": "none",
-    "source": "cc-table",
-    "cc_ref": "CC 3.4.10",
-    "code": {
-     "value": "lineage_witness.rs gates the cosign object, not this row",
-     "source": "gap"
-    }
-   },
-   "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
-   },
-   "freshness": {
-    "value": {
-     "judged_at": "receipt",
-     "W": null
-    },
-    "source": "generic",
-    "closed": "receipt future-skew <=5 min, us resolution",
-    "note": "receipt future-skew <=5 min, us resolution (check_instant_binding); no W; s3: signed instants .sssZ only (signed_instant_form_violation)",
-    "s3": "signed instants .sssZ only (signed_instant_form_violation)"
-   },
-   "lifecycle": {
-    "value": {
-     "withdraws_by": "{attester, subject}",
-     "retraction_class": "peer",
-     "supersedes": "same_attester",
-     "expires": "expires_at honoured",
-     "rotation_on_removal": "no"
-    },
-    "source": "code-v61",
-    "parts": {
-     "withdraws_by": {
-      "value": "{attester, subject}",
-      "source": "code-v61",
-      "note": "{attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary)"
-     },
-     "retraction_class": {
-      "value": "peer",
-      "source": "code-v61"
-     },
-     "supersedes": {
-      "value": "same_attester",
-      "source": "code-v61",
-      "note": "same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes)"
-     },
-     "expires": {
-      "value": "expires_at honoured",
-      "source": "code-v61"
-     },
-     "rotation_on_removal": {
-      "value": "no",
-      "source": "code-v61"
-     }
-    }
-   },
-   "replication": {
-    "value": {
-     "tier": [
-      "local",
-      "federation"
-     ],
-     "audience": {
-      "self_collective": "owner's nodes",
-      "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
-      "commons": "everyone"
-     },
-     "non_recipient": null,
-     "held": "settle_on_key"
-    },
-    "source": "mixed",
-    "parts": {
-     "tier": {
-      "value": [
-       "local",
-       "federation"
-      ],
-      "source": "code-v61",
-      "closed": "local | federation",
-      "note": "local | federation"
-     },
-     "audience": {
-      "value": {
-       "self_collective": "owner's nodes",
-       "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
-       "commons": "everyone"
-      },
-      "source": "code-v61",
-      "closed": "by cohort_scope: self_collective -> owner's nodes",
-      "note": "by cohort_scope: self_collective -> owner's nodes; targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id); commons -> everyone"
-     },
-     "non_recipient": {
-      "value": null,
-      "source": "gap",
-      "note": "on release-61 (a delivered row is stored); s2: drop (#1148)",
-      "s2": "drop (#1148)"
-     },
-     "held": {
-      "value": "settle_on_key",
-      "source": "code-v61",
-      "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
-     }
-    }
-   },
-   "projection": {
-    "value": {
-     "table": "federation_attestations",
-     "rebuild": "n/a"
-    },
-    "source": "code-v61",
-    "parts": {
-     "table": {
-      "value": "federation_attestations",
-      "source": "code-v61",
-      "note": "federation_attestations (the row itself)"
-     },
-     "rebuild": {
-      "value": "n/a",
-      "source": "code-v61"
-     }
-    }
-   },
-   "erasure_route": {
-    "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
-    "source": "code-v61",
-    "closed": "purge"
-   },
-   "governance": {
-    "value": "none",
-    "source": "code-v61"
-   },
-   "evidence": {
-    "value": {
-     "door_claims": [
-      "CLM-witnessed-lineage"
-     ],
-     "generic_tokens": [
-      "namespace_family_unregistered",
-      "namespace_dimension_case_malformed",
-      "score_outside_declared_polarity"
-     ]
-    },
-    "source": "code-v61",
-    "closed": "door claims: CLM-witnessed-lineage"
-   },
-   "polarity": {
-    "value": "positive-only",
-    "source": "code-v61",
-    "registry": "positive-only"
-   },
-   "emitter_class": {
-    "value": "owner",
-    "source": "derived"
-   },
-   "derived": {
-    "value": null,
-    "source": "gap",
-    "note": "no sentence says whether a row of this family equals a recomputation from other rows"
-   },
-   "read_by": {
-    "value": [
-     "state",
-     "stands"
-    ],
-    "source": "cc-table",
-    "rule": "cells",
-    "by": [
-     {
-      "grammar": "fold",
-      "cell": "tools/fold_grammar.py DEFAULT",
-      "answers": [
-       "state",
-       "stands"
-      ]
-     }
-    ]
-   },
-   "confers": {
-    "value": {
-     "relation": "seat",
-     "binds": "signer+holder",
-     "scope": "lineage_witness",
-     "conferrer": "group:cosigned_act",
-     "consent": "accept_row",
-     "ends": "withdraw:holder,unseat:cosigned_act"
-    },
-    "source": "cc-table",
-    "cc_ref": [
-     "CC 3.2"
-    ],
-    "rule": "shape",
-    "from": "formal/derivation/family_shapes.tsv",
-    "sources": {
-     "scope": "quote:CC 3.2 \"A witness is someone else's node, so the conferring roster MUST NOT list a key without a live `lineage_witness:acceptance:v1` from that node's owner\"",
-     "conferrer": "quote:CC 3.2 \"A witness is someone else's node, so the conferring roster MUST NOT list a key without a live `lineage_witness:acceptance:v1` from that node's owner\"",
-     "consent": "quote:CC 3.2 \"A witness is someone else's node, so the conferring roster MUST NOT list a key without a live `lineage_witness:acceptance:v1` from that node's owner\"",
-     "ends": "cell:manifests/family_model.json#lineage_witness:{stage}.lifecycle"
-    },
-    "cells_from": [
-     "formal/derivation/family_shapes.tsv"
-    ]
-   },
-   "binds_segment": {
-    "value": {
-     "{stage}": "none"
-    },
-    "source": "cc-table",
-    "cc_ref": [
-     "CC 3.1.7"
-    ],
-    "rule": "class"
-   },
-   "names_head": {
-    "value": "by_placement",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed at a room or a family and elsewhere",
-    "cc_ref": "CC 2.4.1.1"
-   },
-   "shape": {
-    "value": "consent",
-    "source": "kernel-table",
-    "from": "formal/derivation/family_shapes.tsv"
-   },
-   "descends_on_withdrawal": {
-    "value": "nothing",
-    "source": "derived",
-    "from": "shape",
-    "cc_ref": "CC 6.1.5"
-   },
-   "fold": {
-    "value": [],
-    "source": "generic",
-    "note": "no fold is typed for the family; it reads by the default"
-   },
-   "count": {
-    "value": "none",
-    "arms": [
-     {
-      "when": "*",
-      "doors": "none",
-      "cc_ref": "CC 3.4.10"
-     }
-    ],
-    "source": "cc-table"
-   },
-   "authorship": {
-    "value": "authored",
-    "source": "generic",
-    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
-   },
-   "second_signers": {
-    "value": [],
-    "source": "generic",
-    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
-   },
-   "blind": {
-    "value": [
-     "body.note"
-    ],
-    "source": "derived",
-    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
-   },
-   "verbs_code": {
-    "value": [
-     "attest",
-     "replace",
-     "withdraw",
-     "recant"
-    ],
-    "delta_vs_cc": "+recant,replace,withdraw",
-    "source": "code-v61"
-   },
-   "maintains_record_code": {
-    "value": false,
-    "source": "code-v61",
-    "note": "no"
-   },
-   "reference_code": {
-    "value": null,
-    "source": "gap"
-   },
-   "reserved": {
-    "value": true,
-    "rule": "CC 3.2: per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)",
-    "source": "cc-table"
-   },
-   "code_v61": {
-    "door": "generic put_attestation; family gate NOT BUILT (RESERVED_AND_NOT_YET_GATED, CIRISPersist#974)",
-    "witness": "1 term-matched (1 I-numbered): i458_every_door_runs_its_consequence; +76 in door module tests (lineage_witness.rs, rc6_invariants.rs, roster_head_invariants.rs) incl. i191_the_cosign_door, i192_the_witnessed_head, i194_attach_freshness",
-    "formal_witness": "false",
-    "carries_kind_census": "—",
-    "sources": "src/federation/namespace/namespace_registry.json:3375; admit_lineage_head_cosign@src/federation/lineage_witness.rs:161"
-   },
-   "departs": [],
-   "because": {}
   },
   {
    "family": "locality:decision:{scale}",
@@ -72841,1093 +72460,6 @@
    "because": {}
   },
   {
-   "family": "transparency_log:consistency",
-   "kind": {
-    "value": "Facts",
-    "source": "cc-table",
-    "confidence": "H"
-   },
-   "side": {
-    "value": "account",
-    "source": "cc-table"
-   },
-   "verbs": {
-    "value": [
-     "attest",
-     "withdraw"
-    ],
-    "source": "cc-table"
-   },
-   "maintains_record": {
-    "value": true,
-    "source": "cc-table"
-   },
-   "reference": {
-    "value": null,
-    "source": "cc-table"
-   },
-   "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "cc-table",
-    "cc_ref": "CC 3.4.5.1",
-    "rule": "default",
-    "code": {
-     "value": [
-      "self_collective",
-      "targeted_family",
-      "targeted_room",
-      "commons"
-     ],
-     "source": "gap",
-     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
-    }
-   },
-   "signer_rule": {
-    "value": {
-     "who": "any_registered",
-     "via": "none",
-     "conditions": []
-    },
-    "source": "code-v61",
-    "cites": [
-     {
-      "cc_ref": "CC 3.4",
-      "reading": "agree"
-     }
-    ]
-   },
-   "subject_rule": {
-    "value": {
-     "kind": "any",
-     "cardinality": "any",
-     "must_be_registered": "attested yes, subjects no",
-     "for_key_id": "none",
-     "in_audience": "no",
-     "attested_party": "Targeted only"
-    },
-    "source": "code-v61",
-    "parts": {
-     "kind": {
-      "value": "any",
-      "source": "code-v61"
-     },
-     "cardinality": {
-      "value": "any",
-      "source": "code-v61"
-     },
-     "must_be_registered": {
-      "value": "attested yes, subjects no",
-      "source": "code-v61"
-     },
-     "for_key_id": {
-      "value": "none",
-      "source": "code-v61"
-     },
-     "in_audience": {
-      "value": "no",
-      "source": "code-v61"
-     },
-     "attested_party": {
-      "value": "Targeted only",
-      "source": "code-v61",
-      "note": "Targeted only (AV-84, cohort_standing_core)"
-     }
-    }
-   },
-   "cosign_rule": {
-    "value": "none",
-    "source": "code-v61"
-   },
-   "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
-   },
-   "freshness": {
-    "value": {
-     "judged_at": "receipt",
-     "W": null
-    },
-    "source": "generic",
-    "closed": "receipt future-skew <=5 min, us resolution",
-    "note": "receipt future-skew <=5 min, us resolution (check_instant_binding); no W; s3: signed instants .sssZ only (signed_instant_form_violation)",
-    "s3": "signed instants .sssZ only (signed_instant_form_violation)"
-   },
-   "lifecycle": {
-    "value": {
-     "withdraws_by": "{attester, subject}",
-     "retraction_class": "peer",
-     "supersedes": "same_attester",
-     "expires": "expires_at honoured",
-     "rotation_on_removal": "no"
-    },
-    "source": "code-v61",
-    "parts": {
-     "withdraws_by": {
-      "value": "{attester, subject}",
-      "source": "code-v61",
-      "note": "{attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary)"
-     },
-     "retraction_class": {
-      "value": "peer",
-      "source": "code-v61"
-     },
-     "supersedes": {
-      "value": "same_attester",
-      "source": "code-v61",
-      "note": "same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes)"
-     },
-     "expires": {
-      "value": "expires_at honoured",
-      "source": "code-v61"
-     },
-     "rotation_on_removal": {
-      "value": "no",
-      "source": "code-v61"
-     }
-    }
-   },
-   "replication": {
-    "value": {
-     "tier": [
-      "local",
-      "federation"
-     ],
-     "audience": {
-      "self_collective": "owner's nodes",
-      "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
-      "commons": "everyone"
-     },
-     "non_recipient": null,
-     "held": "settle_on_key"
-    },
-    "source": "mixed",
-    "parts": {
-     "tier": {
-      "value": [
-       "local",
-       "federation"
-      ],
-      "source": "code-v61",
-      "closed": "local | federation",
-      "note": "local | federation"
-     },
-     "audience": {
-      "value": {
-       "self_collective": "owner's nodes",
-       "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
-       "commons": "everyone"
-      },
-      "source": "code-v61",
-      "closed": "by cohort_scope: self_collective -> owner's nodes",
-      "note": "by cohort_scope: self_collective -> owner's nodes; targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id); commons -> everyone"
-     },
-     "non_recipient": {
-      "value": null,
-      "source": "gap",
-      "note": "on release-61 (a delivered row is stored); s2: drop (#1148)",
-      "s2": "drop (#1148)"
-     },
-     "held": {
-      "value": "settle_on_key",
-      "source": "code-v61",
-      "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
-     }
-    }
-   },
-   "projection": {
-    "value": {
-     "table": "federation_attestations",
-     "rebuild": "n/a"
-    },
-    "source": "code-v61",
-    "parts": {
-     "table": {
-      "value": "federation_attestations",
-      "source": "code-v61",
-      "note": "federation_attestations (the row itself)"
-     },
-     "rebuild": {
-      "value": "n/a",
-      "source": "code-v61"
-     }
-    }
-   },
-   "erasure_route": {
-    "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
-    "source": "code-v61",
-    "closed": "purge"
-   },
-   "governance": {
-    "value": "none",
-    "source": "code-v61"
-   },
-   "evidence": {
-    "value": {
-     "generic_tokens": [
-      "namespace_family_unregistered",
-      "namespace_dimension_case_malformed",
-      "score_outside_declared_polarity"
-     ]
-    },
-    "source": "gap",
-    "closed": "no claim row"
-   },
-   "polarity": {
-    "value": "boolean-via-score",
-    "source": "code-v61",
-    "registry": "boolean-via-score"
-   },
-   "emitter_class": {
-    "value": "person",
-    "source": "derived"
-   },
-   "derived": {
-    "value": null,
-    "source": "gap",
-    "note": "no sentence says whether a row of this family equals a recomputation from other rows"
-   },
-   "read_by": {
-    "value": [
-     "state",
-     "stands"
-    ],
-    "source": "cc-table",
-    "rule": "default",
-    "by": [
-     {
-      "grammar": "fold",
-      "cell": "tools/fold_grammar.py DEFAULT",
-      "answers": [
-       "state",
-       "stands"
-      ]
-     }
-    ]
-   },
-   "confers": {
-    "value": "nothing",
-    "source": "cc-table",
-    "cc_ref": "CC 3.4.5.1",
-    "rule": "default"
-   },
-   "binds_segment": {
-    "value": "none",
-    "source": "cc-table",
-    "cc_ref": "CC 3.1.7",
-    "rule": "class"
-   },
-   "names_head": {
-    "value": "by_placement",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed at a room or a family and elsewhere",
-    "cc_ref": "CC 2.4.1.1"
-   },
-   "shape": {
-    "value": "claim",
-    "source": "kernel-table",
-    "from": "formal/derivation/family_shapes.tsv"
-   },
-   "descends_on_withdrawal": {
-    "value": "row",
-    "source": "derived",
-    "from": "shape",
-    "cc_ref": "CC 6.1.5"
-   },
-   "fold": {
-    "value": [],
-    "source": "generic",
-    "note": "no fold is typed for the family; it reads by the default"
-   },
-   "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
-   },
-   "authorship": {
-    "value": "authored",
-    "source": "generic",
-    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
-   },
-   "second_signers": {
-    "value": [],
-    "source": "generic",
-    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
-   },
-   "blind": {
-    "value": [
-     "body.note"
-    ],
-    "source": "derived",
-    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
-   },
-   "verbs_code": {
-    "value": [
-     "attest",
-     "replace",
-     "withdraw",
-     "recant"
-    ],
-    "delta_vs_cc": "+recant,replace",
-    "source": "code-v61"
-   },
-   "maintains_record_code": {
-    "value": false,
-    "source": "code-v61",
-    "note": "no"
-   },
-   "reference_code": {
-    "value": null,
-    "source": "gap"
-   },
-   "reserved": {
-    "value": false,
-    "rule": "-",
-    "source": "cc-table"
-   },
-   "code_v61": {
-    "door": "generic put_attestation (attestation_admit::plan_put_attestation)",
-    "witness": "none",
-    "formal_witness": "false",
-    "carries_kind_census": "—",
-    "sources": "src/federation/namespace/namespace_registry.json:4612; plan_put_attestation@src/federation/attestation_admit.rs:572"
-   },
-   "departs": [],
-   "because": {}
-  },
-  {
-   "family": "transparency_log:cosigned:{tree_size}",
-   "kind": {
-    "value": "Facts",
-    "source": "cc-table",
-    "confidence": "H"
-   },
-   "side": {
-    "value": "account",
-    "source": "cc-table"
-   },
-   "verbs": {
-    "value": [
-     "attest"
-    ],
-    "source": "cc-table"
-   },
-   "maintains_record": {
-    "value": true,
-    "source": "cc-table"
-   },
-   "reference": {
-    "value": null,
-    "source": "cc-table"
-   },
-   "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "cc-table",
-    "cc_ref": "CC 3.4.5.1",
-    "rule": "default",
-    "code": {
-     "value": [
-      "self_collective",
-      "targeted_family",
-      "targeted_room",
-      "commons"
-     ],
-     "source": "gap",
-     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
-    }
-   },
-   "signer_rule": {
-    "value": {
-     "who": "seat_role(attest)",
-     "via": "delegates_to(infra:attest_assurance)",
-     "conditions": []
-    },
-    "source": "code-v61",
-    "closed": "seat_role(attest) x delegates_to(infra:attest_assurance) x {}",
-    "qualifier": "+ identity_type contains witness",
-    "cites": [
-     {
-      "cc_ref": "CC 3.1.2",
-      "reading": "agree"
-     }
-    ]
-   },
-   "subject_rule": {
-    "value": {
-     "kind": "any",
-     "cardinality": "any",
-     "must_be_registered": "attested yes, subjects no",
-     "for_key_id": "none",
-     "in_audience": "no",
-     "attested_party": "Targeted only"
-    },
-    "source": "code-v61",
-    "parts": {
-     "kind": {
-      "value": "any",
-      "source": "code-v61"
-     },
-     "cardinality": {
-      "value": "any",
-      "source": "code-v61"
-     },
-     "must_be_registered": {
-      "value": "attested yes, subjects no",
-      "source": "code-v61"
-     },
-     "for_key_id": {
-      "value": "none",
-      "source": "code-v61"
-     },
-     "in_audience": {
-      "value": "no",
-      "source": "code-v61"
-     },
-     "attested_party": {
-      "value": "Targeted only",
-      "source": "code-v61",
-      "note": "Targeted only (AV-84, cohort_standing_core)"
-     }
-    }
-   },
-   "cosign_rule": {
-    "value": "none",
-    "source": "code-v61"
-   },
-   "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
-   },
-   "freshness": {
-    "value": {
-     "judged_at": "receipt",
-     "W": null
-    },
-    "source": "generic",
-    "closed": "receipt future-skew <=5 min, us resolution",
-    "note": "receipt future-skew <=5 min, us resolution (check_instant_binding); no W; s3: signed instants .sssZ only (signed_instant_form_violation)",
-    "s3": "signed instants .sssZ only (signed_instant_form_violation)"
-   },
-   "lifecycle": {
-    "value": {
-     "withdraws_by": "{attester, subject}",
-     "retraction_class": "peer",
-     "supersedes": "same_attester",
-     "expires": "expires_at honoured",
-     "rotation_on_removal": "no"
-    },
-    "source": "code-v61",
-    "parts": {
-     "withdraws_by": {
-      "value": "{attester, subject}",
-      "source": "code-v61",
-      "note": "{attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary)"
-     },
-     "retraction_class": {
-      "value": "peer",
-      "source": "code-v61"
-     },
-     "supersedes": {
-      "value": "same_attester",
-      "source": "code-v61",
-      "note": "same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes)"
-     },
-     "expires": {
-      "value": "expires_at honoured",
-      "source": "code-v61"
-     },
-     "rotation_on_removal": {
-      "value": "no",
-      "source": "code-v61"
-     }
-    }
-   },
-   "replication": {
-    "value": {
-     "tier": [
-      "local",
-      "federation"
-     ],
-     "audience": {
-      "self_collective": "owner's nodes",
-      "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
-      "commons": "everyone"
-     },
-     "non_recipient": null,
-     "held": "settle_on_key"
-    },
-    "source": "mixed",
-    "parts": {
-     "tier": {
-      "value": [
-       "local",
-       "federation"
-      ],
-      "source": "code-v61",
-      "closed": "local | federation",
-      "note": "local | federation"
-     },
-     "audience": {
-      "value": {
-       "self_collective": "owner's nodes",
-       "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
-       "commons": "everyone"
-      },
-      "source": "code-v61",
-      "closed": "by cohort_scope: self_collective -> owner's nodes",
-      "note": "by cohort_scope: self_collective -> owner's nodes; targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id); commons -> everyone"
-     },
-     "non_recipient": {
-      "value": null,
-      "source": "gap",
-      "note": "on release-61 (a delivered row is stored); s2: drop (#1148)",
-      "s2": "drop (#1148)"
-     },
-     "held": {
-      "value": "settle_on_key",
-      "source": "code-v61",
-      "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
-     }
-    }
-   },
-   "projection": {
-    "value": {
-     "table": "federation_attestations",
-     "rebuild": "n/a"
-    },
-    "source": "code-v61",
-    "parts": {
-     "table": {
-      "value": "federation_attestations",
-      "source": "code-v61",
-      "note": "federation_attestations (the row itself)"
-     },
-     "rebuild": {
-      "value": "n/a",
-      "source": "code-v61"
-     }
-    }
-   },
-   "erasure_route": {
-    "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
-    "source": "code-v61",
-    "closed": "purge"
-   },
-   "governance": {
-    "value": "none",
-    "source": "code-v61"
-   },
-   "evidence": {
-    "value": {
-     "nsproc": [
-      "CLM-nsproc-cosign-transparency-log-cosigned-tree-size",
-      "CLM-nsproc-cosignature-transparency-log-cosigned-tree-size",
-      "CLM-nsproc-witness-key-id-transparency-log-cosigned-tree-size"
-     ],
-     "n_nsproc": 3,
-     "generic_tokens": [
-      "namespace_family_unregistered",
-      "namespace_dimension_case_malformed",
-      "score_outside_declared_polarity"
-     ]
-    },
-    "source": "code-v61",
-    "closed": "3 nsproc: CLM-nsproc-cosign-transparency-log-cosigned-tree-size, CLM-nsproc-cosignature-transparency-log-cosigned-tree-size, CLM-nsproc-witness-key-id-transparency-log-cosigned-tree-size"
-   },
-   "polarity": {
-    "value": "signed",
-    "source": "code-v61",
-    "registry": "signed"
-   },
-   "emitter_class": {
-    "value": "seat:attest",
-    "source": "derived"
-   },
-   "derived": {
-    "value": null,
-    "source": "gap",
-    "note": "no sentence says whether a row of this family equals a recomputation from other rows"
-   },
-   "read_by": {
-    "value": [
-     "state",
-     "stands"
-    ],
-    "source": "cc-table",
-    "rule": "default",
-    "by": [
-     {
-      "grammar": "fold",
-      "cell": "tools/fold_grammar.py DEFAULT",
-      "answers": [
-       "state",
-       "stands"
-      ]
-     }
-    ]
-   },
-   "confers": {
-    "value": "nothing",
-    "source": "cc-table",
-    "cc_ref": "CC 3.4.5.1",
-    "rule": "default"
-   },
-   "binds_segment": {
-    "value": null,
-    "source": "gap",
-    "parts": {},
-    "note": "no sentence says which key slot {tree_size} holds"
-   },
-   "names_head": {
-    "value": "by_placement",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed at a room or a family and elsewhere",
-    "cc_ref": "CC 2.4.1.1"
-   },
-   "shape": {
-    "value": "claim",
-    "source": "kernel-table",
-    "from": "formal/derivation/family_shapes.tsv"
-   },
-   "descends_on_withdrawal": {
-    "value": "row",
-    "source": "derived",
-    "from": "shape",
-    "cc_ref": "CC 6.1.5"
-   },
-   "fold": {
-    "value": [],
-    "source": "generic",
-    "note": "no fold is typed for the family; it reads by the default"
-   },
-   "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
-   },
-   "authorship": {
-    "value": "authored",
-    "source": "generic",
-    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
-   },
-   "second_signers": {
-    "value": [],
-    "source": "generic",
-    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
-   },
-   "blind": {
-    "value": [
-     "body.note"
-    ],
-    "source": "derived",
-    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
-   },
-   "verbs_code": {
-    "value": [
-     "attest",
-     "replace",
-     "withdraw",
-     "recant"
-    ],
-    "delta_vs_cc": "+recant,replace,withdraw",
-    "source": "code-v61"
-   },
-   "maintains_record_code": {
-    "value": false,
-    "source": "code-v61",
-    "note": "no"
-   },
-   "reference_code": {
-    "value": null,
-    "source": "gap"
-   },
-   "reserved": {
-    "value": true,
-    "rule": "CC 3.4.10: witness-emitter (identity_type contains witness)",
-    "source": "cc-table"
-   },
-   "code_v61": {
-    "door": "generic put_attestation; prefix-table row transparency_log:cosigned:",
-    "witness": "3 term-matched (0 I-numbered): admission_rejects_transparency_log_cosigned_from_non_witness, admission_accepts_transparency_log_cosigned_from_witness, default_reserved_prefix_rules_cover_ceg_persist_slice",
-    "formal_witness": "false",
-    "carries_kind_census": "—",
-    "sources": "src/federation/namespace/namespace_registry.json:4631; default_reserved_prefix_rules@src/federation/admission.rs:432"
-   },
-   "departs": [],
-   "because": {}
-  },
-  {
-   "family": "transparency_log:inclusion",
-   "kind": {
-    "value": "Facts",
-    "source": "cc-table",
-    "confidence": "H"
-   },
-   "side": {
-    "value": "account",
-    "source": "cc-table"
-   },
-   "verbs": {
-    "value": [
-     "attest",
-     "withdraw"
-    ],
-    "source": "cc-table"
-   },
-   "maintains_record": {
-    "value": true,
-    "source": "cc-table"
-   },
-   "reference": {
-    "value": null,
-    "source": "cc-table"
-   },
-   "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "cc-table",
-    "cc_ref": "CC 3.4.5.1",
-    "rule": "default",
-    "code": {
-     "value": [
-      "self_collective",
-      "targeted_family",
-      "targeted_room",
-      "commons"
-     ],
-     "source": "gap",
-     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
-    }
-   },
-   "signer_rule": {
-    "value": {
-     "who": "any_registered",
-     "via": "none",
-     "conditions": []
-    },
-    "source": "code-v61",
-    "cites": [
-     {
-      "cc_ref": "CC 3.4",
-      "reading": "agree"
-     }
-    ]
-   },
-   "subject_rule": {
-    "value": {
-     "kind": "any",
-     "cardinality": "any",
-     "must_be_registered": "attested yes, subjects no",
-     "for_key_id": "none",
-     "in_audience": "no",
-     "attested_party": "Targeted only"
-    },
-    "source": "code-v61",
-    "parts": {
-     "kind": {
-      "value": "any",
-      "source": "code-v61"
-     },
-     "cardinality": {
-      "value": "any",
-      "source": "code-v61"
-     },
-     "must_be_registered": {
-      "value": "attested yes, subjects no",
-      "source": "code-v61"
-     },
-     "for_key_id": {
-      "value": "none",
-      "source": "code-v61"
-     },
-     "in_audience": {
-      "value": "no",
-      "source": "code-v61"
-     },
-     "attested_party": {
-      "value": "Targeted only",
-      "source": "code-v61",
-      "note": "Targeted only (AV-84, cohort_standing_core)"
-     }
-    }
-   },
-   "cosign_rule": {
-    "value": "none",
-    "source": "code-v61"
-   },
-   "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
-   },
-   "freshness": {
-    "value": {
-     "judged_at": "receipt",
-     "W": null
-    },
-    "source": "generic",
-    "closed": "receipt future-skew <=5 min, us resolution",
-    "note": "receipt future-skew <=5 min, us resolution (check_instant_binding); no W; s3: signed instants .sssZ only (signed_instant_form_violation)",
-    "s3": "signed instants .sssZ only (signed_instant_form_violation)"
-   },
-   "lifecycle": {
-    "value": {
-     "withdraws_by": "{attester, subject}",
-     "retraction_class": "peer",
-     "supersedes": "same_attester",
-     "expires": "expires_at honoured",
-     "rotation_on_removal": "no"
-    },
-    "source": "code-v61",
-    "parts": {
-     "withdraws_by": {
-      "value": "{attester, subject}",
-      "source": "code-v61",
-      "note": "{attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary)"
-     },
-     "retraction_class": {
-      "value": "peer",
-      "source": "code-v61"
-     },
-     "supersedes": {
-      "value": "same_attester",
-      "source": "code-v61",
-      "note": "same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes)"
-     },
-     "expires": {
-      "value": "expires_at honoured",
-      "source": "code-v61"
-     },
-     "rotation_on_removal": {
-      "value": "no",
-      "source": "code-v61"
-     }
-    }
-   },
-   "replication": {
-    "value": {
-     "tier": [
-      "local",
-      "federation"
-     ],
-     "audience": {
-      "self_collective": "owner's nodes",
-      "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
-      "commons": "everyone"
-     },
-     "non_recipient": null,
-     "held": "settle_on_key"
-    },
-    "source": "mixed",
-    "parts": {
-     "tier": {
-      "value": [
-       "local",
-       "federation"
-      ],
-      "source": "code-v61",
-      "closed": "local | federation",
-      "note": "local | federation"
-     },
-     "audience": {
-      "value": {
-       "self_collective": "owner's nodes",
-       "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
-       "commons": "everyone"
-      },
-      "source": "code-v61",
-      "closed": "by cohort_scope: self_collective -> owner's nodes",
-      "note": "by cohort_scope: self_collective -> owner's nodes; targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id); commons -> everyone"
-     },
-     "non_recipient": {
-      "value": null,
-      "source": "gap",
-      "note": "on release-61 (a delivered row is stored); s2: drop (#1148)",
-      "s2": "drop (#1148)"
-     },
-     "held": {
-      "value": "settle_on_key",
-      "source": "code-v61",
-      "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
-     }
-    }
-   },
-   "projection": {
-    "value": {
-     "table": "federation_attestations",
-     "rebuild": "n/a"
-    },
-    "source": "code-v61",
-    "parts": {
-     "table": {
-      "value": "federation_attestations",
-      "source": "code-v61",
-      "note": "federation_attestations (the row itself)"
-     },
-     "rebuild": {
-      "value": "n/a",
-      "source": "code-v61"
-     }
-    }
-   },
-   "erasure_route": {
-    "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
-    "source": "code-v61",
-    "closed": "purge"
-   },
-   "governance": {
-    "value": "none",
-    "source": "code-v61"
-   },
-   "evidence": {
-    "value": {
-     "generic_tokens": [
-      "namespace_family_unregistered",
-      "namespace_dimension_case_malformed",
-      "score_outside_declared_polarity"
-     ]
-    },
-    "source": "gap",
-    "closed": "no claim row"
-   },
-   "polarity": {
-    "value": "boolean-via-score",
-    "source": "code-v61",
-    "registry": "boolean-via-score"
-   },
-   "emitter_class": {
-    "value": "person",
-    "source": "derived"
-   },
-   "derived": {
-    "value": null,
-    "source": "gap",
-    "note": "no sentence says whether a row of this family equals a recomputation from other rows"
-   },
-   "read_by": {
-    "value": [
-     "state",
-     "stands"
-    ],
-    "source": "cc-table",
-    "rule": "default",
-    "by": [
-     {
-      "grammar": "fold",
-      "cell": "tools/fold_grammar.py DEFAULT",
-      "answers": [
-       "state",
-       "stands"
-      ]
-     }
-    ]
-   },
-   "confers": {
-    "value": "nothing",
-    "source": "cc-table",
-    "cc_ref": "CC 3.4.5.1",
-    "rule": "default"
-   },
-   "binds_segment": {
-    "value": "none",
-    "source": "cc-table",
-    "cc_ref": "CC 3.1.7",
-    "rule": "class"
-   },
-   "names_head": {
-    "value": "by_placement",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed at a room or a family and elsewhere",
-    "cc_ref": "CC 2.4.1.1"
-   },
-   "shape": {
-    "value": "claim",
-    "source": "kernel-table",
-    "from": "formal/derivation/family_shapes.tsv"
-   },
-   "descends_on_withdrawal": {
-    "value": "row",
-    "source": "derived",
-    "from": "shape",
-    "cc_ref": "CC 6.1.5"
-   },
-   "fold": {
-    "value": [],
-    "source": "generic",
-    "note": "no fold is typed for the family; it reads by the default"
-   },
-   "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
-   },
-   "authorship": {
-    "value": "authored",
-    "source": "generic",
-    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
-   },
-   "second_signers": {
-    "value": [],
-    "source": "generic",
-    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
-   },
-   "blind": {
-    "value": [
-     "body.note"
-    ],
-    "source": "derived",
-    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
-   },
-   "verbs_code": {
-    "value": [
-     "attest",
-     "replace",
-     "withdraw",
-     "recant"
-    ],
-    "delta_vs_cc": "+recant,replace",
-    "source": "code-v61"
-   },
-   "maintains_record_code": {
-    "value": false,
-    "source": "code-v61",
-    "note": "no"
-   },
-   "reference_code": {
-    "value": null,
-    "source": "gap"
-   },
-   "reserved": {
-    "value": false,
-    "rule": "-",
-    "source": "cc-table"
-   },
-   "code_v61": {
-    "door": "generic put_attestation (attestation_admit::plan_put_attestation)",
-    "witness": "2 term-matched (0 I-numbered): exercise_v31_migration, transparency_log_inclusion_is_not_witness_reserved",
-    "formal_witness": "false",
-    "carries_kind_census": "—",
-    "sources": "src/federation/namespace/namespace_registry.json:4659; plan_put_attestation@src/federation/attestation_admit.rs:572"
-   },
-   "departs": [],
-   "because": {}
-  },
-  {
    "family": "transport:canonical_rebind",
    "kind": {
     "value": "Identity",
@@ -74759,255 +73291,6 @@
    },
    "departs": [],
    "because": {}
-  },
-  {
-   "family": "trust:blessing",
-   "kind": {
-    "value": "Rules",
-    "source": "cc-table",
-    "confidence": "M"
-   },
-   "side": {
-    "value": "thing",
-    "source": "cc-table"
-   },
-   "verbs": {
-    "value": [
-     "attest",
-     "withdraw"
-    ],
-    "source": "cc-table"
-   },
-   "maintains_record": {
-    "value": false,
-    "source": "cc-table"
-   },
-   "reference": {
-    "value": "pre:Identity",
-    "source": "cc-table"
-   },
-   "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "signer_rule": {
-    "value": {
-     "who": "roster_member(at)",
-     "via": "none",
-     "conditions": []
-    },
-    "source": "cc-table",
-    "cc_ref": "CC 3.1.3",
-    "code": {
-     "value": null,
-     "source": "gap"
-    },
-    "qualifier": "a voice of the conferring roster, counted under its consensus_protocol"
-   },
-   "subject_rule": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "cosign_rule": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "body": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "freshness": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "lifecycle": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "replication": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "projection": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "erasure_route": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "governance": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "evidence": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
-   },
-   "polarity": {
-    "value": "positive-only",
-    "source": "cc-table",
-    "registry": "positive-only"
-   },
-   "emitter_class": {
-    "value": "roster",
-    "source": "derived"
-   },
-   "derived": {
-    "value": null,
-    "source": "gap",
-    "note": "no sentence says whether a row of this family equals a recomputation from other rows"
-   },
-   "read_by": {
-    "value": [
-     "state",
-     "stands",
-     "tally"
-    ],
-    "source": "cc-table",
-    "rule": "cells",
-    "by": [
-     {
-      "grammar": "count",
-      "cell": "formal/derivation/count_text.tsv#trust:blessing",
-      "answers": [
-       "tally"
-      ]
-     },
-     {
-      "grammar": "fold",
-      "cell": "tools/fold_grammar.py DEFAULT",
-      "answers": [
-       "state",
-       "stands"
-      ]
-     }
-    ]
-   },
-   "confers": {
-    "value": null,
-    "source": "gap",
-    "from": "formal/derivation/family_shapes.tsv",
-    "note": "a door family, and no sentence says what its rows confer"
-   },
-   "binds_segment": {
-    "value": "none",
-    "source": "cc-table",
-    "cc_ref": "CC 3.1.7",
-    "rule": "class"
-   },
-   "names_head": {
-    "value": "standing",
-    "source": "ruled",
-    "from": "formal/derivation/names_head_text.tsv",
-    "note": "the bundle in force, by its object id",
-    "derived": null,
-    "cc_ref": "CC 2.4.1.1"
-   },
-   "shape": {
-    "value": "door",
-    "source": "kernel-table",
-    "from": "formal/derivation/family_shapes.tsv"
-   },
-   "descends_on_withdrawal": {
-    "value": "nothing",
-    "source": "derived",
-    "from": "shape",
-    "cc_ref": "CC 6.1.5"
-   },
-   "fold": {
-    "value": [],
-    "source": "generic",
-    "note": "no fold is typed for the family; it reads by the default"
-   },
-   "count": {
-    "value": "cosigned_act@conferrer",
-    "arms": [
-     {
-      "when": "*",
-      "doors": "cosigned_act@conferrer",
-      "cc_ref": "CC 3.1.3"
-     }
-    ],
-    "source": "cc-table"
-   },
-   "authorship": {
-    "value": "counted",
-    "source": "cc-table",
-    "arms": [
-     {
-      "when": "*",
-      "value": "counted",
-      "cc_ref": [
-       "CC 3.1.3"
-      ]
-     }
-    ],
-    "cc_ref": [
-     "CC 3.1.3"
-    ]
-   },
-   "second_signers": {
-    "value": [],
-    "source": "generic",
-    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
-   },
-   "blind": {
-    "value": null,
-    "source": "gap",
-    "note": "erasure_route unread"
-   },
-   "departs": [
-    "placement",
-    "subject_rule",
-    "cosign_rule",
-    "freshness",
-    "lifecycle",
-    "replication",
-    "projection",
-    "erasure_route",
-    "governance"
-   ],
-   "because": {
-    "placement": [
-     "unbuilt"
-    ],
-    "subject_rule": [
-     "unbuilt"
-    ],
-    "cosign_rule": [
-     "unbuilt"
-    ],
-    "freshness": [
-     "unbuilt"
-    ],
-    "lifecycle": [
-     "unbuilt"
-    ],
-    "replication": [
-     "unbuilt"
-    ],
-    "projection": [
-     "unbuilt"
-    ],
-    "erasure_route": [
-     "unbuilt"
-    ],
-    "governance": [
-     "unbuilt"
-    ]
-   }
   },
   {
    "family": "trust:{job}:{version}",

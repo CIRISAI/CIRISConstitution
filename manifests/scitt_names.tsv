@@ -25,7 +25,7 @@ member	occurrence-revocation witness_set	keep		vouching key ids on an occurrence
 token	witness_members_partial	rename	transparency_members_partial	one of the charter's service members without the others	
 token	witness_quorum_mismatch	rename	receipt_quorum_mismatch	a stated quorum that is not the strict majority	
 token	trust_root_head_unwitnessed	rename	trust_root_head_unreceipted	a head with fewer Receipts than the quorum	
-token	witness_quorum_met	rename	receipt_quorum_met	the verifier's quorum check	
+token	witness_quorum_met	retire		the verifier's quorum check	The text names the check by no token: a head with fewer Receipts than the quorum is `trust_root_head_unreceipted`.
 token	witness_signatures	retire		the cosignature list inside a tree head	A head is a Signed Statement and its Receipts ride in the unprotected header (label 394).
 token	witness_id	retire		a cosigning witness's id inside that list	Goes with witness_signatures.
 token	delivery_receipt	rename	delivery_ack	the family's stem	

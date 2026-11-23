@@ -912,12 +912,12 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `stream_id` | `"stream_id"` | payload | `tstr` | on the stream axis | [3.3.2](part_3_the_namespace.md#3.3.2) | The stream. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
-**A delivery receipt: the payload of a `delivery_receipt:{stream_id}` row**
+**A delivery ack: the payload of a `delivery_ack:{stream_id}` row**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
 | `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The subscriber, equal to iss and the CWT sub. |
-| `dimension` | `"dimension"` | payload | `tstr` | always | [3.4.6](part_3_the_namespace.md#3.4.6) | delivery_receipt:{stream_id} with its version. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.4.6](part_3_the_namespace.md#3.4.6) | delivery_ack:{stream_id} with its version. |
 | `stream_id` | `"stream_id"` | payload | `tstr` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The same stream as the leaf. |
 | `epoch` | `"epoch"` | payload | `uint` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The key-rotation index. |
 | `K` | `"k"` | payload | `uint` | always | [5.3.3.11](part_5_transport_substrate.md#5.3.3.11) | The chunk index acknowledged. |
@@ -1094,7 +1094,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | `attestation_envelope` | the payload ([CC 2.6.1.2](#2.6.1.2)); the earlier form's object is [CC 8.11.9](part_8_appendices.md#8.11.9) |
 | `registration_envelope` | none: a key record is the payload of a `key:record` row ([CC 2.6.1.7](#2.6.1.7)) |
 
-**A family's payload (normative).** A family's payload carries the members its record names, one to one, and embeds no signed object. What a record carried as a co-signature is a further statement over the same payload, a counted voice ([CC 2.6.1.9](#2.6.1.9)), never a member. The table above states the payloads of `group:roster`, `membership:{stage}` at its stages `widening` and `removal`, `identity:occurrence_revocation`, `revocation:{entity_type}:{reason}`, `takedown_notice:{basis}`, `custody:{kind}`, `key_grant:{axis}` and `delivery_receipt:{stream_id}`. A `cosign:{state}` row has no payload of its own: each state is a statement over the event's own payload ([CC 3.1.3](part_3_the_namespace.md#3.1.3)). A verifier refuses a payload that breaks its family's rule with `edition2_payload_invalid`, at step 3 of [CC 2.6.1.8](#2.6.1.8). Their schema is [`manifests/family_payloads_v2.cddl`](../manifests/family_payloads_v2.cddl), read together with [`manifests/signed_object_v2.cddl`](../manifests/signed_object_v2.cddl) as one schema.
+**A family's payload (normative).** A family's payload carries the members its record names, one to one, and embeds no signed object. What a record carried as a co-signature is a further statement over the same payload, a counted voice ([CC 2.6.1.9](#2.6.1.9)), never a member. The table above states the payloads of `group:roster`, `membership:{stage}` at its stages `widening` and `removal`, `identity:occurrence_revocation`, `revocation:{entity_type}:{reason}`, `takedown_notice:{basis}`, `custody:{kind}`, `key_grant:{axis}` and `delivery_ack:{stream_id}`. A `cosign:{state}` row has no payload of its own: each state is a statement over the event's own payload ([CC 3.1.3](part_3_the_namespace.md#3.1.3)). A verifier refuses a payload that breaks its family's rule with `edition2_payload_invalid`, at step 3 of [CC 2.6.1.8](#2.6.1.8). Their schema is [`manifests/family_payloads_v2.cddl`](../manifests/family_payloads_v2.cddl), read together with [`manifests/signed_object_v2.cddl`](../manifests/signed_object_v2.cddl) as one schema.
 
 #### 2.6.1.5 `numbers` — Numbers (normative)
 
@@ -1752,7 +1752,7 @@ A row names the capabilities it admits from a closed set: `compute`, `read`, `ne
 
 Every voice's `iss` is a person's identity, whose `identity_type` contains `user` or `accord_holder`. It is read after step 8 finds the statement's key to be a key of that `iss` ([CC 2.6.1.8](#2.6.1.8)). A delegation carries no admission, so the family names no role for a delegate.
 
-**The attested build.** A unit inside an attested build runs under the build's own attestation: the build's manifest names it, and the host holds the counted blessing of the pipeline that signed it ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)). An `admission:unit` row admits what a host loads beyond that build, such as an imported skill, a discovered adapter or a tool added at run time.
+**The attested build.** A unit inside an attested build runs under the build's own attestation: the build's manifest names it, and the host holds the counted grant of the pipeline that signed it ([CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1)). An `admission:unit` row admits what a host loads beyond that build, such as an imported skill, a discovered adapter or a tool added at run time.
 
 **Standing.** The author, or the group whose head a counted row names, stands at a host when it is the host owner's own key. It also stands when the owner's own acceptance edges reach it ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34)), with the class `admission` listed on every edge of that walk. An edge signed by a program's key carries nothing on the walk. No list of issuers ships with anything. A row whose author or group does not stand at a host admits nothing there.
 
