@@ -3063,7 +3063,7 @@ Fold:
 - `@state=proposal|assent: weight=1` (CC 3.1.9.2)
 - `@state=raised: weight=-1` (CC 3.1.9.2)
 
-Body: `cohort`, `cohort_key_id` (text only), `grounds` (text only), `objects_to_attestation_id` (text only)
+Body: `cohort`, `cohort_key_id` (text only), `grounds` (text only)
 
 **`observation:access_assumption`** — Premises, account
 
