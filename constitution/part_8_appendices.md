@@ -2810,7 +2810,7 @@ Change:
 - supersede: `replace[recovery]: by=committed_key` (CC 2.1)
 
 In time:
-- on admitted(key:revocation) or withdrawn(trust:accepts): read lapsed (CC 4.2.1)
+- on admitted(key:revocation): read lapsed (CC 4.2.1)
 - expiry optional `valid_until` max `key_record_max_secs` (CC 2.4.1.1)
 - on close(expiry) unless superseded(self): read lapsed (CC 2.4.1.1)
 

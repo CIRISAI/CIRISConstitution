@@ -256,3 +256,49 @@ trust-accepts = {
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }
+
+; provenance:build_manifest:{target} (CC 3.1.2.1): authored by the pipeline's key; one claim, type scores; the manifest blob is unsigned and cited by its digest.
+build-manifest-row = {
+  "author": identity-ref,                   ; The pipeline's key, equal to iss.
+  "dimension": tstr,                        ; provenance:build_manifest:{target} with its version.
+  "build": build-descriptor,                ; The descriptor of the manifest blob the row cites.
+  "evidence_refs": [+ hash-digest],         ; The manifest blob, by its digest: the digest of build.manifest_hash is among them.
+  "refs": refs,                             ; The bundle the pipeline's grant names, in refs.head.
+  "asserted_at": ms-time,                   ; POSIX milliseconds: the signed instant of the manifest, which the blob does not state.
+  * tstr => ceg-value,
+}
+
+; The descriptor of a manifest blob (CC 3.1.2.1, CC 5.3.2.11): a closed map of exactly four members.
+build-descriptor = {
+  "project": tstr,                          ; The project, equal to the blob's project and listed by the pipeline's grant.
+  "version": tstr,                          ; The version, equal to the blob's version.
+  "manifest_hash": hash-digest,             ; The digest of the manifest blob.
+  "manifest_size": uint,                    ; The blob's length in bytes, checked before the digest.
+}
+
+; trust:confers (CC 3.1.2.1, CC 4.2.1): a delegates_to row counted over the holders of the bundle in force, with no author; sub is the key the grant names.
+trust-confers = {
+  "dimension": tstr,                        ; trust:confers:v1.
+  "scope": [+ tstr],                        ; A set of scope tokens; a pipeline's holds infra:attest:provenance:build_manifest or infra:attest and no other.
+  ? "projects": [+ tstr],                   ; A set of project names; absent, the grant confers a build manifest for no project. (on a build pipeline's grant)
+  "refs": refs,                             ; The bundle in force the grant is counted over, in refs.head.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; membership:acceptance answering a grant (CC 3.1.2.1): authored by the owner of the key the grant names, at federation scope.
+grant-acceptance = {
+  "author": identity-ref,                   ; The owner of the key the grant names: a person, never the grantee's own key.
+  "dimension": tstr,                        ; membership:acceptance:v1.
+  "refs": refs,                             ; The one grant accepted, under answers; an acceptance names no head.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; The withdraws row that ends a grant (CC 4.2.1, CC 2.4.1.1): counted over the holders of the bundle in force, with no author.
+grant-withdrawal = {
+  "refs": refs,                             ; The grant withdrawn, under target; the head the withdrawal acts from, under head.
+  ? "lifts": true,                          ; Present only as true. (where the count lifts single receipts)
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}

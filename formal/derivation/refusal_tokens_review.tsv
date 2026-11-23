@@ -113,7 +113,10 @@ biometric_inference	not_a_token		enumeration value, not a fault
 body_number_unrepresentable	refusal		the text says refused
 budget_bytes	not_a_token		payload or envelope member
 build_manifest	not_a_token		family or row-type name
+build_manifest_descriptor_mismatch	refusal		the text says refused
+build_manifest_equivocation	refusal		the text says a reader refuses both
 build_manifest_hash	not_a_token		payload or envelope member
+build_manifest_project_not_granted	refusal		the text says refused
 bundle_fingerprint	not_a_token		charter or bundle member
 by_rule	not_a_token		enumeration value, not a fault
 call_argument_unrepresentable	refusal		the text says refused
@@ -274,6 +277,7 @@ final_seq	not_a_token		payload or envelope member
 fold_source_count_exceeded	refusal		the text says refused
 for_key_id	not_a_token		payload or envelope member
 founder_only	not_a_token		enumeration value, not a fault
+functions_root	not_a_token		payload or envelope member
 gcp_cloud_hsm	not_a_token		enumeration value, not a fault
 genesis_bundle_count_unmet	hold		the count is not met and the bundle is held
 genesis_bundle_malformed	refusal		the text says Invalid
@@ -478,6 +482,7 @@ peer_id	not_a_token		payload or envelope member
 perceptual_hash_csam	not_a_token		enumeration value, not a fault
 personhood_constitutive_by_attestation	not_a_token		enumeration value, not a fault
 pin_reserve_bytes	not_a_token		payload or envelope member
+pipeline_grant_out_of_role	refusal		the text says refused
 poll_id	not_a_token		payload or envelope member
 portable_2fa	not_a_token		enumeration value, not a fault
 pq_custody	not_a_token		payload or envelope member

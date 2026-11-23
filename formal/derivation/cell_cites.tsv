@@ -530,11 +530,11 @@ peer_reachability:{network}	signer_rule	agree	CC 3.1.4	Substrate-self-reports pe
 preserve_request	signer_rule	agree	CC 3.1.5	**The agent's own retirement row** ([CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5), the Retirement Standard). `{state}` is the closed lifecycle of the `retirement_record` workflow (`decided` \| `frozen` \| `secrets_destroyed` \| `handed_over` \| `notified` \| `custodian_minted`
 preserve_response	signer_rule	agree	CC 3.1.5	the operator (the key the request named)
 progress_measure:{method_id}	projection	agree	CC 3.1.5.5	what counts as progress is the Goal side's `progress_measure:{method_id}` whose `evidence_refs` cite the evidence, never the worker's reference alone
-provenance:build_manifest:{target}	lifecycle	fills	CC 3.1.2.1	A rebuild is a `supersedes` on the earlier Contribution
+provenance:build_manifest:{target}	lifecycle	fills	CC 3.1.2.1	A rebuild is a `supersedes` on the Contribution it replaces
 provenance:build_manifest:{target}	lifecycle	fills	CC 3.1.2.1	a bad build is withdrawn by the pipeline that signed it.
 provenance:build_manifest:{target}	placement	agree	CC 3.1.2.1	Its `cohort_scope` is `federation`.
 provenance:build_manifest:{target}	signer_rule	agree	CC 3.1.2.1	`agent_files:build:{target}` ([CC 3.1.9.1](part_3_the_namespace.md#3.1.9.1)) is **a different claim by a different attester** — the canonical attester's statement that an agent may load that file set, composed under [CC 4.4.3.33](part_4_composition_governance.md#4.4.3.33) — and
-provenance:build_manifest:{target}:locale:{lang_code}	lifecycle	fills	CC 3.1.2.1	A rebuild is a `supersedes` on the earlier Contribution
+provenance:build_manifest:{target}:locale:{lang_code}	lifecycle	fills	CC 3.1.2.1	A rebuild is a `supersedes` on the Contribution it replaces
 provenance:build_manifest:{target}:locale:{lang_code}	lifecycle	fills	CC 3.1.2.1	a bad build is withdrawn by the pipeline that signed it.
 quarantine:{state}	fold	agree	CC 3.1.9.2	**a withhold outranks a release whatever their instants**
 quarantine:{state}	signer_rule	agree	CC 3.1.9.2	Subject-scoped quarantine marker: **slash-duty-holder-only** emitter.

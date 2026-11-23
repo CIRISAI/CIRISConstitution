@@ -936,6 +936,48 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `"service_key"` | payload | `{ 1: int, 3: int, * int => any } / identity-ref` | on an edge of the class transparency | [2.7.11](#2.7.11) [4.4.3.34](part_4_composition_governance.md#4.4.3.34) | The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
 
+**A build manifest: the payload of a `provenance:build_manifest:{target}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | The pipeline's key, equal to iss. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | provenance:build_manifest:{target} with its version. |
+| — | `"build"` | payload | `build-descriptor` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [5.3.2.11](part_5_transport_substrate.md#5.3.2.11) | The descriptor of the manifest blob the row cites. |
+| `evidence_refs` | `"evidence_refs"` | payload | `[+ hash-digest]` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [2.6.1.6](#2.6.1.6) | The manifest blob, by its digest: the digest of build.manifest_hash is among them. |
+| — | `"refs"` | payload | `refs` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [2.4.1.1](#2.4.1.1) | The bundle the pipeline's grant names, in refs.head. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds: the signed instant of the manifest, which the blob does not state. |
+| — | `"project"` | payload | `tstr` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | The project, equal to the blob's project and listed by the pipeline's grant. |
+| — | `"version"` | payload | `tstr` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | The version, equal to the blob's version. |
+| — | `"manifest_hash"` | payload | `hash-digest` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [5.3.2.11](part_5_transport_substrate.md#5.3.2.11) | The digest of the manifest blob. |
+| — | `"manifest_size"` | payload | `uint` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [5.3.2.11](part_5_transport_substrate.md#5.3.2.11) | The blob's length in bytes, checked before the digest. |
+
+**A grant: the members this form names of a `trust:confers` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.1](part_3_the_namespace.md#3.1.1) | trust:confers:v1. |
+| `scope` | `"scope"` | payload | `[+ tstr]` | always | [2.1](#2.1) [4.5.5](part_4_composition_governance.md#4.5.5) | A set of scope tokens; a pipeline's holds infra:attest:provenance:build_manifest or infra:attest and no other. |
+| — | `"projects"` | payload | `[+ tstr]` | on a build pipeline's grant | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [2.6.1.2](#2.6.1.2) | A set of project names; absent, the grant confers a build manifest for no project. |
+| — | `"refs"` | payload | `refs` | always | [4.2.1](part_4_composition_governance.md#4.2.1) [2.6.1.9](#2.6.1.9) | The bundle in force the grant is counted over, in refs.head. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**The acceptance of a grant: the payload of a `membership:acceptance` row that answers a grant**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [3.2](part_3_the_namespace.md#3.2) | The owner of the key the grant names: a person, never the grantee's own key. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) | membership:acceptance:v1. |
+| — | `"refs"` | payload | `refs` | always | [3.1.2.1](part_3_the_namespace.md#3.1.2.1) [2.6.1.3](#2.6.1.3) | The one grant accepted, under answers; an acceptance names no head. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
+**The holders' withdrawal of a grant: the payload of a counted `withdraws` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| — | `"refs"` | payload | `refs` | always | [4.2.1](part_4_composition_governance.md#4.2.1) [2.4.1.1](#2.4.1.1) | The grant withdrawn, under target; the head the withdrawal acts from, under head. |
+| — | `"lifts"` | payload | `true` | where the count lifts single receipts | [2.4.1.1](#2.4.1.1) | Present only as true. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
 **An occurrence: the payload of an `identity:occurrence` row**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
@@ -1283,7 +1325,8 @@ The verifier publishes fourteen files of them ([edition-2-vectors]). Its vectors
 
 | Open encoding | Section | Owner |
 |---|---|---|
-| The payload rule of `ceg-boot-manifest/2` | [CC 2.6.1.11](#2.6.1.11) | server |
+| The payload rule of `ceg-boot-manifest/2`. Its member `build_manifest_row`, a `row-ref`, is the server's and is fixed | [CC 2.6.1.11](#2.6.1.11), [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | server |
+| The CDDL and the known answers of a build manifest's blob | [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | verify |
 | The family of the agent text manifest statement | [CC 2.6.1.11](#2.6.1.11), [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | agent |
 | The member that carries a seat commitment's `room` | [CC 2.6.1.11](#2.6.1.11) | edge |
 | The derivation label of a room binding's seed | [CC 2.6.1.11](#2.6.1.11) | store |

@@ -791,7 +791,7 @@ Chronological rotation events of the Registry's signing keys.
 
 ### 5.3.5 `registry-other` — Other Registry endpoints
 
-`GET /v1/builds/{version}` returns the BuildRecordResponse with a `federation_provenance` block. `GET /v1/verify/build-manifest/{project}/{version}/{target}` returns the verbatim signed BuildManifest. `GET /v1/agent_files/{kind}?platform_or_target=...` returns the [CC 4.4.3.33](part_4_composition_governance.md#4.4.3.33) trust-composition layers. `GET /v1/partner/{key_id}` composes ProfileScorecard data from existing tables.
+`GET /v1/builds/{version}` returns the BuildRecordResponse with a `federation_provenance` block. `GET /v1/provenance/build/{project}/{version}/{target}` is the shipped route for a build manifest, and its answer holds what [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) lists. `GET /v1/verify/build-manifest/{project}/{version}/{target}` returns the BuildManifest of the earlier form ([CC 8.11](part_8_appendices.md#8.11)). `GET /v1/agent_files/{kind}?platform_or_target=...` returns the [CC 4.4.3.33](part_4_composition_governance.md#4.4.3.33) trust-composition layers. `GET /v1/partner/{key_id}` composes ProfileScorecard data from existing tables.
 
 Full response schemas for these endpoints are published as a versioned OpenAPI document alongside this one.
 

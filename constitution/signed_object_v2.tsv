@@ -298,6 +298,28 @@ trust_accepts	trust-accepts	"trust_classes"	trust_classes	payload	[+ tstr]	where
 trust_accepts	trust-accepts	"trust_depth"	trust_depth	payload	0..5	where the edge reaches further	4.4.3.34	Absent reads 0.
 trust_accepts	trust-accepts	"service_key"	-	payload	{ 1: int, 3: int, * int => any } / identity-ref	on an edge of the class transparency	2.7.11 4.4.3.34	The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record.
 trust_accepts	trust-accepts	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+build_manifest	build-manifest-row	"author"	attesting_key_id	payload	identity-ref	always	3.1.2.1	The pipeline's key, equal to iss.
+build_manifest	build-manifest-row	"dimension"	dimension	payload	tstr	always	3.1.2.1	provenance:build_manifest:{target} with its version.
+build_manifest	build-manifest-row	"build"	-	payload	build-descriptor	always	3.1.2.1 5.3.2.11	The descriptor of the manifest blob the row cites.
+build_manifest	build-manifest-row	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	always	3.1.2.1 2.6.1.6	The manifest blob, by its digest: the digest of build.manifest_hash is among them.
+build_manifest	build-manifest-row	"refs"	-	payload	refs	always	3.1.2.1 2.4.1.1	The bundle the pipeline's grant names, in refs.head.
+build_manifest	build-manifest-row	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds: the signed instant of the manifest, which the blob does not state.
+build_manifest	build-descriptor	"project"	-	payload	tstr	always	3.1.2.1	The project, equal to the blob's project and listed by the pipeline's grant.
+build_manifest	build-descriptor	"version"	-	payload	tstr	always	3.1.2.1	The version, equal to the blob's version.
+build_manifest	build-descriptor	"manifest_hash"	-	payload	hash-digest	always	3.1.2.1 5.3.2.11	The digest of the manifest blob.
+build_manifest	build-descriptor	"manifest_size"	-	payload	uint	always	3.1.2.1 5.3.2.11	The blob's length in bytes, checked before the digest.
+grant	trust-confers	"dimension"	dimension	payload	tstr	always	3.1.1	trust:confers:v1.
+grant	trust-confers	"scope"	scope	payload	[+ tstr]	always	2.1 4.5.5	A set of scope tokens; a pipeline's holds infra:attest:provenance:build_manifest or infra:attest and no other.
+grant	trust-confers	"projects"	-	payload	[+ tstr]	on a build pipeline's grant	3.1.2.1 2.6.1.2	A set of project names; absent, the grant confers a build manifest for no project.
+grant	trust-confers	"refs"	-	payload	refs	always	4.2.1 2.6.1.9	The bundle in force the grant is counted over, in refs.head.
+grant	trust-confers	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+grant_acceptance	grant-acceptance	"author"	attesting_key_id	payload	identity-ref	always	3.1.2.1 3.2	The owner of the key the grant names: a person, never the grantee's own key.
+grant_acceptance	grant-acceptance	"dimension"	dimension	payload	tstr	always	3.1.2.1	membership:acceptance:v1.
+grant_acceptance	grant-acceptance	"refs"	-	payload	refs	always	3.1.2.1 2.6.1.3	The one grant accepted, under answers; an acceptance names no head.
+grant_acceptance	grant-acceptance	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+grant_withdrawal	grant-withdrawal	"refs"	-	payload	refs	always	4.2.1 2.4.1.1	The grant withdrawn, under target; the head the withdrawal acts from, under head.
+grant_withdrawal	grant-withdrawal	"lifts"	-	payload	true	where the count lifts single receipts	2.4.1.1	Present only as true.
+grant_withdrawal	grant-withdrawal	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 logical	-	the row id	attestation_id	none	-	-	2.6.1.3	Computed by every holder from the statement; the same for every voice of a counted row.
 logical	-	kid, iss and author	attesting_key_id	none	-	-	2.6.1.7	kid names the signing key; iss the signer's stable identity; author the author of an authored row.
 logical	-	label -70001	attestation_type	none	-	-	2.6.1.1	One of the five.
