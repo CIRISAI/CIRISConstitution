@@ -88,7 +88,6 @@ def main() -> int:
 
 def check(name: str, rev: str) -> int:
     """Rebuild ietf/<name>-<rev>.md in a temporary directory and compare its .xml and .txt with the committed."""
-    import filecmp
     import shutil
 
     doc = f"{name}-{rev}"
@@ -107,16 +106,38 @@ def check(name: str, rev: str) -> int:
         with open(os.path.join(tmp, f"{doc}.xml"), "w", encoding="utf-8") as out:
             subprocess.run(["kramdown-rfc", f"{doc}.md"], cwd=tmp, env=env, check=True, stdout=out, stderr=subprocess.PIPE)
         run(["xml2rfc", "--v3", "--text", os.path.join(tmp, f"{doc}.xml")], cwd=tmp, env=env)
-        bad = [
-            ext
-            for ext in ("xml", "txt")
-            if not filecmp.cmp(os.path.join(tmp, f"{doc}.{ext}"), os.path.join(IETF, f"{doc}.{ext}"), shallow=False)
-        ]
+        bad, moved = [], []
+        for ext in ("xml", "txt"):
+            built = open(os.path.join(tmp, f"{doc}.{ext}"), encoding="utf-8").read()
+            kept = open(os.path.join(IETF, f"{doc}.{ext}"), encoding="utf-8").read()
+            if built == kept:
+                continue
+            if _without_foreign_refs(built, ext) == _without_foreign_refs(kept, ext):
+                moved.append(ext)
+            else:
+                bad.append(ext)
     if bad:
         print(f"{doc}: {', '.join(bad)} differ from a rebuild of the stamped copy: run the build and commit ietf/")
         return 1
+    if moved:
+        # The stamped copy is the draft as submitted. A reference to another author's Internet-Draft is resolved
+        # from the datatracker at build time, so it moves when that draft is revised; that is no change of ours.
+        print(f"{doc}: {', '.join(moved)} differ from a rebuild only in references to other authors' drafts, "
+              f"which have been revised since the stamped copy was built; every other byte is identical")
+        return 0
     print(f"{doc}: .xml and .txt rebuild byte-identically from the stamped copy")
     return 0
+
+
+def _without_foreign_refs(text: str, ext: str) -> str:
+    """The text with each reference to an Internet-Draft of another author removed: its <reference> element in the
+    XML, its entry of the reference list in the text form. A reference to a draft of this suite (I-D.moore-…) stays,
+    and so does every RFC, since those do not move."""
+    import re
+
+    if ext == "xml":
+        return re.sub(r'<reference anchor="I-D\.(?!moore-)[^"]*".*?</reference>\s*', "", text, flags=re.S)
+    return re.sub(r"(?m)^ +\[I-D\.(?!moore-)[^\]]*\]\n(?:^ +\S.*\n)+", "", text)
 
 
 if __name__ == "__main__":
