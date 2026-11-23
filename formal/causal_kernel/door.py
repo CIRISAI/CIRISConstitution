@@ -56,7 +56,7 @@ RX = json.load(open(os.path.join(ROOT, "manifests", "reactions.json"), encoding=
 BASE_LAW = PTAB["base_law"]                      # base(N) = N for N <= k: the sizes run (3 and 4) are all below k
 DOOR_TEXT_PATH = os.path.join(ROOT, "formal", "derivation", "door_text.tsv")
 DOOR_TEXT = list(csv.DictReader((l for l in open(DOOR_TEXT_PATH, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE))
-SEAT = {"identity:substrate_persist": "substrate"}      # a role token of the manifest -> the seat name the worlds use
+SEAT = {"identity:substrate_persist": "substrate", "infra:attest": "substrate"}      # a role token of the manifest -> the seat name the worlds use
 
 # the door -> the clock or expiry of reactions.json it runs: (family, leaf or None, name)
 LANDS = {
@@ -526,7 +526,7 @@ def door_specs():
         opener_says=None, kinds=("deleted",), clauses=(("once", "deleted", ("abs", 1), "all", "deleted"),), silent=None, default="breached",
         secs=30 * 86400, concluder="substrate", late="counts", outcomes=("deleted", "breached", "open"),
         cells={"clock": "sla, dur self.days (the opener row's own member)", "answers": "unless withdrawn/superseded/purged by producer",
-               "close": "emit hard_case:deletion_window_breach by identity:substrate_persist"},
+               "close": "emit hard_case:deletion_window_breach by infra:attest"},
         unstated=[]), "deletion_sla", "substrate")
     D["harm_report"] = stated(dict(policy="content_class:{class}[reported]", kind="clock", opener="member", counted="member", extra=("moderate",),
         target_votes=False, opener_says=None, kinds=("keep",),

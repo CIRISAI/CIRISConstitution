@@ -13,7 +13,7 @@ key is a node's, an agent's or a person's. The signer kind is that axis. This to
   - a cell that does not cite a section and a line;
   - an open cell with no question, and a closed cell with one;
   - a cell that contradicts the relational tokens: `owner`, `wa`, `steward`, `winner` need a person, `holder` an
-    accord holder, `infra:attest`, `serve` and `identity:substrate_persist` a node, `identity:lenscore_detector` a
+    accord holder, `infra:attest`, `serve` and `identity:substrate_persist` a node, `identity:lenscore_detector` and `infra:detect` a
     detector;
   - a `by-leaf` family with no leaf rows.
 
@@ -36,7 +36,7 @@ PERSON_KINDS = {"person", "holder"}
 MACHINE_KINDS = {"agent", "node", "detector", "witness", "rendezvous"}
 NEEDS = {"owner": {"person"}, "wa": {"person"}, "steward": {"person"}, "winner": {"person"}, "holder": {"holder"},
          "infra:attest": {"node"}, "serve": {"node"}, "identity:substrate_persist": {"node"},
-         "identity:lenscore_detector": {"detector"}}
+         "identity:lenscore_detector": {"detector"}, "infra:detect": {"detector"}}
 
 # Reads whose subject is a key of a stated kind (CC 3.2 who owns a key; CC 3.4.7.3 Clauses D and E).
 READS = [

@@ -186,7 +186,7 @@ def check_row_types_table():
 
 RESERVED_STEMS = [
     ("accord:", "accord_holder-only", "CC 3.4.1"),
-    ("detection:", "detector-only (identity_type contains lenscore_detector)", "CC 3.4.8"),
+    ("detection:", "detector-only (the signer holds infra:detect)", "CC 3.4.8"),
     ("capacity:", "no-self-emit (attesting_key_id != attested_key_id)", "CC 3.4.5"),
     ("age_assurance:", "witness-reserved, subject-not-self", "CC 3.4.11"),
     ("capacity_assurance:", "witness-reserved, subject-not-self, attester != steward", "CC 3.4.12"),
@@ -280,7 +280,7 @@ def _reserved_rules():
          "the ledger's single owner (the steward-bound identity of its ledger_id triple); a delegation confers no write on a ledger", "CC 3.3.10.1"),
         # CC 3.4.2 / 3.4.4: the hard-case kinds are open and the emitter is reserved to the substrate.
         (lambda p, c: p.startswith("hard_case:"),
-         "substrate-emitted (identity_type substrate_persist); the kinds are open, the emitter is reserved; a non-substrate emission is a category error", "CC 3.4.4"),
+         "substrate-emitted (the node that admitted or refused the row, under infra:attest); the kinds are open, the emitter is reserved; a non-substrate emission is a category error", "CC 3.4.4"),
         # CC 2.7.11, CC 4.5.13, CC 3.3.6.2: a person's or a holder's row in a substrate-owned family, never a substrate self-report.
         (lambda p, c: p == "admission:unit",
          "a person's key, alone or as a voice of the group whose head the row names; never a substrate self-report", "CC 2.7.11"),

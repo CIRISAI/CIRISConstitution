@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "241eb46feee7c6b4ffc1c8c321680f7759596ac067e8af495a2e867cb4ea75c4",
+  "source_sha256": "e7f2f150d03c1b1a7268e82e56387eea8cfc2e2e991eb6a861295877983c2d5d",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -18,9 +18,8 @@
    "custodian",
    "founder",
    "holder",
-   "identity:lenscore_detector",
-   "identity:substrate_persist",
    "infra:attest",
+   "infra:detect",
    "member",
    "moderate",
    "operator",
@@ -55,7 +54,7 @@
     "commits": 1
    },
    "well_founded": {
-    "requiring": 12,
+    "requiring": 11,
     "longest_chain": 1,
     "reading": "no row's admission requires a row whose own admission requires it back"
    }
@@ -2185,10 +2184,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -7735,10 +7735,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -8385,10 +8386,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -8513,10 +8515,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -8641,10 +8644,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -8769,10 +8773,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -8897,10 +8902,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -10600,10 +10606,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -11468,7 +11475,7 @@
         "reach": "whole"
        },
        {
-        "guard": "when(leaf=recovery) one trust:charter@named[object=object,val:recovery_commitments commits signer] else void",
+        "guard": "when(leaf=recovery) one *@named[object=object,val:recovery_commitments commits signer] else void",
         "cc_ref": [
          "CC 3.1.3",
          "CC 4.2.6"
@@ -11676,10 +11683,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -12598,10 +12606,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -19648,10 +19657,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
