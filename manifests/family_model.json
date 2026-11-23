@@ -58,6 +58,10 @@
    "names_head": "roster | standing | none | by_placement: which head a row of the family names in refs.head (CC 2.4.1.1, CC 2.7.8); null where the placement is unread",
    "shape": "claim | content | consent | door | consent+door, the family's kernel shape (formal/derivation/family_shapes.tsv); null where none takes it",
    "descends_on_withdrawal": "bytes_and_words | row | nothing: what a holder other than the signer drops when a row of the family is withdrawn (CC 6.1.5 N5)",
+   "subject_may_withdraw": "true | false | a map by selector | null where open: whether a party a row of the family names, other than its signer, may withdraw it under rules 2 to 4 of CC 2.4.1.1; false on the kept list, for a row never withdrawn and for a counted row",
+   "accountability_record": "bool: the row is kept as the record of its signer's own acts, so the signer's owner may not withdraw it (CC 3.1.5)",
+   "may_carry_under": "true | false | a map by selector | null where open: a row of the family may be a deputy's edge and carry refs.also.under, a set of exactly one (CC 4.5.5)",
+   "standing_act": "offer | end | acceptance | exercise | none | a map by selector | null where open: what a row of the family is with respect to a standing; receipter is admitted only on an offer and lifts only on a counted end (CC 2.4.1.1)",
    "blind": "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
    "fold": "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)",
@@ -257,6 +261,38 @@
     "gap": 0
    },
    "descends_on_withdrawal": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
+   },
+   "subject_may_withdraw": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
+   },
+   "accountability_record": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
+   },
+   "may_carry_under": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
+   },
+   "standing_act": {
     "cc-table": 0,
     "code-v61": 0,
     "generic": 0,
@@ -829,6 +865,195 @@
     "roles_without_member": 0
    },
    "reading": "authorship gives each family's rows as authored (one party authors; the payload carries author), subject (authored, and the author is the attested key: a statement whose iss is not the sub is refused) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)"
+  },
+  "standing": {
+   "source": "formal/derivation/standing_text.tsv",
+   "columns": [
+    "subject_may_withdraw",
+    "accountability_record",
+    "may_carry_under",
+    "standing_act"
+   ],
+   "rules": {
+    "subject_may_withdraw.default": {
+     "statement": "true",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "Consent can be taken back, so a named party may retire a row about itself."
+      }
+     ]
+    },
+    "subject_may_withdraw.counted": {
+     "statement": "false",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "Rules 1 to 4 do not reach `T`: a quorum's act is undone only by a quorum."
+      }
+     ]
+    },
+    "subject_may_withdraw.affiliation_subject": {
+     "statement": "a row whose subject is an affiliation's own id is withdrawn by nobody acting for that affiliation, in every family; its path is reconsideration",
+     "cites": [
+      {
+       "cc_ref": "CC 4.4.3.12",
+       "quote": "The affiliation never retracts it and contests by reconsideration"
+      },
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "An affiliation withdraws no statement about itself, whatever the statement."
+      }
+     ]
+    },
+    "subject_may_withdraw.legal_weight_act": {
+     "statement": "a row that is an act of a body under a class its record declares with legal_weight true is not withdrawn by its subject, in every family",
+     "cites": [
+      {
+       "cc_ref": "CC 4.4.3.12",
+       "quote": "A row whose emitter resolves to that authority under such a class is an act under a declared legal-weight class"
+      },
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "an act of a body under a declared legal-weight class, such as a conviction or a licence"
+      }
+     ]
+    },
+    "accountability_record.rule": {
+     "statement": "true where the row is kept as the record of its signer's own acts, so that the signer's owner may stop holding its bytes and may not withdraw it; false for a family no sentence keeps so",
+     "cites": [
+      {
+       "cc_ref": "CC 3.1.5",
+       "quote": "The agent's owner MAY stop their own node holding a trace's bytes; that is not an erasure"
+      }
+     ]
+    },
+    "may_carry_under.rule": {
+     "statement": "true only for a family whose row may be a deputy's edge; refs.also.under names the one row that edge hangs from, a set of exactly one",
+     "cites": [
+      {
+       "cc_ref": "CC 4.5.5",
+       "quote": "A deputy's edge names the edge it hangs from, its delegator's seat edge, in `refs.also.under`"
+      },
+      {
+       "cc_ref": "CC 4.5.4",
+       "quote": "Its edge names its delegator's seat edge in `refs.also.under`, and it needs no membership"
+      }
+     ]
+    },
+    "standing_act.exercise": {
+     "statement": "a family whose names_head is roster, standing or by_placement is exercise, and one whose names_head is none is none: a row that names a head is signed in exercise of the standing that head seats; under by_placement a row that names no head exercises none",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "A row signed in exercise of a standing names the head it is at, in `refs.head`."
+      }
+     ]
+    },
+    "standing_act.end": {
+     "statement": "a family whose confers cell is an ending is end; a family whose confers cell has the role acceptance is acceptance",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "A row that ends a standing carries `refs.head` beside its target: a withdrawal of an acceptance or of an offer, an unseating, a resignation."
+      }
+     ]
+    },
+    "standing_act.receipter": {
+     "statement": "the payload member receipter is admitted only on a row whose standing_act is offer",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "or that of a receipter the offer names in `receipter`"
+      }
+     ]
+    },
+    "standing_act.lifts": {
+     "statement": "the payload member lifts is admitted only on a counted end: a row whose standing_act is end and whose authorship arm is counted, or a counted withdraws whose target's standing_act is offer",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "A count that ends a standing MAY state `lifts`, and then only the count's own receipts keep an act in force."
+      }
+     ]
+    },
+    "standing_act.own_end": {
+     "statement": "an end signed by one voice (a resignation, a withdraws by the signer of its target, an end whose authorship arm is authored) is no counted end, and lifts on it is refused lifts_on_own_end",
+     "cites": [
+      {
+       "cc_ref": "CC 2.4.1.1",
+       "quote": "One's own end lifts nothing, and `lifts` on it is refused, `lifts_on_own_end`."
+      }
+     ]
+    },
+    "standing_act.withdraws": {
+     "statement": "withdraws is a composer row type and no family, so it has no cell: a withdraws is an end where its target's standing_act is offer or acceptance, and a counted end where it is itself counted (CC 2.4.1.1 rule 0) and its target's standing_act is offer",
+     "cites": [
+      {
+       "cc_ref": "CC 2.7.7",
+       "quote": "An offer conferred by a count is ended by its holder or by a count, never by its proposer alone."
+      }
+     ]
+    }
+   },
+   "cells": {
+    "subject_may_withdraw": {
+     "by_value": {
+      "by_selector": 11,
+      "false": 23,
+      "true": 151
+     },
+     "by_source": {
+      "derived": 164,
+      "quote": 19,
+      "ruling": 1,
+      "open": 1
+     }
+    },
+    "accountability_record": {
+     "by_value": {
+      "false": 184,
+      "true": 1
+     },
+     "by_source": {
+      "derived": 184,
+      "quote": 1,
+      "ruling": 0,
+      "open": 0
+     }
+    },
+    "may_carry_under": {
+     "by_value": {
+      "by_selector": 1,
+      "false": 182,
+      "open": 2
+     },
+     "by_source": {
+      "derived": 182,
+      "quote": 1,
+      "ruling": 0,
+      "open": 2
+     }
+    },
+    "standing_act": {
+     "by_value": {
+      "acceptance": 2,
+      "by_selector": 3,
+      "end": 2,
+      "exercise": 154,
+      "none": 7,
+      "offer": 4,
+      "open": 13
+     },
+     "by_source": {
+      "derived": 164,
+      "quote": 8,
+      "ruling": 0,
+      "open": 13
+     }
+    }
+   },
+   "reading": "source derived: the cell follows from the other columns by the rule of that name in rules; quote: a row of the table whose words stand verbatim in cc_ref; ruling: a ruled reading the text does not yet state for the family by name; open: no value, and needs states the sentence the text would need. A cell with per_selector gives its value by leaf or by act, `*` taking every other row. Two rules of subject_may_withdraw hold in every family and are no cell: affiliation_subject and legal_weight_act. withdraws is a composer row and no family: rules.`standing_act.withdraws` states how an end is recognised"
   },
   "default_row": {
    "columns": {
@@ -1873,6 +2098,36 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": {
+     "leaf=lifecycle:{kind}": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -2313,6 +2568,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -2769,6 +3050,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -3184,6 +3491,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -3581,6 +3914,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -3983,6 +4342,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -4551,6 +4936,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "derived",
+    "from": "authorship",
+    "note": "every row of the family is counted: rules 1 to 4 never reach a counted row",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -4818,6 +5229,36 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": {
+     "act=group": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -5218,6 +5659,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -5451,6 +5918,40 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": {
+     "act=group": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": {
+     "act=group": "exercise",
+     "act=own": "none"
+    },
+    "source": "derived",
+    "from": "names_head",
+    "note": "by the head each selector names",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
    },
    "fold": {
     "value": [],
@@ -5896,6 +6397,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -6302,6 +6829,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -6695,6 +7248,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -7063,6 +7642,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -7334,6 +7939,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "names_head",
+    "note": "the names_head cell is unread, so nothing says whether a row of the family exercises a standing",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -7755,6 +8386,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -8141,6 +8798,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -8531,6 +9214,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -8934,6 +9643,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (roster)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -9347,6 +10082,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -9739,6 +10500,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -10100,6 +10887,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -10466,6 +11279,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -10799,6 +11638,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (roster)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -11143,6 +12008,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "acceptance",
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 4.5.13",
+    "quote": "**The winner accepts by their own row**, as a member accepts an invitation",
+    "derived": "none"
    },
    "fold": {
     "value": [
@@ -11618,6 +12510,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (roster)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -11990,6 +12908,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -12355,6 +13299,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -12716,6 +13686,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -13090,6 +14086,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -13450,6 +14472,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -13945,6 +14993,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `capacity:*` or `detection:*` finding made by someone else",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -14496,6 +15571,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `capacity:*` or `detection:*` finding made by someone else",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -14998,6 +16100,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `capacity:*` or `detection:*` finding made by someone else",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -15411,6 +16540,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -15802,6 +16957,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -16236,6 +17417,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -16740,6 +17947,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (standing)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -17175,6 +18408,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (roster)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -17596,6 +18855,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (roster)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -17990,6 +19275,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (standing)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -18413,6 +19724,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (standing)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -18822,6 +20159,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (standing)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -19197,6 +20560,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -19565,6 +20954,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -19922,6 +21337,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -20306,6 +21747,36 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": {
+     "act=group": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -20693,6 +22164,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -21095,6 +22592,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (roster)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -21520,6 +23043,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -21894,6 +23443,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -22254,6 +23829,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -22616,6 +24217,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -22976,6 +24603,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -23408,6 +25061,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.7.5",
+    "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
+    "derived": "exercise"
    },
    "fold": {
     "value": [
@@ -23877,6 +25557,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -24245,6 +25951,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -24693,6 +26425,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -25194,6 +26952,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "acceptance",
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 4.4.3.19",
+    "quote": "the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`",
+    "derived": "exercise"
    },
    "fold": {
     "value": [
@@ -25705,6 +27490,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "offer",
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 4.4.3.19",
+    "quote": "the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`",
+    "derived": "exercise"
+   },
    "fold": {
     "value": [
      {
@@ -26130,6 +27942,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.7.5",
+    "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
+    "derived": "exercise"
    },
    "fold": {
     "value": [
@@ -26561,6 +28400,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.7.5",
+    "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
+    "derived": "exercise"
    },
    "fold": {
     "value": [],
@@ -27047,6 +28913,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.7.5",
+    "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
+    "derived": "exercise"
+   },
    "fold": {
     "value": [
      {
@@ -27508,6 +29401,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.7.5",
+    "needs": "a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it",
+    "derived": "exercise"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -27903,6 +29823,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -28316,6 +30262,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -28707,6 +30679,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -28931,6 +30929,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (standing)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -29301,6 +31325,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -29606,6 +31656,47 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": {
+     "leaf=signature": false,
+     "leaf=pending": null
+    },
+    "source": "open",
+    "per_selector": true,
+    "from": "formal/derivation/standing_text.tsv",
+    "sources": {
+     "leaf=signature": "quote",
+     "leaf=pending": "open"
+    },
+    "cc_ref": {
+     "leaf=signature": "CC 2.4.1.1",
+     "leaf=pending": "CC 3.1.3"
+    },
+    "words": {
+     "leaf=signature": "an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either",
+     "leaf=pending": "a sentence saying whether a party a pending event names (the member a pending removal names) may withdraw the pending row under rules 2 to 4; the text states only the proposer's withdrawal"
+    },
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (roster)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -29997,6 +32088,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -30520,6 +32637,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (standing)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -30897,6 +33040,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -31336,6 +33505,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -31801,6 +33996,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -32187,6 +34408,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -32632,6 +34879,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -33026,6 +35299,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `capacity:*` or `detection:*` finding made by someone else",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -33452,6 +35752,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `capacity:*` or `detection:*` finding made by someone else",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -33861,6 +36188,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `capacity:*` or `detection:*` finding made by someone else",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -34261,6 +36615,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `capacity:*` or `detection:*` finding made by someone else",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -34677,6 +37058,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `capacity:*` or `detection:*` finding made by someone else",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -35087,6 +37495,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "none",
+    "source": "derived",
+    "from": "names_head",
+    "note": "a row of its signer's own, exercising no conferred standing",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -35458,6 +37892,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -35823,6 +38283,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -36183,6 +38669,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -36545,6 +39057,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -36896,6 +39434,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.1",
+    "needs": "a sentence saying whether an obligation attached to a permission is part of the offer it attaches to; the shapes table reads it as a term on an offer that moves no seat",
+    "derived": "exercise"
    },
    "fold": {
     "value": [],
@@ -37272,6 +39837,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -37636,6 +40227,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -38006,6 +40623,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -38372,6 +41015,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -38752,6 +41421,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (standing)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -39134,6 +41829,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -39501,6 +42222,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -39897,6 +42644,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -40261,6 +43034,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -40639,6 +43438,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -41000,6 +43825,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -41398,6 +44249,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -42194,6 +45071,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "derived",
+    "from": "authorship",
+    "note": "every row of the family is counted: rules 1 to 4 never reach a counted row",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.7.8",
+    "needs": "a sentence saying what a roster version is with respect to the seats it lists: it is the head acts name, and the text calls no roster version an offer or an end",
+    "derived": "exercise"
+   },
    "fold": {
     "value": [
      {
@@ -42730,6 +45634,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -43119,6 +46050,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -43503,6 +46460,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -43851,6 +46834,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -44429,6 +47438,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.3.6.4",
+    "needs": "a sentence saying whether the row that adds a key to a self roster is an offer; its second consent is waived and the text names no offer there",
+    "derived": "none"
+   },
    "fold": {
     "value": [
      {
@@ -44930,6 +47966,36 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either",
+    "derived": {
+     "identity=user": false,
+     "*": true
+    }
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "end",
+    "source": "derived",
+    "from": "confers",
+    "note": "the family's rows end a standing",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -45382,6 +48448,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -45756,6 +48848,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -46142,6 +49260,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -46507,6 +49651,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -46867,6 +50037,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -47232,6 +50428,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -47629,6 +50851,36 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": {
+     "act=group": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "none",
+    "source": "derived",
+    "from": "names_head",
+    "note": "a row of its signer's own, exercising no conferred standing",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -48112,6 +51364,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "A `key:revocation:v1` row is withdrawn by nobody, because revocation is non-rollbackable",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "end",
+    "source": "derived",
+    "from": "confers",
+    "note": "the family's rows end a standing",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -48539,6 +51818,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -49132,6 +52437,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (standing)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -49438,6 +52770,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "names_head",
+    "note": "the names_head cell is unread, so nothing says whether a row of the family exercises a standing",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -49849,6 +53207,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -50270,6 +53654,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -50658,6 +54068,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -51165,6 +54601,36 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`",
+    "derived": {
+     "act=group": false,
+     "*": true
+    }
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -51638,6 +55104,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -51872,6 +55364,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "none",
+    "source": "derived",
+    "from": "names_head",
+    "note": "a row of its signer's own, exercising no conferred standing",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -52256,6 +55774,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -53056,6 +56600,74 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": {
+     "leaf=widening|removal": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": {
+     "leaf=proposal": "offer",
+     "leaf=acceptance": "acceptance",
+     "leaf=decline": "acceptance",
+     "leaf=widening": "offer",
+     "leaf=removal": "end",
+     "leaf=resignation": "end"
+    },
+    "source": "quote",
+    "per_selector": true,
+    "from": "formal/derivation/standing_text.tsv",
+    "sources": {
+     "leaf=proposal": "quote",
+     "leaf=acceptance": "quote",
+     "leaf=decline": "quote",
+     "leaf=widening": "quote",
+     "leaf=removal": "quote",
+     "leaf=resignation": "quote"
+    },
+    "cc_ref": {
+     "leaf=proposal": "CC 3.1.3.2",
+     "leaf=acceptance": "CC 3.1.3.2",
+     "leaf=decline": "CC 3.1.3.2",
+     "leaf=widening": "CC 3.1.3.2",
+     "leaf=removal": "CC 3.1.3.2",
+     "leaf=resignation": "CC 3.1.3.2"
+    },
+    "words": {
+     "leaf=proposal": "**The proposal is an invitation, not the group's decision.**",
+     "leaf=acceptance": "An **acceptance** or **decline** is K's answer to exactly one proposal",
+     "leaf=decline": "An **acceptance** or **decline** is K's answer to exactly one proposal",
+     "leaf=widening": "The group decides on the **growth record**: a membership **widening**, the only door that adds anyone.",
+     "leaf=removal": "a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member",
+     "leaf=resignation": "a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member"
+    },
+    "derived": {
+     "leaf=proposal": "exercise",
+     "leaf=acceptance": "none",
+     "leaf=decline": "none",
+     "leaf=widening": "exercise",
+     "leaf=removal": "exercise",
+     "leaf=resignation": "exercise"
+    }
+   },
    "fold": {
     "value": [
      {
@@ -53608,6 +57220,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -53989,6 +57627,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -54366,6 +58030,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -54781,6 +58471,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -55172,6 +58889,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "ruling",
+    "from": "formal/derivation/standing_text.tsv",
+    "note": "ruled: a participant does not withdraw the moderation record composed about them; the kept list's sentence names `moderation:*`, which does not take this family by name",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -55573,6 +59316,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -55945,6 +59714,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "none",
+    "source": "derived",
+    "from": "names_head",
+    "note": "a row of its signer's own, exercising no conferred standing",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -56313,6 +60108,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -56676,6 +60497,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -57093,6 +60940,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -57530,6 +61403,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -57889,6 +61788,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -58281,6 +62206,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "offer",
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "Where one row between two keys is the whole record, as an owner-binding is, that row is the head.",
+    "derived": "none"
    },
    "fold": {
     "value": [
@@ -58717,6 +62669,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -59087,6 +63065,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -59347,6 +63351,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.5",
+    "needs": "a sentence saying which of the request and the operator's answer confers the custody standing and which accepts it",
+    "derived": null
    },
    "fold": {
     "value": [],
@@ -59639,6 +63670,33 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.5",
+    "needs": "a sentence saying which of the request and the operator's answer confers the custody standing and which accepts it",
+    "derived": "acceptance"
    },
    "fold": {
     "value": [],
@@ -60056,6 +64114,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -60425,6 +64509,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -60813,6 +64923,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "none",
+    "source": "derived",
+    "from": "names_head",
+    "note": "a row of its signer's own, exercising no conferred standing",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -61209,6 +65345,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -61613,6 +65775,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -61982,6 +66170,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -62376,6 +66590,36 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker",
+    "derived": {
+     "group=affiliations & seats=one": false,
+     "*": true
+    }
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -62798,6 +67042,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -63178,6 +67448,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -63541,6 +67837,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -63906,6 +68228,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -64270,6 +68618,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -64633,6 +69007,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -65024,6 +69424,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -65389,6 +69815,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -65782,6 +70234,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "none",
+    "source": "derived",
+    "from": "names_head",
+    "note": "a row of its signer's own, exercising no conferred standing",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -66142,6 +70620,36 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": {
+     "leaf=custodian_minted": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": null,
+    "source": "open",
+    "from": "names_head",
+    "note": "the names_head cell is unread, so nothing says whether a row of the family exercises a standing",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -66639,6 +71147,33 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -67027,6 +71562,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -67386,6 +71947,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -67768,6 +72355,39 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": {
+     "act=group": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3",
+    "needs": "a sentence saying whether a deputy's edge may carry this label, which claims no job, or always rides `trust:confers:v1` as a scope-carrying grant",
+    "derived": false
+   },
+   "standing_act": {
+    "value": "offer",
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.7.5",
+    "quote": "A delegation that carries a scope seats its delegate only with the delegate's own signature",
+    "derived": "exercise"
    },
    "fold": {
     "value": [
@@ -68247,6 +72867,35 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": null,
+    "source": "open",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3",
+    "needs": "a sentence saying whether a duty holder's delegation to their own agent is a deputy's edge that names the seat edge in refs.also.under, or always rides `trust:confers:v1`",
+    "derived": false
+   },
+   "standing_act": {
+    "value": "offer",
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.3",
+    "quote": "a scoped act-on-behalf delegation, whose acts are the agent's own rows under its own `iss`",
+    "derived": "exercise"
+   },
    "fold": {
     "value": [
      {
@@ -68721,6 +73370,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -69143,6 +73818,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -69608,6 +74309,36 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker",
+    "derived": {
+     "group=affiliations & seats=one": false,
+     "*": true
+    }
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -69868,6 +74599,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -70246,6 +75003,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -70841,6 +75624,37 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "a `takedown_notice:*`, where the path is the counter-notice its basis names",
+    "derived": {
+     "leaf=steward_purge": false,
+     "group=affiliations & seats=one": false,
+     "*": true
+    }
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -71275,6 +76089,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "none",
+    "source": "derived",
+    "from": "names_head",
+    "note": "a row of its signer's own, exercising no conferred standing",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -71635,6 +76475,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -72017,6 +76883,35 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "an agent's own `trace:*`, where the path of a person named in it is withdrawing consent",
+    "derived": true
+   },
+   "accountability_record": {
+    "value": true,
+    "source": "quote",
+    "from": "formal/derivation/standing_text.tsv",
+    "cc_ref": "CC 3.1.5",
+    "quote": "An agent's trace is erased only by its signer's `withdraws` under [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1) rule 1",
+    "derived": false
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -72405,6 +77300,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -72829,6 +77750,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": false,
+    "source": "derived",
+    "from": "authorship",
+    "note": "every row of the family is counted: rules 1 to 4 never reach a counted row",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -73238,6 +78185,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
@@ -73697,6 +78670,79 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": {
+     "act=group": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": {
+     "leaf=confers": true,
+     "leaf=accepts": false,
+     "leaf=charter": false
+    },
+    "source": "quote",
+    "per_selector": true,
+    "from": "formal/derivation/standing_text.tsv",
+    "sources": {
+     "leaf=confers": "quote",
+     "leaf=accepts": "quote",
+     "leaf=charter": "quote"
+    },
+    "cc_ref": {
+     "leaf=confers": "CC 3.1.3",
+     "leaf=accepts": "CC 3.1.1",
+     "leaf=charter": "CC 3.1.1"
+    },
+    "words": {
+     "leaf=confers": "A delegation that claims a job rides `trust:{job}` ([CC 3.1.1](part_3_the_namespace.md#3.1.1)): a scope-carrying grant is `trust:confers:v1`.",
+     "leaf=accepts": "`trust:accepts:v1` (owner→root acceptance, a person's row that every node and agent they own reads",
+     "leaf=charter": "A root's charter is the `charter` member of its bundle, and no row is a charter."
+    },
+    "derived": false
+   },
+   "standing_act": {
+    "value": {
+     "leaf=confers": "offer",
+     "leaf=accepts": "acceptance",
+     "leaf=charter": "none"
+    },
+    "source": "quote",
+    "per_selector": true,
+    "from": "formal/derivation/standing_text.tsv",
+    "sources": {
+     "leaf=confers": "quote",
+     "leaf=accepts": "quote",
+     "leaf=charter": "quote"
+    },
+    "cc_ref": {
+     "leaf=confers": "CC 3.1.1",
+     "leaf=accepts": "CC 3.1.1",
+     "leaf=charter": "CC 3.1.1"
+    },
+    "words": {
+     "leaf=confers": "`trust:confers:v1` (a grant counted over the holders of the bundle in force)",
+     "leaf=accepts": "`trust:accepts:v1` (owner→root acceptance, a person's row that every node and agent they own reads",
+     "leaf=charter": "A root's charter is the `charter` member of its bundle, and no row is a charter."
+    },
+    "derived": {
+     "leaf=accepts": "none",
+     "leaf=confers": "exercise",
+     "leaf=charter": "none"
+    }
+   },
    "fold": {
     "value": [
      {
@@ -74132,6 +79178,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -74538,6 +79610,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -74904,6 +80002,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -75291,6 +80415,36 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": {
+     "leaf=abandonment|seizure|successor": false,
+     "*": true
+    },
+    "source": "derived",
+    "from": "authorship",
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [
@@ -75747,6 +80901,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (roster)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [],
     "source": "generic",
@@ -76118,6 +81298,32 @@
     "from": "shape",
     "cc_ref": "CC 6.1.5"
    },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
    "fold": {
     "value": [
      {
@@ -76483,6 +81689,32 @@
     "source": "derived",
     "from": "shape",
     "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
    },
    "fold": {
     "value": [],
