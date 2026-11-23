@@ -11,23 +11,23 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 94,
+  "total": 95,
   "by_status": {
-   "runnable": 78,
+   "runnable": 79,
    "stated": 12,
    "wording-only": 4
   },
   "by_implementer": {
    "agent": 1,
    "edge": 2,
-   "persist": 87,
+   "persist": 88,
    "tooling": 4
   },
   "by_kind": {
    "audience": 4,
    "cosign": 7,
    "count": 4,
-   "door": 24,
+   "door": 25,
    "fold": 9,
    "freshness": 1,
    "lifecycle": 10,
@@ -3024,6 +3024,124 @@
    },
    "order_dependent_shipped": false,
    "note": "formal/derivation/census_names.tsv records how the census row of this name is read"
+  },
+  {
+   "id": "persist/cosign:{state}/family name",
+   "implementer": "persist",
+   "family": "cosign:{state}",
+   "where": "family name",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-cosign-collection-held"
+   ],
+   "claims": [
+    "CLM-cosign-collection-held"
+   ],
+   "text": {
+    "value": "refused by name: the registry carries no family of this name",
+    "cc_ref": "CC 3.1.3",
+    "quote": "a row under the stem `cosign:` is refused `namespace_family_unregistered`",
+    "param": {
+     "family": "cosign:{state}",
+     "refuse": [
+      "family_unregistered"
+     ]
+    }
+   },
+   "shipped": {
+    "value": "a peer-fed pending or signature statement signed by a member is admitted and counts nothing (src/federation/cosign.rs#admit_row)",
+    "source": "constitution/vendor/evidence/CIRISPersist.cc_impl.tsv CLM-cosign-collection-held (the store's release pinned there; the census carries no row of this name)",
+    "census_cell": null,
+    "file": "constitution/vendor/evidence/CIRISPersist.cc_impl.tsv",
+    "file_sha256": "fe480c5485817473310469cdeae48bac0c78f78b981fae53169a6814c103267c",
+    "file_rows": [
+     "CLM-cosign-collection-held"
+    ],
+    "param": {
+     "family": "cosign:{state}",
+     "gate": [
+      [
+       "seat:member@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "cosign:{state}",
+      "group": "g",
+      "head": [
+       "g"
+      ]
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "refused",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "refused"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "formal/derivation/census_names.tsv records that the census carries no row of this name"
   },
   {
    "id": "persist/age_assurance:{level}:{band}:{version}/signer_rule",
@@ -7624,7 +7742,7 @@
     }
    },
    "shipped": {
-    "value": "short of the count, the row is admitted as testimony (LicensureIssuance::Testimony), not held as cosign:pending",
+    "value": "short of the count, the row is admitted as testimony (LicensureIssuance::Testimony), not held",
     "source": "constitution/claims.tsv CLM-licence-authority-quorum (impl community_quorum_cosigned_at; the implementer's answer for the edition)",
     "census_cell": null,
     "file": "constitution/claims.tsv",

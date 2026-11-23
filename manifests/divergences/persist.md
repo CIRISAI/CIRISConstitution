@@ -6,7 +6,7 @@ How to consume: each entry is one test: build `case`, ask `ask`, assert `expect_
 
 To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.
 
-87 entries: 75 runnable, 0 disputed, 8 stated, 4 wording only.
+88 entries: 76 runnable, 0 disputed, 8 stated, 4 wording only.
 
 | id | family | where | the sentence | the case | assert |
 |---|---|---|---|---|---|
@@ -37,6 +37,7 @@ To return an entry whose verdict you hold wrong, add a row to `formal/derivation
 | persist/transparency_log:consistency/family name | transparency_log:consistency | family name | CC 3.4.10: A row of one of those names is refused `namespace_family_unregistered` | ka:keyrec by A; h:transparency_log:consistency by A names ka \| ask state h | refused |
 | persist/lineage_witness:{stage}/family name | lineage_witness:{stage} | family name | CC 3.1.3: a row under the stem `lineage_witness:` is refused `namespace_family_unregistered` | ka:keyrec by A; h:lineage_witness:{stage} by A names ka \| ask state h | refused |
 | persist/delivery_receipt:{stream_id}/family name | delivery_receipt:{stream_id} | family name | CC 3.1.7: So is a stem marked `kind: retired`, under which no family stands | ka:keyrec by A; h:delivery_receipt:{stream_id} by A names ka \| ask state h | refused |
+| persist/cosign:{state}/family name | cosign:{state} | family name | CC 3.1.3: a row under the stem `cosign:` is refused `namespace_family_unregistered` | g:offer by A; h:cosign:{state} by A names g \| ask state h | refused |
 | persist/age_assurance:{level}:{band}:{version}/signer_rule | age_assurance:{level}:{band}:{version} | signer_rule | CC 3.4.7: `assure:age` | kw:keyrec by W; rt:offer by Rt; o1:offer by Rt names rt; a1:accept by W names o1; h:age_assurance:{level}:{band}:{version} by W names kw,a1 \| ask state h | concludes nothing |
 | persist/capacity_assurance:{level}:{domain}:{band}:{version}/signer_rule | capacity_assurance:{level}:{domain}:{band}:{version} | signer_rule | CC 3.4.7: `assure:capacity` | kw:keyrec by W; rt:offer by Rt; o1:offer by Rt names rt; a1:accept by W names o1; h:capacity_assurance:{level}:{domain}:{band}:{version} by W names kw,a1 \| ask state h | concludes nothing |
 | persist/capacity_assurance:reversible_excluded:{domain}:{version}/signer_rule | capacity_assurance:reversible_excluded:{domain}:{version} | signer_rule | CC 3.4.7: `assure:capacity` | kw:keyrec by W; rt:offer by Rt; o1:offer by Rt names rt; a1:accept by W names o1; h:capacity_assurance:reversible_excluded:{domain}:{version} by W names kw,a1 \| ask state h | concludes nothing |

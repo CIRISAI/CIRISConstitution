@@ -43,7 +43,8 @@ Checks (every run, before writing):
   (CC 3.1.3 `key:record`) that must each give their own answer.
   The payloads of nine families (CC 2.6.1.4): one valid payload of each family rule validates and broken ones are
   refused; the rules the CDDL cannot state (a member required on one stage, axis or state; a dimension leaf equal to
-  its member; a cosign:{state} row with a payload of its own) refuse edition2_payload_invalid, over deliberate breaks.
+  its member) refuse edition2_payload_invalid, over deliberate breaks. A statement labelled with a retired family
+  (cosign:{state}, CC 3.1.3) is refused namespace_family_unregistered before any payload rule, over a deliberate break.
   --check   check, and compare the block with what the Part holds; write nothing (exit 1 when stale)
 
 stdlib only. Run:  python3 tools/build_cc_signed_object_v2.py [--check]
@@ -461,6 +462,13 @@ def family_ids():
     return {_re.sub(r"\{([a-z_]+)\}", r".\1", f["prefix"]).replace("*", ".") for f in reg["families"]}
 
 
+def retired_stems():
+    """The stems the registry marks `kind: retired` (CC 3.1.7): no family stands under one."""
+    import json
+    reg = json.load(open(os.path.join(ROOT, "manifests", "namespace_registry.json"), encoding="utf-8"))
+    return [s["stem"] for s in reg["_meta"]["case_rule"]["reserved_stems"] if s.get("kind") == "retired"]
+
+
 def family_checks():
     """(line, problems): the samples' family ids are registry family ids, the lifecycle sample's dimension matches its
     family with no refusal, and the accord rule refuses a valid_until not after asserted_at."""
@@ -521,6 +529,7 @@ def recovery_samples():
 
 # ---------------------------------------------------------------- the payloads of nine families (CC 2.6.1.4)
 PAYLOAD_INVALID = "edition2_payload_invalid"
+FAMILY_UNREGISTERED = "namespace_family_unregistered"   # a family label under a retired stem (CC 3.1.7)
 
 
 def _ref(n):
@@ -720,9 +729,10 @@ def _segment(dim, i):
 
 def family_payload_rule(root, p, family=None):
     """The rules of a family's payload the CDDL cannot state, checked in prose: None, or edition2_payload_invalid.
-    `family` is the statement's family label; a cosign:{state} family has no payload of its own (CC 3.1.3)."""
-    if family == "cosign:.state":
-        return PAYLOAD_INVALID                            # a pending or signature state is a statement over the event's own payload
+    `family` is the statement's family label. A label under a stem the registry marks retired is refused
+    namespace_family_unregistered before any payload rule is read (CC 3.1.7): cosign:{state} is retired (CC 3.1.3)."""
+    if family is not None and any(family.startswith(stem) for stem in retired_stems()):
+        return FAMILY_UNREGISTERED                        # no family stands under the stem: the payload is never read
     dim = p.get("dimension", "")
     if root == "membership-change":
         stage = _segment(dim, 1)
@@ -962,7 +972,6 @@ def family_payload_rule_checks():
         ("takedown-notice", dict(P["takedown-notice"][1], dimension="takedown_notice:steward_purge:v1",
                                  legal_basis="steward_purge"), None),
         ("group-roster", dict(P["group-roster"][1], version=1), None),
-        ("membership-change", P["membership-change"][1], "cosign:.state"),
         ("canonical-rebind", dict(P["canonical-rebind"][1], refs={"also": {"cites": [_ref(9)]}}), None),
         ("deferral-response", dict(P["deferral-response"][1], reason_digest=[-16, bytes([7]) * 32]), None),
         ("build-manifest-row", dict(P["build-manifest-row"][1], refs={"also": {"cites": [_ref(9)]}}), None),
@@ -983,8 +992,11 @@ def family_payload_rule_checks():
             caught += 1
         else:
             bad.append(f"deliberate break not caught: a {root} payload the prose refuses passed")
-    return (f"family payload rules: {len(P)} samples pass; {caught} breaks refused {PAYLOAD_INVALID}, "
-            f"a cosign state carrying a payload of its own among them"), bad
+    # A retired family (CC 3.1.3): a valid payload under its label is refused by the label, before any payload rule.
+    if family_payload_rule("membership-change", P["membership-change"][1], "cosign:.state") != FAMILY_UNREGISTERED:
+        bad.append("deliberate break not caught: a statement labelled cosign:.state was not refused as an unregistered family")
+    return (f"family payload rules: {len(P)} samples pass; {caught} breaks refused {PAYLOAD_INVALID}; "
+            f"a statement labelled with the retired family cosign:.state is refused {FAMILY_UNREGISTERED}"), bad
 
 
 def family_cddl_checks(text, ftext):
@@ -1069,8 +1081,7 @@ FAMILY_PREAMBLE = """; CC 2.6.1.4: the payload rules of the families it names, o
 ; key record's are. Each carries the members its family names one to one and embeds no signed object. What a
 ; family's record carried as a co-signature is a further statement over the same payload, a counted voice
 ; (CC 2.6.1.9), never a member. A payload that breaks its family's rule is refused edition2_payload_invalid
-; (CC 2.6.1.8 step 3). A member required only on one stage, axis or state is optional here and checked in prose.
-; A cosign:{state} row has no payload of its own: each state is a statement over the event's own payload (CC 3.1.3)."""
+; (CC 2.6.1.8 step 3). A member required only on one stage, axis or state is optional here and checked in prose."""
 
 
 def family_cddl_text(rows):

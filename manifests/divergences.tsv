@@ -27,6 +27,7 @@ persist/transparency_log:inclusion/family name	persist	door	runnable	transparenc
 persist/transparency_log:consistency/family name	persist	door	runnable	transparency_log:consistency	family name	CC 3.4.10	refused	admitted	CLM-witness-emitter
 persist/lineage_witness:{stage}/family name	persist	door	runnable	lineage_witness:{stage}	family name	CC 3.1.3	refused	admitted	CLM-lineage-witness-consent
 persist/delivery_receipt:{stream_id}/family name	persist	door	runnable	delivery_receipt:{stream_id}	family name	CC 3.1.7	refused	admitted	CLM-reservation-delivery
+persist/cosign:{state}/family name	persist	door	runnable	cosign:{state}	family name	CC 3.1.3	refused	admitted	CLM-cosign-collection-held
 persist/age_assurance:{level}:{band}:{version}/signer_rule	persist	signer	runnable	age_assurance:{level}:{band}:{version}	signer_rule	CC 3.4.7	concludes nothing	admitted	C423 C483 C564
 persist/capacity_assurance:{level}:{domain}:{band}:{version}/signer_rule	persist	signer	runnable	capacity_assurance:{level}:{domain}:{band}:{version}	signer_rule	CC 3.4.7	concludes nothing	admitted	C483 C564
 persist/capacity_assurance:reversible_excluded:{domain}:{version}/signer_rule	persist	signer	runnable	capacity_assurance:reversible_excluded:{domain}:{version}	signer_rule	CC 3.4.7	concludes nothing	admitted	C483 C564

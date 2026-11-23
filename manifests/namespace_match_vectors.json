@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc22",
-    "registry_sha256": "1d236189ff90059188eea0344fb78a8df757ed45dbe57eac5d524e6685950742",
+    "registry_sha256": "b20ef0bf0e1b456fdc209e7d0945db14c4636d6930ed084434d947c8ca9cc64a",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -2717,60 +2717,6 @@
       "family": "corpus_health:n_eff_measurable",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
-    },
-    {
-      "dimension": "cosign:pending:v1",
-      "family": "cosign:{state}",
-      "refusal": null,
-      "why": "instantiated sample resolves to its row"
-    },
-    {
-      "dimension": "cosign:pending:V1",
-      "family": "cosign:{state}",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "cosign:pending:v1:v2",
-      "family": "cosign:{state}",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "cosign:pending:v1beta",
-      "family": "cosign:{state}",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Cosign:pending:v1",
-      "family": "cosign:{state}",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "cosign:pending",
-      "family": "cosign:{state}",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
-    },
-    {
-      "dimension": "cosign:PENDING:v1",
-      "family": "cosign:{state}",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
-    },
-    {
-      "dimension": "cosign:signature:v1",
-      "family": "cosign:{state}",
-      "refusal": null,
-      "why": "a listed value of a closed enumeration resolves to its row"
-    },
-    {
-      "dimension": "cosign:not_a_listed_value:v1",
-      "family": "cosign:{state}",
-      "refusal": "namespace_vocab_value_unregistered",
-      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "credits:sample:sample:id1:v1",
@@ -7723,6 +7669,12 @@
       "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
     },
     {
+      "dimension": "cosign:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_family_unregistered",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
+    },
+    {
       "dimension": "x_private:anything:v1",
       "family": null,
       "refusal": "namespace_private_use_not_federatable",
@@ -7898,6 +7850,12 @@
     },
     {
       "dimension": "Delivery_receipt:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
+    },
+    {
+      "dimension": "Cosign:zz_unminted_leaf:v1",
       "family": null,
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"

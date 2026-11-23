@@ -101,6 +101,7 @@ RETIRED_STEMS = [
     ("transparency_log:consistency:", "retired: no family; a Transparency Service's Receipt carries the proof", "CC 3.4.10"),
     ("lineage_witness:", "retired: no family; a charter names its Transparency Services", "CC 3.2"),
     ("delivery_receipt:", "renamed with no alias: the family is delivery_ack:{stream_id}", "CC 3.4.6"),
+    ("cosign:", "retired: no family; a counted row short of its count is held as its own voices", "CC 3.3.4"),
 ]
 ROW_TYPES_SOURCE_REL = "constitution/part_2_the_grammar.md"
 STRUCTURAL_ROW_TYPES = ["scores", "delegates_to", "supersedes", "withdraws", "recants"]
@@ -260,15 +261,12 @@ def _reserved_rules():
         (lambda p, c: p.startswith("observation:access_assumption"),
          "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids non-empty, the observed agent; never the subject itself)", "CC 3.1.9.4"),
         # CC 3.1.3.2: the membership ceremony — per-leaf emitter, not a substrate self-report.
-        # CC 3.1.3 cosignature collection: member-signed, never a substrate self-report.
         # CC 5.3.3.8: a stream's signed head, written by whoever produces the stream.
         (lambda p, c: p == "stream:head",
          "self: the signer is the row's author and the stream's producer, a member's key and never a node's; sub is stream: and the stream's id; no second signer", "CC 5.3.3.8"),
         # CC 2.7.5 / CC 2.4.1.1: a receipt of acts, by a voice at the head the acts name.
         (lambda p, c: p == "act:ack",
          "a voice at the head the acts name: the conferrer, another holder of the body the acts were done for, or a receipter an offer names; never the signer of an act it names, and never a node; one voice or the body's count", "CC 2.4.1.1"),
-        (lambda p, c: p.startswith("cosign:"),
-         "per-leaf: pending = the event's primary signer, an active member of the group at the roster head the event names; signature = the member whose signature it carries; served to the group's active members only; only the proposer withdraws a pending row; a signature row is never withdrawn", "CC 3.1.3"),
         (lambda p, c: p.startswith("membership:"),
          "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member", "CC 3.1.3.2"),
         # CC 3.4.6: a SUBSCRIBER's signed acknowledgement, membership-gated — the row says
@@ -946,6 +944,8 @@ def main():
         "lineage_witness:{stage}",                 # retired; the stem is fenced
         "trust:blessing",                          # retired; a pipeline's grant is a trust:confers:v1 row
         "delivery_receipt:{stream_id}",            # -> delivery_ack:{stream_id}; no alias, the old stem is fenced
+        # A counted row short of its count is held as its own voices (CC 3.3.4): no family collects them.
+        "cosign:{state}",                          # retired; the stem is fenced
     }
     if os.path.exists(OUT):
         try:

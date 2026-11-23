@@ -182,6 +182,7 @@ def cases():
             "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect)",
             [keyrec("kd", "D")] + root_seat("D", "infra:detect") + [fam("h", "D", f, ("kd", "a1"), root="Rt")], "h"))
     # ---- names the text retires or renames with no alias: the registry refuses a row of the name, the shipped store keeps it
+    VENDORED = "constitution/vendor/evidence/CIRISPersist.cc_impl.tsv"
     for f, srcs, cc, q, sdnf, sw, rows in [
         ("transparency_log:cosigned:{tree_size}", ["CLM-witness-emitter"], "CC 3.4.10",
          "A row of one of those names is refused `namespace_family_unregistered`",
@@ -201,13 +202,22 @@ def cases():
         ("delivery_receipt:{stream_id}", ["CLM-reservation-delivery"], "CC 3.1.7",
          "So is a stem marked `kind: retired`, under which no family stands", [["registered"]],
          "GAP: any_registered (CC reserves; no gate)", [keyrec("ka", "A"), fam("h", "A", "delivery_receipt:{stream_id}", ("ka",))]),
+        # the census carries no row of this name: the shipped value is read from the vendored evidence of the store's release
+        ("cosign:{state}", ["CLM-cosign-collection-held"], "CC 3.1.3",
+         "a row under the stem `cosign:` is refused `namespace_family_unregistered`", [["seat:member@group"]],
+         "a peer-fed pending or signature statement signed by a member is admitted and counts nothing (src/federation/cosign.rs#admit_row)",
+         group() + [fam("h", "A", "cosign:{state}", ("g",), group="g", head=("g",))]),
     ]:
         E.append({"implementer": "persist", "family": f, "where": "family name", "kind": "door", "sources": srcs, "cc_ref": cc,
                   "quote": q, "text_value": "refused by name: the registry carries no family of this name",
                   "text_param": {"family": f, "refuse": ["family_unregistered"]},
-                  "shipped_param": {"family": f, "gate": sdnf}, "shipped_value": sw, "census": (f, SIGNER[0]),
+                  "shipped_param": {"family": f, "gate": sdnf}, "shipped_value": sw,
+                  "census": None if f == "cosign:{state}" else (f, SIGNER[0]),
                   "rows": rows, "ask": {"answer": "state", "target": "h"},
                   "note": "formal/derivation/census_names.tsv records how the census row of this name is read"})
+        if f == "cosign:{state}":
+            E[-1]["shipped_source"] = VENDORED + " CLM-cosign-collection-held (the store's release pinned there; the census carries no row of this name)"
+            E[-1]["note"] = "formal/derivation/census_names.tsv records that the census carries no row of this name"
     for f, duty, srcs in [("age_assurance:{level}:{band}:{version}", "assure:age", ["C423", "C483", "C564"]),
                           ("capacity_assurance:{level}:{domain}:{band}:{version}", "assure:capacity", ["C483", "C564"]),
                           ("capacity_assurance:reversible_excluded:{domain}:{version}", "assure:capacity", ["C483", "C564"]),
@@ -517,7 +527,7 @@ def cases():
     E.append(signer_entry("persist", lic, ["CLM-licence-authority-quorum"], "CC 2.4",
         "a row short of its protocol by signatures alone is not refused; it waits",
         [["count:protocol@group"]], [["count:protocol@group"], ["any"]],
-        "short of the count, the row is admitted as testimony (LicensureIssuance::Testimony), not held as cosign:pending",
+        "short of the count, the row is admitted as testimony (LicensureIssuance::Testimony), not held",
         group() + [fam("h", "A", lic, ("g",), group="g", head=("g",))], "h", census=None, kind="cosign",
         where="cosign_rule[short of the count]"))
     E[-1]["shipped_source"] = lic_src

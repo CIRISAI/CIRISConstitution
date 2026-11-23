@@ -96,14 +96,6 @@ contribution:{subject_kind}	replication	unbuilt	null
 contribution:{subject_kind}	projection	unbuilt	null
 contribution:{subject_kind}	erasure_route	unbuilt	null
 contribution:{subject_kind}	governance	unbuilt	null
-cosign:{state}	placement	unbuilt	["targeted_family", "targeted_room"]
-cosign:{state}	subject_rule	unbuilt	null
-cosign:{state}	freshness	unbuilt	null
-cosign:{state}	lifecycle	unbuilt	null
-cosign:{state}	replication	unbuilt	null
-cosign:{state}	projection	unbuilt	null
-cosign:{state}	erasure_route	unbuilt	null
-cosign:{state}	governance	unbuilt	null
 credits:{domain}:{language}:{subject}	projection	typed_view	{"rebuild": "byte_equal", "table": "credits_ledger"}
 custody:{kind}	placement	custody_scope	"the blob's held claim scope (holding_claim::check_holding_claim_scope)"
 custody:{kind}	subject_rule	custody_own_report	{"for_key_id": "none", "kind": ["the device", "attested == attester", "evidence_refs exactly 1 blob digest"]}

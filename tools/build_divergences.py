@@ -153,14 +153,14 @@ def attach_returns(out, returns, errs):
 
 
 def source_digest(path, keys=(), family=None):
-    """The sha256 of what the shipped value was read from: in a shared register (the claims, the conflicts) the rows
-    the entry names; in another table the lines naming the family; in a manifest the items of the family; else the
+    """The sha256 of what the shipped value was read from: in a shared register (the claims, the conflicts, the vendored
+    evidence of an implementer's release) the rows the entry names; in another table the lines naming the family; in a manifest the items of the family; else the
     whole file. So an unrelated change elsewhere in the file does not move it, and a change to the family's own part
     does."""
     full = os.path.join(ROOT, path)
     text = open(full, encoding="utf-8").read()
     if keys:
-        part = [l for l in text.split("\n") if any(l.startswith(k + "\t") for k in keys)]
+        part = [l for l in text.split("\n") if any(l.startswith(k + "\t") or ("\t" + k + "\t") in l for k in keys)]
     elif path.endswith(".tsv") and family:
         part = [l for l in text.split("\n") if family in l]
     elif path.endswith(".json") and family:
@@ -231,9 +231,10 @@ def build():
             if f is None:
                 errs.append("%s: the shipped value names no file it was read from (shipped_file)" % i)
             else:
-                keys = [x for x in e["sources"] if re.fullmatch(r"C\d+|CLM-[\w-]+", x)] if f in (
+                vendored = f.startswith("constitution/vendor/evidence/")   # its rows name the claim in a later column
+                keys = [x for x in e["sources"] if re.fullmatch(r"C\d+|CLM-[\w-]+", x)] if vendored or f in (
                     "constitution/claims.tsv", "formal/derivation/text_conflicts.tsv") else []
-                keys = [x for x in keys if x.startswith("CLM-")] if f == "constitution/claims.tsv" else keys
+                keys = [x for x in keys if x.startswith("CLM-")] if vendored or f == "constitution/claims.tsv" else keys
                 rec["shipped"]["file"] = f
                 rec["shipped"]["file_sha256"] = source_digest(f, keys, e["family"])
                 if keys: rec["shipped"]["file_rows"] = keys

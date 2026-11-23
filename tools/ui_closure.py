@@ -40,7 +40,8 @@ BINDS = {
     "LineageChain": ("change",), "CodeCompare": (), "QrCode": (), "Transcript": ("verdicts",), "ConscienceStep": ("fold",),
     "PolicyLens": ("fold",), "GraphView": (), "Document": ("change",), "Media": ("body",),
 }
-FLOORS = {"roles": 459, "confirm": 459, "undo": 457, "reason": 26, "change": 20, "fold": 76}
+# roles, confirm, undo and fold fell with the two transitions and the fold of cosign:{state}, which left the registry (CC 3.1.3).
+FLOORS = {"roles": 457, "confirm": 458, "undo": 456, "reason": 26, "change": 20, "fold": 75}
 
 
 def measures():

@@ -525,8 +525,8 @@ admit_community_change(C, proposed: community_record):
   // the door has already checked the row's own bytes and its signer's key plane
   signatures_ok = evaluate_consensus_protocol(protocol, current, proposed.signatures)
   if not signatures_ok:
-    // CC 3.3.4: a shortfall of signatures is held, and its cosignatures are collected
-    hold as cosign:pending for the group's hold window
+    // CC 3.3.4: a shortfall of voices is held as the event's own voices, and nothing is counted
+    hold the event's voices for the group's hold window
     return
 
   // CC 3.1.3.2: a supersede NEVER adds (membership_supersede_cannot_add);
@@ -978,7 +978,7 @@ admit_family_change(F, proposed: family_record):
     trigger the CC 4.4.3.16 key_grant cascade
   else if not group_ok:
     // short by signatures: held, never refused (CC 3.3.4)
-    hold as cosign:pending and collect cosign:signature rows for the group's hold window
+    hold the event's voices for the group's hold window
   else:
     // these checks read other rows: held, and concludes nothing (CC 2.7.3)
     emit hard_case:family_consensus_protocol_violation:{F}; conclude nothing

@@ -237,6 +237,7 @@ encryption_pubkeys	not_a_token		payload or envelope member
 encyclopedia_article	not_a_token		enumeration value, not a fault
 end_names_old_head	concludes_nothing		the text says concludes nothing
 entity_kind	not_a_token		payload or envelope member
+entity_type	not_a_token		segment of a family's name (revocation:{entity_type}:{reason})
 envelope_member_null	detail		reason carried with federation_malformed_row
 epistemic_mode	not_a_token		payload or envelope member
 epoch_be8	not_a_token		constant or parameter name
