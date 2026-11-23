@@ -621,6 +621,7 @@ software_test	not_a_token		enumeration value, not a fault
 source_count	not_a_token		payload or envelope member
 spiritual_direction	not_a_token		enumeration value, not a fault
 standard_version	not_a_token		payload or envelope member
+stands_on	not_a_token		a refs role
 statement_invalid	refusal		listed among the refusals of its row or object
 statement_kid_not_iss	refusal		the text says refused
 statement_no_role	refusal		listed among the refusals of its row or object
