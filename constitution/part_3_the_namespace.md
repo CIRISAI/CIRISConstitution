@@ -2715,7 +2715,7 @@ The families `transparency_log:cosigned:{tree_size}`, `transparency_log:inclusio
 | `testimonial_witness:*`, `witness_diversity:*` | dimension families ([CC 3.1.9.3](part_3_the_namespace.md#3.1.9.3)) | Nothing — any party may testify; these are claims, not roles |
 | The wholeness witness; the privacy witness chain | [CC 6.1.1](part_6_the_coherence_mathematics.md#6.1.1); [CC 5.4.5](part_5_transport_substrate.md#5.4.5) | A node's own state-root commitments; neither is a role a key holds |
 
-A monitoring node's `observation:reachability` rows ([CC 3.1.9.4](part_3_the_namespace.md#3.1.9.4)) are a fifth thing only in ordinary speech: the node witnessed its own probe, says so with `witness_relation: self`, and holds no witness role by doing it. A Transparency Service is none of these: it registers a statement in its own log and issues a Receipt ([CC 3.2](part_3_the_namespace.md#3.2) T6, [CC 2.7.5](part_2_the_grammar.md#2.7.5)).
+A monitoring node's `observation:reachability` rows ([CC 3.1.9.4](part_3_the_namespace.md#3.1.9.4)) are a fifth thing only in ordinary speech: the node witnessed its own probe, says so with `witness_relation: self`, and holds no witness role by doing it. A Transparency Service is none of these: it registers a statement in its own log and issues a Receipt ([CC 3.2](part_3_the_namespace.md#3.2) T6, [CC 2.6.1.11](part_2_the_grammar.md#2.6.1.11), [CC 2.7.5](part_2_the_grammar.md#2.7.5)).
 
 ### 3.4.11 `age-assurance` — Age-assurance: the witness-reserved ladder, the subject self-declared rung, and the protective gate
 
