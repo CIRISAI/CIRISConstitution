@@ -269,11 +269,11 @@ canonical-rebind = {
   * tstr => ceg-value,
 }
 
-; trust:accepts (CC 3.2 T3, CC 4.4.3.34, CC 2.7.11): the owner's edge, signed by any live key of the owner's roster; a node's own edge is read only while its owner has signed none. sub is the lineage's name, the bundle's family_key_id; the edge names no refs.head and carries no scope. The members this form names; its further members are the store's.
+; trust:accepts (CC 3.2 T3, CC 4.4.3.34, CC 2.7.11): the owner's edge, signed by any live key of the owner's roster; a node's own edge is read only while its owner has signed none. sub is what the edge accepts: a lineage's name where it attaches a root, a Transparency Service's key thumbprint or identity, or on the admission walk an author's identity or a group's id. The edge names no refs.head and carries no scope. The members this form names; its further members are the store's.
 trust-accepts = {
   "author": identity-ref,                   ; The owner whose edge it is: a person, and any live key of their roster signs it. A node's own edge is read only while its owner has signed none.
-  "dimension": tstr,                        ; trust:accepts:v1. The CWT sub is the lineage's name, the bundle's family_key_id. The edge names no refs.head and carries no scope.
-  "attached_head_digest": hash-digest,      ; The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). A new edge without it is refused, trust_root_head_unnamed.
+  "dimension": tstr,                        ; trust:accepts:v1. The CWT sub is what the edge accepts: a lineage's name, a service's key thumbprint or identity, an author's identity or a group's id. The edge names no refs.head and carries no scope.
+  ? "attached_head_digest": hash-digest,    ; The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). The member is what makes the edge one that attaches a root. A reader that holds a lineage of the name in sub refuses a new edge without it, trust_root_head_unnamed. (on an edge that attaches a root)
   ? "trust_classes": [+ tstr],              ; A set of class ids; absent, every class the charter declares. (where the edge narrows its classes)
   ? "trust_depth": 0..5,                    ; Absent reads 0. (where the edge reaches further)
   ? "service_key": { 1: int, 3: int, * int => any } / identity-ref, ; The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record. (on an edge of the class transparency)
@@ -347,7 +347,7 @@ owner-binding = {
   ? "scope": [+ tstr],                      ; A set of scope tokens: a node's binding carries its infra tokens. Absent on an agent's binding, whose role is its template's (CC 2.7.11). (where the owner confers scopes)
   ? "delegation_valid_from": ms-time,       ; POSIX milliseconds; absent reads asserted_at. (where the binding states a start)
   ? "delegation_valid_until": ms-time,      ; POSIX milliseconds, later than the start; the binding lapses at this instant. (where the binding states its end)
-  "cohort_scope": "self" / "family" / "community" / "affiliations" / "species" / "biosphere" / "federation", ; Where the row is placed: self on the first row, and a row re-signed at a wider scope stands beside it.
+  "cohort_scope": "self" / "family" / "community" / "affiliations" / "species" / "biosphere" / "federation", ; Where the row is placed: the scope its owner first places the node at, and a row re-signed at another scope stands beside it.
   ? "community_id": group-ref,              ; The group the row is placed in. It places the row and says nothing of who answers for the key. (iff cohort_scope is community or affiliations)
   ? "family_id": group-ref,                 ; The family the row is placed in. (iff cohort_scope is family)
   ? "on_behalf_of": group-ref,              ; The organisation's affiliation, which answers alongside the owner. One that names no affiliation is refused, owner_binding_not_an_affiliation. (where the owner holds the key for an organisation)

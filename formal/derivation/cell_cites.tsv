@@ -611,7 +611,7 @@ trace_summary:{kind}	signer_rule	agree	CC 3.4.5	**Pro-self** — `attesting_key_
 transport:canonical_rebind	body	agree	CC 3.1.3	It carries the node's new `transport_destination` and transit key in its payload.
 transport:canonical_rebind	signer_rule	agree	CC 3.1.3	**Yes — the accord holders, a strict majority of the bundle in force**; never a single holder, never the node itself
 transport:{kind}	signer_rule	agree	CC 3.1.4	Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md#3.4.3).
-trust:{job}:{version}	body	agree	CC 2.1	`trust:accepts:v1`, REQUIRED
+trust:{job}:{version}	body	agree	CC 2.1	`trust:accepts:v1` that attaches a root, REQUIRED
 trust:{job}:{version}	body	agree	CC 8.11.9	T4a attach window.
 trust:{job}:{version}	body	agree	CC 8.11.9	T4a: the lineage head the acceptance attaches on.
 trust:{job}:{version}	fold	agree	CC 8.11.9	T6 quorum; ⌊\|witnesses\|/2⌋ + 1 and at least 2, or 0.

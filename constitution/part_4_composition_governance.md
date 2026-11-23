@@ -1430,6 +1430,8 @@ A reader trusts a signed statement when the key that signed it (`attesting_key_i
 
 **Classes that name no licence.** `admission` is the class of an edge by which an admission stands at a host, and `transparency` the class of an edge by which a host trusts a Transparency Service's receipts ([CC 2.7.11](part_2_the_grammar.md#2.7.11)). No charter declares either.
 
+**What an edge accepts.** The subject of an acceptance edge is one of three. An edge that attaches a root names the lineage, and it alone carries `attached_head_digest` ([CC 3.2](part_3_the_namespace.md#3.2) T4a). An edge of the class `transparency` names the service's key or identity and carries `service_key`. An edge on the admission walk names an author's identity or a group's id, and an edge to a licensor names that authority. No edge to a community attaches a root.
+
 **The walk.** The walk is breadth-first from the reader's own edges, a bounded walk of live seats ([CC 2.7.5](part_2_the_grammar.md#2.7.5)). An onward hop counts only from the authority's own acceptance edges, signed by its authority set. At each hop the remaining depth is the lesser of what is left and the edge's own. The classes are the intersection, so the walk only ever narrows. Cycles are visited once, and the cap holds whatever a licensor carries. Nothing is cached.
 
 **The charter is read at read.** A class the charter does not declare is not a refusal. It is a licence that does not match. A class a later amendment drops stops matching, and the edge stands ([CC 4.4.3.12](#4.4.3.12)).

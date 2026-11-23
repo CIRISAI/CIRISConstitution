@@ -598,8 +598,7 @@ def family_payloads():
             "author": iref(0), "unit": dig, "capabilities": ["read", "compute"], "cohort_scope": "self", "asserted_at": t,
             "valid_until": t + 86400000}),
         "trust-accepts": ("trust:accepts", {
-            "author": iref(0), "dimension": "trust:accepts:v1", "attached_head_digest": dig, "trust_classes": ["transparency"],
-            "service_key": {1: 2, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32)}, "asserted_at": t}),
+            "author": iref(0), "dimension": "trust:accepts:v1", "attached_head_digest": dig, "trust_depth": 1, "asserted_at": t}),
         "delivery-ack": ("delivery_ack:.stream_id", {
             "author": iref(1), "dimension": "delivery_ack:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
             "chunk_root": dig, "asserted_at": t}),
@@ -631,6 +630,19 @@ def family_payloads():
             "evidence_refs": [dig, [-16, bytes([8]) * 32]], "score": 1000000, "confidence": 900000,
             "body": {"bound": Tag(4, [-2, 5]), "unit": "ratio", "basis": "price"}, "asserted_at": t}),
     }
+
+
+def service_edge(**change):
+    """An acceptance edge to a Transparency Service (CC 2.7.11): the class transparency and the service's key; it
+    attaches no root, so it names no head digest."""
+    p = _without(family_payloads()["trust-accepts"][1], "attached_head_digest", "trust_depth")
+    return dict(dict(p, trust_classes=["transparency"], service_key={1: 2, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32)}), **change)
+
+
+def admission_edge(**change):
+    """An acceptance edge on the admission walk (CC 2.7.11): the class admission; its subject is an author or a group."""
+    p = _without(family_payloads()["trust-accepts"][1], "attached_head_digest", "trust_depth")
+    return dict(dict(p, trust_classes=["admission"]), **change)
 
 
 def purge_notice():
@@ -749,10 +761,14 @@ def family_payload_samples():
          statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: []}), []),
         ("ceg-statement", "an admission:unit statement whose receipt is no COSE_Sign1",
          statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: [cde([bytes(4), {}, None, bytes(64)])]}), []),
-        ("trust-accepts", "a transparency edge carrying its service's COSE key", cde(family_payloads()["trust-accepts"][1]), [
-            ("a service key that is a key id, not an identity reference", cde(dict(family_payloads()["trust-accepts"][1], service_key="A1"))),
+        ("trust-accepts", "an acceptance edge that attaches a root", cde(family_payloads()["trust-accepts"][1]), [
             ("an attached head digest as hex text", cde(dict(family_payloads()["trust-accepts"][1], attached_head_digest="07" * 32))),
             ("a trust depth of 6", cde(dict(family_payloads()["trust-accepts"][1], trust_depth=6)))]),
+        ("trust-accepts", "a transparency edge carrying its service's COSE key", cde(service_edge()), [
+            ("a service key that is a key id, not an identity reference", cde(service_edge(service_key="A1"))),
+            ("an empty set of classes", cde(service_edge(trust_classes=[])))]),
+        ("trust-accepts", "an edge on the admission walk", cde(admission_edge()), [
+            ("an edge with no author", cde(_without(admission_edge(), "author")))]),
         ("delivery-ack", "delivery_ack:{stream_id} payload", cde(P["delivery-ack"]), [
             ("an ack with no chunk index", D("delivery-ack", "k")),
             ("a chunk root as bare bytes", W("delivery-ack", chunk_root=bytes(32)))]),
@@ -915,8 +931,13 @@ def family_payload_rule(root, p, family=None):
             return PAYLOAD_INVALID                        # a reply is an acceptance or a decline
         if "answers" not in refs or "head" in refs or "target" in refs or "proposal_hash" in p:
             return PAYLOAD_INVALID                        # names the one row it answers and nothing else (CC 3.1.3.2)
-    if root == "trust-accepts" and ("head" in refs or "scope" in p):
-        return PAYLOAD_INVALID                            # the edge names no head and carries no scope (CC 3.2 T4a)
+    if root == "trust-accepts":
+        if "head" in p.get("refs", {}) or "scope" in p:
+            return PAYLOAD_INVALID                        # the edge names no head and carries no scope (CC 3.2 T4a)
+        if ("service_key" in p) != ("transparency" in p.get("trust_classes", [])):
+            return PAYLOAD_INVALID                        # the service's key on an edge of the class transparency, and on no other
+        if "service_key" in p and "attached_head_digest" in p:
+            return PAYLOAD_INVALID                        # an edge to a service attaches no root (CC 2.7.11)
     if root == "owner-binding":
         if not dim.startswith("ownership:"):
             return PAYLOAD_INVALID
@@ -1187,6 +1208,9 @@ def family_payload_rule_checks():
         ("membership-reply", grant_reply(refs={"also": {"cites": [_ref(15)]}}), None),
         ("trust-accepts", dict(P["trust-accepts"][1], refs={"head": _ref(9)}), None),
         ("trust-accepts", dict(P["trust-accepts"][1], scope=["infra:serve"]), None),
+        ("trust-accepts", service_edge(attached_head_digest=[-16, bytes([7]) * 32]), None),
+        ("trust-accepts", _without(service_edge(), "service_key"), None),
+        ("trust-accepts", dict(admission_edge(), service_key={1: 2, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32)}), None),
         ("owner-binding", dict(P["owner-binding"][1], dimension="self:delegates_to:v1"), None),
         ("owner-binding", dict(P["owner-binding"][1], scope=["infra:serve", "infra:attest", "infra:serve"]), None),
         ("owner-binding", dict(P["owner-binding"][1], delegation_valid_until=P["owner-binding"][1]["asserted_at"]), None),
@@ -1306,7 +1330,7 @@ FAMILY_RULE_HEAD = {
     "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
     "key-grant": "key_grant:{axis}: authored by the sealer; sub is the recipient.",
     "delivery-ack": "delivery_ack:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
-    "trust-accepts": "trust:accepts (CC 3.2 T3, CC 4.4.3.34, CC 2.7.11): the owner's edge, signed by any live key of the owner's roster; a node's own edge is read only while its owner has signed none. sub is the lineage's name, the bundle's family_key_id; the edge names no refs.head and carries no scope. The members this form names; its further members are the store's.",
+    "trust-accepts": "trust:accepts (CC 3.2 T3, CC 4.4.3.34, CC 2.7.11): the owner's edge, signed by any live key of the owner's roster; a node's own edge is read only while its owner has signed none. sub is what the edge accepts: a lineage's name where it attaches a root, a Transparency Service's key thumbprint or identity, or on the admission walk an author's identity or a group's id. The edge names no refs.head and carries no scope. The members this form names; its further members are the store's.",
     "build-manifest-row": "provenance:build_manifest:{target} (CC 3.1.2.1): authored by the pipeline's key; one claim, type scores; the manifest blob is unsigned and cited by its digest.",
     "build-descriptor": "The descriptor of a manifest blob (CC 3.1.2.1, CC 5.3.2.11): a closed map of exactly four members.",
     "trust-confers": "trust:confers (CC 3.1.2.1, CC 4.2.1): a delegates_to row counted over the holders of the bundle in force, with no author; sub is the key the grant names.",

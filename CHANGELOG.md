@@ -58,6 +58,9 @@ The CIRIS Constitution is one document with one version line. Each release below
 - A holon claim is placed at `federation` scope, and its signer cites only digests whose blobs it holds for that scope (3.1.11). The crate that computes the kernel's rules is cited at `kernel-v0.2.2`.
 - A resignation is the leaving member's own row and its leaf says what it is (3.3.4): one no key of that member signed is refused `resignation_not_by_member`, and one naming a head at which the member holds no seat is refused `resignation_not_a_member_at_head`. Where the last member resigns the group is dissolved from that row's head; the members dissolve a group by a terminal counted roster version carrying `dissolved_at`. In the trust root's fold a resignation and a removal are read alike, and everywhere else the leaf decides (3.2).
 - A counted widening and a counted removal are each a version of the roster's lineage: each names the head it extends and is the head for every row after it. A resignation is an end and no head (3.3.4, 2.7.8).
+- An acceptance edge has one of three subjects (4.4.3.34, 3.2 T4a): a lineage where it attaches a root, and it alone carries `attached_head_digest`; a Transparency Service's key or identity, with `service_key`; or, on the admission walk and to a licensor, an author, a group or an authority. No edge to a community attaches a root.
+- A member of a room MAY relay a call's sealed chunks between two room-mates who cannot link directly, in a room of any size, and a member device relays and is relayed for whether or not its owner announced it (5.3.3.2).
+- The first owner-binding of a node is written at the scope its owner first places the node at, `self` or `federation` (3.2). A person's own occurrences are placed wherever a binding of any node that person owns is placed (5.4.6).
 
 ## 1.0-rc21 (released 2026-11-19, tag v1.0-rc21)
 
