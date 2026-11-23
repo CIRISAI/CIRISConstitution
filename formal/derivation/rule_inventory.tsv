@@ -1255,7 +1255,7 @@ p3	512	3.1.9.1	family	announce	none	agent_files	is	states	5.3.2	Node-mode peers 
 p3	518	3.1.9.2	family	row_shape	body	moderation	is	states		moderation allegation_type is rogue_vote, coordinated_voting, out_of_distribution_attestation, external_inducement_evidence, expertise_fraud.	table
 p3	519	3.1.9.2	family	row_shape	body	slashing	is	states	3.1.7,4.5.1.1	slashing outcome canonical values are proven_rogue and not_proven, lowercase; the other values a substrate emits admit as open vocab.	table
 p3	519	3.1.9.2	family	moderation	evidence_screen	slashing,moderation	is	states		Slashing is decoupled from disagreement at every level and fires only on documented Method-execution spoofing or the moderation allegation types.	table
-p3	520	3.1.9.2	family	row_shape	body	objection	is	states	4.5.1.1,3.3.6.4	objection is a signed roster-pinned vote on a pending act; states open with canonical proposal, assent, raised; carries cohort, cohort_key_id and objects_to_attestation_id.	table
+p3	520	3.1.9.2	family	row_shape	body	objection	is	states	4.5.1.1,3.3.6.4	objection is a signed roster-pinned vote on a pending act; states open with canonical proposal, assent, raised; carries cohort and cohort_key_id, and an assent or raised row names its object in refs.answers.	table
 p3	520	3.1.9.2	family	policy_row	projection	objection	is	states		objection:proposal is the proposer's own row and counts as approval; assent counts +1; raised counts -1.	table
 p3	520	3.1.9.2	kernel	policy_row	cosign_rule	objection	is	applies	4.2.1.1,2.7.5	Any two-path door carries its votes on the objection family.	table
 p3	521	3.1.9.2	family	signer	signer_rule	quarantine	is	states		quarantine is emitted only by the slash-duty holder.	table
