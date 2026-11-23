@@ -155,6 +155,8 @@ A rebuild is a `supersedes` on the Contribution it replaces, and a bad build is 
 
 **Whose decline counts.** A decline of a grant is the owner's. The owner is the owner of the grantee's key, read from the owner-binding the reader holds. A decline by any other key is no decline of that grant.
 
+*Checked.* That a row under a root grant stands on both the bundle and the acceptance is checked by the kernel's exhaustive run over the vendored fixture `conferral_two.json` (the kernel's `CONFERRAL_END.md`, section J), and it is not a TLC result.
+
 #### `SkillImportManifest` canonical bytes (v2 — normative)
 
 A skill import manifest is signed with one composite signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)) over its signing bytes. Those bytes cover the pinned domain `ciris.skill_import.v2`, `source`, `skill_manifest_sha256`, `signer_identity`, `import_timestamp`, `capability_declaration` and, where it is set, `valid_until`. `capability_declaration` is a set ([CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2)). The encoding of those bytes is an open encoding ([CC 2.6.1.12](part_2_the_grammar.md#2.6.1.12)). Their earlier form is [CC 8.11.16](part_8_appendices.md#8.11.16).
