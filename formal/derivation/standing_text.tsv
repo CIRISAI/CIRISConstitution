@@ -1,0 +1,71 @@
+# What a row of a family is with respect to withdrawal and standing, where the derivation from the other columns does not give it:
+# four read-only columns of manifests/family_model.json (subject_may_withdraw, accountability_record, may_carry_under, standing_act).
+# Applied by tools/build_family_model.py over the derived value. family: a family's name, or a stem ending in a colon that takes every
+# family under it. selector: * for the whole family, or leaf=NAME where one value does not describe the family.
+# source: quote (words stands verbatim in cc_ref, and the build fails when it no longer does) | ruling (a ruled reading the text does
+# not yet state for this family by name; words is the note) | open (no value; words is the sentence the text would need).
+# column _meta: a rule or a note that is no family's cell, keyed in the family field, its statement in value; every such row quotes.
+# value: true | false for the three boolean columns; offer | end | acceptance | exercise | none for standing_act; - where open.
+column	family	selector	value	source	cc_ref	words
+_meta	subject_may_withdraw.default	*	true	quote	CC 2.4.1.1	Consent can be taken back, so a named party may retire a row about itself.
+_meta	subject_may_withdraw.counted	*	false	quote	CC 2.4.1.1	Rules 1 to 4 do not reach `T`: a quorum's act is undone only by a quorum.
+_meta	subject_may_withdraw.affiliation_subject	*	a row whose subject is an affiliation's own id is withdrawn by nobody acting for that affiliation, in every family; its path is reconsideration	quote	CC 4.4.3.12	The affiliation never retracts it and contests by reconsideration
+_meta	subject_may_withdraw.affiliation_subject	*	a row whose subject is an affiliation's own id is withdrawn by nobody acting for that affiliation, in every family; its path is reconsideration	quote	CC 2.4.1.1	An affiliation withdraws no statement about itself, whatever the statement.
+_meta	subject_may_withdraw.legal_weight_act	*	a row that is an act of a body under a class its record declares with legal_weight true is not withdrawn by its subject, in every family	quote	CC 4.4.3.12	A row whose emitter resolves to that authority under such a class is an act under a declared legal-weight class
+_meta	subject_may_withdraw.legal_weight_act	*	a row that is an act of a body under a class its record declares with legal_weight true is not withdrawn by its subject, in every family	quote	CC 2.4.1.1	an act of a body under a declared legal-weight class, such as a conviction or a licence
+_meta	accountability_record.rule	*	true where the row is kept as the record of its signer's own acts, so that the signer's owner may stop holding its bytes and may not withdraw it; false for a family no sentence keeps so	quote	CC 3.1.5	The agent's owner MAY stop their own node holding a trace's bytes; that is not an erasure
+_meta	may_carry_under.rule	*	true only for a family whose row may be a deputy's edge; refs.also.under names the one row that edge hangs from, a set of exactly one	quote	CC 4.5.5	A deputy's edge names the edge it hangs from, its delegator's seat edge, in `refs.also.under`
+_meta	may_carry_under.rule	*	true only for a family whose row may be a deputy's edge; refs.also.under names the one row that edge hangs from, a set of exactly one	quote	CC 4.5.4	Its edge names its delegator's seat edge in `refs.also.under`, and it needs no membership
+_meta	standing_act.exercise	*	a family whose names_head is roster, standing or by_placement is exercise, and one whose names_head is none is none: a row that names a head is signed in exercise of the standing that head seats; under by_placement a row that names no head exercises none	quote	CC 2.4.1.1	A row signed in exercise of a standing names the head it is at, in `refs.head`.
+_meta	standing_act.end	*	a family whose confers cell is an ending is end; a family whose confers cell has the role acceptance is acceptance	quote	CC 2.4.1.1	A row that ends a standing carries `refs.head` beside its target: a withdrawal of an acceptance or of an offer, an unseating, a resignation.
+_meta	standing_act.receipter	*	the payload member receipter is admitted only on a row whose standing_act is offer	quote	CC 2.4.1.1	or that of a receipter the offer names in `receipter`
+_meta	standing_act.lifts	*	the payload member lifts is admitted only on a counted end: a row whose standing_act is end and whose authorship arm is counted, or a counted withdraws whose target's standing_act is offer	quote	CC 2.4.1.1	A count that ends a standing MAY state `lifts`, and then only the count's own receipts keep an act in force.
+_meta	standing_act.own_end	*	an end signed by one voice (a resignation, a withdraws by the signer of its target, an end whose authorship arm is authored) is no counted end, and lifts on it is refused lifts_on_own_end	quote	CC 2.4.1.1	One's own end lifts nothing, and `lifts` on it is refused, `lifts_on_own_end`.
+_meta	standing_act.withdraws	*	withdraws is a composer row type and no family, so it has no cell: a withdraws is an end where its target's standing_act is offer or acceptance, and a counted end where it is itself counted (CC 2.4.1.1 rule 0) and its target's standing_act is offer	quote	CC 2.7.7	An offer conferred by a count is ended by its holder or by a count, never by its proposer alone.
+subject_may_withdraw	capacity:	*	false	quote	CC 2.4.1.1	a `capacity:*` or `detection:*` finding made by someone else
+subject_may_withdraw	detection:	*	false	quote	CC 2.4.1.1	a `capacity:*` or `detection:*` finding made by someone else
+subject_may_withdraw	licensure:	*	false	quote	CC 2.4.1.1	a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`
+subject_may_withdraw	revocation:	*	false	quote	CC 2.4.1.1	a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`
+subject_may_withdraw	moderation:	*	false	quote	CC 2.4.1.1	a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker
+subject_may_withdraw	hard_case:	*	false	quote	CC 2.4.1.1	a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker
+subject_may_withdraw	slashing:	*	false	quote	CC 2.4.1.1	a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker
+subject_may_withdraw	quarantine:	*	false	quote	CC 2.4.1.1	a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker
+subject_may_withdraw	takedown_notice:	*	false	quote	CC 2.4.1.1	a `takedown_notice:*`, where the path is the counter-notice its basis names
+subject_may_withdraw	trace:	*	false	quote	CC 2.4.1.1	a producer's own `trace:*`, where the path of a person named in it is withdrawing consent
+subject_may_withdraw	key:revocation	*	false	quote	CC 2.4.1.1	A `key:revocation:v1` row is withdrawn by nobody, because revocation is non-rollbackable
+subject_may_withdraw	identity:occurrence_revocation	*	false	quote	CC 2.4.1.1	an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either
+subject_may_withdraw	key_grant:	*	false	quote	CC 2.4.1.1	an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either
+subject_may_withdraw	cosign:{state}	leaf=signature	false	quote	CC 2.4.1.1	an occurrence revocation, a key grant and a cosignature already sent are never withdrawn either
+subject_may_withdraw	cosign:{state}	leaf=pending	-	open	CC 3.1.3	a sentence saying whether a party a pending event names (the member a pending removal names) may withdraw the pending row under rules 2 to 4; the text states only the proposer's withdrawal
+subject_may_withdraw	moderation_track_record:	*	false	quote	CC 2.4.1.1	a `moderation:*` report or action, a `moderation_track_record:*`, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker
+accountability_record	trace:	*	true	quote	CC 3.1.5	An agent's trace is erased only by its signer's `withdraws` under [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1) rule 1
+may_carry_under	trust:{job}:{version}	leaf=confers	true	quote	CC 3.1.3	A delegation that claims a job rides `trust:{job}` ([CC 3.1.1](part_3_the_namespace.md#3.1.1)): a scope-carrying grant is `trust:confers:v1`.
+may_carry_under	trust:{job}:{version}	leaf=accepts	false	quote	CC 3.1.1	`trust:accepts:v1` (owner→root acceptance, a person's row that every node and agent they own reads
+may_carry_under	trust:{job}:{version}	leaf=charter	false	quote	CC 3.1.1	A root's charter is the `charter` member of its bundle, and no row is a charter.
+may_carry_under	self:delegates_to	*	-	open	CC 3.1.3	a sentence saying whether a deputy's edge may carry this label, which claims no job, or always rides `trust:confers:v1` as a scope-carrying grant
+may_carry_under	self:delegates_to:agent_occurrence	*	-	open	CC 3.1.3	a sentence saying whether a duty holder's delegation to their own agent is a deputy's edge that names the seat edge in refs.also.under, or always rides `trust:confers:v1`
+standing_act	self:delegates_to	*	offer	quote	CC 2.7.5	A delegation that carries a scope seats its delegate only with the delegate's own signature
+standing_act	self:delegates_to:agent_occurrence	*	offer	quote	CC 3.1.3	a scoped act-on-behalf delegation, whose acts are the agent's own rows under its own `iss`
+standing_act	trust:{job}:{version}	leaf=confers	offer	quote	CC 3.1.1	`trust:confers:v1` (a grant counted over the holders of the bundle in force)
+standing_act	trust:{job}:{version}	leaf=accepts	acceptance	quote	CC 3.1.1	`trust:accepts:v1` (owner→root acceptance, a person's row that every node and agent they own reads
+standing_act	trust:{job}:{version}	leaf=charter	none	quote	CC 3.1.1	A root's charter is the `charter` member of its bundle, and no row is a charter.
+standing_act	membership:{stage}	leaf=proposal	offer	quote	CC 3.1.3.2	**The proposal is an invitation, not the group's decision.**
+standing_act	membership:{stage}	leaf=acceptance	acceptance	quote	CC 3.1.3.2	An **acceptance** or **decline** is K's answer to exactly one proposal
+standing_act	membership:{stage}	leaf=decline	acceptance	quote	CC 3.1.3.2	An **acceptance** or **decline** is K's answer to exactly one proposal
+standing_act	membership:{stage}	leaf=widening	offer	quote	CC 3.1.3.2	The group decides on the **growth record**: a membership **widening**, the only door that adds anyone.
+standing_act	membership:{stage}	leaf=removal	end	quote	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member
+standing_act	membership:{stage}	leaf=resignation	end	quote	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`, a resignation is signed by the leaving member
+standing_act	ballot:moderator_acceptance	*	acceptance	quote	CC 4.5.13	**The winner accepts by their own row**, as a member accepts an invitation
+standing_act	consent:partnership_grant	*	offer	quote	CC 4.4.3.19	the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`
+standing_act	consent:partnership_accept	*	acceptance	quote	CC 4.4.3.19	the user emits `consent:partnership_grant` and the agent emits `consent:partnership_accept` under one `bilateral_pair_id`
+standing_act	ownership:{relation}:{target_kind}:{version}	*	offer	quote	CC 2.4.1.1	Where one row between two keys is the whole record, as an owner-binding is, that row is the head.
+standing_act	consent:community_trust	*	-	open	CC 2.7.5	a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it
+standing_act	consent:replication:{version}	*	-	open	CC 2.7.5	a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it
+standing_act	consent:scope:{kind}	*	-	open	CC 2.7.5	a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it
+standing_act	consent:state:{stance}	*	-	open	CC 2.7.5	a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it
+standing_act	consent:stream:{kind}	*	-	open	CC 2.7.5	a sentence saying whether a one-row permission is an offer that may name a receipter; the text says only that one row carries it
+standing_act	identity:occurrence	*	-	open	CC 3.3.6.4	a sentence saying whether the row that adds a key to a self roster is an offer; its second consent is waived and the text names no offer there
+standing_act	group:roster	*	-	open	CC 2.7.8	a sentence saying what a roster version is with respect to the seats it lists: it is the head acts name, and the text calls no roster version an offer or an end
+standing_act	preserve_request	*	-	open	CC 3.1.5	a sentence saying which of the request and the operator's answer confers the custody standing and which accepts it
+standing_act	preserve_response	*	-	open	CC 3.1.5	a sentence saying which of the request and the operator's answer confers the custody standing and which accepts it
+standing_act	duty:{kind}	*	-	open	CC 3.1.1	a sentence saying whether an obligation attached to a permission is part of the offer it attaches to; the shapes table reads it as a term on an offer that moves no seat
