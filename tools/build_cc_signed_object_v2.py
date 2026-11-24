@@ -958,6 +958,13 @@ def family_payload_rule(root, p, family=None):
     if root == "group-roster" and group_id_rule(p) is not None:
         return PAYLOAD_INVALID                            # a first version's id is derived from it (group_id_rule gives the token)
     refs = p.get("refs", {})
+    voice = refs.get("also", {}).get("voice") if isinstance(refs.get("also"), dict) else None
+    if voice is not None:                                 # a row of a private room names its signer's voice head (CC 2.6.1.11)
+        if len(voice) != 1:
+            return PAYLOAD_INVALID                        # a set of exactly one
+        also = {k: v for k, v in refs["also"].items() if k != "voice"}
+        refs = dict({k: v for k, v in refs.items() if k != "also"}, **({"also": also} if also else {}))
+        p = dict(p, refs=refs) if refs else _without(p, "refs")   # each family's own rule is read with that head set aside
     if root == "build-manifest-row":
         if dim.split(":")[:2] != ["provenance", "build_manifest"] or "head" not in refs:
             return PAYLOAD_INVALID                        # the bundle in force when the row is signed, in refs.head
@@ -1213,6 +1220,8 @@ def family_payload_rule_checks():
         bad.append("a holon claim that names two heads of its group breaks its prose rule")
     if family_payload_rule("holon-claim", holon_follows(refs={"target": _ref(25)})) is not None:
         bad.append("a holon claim that supersedes the row it names breaks its prose rule")
+    if family_payload_rule("act-ack", dict(P["act-ack"][1], refs={"also": dict(P["act-ack"][1]["refs"]["also"], voice=[_ref(30)])})) is not None:
+        bad.append("a receipt of a private room that names its signer's voice head breaks its prose rule")
     if family_payload_rule("objection-vote", dict(P["objection-vote"][1], dimension="objection:assent:v1")) is not None:
         bad.append("an assent breaks its prose rule")
     breaks = [
@@ -1283,6 +1292,8 @@ def family_payload_rule_checks():
         ("holon-claim", dict(P["holon-claim"][1], view="sample..view"), None),
         ("holon-claim", dict(P["holon-claim"][1], consumer="engine/consumer"), None),
         ("act-ack", dict(P["act-ack"][1], refs={"also": {"cites": [_ref(21)]}}), None),
+        ("act-ack", dict(P["act-ack"][1], refs={"also": dict(P["act-ack"][1]["refs"]["also"], voice=sorted([_ref(30), _ref(31)], key=cde))}), None),
+        ("act-ack", dict(P["act-ack"][1], refs={"also": {"voice": [_ref(30)]}}), None),
         ("act-ack", dict(P["act-ack"][1], refs=dict(P["act-ack"][1]["refs"], head=_ref(1))), None),
         ("objection-vote", dict(P["objection-vote"][1], refs={"also": {"cites": [_ref(23)]}}), None),
         ("objection-vote", dict(P["objection-vote"][1], objects_to_attestation_id="a-1"), None),

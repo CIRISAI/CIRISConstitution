@@ -69,7 +69,7 @@ family-id = tstr .regexp "[a-z0-9_.][a-z0-9_.-]*(:[a-z0-9_.][a-z0-9_.-]*)*"
 
 cwt-claims = {
   1: identity-ref,                 ; iss: the signer's stable identity reference (its genesis key's thumbprint URI), never the rotating kid;
-                                   ; under a room key, iss is the room key's own identity reference, never its person's genesis key
+                                   ; under a room key, iss is the voice, the identity reference of the voice's first room key, never its person's
   2: tstr,                         ; sub: what the row is about; a key subject is an identity-ref
   6: uint,                         ; iat: floor(asserted_at / 1000), seconds, derived; a verifier refuses disagreement
   ? 5: uint,                       ; nbf: floor(valid_from / 1000) where the row has one
@@ -178,8 +178,9 @@ refs-members = {
 ; The also roles, closed: "ack" names a row acknowledged (a revocation snapshot's scope head, the acts a receipt
 ; acknowledges); "cites" names the row a row cites, as a build attestation names its manifest contribution;
 ; "under" names the one row a deputy's edge hangs from, a set of exactly one; "stands_on" names the one acceptance a
-; row signed under a root grant stands on, a set of exactly one. Any other role is a later registration.
-also-role = "ack" / "cites" / "under" / "stands_on"
+; row signed under a root grant stands on, a set of exactly one; "voice" names the head of the key roster of the voice
+; a room key signs for, a set of exactly one (CC 2.6.1.11). Any other role is a later registration.
+also-role = "ack" / "cites" / "under" / "stands_on" / "voice"
 nonempty-map = { + any => any }
 
 ; The CEG statement id (a name of this profile; RFC 9943 defines no statement identifier): SHA-256 over the deterministic encoding of this

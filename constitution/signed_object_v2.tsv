@@ -12,13 +12,13 @@ protected	statement-protected	-70002	-	header:protected	family-id	always	2.6.1.1
 protected	statement-protected	4	attesting_key_id	header:protected	kid	always	2.6.1.7	kid: the 32-byte thumbprint of the signer's composite key, fixed for the key's life.
 protected	statement-protected	15	-	header:protected	cwt-claims	always	2.6.1.1	The CWT claims.
 protected	statement-protected	16	-	header:protected	"ceg-row/2"	always	2.6.1.1 2.6.1.11	typ: ceg-row/2 for every row.
-cwt	cwt-claims	1	attesting_key_id	header:cwt	identity-ref	always	2.6.1.1 2.6.1.7	iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the room key's own. kid's key is a key of it.
+cwt	cwt-claims	1	attesting_key_id	header:cwt	identity-ref	always	2.6.1.1 2.6.1.7	iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the voice: the identity reference of the voice's first room key, never the person's. kid's key is a key of it.
 cwt	cwt-claims	2	attested_key_id	header:cwt	tstr	always	2.6.1.1 2.6.1.3	sub: what the row is about; a key subject is an identity reference; the row id reads it.
 cwt	cwt-claims	6	-	header:cwt	uint	always	2.6.2	iat: floor(asserted_at / 1000); a disagreement is refused.
 cwt	cwt-claims	5	-	header:cwt	uint	iff the payload carries valid_from	2.6.2	nbf: floor(valid_from / 1000); a disagreement is refused.
 cwt	cwt-claims	4	-	header:cwt	uint	iff the payload carries valid_until	2.6.2	exp: floor(valid_until / 1000); a disagreement is refused.
 cwt	cwt-claims	-70003	-	header:cwt	2	always	2.6.1.1	edition: the constant 2.
-payload	attestation-envelope	"author"	attesting_key_id	payload	identity-ref	iff the family is authored	2.6.1.3 2.6.1.9	The iss of the author, read by the row id from the payload. A counted family carries none, and its row id takes null.
+payload	attestation-envelope	"author"	attesting_key_id	payload	identity-ref	iff the family is authored	2.6.1.3 2.6.1.9	The iss of the author, read by the row id from the payload; in a private room, the voice. A counted family carries none, and its row id takes null.
 payload	attestation-envelope	"refs"	references_attestation_id	payload	refs	iff the row names a row	2.6.1.3	Every row this row names, and the only member that names a row; never empty.
 payload	attestation-envelope	"dimension"	dimension	payload	tstr	where the family scores a dimension	2.6.1.1	The full scored dimension, leaf and version; it resolves to the family id of label -70002, and is refused otherwise.
 payload	attestation-envelope	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	where the row cites a blob	2.6.1.6 2.6.1.2	The blobs the row cites, by content hash: a sequence, bytes never hex.
@@ -49,7 +49,7 @@ refs	refs-members	"further_prev"	-	payload:refs	row-ref-set	where a row names fu
 refs	refs-members	"answers"	-	payload:refs	row-ref	where the row answers a row	2.6.1.3	The proposal voted on or accepted, the window opened, the row replied to.
 refs	refs-members	"target"	-	payload:refs	row-ref	on a supersession, withdrawal, recantation, cut or removal	2.6.1.3	The row superseded, withdrawn, recanted, cut or removed.
 refs	refs-members	"trusted_through"	-	payload:refs	row-ref-set	on a key revocation that names rows held good; on a row that ends a member's seat and on a keeps row	2.6.1.11 3.1.3.2 2.6.1.2	The last rows of the revoked key held good, or the newest content rows of the member held good: a set of at most 64.
-refs	refs-members	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names any other row	2.6.1.3 2.6.1.2	Any other named row, under a role of the closed registry: ack, cites, under or stands_on; each list a set, and under and stands_on each a set of exactly one.
+refs	refs-members	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names any other row	2.6.1.3 2.6.1.2	Any other named row, under a role of the closed registry: ack, cites, under, stands_on or voice; each list a set, and under, stands_on and voice each a set of exactly one.
 row_id	row-id-input	type	attestation_type	derived	row-type	always	2.6.1.3	The type of label -70001, one of the five, as a text string.
 row_id	row-id-input	family	-	derived	family-id	always	2.6.1.3	The family id of label -70002, as a text string.
 row_id	row-id-input	sub	-	derived	tstr	always	2.6.1.3	The CWT sub.
@@ -240,7 +240,7 @@ delivery_ack	delivery-ack	"k"	K	payload	uint	always	5.3.3.11	The chunk index ack
 delivery_ack	delivery-ack	"chunk_root"	chunk_root	payload	hash-digest	always	5.3.3.11	The published tree root the subscriber signs over.
 delivery_ack	delivery-ack	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 occurrence	identity-occurrence	"author"	attesting_key_id	payload	identity-ref	always	3.3.6	A live roster key's identity: the identity named by identity_key_id.
-occurrence	identity-occurrence	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6	The identity the occurrence speaks for: a person's, or an agent's own.
+occurrence	identity-occurrence	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6	The identity the occurrence speaks for: a person's, or an agent's own; on a row that seats a further room key, the voice.
 occurrence	identity-occurrence	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6	The participant's key, equal to the CWT sub; its own statement over the payload is the second voice.
 occurrence	identity-occurrence	"device_class"	device_class	payload	"phone" / "laptop" / "server" / "embedded" / "agent" / "service"	always	3.3.6	A closed set; agent stands only under an agent's own identity.
 occurrence	identity-occurrence	"hardware_attestation"	hardware_attestation	payload	bstr	where the occurrence carries one	3.3.6 2.6.1.2	The attestation blob, as bytes.

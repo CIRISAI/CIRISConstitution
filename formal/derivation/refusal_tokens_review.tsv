@@ -738,4 +738,8 @@ room_binding_xwing_pubkey	not_a_token		a member of an occurrence
 seat_commitment	not_a_token		a member of a room key record
 room_binding_ml_kem_768_reuse	refusal		the text says refused
 room_binding_x25519_reuse	refusal		the text says refused
-key_revocation_not_own	concludes_nothing		a revocation signed by a key that is not the revoked key concludes nothing
+key_revocation_no_standing	concludes_nothing		a revocation signed by a key with no standing to revoke concludes nothing
+room_key_other_room	refusal		the text says refused
+room_key_occurrence_outside_room	refusal		the text says refused
+room_key_binding_outside_room	refusal		the text says refused
+room_row_signer_not_room_key	refusal		the text says refused

@@ -32,14 +32,14 @@
    "invariants": 263,
    "claims": 610,
    "entries": 20,
-   "refusal_tokens": 128
+   "refusal_tokens": 133
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "c670c631df3ba39ba47fab268b1d4816e04eaf9aca5d2ef567bb5f8ae06a8013"
+  "chain_sha256": "19916b8ca5491e23796b3e21d8d6288f89f3a7feed433f17177252125b4ad127"
  },
  "chain": [
   {
@@ -54962,6 +54962,9 @@
   "identity_amendment": {
    "8.10": "bold"
   },
+  "identity_occurrence": {
+   "3.1.3.2": "after_refusal"
+  },
   "internal_normative_regime": {
    "4.4.3.12": "bold"
   },
@@ -55094,6 +55097,18 @@
   },
   "room_binding_x25519_reuse": {
    "3.3.6.1": "after_refusal"
+  },
+  "room_key_binding_outside_room": {
+   "3.1.3.2": "after_refusal"
+  },
+  "room_key_occurrence_outside_room": {
+   "3.1.3.2": "after_refusal"
+  },
+  "room_key_other_room": {
+   "3.1.3.2": "after_refusal"
+  },
+  "room_row_signer_not_room_key": {
+   "3.1.3.2": "after_refusal"
   },
   "run_kind": {
    "3.1.5": "bold"

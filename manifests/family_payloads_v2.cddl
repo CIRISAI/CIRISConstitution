@@ -186,7 +186,7 @@ delivery-ack = {
 ; identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.
 identity-occurrence = {
   "author": identity-ref,                   ; A live roster key's identity: the identity named by identity_key_id.
-  "identity_key_id": identity-ref,          ; The identity the occurrence speaks for: a person's, or an agent's own.
+  "identity_key_id": identity-ref,          ; The identity the occurrence speaks for: a person's, or an agent's own; on a row that seats a further room key, the voice.
   "occurrence_key_id": identity-ref,        ; The participant's key, equal to the CWT sub; its own statement over the payload is the second voice.
   "device_class": "phone" / "laptop" / "server" / "embedded" / "agent" / "service", ; A closed set; agent stands only under an agent's own identity.
   ? "hardware_attestation": bstr,           ; The attestation blob, as bytes. (where the occurrence carries one)
