@@ -748,3 +748,8 @@ key_grant_recipient_not_seat	refusal		the text says refused
 xwing_hpke_aes256_gcm_hkdf_sha256	not_a_token		a wrap_algorithm value
 leaf_key	not_a_token		an element of a leaf vouch entry
 leaf_vouch_max_secs	not_a_token		a constant
+membership_binding_ack_unresolved	hold		RETRYABLE: the widening waits for the receipt it cites
+membership_private_refused	refusal		the text says refused
+membership_public_to_private	concludes_nothing		a version declaring private over a public room concludes nothing
+membership_not_a_community	refusal		the text says refused
+person_count_binding_missing	hold		the count is held at the node
