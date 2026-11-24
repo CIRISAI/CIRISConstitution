@@ -36,3 +36,4 @@ accord:invoke:drill:{drill_id}	*	none	as the halt: read on receipt, under the ro
 provenance:build_manifest:{target}	*	standing	the bundle in force when the row is signed: the one the pipeline's grant names or a later bundle of the same lineage
 holon:claim	*	none	a claim names no head; in refs it names only the rows of its own group that it follows
 mls:leaf_vouch	*	none	a vouch names no head; a room key's vouch names the head of its voice roster under the also role voice
+window:{state}	*	none	a held row and a landing name no head; a landing is read over its own causal past

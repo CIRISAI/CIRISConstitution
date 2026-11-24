@@ -397,3 +397,12 @@ holon-claim-body = {
   "basis": "price" / "realised",            ; What the bound is stated on.
   * tstr => ceg-value,
 }
+
+; window:{state}, the states held, landed and refused (CC 3.1.3, CC 3.3.6.4): authored by a key seated in the counted set at the head the opener names; type scores, with no score. It names the opener under refs.target. A held row names nothing else. A landing names its signer's held row under prev and every row it counted under the also role cites, and no head.
+window-step = {
+  "author": identity-ref,                   ; The key that holds the opener, or that lands the window: a key seated in the counted set at the head the opener names.
+  "dimension": tstr,                        ; window:held:v1, window:landed:v1 or window:refused:v1; the states are closed at these three. The row's type is scores.
+  "refs": refs,                             ; The opener, under target. A held row names nothing else. A landing names its signer's held row under prev, exactly one row, and every row it counted under the also role cites, absent where it counted none. No head and no other role.
+  "asserted_at": ms-time,                   ; POSIX milliseconds: the held row's instant, or the landing's. The window's length is read between the two.
+  * tstr => ceg-value,
+}

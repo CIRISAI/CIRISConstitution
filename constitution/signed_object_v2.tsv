@@ -417,3 +417,7 @@ holon_claim	holon-claim-body	"bound"	-	payload:body	body-decimal	always	3.1.11 2
 holon_claim	holon-claim-body	"realised"	-	payload:body	body-decimal	iff basis is realised	3.1.11 2.6.1.2	The value realised, a decimal fraction (tag 4).
 holon_claim	holon-claim-body	"unit"	-	payload:body	tstr .size (1..64)	always	3.1.11	The bound's unit: a token of the declaration's vocabulary, read from the blob.
 holon_claim	holon-claim-body	"basis"	-	payload:body	"price" / "realised"	always	3.1.11	What the bound is stated on.
+window_step	window-step	"author"	attesting_key_id	payload	identity-ref	always	3.3.6.4	The key that holds the opener, or that lands the window: a key seated in the counted set at the head the opener names.
+window_step	window-step	"dimension"	dimension	payload	tstr	always	3.1.3	window:held:v1, window:landed:v1 or window:refused:v1; the states are closed at these three. The row's type is scores.
+window_step	window-step	"refs"	-	payload	refs	always	3.3.6.4 2.6.1.3	The opener, under target. A held row names nothing else. A landing names its signer's held row under prev, exactly one row, and every row it counted under the also role cites, absent where it counted none. No head and no other role.
+window_step	window-step	"asserted_at"	asserted_at	payload	ms-time	always	3.3.6.4 2.6.2	POSIX milliseconds: the held row's instant, or the landing's. The window's length is read between the two.

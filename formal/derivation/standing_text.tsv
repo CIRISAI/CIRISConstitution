@@ -96,3 +96,4 @@ names_stands_on	census:composite:{class}	*	true	quote	CC 3.4.7	| `census:partial
 names_stands_on	provenance:build_manifest:{target}	*	true	quote	CC 3.1.2.1	The row MUST also name in `refs.also.stands_on` the acceptance of the grant it stands on
 names_stands_on	provenance:build_manifest:{target}:locale:{lang_code}	*	true	quote	CC 3.1.2.1	A build pipeline's scope token is `infra:attest:provenance:build_manifest`: the capability, sub-scoped to this family's stem
 subject_may_withdraw	holon:claim	*	false	quote	CC 3.1.11	A row of another signer is in no group but its own, and it never voids or replaces a claim, whatever it names.
+subject_may_withdraw	window:{state}	*	false	quote	CC 3.3.6.4	A held row and a landing are never withdrawn, and only a later landing that names a landing answers it.
