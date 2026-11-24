@@ -14,11 +14,15 @@
            subject_key_ids; one that does not is not counted.  A grant whose binding the receiver
            does not hold yet waits.  A grant or revocation from a key that is neither the node, the
            agent key, nor the owner at the head the row names is not this node's consent.
-   The fold (CC 3.3.1, normative): the latest admitted revocation's asserted_at is R; every grant
+   The fold, as this module has it: the latest admitted revocation's asserted_at is R; every grant
    with asserted_at <= R is out; among grants after R the latest asserted_at wins, ties on the
    smallest attestation id (here: the row index); no grant means no consent.  A revocation is a
    boundary, not a deletion.  The fold over `st` also yields `expired` when the winning grant's
    valid_until has passed (CC 3.3.1 `consent:state:expired`).
+   This is ONE boundary over every party's rows.  CC 3.3.1 folds each party's rows apart: a party's
+   R puts out that party's own grants, and only its own later grant answers its revocation.  That
+   fold is not modelled.  Here any party's revocation puts out every party's grant, and any party's
+   later grant restores capture.
 
    Two readings, kept apart (CC 2.4.1.1: an act names its head, it counts at that head, and no
    instant decides):
@@ -29,8 +33,8 @@
                  revocation's instant and grants at or before R are out.  This is a consent window,
                  not a standing, and it is unchanged.
    Admission freshness (CC 2.6.7): the instant is signer-chosen, so it is bounded: a row whose
-   asserted_at precedes the receiver's clock by more than W is refused (asserted_at_stale) and
-   moves nothing.  CC 2.6.7: "The window decides no standing."
+   asserted_at precedes the receiver's clock by more than W, when the receiver first holds it, is
+   refused (asserted_at_stale) and moves nothing.  CC 2.6.7: "The window decides no standing."
 
    Ownership: binding B1 (owner O1) is the node's owner-binding from the start.  At receiver-clock
    TX it is replaced by B2 (owner O2), an owner_binding withdrawn and replaced (CC 3.2).  B2 reaches
@@ -66,7 +70,7 @@
    non-substrate key; grants replication as a stranger.
 
    Mode picks the reading under test:
-     "ruled"          - the CC 3.3.1 fold, standing at the named head, the CC 2.6.7 W bound.
+     "ruled"          - the single-boundary fold, standing at the named head, the CC 2.6.7 W bound.
      "instant"        - the reading this module had before: the owner is the owner at the row's
                         asserted_at, and the head a row names is not read.  A planted break.
      "current_view"   - the owner is the owner by the newest binding the receiver holds (the reading
@@ -79,12 +83,25 @@
    guard: "any_scope" (an analyze use on a grant of any scope), "forged_expiry" (an `expired` row
    from any key, naming any row), "eager_decay" (decay starts under a live grant), "decay_back" (a
    decay step may go back), "decay_stalls" (decay stops at identity_severed), "decay_never" (decay
-   does not start), "blind_send" (the node sends to a peer no grant names).                     *)
+   does not start), "blind_send" (the node sends to a peer no grant names).
+   Four more: "no_wait" (a row that names a binding the receiver does not hold is judged at once and
+   not held), "stranger_repl" (a replication grant from any key), "tie_largest" (a tie between grants
+   goes to the largest attestation id), "stranger_ok" (a consent:state grant or revocation from any
+   key).
+
+   A row that waits (CC 3.3.1 "A grant whose binding rows have not yet arrived is held, as every
+   owner-gated row is"; CC 2.6.7 "checked for its age at the node that first receives it"): a row
+   that names B2 and reaches a receiver that does not hold B2 is held and not counted.  Its age is
+   judged when the receiver first holds it.  Once B2 arrives it is counted with the asserted_at it
+   carries, however long it waited.  So a revocation that waited puts out grants, and covers the
+   instants of captures already decided, further back than W from the clock at which it is counted.
+   Nothing in the text bounds that wait.                                                          *)
 EXTENDS Integers, FiniteSets, Sequences
 
 CONSTANTS Mode, Planes, MaxT, W, TX, Life, MaxRows, InForce, Peers
 ASSUME Mode \in {"ruled", "no_boundary", "literal_signer", "no_W", "instant", "current_view",
-                 "any_scope", "forged_expiry", "eager_decay", "decay_back", "decay_stalls", "decay_never", "blind_send"}
+                 "any_scope", "forged_expiry", "eager_decay", "decay_back", "decay_stalls", "decay_never", "blind_send",
+                 "no_wait", "stranger_repl", "tie_largest", "stranger_ok"}
 ASSUME InForce \in {"counts", "ends"}
 ASSUME Planes \subseteq {"st", "ct"} /\ Planes # {}
 ASSUME TX \in 1..MaxT /\ W \in 1..MaxT /\ Life \in 1..MaxT
@@ -111,12 +128,13 @@ VARIABLES now,       \* the receiver's clock
           scored,    \* [Instants -> -1..MaxRows]: the same for an analyze use
           decay,     \* the agent's decay ladder for the subject's data
           decayCause,\* the st fold value when the ladder started
-          replLive,  \* peers named by a live, admitted consent:replication grant
+          replLive,  \* the live consent:replication grants: <<peer, the grant is a stranger's>>
           peerHolds, \* peers holding the node's captured traces
           badSend,   \* a send to a peer with no live grant naming it happened
           hb2,       \* the receiver holds B2, the binding that replaced B1
-          captB      \* [Instants -> BOOLEAN]: the capture at that instant was decided holding B2
-vars == <<now, rows, capt, scored, decay, decayCause, replLive, peerHolds, badSend, hb2, captB>>
+          captB,     \* [Instants -> BOOLEAN]: the capture at that instant was decided holding B2
+          b2new      \* B2 arrived at the receiver's current clock
+vars == <<now, rows, capt, scored, decay, decayCause, replLive, peerHolds, badSend, hb2, captB, b2new>>
 
 Ids     == 1..Len(rows)
 Pre(k)  == 1..k                       \* what a use decided at prefix k saw
@@ -138,17 +156,17 @@ CtVerdict(r, hb) ==
     [] OTHER ->
           IF r.kind = "grant"
           THEN IF r.head \notin {1, 2} THEN "void"                    \* act_names_no_head
-               ELSE IF ~HeldB(r.head, hb) THEN "wait"
+               ELSE IF ~HeldB(r.head, hb) /\ Mode # "no_wait" THEN "wait"
                ELSE yes(\/ r.signer = Owner(r.head)
                         \/ r.signer = "node" /\ r.lst = Owner(r.head))
           ELSE IF Mode = "literal_signer" THEN yes(r.signer = "node")
                ELSE IF r.signer \in {"node", "agent"} THEN "counts"
                ELSE IF r.head \notin {1, 2} THEN "void"
-               ELSE IF ~HeldB(r.head, hb) THEN "wait"
+               ELSE IF ~HeldB(r.head, hb) /\ Mode # "no_wait" THEN "wait"
                ELSE yes(r.signer = Owner(r.head))
 
 Standing(r) ==
-  CASE r.series = "st" /\ r.kind \in {"grant", "revoke"} -> r.signer = "subject"
+  CASE r.series = "st" /\ r.kind \in {"grant", "revoke"} -> Mode = "stranger_ok" \/ r.signer = "subject"
     [] r.series = "st" /\ r.kind = "expired" ->
           /\ r.sup \in Ids
           /\ \/ Mode = "forged_expiry"
@@ -160,12 +178,22 @@ Standing(r) ==
 
 Fresh(r, t) == Mode = "no_W" \/ t - r.at <= W
 
-(* A refused row (asserted_at_stale), a void row and a waiting row are not admitted: each moves
-   nothing, so the model has no transition for it.  A waiting row is offered again once B2 is held.
+(* A refused row (asserted_at_stale) and a void row are not admitted: each moves nothing, so the
+   model has no transition for it.  A waiting row is held and moves nothing until B2 arrives; it is
+   then counted on the age it had when the receiver first held it (Waited below).  The model keeps
+   no queue: at the clock B2 arrives it counts any row that could have been waiting since before.
    Replay of an admitted row dedups on its attestation id and is likewise no transition; replay of a
    refused row is re-judged at a later clock, where staleness only grows, and its standing is read
    from the head it names, so it reaches the verdict it reached before. *)
 Admit(r, t) == Fresh(r, t) /\ Standing(r)
+
+(* The earliest clock at which a receiver can first hold a row that names B2: B2 exists from TX.
+   A row that waited is counted at the clock at which B2 arrives, if it was fresh when the receiver
+   first held it.  The count is a step of its own, so within that one clock another row or a capture
+   may come between B2 and the count; a later clock finds no row still waiting. *)
+FirstHeld(r) == IF r.at > TX THEN r.at ELSE TX
+Waited(r) == /\ r.series = "ct" /\ hb2 /\ b2new /\ CtVerdict(r, FALSE) = "wait"
+             /\ Fresh(r, FirstHeld(r))
 
 (* ---------------------------------------------------------------- the fold -------------- *)
 (* hb: the deciding node holds B2.  Under InForce = "ends" a ct grant at the replaced binding is not
@@ -178,7 +206,7 @@ Bound(s, t, H) ==
   IF Mode = "no_boundary" \/ RevokesAt(s, t, H) = {} THEN -1 ELSE MaxAt(RevokesAt(s, t, H))
 After(s, t, H, hb) == {i \in GrantsAt(s, t, H, hb) : rows[i].at > Bound(s, t, H)}
 Winner(S) == CHOOSE i \in S : \A j \in S : rows[j].at < rows[i].at
-                                          \/ (rows[j].at = rows[i].at /\ i <= j)
+                                          \/ (rows[j].at = rows[i].at /\ IF Mode = "tie_largest" THEN i >= j ELSE i <= j)
 Fold(s, t, H, hb) ==
   IF After(s, t, H, hb) = {}
   THEN [v |-> IF Bound(s, t, H) >= 0 THEN "revoked" ELSE "none", by |-> 0]
@@ -194,30 +222,31 @@ Init == /\ now = 0 /\ rows = <<>>
         /\ capt = [t \in Instants |-> -1] /\ scored = [t \in Instants |-> -1]
         /\ decay = "none" /\ decayCause = "none"
         /\ replLive = {} /\ peerHolds = {} /\ badSend = FALSE
-        /\ hb2 = FALSE /\ captB = [t \in Instants |-> FALSE]
+        /\ hb2 = FALSE /\ captB = [t \in Instants |-> FALSE] /\ b2new = FALSE
 
 (* ---------------------------------------------------------------- actions --------------- *)
-Tick == /\ now < MaxT /\ now' = now + 1
+Tick == /\ now < MaxT /\ now' = now + 1 /\ b2new' = FALSE
         /\ UNCHANGED <<rows, capt, scored, decay, decayCause, replLive, peerHolds, badSend, hb2, captB>>
 
 (* B2 exists from TX and reaches this receiver then or at any later step.  Nothing forces it: a
    receiver may never hold it. *)
 ArriveB2 == /\ "ct" \in Planes /\ now >= TX /\ ~hb2
-            /\ hb2' = TRUE
+            /\ hb2' = TRUE /\ b2new' = TRUE
             /\ UNCHANGED <<now, rows, capt, scored, decay, decayCause, replLive, peerHolds, badSend, captB>>
 
 (* head: the binding the row names (0: none).  lst: the owner a node-authored grant lists in
    subject_key_ids ("none": it lists no owner).  adm, ahb: the clock, and whether B2 was held, when the
-   receiver admitted the row. *)
+   receiver counted the row.  rcv: the clock when it first held the row (before adm where it waited). *)
 RowH(s, k, sg, a, sc, vu, sup, h, l) ==
   [series |-> s, kind |-> k, signer |-> sg, at |-> a, scope |-> sc, vu |-> vu, sup |-> sup,
-   head |-> h, lst |-> l, adm |-> 0, ahb |-> FALSE]
+   head |-> h, lst |-> l, adm |-> 0, ahb |-> FALSE, rcv |-> 0]
 Row(s, k, sg, a, sc, vu, sup) == RowH(s, k, sg, a, sc, vu, sup, 0, "none")
 
 Offer(r) == /\ Len(rows) < MaxRows
-            /\ Admit(r, now)
-            /\ rows' = Append(rows, [r EXCEPT !.adm = now, !.ahb = hb2])
-            /\ UNCHANGED <<now, capt, scored, decay, decayCause, replLive, peerHolds, badSend, hb2, captB>>
+            /\ Standing(r) /\ (Fresh(r, now) \/ Waited(r))
+            /\ rows' = Append(rows, [r EXCEPT !.adm = now, !.ahb = hb2,
+                                              !.rcv = IF Fresh(r, now) THEN now ELSE FirstHeld(r)])
+            /\ UNCHANGED <<now, capt, scored, decay, decayCause, replLive, peerHolds, badSend, hb2, captB, b2new>>
 
 (* Any party, or the adversary in its name, signs a row with an asserted_at of its choosing. *)
 SignSt == /\ "st" \in Planes
@@ -248,23 +277,23 @@ Capture == /\ "ct" \in Planes
            /\ capt[now] = -1 /\ FoldNow("ct").v = "granted"
            /\ capt' = [capt EXCEPT ![now] = Len(rows)]
            /\ captB' = [captB EXCEPT ![now] = hb2]
-           /\ UNCHANGED <<now, rows, scored, decay, decayCause, replLive, peerHolds, badSend, hb2>>
+           /\ UNCHANGED <<now, rows, scored, decay, decayCause, replLive, peerHolds, badSend, hb2, b2new>>
 
 Score == /\ "st" \in Planes
          /\ scored[now] = -1 /\ FoldNow("st").v = "granted"
          /\ (Mode = "any_scope" \/ "analyze" \in rows[FoldNow("st").by].scope)
          /\ scored' = [scored EXCEPT ![now] = Len(rows)]
-         /\ UNCHANGED <<now, rows, capt, decay, decayCause, replLive, peerHolds, badSend, hb2, captB>>
+         /\ UNCHANGED <<now, rows, capt, decay, decayCause, replLive, peerHolds, badSend, hb2, captB, b2new>>
 
 StartDecay == /\ decay = "none" /\ Mode # "decay_never"
               /\ (Mode = "eager_decay" \/ FoldNow("st").v \in {"revoked", "expired"})
               /\ decay' = "identity_severed" /\ decayCause' = FoldNow("st").v
-              /\ UNCHANGED <<now, rows, capt, scored, replLive, peerHolds, badSend, hb2, captB>>
+              /\ UNCHANGED <<now, rows, capt, scored, replLive, peerHolds, badSend, hb2, captB, b2new>>
 DecayStep == /\ decay \in {"identity_severed", "patterns_anonymized"}
              /\ Mode # "decay_stalls"
              /\ \/ decay' = Stages[Rank(decay) + 1]
                 \/ Mode = "decay_back" /\ decay = "patterns_anonymized" /\ decay' = "identity_severed"
-             /\ UNCHANGED <<now, rows, capt, scored, decayCause, replLive, peerHolds, badSend, hb2, captB>>
+             /\ UNCHANGED <<now, rows, capt, scored, decayCause, replLive, peerHolds, badSend, hb2, captB, b2new>>
 
 (* consent:replication (CC 3.3.7): directed, one peer per grant, by the node (or its owner, for
    one of its own nodes); a stranger's grant has no standing and is refused.  A withdraws by the
@@ -272,19 +301,20 @@ DecayStep == /\ decay \in {"identity_severed", "patterns_anonymized"}
    here and names no head: its owner is the owner at a binding the receiver holds.  What a replaced
    binding does to a replication grant is not modelled. *)
 ReplStanding(sg) == sg = "node" \/ \E b \in {1, 2} : HeldB(b, hb2) /\ sg = Owner(b)
+ReplPeers == {g[1] : g \in replLive}
 GrantRepl == \E sg \in {"node", "o1", "o2", "stranger"}, p \in Peers :
-               /\ "ct" \in Planes /\ p \notin replLive /\ ReplStanding(sg)
-               /\ replLive' = replLive \cup {p}
-               /\ UNCHANGED <<now, rows, capt, scored, decay, decayCause, peerHolds, badSend, hb2, captB>>
-RevokeRepl == \E p \in replLive :
-               /\ replLive' = replLive \ {p}
-               /\ UNCHANGED <<now, rows, capt, scored, decay, decayCause, peerHolds, badSend, hb2, captB>>
+               /\ "ct" \in Planes /\ p \notin ReplPeers /\ (Mode = "stranger_repl" \/ ReplStanding(sg))
+               /\ replLive' = replLive \cup {<<p, sg = "stranger">>}
+               /\ UNCHANGED <<now, rows, capt, scored, decay, decayCause, peerHolds, badSend, hb2, captB, b2new>>
+RevokeRepl == \E g \in replLive :
+               /\ replLive' = replLive \ {g}
+               /\ UNCHANGED <<now, rows, capt, scored, decay, decayCause, peerHolds, badSend, hb2, captB, b2new>>
 Replicate == \E p \in Peers :
-               /\ (Mode = "blind_send" \/ p \in replLive)
+               /\ (Mode = "blind_send" \/ p \in ReplPeers)
                /\ \E t \in Instants : capt[t] # -1
                /\ peerHolds' = peerHolds \cup {p}
-               /\ badSend' = (badSend \/ p \notin replLive)
-               /\ UNCHANGED <<now, rows, capt, scored, decay, decayCause, replLive, hb2, captB>>
+               /\ badSend' = (badSend \/ p \notin ReplPeers)
+               /\ UNCHANGED <<now, rows, capt, scored, decay, decayCause, replLive, hb2, captB, b2new>>
 
 Next == \/ Tick \/ ArriveB2 \/ SignSt \/ SignCt \/ EmitExpired
         \/ Capture \/ Score \/ StartDecay \/ DecayStep
@@ -296,8 +326,8 @@ Spec == Init /\ [][Next]_vars /\ WF_vars(StartDecay) /\ WF_vars(DecayStep)
 TypeOK == /\ now \in Instants /\ Len(rows) <= MaxRows
           /\ capt \in [Instants -> -1..MaxRows] /\ scored \in [Instants -> -1..MaxRows]
           /\ decay \in {"none", "identity_severed", "patterns_anonymized", "complete"}
-          /\ replLive \subseteq Peers /\ peerHolds \subseteq Peers /\ badSend \in BOOLEAN
-          /\ hb2 \in BOOLEAN /\ captB \in [Instants -> BOOLEAN]
+          /\ replLive \subseteq (Peers \X BOOLEAN) /\ peerHolds \subseteq Peers /\ badSend \in BOOLEAN
+          /\ hb2 \in BOOLEAN /\ captB \in [Instants -> BOOLEAN] /\ b2new \in BOOLEAN
 
 IsRev(i, s)   == rows[i].series = s /\ rows[i].kind = "revoke"
 IsGrant(i, s) == rows[i].series = s /\ rows[i].kind = "grant"
@@ -387,17 +417,37 @@ Inv_OwnerCanRecant ==
         /\ \A b \in {1, 2} : HeldB(b, hb2) => Admit(RevNowAt(b), now)
   /\ ("st" \in Planes /\ FoldNow("st").v = "granted") => Admit(RevNow("st", "subject"), now)
 
-(* CC 2.6.7: a row dated more than W before the receiver's clock is refused asserted_at_stale and
-   moves nothing.  Stated on the held rows.  The window bounds the signer-chosen instant that the
-   boundary fold reads; it decides no standing. *)
-Inv_BackdateBounded == \A i \in Ids : rows[i].adm - rows[i].at <= W
+(* CC 2.6.7: a row dated more than W before the clock at which the receiver first holds it is
+   refused asserted_at_stale and moves nothing.  Stated on the held rows.  The window bounds the
+   signer-chosen instant that the boundary fold reads; it decides no standing.  It does not bound
+   the clock at which a row that waited on a binding is counted: Inv_CountedWithinW states that
+   wider bound, and it fails (Consent_waited_counted.cfg). *)
+Inv_BackdateBounded == \A i \in Ids : rows[i].rcv - rows[i].at <= W
+Inv_CountedWithinW  == \A i \in Ids : rows[i].adm - rows[i].at <= W
 
 (* CC 2.6.7, the other side: a revocation admitted after a use was decided reaches back to that
    use only if the use's instant is within W of the revocation's asserted_at. *)
-LateRevOk(s, t) ==
+LateRevOk(s, t, any) ==
   Uses(s)[t] = -1 \/ \A i \in Ids :
-     (IsRev(i, s) /\ i > Uses(s)[t] /\ rows[i].at <= t) => t <= rows[i].at + W
-Inv_LateRevocationWithinW == \A t \in Instants, s \in Planes : LateRevOk(s, t)
+     (IsRev(i, s) /\ i > Uses(s)[t] /\ rows[i].at <= t /\ (any \/ rows[i].adm = rows[i].rcv)) => t <= rows[i].at + W
+(* Of a revocation that did not wait on a binding.  One that waited reaches back as far as it
+   waited: Inv_LateRevocationWithinW_Waited states the bound of every revocation, and it fails
+   (Consent_waited_reach.cfg). *)
+Inv_LateRevocationWithinW == \A t \in Instants, s \in Planes : LateRevOk(s, t, FALSE)
+Inv_LateRevocationWithinW_Waited == \A t \in Instants, s \in Planes : LateRevOk(s, t, TRUE)
+
+(* CC 3.3.1: "A grant whose binding rows have not yet arrived is held, as every owner-gated row is."
+   No row that names B2 was counted by a receiver that did not hold B2.  Stated on the held rows. *)
+Inv_HeldUntilBindingArrives ==
+  \A i \in Ids : (rows[i].series = "ct" /\ rows[i].head = 2) => rows[i].ahb
+
+(* CC 3.3.1 fold: among the grants after R the latest asserted_at wins, "ties on the smallest
+   attestation id".  The grant an analyze use rests on has no held grant of the same instant
+   before it. *)
+Inv_TieOnSmallestId ==
+  \A t \in Instants : scored[t] = -1 \/
+     LET g == UseFold("st", t, scored[t]).by IN
+        \A j \in Pre(scored[t]) : (IsGrant(j, "st") /\ rows[j].at = rows[g].at) => g <= j
 
 (* CC 3.3.1: a grant naming no scope matches nothing. *)
 Inv_EmptyScopeMatchesNothing ==
@@ -417,6 +467,9 @@ Inv_ExpiryEmittedBySubstrate ==
 
 (* CC 3.3.7: a peer holds the node's traces only under a replication grant naming it. *)
 Inv_ReplicationNeedsDirectedGrant == ~badSend
+(* CC 3.3.7: the grant is the node's or its owner's.  No live replication grant is a stranger's.
+   Stated on the live grants, without ReplStanding. *)
+Inv_ReplicationGrantHasStanding == \A g \in replLive : ~g[2]
 
 (* ---------------------------------------------------------------- witnesses ------------- *)
 (* Each Wit_* is the negation of a scenario that must be REACHABLE under the CC reading; a
@@ -443,6 +496,27 @@ Wit_FreshGrantAfterRevocation ==
 Wit_AgentRevokes   == ~\E i \in Ids : IsRev(i, "ct") /\ rows[i].signer = "agent"
 Wit_O2Revokes      == ~\E i \in Ids : IsRev(i, "ct") /\ rows[i].signer = "o2"
 Wit_PeerHolds      == peerHolds = {}
+Wit_WaitedRowCounted == ~\E i \in Ids : rows[i].adm > rows[i].rcv
+Wit_WaitedRevocationReachesPastW ==
+                      ~\E t \in Instants, i \in Ids :
+                         /\ capt[t] # -1 /\ ~captB[t] /\ IsRev(i, "ct") /\ i > capt[t]
+                         /\ rows[i].at <= t /\ t > rows[i].at + W
+Wit_WaitedGrantCounted ==
+                      ~\E t \in Instants : capt[t] # -1 /\
+                         LET g == UseFold("ct", t, capt[t]).by IN rows[g].adm > rows[g].at + W
+Wit_WithdrawnOwnerGrantsHoldingB2 ==
+                      ~\E t \in Instants : capt[t] # -1 /\ captB[t] /\
+                         LET g == UseFold("ct", t, capt[t]).by IN rows[g].signer = "o1" /\ rows[g].ahb
+Wit_WithdrawnOwnerStopsNewOwner ==
+                      ~(/\ hb2 /\ FoldNow("ct").v = "revoked"
+                        /\ \E i, j \in Ids :
+                              /\ j < i /\ IsGrant(j, "ct") /\ rows[j].signer = "o2" /\ rows[j].head = 2
+                              /\ IsRev(i, "ct") /\ rows[i].signer = "o1" /\ rows[i].ahb
+                              /\ \A k \in Ids : IsRev(k, "ct") => k = i)
+Wit_ScoreOnTiedGrants ==
+                      ~\E t \in Instants : scored[t] # -1 /\
+                         LET g == UseFold("st", t, scored[t]).by IN
+                            \E j \in Pre(scored[t]) : j # g /\ IsGrant(j, "st") /\ rows[j].at = rows[g].at
 Wit_ExpiredEmitted == ~\E i \in Ids : rows[i].kind = "expired"
 Wit_DecayComplete  == decay # "complete"
 Wit_DecayOnExpiry  == decayCause # "expired"

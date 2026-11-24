@@ -320,8 +320,8 @@ def apply_guards(rows):
         if g["reach"] not in ("whole", "partial"):
             raise SystemExit(f"{where}: reach {g['reach']!r}")
         inst = gg.head_sentence_at_instant(clauses, g["quote"])
-        if inst:      # CC 2.4.1.1: a standing counts at the head the act names; no instant decides
-            raise SystemExit(f"{where}: the quoted sentence reads a standing at a head and the guard reads an instant: " + "; ".join(inst))
+        if inst:      # CC 2.4.1.1: a standing counts at the head the act names; no instant decides, and neither does the receiver's view (CC 3.3.1)
+            raise SystemExit(f"{where}: the quoted sentence reads a standing at a head and the guard reads it elsewhere: " + "; ".join(inst))
         verbs = gg.top_conds(clauses, "verb")
         verbs = ["supersede" if v == "replace" else v for v in verbs] if verbs else ["attest", "authorize"]
         hit = [t for t in by[g["family"]]["transitions"] if t["verb"] in verbs]

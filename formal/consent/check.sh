@@ -7,7 +7,7 @@
 #   bash formal/consent/check.sh            every run
 #   bash formal/consent/check.sh --quick    everything but the two large closing runs (head_counts, head_ends)
 #
-# TLA_JAR names tla2tools.jar (1.7.4). The whole file peaked at 3.4 GB: on a shared box run it as
+# TLA_JAR names tla2tools.jar (1.7.4). The whole file peaked at 3.5 GB: on a shared box run it as
 #   grace-sched run --owner CIRISConstitution -- bash formal/consent/check.sh
 cd "$(dirname "$0")" || exit 2
 JAR="${TLA_JAR:-../../tla2tools.jar}"
@@ -72,6 +72,10 @@ fi
 breaks Consent_counts_vs_3121.cfg 'Invariant Inv_ReplacedBindingEndsGrant is violated'
 breaks Consent_ends_vs_331.cfg 'Action property Prop_TransferKeepsFold is violated'
 
+# a row that waited on a binding: the ruled reading against the wider bound W would give were it measured at the count
+breaks Consent_waited_counted.cfg 'Invariant Inv_CountedWithinW is violated'
+breaks Consent_waited_reach.cfg 'Invariant Inv_LateRevocationWithinW_Waited is violated'
+
 # planted breaks (the two _form plants read no variable, so TLC reports them before the search: 'is equal to FALSE')
 breaks Consent_instant.cfg 'Invariant Inv_BackdatedGrantRefused is violated'
 breaks Consent_instant_stranger.cfg 'Invariant Inv_StrangerNeverGrants is violated'
@@ -89,19 +93,25 @@ breaks Consent_decay_back.cfg 'Action property Prop_DecayForwardOnly is violated
 breaks Consent_decay_stalls.cfg 'Temporal properties were violated'
 breaks Consent_decay_never.cfg 'Temporal properties were violated'
 breaks Consent_blind_send.cfg 'Invariant Inv_ReplicationNeedsDirectedGrant is violated'
+breaks Consent_no_wait.cfg 'Invariant Inv_HeldUntilBindingArrives is violated'
+breaks Consent_stranger_repl.cfg 'Invariant Inv_ReplicationGrantHasStanding is violated'
+breaks Consent_tie_largest.cfg 'Invariant Inv_TieOnSmallestId is violated'
+breaks Consent_stranger_ok.cfg 'Invariant Inv_StrangerNeverGrants is violated'
 breaks_one Consent_no_boundary.cfg Inv_RevokedOverridesGranted
 breaks_one Consent_no_W.cfg Inv_LateRevocationWithinW
 
 # witnesses
 for w in Wit_OldHeadAfterTransfer Wit_OldHeadWhileHoldingB2 Wit_CaptureHoldingB2 Wit_NewOwnerGrants Wit_NodeRegrants Wit_NodeGrantsAtB1 \
-         Wit_O1RevokesHoldingB2 Wit_BackdatedWithinW Wit_LateRevocation Wit_FreshGrantAfterRevocation Wit_AgentRevokes Wit_O2Revokes; do
+         Wit_O1RevokesHoldingB2 Wit_BackdatedWithinW Wit_LateRevocation Wit_FreshGrantAfterRevocation Wit_AgentRevokes Wit_O2Revokes \
+         Wit_WaitedRowCounted Wit_WaitedGrantCounted Wit_WaitedRevocationReachesPastW Wit_WithdrawnOwnerGrantsHoldingB2 Wit_WithdrawnOwnerStopsNewOwner; do
   witness Consent_head_counts.cfg $w
 done
 witness Consent_replication.cfg Wit_PeerHolds
-for w in Wit_OldHeadAfterTransfer Wit_CaptureHoldingB2 Wit_FoldEndsOnArrival Wit_NodeRegrants Wit_O1RevokesHoldingB2; do
+for w in Wit_OldHeadAfterTransfer Wit_CaptureHoldingB2 Wit_FoldEndsOnArrival Wit_NodeRegrants Wit_O1RevokesHoldingB2 \
+         Wit_WaitedGrantCounted Wit_WithdrawnOwnerStopsNewOwner; do
   witness Consent_head_ends.cfg $w
 done
-for w in Wit_ExpiredEmitted Wit_DecayComplete Wit_DecayOnExpiry Wit_ScoreAfterRevocation; do
+for w in Wit_ExpiredEmitted Wit_DecayComplete Wit_DecayOnExpiry Wit_ScoreAfterRevocation Wit_ScoreOnTiedGrants; do
   witness Consent_ruled_st.cfg $w
 done
 

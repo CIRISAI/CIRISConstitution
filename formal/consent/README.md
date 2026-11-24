@@ -1,9 +1,12 @@
 # `formal/consent` — the consent plane, model-checked
 
 **Why.** The consent plane has four state-table variables (`consent.state`, `consent.decay`,
-`consent.community_trust`, `consent.replication`). This module realises all four and checks the rules
-CC 3.3.1, 3.3.7, 2.4.1.1 and 2.6.7 state about them. It also checks CC 3.3.1's revocation authority:
-the owner may author the capture grant, and the node, the owner and the agent key may each withdraw.
+`consent.community_trust`, `consent.replication`). This module realises all four and checks the
+properties listed below, which state some of what CC 3.3.1, 3.3.7, 2.4.1.1 and 2.6.7 say about them.
+Among them is CC 3.3.1's revocation authority: the owner may author the capture grant, and the node,
+the owner and the agent key may each withdraw. What the module leaves out is listed at the end. The
+largest omission is the fold itself: CC 3.3.1 folds each party's rows apart, and this module folds
+every party's rows under one boundary.
 
 A run here is a search of every state inside the bound below. It is not a proof beyond that bound.
 
@@ -37,8 +40,25 @@ instant decides.
   and it is as it was.
 
 **Admission freshness (CC 2.6.7).** The instant the window reads is signer-chosen, so it is bounded:
-a row whose `asserted_at` precedes the receiver's clock by more than `W` is refused
-(`asserted_at_stale`) and moves nothing. CC 2.6.7: "The window decides no standing."
+a row whose `asserted_at` precedes the receiver's clock by more than `W`, when the receiver first
+holds it, is refused (`asserted_at_stale`) and moves nothing. CC 2.6.7: "The window decides no
+standing."
+
+**A row that waits.** CC 3.3.1: "A grant whose binding rows have not yet arrived is held, as every
+owner-gated row is." CC 2.6.7 checks a row's age "at the node that first receives it". So a row that
+names `B2` and reaches a receiver without `B2` is held and not counted. Its age is judged at that
+first holding. When `B2` arrives the row is counted with the `asserted_at` it carries, however long
+it waited. The model keeps no queue: at the clock `B2` arrives it counts any row that could have
+been waiting, and a row counted that way records when it was first held (`rcv`) and when it was
+counted (`adm`). The count is a step of its own, so inside that one clock a capture may fall between
+`B2` and the count.
+
+This has a consequence the text does not state. `W` bounds how far a row is dated before the
+receiver first holds it. It does not bound how far it is dated before it is counted. A revocation by
+the new owner that waited on `B2` covers the instants of captures decided while it waited, further
+back than `W` (`Wit_WaitedRevocationReachesPastW`; the wider bounds `Inv_CountedWithinW` and
+`Inv_LateRevocationWithinW_Waited` are both violated). No capture is unmade by it: a boundary puts
+out grants and never the traces already captured (CC 3.3.1).
 
 **The adversary.** It signs as a stranger. It signs as the withdrawn owner `o1` after `TX`, at head
 `B1` or naming `B2`, with any `asserted_at`. It names any binding that exists, or none, on any row,
@@ -79,8 +99,30 @@ part on whether the grant still **authorises capture** at a receiver that holds 
 | `Inv_ReplacedBindingEndsGrant` | **violated** (`Consent_counts_vs_3121.cfg`) | holds |
 
 Under `counts`, only a revocation ends the old owner's reach, and `o1` can sign a later grant at
-`B1` after any revocation. Under `ends`, the exception "unless it was receipted" is not modelled, so
-no `B1` grant is kept in force.
+`B1` after any revocation. A capture decided by a receiver that holds `B2` rests on a grant `o1`
+signed at `B1` and that receiver admitted while holding `B2` (`Wit_WithdrawnOwnerGrantsHoldingB2`).
+Under `ends`, the exception "unless it was receipted" is not modelled, so no `B1` grant is kept in
+force.
+
+The CC 3.1.2.1 sentence stands in the entry on a pipeline's capability grant and its owner's
+acceptance. Reading it of a capture grant is this module's reading. CC 2.4.1.1 "The limit" says the
+same in general words: "Where the record is one row, an act from such a device counts at that row
+and is never in force after the end." The CC 3.3.1 sentence speaks of admitting and un-admitting,
+which both readings keep (`Prop_TransferMovesNoVerdict`). If "admits" there means the verdict and
+nothing more, the sentences do not collide and `ends` is what CC 2.4.1.1 gives. If it means the
+grant goes on authorising capture, CC 3.3.1 is an exception to CC 2.4.1.1 and says so nowhere. The
+text does not say which, and the choice is not this module's to make.
+
+## What the head reading costs, in this fold
+
+Under either reading the withdrawn owner `o1` keeps a revocation at `B1`: the row names `B1`, `o1`
+is the owner there, and no instant is read. With one boundary over every party's rows, that
+revocation puts out the new owner's grant at `B2`, at a receiver that holds `B2`, at any later time
+and as often as `o1` signs one (`Wit_WithdrawnOwnerStopsNewOwner`, reached under both readings).
+The reading this module had before bounded that to `W` after the transfer. CC 3.3.1's own fold does
+not give `o1` this: there a party's revocation ends that party's consent, and `o2`'s grant binds the
+node, `o2` and the agent key, and not `o1`. The module does not model that fold, so it shows only
+that the single-boundary fold and the head reading together fail closed against the new owner.
 
 ## State-table realisation
 
@@ -89,7 +131,7 @@ no `B1` grant is kept in force.
 | `consent.state` | `FoldNow("st").v` | `none`, `granted`, `revoked`, `expired` |
 | `consent.decay` | `decay` | `none`, `identity_severed`, `patterns_anonymized`, `complete` |
 | `consent.community_trust` | `FoldNow("ct").v` | `none` is `absent`, `granted`, `revoked` is `bounded` |
-| `consent.replication` | `p \in replLive` per peer | `none`, `granted` |
+| `consent.replication` | `p \in ReplPeers` per peer | `none`, `granted` |
 
 ## The bound, and what ran
 
@@ -98,14 +140,22 @@ instants after the grant, at most three admitted rows (none in the `_form` confi
 no row), one node, one subject, two bindings. Replication touches the rest of the plane only through
 "some capture exists", so the configurations that search the capture fold run with no peer, and
 `Consent_replication.cfg` runs two peers over two admitted rows. TLA+ tools 1.7.4.
+
+Each bound was raised by one, once, by hand and outside `check.sh`, invariants only. All closed:
+`W = 2` (7,587,288 states under `counts`, 4,755,650 under `ends`); `TX = 1` (5,045,600 and
+3,071,448); `TX = 3` (1,939,624 and 1,354,896); instants `0..5` (10,839,198 and 6,401,146); four
+rows over instants `0..3` (20,396,913 and 14,124,639); on `st`, `W = 2` with `valid_until` three
+instants on (972,714) and four rows (9,553,465); replication with three rows over instants `0..3`
+(10,759,560). These are one step each and say nothing of a fifth row, a third binding or a second
+node.
 `bash formal/consent/check.sh` runs every line below and exits 0 when each gives the verdict stated.
 
 | Config | Mode, plane, `InForce` | Reading | TLC verdict |
 |---|---|---|---|
-| `Consent_head_counts.cfg` | `ruled`, `ct`, `counts` | standing at the named head; a counted grant stays in the fold | **closes**: every invariant and both action properties hold, 2,431,806 distinct states, depth 14 |
-| `Consent_head_ends.cfg` | `ruled`, `ct`, `ends` | standing at the named head; a grant at a replaced binding is out of the fold | **closes**: every invariant and the action property hold, 1,530,724 distinct states, depth 14 |
-| `Consent_head_form.cfg` | `ruled`, `ct`, no rows | the three checks of form, over all 450 `ct` rows the adversary can write | **closes**: 8 distinct states, depth 6 |
-| `Consent_replication.cfg` | `ruled`, `ct`, `counts`, two peers, two rows | the replication grant and the send | **closes**: every invariant holds, 955,776 distinct states, depth 19 |
+| `Consent_head_counts.cfg` | `ruled`, `ct`, `counts` | standing at the named head; a counted grant stays in the fold | **closes**: every invariant and both action properties hold, 3,191,888 distinct states, depth 14 |
+| `Consent_head_ends.cfg` | `ruled`, `ct`, `ends` | standing at the named head; a grant at a replaced binding is out of the fold | **closes**: every invariant and the action property hold, 2,042,150 distinct states, depth 14 |
+| `Consent_head_form.cfg` | `ruled`, `ct`, no rows | the three checks of form, over all 450 `ct` rows the adversary can write | **closes**: 10 distinct states, depth 6 |
+| `Consent_replication.cfg` | `ruled`, `ct`, `counts`, two peers, two rows | the replication grant and the send | **closes**: every invariant holds, 1,219,840 distinct states, depth 19 |
 | `Consent_ruled_st.cfg` | `ruled`, `st` | the fold over the subject's stance; scope, expiry, decay; the three temporal properties | **closes**: 467,692 distinct states, depth 16 |
 | `Consent_counts_vs_3121.cfg` | `ruled`, `ct`, `counts` | the CC 3.3.1 reading against the CC 3.1.2.1 sentence | `Inv_ReplacedBindingEndsGrant` violated |
 | `Consent_ends_vs_331.cfg` | `ruled`, `ct`, `ends` | the CC 3.1.2.1 reading against the CC 3.3.1 sentence read of the fold | `Prop_TransferKeepsFold` violated |
@@ -125,8 +175,19 @@ no row), one node, one subject, two bindings. Replication touches the rest of th
 | `Consent_decay_never.cfg` | `decay_never`, `st` | planted: decay does not start | `Prop_DecayStarts` violated |
 | `Consent_blind_send.cfg` | `blind_send`, `ct`, two peers | planted: the node sends to a peer no grant names | `Inv_ReplicationNeedsDirectedGrant` violated |
 
+| `Consent_no_wait.cfg` | `no_wait`, `ct` | planted: a row that names a binding the receiver does not hold is judged at once | `Inv_HeldUntilBindingArrives` violated |
+| `Consent_stranger_repl.cfg` | `stranger_repl`, `ct`, two peers | planted: a replication grant from any key | `Inv_ReplicationGrantHasStanding` violated |
+| `Consent_tie_largest.cfg` | `tie_largest`, `st` | planted: a tie between grants of one instant goes to the largest attestation id | `Inv_TieOnSmallestId` violated |
+| `Consent_stranger_ok.cfg` | `stranger_ok`, `st` | planted: a `consent:state` grant or revocation from any key | `Inv_StrangerNeverGrants` violated, by a stranger's row |
+| `Consent_waited_counted.cfg` | `ruled`, `ct`, `counts` | not a plant: the ruled reading against a bound it does not give | `Inv_CountedWithinW` violated: a row that waited on `B2` is counted more than `W` after its `asserted_at` |
+| `Consent_waited_reach.cfg` | `ruled`, `ct`, `counts` | not a plant: the same | `Inv_LateRevocationWithinW_Waited` violated |
+
 `check.sh` also runs `no_boundary` with `Inv_RevokedOverridesGranted` alone and `no_W` with
 `Inv_LateRevocationWithinW` alone; each is violated.
+
+Before the three plants `no_wait`, `stranger_repl` and `tie_largest` were added, each of those
+misreadings closed against every property the module then had (5,774,018, 3,420,441 and 453,472
+distinct states): nothing checked the wait, who grants replication, or the tie.
 
 **Witnesses.** The closing runs are not vacuous. Each scenario below is the negation of a `Wit_*`
 predicate in the module, and `check.sh` requires TLC to reach it.
@@ -139,14 +200,23 @@ predicate in the module, and `check.sh` requires TLC to reach it.
   receiver that holds `B2` (`Wit_O1RevokesHoldingB2`). A grant backdated within `W` is admitted
   (`Wit_BackdatedWithinW`). A revocation is admitted after a capture whose instant it covers
   (`Wit_LateRevocation`). A capture happens after a revocation, on a fresh grant
-  (`Wit_FreshGrantAfterRevocation`). The agent key revokes, and `o2` revokes.
+  (`Wit_FreshGrantAfterRevocation`). The agent key revokes, and `o2` revokes. A row that waited on
+  `B2` is counted (`Wit_WaitedRowCounted`), and a capture rests on a grant counted more than `W`
+  after its `asserted_at` (`Wit_WaitedGrantCounted`). A revocation that waited covers a capture
+  decided before `B2` arrived, more than `W` after the revocation's `asserted_at`
+  (`Wit_WaitedRevocationReachesPastW`). A capture decided holding `B2` rests on a grant `o1` signed
+  at `B1` and the receiver admitted holding `B2` (`Wit_WithdrawnOwnerGrantsHoldingB2`). `o1`'s
+  revocation at `B1` puts out `o2`'s grant at `B2` at a receiver that holds `B2`
+  (`Wit_WithdrawnOwnerStopsNewOwner`).
 - Under `Consent_replication.cfg`: a peer holds captured traces (`Wit_PeerHolds`).
 - Under `ends`: the fold goes to `none` at a receiver that holds `B2` while it holds a `B1` grant
   admitted earlier (`Wit_FoldEndsOnArrival`). A capture is decided while holding `B2`, on a `B2`
   grant. `o1`'s grant at `B1` after `TX` still carries a capture at a receiver without `B2`. The node
-  re-grants at `B2`. `o1` revokes at a receiver that holds `B2`.
+  re-grants at `B2`. `o1` revokes at a receiver that holds `B2`, and that revocation puts out
+  `o2`'s grant. A capture rests on a grant that waited.
 - On `st`: the substrate emits `expired`. Decay reaches `complete`, and decay starts on expiry. An
-  `analyze` use happens after a revocation, on a fresh grant.
+  `analyze` use happens after a revocation, on a fresh grant. An `analyze` use rests on one of two
+  grants of the same instant (`Wit_ScoreOnTiedGrants`).
 
 ## INVARIANTS
 
@@ -154,7 +224,8 @@ predicate in the module, and `check.sh` requires TLC to reach it.
 |---|---|---|---|
 | `Inv_RevocationIsBoundary` | No capture or `analyze` use at an instant after a revocation the deciding node held, unless it also held a grant dated after that revocation and not after the use. Stated without the fold. | 3.3.1, 2.4.1.1 | `no_boundary` |
 | `Inv_RevokedOverridesGranted` | No use rests on a grant dated at the same instant as a held revocation. | 3.3.1 | `no_boundary`, run with this property alone |
-| `Inv_StrangerNeverGrants` | No held row is a stranger's. A held capture grant names a binding and is that binding's owner's, or the node's and lists that owner. A held capture revocation is the node's, the agent key's, or the owner's at the binding it names. A held `st` grant or revocation is the subject's. Stated on the held rows, without the standing rule. | 3.3.1, 2.4.1.1 | `instant` |
+| `Inv_StrangerNeverGrants` | No held row is a stranger's. A held capture grant names a binding and is that binding's owner's, or the node's and lists that owner. A held capture revocation is the node's, the agent key's, or the owner's at the binding it names. A held `st` grant or revocation is the subject's. Stated on the held rows, without the standing rule. | 3.3.1, 2.4.1.1 | `instant` (a capture grant that names no binding), `stranger_ok` (a stranger's row on `st`) |
+| `Inv_HeldUntilBindingArrives` | No row that names `B2` was counted by a receiver that did not hold `B2`. Stated on the held rows. | 3.3.1 | `no_wait` |
 | `Inv_BackdatedGrantRefused` | No held grant is `o1`'s and names `B2`: the withdrawn owner holds nothing at `B2`, whatever instant it writes. | 2.4.1.1, 3.3.1 | `instant` |
 | `Inv_InstantBuysNoStanding` | Two `ct` rows that differ in `asserted_at` alone reach one verdict. Over all 450 rows the adversary can write. | 2.4.1.1 | `instant` |
 | `Inv_SameVerdictOnceHeld` | A receiver without `B2` either waits on a row or reaches the verdict a receiver holding `B2` reaches. | 3.3.1 | `current_view` |
@@ -162,8 +233,11 @@ predicate in the module, and `check.sh` requires TLC to reach it.
 | `Prop_TransferKeepsFold` | At the step `B2` arrives the capture fold is what it was. Holds under `counts` only. | 3.3.1 | `InForce = "ends"` |
 | `Inv_ReplacedBindingEndsGrant` | No capture decided by a node that held `B2` rests on a grant at `B1`. Holds under `ends` only. | 3.1.2.1, 2.4.1.1 | `InForce = "counts"` |
 | `Inv_OwnerCanRecant` | While a grant stands, a revocation signed now by the node, by the agent key, by the owner at any binding the receiver holds (naming it), or by the subject (`st`), is admitted. The model's row budget is not counted as a party's limit. | 3.3.1 | `literal_signer` |
-| `Inv_BackdateBounded` | No held row was admitted more than `W` after its `asserted_at`. | 2.6.7 | `no_W` |
-| `Inv_LateRevocationWithinW` | A revocation admitted after a use reaches back to it only if the use's instant is within `W` of the revocation's `asserted_at`. | 2.6.7 | `no_W`, run with this property alone |
+| `Inv_BackdateBounded` | No held row was first held more than `W` after its `asserted_at`. It says nothing of when a row that waited is counted. | 2.6.7 | `no_W` |
+| `Inv_CountedWithinW` | No held row was counted more than `W` after its `asserted_at`. **Violated** under the ruled reading by a row that waited on `B2`. | none: the text gives no such bound | (the ruled reading itself, `Consent_waited_counted.cfg`) |
+| `Inv_LateRevocationWithinW` | A revocation that did not wait on a binding, admitted after a use, reaches back to it only if the use's instant is within `W` of the revocation's `asserted_at`. | 2.6.7 | `no_W`, run with this property alone |
+| `Inv_LateRevocationWithinW_Waited` | The same of every revocation. **Violated** under the ruled reading by a revocation that waited on `B2`. | none: the text gives no such bound | (the ruled reading itself, `Consent_waited_reach.cfg`) |
+| `Inv_TieOnSmallestId` | The grant an `analyze` use rests on has no held grant of the same instant before it. Checked on `st` only. | 3.3.1 | `tie_largest` |
 | `Inv_EmptyScopeMatchesNothing` | Every `analyze` use rests on a grant whose `scope` names `analyze`. | 3.3.1, 3.4.5 | `any_scope` |
 | `Inv_DecayForwardOnly` | Decay starts only when the `st` fold reads revoked or expired. | 3.3.1 | `eager_decay` |
 | `Prop_DecayForwardOnly` | Decay never steps backward (action property). | 3.3.1 | `decay_back` |
@@ -171,8 +245,15 @@ predicate in the module, and `check.sh` requires TLC to reach it.
 | `Prop_DecayStarts` | If the fold reads revoked or expired from some point on, decay starts. | 3.3.1 | `decay_never` |
 | `Inv_ExpiryEmittedBySubstrate` | Every held `expired` row is the substrate's and names a held grant whose `valid_until` it does not precede. | 3.3.1 | `forged_expiry` |
 | `Inv_ReplicationNeedsDirectedGrant` | The node never sends to a peer without a live replication grant naming that peer. | 3.3.7 | `blind_send` |
+| `Inv_ReplicationGrantHasStanding` | No live replication grant is a stranger's. It does not tell the owner at `B1` from the owner at `B2`: either may grant once its binding is held. | 3.3.7 | `stranger_repl` |
 
-Every property has a planted break that `check.sh` runs and that violates it. `TypeOK` has none.
+Every property that holds has a planted break that `check.sh` runs and that violates it. `TypeOK`
+has none. Three limits on that sentence. `Prop_TransferMovesNoVerdict` and `Inv_SameVerdictOnceHeld`
+say one thing twice: each compares the verdict without `B2` to the verdict with it, and one plant
+breaks both. `Inv_InstantBuysNoStanding`, `Inv_SameVerdictOnceHeld` and
+`Prop_TransferMovesNoVerdict` are about the verdict function alone and read no held row.
+`Inv_BackdatedGrantRefused` is implied by `Inv_StrangerNeverGrants`; it is kept because it names
+the case the earlier reading let through.
 
 ## What is assumed and not checked
 
@@ -187,9 +268,26 @@ Every property has a planted break that `check.sh` runs and that violates it. `T
 - **The fold is one boundary over every party's rows.** CC 3.3.1 folds each party's rows apart: a
   party's revocation ends that party's consent and only that party's own later grant undoes it. This
   module keeps the earlier single-`R` fold. `formal/derivation/seven_rankings_shipped.tsv` lists the
-  difference.
-- **The owner's device key.** CC 3.3.1 reads the attester as "a live roster key of the owner's fedID
-  at the grant's `asserted_at`". The model has one key for each owner and no self roster.
+  difference. It cuts both ways. The module stops capture where the text does not: any party's
+  revocation puts out every party's grant, the withdrawn owner's included (the section above). And
+  it allows capture where the text does not: after the agent key revokes, the node's later grant
+  restores capture here, while in the text only the agent key's own later grant answers its
+  revocation. So `Inv_RevocationIsBoundary` is weaker than the text's hard stop.
+- **A revocation names no grant.** In the text a `withdraws` has a target and is admitted when its
+  signer is a party the target names (CC 2.4.1.1 rule 2). Here a revocation is admitted on its
+  signer's standing alone, and `Inv_OwnerCanRecant` is stated that way.
+- **A revocation at a replaced binding stays in force under `ends`.** `InForce = "ends"` takes
+  grants at `B1` out of the fold and leaves revocations at `B1` in it. CC 3.3.1 says the listed
+  owner's withdrawal is admitted "whatever ownership later becomes"; whether CC 2.4.1.1's "not in
+  force" reaches a withdrawal signed at an old head is not modelled either way.
+- **The owner's device key, and an instant the text still reads.** CC 3.3.1 reads the attester of
+  an owner-authored grant as "a live roster key of the owner's fedID at the grant's `asserted_at`".
+  That is a standing read at a signed instant, in the same entry that reads the owner at a head.
+  The model has one key for each owner and no self roster, so it checks neither reading of it.
+- **Only `B2` is waited on.** `B1` is held from the start, and a node's or the agent key's
+  revocation is read off the row alone and never waits.
+- **The agent key is one fixed key.** The text folds a revocation from "the agent key a grant
+  names". The model does not tie the agent key to a grant.
 - **Replication is a sender's discipline.** CC 3.3.7 makes `consent:replication` a governance record,
   not an admission check. A replication grant is no row here and names no head, and what a replaced
   binding does to it is not modelled. A peer re-sending onward is not modelled. Bytes a peer already
@@ -200,5 +298,8 @@ Every property has a planted break that `check.sh` runs and that violates it. `T
 - **Several subjects, several nodes, and more than three rows** are not modelled.
 - **The `consent_supersedes` member on a grant** is not modelled. The fold does not read it.
 
-Run: `bash formal/consent/check.sh` (with `TLA_JAR` naming `tla2tools.jar`). The two large closing
-runs peaked at 3.4 GB together with the rest; the whole file took 324 s. `--quick` leaves them out.
+Run: `bash formal/consent/check.sh` (with `TLA_JAR` naming `tla2tools.jar`). The whole file, 5
+closing runs, 4 runs of one reading against a sentence it does not give, 21 planted-break runs and
+30 witness runs, took 477 s and peaked at 3.5 GB with the default heap and four workers, and 448 s
+and 1.5 GB with `CONSENT_XMX=1200m CONSENT_WORKERS=2`. `--quick` leaves out the two large closing
+runs.

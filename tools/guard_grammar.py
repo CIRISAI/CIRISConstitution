@@ -39,7 +39,8 @@ or through others. The key of the judged row (`signer`, `subject`, ...) is read 
 the key of a named row (`R.signer`) at the head R names. No signed instant is read, so a row dated to suit moves
 nothing, and no row that arrives later changes the answer: the clause reads the rows this row names and its word
 is `void`. A row atom takes no `at head`: `@named` is that reading. A guard whose quoted sentence reads a standing
-"at the head" MUST NOT read it at an instant (head_sentence_at_instant below; tools/build_transitions.py refuses it).
+"at the head" MUST read it there: not at an instant, not at receipt and not over the rows the node holds, which is
+what a role atom with no `at` reads (head_sentence_at_instant below; tools/build_transitions.py refuses each).
 
 Three tokens name something no other vocabulary does and are counted wherever they are used: the state
 `landed` (admitted and its policy met), the operator `commits`, the key atom `signs`. So are a reference to
@@ -285,12 +286,15 @@ def placement(clauses):
 
 
 def head_sentence_at_instant(clauses, quote):
-    """The key atoms that read a standing at a signed instant under a quoted sentence that reads it at a head.
+    """The key atoms that read a standing anywhere but at the head, under a quoted sentence that reads it at a head.
     CC 2.4.1.1: an act counts at the head it names and no instant decides, so a signer cannot gain a standing by
-    choosing its row's instant. Returns the atoms' own words; empty where the guard reads the head."""
+    choosing its row's instant. CC 3.3.1 excludes by name the other reading too: "never the receiver's current
+    view", which is what a role atom with no `at`, or `at receipt`, reads (the rows the node holds). So under such a
+    sentence every role atom reads `at head`, and at least one atom reads the head (a role atom `at head`, or a row
+    atom in state `named`). Returns the offending atoms' own words; empty where the guard reads the head."""
     if not HEAD_SENTENCE.search(quote):
         return []
-    bad = []
+    bad, reads = [], []
     def walk(cs):
         for c in cs:
             for w in c["when"]:
@@ -298,9 +302,13 @@ def head_sentence_at_instant(clauses, quote):
             if "group" in c: walk(c["group"])
             else: one(c["atom"])
     def one(a):
-        if a["atom"] == "key" and a["fn"] not in ("type", "signs") and a["at"] in ("asserted_at", "its_asserted_at"):
-            bad.append(f"{a['fn']}({','.join(a['args'])}) at {a['at']}")
+        if a["atom"] == "row" and a["state"] == "named": reads.append(a)
+        if a["atom"] != "key" or a["fn"] in ("type", "signs") + CONDITIONS: return
+        if a["at"] == HEAD: reads.append(a)
+        else: bad.append(f"{a['fn']}({','.join(a['args'])}) " + (f"at {a['at']}" if a["at"] else "with no `at` (the rows the node holds)"))
     walk(clauses)
+    if not bad and not reads:
+        bad.append("no atom reads the head")
     return bad
 
 
@@ -367,8 +375,21 @@ def self_test():
         assert not head_sentence_at_instant(parse(old)[0], "a sentence that names no such thing"), "an instant was refused under a sentence that reads none"
     assert head_sentence_at_instant(parse("when(member(signer,object) at asserted_at) one x@admitted[id=id]")[0], "counted over the members at the head it names")
     assert parse(good[-1])[0][1]["atom"]["at"] == HEAD
+    # The other reading CC 3.3.1 excludes by name, "never the receiver's current view": the same cells with the
+    # `at head` dropped (the rows the node holds), read at receipt, or with the standing atom gone.
+    view = 0
+    for _, new, quote in head_cells:
+        for form in (new.replace(" at head", "", 1), new.replace(" at head", " at receipt", 1)):
+            assert form != new and head_sentence_at_instant(parse(form)[0], quote), f"the receiver's view under a head sentence was let through: {form}"
+            assert not head_sentence_at_instant(parse(form)[0], "a sentence that names no such thing")
+            view += 1
+    assert head_sentence_at_instant(parse("none")[0], head_cells[0][2]) == ["no atom reads the head"]
+    assert head_sentence_at_instant(parse("when(type(signer,node)) one x@admitted[id=id] else exclude")[0], head_cells[0][2])
+    assert not head_sentence_at_instant(parse("one x@named[id=ref:prev] else void")[0], "counted over the members at the head it names")
+    assert not head_sentence_at_instant(parse("when(adult(signer)) owner(subject,attested) at head else void")[0], head_cells[0][2])
     print(f"guard grammar: {len(good)} forms parse, {len(bad)} malformed forms refused; "
-          f"{len(head_cells)} cells that read an instant under a head sentence refused, their head form admitted")
+          f"{len(head_cells)} cells that read an instant under a head sentence refused, their head form admitted; "
+          f"{view} forms that read the receiver's view under a head sentence refused, and a guard with no atom at the head")
 
 
 if __name__ == "__main__":

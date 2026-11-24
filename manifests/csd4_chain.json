@@ -3,10 +3,10 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "901c02995f03912bb216b68e2c897f53f7f992095edfcd037f9edbf3771c9199",
-   "invariants_sha256": "47a0ad4f49a84c6e65b21a664d94fe4dde539cbac4ce3f43a2cefef653e9e95d",
+   "invariants_sha256": "8866580a7a33c1790a34cf7a9b2c9254a46d0938e751f47632d183716c80af57",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "32c7d13067966a9e87128258d3d7ce699c3da88eec1d0d0306dc9d1a3d290514",
+   "claims_sha256": "152afaa84cbdea6403de85db1a4b1e8517148dec1e1f3132379ec8b5a2cbd7b1",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -29,7 +29,7 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 269,
+   "invariants": 272,
    "claims": 610,
    "entries": 20,
    "refusal_tokens": 126
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "8af8597d95fe1028fbade01946d2e46f38250983159e42386a915f11ef330e71"
+  "chain_sha256": "147c881ab6901fff995e06ac112bd332a0098b5b5c55d08efe6dcb0aa2f75705"
  },
  "chain": [
   {
@@ -14333,6 +14333,15 @@
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
      "verdict": "closes; blind_send twin fails"
+    },
+    {
+     "inv_id": "CN.replstanding",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationGrantHasStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes; stranger_repl twin fails"
     }
    ],
    "claims": [
@@ -14511,6 +14520,15 @@
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
      "verdict": "closes; blind_send twin fails"
+    },
+    {
+     "inv_id": "CN.replstanding",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationGrantHasStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes; stranger_repl twin fails"
     }
    ],
    "claims": [
@@ -36353,7 +36371,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes; instant twin fails"
+     "verdict": "closes; instant and stranger_ok twins fail"
     },
     {
      "inv_id": "CN.backdate",
@@ -36371,7 +36389,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes; no_W twin fails"
+     "verdict": "closes; no_W twin fails; fails of a revocation that waited (Inv_LateRevocationWithinW_Waited)"
     },
     {
      "inv_id": "CN.scope",
@@ -36408,6 +36426,15 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes; forged_expiry twin fails"
+    },
+    {
+     "inv_id": "CN.tieid",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_TieOnSmallestId",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; tie_largest twin fails"
     }
    ],
    "claims": [
@@ -36649,6 +36676,7 @@
         "Inv_BackdatedGrantRefused",
         "Inv_InstantBuysNoStanding",
         "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -36729,7 +36757,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes; instant twin fails"
+     "verdict": "closes; instant and stranger_ok twins fail"
     },
     {
      "inv_id": "CN.backdate",
@@ -36747,7 +36775,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes; no_W twin fails"
+     "verdict": "closes; no_W twin fails; fails of a revocation that waited (Inv_LateRevocationWithinW_Waited)"
     },
     {
      "inv_id": "CN.scope",
@@ -36784,6 +36812,15 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes; forged_expiry twin fails"
+    },
+    {
+     "inv_id": "CN.tieid",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_TieOnSmallestId",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; tie_largest twin fails"
     }
    ],
    "claims": [
@@ -37025,6 +37062,7 @@
         "Inv_BackdatedGrantRefused",
         "Inv_InstantBuysNoStanding",
         "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37105,7 +37143,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes; instant twin fails"
+     "verdict": "closes; instant and stranger_ok twins fail"
     },
     {
      "inv_id": "CN.backdate",
@@ -37123,7 +37161,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes; no_W twin fails"
+     "verdict": "closes; no_W twin fails; fails of a revocation that waited (Inv_LateRevocationWithinW_Waited)"
     },
     {
      "inv_id": "CN.scope",
@@ -37160,6 +37198,15 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes; forged_expiry twin fails"
+    },
+    {
+     "inv_id": "CN.tieid",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_TieOnSmallestId",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; tie_largest twin fails"
     }
    ],
    "claims": [
@@ -37401,6 +37448,7 @@
         "Inv_BackdatedGrantRefused",
         "Inv_InstantBuysNoStanding",
         "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37700,6 +37748,7 @@
         "Inv_BackdatedGrantRefused",
         "Inv_InstantBuysNoStanding",
         "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37999,6 +38048,7 @@
         "Inv_BackdatedGrantRefused",
         "Inv_InstantBuysNoStanding",
         "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38298,6 +38348,7 @@
         "Inv_BackdatedGrantRefused",
         "Inv_InstantBuysNoStanding",
         "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38433,6 +38484,15 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes under InForce = ends; fails under InForce = counts; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.heldwait",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_HeldUntilBindingArrives",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; no_wait twin fails"
     }
    ],
    "claims": [
@@ -38658,6 +38718,7 @@
         "Inv_BackdatedGrantRefused",
         "Inv_InstantBuysNoStanding",
         "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38793,6 +38854,15 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes under InForce = ends; fails under InForce = counts; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.heldwait",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_HeldUntilBindingArrives",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; no_wait twin fails"
     }
    ],
    "claims": [
@@ -39018,6 +39088,7 @@
         "Inv_BackdatedGrantRefused",
         "Inv_InstantBuysNoStanding",
         "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -39081,6 +39152,15 @@
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
      "verdict": "closes; blind_send twin fails"
+    },
+    {
+     "inv_id": "CN.replstanding",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationGrantHasStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes; stranger_repl twin fails"
     }
    ],
    "claims": [
