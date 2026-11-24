@@ -71,7 +71,8 @@ Ver(b) == CASE b = G -> 1 [] b = A2 -> 2 [] b = B2 -> 2 [] b = A3 -> 3 [] OTHER 
 Chain(b) == CASE b = G -> {G} [] b = A2 -> {G, A2} [] b = B2 -> {G, B2}
               [] b = A3 -> {G, A2, A3} [] OTHER -> {}
 (* A bundle's own asserted_at. It is fixed by the version, so that a bound  *)
-(* of 0 unmakes every statement, 1 leaves the genesis, 2 leaves version 2.  *)
+(* of 0 or 1 unmakes every statement over version 2, and 2 leaves version   *)
+(* 2. No bound unmakes the first bundle (CC 2.6.1.11).                      *)
 HAt(b) == Ver(b) - 1
 Anchor == G                      \* the head held out of band (T5): the pinned genesis
 
@@ -123,8 +124,12 @@ KeyGood(h, at) ==
 (* h's statement over b counts, under the key b's predecessor seats for h. *)
 StmtOK(h, b, H) == h \in sig[b] /\ (RecBy(h, Prev(b), H) \/ KeyGood(h, HAt(b)))
 
+(* The first bundle counts once every holder it lists has made a valid
+   statement over it, and a bound on a holder's key never unmakes that count
+   (CC 2.6.1.11). The node holds g from the first state with every holder's
+   statement made under a key with no bound, so its count stands. *)
 Counted(b, H, X) ==
-    IF b = G THEN \A h \in Holders : KeyGood(h, HAt(G))        \* every holder it lists
+    IF b = G THEN Plant = "bound_unmakes_first" => \A h \in Holders : KeyGood(h, HAt(G))
     ELSE IF rec[b] # {} THEN TRUE                               \* one statement, the recovery key's
     ELSE 2 * (Cardinality({h \in Holders : StmtOK(h, b, H)})
               + (IF Plant = "seat_counts" /\ b \in X THEN 1 ELSE 0)) > Cardinality(Holders)
@@ -436,6 +441,15 @@ Inv_viii ==
     /\ Frozen(held, {}) = Frozen(Verified, {})
     /\ \A h \in Holders, t \in Instants :
           (cur # NoHead /\ ~RecBy(h, cur, held) /\ krev[h] <= t) => h \notin LiveHolders(cur, t)
+
+(* CC 2.6.1.11: "A bound on a holder's key never unmakes the first bundle:
+   its count stands once every holder it lists has made a valid statement
+   over it." Whatever bounds are held, a node with a live edge stands on a
+   bundle of the lineage and is Rooted or Stalled at every instant: a
+   holder's key revoked with no bound moves Rooted to Stalled (T8) and never
+   to NotRooted. The state it excludes is a live edge and no bundle in force. *)
+Inv_FirstBundleStands ==
+    (edge = "present" /\ edgeAt < orev) => (cur # NoHead /\ \A t \in Instants : VAt(t) # NotRooted)
 
 (* T7: "It is no leg of any root's standing, and T8 never reads it." V is the
    same whatever the founder margin of an infrastructure room is. *)

@@ -15,7 +15,7 @@ separate head object and nothing cosigns one.
 | The lineage's heads | `held`: the genesis `g` (version 1), `a2` (version 2, on `g`), with `Fork` a second bundle `b2` at version 2 on `g`, and with `Deep` a third version `a3` on `a2`. A later bundle is an amend carrying the statements of a strict majority of the holders (`sig`), or one holder's recovery (`rec`). A bundle's own instant is its version less one |
 | The Receipts held for each | `rN`: how many distinct services' Receipts for a bundle count, up to the quorum; `rAt`: the issue instant of the newest. Of `NServices` services, all but `Faulty` register one bundle for each version, so two bundles at one version both reach the quorum only through a faulty service |
 | The bundle in force: `holders`, `charter` | `Holders`, the same in every bundle; `Named`: the genesis charter names the services, or names none. The fork bundle `b2` always names services of its own, and those have always issued their Receipts for it. `cur` is the bundle in force for this node |
-| `revoked_after` bounds | `krev`: of each holder's genesis key; `orev`: of the key that signed the acceptance edge. Bounds only lower. With `Uncountable`, a service's key is revoked below a Receipt it issued and that Receipt falls out of the count (`Uncount`) |
+| `revoked_after` bounds | `krev`: of each holder's genesis key; `orev`: of the key that signed the acceptance edge. Bounds only lower. A bound on a holder's key takes the holder out of the live holders and voids its statements over a later bundle; it never unmakes the first bundle. With `Uncountable`, a service's key is revoked below a Receipt it issued and that Receipt falls out of the count (`Uncount`) |
 | The acceptance edge and the head it names | `edge`: none, present, withdrawn, recanted or tombstoned; `edgeHead`; `edgeAt`, the edge's own signed instant, within `Skew` of the clock at admission |
 | *t* | every instant: `VAt(t)` is checked for all `t` in `0..MaxT`. `clock` is the evaluating clock, which `VAt` never reads |
 | Each seat's `identity_type`, the halt latch, an `infrastructure` room's founder margin | arguments of the verdict, not state: an invariant quantifies over every value of each (i, v, T7) |
@@ -33,7 +33,8 @@ is held. Where no services are named the edge names the anchored head, the genes
 After the edge is written the node follows the lineage. It adopts a later bundle that is counted and,
 where the predecessor names services, receipted. It adopts none on a frozen lineage. It falls back to
 the nearest ancestor that still verifies when a lowered `revoked_after` unmakes the count of the
-bundle it stands on.
+bundle it stands on. The first bundle always verifies: the node holds it with every holder's statement
+made, and no bound unmakes its count (CC 2.6.1.11).
 
 **What it checks.** Four configurations close on every row below: `TrustRootVerdict.cfg` (services
 named, two versions with the fork and one faulty service), `TrustRootVerdict_revoked.cfg` (a Receipt
@@ -50,6 +51,7 @@ may fall out of the count), `TrustRootVerdict_deep.cfg` (a third version) and
 | `Inv_vi`, `Prop_vi` | (vi) "Deleting the acceptance edge is sufficient for `NotRooted` from any state, and from `NotRooted` *for want of an edge* nothing but a new edge naming a head re-enters `Rooted`." The deletion is enabled in every state with an edge |
 | `Inv_vii` | (vii) "V(rows, *t*) is independent of the order in which the rows arrived — the fold commutes." The head the node reached row by row equals a fold over the rows it holds, outside the two corners of Readings 1 and 2 |
 | `Inv_viii` | (viii) "A `revoked_after` lowered below a receipted head's `asserted_at` is applied at read time, fail-closed … V(rows ∪ {*v*}, *t*) equals V over the rows with *h* and every head descending from *h* removed, for all *t*. The lineage's current head is the latest receipted head that still verifies, and the signer leaves the live holders from the bound onward." |
+| `Inv_FirstBundleStands` | CC 2.6.1.11: "A bound on a holder's key never unmakes the first bundle: its count stands once every holder it lists has made a valid statement over it." Whatever bounds are held, a node with a live edge stands on a bundle of the lineage and is `Rooted` or `Stalled` at every *t*, never `NotRooted` |
 | `Inv_T7` | T7, *Scope*: "It is no leg of any root's standing, and T8 never reads it." V is the same whatever the founder margin of an `infrastructure` room is |
 | `Inv_T4`, `Prop_T4` | T8, `NotRooted`: "Each attach-time clause is never a leg of V for a node already attached (T4)." A step that changes only the clock and the Receipts never moves `Rooted` or `Stalled` to `NotRooted` |
 | `Inv_Stalled` | T8, `Stalled`: "every leg of `Rooted` holds except the holders' margin: fewer of the bundle's holders are live than a strict majority." |
@@ -74,6 +76,7 @@ one and must fail the property beside it; `run.sh` refuses any other outcome.
 | `end_by_instant` | the end of the edge is read by its instant, so V stays `Rooted` at instants before it | `Inv_EndNoInstant` |
 | `first_seen_wins` | with no services named, of two counted bundles on one predecessor the first seen is adopted | `Inv_vii` |
 | `unmade_head_stays` | a head whose count a lowered `revoked_after` unmade stays the bundle in force | `Inv_viii` |
+| `bound_unmakes_first` | a bound on a holder's key unmakes the first bundle, so one holder's key revoked with no bound leaves no bundle of the lineage verifying and the node `NotRooted` | `Inv_FirstBundleStands` |
 | `founder_margin` | `Stalled` is fed by the founder margin of an `infrastructure` room | `Inv_T7` |
 | `own_charter` | a head's Receipts are verified against the services its own charter names | `Prop_PredecessorSet` |
 | `fork_freezes` | a fork attempt, a counted head that is not receipted, freezes the lineage | `Inv_ForkNeverFreezes` |
@@ -82,8 +85,8 @@ one and must fail the property beside it; `run.sh` refuses any other outcome.
 
 **The witnesses.** `TrustRootWitness.tla` states the negation of each corner the invariants speak
 of, and `run.sh` requires TLC to reach every one: `Rooted`, `Stalled`, `Stalled` at the edge's
-own instant, `Rooted` again by a recovery, a later head adopted, a fall back to an ancestor, a lineage
-with no verifying bundle, an edge whose signer is revoked, an attached node on a frozen lineage, a
+own instant, `Rooted` again by a recovery, a later head adopted, a fall back to an ancestor, an edge
+whose signer is revoked, an attached node on a frozen lineage, a
 fork attempt beside a receipted head, an attached node still `Rooted` on stale Receipts and on a head
 that lost its quorum, tips that wait where no services are named, Receipts held and not counted, and
 the third version in force.
@@ -112,13 +115,14 @@ hold. The model takes the reading named first. The text is unchanged.
 3. **(viii), which heads are removed.** (viii): "V(rows ∪ {*v*}, *t*) equals V over the rows with
    *h* and every head descending from *h* removed." CC 2.6.1.11: "a statement whose `iat` disagrees
    is Invalid on its own, and the bundle is counted on the statements that remain." The model
-   removes *h* only where its count fails on the statements that remain. A consequence follows for
-   the first bundle, which "counts when every holder it lists has a valid statement over it". One
-   holder's key revoked with no bound ("Absent member = revoke-all", CC 2.4.1.1) unmakes the genesis
-   and every head after it, and every node on the lineage is `NotRooted`. T8's transition for the
-   same row is "a key revocation or `revoked_after` crossing that leaves fewer live holders than a
-   strict majority (`Rooted → Stalled`)". No recovery bundle restores a lineage whose genesis is
-   unmade. The witness `Wit_LineageUnmade` is this state.
+   removes *h* only where its count fails on the statements that remain. *h* is a later bundle:
+   "(viii) reads every later bundle: a bound on a holder's key never unmakes the first bundle". One
+   holder's key revoked with no bound ("Absent member = revoke-all", CC 2.4.1.1) takes that holder
+   out of the live holders, and T8's transition for the row is "a key revocation or `revoked_after`
+   crossing that leaves fewer live holders than a strict majority (`Rooted → Stalled`)". A recovery
+   bundle restores the majority. The reading in which the bound unmakes the first bundle is the
+   planted fault `bound_unmakes_first`: under it no bundle of the lineage verifies, every node on
+   the lineage is `NotRooted`, and no recovery bundle restores it.
 4. **The edge's signer.** T8, `NotRooted`: "the edge's signer past its effective `revoked_after`".
    CC 2.4.1.1: "a claim signed by K is valid iff its `asserted_at` precedes `K.revoked_after`". The
    model reads the second: the edge counts iff its own instant precedes the bound, at every *t*. The
@@ -174,7 +178,7 @@ hold. The model takes the reading named first. The text is unchanged.
 TLA2TOOLS=/path/to/tla2tools.jar ./run.sh
 ```
 
-It runs the four closing configurations, the fourteen planted faults, the two runs of the rejected
+It runs the four closing configurations, the fifteen planted faults, the two runs of the rejected
 reading and the witnesses, and exits 1 on any outcome but the expected one. The CI job
 (`.github/workflows/formal.yml`) runs the same script. On the shared build machine run it through
 the scheduler: `grace-sched run --owner CIRISConstitution -- env TLA2TOOLS=… ./run.sh`.
@@ -185,14 +189,14 @@ TLC 2.19, eight workers, an 800 MB heap, through the scheduler on a loaded machi
 
 | Configuration | Distinct states | Depth | Time | Result |
 |---|---|---|---|---|
-| `TrustRootVerdict.cfg` | 471,462 | 16 | 14 min (4 min 10 s on a quieter run) | closes, no violation |
-| `TrustRootVerdict_revoked.cfg` | 63,591 | 14 | 57 s | closes, no violation |
-| `TrustRootVerdict_anchored.cfg` | 138,207 | 12 | 6 min 17 s | closes, no violation |
-| `TrustRootVerdict_deep.cfg` | 257,919 | 16 | 4 min 33 s | closes, no violation |
+| `TrustRootVerdict.cfg` | 479,605 | 16 | 2 min 54 s | closes, no violation |
+| `TrustRootVerdict_revoked.cfg` | 65,228 | 14 | 12 s | closes, no violation |
+| `TrustRootVerdict_anchored.cfg` | 138,207 | 12 | 2 min 18 s | closes, no violation |
+| `TrustRootVerdict_deep.cfg` | 265,681 | 15 | 2 min 18 s | closes, no violation |
 
-931,179 distinct states in all. Each of the fourteen planted faults is caught by the property named
+948,721 distinct states in all. Each of the fifteen planted faults is caught by the property named
 beside it, within 15,000 states and four seconds. Both runs of the rejected reading fail
-`Inv_vii_Unconditional`, at 66,932 and 9,790 states, on the traces Readings 1 and 2 describe. Every
+`Inv_vii_Unconditional`, at 92,901 and 10,664 states, on the traces Readings 1 and 2 describe. Every
 witness is reached. No run found a state the text's rules do not cover; what the runs did find is
 in *Readings*. Keep TLC's state files out of the tree: `run.sh` writes them to a temporary
 directory and removes it.

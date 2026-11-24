@@ -95,7 +95,7 @@ def gen(entry_path):
                    f"    Holders = {tla_set([f'h{i}' for i in range(1, seated + 1)])}\n    NServices = {wn or 2}\n"
                    f"    Named = {'TRUE' if wn else 'FALSE'}\n    Faulty = 0\n    Uncountable = FALSE\n    Fork = TRUE\n    Deep = {'FALSE' if wn else 'TRUE'}\n"
                    f"    MaxT = 2\n    AttachWindow = {attach}\n    Skew = 1\n    MaxRevs = 2\n    Plant = \"none\"\n"
-                   "INVARIANTS\n    TypeOK\n    Inv_i\n    Inv_ii\n    Inv_iii\n    Inv_v\n    Inv_vi\n    Inv_vii\n    Inv_viii\n    Inv_T7\n    Inv_T4\n"
+                   "INVARIANTS\n    TypeOK\n    Inv_i\n    Inv_ii\n    Inv_iii\n    Inv_v\n    Inv_vi\n    Inv_vii\n    Inv_viii\n    Inv_FirstBundleStands\n    Inv_T7\n    Inv_T4\n"
                    "    Inv_Stalled\n    Inv_RecoverEnabled\n    Inv_EndNoInstant\n    Inv_PredecessorSet\n    Inv_ForkNeverFreezes\n"
                    "    Inv_FreezeAdoptionOnly\n    Inv_NoServicesNoReceipt\n"
                    "PROPERTIES\n    Prop_ii\n    Prop_iv\n    Prop_vi\n    Prop_T4\n    Prop_PredecessorSet\n    Prop_FreezeAdoptionOnly\n")

@@ -61,6 +61,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - An acceptance edge has one of three subjects (4.4.3.34, 3.2 T4a): a lineage where it attaches a root, and it alone carries `attached_head_digest`; a Transparency Service's key or identity, with `service_key`; or, on the admission walk and to a licensor, an author, a group or an authority. No edge to a community attaches a root.
 - A member of a room MAY relay a call's sealed chunks between two room-mates who cannot link directly, in a room of any size, and a member device relays and is relayed for whether or not its owner announced it (5.3.3.2).
 - The first owner-binding of a node is written at the scope its owner first places the node at, `self` or `federation` (3.2). A person's own occurrences are placed wherever a binding of any node that person owns is placed (5.4.6).
+- A bound on a holder's key never unmakes the first bundle of a lineage (2.6.1.11, 3.2 T8): a holder's key revoked with no bound takes that holder out of the live holders, so the lineage stalls and a recovery restores it. Every later bundle is read by the bound. The cost is stated: a first bundle made with a holder key already compromised at the ceremony is not unmade by that holder's later bound. The standing-verdict model carries the rule as a property and the other reading as a planted fault.
 
 ## 1.0-rc21 (released 2026-11-19, tag v1.0-rc21)
 
