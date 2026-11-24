@@ -17,7 +17,14 @@
    formal/accord_halt; TwoPath_halt_mirror.cfg shows the mirror as this module's parameters.
 
    Votes are cast by voters; an adversary holds Coerced voters who approve what the adversary
-   proposes and object to what it does not. Time is per proposal (age), no clock. *)
+   proposes and object to what it does not. Time is per proposal (age), no clock.
+
+   This module is the COUNT, read by one reader with an abstract age: which thresholds land or
+   cancel a change once its window is over. It says nothing of how a window comes to be over, or
+   of two readers. Where a door closes its window by signed rows and never by a node's own clock
+   (the self roster's lone path, CC 3.3.6.4), the closing is TwoPathRows.tla in this directory:
+   the outcome as a function of the rows a node counts, at two nodes, in every arrival order.
+   TwoPath_3_selfroster.cfg checks the self roster's counts only. *)
 EXTENDS Naturals, FiniteSets
 
 CONSTANTS Voters,        \* the standing set, |Voters| = N

@@ -3,430 +3,438 @@
  "kind": "land",
  "checked": "Inv_NotRecovered",
  "tlc": "Invariant Inv_NotRecovered is violated",
- "reading": "every Execute in this trace lands under the combined two-path policy; the final state is Recovered",
+ "reading": "every Settle in this trace reads landed under the rule of CC 3.3.6.4 (a met count, or a lone landing that stands); the final state is Recovered",
  "lasso_back_to_state": null,
  "states": [
   {
    "n": 1,
    "tlc_action": "Initial predicate",
+   "member": [
+    "d1",
+    "d2",
+    "d3"
+   ],
+   "gone": [],
+   "stolen": 0,
    "holder": {
     "d1": "owner",
     "d2": "owner",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [],
-   "member": [
-    "d1",
-    "d2",
-    "d3"
-   ],
-   "acted": [],
-   "lostN": 0,
    "wrong": false,
+   "lostN": 0,
+   "props": [],
    "started": false,
-   "stolen": 0,
    "step": "init"
   },
   {
    "n": 2,
    "tlc_action": "Lose",
+   "member": [
+    "d1",
+    "d2",
+    "d3"
+   ],
+   "gone": [],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "owner",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [],
-   "member": [
-    "d1",
-    "d2",
-    "d3"
-   ],
-   "acted": [],
-   "lostN": 1,
    "wrong": false,
+   "lostN": 1,
+   "props": [],
    "started": false,
-   "stolen": 0,
    "step": "Lose(d1)"
   },
   {
    "n": 3,
    "tlc_action": "Lose",
+   "member": [
+    "d1",
+    "d2",
+    "d3"
+   ],
+   "gone": [],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [],
-   "member": [
-    "d1",
-    "d2",
-    "d3"
-   ],
-   "acted": [],
-   "lostN": 2,
    "wrong": false,
+   "lostN": 2,
+   "props": [],
    "started": false,
-   "stolen": 0,
    "step": "Lose(d2)"
   },
   {
    "n": 4,
    "tlc_action": "Honest",
+   "member": [
+    "d1",
+    "d2",
+    "d3"
+   ],
+   "gone": [],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [
+   "wrong": false,
+   "lostN": 2,
+   "props": [
     {
-     "kind": "evict",
-     "target": "d1",
+     "base": [
+      "d1",
+      "d2",
+      "d3"
+     ],
      "by": "d3",
-     "approvers": [],
-     "age": 0,
-     "objectors": [],
-     "spoke": false
+     "ans": {
+      "d1": "none",
+      "d2": "none"
+     },
+     "held": "none",
+     "heldLate": false,
+     "land": "none",
+     "landLate": false,
+     "kind": "evict",
+     "spoke": "no",
+     "wd": false,
+     "target": "d1"
     }
    ],
-   "member": [
-    "d1",
-    "d2",
-    "d3"
-   ],
-   "acted": [
-    "d3"
-   ],
-   "lostN": 2,
-   "wrong": false,
    "started": true,
-   "stolen": 0,
    "step": "Propose(evict, by=d3, target=d1)"
   },
   {
    "n": 5,
-   "tlc_action": "Tick",
+   "tlc_action": "Honest",
+   "member": [
+    "d1",
+    "d2",
+    "d3"
+   ],
+   "gone": [],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [
+   "wrong": false,
+   "lostN": 2,
+   "props": [
     {
-     "kind": "evict",
-     "target": "d1",
+     "base": [
+      "d1",
+      "d2",
+      "d3"
+     ],
      "by": "d3",
-     "approvers": [],
-     "age": 1,
-     "objectors": [],
-     "spoke": false
+     "ans": {
+      "d1": "none",
+      "d2": "none"
+     },
+     "held": "ok",
+     "heldLate": false,
+     "land": "none",
+     "landLate": false,
+     "kind": "evict",
+     "spoke": "no",
+     "wd": false,
+     "target": "d1"
     }
    ],
-   "member": [
-    "d1",
-    "d2",
-    "d3"
-   ],
-   "acted": [],
-   "lostN": 2,
-   "wrong": false,
    "started": true,
-   "stolen": 0,
-   "step": "Tick"
+   "step": "Hold(evict d1 by d3: ok)"
   },
   {
    "n": 6,
-   "tlc_action": "React",
+   "tlc_action": "Honest",
+   "member": [
+    "d1",
+    "d2",
+    "d3"
+   ],
+   "gone": [],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [
+   "wrong": false,
+   "lostN": 2,
+   "props": [
     {
-     "kind": "evict",
-     "target": "d1",
+     "base": [
+      "d1",
+      "d2",
+      "d3"
+     ],
      "by": "d3",
-     "approvers": [],
-     "age": 1,
-     "objectors": [],
-     "spoke": false
+     "ans": {
+      "d1": "none",
+      "d2": "none"
+     },
+     "held": "ok",
+     "heldLate": false,
+     "land": "concl",
+     "landLate": false,
+     "kind": "evict",
+     "spoke": "no",
+     "wd": false,
+     "target": "d1"
     }
    ],
-   "member": [
-    "d1",
-    "d2",
-    "d3"
-   ],
-   "acted": [
-    "d3"
-   ],
-   "lostN": 2,
-   "wrong": false,
    "started": true,
-   "stolen": 0,
-   "step": "React(d3)"
+   "step": "Land(evict d1 by d3: concl)"
   },
   {
    "n": 7,
-   "tlc_action": "Tick",
+   "tlc_action": "Honest",
+   "member": [
+    "d2",
+    "d3"
+   ],
+   "gone": [
+    "d1"
+   ],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [
-    {
-     "kind": "evict",
-     "target": "d1",
-     "by": "d3",
-     "approvers": [],
-     "age": 2,
-     "objectors": [],
-     "spoke": false
-    }
-   ],
-   "member": [
-    "d1",
-    "d2",
-    "d3"
-   ],
-   "acted": [],
-   "lostN": 2,
    "wrong": false,
+   "lostN": 2,
+   "props": [],
    "started": true,
-   "stolen": 0,
-   "step": "Tick"
+   "step": "Settle(evict d1 by d3: landed)"
   },
   {
    "n": 8,
    "tlc_action": "Honest",
+   "member": [
+    "d2",
+    "d3"
+   ],
+   "gone": [
+    "d1"
+   ],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [],
-   "member": [
-    "d2",
-    "d3"
-   ],
-   "acted": [],
-   "lostN": 2,
    "wrong": false,
+   "lostN": 2,
+   "props": [
+    {
+     "base": [
+      "d2",
+      "d3"
+     ],
+     "by": "d3",
+     "ans": {
+      "d2": "none"
+     },
+     "held": "none",
+     "heldLate": false,
+     "land": "none",
+     "landLate": false,
+     "kind": "evict",
+     "spoke": "no",
+     "wd": false,
+     "target": "d2"
+    }
+   ],
    "started": true,
-   "stolen": 0,
-   "step": "Execute(evict d1)"
+   "step": "Propose(evict, by=d3, target=d2)"
   },
   {
    "n": 9,
    "tlc_action": "Honest",
+   "member": [
+    "d2",
+    "d3"
+   ],
+   "gone": [
+    "d1"
+   ],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [
+   "wrong": false,
+   "lostN": 2,
+   "props": [
     {
-     "kind": "evict",
-     "target": "d2",
+     "base": [
+      "d2",
+      "d3"
+     ],
      "by": "d3",
-     "approvers": [],
-     "age": 0,
-     "objectors": [],
-     "spoke": false
+     "ans": {
+      "d2": "none"
+     },
+     "held": "ok",
+     "heldLate": false,
+     "land": "none",
+     "landLate": false,
+     "kind": "evict",
+     "spoke": "no",
+     "wd": false,
+     "target": "d2"
     }
    ],
-   "member": [
-    "d2",
-    "d3"
-   ],
-   "acted": [
-    "d3"
-   ],
-   "lostN": 2,
-   "wrong": false,
    "started": true,
-   "stolen": 0,
-   "step": "Propose(evict, by=d3, target=d2)"
+   "step": "Hold(evict d2 by d3: ok)"
   },
   {
    "n": 10,
-   "tlc_action": "Tick",
+   "tlc_action": "Honest",
+   "member": [
+    "d2",
+    "d3"
+   ],
+   "gone": [
+    "d1"
+   ],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [
+   "wrong": false,
+   "lostN": 2,
+   "props": [
     {
-     "kind": "evict",
-     "target": "d2",
+     "base": [
+      "d2",
+      "d3"
+     ],
      "by": "d3",
-     "approvers": [],
-     "age": 1,
-     "objectors": [],
-     "spoke": false
+     "ans": {
+      "d2": "none"
+     },
+     "held": "ok",
+     "heldLate": false,
+     "land": "concl",
+     "landLate": false,
+     "kind": "evict",
+     "spoke": "no",
+     "wd": false,
+     "target": "d2"
     }
    ],
-   "member": [
-    "d2",
-    "d3"
-   ],
-   "acted": [],
-   "lostN": 2,
-   "wrong": false,
    "started": true,
-   "stolen": 0,
-   "step": "Tick"
+   "step": "Land(evict d2 by d3: concl)"
   },
   {
    "n": 11,
-   "tlc_action": "React",
+   "tlc_action": "Honest",
+   "member": [
+    "d3"
+   ],
+   "gone": [
+    "d1",
+    "d2"
+   ],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [
-    {
-     "kind": "evict",
-     "target": "d2",
-     "by": "d3",
-     "approvers": [],
-     "age": 1,
-     "objectors": [],
-     "spoke": false
-    }
-   ],
-   "member": [
-    "d2",
-    "d3"
-   ],
-   "acted": [
-    "d3"
-   ],
-   "lostN": 2,
    "wrong": false,
+   "lostN": 2,
+   "props": [],
    "started": true,
-   "stolen": 0,
-   "step": "React(d3)"
+   "step": "Settle(evict d2 by d3: landed)"
   },
   {
    "n": 12,
-   "tlc_action": "Tick",
+   "tlc_action": "Honest",
+   "member": [
+    "d3"
+   ],
+   "gone": [
+    "d1",
+    "d2"
+   ],
+   "stolen": 0,
    "holder": {
     "d1": "lost",
     "d2": "lost",
     "d3": "owner",
     "d4": "owner"
    },
-   "pending": [
+   "wrong": false,
+   "lostN": 2,
+   "props": [
     {
-     "kind": "evict",
-     "target": "d2",
+     "base": [
+      "d3"
+     ],
      "by": "d3",
-     "approvers": [],
-     "age": 2,
-     "objectors": [],
-     "spoke": false
+     "ans": {},
+     "held": "none",
+     "heldLate": false,
+     "land": "none",
+     "landLate": false,
+     "kind": "add",
+     "spoke": "no",
+     "wd": false,
+     "target": "d4"
     }
    ],
-   "member": [
-    "d2",
-    "d3"
-   ],
-   "acted": [],
-   "lostN": 2,
-   "wrong": false,
    "started": true,
-   "stolen": 0,
-   "step": "Tick"
+   "step": "Propose(add, by=d3, target=d4)"
   },
   {
    "n": 13,
    "tlc_action": "Honest",
-   "holder": {
-    "d1": "lost",
-    "d2": "lost",
-    "d3": "owner",
-    "d4": "owner"
-   },
-   "pending": [],
    "member": [
-    "d3"
+    "d3",
+    "d4"
    ],
-   "acted": [],
-   "lostN": 2,
-   "wrong": false,
-   "started": true,
-   "stolen": 0,
-   "step": "Execute(evict d2)"
-  },
-  {
-   "n": 14,
-   "tlc_action": "Honest",
-   "holder": {
-    "d1": "lost",
-    "d2": "lost",
-    "d3": "owner",
-    "d4": "owner"
-   },
-   "pending": [
-    {
-     "kind": "add",
-     "target": "d1",
-     "by": "d3",
-     "approvers": [],
-     "age": 0,
-     "objectors": [],
-     "spoke": false
-    }
-   ],
-   "member": [
-    "d3"
-   ],
-   "acted": [
-    "d3"
-   ],
-   "lostN": 2,
-   "wrong": false,
-   "started": true,
-   "stolen": 0,
-   "step": "Propose(add, by=d3, target=d1)"
-  },
-  {
-   "n": 15,
-   "tlc_action": "Honest",
-   "holder": {
-    "d1": "owner",
-    "d2": "lost",
-    "d3": "owner",
-    "d4": "owner"
-   },
-   "pending": [],
-   "member": [
+   "gone": [
     "d1",
-    "d3"
+    "d2"
    ],
-   "acted": [
-    "d3"
-   ],
-   "lostN": 2,
-   "wrong": false,
-   "started": true,
    "stolen": 0,
-   "step": "Execute(add d1)"
+   "holder": {
+    "d1": "lost",
+    "d2": "lost",
+    "d3": "owner",
+    "d4": "owner"
+   },
+   "wrong": false,
+   "lostN": 2,
+   "props": [],
+   "started": true,
+   "step": "Settle(add d4 by d3: landed)"
   }
  ]
 }

@@ -245,6 +245,8 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      # The lone path is read from signed rows (CC 3.3.6.4); the module has no clock. formal/self_roster/run.sh runs
+      # every configuration, planted break and witness; the steps below are the subset this job has always run.
       - name: The normative configurations close; each must-fail twin fails its named property
         working-directory: formal/self_roster
         run: |
@@ -400,6 +402,8 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      # TwoPath.tla is the count at one reader. The lone path as a window of rows at two nodes is TwoPathRows.tla,
+      # run by formal/two_path/run_rows.sh (not yet a step of this job).
       - name: Seven instances close, and every row of the governance policy table as an instance
         working-directory: formal/two_path
         run: |

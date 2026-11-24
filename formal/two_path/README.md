@@ -93,7 +93,7 @@ key is the same person's; it is checked against its own corridor without the flo
 
 | Config | Instance | Verdict |
 |---|---|---|
-| `TwoPath_3_selfroster` | 3 voters, strict majority both ways, 1 coerced — CC 3.3.6.4 | closes, 47 states |
+| `TwoPath_3_selfroster` | 3 voters, strict majority both ways, 1 coerced — the counts of CC 3.3.6.4 at one reader; how its lone path closes is `TwoPathRows.tla` below | closes, 47 states |
 | `TwoPath_6_enact23_cancel13_1coerced` | enact 2/3, cancel 1/3, 1 of 6 coerced (below cancel) | closes, 431 |
 | `TwoPath_6_enact23_cancel13_2coerced` | 2 of 6 coerced = exactly 1/3: can cancel, cannot enact | closes, 702 (the bound, shown) |
 | `TwoPath_6_irreversible` | the same policy with no instant landing | closes, 431 |
@@ -106,8 +106,88 @@ The first five instances carry floor 1/3 and close.
 
 The halt is the mirror instance — fire at one, lapse at the fuse unless a majority confirms, a
 majority resumes — and is checked in `formal/accord_halt`; the self roster's full policy with
-per-door conditions (silent target, one open proposal per proposer, void votes of evicted keys) is
-`formal/self_roster`. This module is the common core both refine.
+per-door conditions (silent target, one open proposal per proposer, the rows of a key whose seat
+ended) is `formal/self_roster`. This module is the common core both refine.
+
+`TwoPath.tla` is the count, read by one reader with an abstract age. It says which thresholds land
+or cancel a change once its window is over. It does not say how a window comes to be over, and it
+has one reader, so it cannot show two nodes disagreeing.
+
+## `TwoPathRows.tla` — the lone path as a window of rows
+
+The self roster's lone path closes by signed rows and never by a node's own clock (CC 3.3.6.4,
+"The lone path is a window of rows"; CC 2.7, the window). This module writes one proposal's rows
+out with their pasts and hands them to two nodes in every order. A node counts a row once it
+counts every row of that row's past; until then the row waits. The node's reading is the outcome
+of the rule over the rows it counts.
+
+**The rule, as the module states it.** The table over a set of rows: a strict majority of the
+roster approving, the proposer counted, is `landed`; else the proposer's withdrawal is `refused`;
+else a strict majority of the others objecting is `refused`; else, with a full span, an eviction
+whose target signed inside the window is `refused` and anything else is `landed`. An approval
+with the withdrawal in its past approves nothing. An addition has the same table without the
+target's silence. A landing **concludes** where its held row is its own signer's, has no row of
+the target beyond the proposal's past in its past, and the table over the landing's own past gives
+what it states. It **stands** where the table over every row that does not name it still does. The
+outcome is what the standing landings on the frontier state (`contested` where two differ); with
+none standing, the met count's or the withdrawal's outcome with no landing row; else `open` where
+no landing concluded and `contested` otherwise.
+
+**Bound.** A roster of three keys, K1 the proposer. Five scenarios, each a fixed set of at most ten
+rows that may ever be signed, with fixed pasts; two nodes; every order of arrival, a row before
+its past included. The span of a window is a boolean each landing states (no instant of one signer
+is compared with another's). Not here: two proposals at once, a seat ended by another proposal,
+the roster head a proposal names, a signer who answers both ways.
+
+| Config | Scenario | Verdict |
+|---|---|---|
+| `TwoPathRows_evict` | an eviction: the target's row unnamed and named, an objection, the withdrawal, a lone landing, a second landing naming both | closes, 262,144 states |
+| `TwoPathRows_count` | the counts: an approval, an approval with the withdrawal in its past, an objection, a landing with a short span, `landed` stated over the withdrawal | closes, 262,144 |
+| `TwoPathRows_held` | a held row with the target's row in its past and a landing on it; a landing that states what the table does not | closes, 65,536 |
+| `TwoPathRows_add` | an addition: two objections, a lone landing, a landing that counted one objection, `landed` stated over both | closes, 1,048,576 |
+| `TwoPathRows_reopen` | the target's row that names the landing, and a second landing that counts it | closes, 4,096 |
+
+| Property | Statement |
+|---|---|
+| `Inv_SameRowsSameOutcome` | two nodes that hold the same rows count the same rows and read the same outcome, in whatever order the rows arrived |
+| `Inv_C1Unreachable` | no two nodes hold every row and read one `landed`, the other `refused` (`formal/derivation/order/witnesses.tsv` row C1) |
+| `Inv_CountedIsClosure` | what a node counts, kept as rows arrive, is the rows it holds whose pasts it holds |
+| `Inv_MetCountDecides` | a met count gives its outcome with no landing row, and a met approval beats the withdrawal |
+| `Inv_WithdrawalRefuses` | a counted withdrawal, with no approval made without it, is `refused` |
+| `Inv_TargetRowStopsLoneEviction` | no eviction is read as landed, short of the count, while the node counts a row of the target that names no landing |
+| `Inv_KnownEvict`, `Inv_KnownCount`, `Inv_KnownHeld`, `Inv_KnownAdd` | 32 known answers worked from the text by hand, each read at any node that counts exactly the rows named |
+
+**What the first three say and do not say.** Under the rule a node's reading takes the rows it
+counts and nothing else of the node, so equal rows give equal readings by the form of the
+definition. What the run adds is that the counting kept as rows arrive, with rows that wait for
+their pasts, comes to the same set in every order, and that no reading takes a clock.
+
+**Planted readings**, each caught by the property beside it:
+
+| Plant | The reading | Caught by |
+|---|---|---|
+| `plant_node_clock` | each node closes the window on its own clock and keeps what it then read (the rule this module replaces). Reaches row C1: both nodes hold every row, one reads `refused`, the other `landed`, and nothing more can arrive | `Inv_C1Unreachable` |
+| `plant_no_cascade` | a row that arrives before its past is dropped | `Inv_SameRowsSameOutcome` |
+| `plant_no_held_rule` | a held row may have the target's later rows in its past | `Inv_TargetRowStopsLoneEviction` |
+| `plant_landing_unchecked` | a landing concludes on its word | `Inv_KnownHeld` |
+| `plant_landing_needed` | a met count gives no outcome until a landing states it | `Inv_MetCountDecides` |
+| `plant_withdrawal_first` | the withdrawal is read before the majority's approval | `Inv_MetCountDecides` |
+| `plant_wd_approval_counts` | an approval with the withdrawal in its past still approves | `Inv_WithdrawalRefuses` |
+
+**Witnesses**, each reached: the four outcomes (`Wit_Open`, `Wit_Contested`, `Wit_Landed`,
+`Wit_Refused`); a row waiting for its past (`Wit_Waiting`); a lone landing that is not final
+(`Wit_LoneLandingNotFinal`: one node reads `landed`, and another that holds those rows and one more
+reads `contested`); an addition landed with one objection counted (`Wit_AddOneObjection`); two
+nodes that hold different rows and differ (`Wit_DifferWhileRowsDiffer`).
+
+**A question the runs show, for the text** (`Wit_NamedRowReopens`). The target signs a row that
+names the landing. By itself that row changes nothing: the eviction still reads `landed`. A second
+landing by another seated key that counts that row then reads `refused`, because the row is in its
+past and not in its held row's past. The text says both things; whether a row that came after the
+landing may be counted by a second landing is not settled here, and the module follows the
+sentences as written.
+
+Run: `TLA2TOOLS=/path/to/tla2tools.jar ./run_rows.sh` (about three minutes at 1.5 GB of heap).
 
 ## `PolicyCorridor.lean` — the limits
 
