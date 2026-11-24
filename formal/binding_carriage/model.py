@@ -96,6 +96,8 @@ TEXT = {
     "check_commit": True,                          # the opening opens the seat row's commitment
     "claim_signed": False,                         # nobody signs the claim
     "commit_in_seat_row": True,                    # the commitment is inside the row R signs
+    "seat_signed_by": "roomkey",                   # the seat row is signed under the room key and under nothing else
+    "nonce_in_commit": True,                       # the commitment covers fresh random bytes
 }
 
 
@@ -176,7 +178,7 @@ COALITION = {"rs:RX", "rk:RX", "rs:RY", "rk:RY", "rs:RZ", "rk:RZ", "rs:RC", "rk:
              "rs:RP", "rk:RP", "n:RP", "rs:RP2", "rk:RP2", "n:RP2", "ck:P"}
 
 
-def sessions(r, binding_key_of_p="bk:P"):
+def sessions(r, restated=False):
     """The sessions the honest addressee A runs. Each is (label, session). A challenges the binding key it reads on
     a live occurrence of the person claimed."""
     def s(label, R, person, commit_person, nonce, i):
@@ -188,21 +190,29 @@ def sessions(r, binding_key_of_p="bk:P"):
         s("P's own room key, claimed as P", "RP", "P", "P", "n:RP", 2),
         s("a coalition key committed to P, claimed as the coalition's C", "RZ", "C", "P", "n:adv", 3),
         s("P's own room key, claimed as the coalition's C", "RP", "C", "P", "n:RP", 4),
-    ]
+        # the coalition holds the signing secret of P's room key of the other room, and states a seat row for it here
+        s("P's room key of another room, restated in this room by the coalition, claimed as P", "RP2", "P", "P", "n:RP2", 5),
+    ] + ([
+        # the coalition holds the signing secret of P's room key, and states a second seat row for it, committed to C
+        s("P's own room key on a seat row the coalition restated to its own C, claimed as C", "RP", "C", "C", "n:adv", 6),
+    ] if restated else [])
 
 
-def authenticity(r, roster_key_leaked=False):
+def authenticity(r, roster_key_leaked=False, restated=False):
     """Every confirmation the coalition can put before A, in every session A runs, with honest P answering every
     challenge the coalition can form, to every addressee record the coalition can state. Returns
     {goal: example}, and the number of honest acceptances (the premise is reached).
         forged     A takes a key that P never proved to be P's
         misaddressed  A takes P's own key as P's on an answer P made for another addressee
+        crossroom  A takes a key P holds in another room as P's in this room, on an answer P made in that other room
         stolen     A takes P's own key to be a coalition person's
+    With restated, A also runs a session on a seat row the coalition signed for P's room key (it holds that key's
+    signing secret) and committed to its own person.
     """
     known = set(PUBLIC) | set(COALITION)
     if roster_key_leaked:
         known |= {"ik:P", "bk:adv"}                              # the coalition publishes an occurrence of P with its own binding key
-    sess = sessions(r)
+    sess = sessions(r, restated)
     cts = {}
     for label, s in sess:
         target = s["person"]
@@ -235,15 +245,19 @@ def authenticity(r, roster_key_leaked=False):
             got = accept(r, s, m)
             if got is None: continue
             src = calls.get(m)
-            if src == {(s["R"], s["A"])} and got == "P":           # P made it for this key and this addressee, and for no other
+            in_room = s["R"] in P_KEYS and P_KEYS[s["R"]][0] == s["room"]
+            if src == {(s["R"], s["A"])} and got == "P" and in_room:   # P made it for this key, this addressee and this room
                 honest += 1
                 continue
             if got == "P" and s["R"] not in P_KEYS: goal = "forged"
+            elif got == "P" and not in_room: goal = "crossroom"
             elif got == "P": goal = "misaddressed"
             elif s["R"] in P_KEYS: goal = "stolen"
             else: continue                                        # the coalition binds its own key to its own person
             other = sorted(x for x in (src or ()) if x != (s["R"], s["A"]))
-            goals.setdefault(goal, (label, "an answer P made for %s to %s" % other[0] if other else "made by the coalition"))
+            how = ("an answer P made for %s to %s" % other[0] if other else
+                   "an answer P made for the same room key in its other room" if src else "made by the coalition")
+            goals.setdefault(goal, (label, how))
     return goals, honest, tried
 
 
@@ -274,6 +288,7 @@ def transcript(r, key, nonce, ss):
     it, whoever made it. Returns (view, shown): shown is what A would hand a third party to show who R named."""
     c = commitment(ROOM, key, "P", nonce)
     row = seat_row(key, ROOM, c) if r["commit_in_seat_row"] else seat_row(key, ROOM, "none")
+    if r["seat_signed_by"] == "identity": row = tup(row, sig("ik:P", row[2]))      # the person's identity key signs it as well
     claim_body = tup("claim", "P", pk("bk:P"), row) if r["commit_in_seat_row"] else tup("claim", "P", pk("bk:P"), row, c)
     if r["claim_signed"]: claim_body = tup(claim_body, sig("ik:P", tup("claim", key, ROOM)))
     claim = seal(pk("rk:RA"), claim_body)
@@ -316,10 +331,11 @@ def deniability(r):
     without_p = [canon(t) for t in sim] == [canon(t) for t in view] and all(can_make(non_p, t) for t in sim)
     not_r = analyse(pub | (EVERY_SECRET - {"rs:RP"}) | {"ss:A:real"})        # everyone but R's holder, and they hold the row
     opens_to_p = shown[2] in subterms(shown) and commitment(ROOM, "RP", shown[3][1], shown[3][2]) == shown[2]
-    signed_part = [t for t in subterms(shown[1]) if isinstance(t, tuple) and t[0] == "sig"]
+    signed_part = [t for t in subterms(shown[1]) if isinstance(t, tuple) and t[0] == "sig" and t[1] == "rs:RP"]
     names_p_under_r = any(shown[2] in subterms(s) for s in signed_part)
     r_named_p = opens_to_p and names_p_under_r and not can_make(not_r, shown[1])
-    convinces = any(not can_make(analyse(pub | (EVERY_SECRET - P_SECRETS) | {"ss:A:real", row}), t) for t in view)
+    # the seat row is not handed over as a given: everyone but P holds R's secret and the nonce, and must make it
+    convinces = any(not can_make(analyse(pub | (EVERY_SECRET - P_SECRETS) | {"ss:A:real"}), t) for t in view)
     return {"from_a_and_r": from_a_and_r, "without_p": without_p, "r_named_p": r_named_p, "convinces": convinces}
 
 
@@ -340,7 +356,9 @@ def live_judge():
 # An exchange is one ordered pair (prover, addressee). Its messages are the claim, and for each challenge the
 # addressee has issued, that challenge and its confirmation. The network holds every message sent and delivers any of
 # them to anyone, any number of times, or never. A wipe empties it. An addressee may lose its pending secret.
-CARRIAGE_PLANTS = ("sign_on_claim", "hearsay", "final_without_ack", "confirm_not_keyed", "claim_once", "challenge_once", "refuse_after_bad")
+CARRIAGE_PLANTS = ("sign_on_claim", "hearsay", "final_without_ack", "confirm_not_keyed", "claim_once", "challenge_once", "refuse_after_bad",
+                   "sign_on_one", "final_without_cosign", "accept_without_pending", "pending_not_resent")
+ENVIRONMENT = ("lose the pending secret", "the network loses everything in flight")      # steps no party chooses
 
 
 def config(name, L=None, W=None):
@@ -437,7 +455,7 @@ def steps(cfg, tab, plant, s):
             cap = 1 if plant == "challenge_once" else 1 + lost
             if pending < 0 and issued < cap:
                 put("issue challenge", e, (claim, ever, chal | (1 << issued), conf, issued + 1, issued, held, verified, lost, dead))
-            elif pending >= 0:
+            elif pending >= 0 and plant != "pending_not_resent":
                 put("send the pending challenge again", e, (claim, ever, chal | (1 << pending), conf, issued, pending, held, verified, lost, dead))
         for i in range(cfg["L"] + 1):
             if chal >> i & 1 and joined:
@@ -446,6 +464,8 @@ def steps(cfg, tab, plant, s):
                 j = pending if pending >= 0 else None
                 if tab["accept"][(e, i, e, j)]:
                     put("accept confirmation", e, (claim, ever, chal, conf, issued, -1, 1, int(tab["verified"][(e, i, e, j)]), lost, dead))
+                elif plant == "accept_without_pending" and j is None:
+                    put("accept a confirmation while holding no pending secret", e, (claim, ever, chal, conf, issued, -1, 1, 0, lost, dead))
                 else:
                     put("drop a confirmation it cannot open", e, (claim, ever, chal, conf, issued, pending, held, verified, lost,
                                                                   1 if plant == "refuse_after_bad" else dead))
@@ -462,9 +482,11 @@ def steps(cfg, tab, plant, s):
         if row in rows: continue
         ok = all(exs[k][6] for k in needs)
         if plant == "sign_on_claim": ok = all(exs[k][4] > 0 or exs[k][6] for k in needs)
+        if plant == "sign_on_one": ok = any(exs[k][6] for k in needs)
         if ok: put("sign " + row, rows_=rows | {row})
     if not done:
         need = [row for row, _ in cfg["sign"] if not (plant == "final_without_ack" and row in cfg["ack"])]
+        if plant == "final_without_cosign": need = [row for row in need if row in cfg["ack"] or row == "cosign:" + str(cfg["inviter"])]
         if all(x in rows for x in need) and (has_inv or not cfg["inviter"]):
             put("the admission is signed", rows_=rows | {"final"})
     return out
@@ -487,7 +509,7 @@ def explore(cfg, r=TEXT, plant=None, stop_at_unsafe=False):
     if plant == "confirm_not_keyed": r = rule(keyed=False)
     tab = delivery_table(r, cfg)
     s0 = initial(cfg)
-    seen, order, edges, labels, same = {s0: None}, [s0], {}, set(), {s0: s0}
+    seen, order, edges, own, labels, same = {s0: None}, [s0], {}, {}, set(), {s0: s0}
     bad = None
     i = 0
     while i < len(order):
@@ -495,7 +517,7 @@ def explore(cfg, r=TEXT, plant=None, stop_at_unsafe=False):
         if bad is None and not safe(cfg, s):
             bad = s
             if stop_at_unsafe: break
-        out = []
+        out, mine = [], []
         for label, t in steps(cfg, tab, plant, s):
             labels.add(label)
             if t not in seen:
@@ -503,19 +525,26 @@ def explore(cfg, r=TEXT, plant=None, stop_at_unsafe=False):
                 same[t] = t
                 order.append(t)
             out.append(same[t])                                   # one object for each state, whoever reaches it
+            if label not in ENVIRONMENT: mine.append(same[t])
         edges[s] = out
+        own[s] = mine
     # property 4: from every state, the admission can still be signed
-    back = {}
-    for s, ts in edges.items():
-        for t in ts: back.setdefault(t, []).append(s)
-    good = {s for s in seen if "final" in s[1]}
-    todo = list(good)
-    while todo:
-        t = todo.pop()
-        for s in back.get(t, ()):
-            if s not in good:
-                good.add(s); todo.append(s)
-    stuck = [s for s in order if s not in good]
+    def cannot_finish(graph):
+        back = {}
+        for s, ts in graph.items():
+            for t in ts: back.setdefault(t, []).append(s)
+        good = {s for s in seen if "final" in s[1]}
+        todo = list(good)
+        while todo:
+            t = todo.pop()
+            for s in back.get(t, ()):
+                if s not in good:
+                    good.add(s); todo.append(s)
+        return [s for s in order if s not in good]
+    stuck = cannot_finish(edges)
+    # the same with no help from a loss or a wipe: a path to the admission that needs the network to lose something
+    # is not one the parties can take
+    stuck_own = None if (bad is not None and stop_at_unsafe) else len(cannot_finish(own))
     def path(s):
         out = []
         while seen[s] is not None:
@@ -538,7 +567,7 @@ def explore(cfg, r=TEXT, plant=None, stop_at_unsafe=False):
         facts["every cosigner has signed, the duty holder holds no binding, and the admission waits"] = any(
             s[1] == others and not any(s[0][k][6] for k in ack_ex) for s in seen)
     return {"states": len(seen), "unsafe": None if bad is None else path(bad), "stuck": len(stuck),
-            "stuck_path": path(stuck[0]) if stuck else None, "facts": facts, "wrong_accepts": tab["wrong"]}
+            "stuck_path": path(stuck[0]) if stuck else None, "stuck_own": stuck_own, "facts": facts, "wrong_accepts": tab["wrong"]}
 
 
 def misdelivery(cfg, r=TEXT):
@@ -601,6 +630,16 @@ def decide(reading, checks, sees, holds, plant=None):
     raise ValueError(reading)
 
 
+def decide_from_bindings(checks, sees, holds, pres=None, joiner="P", first="P"):
+    """The cosigner's duty as CC 3.1.3.2 writes it, read from what the signer holds and not from a table: it ends its
+    own exchange for the second room key with a person (presentable), and refuses when that person is one it holds a
+    binding of on a room key it reads as seated."""
+    if not checks: return "sign"
+    named = (pres or presentable())[(joiner, joiner)]
+    seated_persons = {first} if (sees and holds) else set()
+    return "refuse" if named in seated_persons else "sign"
+
+
 def second_voice(reading, duty_holder, max_signers=4, plant=None):
     """Every second admission of up to max_signers signers, each with its three facts, and a duty holder (who
     acknowledged the first, so holds R1's binding) where the room seats one. Returns the cases, the cases seated, and
@@ -660,9 +699,10 @@ def acceptable(r, key, commits, two_rows="any"):
     return frozenset(out)
 
 
-def person_count(votes, held, count_bound_only=False, keys=COUNT_KEYS):
+def person_count(votes, held, count_bound_only=False, keys=COUNT_KEYS, voters_only=False):
     """A count of persons at one node. votes: key -> yes, no or None. held: key -> the person its binding names."""
     missing = frozenset(k for k in keys if k not in held)
+    if voters_only and not any(votes.get(k) for k in missing): missing = frozenset()
     if missing and not count_bound_only: return ("waits", missing)
     said = {}
     for k, v in votes.items():
@@ -671,7 +711,7 @@ def person_count(votes, held, count_bound_only=False, keys=COUNT_KEYS):
             len(set(held.values())))
 
 
-def count_world(r=TEXT, equivocate=False, two_rows="any", count_bound_only=False):
+def count_world(r=TEXT, equivocate=False, two_rows="any", count_bound_only=False, voters_only=False):
     """Two nodes hold the same rows. Each holds, for each seated key, no binding or one its own check accepts. Every
     pair of holdings and every way the keys vote. Returns the tallies of what the pair concludes."""
     commits = {k: [commitment(ROOM, k, TRUTH[k], "n:" + k)] for k in COUNT_KEYS}
@@ -682,7 +722,7 @@ def count_world(r=TEXT, equivocate=False, two_rows="any", count_bound_only=False
            "missing not as stated": 0, "holdings": len(holdings), "first fork": None}
     for votes_ in itertools.product(("yes", "no", None), repeat=len(COUNT_KEYS)):
         votes = dict(zip(COUNT_KEYS, votes_))
-        ans = [person_count(votes, hd, count_bound_only) for hd in holdings]
+        ans = [person_count(votes, hd, count_bound_only, voters_only=voters_only) for hd in holdings]
         for i, a in enumerate(ans):
             if a[0] == "waits" and a[1] != frozenset(COUNT_KEYS) - set(holdings[i]): out["missing not as stated"] += 1
         for i, a in enumerate(ans):
@@ -698,6 +738,8 @@ def count_world(r=TEXT, equivocate=False, two_rows="any", count_bound_only=False
                 elif wa and wb: out["both wait"] += 1
                 else: out["one waits"] += 1
     out["a full holding exists"] = any(len(hd) == len(COUNT_KEYS) for hd in holdings)
+    out["full holdings"] = sum(len(hd) == len(COUNT_KEYS) for hd in holdings)
+    out["persons for a key, at most"] = max(len(v) - 1 for v in options.values())
     return out
 
 
@@ -705,7 +747,7 @@ def count_world(r=TEXT, equivocate=False, two_rows="any", count_bound_only=False
 # 8. what a relay learns
 # =========================================================================================================
 DIRECTORY = {pk("ck:P"): "P", pk("bk:P"): "P", pk("ck:I"): "I", pk("bk:I"): "I"}     # public: an identity's keys name the person
-RELAY_PLANTS = ("claim_in_clear", "challenge_bare", "info_in_header", "address_by_record")
+RELAY_PLANTS = ("claim_in_clear", "challenge_bare", "info_in_header", "address_by_record", "wrap_to_identity_key")
 
 
 def envelopes(plant=None):
@@ -720,6 +762,7 @@ def envelopes(plant=None):
         body = tup("claim", "P", pk("bk:P"), row)
         claim = body if plant == "claim_in_clear" else seal(pk("rk:R" + a), body)
         if plant == "address_by_record": claim = tup(recs[a], claim)
+        if plant == "wrap_to_identity_key" and a == "I": claim = seal(pk("ck:I"), body)   # as today's wraps, to a content key
         ct = challenge(TEXT, "P", "RJ", "ss:" + a)
         chal = tup(ct, "R" + a) if plant == "challenge_bare" else seal(pk("rk:RJ"), tup("chal", ct, "R" + a))
         conf = prove(TEXT, me, "R" + a, pk("rk:R" + a), ct)
@@ -740,3 +783,14 @@ def relay(plant=None, key_private=False):
     env = envelopes(plant)
     each = {name: learned([t]) for name, t in env}
     return each, learned([t for _, t in env])
+
+
+def row_holder(r=TEXT):
+    """A holder of the room's rows that holds no binding and no secret (a custodian, or a relay handed the rows). It
+    knows every public person. Returns the persons it can tie to the joiner's room key: those whose commitment it
+    can compute and then find on the seat row."""
+    def c_of(person):
+        return commitment(ROOM, "RJ", person, "n:J") if r["nonce_in_commit"] else h("CEG-seat/2", ROOM, "RJ", person)
+    c = c_of("P")
+    K = analyse(set(PUBLIC) | {"RJ", pk("rk:RJ"), "rec", seat_row("RJ", ROOM, c)}) - {c}
+    return {person for person in ("P", "C", "A", "Z") if c_of(person) == c and can_make(K, c_of(person))}

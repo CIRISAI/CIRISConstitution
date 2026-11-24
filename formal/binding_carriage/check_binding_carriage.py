@@ -48,11 +48,12 @@ def main():
     t0 = time.time()
 
     # ---------------------------------------------------------------------------------------------------
-    print("1  authenticity inside (five sessions of A, P answering every challenge the coalition can form, in two rooms)")
+    print("1  authenticity inside (six sessions of A on the seat rows named, P answering every challenge the coalition can form, in two rooms)")
     goals, honest, tried = M.authenticity(M.TEXT)
     # Inv_AuthenticInside
     line(not goals, "the coalition holds every secret but P's binding key, P's roster key and A's own: of %d confirmations it can put "
-         "before A, none makes A take a key to be P's that P did not prove to A (forged, misaddressed, stolen: %s)" % (tried, sorted(goals) or "none"))
+         "before A, none makes A take a key to be P's that P did not prove to A in this room (forged, misaddressed, taken from P's other room: %s). "
+         "On the seat row P signed, none makes A take P's key to be a coalition person's (stolen)" % (tried, sorted(goals) or "none"))
     line(honest > 0, "P's own answer to A's own challenge is accepted (%d): the check is reached" % honest, "witnesses")
     for change, want, text in (
             ({"keyed": False}, "forged", "the confirmation is not keyed by the challenge's secret"),
@@ -64,11 +65,19 @@ def main():
         g, _, _ = M.authenticity(M.rule(**change))
         line(want in g, "%s: %s, e.g. %s; %s" % (text, want, g.get(want, ("-", "-"))[0], g.get(want, ("-", "-"))[1]), "plants")
     ab = M.info_ablation()
-    as_stated = all((("forged" in g) == ({"R", "commit"} <= d)) and (("misaddressed" in g) == ("A" in d)) and "stolen" not in g for d, g in ab.items())
+    as_stated = all((("forged" in g) == ({"R", "commit"} <= d)) and (("misaddressed" in g) == ("A" in d))
+                    and (("crossroom" in g) == ({"room", "commit"} <= d)) and "stolen" not in g for d, g in ab.items())
     # Inv_InfoBindsAddressee
     line(as_stated, "the info, with each of the %d subsets of its five members left out: a key is forged exactly when the room key and the "
-         "commitment are both left out, and an answer is misaddressed exactly when the addressee is left out. Within this bound the room "
-         "and the binding key's thumbprint bind nothing the commitment does not" % len(ab))
+         "commitment are both left out, an answer is misaddressed exactly when the addressee is left out, and a key of P's other room is taken "
+         "here exactly when the room and the commitment are both left out. The binding key's thumbprint is not exercised: no person here "
+         "has two binding keys" % len(ab))
+    g, _, _ = M.authenticity(M.rule(info=("R", "A", "pkB")))
+    line("crossroom" in g, "the info binds neither the room nor the commitment: taken from another room, e.g. %s; %s" % g.get("crossroom", ("-", "-")), "plants")
+    g, _, _ = M.authenticity(M.TEXT, restated=True)
+    line(set(g) == {"stolen"}, "a coalition that holds the signing secret of P's room key states a SECOND seat row for it, committed to its own "
+         "person C, and C answers A's challenge honestly: A, reading that row, takes P's room key to be C's. Nothing in the construction refuses "
+         "it. 'Not stolen' holds only where A reads the seat row P signed; which seat row of a room key a node reads is the open rule of property 6", "findings")
     g, _, _ = M.authenticity(M.TEXT, roster_key_leaked=True)
     line("forged" in g, "the stated edge of the property: a coalition that holds a roster key of P places an occurrence of P with a "
          "binding key of its own, A challenges that key, and the key is forged. The binding key is as good as the roster that states it", "witnesses")
@@ -85,6 +94,9 @@ def main():
     line(d2["convinces"] and not d2["without_p"], "the claim carries P's identity signature: a third party is then convinced that P took part", "plants")
     d3 = M.deniability(M.rule(commit_in_seat_row=False))
     line(not d3["r_named_p"], "the commitment travels beside the seat row and not inside what R signs: A can then show nothing about whom R's holder named", "plants")
+    d4 = M.deniability(M.rule(seat_signed_by="identity"))
+    line(d4["convinces"] and not d4["without_p"], "the seat row is also signed under P's identity key (an occurrence or an owner-binding of the room key): "
+         "a third party is then convinced, from the row alone", "plants")
     line(M.live_judge(), "the stated limit, as a run: a third party forms the challenge and A relays it. A cannot have keyed the confirmation, "
          "and the third party is convinced", "witnesses")
 
@@ -104,8 +116,8 @@ def main():
         line(bad == 0 and r["wrong_accepts"] == 0, "%s: %d pairs of a message and a party or a pending secret. A claim and a challenge are opened by the "
              "party they were made for and no other, and a confirmation is accepted against the challenge it answers and no other" % (name, n))
         # Inv_FlowRestarts
-        line(r["stuck"] == 0, "%s: from every one of the %d states the admission can still be signed, using what the parties keep for good and "
-             "the rows they can read" % (name, r["states"]))
+        line(r["stuck"] == 0 and r["stuck_own"] == 0, "%s: from every one of the %d states the admission can still be signed, using what the parties keep for good and "
+             "the rows they can read, and by the parties' own steps alone (no path counted needs a further loss or wipe)" % (name, r["states"]))
     print("      planted breaks are run with one lost secret and one wipe")
     w, f2, f3 = runs["widening"]["facts"], runs["founding2"]["facts"], runs["founding3"]["facts"]
     for fact in ("admitted", "admitted after a lost secret", "admitted after the network lost everything", "a stale confirmation is dropped",
@@ -121,13 +133,17 @@ def main():
             ("sign_on_claim", "founding2", "a founder signs once it has read the other's claim"),
             ("hearsay", "widening", "a cosigner takes the inviter's word that the binding is good"),
             ("final_without_ack", "widening", "the admission does not name the duty holder's acknowledgement"),
-            ("confirm_not_keyed", "widening", "the confirmation is not keyed, so one that answers a lost challenge is accepted")):
-        r = M.explore(M.config(cfgname, L=1, W=1), plant=plant, stop_at_unsafe=True)
+            ("confirm_not_keyed", "widening", "the confirmation is not keyed, so one that answers a lost challenge is accepted"),
+            ("accept_without_pending", "widening", "an addressee that lost its pending secret takes a confirmation anyway"),
+            ("final_without_cosign", "widening", "the admission stands on the inviter and the duty holder, and not on the second cosigner"),
+            ("sign_on_one", "founding3", "a founder signs holding one of the two other founders' bindings")):
+        r = M.explore(M.config(cfgname, L=1, W=0 if cfgname == "founding3" else 1), plant=plant, stop_at_unsafe=True)
         line(r["unsafe"] is not None, "property 3, %s (%s): %s" % (text, cfgname, " > ".join(r["unsafe"] or ["not caught"])), "plants")
     for plant, cfgname, text in (
             ("claim_once", "widening", "the joiner sends each claim once"),
             ("challenge_once", "widening", "an addressee never issues a second challenge"),
             ("challenge_once", "founding2", "a founder never issues a second challenge"),
+            ("pending_not_resent", "widening", "an addressee never sends its pending challenge again"),
             ("refuse_after_bad", "widening", "an addressee refuses a room key for good after a confirmation it cannot open")):
         r = M.explore(M.config(cfgname, L=1, W=1), plant=plant)
         line(r["stuck"] > 0 and r["unsafe"] is None, "property 4, %s (%s): %d states from which the admission is never signed, e.g. %s"
@@ -150,6 +166,9 @@ def main():
     line(seated > 0, "the stated cost: a second voice is seated where every signer, and the duty holder, did not check (%d cases)" % seated, "witnesses")
     n, seated, with_checker = M.second_voice_sequential("as written", True, plant="ignore_seated")
     line(with_checker > 0, "a checking member signs although the binding names a person it holds as seated: %d second voices with a checker among the signers" % with_checker, "plants")
+    line(all(M.decide_from_bindings(c_, s_, h_, pres) == M.decide("as written", c_, s_, h_) for c_ in (0, 1) for s_ in (0, 1) for h_ in (0, 1)),
+         "the table's 'as written' column is what follows from the bindings a signer holds: it refuses exactly when its own exchange names a person "
+         "whose binding it holds on a key it reads as seated (8 cases). The rest of this section is that decision table counted, and no state machine")
     sv = {(rd, dh): M.second_voice(rd, dh) for rd in M.READINGS for dh in (False, True)}
     a, s, hd = "as written", "as written, strict", "held"
     lost, late = "a checker without the first binding", "a checker the first seat had not reached"
@@ -178,6 +197,9 @@ def main():
          "%d pairs of holdings over %d ways to vote: two nodes that both count agree (%d pairs, %d differ); two nodes that hold different "
          "bindings never both count (%d); a node that waits names exactly the keys it lacks"
          % (c["pairs"], 3 ** len(M.COUNT_KEYS), c["both counted"], c["fork"], c["differ and neither waits"]))
+    line(c["full holdings"] == 1 and c["persons for a key, at most"] == 1,
+         "why they agree: each seat row's commitment lets a node's own check end with one person and no other, so there is exactly one way to hold every "
+         "binding. The %d pairs that both count are that one holding against itself" % c["both counted"])
     line(c["both counted"] > 0 and c["one waits"] > 0 and c["both wait"] > 0, "both count (%d pairs), one counts and one waits (%d), both wait (%d)"
          % (c["both counted"], c["one waits"], c["both wait"]), "witnesses")
     p = M.count_world(r=M.rule(check_commit=False))
@@ -185,6 +207,9 @@ def main():
          % (p["fork"], p["first fork"][2], p["first fork"][4]), "plants")
     p = M.count_world(count_bound_only=True)
     line(p["fork"] > 0 and p["differ and neither waits"] > 0, "a node counts over the bindings it has and does not wait: %d pairs count differently" % p["fork"], "plants")
+    p = M.count_world(voters_only=True)
+    line(p["fork"] > 0 and p["differ and neither waits"] > 0, "a node waits only for the bindings of the keys that voted: %d pairs count differently "
+         "(same yes and no, different number of persons in the room), e.g. %s against %s" % (p["fork"], p["first fork"][2], p["first fork"][4]), "plants")
     e = M.count_world(equivocate=True, two_rows="any")
     line(e["fork"] > 0, "the shared key has TWO seat rows, one committed to each colluder, and both nodes hold both rows. If a binding is taken when it "
          "opens either commitment, two nodes that each hold every binding count differently in %d pairs. The text says the seat row carries 'a commitment' "
@@ -210,10 +235,14 @@ def main():
     for plant, text, want in (("claim_in_clear", "the claim travels outside the seal", (True, True)),
                               ("challenge_bare", "the challenge travels outside an envelope", (True, False)),
                               ("info_in_header", "the confirmation's info travels beside it", (True, True)),
-                              ("address_by_record", "an envelope is addressed by the room key's record, which names its room", (False, True))):
+                              ("address_by_record", "an envelope is addressed by the room key's record, which names its room", (False, True)),
+                              ("wrap_to_identity_key", "the return is sealed to the inviter's identity key, as a wrap to a content key is today", (True, False))):
         e, _ = M.relay(plant)
         got = (any(x[0] for k, x in e.items() if k != "the invitation"), any(x[1] for x in e.values()))
-        line(got == want, "%s: the relay learns %s" % (text, " and ".join(n for n, g in zip(("the person", "the room"), got) if g)), "plants")
+        line(got == want, "%s: the relay learns %s" % (text, " and ".join(n for n, g in zip(("a person", "the room"), got) if g)), "plants")
+    line(not M.row_holder(), "a holder of the room's rows with no binding (a custodian, or a relay handed the rows) ties no person to the joiner's room key: "
+         "it cannot recompute the commitment for any person it knows, lacking the fresh bytes")
+    line(M.row_holder(M.rule(nonce_in_commit=False)) == {"P"}, "the commitment covers no fresh bytes: a holder of the rows tries every person it knows and finds P", "plants")
 
     # ---------------------------------------------------------------------------------------------------
     print("8  against formal/causal_kernel/roomkey.py, which takes a binding as a given fact")
