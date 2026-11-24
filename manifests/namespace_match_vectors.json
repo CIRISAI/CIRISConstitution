@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc22",
-    "registry_sha256": "581e2de16c0740b3a6536a24c19db89f9a6bf1b7a30369d60032c4c76f5d42f1",
+    "registry_sha256": "058921ac8282152d17c7963d76da71dc5b92509be692e1c1cf96d4eccdc81ae6",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -5141,6 +5141,42 @@
       "family": "method:{approach_id}:{substrate_rung}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "mls:leaf_vouch:v1",
+      "family": "mls:leaf_vouch",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "mls:leaf_vouch:V1",
+      "family": "mls:leaf_vouch",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "mls:leaf_vouch:v1:v2",
+      "family": "mls:leaf_vouch",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "mls:leaf_vouch:v1beta",
+      "family": "mls:leaf_vouch",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Mls:leaf_vouch:v1",
+      "family": "mls:leaf_vouch",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "mls:leaf_vouch",
+      "family": "mls:leaf_vouch",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
       "dimension": "model_3d:leaf:v1",

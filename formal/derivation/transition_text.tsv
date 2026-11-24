@@ -97,3 +97,5 @@ audit_chain:hash_continuity	attest	roles		infra:attest	CC 3.4.7	a node, about it
 corpus_health:n_eff_measurable	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
 federation_directory:replication_lag	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
 identity_continuity:relational_anchor	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+mls:leaf_vouch	withdraw	roles		author	CC 5.1	the signer's withdrawal ends a vouch early
+mls:leaf_vouch	withdraw	policy		selfAct	CC 5.1	the signer's withdrawal ends a vouch early

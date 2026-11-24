@@ -222,12 +222,12 @@ delegate only with the delegate's own signature (CC 4.4.3.19), and a custodian h
 need none and say why: a node in an infrastructure community, a key of a person's own roster, and a device
 under its owner. **open**: how the second signature travels and from when a delegation without it stops
 seating are not settled. **measured** (`manifests/family_model.json`, `formal/derivation/confers_text.tsv`): what a family confers is
-stated for 161 of 185 families. 137 claim and content families take one default, that a claim seats no one
+stated for 162 of 186 families. 138 claim and content families take one default, that a claim seats no one
 (CC 3.4.5.1). Twenty consents take their seat from `family_shapes.tsv`, and four families have a sentence of
 their own. **open**: 24 families confer nothing that a sentence states: 21 doors, two consents the shape
 table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 157
 families; 28 have a segment that names another row and no word yet says so, a limit CC 8.3.4 names. Which answers read a family's
-rows is filled for all 185 from the expression language: every family is read by **state** and **stands**
+rows is filled for all 186 from the expression language: every family is read by **state** and **stands**
 through the default fold, a default checked for none of the 79 that take it, and 44 are also read by another
 answer. A row that must equal its own recomputation is stated for three families (CC 6.1.9) and for no other.
 
@@ -252,7 +252,7 @@ signed both (CC 5.2). No member carries another member's signed row out. **prove
 `nothing_leaves`, `others_elsewhere_change_nothing`, `author_carries`, `same_room_unchanged`. The cost: a cut
 that names a row of another room waits until that row's signer carries it. What must not travel is proof of
 who said it or of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): no placement cell
-is empty. Of 185 families, 143 take the one default, the scope each row carries with the audience CC 5.2 gives
+is empty. Of 186 families, 143 take the one default, the scope each row carries with the audience CC 5.2 gives
 it, and 20 are placed by a sentence of their own. **open**: the default is stated once for all families and is
 checked for none of the 143. CC 8.3.4 names this as a limit. The copy rule is a row of that table.
 
@@ -335,7 +335,7 @@ most one lease against that person's other devices.
 
 Every row family is one of four shapes: a **consent**, a **door**, a **claim** or **content**. A roster is a
 consent given by a count, and an acknowledgement is a claim. **measured**
-(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 185 families, 113 are
+(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 186 families, 114 are
 claims, 24 content, 23 doors, 15 consents and 7 both a consent and a door. Three fit none.
 
 The four are labels over two mechanisms. Removing the shapes in order, three orders leave the same two:
@@ -454,7 +454,8 @@ identity keys. The rule is CC 3.1.3.2, and the kernel is not changed by it: a ro
 In a private room the roster seats a **voice**, never an identity. A voice is a small counted roster of **room
 keys**, one for each device, made for that room only, and every row of the room is signed under a room key, a
 duty holder's verdict included. That a voice is a given person's is the **binding**. It is never a row and
-nobody signs it. It is made for one addressee, who can check it and cannot prove it to anyone else. The seat
+nobody signs it. It is made for one addressee, who can check it. The addressee can show others only that the
+room key's holder named the person. The seat
 row of a room key carries a commitment to its person, and a binding that does not open it is refused.
 
 No answer of section 5 reads a binding. It is read to show a member who spoke, to check a joiner before a
@@ -493,9 +494,11 @@ convinced when nobody but the person named could have.
   is refused; `private` on a body that is public by function is refused; of 434 sequences of later declarations
   none goes from public to private.
 
-**open**: the wire. The commitment, the two encapsulations, the key pair kept for bindings and the sealed
-invitation are planned for a later edition and are the implementer's (CC 3.1.3.2). **open**: no proof. The
-statements above are runs to a bound over a symbolic model.
+The wire is typed in the text: the record of a room key, the commitment, the three flows of a binding, the wrap
+to a room key and the key pair kept for bindings (CC 2.6.1.11, CC 3.1.3.2). **open**: no model reads that wire.
+The sealed carriage of a binding before a seat is stated and checked by no model, and the contents of the sealed
+invitation are the transport's to submit. **open**: no proof. The statements above are runs to a bound over a
+symbolic model.
 
 What a private room does not give, each marked as the check marks it:
 

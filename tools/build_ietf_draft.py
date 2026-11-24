@@ -170,7 +170,9 @@ def check_cddl(path):
         sys.exit("build_ietf_draft: cddl not found")
     sys.path.insert(0, os.path.join(ROOT, "tools"))
     import build_cc_signed_object_v2 as v2
-    lines, bad = v2.cddl_checks(open(path, encoding="utf-8").read())
+    # The samples of rules added after the published revision are run against the working CDDL only: the published
+    # CDDL does not carry those rules, and it stays as published.
+    lines, bad = v2.cddl_checks(open(path, encoding="utf-8").read(), later=os.path.abspath(path) == os.path.abspath(CDDL_IN))
     if bad:
         sys.exit(f"build_ietf_draft: {os.path.relpath(path, ROOT)}: " + "; ".join(bad))
     return [l for l in lines if "parses" not in l]

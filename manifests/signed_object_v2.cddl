@@ -10,6 +10,8 @@
 ceg-anything = ceg-statement / ceg-object-statement / second-consent / row-id-input / row-id
              / statement-id-input / statement-id / object-id-input / ceg-key / key-record-members
              / revocation-snapshot / ceg-genesis-bundle / recovery-commitment-input / seat-commitment-input / group-id-input
+             / binding-info-input / binding-opening / room-sealed
+             / leaf-vouch-entry / mls-group-id-input / mls-call-group-id-input
              / hpke-info / ceg-typ / accord-invocation / accord-lifecycle / transport-destination-binding
 
 ; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
@@ -69,7 +71,7 @@ family-id = tstr .regexp "[a-z0-9_.][a-z0-9_.-]*(:[a-z0-9_.][a-z0-9_.-]*)*"
 
 cwt-claims = {
   1: identity-ref,                 ; iss: the signer's stable identity reference (its genesis key's thumbprint URI), never the rotating kid;
-                                   ; under a room key, iss is the room key's own identity reference, never its person's genesis key
+                                   ; under a room key, iss is the voice, the identity reference of the voice's first room key, never its person's
   2: tstr,                         ; sub: what the row is about; a key subject is an identity-ref
   6: uint,                         ; iat: floor(asserted_at / 1000), seconds, derived; a verifier refuses disagreement
   ? 5: uint,                       ; nbf: floor(valid_from / 1000) where the row has one
@@ -99,7 +101,7 @@ attestation-envelope = {
   ? "refs": refs,                  ; EVERY row this row names, by row-ref
   ? "dimension": tstr,             ; the full scored dimension (leaf and :vN); it resolves to cty's family, refused otherwise
   ? "evidence_refs": [+ hash-digest],   ; the blobs the row cites, by content hash: a sequence, bytes never hex
-  ? "seat_commitment": hash-digest,; on a seat row of a private room: the commitment the binding opens (seat-commitment-input)
+  ? "seat_commitment": hash-digest,; on the key record of a room key: the commitment the binding opens (seat-commitment-input)
   ? "score": fixed6-score,         ; integers, never floats (see fixed6)
   ? "confidence": fixed6-unit,
   ? "weight": fixed6-weight,
@@ -130,6 +132,9 @@ count32 = 0..4294967295
 sd-disclosure = salted-claim / salted-element
 salted-claim = [salt: bstr .size 16, value: ceg-value, key: tstr]
 salted-element = [salt: bstr .size 16, value: ceg-value]
+; What a blinded element of a leaf vouch discloses (CC 5.1): the `value` of its salted-element. The leaf's Ed25519
+; public key, the room it is vouched for, and the suite, the constant 0x004D.
+leaf-vouch-entry = [leaf_key: bstr .size 32, room: group-ref, suite: 77]
 ms-time = uint                     ; POSIX milliseconds, no tag, never a float
 
 ; Integers at one fixed scale: fixed6 is the value times 10^6. Folds sum in checked i64 and refuse on
@@ -178,8 +183,9 @@ refs-members = {
 ; The also roles, closed: "ack" names a row acknowledged (a revocation snapshot's scope head, the acts a receipt
 ; acknowledges); "cites" names the row a row cites, as a build attestation names its manifest contribution;
 ; "under" names the one row a deputy's edge hangs from, a set of exactly one; "stands_on" names the one acceptance a
-; row signed under a root grant stands on, a set of exactly one. Any other role is a later registration.
-also-role = "ack" / "cites" / "under" / "stands_on"
+; row signed under a root grant stands on, a set of exactly one; "voice" names the head of the key roster of the voice
+; a room key signs for, a set of exactly one (CC 2.6.1.11). Any other role is a later registration.
+also-role = "ack" / "cites" / "under" / "stands_on" / "voice"
 nonempty-map = { + any => any }
 
 ; The CEG statement id (a name of this profile; RFC 9943 defines no statement identifier): SHA-256 over the deterministic encoding of this
@@ -206,13 +212,16 @@ ceg-key = { 1: 7, 3: composite-alg, -1: bstr .size 1984 }
 ; a SET of roles (CC 4.5.8). The end rule reads "contains", in prose (CC 2.4.1.1): a set mixing
 ; user or accord_holder with node or agent is refused; a record whose set contains user or
 ; accord_holder carries no valid_until; one whose set contains node or agent carries one, unless it
-; is a room key of a private room; a role outside both groups takes no end rule of its own; asserted_at < valid_until <= asserted_at +
+; is a room key, a record that carries `room`; a role outside both groups takes no end rule of its own; asserted_at < valid_until <= asserted_at +
 ; key_record_max_secs * 1000; refused key_record_out_of_window otherwise.
 key-record-members = {
   "key": ceg-key,
   "identity_type": [+ tstr],       ; a set
   "asserted_at": ms-time,
   ? "valid_until": ms-time,
+  ? "room": group-ref,             ; iff the key is a room key: the one room it is made for (CC 3.1.3.2); the end rule reads it
+  ? "kem_xwing_pubkey": bstr .size 1216,   ; iff the key is a room key: its X-Wing KEM key, the target of every wrap to it
+  ? "seat_commitment": hash-digest,; iff the key is a room key: this record is the key's seat row
   ? "attestation_evidence": attestation-evidence,
   * tstr => ceg-value,
 }
@@ -372,10 +381,11 @@ transport-destination = {
 }
 
 ; Room keys. The seat commitment of a private room: SHA-256 over the deterministic encoding of this
-; array, carried as "seat_commitment" on the seat row and opened by the binding. `room` is the room's
-; id; the member that carries it waits on its owner's submission. `nonce` is 32 fresh random bytes. The binding key and the content-KEM keys
-; of one identity are distinct bytes, refused at admission otherwise.
-seat-commitment-input = ["CEG-seat/2", room: tstr, room_key: kid, person: identity-ref, nonce: bstr .size 32]
+; array, carried as "seat_commitment" on the room key's own key record, which is its seat row, and opened by the
+; binding. `room` is the room's derived id, the `room` of that record. `nonce` is 32 fresh random bytes. The binding
+; key of an identity is the member room_binding_xwing_pubkey of its identity:occurrence; its halves and those of the
+; other KEM keys on that row are distinct bytes, refused at admission otherwise.
+seat-commitment-input = ["CEG-seat/2", room: group-ref, room_key: kid, person: identity-ref, nonce: bstr .size 32]
 
 ; A group's id (a family's, a community's, an affiliation's) is derived from its first version and chosen by nobody:
 ; "group-" followed by the base64url, without padding, of SHA-256 over the deterministic encoding of group-id-input.
@@ -383,10 +393,38 @@ seat-commitment-input = ["CEG-seat/2", room: tstr, room_key: kid, person: identi
 ; identity reference is a thumbprint URI, and a group's id is never one.
 group-ref = tstr .regexp "group-[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]"
 group-id-input = ["CEG-group/2", group_kind: "family" / "community", first_members: [+ identity-ref], founded_at: ms-time, nonce: bstr .size 32]
-; The HPKE info strings of a binding and of an invitation. The KEM key, the binding's two
-; encapsulations and the occurrence keys take their bytes from the X-Wing HPKE suite and are fixed
-; with that suite's known-answer vectors, not in this file; so does the binding seed's derivation label.
-hpke-info = "CEG-binding/2" / "CEG-invitation/2"
+; The binding of a voice to its person (CC 2.6.1.11, CC 3.1.3.2): a claim, a challenge and a confirmation. The
+; challenge is an X-Wing encapsulation to the person's binding key (1120 bytes). The confirmation is an RFC 9180 HPKE
+; seal in mode_psk (KEM 0x647a, HKDF-SHA256, AES-256-GCM) to the addressee's room key's kem_xwing_pubkey, with psk the
+; challenge's shared secret, psk_id SHA-256 over the challenge, info the deterministic encoding of
+; binding-info-input, empty aad and plaintext the deterministic encoding of binding-opening. No MAC and no seed.
+; `binding_key` is the thumbprint of the person's binding key; its encoding waits on its owner's submission.
+binding-info-input = ["CEG-binding/2", room: group-ref, room_key: kid, addressee_key: kid, seat_commitment: hash-digest, binding_key: bstr .size 32]
+binding-opening = [person: identity-ref, nonce: bstr .size 32]
+; What a wrap to a room key seals, and what a sealed envelope to one room key carries outside a wrap: the plaintext of
+; an HPKE mode_base seal under the same three identifiers. A wrap carries `dek`; an envelope carries none. Each flow
+; of a binding rides here and never as a cleartext member of a row.
+room-sealed = {
+  ? "dek": bstr .size 32,                    ; on a wrap to a room key: the wrapped key
+  ? "claim": binding-claim,                  ; from the room key's holder: the person it names
+  ? "challenge": bstr .size 1120,            ; from the addressee: the encapsulation to the person's binding key
+  ? "confirmation": binding-confirmation,    ; from the room key's holder: the seal the addressee opens
+}
+binding-claim = {
+  "person": identity-ref,
+  ? "occurrence": [+ bstr],                  ; the statements of the person's identity:occurrence row that carries the binding key
+}
+binding-confirmation = {
+  "enc": bstr .size 1120,                    ; the confirmation's own X-Wing encapsulation
+  "ct": bstr,                                ; the AEAD ciphertext over binding-opening
+}
+; A room's MLS group ids (CC 5.1): each is SHA-256 over the deterministic encoding of its array, so a door recomputes
+; which room a group is of. `call` is the call's id; the member that carries it waits on its owner's submission.
+mls-group-id-input = ["CEG-mls-group/2", room: group-ref]
+mls-call-group-id-input = ["CEG-mls-call-group/2", room: group-ref, call: bstr]
+; The HPKE info of an invitation and of a wrap to a room key, as text. A confirmation's info is binding-info-input.
+; The bytes of each are fixed with the verifier's known-answer vectors, not in this file.
+hpke-info = "CEG-invitation/2" / "CEG-room-wrap/2"
 
 ; Verification has three answers, returned by a verifier and never on the wire: Valid; Invalid(reason);
 ; Waiting{missing key refs}. Invalid under a held key is final. A structural fault is Invalid whatever

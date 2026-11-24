@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "607e9f2fa4824ad9f245634e4e407099784f9d06fffea6926e412aabf051f3a4",
-   "formal/derivation/signer_kind.tsv": "6c83926e312ccc5bcce7a2f5b9be3d2cb983189db317febaedcff106e4a40234"
+   "manifests/transitions.json": "1a53a980ecebddc92667c23a679aeecbff517c70f190a02b0ea9c060144c123e",
+   "formal/derivation/signer_kind.tsv": "41a0ec41a739ab2e84b2670951d60aed4e797ed716d7291d9dca443204d30423"
   },
   "kinds": [
    "person",
@@ -63,8 +63,8 @@
    ]
   },
   "counts": {
-   "uses": 503,
-   "transitions": 462,
+   "uses": 505,
+   "transitions": 464,
    "open_uses": 0,
    "open_questions": 0
   },
@@ -139,14 +139,12 @@
    "leaf": null,
    "roles": [],
    "kinds": [
-    "agent",
-    "person",
-    "room"
+    "ephemeral"
    ],
    "open": false,
    "question": null,
    "rule": "use",
-   "cc_ref": "CC 5.1 People, not infrastructure, join a room (a KeyPackage is signed by its leaf's key)",
+   "cc_ref": "CC 5.1 People, not infrastructure, join a room (a KeyPackage is signed by its leaf's key, a separate key the member's device key vouches for)",
    "at": "P5:80"
   },
   {
@@ -5833,7 +5831,8 @@
    "kinds": [
     "agent",
     "node",
-    "person"
+    "person",
+    "room"
    ],
    "open": false,
    "question": null,
@@ -6621,6 +6620,44 @@
    "rule": "actor_content",
    "cc_ref": "CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E",
    "at": "P3:710, P3:2585, P3:2613"
+  },
+  {
+   "use": "mls:leaf_vouch#attest:none>admitted",
+   "family": "mls:leaf_vouch",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "self"
+   ],
+   "kinds": [
+    "agent",
+    "person",
+    "room"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "actor_content",
+   "cc_ref": "CC 3.1.4 (registry); CC 5.1 the member's device key signs the vouch, never a node key",
+   "at": "P3:461, P5:80"
+  },
+  {
+   "use": "mls:leaf_vouch#withdraw:admitted>withdrawn",
+   "family": "mls:leaf_vouch",
+   "verb": "withdraw",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "person",
+    "room"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "actor_content",
+   "cc_ref": "CC 3.1.4 (registry); CC 5.1 the member's device key signs the vouch, never a node key",
+   "at": "P3:461, P5:80"
   },
   {
    "use": "model_3d:*#attest:none>admitted",
@@ -9227,7 +9264,6 @@
  ],
  "by_kind": {
   "person": [
-   "@mls_keypackage",
    "@mls_leaf",
    "@split_key_id",
    "@stream_key_binding",
@@ -9511,6 +9547,8 @@
    "method:{approach_id}:{substrate_rung}#attest:none>admitted",
    "method:{approach_id}:{substrate_rung}#supersede:admitted>superseded",
    "method:{approach_id}:{substrate_rung}#withdraw:admitted>withdrawn",
+   "mls:leaf_vouch#attest:none>admitted",
+   "mls:leaf_vouch#withdraw:admitted>withdrawn",
    "model_3d:*#attest:none>admitted",
    "model_3d:*#recant:admitted>recanted",
    "model_3d:*#supersede:admitted>superseded",
@@ -9650,7 +9688,6 @@
    "transport:canonical_rebind#supersede:admitted>superseded"
   ],
   "agent": [
-   "@mls_keypackage",
    "@mls_leaf",
    "@split_key_id",
    "@stream_key_binding",
@@ -9887,6 +9924,8 @@
    "method:{approach_id}:{substrate_rung}#attest:none>admitted",
    "method:{approach_id}:{substrate_rung}#supersede:admitted>superseded",
    "method:{approach_id}:{substrate_rung}#withdraw:admitted>withdrawn",
+   "mls:leaf_vouch#attest:none>admitted",
+   "mls:leaf_vouch#withdraw:admitted>withdrawn",
    "model_3d:*#attest:none>admitted",
    "model_3d:*#recant:admitted>recanted",
    "model_3d:*#supersede:admitted>superseded",
@@ -10199,12 +10238,15 @@
    "rendezvous:route#attest:none>admitted"
   ],
   "room": [
-   "@mls_keypackage",
    "@mls_leaf",
-   "@room_row"
+   "@room_row",
+   "key_grant:{axis}#attest:none>admitted",
+   "mls:leaf_vouch#attest:none>admitted",
+   "mls:leaf_vouch#withdraw:admitted>withdrawn"
   ],
   "ephemeral": [
-   "@chunk_key"
+   "@chunk_key",
+   "@mls_keypackage"
   ],
   "kem": [
    "@content_kem",

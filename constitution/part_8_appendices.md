@@ -1648,7 +1648,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons. A card and a description MUST NOT differ on a value. The build takes a value the text states from words quoted from the text, and fails when those words change. A value the text does not state is read from the shipped store, and a difference between the store and the text is a listed departure (`manifests/divergences.tsv`). An `else` arm of a guard names one reason. Where a section also gives a RETRYABLE reason for that clause, that reason is the one reported while the row the clause waits for is not held.
 
-A family with no card states none of these beyond the default row. Cards: 122 of 185 families.
+A family with no card states none of these beyond the default row. Cards: 123 of 186 families.
 
 **`accord:*`** — Rules, thing
 
@@ -2742,7 +2742,7 @@ In time:
 - landing of `window`: each node for itself, nothing signed (CC 3.3.6.4)
 - while `window` is open: binds nobody until it lands (CC 3.3.6.4)
 
-Body: `author`, `identity_key_id`, `occurrence_key_id`, `device_class`, `hardware_attestation`, `transport_destination`, `encryption_pubkeys`, `build_manifest_hash`, `dial_hints`, `refs`, `asserted_at`, `valid_until`
+Body: `author`, `identity_key_id`, `occurrence_key_id`, `device_class`, `hardware_attestation`, `transport_destination`, `encryption_pubkeys`, `room_binding_xwing_pubkey`, `build_manifest_hash`, `dial_hints`, `refs`, `asserted_at`, `valid_until`
 
 **`identity:occurrence_revocation`** — Identity, thing
 
@@ -3023,6 +3023,17 @@ Fold:
 
 In time:
 - [emergency] expiry required `valid_until` max `mesh_config_emergency_ttl_secs` (CC 4.2.1.4, CC 4.2.1, CC 3.1.9.2)
+
+**`mls:leaf_vouch`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | false | false | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `none` (CC 5.1)
+
+Body: `author`, `dimension`, `suite`, `leaves`, `valid_from`, `valid_until`, `refs`, `asserted_at`
 
 **`model_3d:*`** — Facts, account
 

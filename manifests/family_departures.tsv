@@ -194,6 +194,14 @@ membership:{stage}	replication	group_plane	{"audience": "may_receive_group_plane
 membership:{stage}	projection	typed_view	{"rebuild": "byte_equal", "table": "federation_{family,community}_membership_{widenings,revocations}"}
 membership:{stage}	governance	room_door_policy	"none (community_invite / community_remove rows vendored, not read)"
 mesh_config:{key}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "read-time clamp (fold_mesh_config)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
+mls:leaf_vouch	placement	unbuilt	null
+mls:leaf_vouch	subject_rule	unbuilt	null
+mls:leaf_vouch	freshness	unbuilt	null
+mls:leaf_vouch	lifecycle	unbuilt	null
+mls:leaf_vouch	replication	unbuilt	null
+mls:leaf_vouch	projection	unbuilt	null
+mls:leaf_vouch	erasure_route	unbuilt	null
+mls:leaf_vouch	governance	unbuilt	null
 moderation:{allegation_type}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 moderation:{allegation_type}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
 moderation:{allegation_type}	governance	room_door_policy	"none (moderation_action mirror row vendored, not read)"

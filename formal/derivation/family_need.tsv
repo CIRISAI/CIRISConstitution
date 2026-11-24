@@ -127,60 +127,61 @@ manifold_conformity:{cohort}	acts of its own	0	0	fold	-	B009	2	-
 membership:{stage}	read by a rule	3	1	fold count guard change expiry react land while	group:roster reference	B097	1	group:roster.change group:roster.fold key_grant:{axis}.reaction
 mesh_config:{key}	acts of its own	0	0	fold expiry	-	B098	1	-
 method:{approach_id}:{substrate_rung}	nothing shown	0	0	-	-	B003	5	-
+mls:leaf_vouch	nothing shown	0	0	-	-	B099	1	-
 model_3d:*	nothing shown	0	0	-	-	B002	10	-
-moderation:{allegation_type}	read by a rule	1	0	fold	-	B099	1	slashing:{outcome}.guard
-moderation_track_record:{community_key_id}	acts of its own	0	0	fold	-	B100	1	-
+moderation:{allegation_type}	read by a rule	1	0	fold	-	B100	1	slashing:{outcome}.guard
+moderation_track_record:{community_key_id}	acts of its own	0	0	fold	-	B101	1	-
 multilateral_participation:{forum}:{kind}	nothing shown	0	0	-	-	B003	5	-
-need:{domain}:{kind}	nothing shown	0	0	-	-	B101	1	-
+need:{domain}:{kind}	nothing shown	0	0	-	-	B102	1	-
 news:*	nothing shown	0	0	-	-	B002	10	-
 non_maleficence:{aspect}	nothing shown	0	0	-	-	B011	2	-
-objection:{state}	acts of its own	0	0	fold	reference	B102	1	-
-observation:access_assumption	acts of its own	0	0	guard	consent:state:{stance}	B103	1	-
-observation:reachability	acts of its own	0	0	fold	-	B104	1	-
-ownership:{relation}:{target_kind}:{version}	acts of its own	0	0	fold count guard	reference wa_adjudication:{state}	B105	1	-
-partner_role:{role}	nothing shown	0	0	-	-	B106	1	-
-peer_reachability:{network}	nothing shown	0	0	-	-	B107	1	-
-preserve_request	nothing shown	0	0	-	reference	B108	1	-
-preserve_response	nothing shown	0	0	-	reference	B109	1	-
-progress_measure:{method_id}	read by a rule	1	0	fold	-	B110	1	evidence:{suite}:{kind}:{cell}:{prefix}.fold
-prohibited:{category}	nothing shown	0	0	-	-	B111	1	-
-provenance:build_manifest:{target}	acts of its own	0	0	fold	-	B112	1	-
+objection:{state}	acts of its own	0	0	fold	reference	B103	1	-
+observation:access_assumption	acts of its own	0	0	guard	consent:state:{stance}	B104	1	-
+observation:reachability	acts of its own	0	0	fold	-	B105	1	-
+ownership:{relation}:{target_kind}:{version}	acts of its own	0	0	fold count guard	reference wa_adjudication:{state}	B106	1	-
+partner_role:{role}	nothing shown	0	0	-	-	B107	1	-
+peer_reachability:{network}	nothing shown	0	0	-	-	B108	1	-
+preserve_request	nothing shown	0	0	-	reference	B109	1	-
+preserve_response	nothing shown	0	0	-	reference	B110	1	-
+progress_measure:{method_id}	read by a rule	1	0	fold	-	B111	1	evidence:{suite}:{kind}:{cell}:{prefix}.fold
+prohibited:{category}	nothing shown	0	0	-	-	B112	1	-
+provenance:build_manifest:{target}	acts of its own	0	0	fold	-	B113	1	-
 provenance:build_manifest:{target}:locale:{lang_code}	acts of its own	0	0	fold	-	B015	2	-
-provenance:skill_import:{source}	acts of its own	0	0	fold	-	B113	1	-
+provenance:skill_import:{source}	acts of its own	0	0	fold	-	B114	1	-
 provenance:slsa:{level}	acts of its own	0	0	fold	-	B015	2	-
-quarantine:{state}	acts of its own	0	0	fold count	reference	B114	1	-
-ratchet:flag:coordinated_voting_cluster	acts of its own	0	0	fold	-	B115	1	-
+quarantine:{state}	acts of its own	0	0	fold count	reference	B115	1	-
+ratchet:flag:coordinated_voting_cluster	acts of its own	0	0	fold	-	B116	1	-
 ratchet:flag:counter_rii:{layer}	read by a rule	1	0	fold	-	B004	5	slashing:{outcome}.guard
 ratchet:flag:density_anomaly	acts of its own	0	0	fold	-	B004	5	-
 ratchet:flag:expertise_attestation_anomaly	acts of its own	0	0	fold	-	B004	5	-
 ratchet:flag:harassment_pattern	acts of its own	0	0	fold	-	B004	5	-
 ratchet:flag:out_of_distribution_voting	acts of its own	0	0	fold	-	B004	5	-
-reconsideration:{grounds}	nothing shown	0	0	-	reference	B116	1	-
+reconsideration:{grounds}	nothing shown	0	0	-	reference	B117	1	-
 regime:{artifact}:{version}	nothing shown	0	0	-	-	B016	2	-
-rendezvous:route	acts of its own	0	0	guard expiry react	-	B117	1	-
-retirement:{state}	read by a rule	1	1	count change guard clock land	custody:{kind} reference	B118	1	key_grant:{axis}.guard
-revocation:{entity_type}:{reason}	read by a rule	1	0	fold change	bond_posted:{currency}	B119	1	bond_posted:{currency}.reaction
-rollback_detected:{revision_field}	nothing shown	0	0	-	-	B120	1	-
+rendezvous:route	acts of its own	0	0	guard expiry react	-	B118	1	-
+retirement:{state}	read by a rule	1	1	count change guard clock land	custody:{kind} reference	B119	1	key_grant:{axis}.guard
+revocation:{entity_type}:{reason}	read by a rule	1	0	fold change	bond_posted:{currency}	B120	1	bond_posted:{currency}.reaction
+rollback_detected:{revision_field}	nothing shown	0	0	-	-	B121	1	-
 seed_holder_voting_alignment:{cell}	read by a rule	1	0	-	-	B016	2	slashing:{outcome}.guard
-self:delegates_to	acts of its own	0	0	fold count	-	B121	1	-
-self:delegates_to:agent_occurrence	acts of its own	0	0	fold	-	B122	1	-
-session:{kind}	acts of its own	0	0	fold change expiry react	-	B123	1	-
-settlement:*	acts of its own	0	0	fold	-	B124	1	-
-slashing:{outcome}	acts of its own	0	0	count guard	moderation:{allegation_type} ratchet:flag:counter_rii:{layer} seed_holder_voting_alignment:{cell} testimonial_witness:{kind}	B125	1	-
-stream:head	read by a rule	1	0	-	-	B126	1	delivery_ack:{stream_id}.guard
-system:*	nothing shown	0	0	-	-	B127	1	-
-takedown_notice:{basis}	acts of its own	0	0	count guard react clock land while	-	B128	1	-
-testimonial_witness:{kind}	read by a rule	1	0	-	-	B129	1	slashing:{outcome}.guard
-topical_relation:{kind}	acts of its own	0	0	fold	-	B130	1	-
-trace:{form}:{version}	read by a rule	1	0	-	-	B131	1	consent:community_trust.change
-trace_summary:{kind}	nothing shown	0	0	-	-	B132	1	-
-transport:canonical_rebind	read by a rule	2	0	count change	-	B133	1	identity:occurrence.change transport:{kind}.guard
-transport:{kind}	acts of its own	0	0	guard	transport:canonical_rebind	B134	1	-
-trust:{job}:{version}	read by a rule	3	1	fold change guard react expiry	-	B135	1	accord:*.fold group:roster.change mesh_config:{key}.signer_rule
+self:delegates_to	acts of its own	0	0	fold count	-	B122	1	-
+self:delegates_to:agent_occurrence	acts of its own	0	0	fold	-	B123	1	-
+session:{kind}	acts of its own	0	0	fold change expiry react	-	B124	1	-
+settlement:*	acts of its own	0	0	fold	-	B125	1	-
+slashing:{outcome}	acts of its own	0	0	count guard	moderation:{allegation_type} ratchet:flag:counter_rii:{layer} seed_holder_voting_alignment:{cell} testimonial_witness:{kind}	B126	1	-
+stream:head	read by a rule	1	0	-	-	B127	1	delivery_ack:{stream_id}.guard
+system:*	nothing shown	0	0	-	-	B128	1	-
+takedown_notice:{basis}	acts of its own	0	0	count guard react clock land while	-	B129	1	-
+testimonial_witness:{kind}	read by a rule	1	0	-	-	B130	1	slashing:{outcome}.guard
+topical_relation:{kind}	acts of its own	0	0	fold	-	B131	1	-
+trace:{form}:{version}	read by a rule	1	0	-	-	B132	1	consent:community_trust.change
+trace_summary:{kind}	nothing shown	0	0	-	-	B133	1	-
+transport:canonical_rebind	read by a rule	2	0	count change	-	B134	1	identity:occurrence.change transport:{kind}.guard
+transport:{kind}	acts of its own	0	0	guard	transport:canonical_rebind	B135	1	-
+trust:{job}:{version}	read by a rule	3	1	fold change guard react expiry	-	B136	1	accord:*.fold group:roster.change mesh_config:{key}.signer_rule
 truth_grounding:{subject}	read by a rule	1	0	-	-	B001	17	moderation_track_record:{community_key_id}.fold
 video:*	nothing shown	0	0	-	-	B002	10	-
-vote:{contribution_id}	read by a rule	1	0	fold	-	B136	1	weighted_aggregate:{contribution_id}.fold
-wa_adjudication:{state}	read by a rule	1	0	fold	-	B137	1	ownership:{relation}:{target_kind}:{version}.guard
-watchlist:{id}	acts of its own	0	0	react	-	B138	1	-
-weighted_aggregate:{contribution_id}	acts of its own	0	0	fold	-	B139	1	-
-witness_diversity:{contribution_id}	read by a rule	1	0	-	-	B140	1	moderation_track_record:{community_key_id}.fold
+vote:{contribution_id}	read by a rule	1	0	fold	-	B137	1	weighted_aggregate:{contribution_id}.fold
+wa_adjudication:{state}	read by a rule	1	0	fold	-	B138	1	ownership:{relation}:{target_kind}:{version}.guard
+watchlist:{id}	acts of its own	0	0	react	-	B139	1	-
+weighted_aggregate:{contribution_id}	acts of its own	0	0	fold	-	B140	1	-
+witness_diversity:{contribution_id}	read by a rule	1	0	-	-	B141	1	moderation_track_record:{community_key_id}.fold

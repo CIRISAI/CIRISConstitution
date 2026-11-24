@@ -1,7 +1,7 @@
 {
  "_meta": {
   "cc_version": "1.0-rc22",
-  "family_model_sha256": "b2b62c1f878bbb5a3403fe3708670197a1223e1dc0df026debb97a92f94509f8",
+  "family_model_sha256": "c4ef28b1ec7bcc368f69cf646520abbd98ddd620179aa7c9a711063a56ddf71d",
   "generator": "tools/cc_family_select.py",
   "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` equals ctx `sub`, false when it differs, `unknown` when either is absent. A vector with `voice` offers a statement in that role over the row: `admits` is true only when the second_signers answer names the role",
   "keys": {
@@ -16,7 +16,7 @@
   },
   "counts": {
    "false_beats_unknown": 8,
-   "holds": 87,
+   "holds": 88,
    "no_arm": 2,
    "not_holds": 68,
    "order": 2,
@@ -1515,6 +1515,18 @@
    "decided_by": 0,
    "kind": "not_holds",
    "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "mls:leaf_vouch",
+   "cell": "count",
+   "dimension": "mls:leaf_vouch:v1",
+   "matcher_family": "mls:leaf_vouch",
+   "leaf": "",
+   "ctx": {},
+   "expect": "none",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (*) is the first that holds"
   },
   {
    "family": "objection:{state}",
