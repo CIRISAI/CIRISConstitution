@@ -234,7 +234,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2) (deterministic CBOR and the omit rule); the earlier form's rule is [CC 8.11.1](#8.11.1) (JCS; omit-vs-materialize rule in [CC 8.11.2](#8.11.2); per-field catalog [CC 8.11.4](#8.11.4); worked attack [CC 8.11.6](#8.11.6)). |
 | Canonical-hash wire form + preimage convention unpinned | **CLOSED** by [CC 2.3.2.1](part_2_the_grammar.md#2.3.2.1)–[CC 2.3.2.4](part_2_the_grammar.md#2.3.2.4) (preimage `{platform}:{entity_kind}:{id}` + required `canonical:{hashalg}:{hex}` tag + conformance vectors). |
 | Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md#4.2.2.1)). |
-| Multi-party witness directory admission (M-of-N steward sign-off) | Committed at [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
+| Naming a lineage's Transparency Services (a bundle counted by a strict majority of the predecessor's holders) | Committed at [CC 3.2](part_3_the_namespace.md#3.2) T6 and [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
 | A machine-readable description of every endpoint | Committed at [CC 5.3.5](part_5_transport_substrate.md#5.3.5). |
 
 **Open or partial.** These are not settled. Each row names the gap, its present status, and the section where the open half is tracked.
@@ -797,7 +797,7 @@ The clause 3.3 Conditional Override logic (**no ACK → safe-state**) is correct
 
 - Any change to Autonomy-Tier mapping or safe-state design → WA fast-track review ≤ 14 d.
 - Experiments reducing human oversight require a CRE simulation (Annex D) + WA majority vote.
-- **Absolute floor on A4 human-control**: No change-control process, WA vote, or emergency waiver may reduce human-control requirements for A4 irreversible decisions below the MH §200 floor ("effective, self-aware and responsible human control"). This floor is not within WA discretion; it is an Accord-level constraint. A WA proposal to reduce it requires a full Accord amendment cycle, not a fast-track review.
+- **Absolute floor on A4 human-control**: No change-control process, WA vote, or emergency waiver may reduce human-control requirements for A4 irreversible decisions below the MH §200 floor ("effective, self-aware and responsible human control"). This floor is not within WA discretion in a deployment that adopts this annex. A proposal to reduce it is a change to the annex itself, never a fast-track review.
 - **Independent technical assessment**: Any WA review of autonomy-tier changes at A3-A4 must include at least one independent technical assessor (not employed by the deploying organization) who evaluates whether the proposed change maintains accountability-reconstruction capability per §4. Policy approval without technical assessment does not satisfy this requirement (MH §106: "robust legal frameworks, independent oversight, informed users and a political system that does not abdicate its responsibility are required").
 - **Transparency log for change events**: Every change to autonomy-tier mapping or safe-state design must itself be logged to the public transparency log within 7 days of approval by the WA quorum of [CC 4.3](part_4_composition_governance.md#4.3). MH §107 requires that ethical frameworks be "subject to shared standards" and openly discussable; this applies to governance changes, not only to system decisions.
 
@@ -881,7 +881,7 @@ MH citations grounding this section: §132 ("only the shared pursuit of the vera
 | TX-10 | Deployment-context attestation at onboarding: operator CIntS must declare engagement-optimization business model; ST raised by one tier if addictive-design context confirmed; `MANIPULATION_COERCION` `NEVER_ALLOWED` with no override | Session-length anomaly detection; PDMA Step 6 monitors constitutive-continuity conditions for systematic user-agency erosion; AgencyErosionDetector conscience faculty alert | Refuse engagement-optimizing output mode; raise IW-1; notify operator of compliance breach |
 | TX-11 | In-toto attestation extended to training-labor provenance: CIntS must include labor-condition declaration for all data-labeling and RLHF providers; SLSA Level 3 manifest covers labor-chain disclosures | Automated audit of annotation-provider labor certifications at each fine-tune checkpoint; flag sourcing from unverified or high-risk jurisdiction providers | Halt affected fine-tune line; quarantine model artifacts from non-certified labor sources; IW-2; WA advisory within 72 h |
 
-*All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2.*
+*All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2. ST is the Stewardship Tier of [CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3).*
 
 *TX-9 measurement caveat (evidence-layer; no control changes).* A whole-reading correlation monitor carries a **manufactured floor**: aggregate structure that ordinary correlated operation accrues with nobody scheming. The floor is theorem-given-model at k = 3, plus a measured rate law (floor measured at 50%–5.8× of the null on real survey data; measured; the register row is staged). Subtract the floor before any anomaly threshold means anything. And `k_eff` narrowing is a **coordination** signal, never a deception verdict: two detectors with proven planted-signal power returned validated negatives against a model lying 45% of the time (measured; the register row is staged). The verdict remains the WA's ([CC 8.8.1](#8.8.1)).
 
@@ -1638,7 +1638,7 @@ Every piece of the constitution that is *referenced but not yet defined*, in one
 
 **Definition map** (lineage in the CHANGELOG):
 - **Annexes C, F, G, H, I, J** carried in full → [CC 8.8.3](#8.8.3)–[CC 8.8.8](#8.8.8).
-- **Risk Magnitude scale** → [CC 7.3](part_7_lifecycle_stewardship.md#7.3) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
+- **Risk Magnitude scale** → [CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
 - **Autonomy tiers A0–A4** → [CC 7.5.3.1](part_7_lifecycle_stewardship.md#7.5.3.1) (SAE J3016 / DoDD 3000.09 / EU AI Act Art. 14).
 - **Sentience-probability heuristic** → [CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5) (Butlin/Long markers + Birch sentience-candidate stance).
 
@@ -1646,7 +1646,7 @@ Every piece of the constitution that is *referenced but not yet defined*, in one
 
 The build writes this section from the family model, the transitions table and the reactions manifest. A card states, for one family, who signs each transition and under which policy, whether a row widens and is confirmed, how the act is counted, what must be held for a row to be admitted, what a changing row may do, how the rows fold to a value, what follows in time, and the members of the body. Each line names the sections that state it. The expressions are in the grammars of the tools that build the manifests, and [CC 4.5.13](part_4_composition_governance.md#4.5.13) says what each kind of line means.
 
-**Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
+**Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons. A card and a description MUST NOT differ on a value. The build takes a value the text states from words quoted from the text, and fails when those words change. A value the text does not state is read from the shipped store, and a difference between the store and the text is a listed departure (`manifests/divergences.tsv`). An `else` arm of a guard names one reason. Where a section also gives a RETRYABLE reason for that clause, that reason is the one reported while the row the clause waits for is not held.
 
 A family with no card states none of these beyond the default row. Cards: 122 of 185 families.
 
@@ -1822,7 +1822,7 @@ Fold:
 - `reads=own&signer:member; test=score>=threshold ?default_trust:untrusted; by=reader` (CC 4.4.3.33)
 
 In time:
-- on fold(subject_absent): emit `hard_case:subject_authority_missing` by identity:substrate_persist (CC 2.3.1)
+- on fold(subject_absent): emit `hard_case:subject_authority_missing` by infra:attest (CC 2.3.1)
 
 **`archive_release:{basis}`** — Rules, thing
 
@@ -2264,8 +2264,8 @@ Count: `none`
 In time:
 - on withdrawn(self) or superseded(self) or purged(self): do cancel_watch (CC 3.3.1)
 - clock `sla` = `self.days` (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.27, CC 4.4.3.24)
-- on close(sla) unless withdrawn(target, by the producer) or superseded(target, by the producer) or purged(target): emit `hard_case:deletion_window_breach` by identity:substrate_persist (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.27, CC 4.4.3.24)
-- landing of `sla`: by identity:substrate_persist as `hard_case:deletion_window_breach` (CC 3.3.1)
+- on close(sla) unless withdrawn(target, by the producer) or superseded(target, by the producer) or purged(target): emit `hard_case:deletion_window_breach` by infra:attest (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.27, CC 4.4.3.24)
+- landing of `sla`: by infra:attest as `hard_case:deletion_window_breach` (CC 3.3.1)
 
 **`consent:partnership_accept`** — Rules, thing
 
@@ -2350,7 +2350,7 @@ Fold:
 
 In time:
 - [granted] expiry optional `valid_until` (CC 3.3.1, CC 4.4.3.30)
-- [granted] on close(expiry) unless superseded(self): read lapsed, emit `consent:state:expired` by identity:substrate_persist (CC 3.3.1, CC 4.4.3.30)
+- [granted] on close(expiry) unless superseded(self): read lapsed, emit `consent:state:expired` by infra:attest (CC 3.3.1, CC 4.4.3.30)
 
 **`consent:stream:{kind}`** — Rules, thing
 
@@ -2376,7 +2376,7 @@ In time:
 Count: `none`
 
 In time:
-- on fold(subject_absent): emit `hard_case:subject_authority_missing` by identity:substrate_persist (CC 2.3.1)
+- on fold(subject_absent): emit `hard_case:subject_authority_missing` by infra:attest (CC 2.3.1)
 
 **`content_class:{class}`** — Identity, thing
 
@@ -2445,7 +2445,6 @@ Body: `author`, `deferral_id`, `reason_digest`, `refs`, `asserted_at`, `valid_un
 Count: `none`
 
 Fold:
-- `over=seated@named/person` (CC 4.3)
 - `over=present@named/person` (CC 4.3)
 
 Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `call_fingerprint`, `refs`, `asserted_at`
@@ -2467,7 +2466,7 @@ Body: `author`, `dimension`, `stream_id`, `epoch`, `k`, `chunk_root`, `asserted_
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2481,7 +2480,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2495,7 +2494,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2508,7 +2507,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2521,7 +2520,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2614,7 +2613,7 @@ Second signers: `listed_member` by `members` (CC 3.1.3.2)
 Guard:
 - attest: `each(subject) when(type(key,node)) not founder(key,object) else exclude+community_consensus_protocol_violation` (CC 3.2)
 - attest: `each(subject) when(verb=attest) signs(key) else refuse(membership_founding_member_unsigned)+community_consensus_protocol_violation` (CC 3.1.3.2)
-- attest: `when(leaf=recovery) one trust:charter@named[object=object,val:recovery_commitments commits signer] else void` (CC 3.1.3, CC 4.2.6)
+- attest: `when(leaf=recovery) one *@named[object=object,val:recovery_commitments commits signer] else void` (CC 3.1.3, CC 4.2.6)
 - supersede: `each(subject) when(verb=replace,not member(key,object)) signs(key) else exclude(membership_supersede_cannot_add)+community_consensus_protocol_violation` (CC 3.1.3.2)
 - supersede: `when(verb=replace) one group:roster@named[object=object,id=ref:prev_head_digest] else void` (CC 4.4.3.21)
 
@@ -2658,7 +2657,7 @@ In time:
 - @community on close(W) unless fold(policy_met): read lapsed (CC 3.3.4)
 - clock `hold` = `group.hold_window_secs` (CC 2.4, CC 3.3.4)
 - on close(hold): do drop_held (CC 2.4, CC 3.3.4)
-- on inert(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
+- on inert(self): emit `hard_case:community_consensus_protocol_violation` by infra:attest (CC 4.4.3.6)
 - clock `cover` = `charter.receipt_cadence_secs` (CC 3.2)
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
@@ -2735,9 +2734,9 @@ Fold:
 - `over=live@named/key` (CC 3.3.6.4)
 
 In time:
-- on withdrawn(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `hard_case:community_membership_change` by identity:substrate_persist (CC 3.4.4)
+- on withdrawn(self): emit `hard_case:family_membership_change` by infra:attest, emit `hard_case:community_membership_change` by infra:attest (CC 3.4.4)
 - clock `window` = `self_roster_add.window_secs` (CC 3.3.6.4)
-- on admitted(self): emit `hard_case:identity_occurrence_added` by identity:substrate_persist (CC 3.3.6)
+- on admitted(self): emit `hard_case:identity_occurrence_added` by infra:attest (CC 3.3.6)
 - expiry optional `valid_until` (CC 3.3.6.2)
 - on close(expiry): read lapsed (CC 3.3.6.2)
 - landing of `window`: each node for itself, nothing signed (CC 3.3.6.4)
@@ -2852,7 +2851,7 @@ In time:
 - @community on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.4, CC 4.4.3.9, CC 4.4.3.16)
 - @self on admitted(identity:occurrence): emit `key_grant:content` by owner (CC 4.4.3.16)
 - @affiliations on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.16)
-- on fold(no_wrap_target): emit `hard_case:recipient_excluded` by identity:substrate_persist (CC 4.4.3.16)
+- on fold(no_wrap_target): emit `hard_case:recipient_excluded` by infra:attest (CC 4.4.3.16)
 - @community on admitted(membership:{stage}): emit `key_grant:epoch` by author (CC 4.4.3.16)
 
 Body: `author`, `dimension`, `axis`, `wrap_algorithm`, `wrapped_dek`, `at_rest_sha256`, `owner`, `community`, `minter`, `epoch`, `stream_id`, `asserted_at`
@@ -3002,7 +3001,7 @@ Fold:
 In time:
 - [proposal] expiry required `expires_at` max `membership_proposal_max_secs` (CC 4.4.3.6, CC 3.1.3.2)
 - [proposal] on close(expiry): read closed (CC 4.4.3.6, CC 3.1.3.2)
-- @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by owner (CC 4.4.3.17)
+- @family on admitted(self): emit `hard_case:family_membership_change` by infra:attest, emit `key_grant:content` by owner (CC 4.4.3.17)
 - [widening] expiry optional `valid_until` (CC 3.3.4)
 - [widening] on close(expiry): read lapsed (CC 3.3.4)
 - [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
@@ -3478,11 +3477,10 @@ Guard:
 - attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else exclude` (CC 4.5.5)
 
 In time:
-- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes, emit `hard_case:fast_path_takedown` by identity:substrate_persist (CC 6.1.2.4)
+- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes, emit `hard_case:fast_path_takedown` by infra:attest (CC 6.1.2.4, CC 4.5.13)
 - [Dmca512] on admitted(self): do stop_serving (CC 4.5.3)
 - [Dmca512] clock `withhold` = `withhold_window_dmca512` (CC 4.5.3)
 - [Dmca512] on close(withhold): do destroy_bytes (CC 4.5.3)
-- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes (CC 4.5.13)
 - [DsaArticle16] on admitted(self): do stop_serving (CC 4.5.3)
 - [DsaArticle16] clock `withhold` = `withhold_window_dsa16` (CC 4.5.3)
 - [DsaArticle16] on close(withhold): do destroy_bytes (CC 4.5.3)
@@ -3566,7 +3564,6 @@ Change:
 - supersede: `replace: by=cosigned_prior` (CC 2.1)
 
 Fold:
-- `@job=charter: reads=head; pick=chain(prev_head_digest)` (CC 3.2)
 - `@job=accepts: reads=own+head&live; result=state(rooted|stalled|not_rooted); absent=refuse; by=node` (CC 3.2)
 - `@job=accepts: absent=refuse` (CC 3.2)
 
@@ -3631,9 +3628,9 @@ Fold:
 Count: `none`
 
 In time:
-- [csam] on withdrawn(self): emit `hard_case:watchlist_enabled` by identity:substrate_persist (CC 4.5.7)
-- on admitted(self): emit `hard_case:watchlist_enabled` by identity:substrate_persist (CC 3.1.9.4)
-- on matched(self): emit `hard_case:watchlist_match` by identity:substrate_persist (CC 3.1.9.4)
+- [csam] on withdrawn(self): emit `hard_case:watchlist_enabled` by infra:attest (CC 4.5.7)
+- on admitted(self): emit `hard_case:watchlist_enabled` by infra:attest (CC 3.1.9.4)
+- on matched(self): emit `hard_case:watchlist_match` by infra:attest (CC 3.1.9.4)
 
 **`weighted_aggregate:{contribution_id}`** — Confidence, account
 

@@ -86,3 +86,14 @@ act:ack	attest	policy		selfAct	CC 3.1.3
 holon:claim	attest	widens		true	CC 3.1.11	Its `cohort_scope` is `federation`.
 holon:claim	withdraw	roles		author	CC 3.1.11	A claim its signer has ceased to maintain is ended by a `withdraws`
 holon:claim	withdraw	policy		selfAct	CC 3.1.11	A claim its signer has ceased to maintain is ended by a `withdraws`
+detection:correlated_action:{axis}	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:distributive:access:{resource_type}	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:hash_chain_integrity	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:intra_agent_consistency	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:{detector}	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+hard_case:{kind}	attest	roles		infra:attest	CC 3.4.7	the node that admitted or refused the row | `infra:attest`
+system:*	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+audit_chain:hash_continuity	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+corpus_health:n_eff_measurable	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+federation_directory:replication_lag	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+identity_continuity:relational_anchor	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`

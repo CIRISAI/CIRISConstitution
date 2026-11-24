@@ -134,7 +134,7 @@
         {
           "cc_ref": "CC 3.4.8",
           "kind": "reserved",
-          "rule": "detector-only (identity_type contains lenscore_detector)",
+          "rule": "detector-only (the signer holds infra:detect)",
           "stem": "detection:"
         },
         {
@@ -328,7 +328,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "60ba665dd9a888589bf9a7c2a31268c842e176659c4dabe20615a03938c6bd34",
+    "registry_sha256": "581e2de16c0740b3a6536a24c19db89f9a6bf1b7a30369d60032c4c76f5d42f1",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -343,7 +343,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "5e94686ca41a57ea9aafa1e22cba90484cac149137d5b0f3e8d4145b2c82997c"
+    "source_sha256": "da28db90ae6efd3a230fb16068708223736cdd874345f18ca17c5b198fa99b50"
   },
   "families": [
     {
@@ -2248,7 +2248,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2276,7 +2276,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2311,7 +2311,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2334,7 +2334,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2357,7 +2357,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2845,7 +2845,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.4",
-        "rule": "substrate-emitted (identity_type substrate_persist); the kinds are open, the emitter is reserved; a non-substrate emission is a category error"
+        "rule": "substrate-emitted (the node that admitted or refused the row, under infra:attest); the kinds are open, the emitter is reserved; a non-substrate emission is a category error"
       },
       "segments": [
         {

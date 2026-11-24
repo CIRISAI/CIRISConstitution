@@ -13,10 +13,10 @@ plain	2e	works today for a joined node	the first-join receipt rule is staged: CI
 plain	2f	works today for scope, revocation, cycle and depth	the 365-day term is staged: CIRISServer#752, CIRISEdge#896; G13
 plain	2g	works today	G20
 plain	2h	a rule, no code yet	
-plain	3a	works today, test-backed	G5
+plain	3a	works today for the bond, its listed powers and the stop when it lapses, test-backed	the 365-day review term is staged: CIRISServer#752, CIRISEdge#896; G5
 plain	3b	in code; no register row yet	
 plain	3c	works today for the binding and the age line	the report duty is a rule
-plain	3d	works today	G6
+plain	3d	works today for the named moderator	the lock and the election are staged: CIRISPersist#1195; G6
 plain	3e	a rule, no code yet	
 plain	4a	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
 plain	4b	works today	
@@ -71,7 +71,7 @@ operator	If you run a node|Traces say what run they are.	works today	run_kind is
 operator	If you run a node|A purge is a tombstone.	works today	
 operator	If you run a node|Your exit:	works today	
 operator	If you hold a steward key for an agent|You accepted the root on the agent's behalf.	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
-operator	If you hold a steward key for an agent|The bond is a signed row with listed powers.	works today	the organisation on the bond is in code; no register row yet
+operator	If you hold a steward key for an agent|The bond is a signed row with listed powers.	works today for the bond and its listed powers	the 365-day review term is staged: CIRISServer#752, CIRISEdge#896; the organisation on the bond is in code; no register row yet
 operator	If you hold a steward key for an agent|Tier before operation.	a rule, no code yet	
 operator	If you hold a steward key for an agent|You are the agent's Wise Authority today.	deferral works today	the duty not to sign reasoning you cannot evaluate does not bind anyone yet
 operator	If you hold a steward key for an agent|Shutdown, in two acts.	works today	
@@ -80,7 +80,7 @@ operator	If you hold a steward key for an agent|Retirement Standard.	being built
 operator	If you hold a steward key for an agent|The data people choose.	works today	
 operator	If you hold a steward key for an agent|Licensed professions.	works today	
 operator	If you hold a steward key for an agent|Your exit:	works today	
-operator	If you moderate a community|A room always has a named moderator.	works today	
+operator	If you moderate a community|A room always has a named moderator.	works today for the named moderator	the lock and the election are staged: CIRISPersist#1195
 operator	If you moderate a community|Looking in order to act is not a view.	works today	moderation ledger rows
 operator	If you moderate a community|You report harm to a child the moment you learn of it	the channel works today	the duty is a rule
 operator	If you moderate a community|You cannot ban a room, and nobody can ban yours.	works today, by construction	
@@ -88,3 +88,7 @@ operator	If you moderate a community|A takedown on the fast path still passes th
 operator	If you hold a root|Your key is post-quantum and hardware-attested	works today	
 operator	If you hold a root|One of you can pause every agent	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
 operator	If you hold a root|Your powers are a closed list	works today	
+operator	What binds you everywhere|Every consequential act you sign	works today, test-backed	G4
+operator	What binds you everywhere|Delegation you grant	works today for scope, revocation, cycle and depth	the 365-day term is staged: CIRISServer#752, CIRISEdge#896; G13
+operator	What binds you everywhere|A deployment serving more than 100,000	a rule, no code yet	
+operator	What binds you everywhere|Some uses are never allowed	a rule, no code yet	G26

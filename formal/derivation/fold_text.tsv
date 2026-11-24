@@ -171,8 +171,6 @@ accord:*	reads=own&cites(hardware_custody:{platform}); weight=rate(hardware_clas
 accord:lifecycle:{kind}	over=standing@named/person	CC 4.2.6	The **live set `L`** is the holders whose statements over the bundle are held, and the change counts them against the standing roster
 accord:lifecycle:{kind}	over=standing@named/person	CC 4.2.6	A presumed-dead holder who resurfaces therefore does **not** unilaterally defeat a change: the bundle still carries if a strict majority of the standing roster signed it
 accord:*	key=attested_key_id; pick=chain(prev); absent=from(trust:{job}:{version})	CC 4.2.6	The commitment **in force** for a holder is the one the bundle in force names for that holder
-deferral:response:{outcome}	over=seated@named/person	CC 4.3	any WA quorum threshold over an **entrenched, restrictive, or roster-changing** decision computes its denominator over the **full seated roster**, never the live subset. A shrinking
-deferral:response:{outcome}	over=seated@named/person	CC 4.3	**A decision that unseats a roster member is tallied at the pre-change denominator**
 deferral:response:{outcome}	over=present@named/person	CC 4.3	Liveness-critical decisions (deferral-answering and symmetry rule 1 below, per CC 4.2.6) are exempt: there, presence-is-authority governs, because an absent WA freezes the agent.
 detection:correlated_action:{axis}	combine=median(score); by=reader	CC 4.4.2	Detector dimensions (`detection:correlated_action:*`, `detection:distributive:access:*`, `ratchet:flag:*`)
 detection:distributive:access:{resource_type}	combine=median(score); by=reader	CC 4.4.2	Detector dimensions (`detection:correlated_action:*`, `detection:distributive:access:*`, `ratchet:flag:*`)
@@ -208,7 +206,6 @@ ownership:{relation}:{target_kind}:{version}	reads=own&live&signer:owner; key=at
 ownership:{relation}:{target_kind}:{version}	key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less	CC 3.2	A `node` or `agent` key with no owner-binding, or with live owner-bindings naming more than one owner, is steward-less
 ownership:{relation}:{target_kind}:{version}	reads=own	CC 3.2	read owner-bindings alone
 group:roster	pick=chain(prev_head_digest),tips	CC 3.2	Two versions of one head of a family or community roster wait as tips, as the kernel states ([CC 2.7.8](part_2_the_grammar.md#2.7.8)).
-trust:{job}:{version}	@job=charter: reads=head; pick=chain(prev_head_digest)	CC 3.2	A consumer that holds a receipted head MUST hold a competing head that is not receipted void for itself, and MUST NOT silently adopt a first-seen fork
 trust:{job}:{version}	@job=accepts: reads=own+head&live; result=state(rooted|stalled|not_rooted); absent=refuse; by=node	CC 3.2	- `Rooted` — a live chain runs from the self-root the evaluating node inherits (T1) through its owner's `trust:accepts:v1` edge (T3) to a head of a bundle's lineage (T5)
 trust:{job}:{version}	@job=accepts: absent=refuse	CC 3.2	- `NotRooted` — otherwise, including: no acceptance edge; the edge withdrawn, recanted or tombstoned; the edge's signer past its effective `revoked_after`;
 trust:{job}:{version}	@job=accepts: absent=refuse	CC 3.2	- (vi) Deleting the acceptance edge is sufficient for `NotRooted` from any state, and from `NotRooted` *for want of an edge* nothing but a new

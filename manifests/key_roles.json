@@ -3,7 +3,7 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "3ebed34eef0cb508d9c85d0fc7453636d85e67c91902a2a56700a751cd9c1e2d",
+   "manifests/transitions.json": "c90d6695e72fecb656fe7cd35200a50b59e3ea758f460c5b9b15feb1ff8e6865",
    "formal/derivation/signer_kind.tsv": "6c83926e312ccc5bcce7a2f5b9be3d2cb983189db317febaedcff106e4a40234"
   },
   "kinds": [
@@ -42,6 +42,9 @@
    ],
    "infra:attest": [
     "node"
+   ],
+   "infra:detect": [
+    "detector"
    ],
    "owner": [
     "person"
@@ -1068,7 +1071,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -3424,7 +3427,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -3676,7 +3679,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -3727,7 +3730,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -3778,7 +3781,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -3829,7 +3832,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -3880,7 +3883,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -4582,7 +4585,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -4978,7 +4981,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -5435,7 +5438,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -8474,7 +8477,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"

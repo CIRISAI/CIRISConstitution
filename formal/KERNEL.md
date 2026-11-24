@@ -207,8 +207,8 @@ stands when a bounded walk of live seats leads to it from a root. For what a row
 the node's own key. **proved**: `no_offer_no_seat`, `no_acceptance_no_seat`, `third_key_cannot_end`,
 `only_withdrawals_and_cuts_end`, `means_is_seat_walk`. **run**: 2,774 sets in 701,176 arrival orders.
 
-The 23 role names of the tables are not 23 things. **run** (`formal/causal_kernel/role_shapes.tsv`): the seat
-covers 18 of them, three are read off the row judged (`author`, `self`, `subject`), `winner` is a tally, and
+The 22 role names of the tables are not 22 things. **run** (`formal/causal_kernel/role_shapes.tsv`): the seat
+covers 17 of them, three are read off the row judged (`author`, `self`, `subject`), `winner` is a tally, and
 `tally` fits none because its holders are drawn from a group secret that is not a row. A duty seat over a community is one seat with four scopes: `moderate`, `review`, `slash` and `takedown`. The
 founding record seats the duty holders who sign it, and they are equals (CC 4.5.4). A duty seat is conferred
 by a strict majority of the duty holders, or by the lone holder with the new holder's acceptance. It is
@@ -598,7 +598,7 @@ that the ending row has not seen from counting.
 
 | Item | Kind | Where |
 |---|---|---|
-| Which rows seat which key in which role: what 20 doors and 3 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
+| Which rows seat which key in which role: what 20 doors and 3 other families confer, 29 name segments that point at another row, the 22 roles as one walk | table data | `manifests/family_model.json` |
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
 | One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |
 | The default audience checked family by family for the 147 that take it; the transport reading placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |

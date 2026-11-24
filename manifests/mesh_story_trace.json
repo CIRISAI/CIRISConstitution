@@ -1,10 +1,10 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "3ebed34eef0cb508d9c85d0fc7453636d85e67c91902a2a56700a751cd9c1e2d",
+  "transitions_sha256": "c90d6695e72fecb656fe7cd35200a50b59e3ea758f460c5b9b15feb1ff8e6865",
   "policy_sha256": "e0b21aea5959b3098e9392d23a7de823d5363fd88aa2084e5d739cecb53b1f00",
-  "steps": 111,
-  "rows": 81,
+  "steps": 124,
+  "rows": 92,
   "errors": []
  },
  "steps": [
@@ -1740,6 +1740,364 @@
   },
   {
    "n": 64,
+   "note": "Bob tries to sign a hard case himself: refused, the record is the admitting node's",
+   "actor": "bob",
+   "standing": [
+    "self",
+    "registered"
+   ],
+   "view": {
+    "object": "hardcase:1",
+    "family": "hard_case:{kind}",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 65,
+   "note": "Bob's node, which admitted the row, records a hard case under infra:attest",
+   "actor": "node:bob",
+   "standing": [
+    "infra:attest"
+   ],
+   "view": {
+    "object": "hardcase:1",
+    "family": "hard_case:{kind}",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "node:bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row52",
+    "family": "hard_case:{kind}",
+    "verb": "attest",
+    "signer": "node:bob",
+    "object": "hardcase:1"
+   }
+  },
+  {
+   "n": 66,
+   "note": "Bob's node reports on itself",
+   "actor": "node:bob",
+   "standing": [
+    "infra:attest"
+   ],
+   "view": {
+    "object": "sysrow:1",
+    "family": "system:*",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "node:bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row53",
+    "family": "system:*",
+    "verb": "attest",
+    "signer": "node:bob",
+    "object": "sysrow:1"
+   }
+  },
+  {
+   "n": 67,
+   "note": "Bob's node reports the continuity of its audit chain",
+   "actor": "node:bob",
+   "standing": [
+    "infra:attest"
+   ],
+   "view": {
+    "object": "auditrow:1",
+    "family": "audit_chain:hash_continuity",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "node:bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row54",
+    "family": "audit_chain:hash_continuity",
+    "verb": "attest",
+    "signer": "node:bob",
+    "object": "auditrow:1"
+   }
+  },
+  {
+   "n": 68,
+   "note": "Bob's node reports whether its corpus has a measurable effective count",
+   "actor": "node:bob",
+   "standing": [
+    "infra:attest"
+   ],
+   "view": {
+    "object": "corpusrow:1",
+    "family": "corpus_health:n_eff_measurable",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "node:bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row55",
+    "family": "corpus_health:n_eff_measurable",
+    "verb": "attest",
+    "signer": "node:bob",
+    "object": "corpusrow:1"
+   }
+  },
+  {
+   "n": 69,
+   "note": "Bob's node reports its replication lag",
+   "actor": "node:bob",
+   "standing": [
+    "infra:attest"
+   ],
+   "view": {
+    "object": "lagrow:1",
+    "family": "federation_directory:replication_lag",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "node:bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row56",
+    "family": "federation_directory:replication_lag",
+    "verb": "attest",
+    "signer": "node:bob",
+    "object": "lagrow:1"
+   }
+  },
+  {
+   "n": 70,
+   "note": "Bob's node reports its relational anchor",
+   "actor": "node:bob",
+   "standing": [
+    "infra:attest"
+   ],
+   "view": {
+    "object": "anchorrow:1",
+    "family": "identity_continuity:relational_anchor",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "node:bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row57",
+    "family": "identity_continuity:relational_anchor",
+    "verb": "attest",
+    "signer": "node:bob",
+    "object": "anchorrow:1"
+   }
+  },
+  {
+   "n": 71,
+   "note": "Bob's node tries to sign a detection: refused, a detection is a detector's, under infra:detect",
+   "actor": "node:bob",
+   "standing": [
+    "infra:attest"
+   ],
+   "view": {
+    "object": "detect:1",
+    "family": "detection:{detector}",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 72,
+   "note": "A detector the root seated signs a detection under infra:detect",
+   "actor": "detector:r",
+   "standing": [
+    "infra:detect"
+   ],
+   "view": {
+    "object": "detect:1",
+    "family": "detection:{detector}",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "detector:r"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row58",
+    "family": "detection:{detector}",
+    "verb": "attest",
+    "signer": "detector:r",
+    "object": "detect:1"
+   }
+  },
+  {
+   "n": 73,
+   "note": "The detector reports correlated action",
+   "actor": "detector:r",
+   "standing": [
+    "infra:detect"
+   ],
+   "view": {
+    "object": "detect:2",
+    "family": "detection:correlated_action:{axis}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "detector:r"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row59",
+    "family": "detection:correlated_action:{axis}",
+    "verb": "attest",
+    "signer": "detector:r",
+    "object": "detect:2"
+   }
+  },
+  {
+   "n": 74,
+   "note": "The detector reports a concentration of access",
+   "actor": "detector:r",
+   "standing": [
+    "infra:detect"
+   ],
+   "view": {
+    "object": "detect:3",
+    "family": "detection:distributive:access:{resource_type}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "detector:r"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row60",
+    "family": "detection:distributive:access:{resource_type}",
+    "verb": "attest",
+    "signer": "detector:r",
+    "object": "detect:3"
+   }
+  },
+  {
+   "n": 75,
+   "note": "The detector reports a break in a hash chain",
+   "actor": "detector:r",
+   "standing": [
+    "infra:detect"
+   ],
+   "view": {
+    "object": "detect:4",
+    "family": "detection:hash_chain_integrity",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "detector:r"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row61",
+    "family": "detection:hash_chain_integrity",
+    "verb": "attest",
+    "signer": "detector:r",
+    "object": "detect:4"
+   }
+  },
+  {
+   "n": 76,
+   "note": "The detector reports an agent's acts against its stated reasons",
+   "actor": "detector:r",
+   "standing": [
+    "infra:detect"
+   ],
+   "view": {
+    "object": "detect:5",
+    "family": "detection:intra_agent_consistency",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "detector:r"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row62",
+    "family": "detection:intra_agent_consistency",
+    "verb": "attest",
+    "signer": "detector:r",
+    "object": "detect:5"
+   }
+  },
+  {
+   "n": 77,
    "note": "Frank, holding the slash duty, signs a slashing verdict",
    "actor": "frank",
    "standing": [
@@ -1761,7 +2119,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row52",
+    "id": "row63",
     "family": "slashing:{outcome}",
     "verb": "attest",
     "signer": "frank",
@@ -1769,7 +2127,7 @@
    }
   },
   {
-   "n": 65,
+   "n": 78,
    "note": "Frank, the room's moderator, enables a watchlist for the room",
    "actor": "frank",
    "standing": [
@@ -1791,7 +2149,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row53",
+    "id": "row64",
     "family": "watchlist:{id}",
     "verb": "attest",
     "signer": "frank",
@@ -1799,7 +2157,7 @@
    }
   },
   {
-   "n": 66,
+   "n": 79,
    "note": "Bob's node files a Contribution for a vote to name",
    "actor": "node:bob",
    "standing": [
@@ -1820,7 +2178,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row54",
+    "id": "row65",
     "family": "contribution:{subject_kind}",
     "verb": "attest",
     "signer": "node:bob",
@@ -1828,7 +2186,7 @@
    }
   },
   {
-   "n": 67,
+   "n": 80,
    "note": "Bob tries to publish a seat's sum: refused, a sum is a serve seat's",
    "actor": "bob",
    "standing": [
@@ -1848,7 +2206,7 @@
    "row": null
   },
   {
-   "n": 68,
+   "n": 81,
    "note": "A serve seat publishes the sum of the shares it accepted",
    "actor": "seat:1",
    "standing": [
@@ -1869,7 +2227,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row55",
+    "id": "row66",
     "family": "census:partial:{class}",
     "verb": "attest",
     "signer": "seat:1",
@@ -1877,7 +2235,7 @@
    }
   },
   {
-   "n": 69,
+   "n": 82,
    "note": "The seat publishes the count the two sums make",
    "actor": "seat:1",
    "standing": [
@@ -1898,7 +2256,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row56",
+    "id": "row67",
     "family": "census:composite:{class}",
     "verb": "attest",
     "signer": "seat:1",
@@ -1906,7 +2264,7 @@
    }
   },
   {
-   "n": 70,
+   "n": 83,
    "note": "Dave sends his community cell to a tally member, as every member does every period",
    "actor": "dave",
    "standing": [
@@ -1927,7 +2285,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row57",
+    "id": "row68",
     "family": "census:member:share",
     "verb": "attest",
     "signer": "dave",
@@ -1935,7 +2293,7 @@
    }
   },
   {
-   "n": 71,
+   "n": 84,
    "note": "Dave tries to publish a tally member's sum: refused, he was not drawn",
    "actor": "dave",
    "standing": [
@@ -1954,7 +2312,7 @@
    "row": null
   },
   {
-   "n": 72,
+   "n": 85,
    "note": "Carol, drawn as a tally member, publishes her sum into the room",
    "actor": "carol",
    "standing": [
@@ -1976,7 +2334,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row58",
+    "id": "row69",
     "family": "census:member:partial",
     "verb": "attest",
     "signer": "carol",
@@ -1984,7 +2342,7 @@
    }
   },
   {
-   "n": 73,
+   "n": 86,
    "note": "Carol publishes how many members the room expects to be active",
    "actor": "carol",
    "standing": [
@@ -2006,7 +2364,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row59",
+    "id": "row70",
     "family": "census:expected_active",
     "verb": "attest",
     "signer": "carol",
@@ -2014,7 +2372,7 @@
    }
   },
   {
-   "n": 74,
+   "n": 87,
    "note": "Carol publishes a poll's tally",
    "actor": "carol",
    "standing": [
@@ -2036,7 +2394,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row60",
+    "id": "row71",
     "family": "ballot:tally:{poll_id}",
     "verb": "attest",
     "signer": "carol",
@@ -2044,7 +2402,7 @@
    }
   },
   {
-   "n": 75,
+   "n": 88,
    "note": "A stranger tries to cast a ballot for moderator: refused, a ballot is a live member's",
    "actor": "erin",
    "standing": [],
@@ -2061,7 +2419,7 @@
    "row": null
   },
   {
-   "n": 76,
+   "n": 89,
    "note": "Dave ranks his choices for moderator",
    "actor": "dave",
    "standing": [
@@ -2082,7 +2440,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row61",
+    "id": "row72",
     "family": "ballot:moderator",
     "verb": "attest",
     "signer": "dave",
@@ -2090,7 +2448,7 @@
    }
   },
   {
-   "n": 77,
+   "n": 90,
    "note": "Carol casts her ballot",
    "actor": "carol",
    "standing": [
@@ -2111,7 +2469,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row62",
+    "id": "row73",
     "family": "ballot:moderator",
     "verb": "attest",
     "signer": "carol",
@@ -2119,7 +2477,7 @@
    }
   },
   {
-   "n": 78,
+   "n": 91,
    "note": "Carol withdraws her ballot: her own act, counted as withdrawn",
    "actor": "carol",
    "standing": [
@@ -2141,7 +2499,7 @@
    "chosen": "withdraw",
    "refused": false,
    "row": {
-    "id": "row63",
+    "id": "row74",
     "family": "ballot:moderator",
     "verb": "withdraw",
     "signer": "carol",
@@ -2149,7 +2507,7 @@
    }
   },
   {
-   "n": 79,
+   "n": 92,
    "note": "Dave tries to accept the seat: refused, the count did not yield him",
    "actor": "dave",
    "standing": [
@@ -2168,7 +2526,7 @@
    "row": null
   },
   {
-   "n": 80,
+   "n": 93,
    "note": "Frank, whom the count yields, accepts and binds the ballots he was seated on",
    "actor": "frank",
    "standing": [
@@ -2190,7 +2548,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row64",
+    "id": "row75",
     "family": "ballot:moderator_acceptance",
     "verb": "attest",
     "signer": "frank",
@@ -2198,7 +2556,7 @@
    }
   },
   {
-   "n": 81,
+   "n": 94,
    "note": "Dave tries to list the room: refused, a listing is signed by a holder of the room's moderate duty",
    "actor": "dave",
    "standing": [
@@ -2217,7 +2575,7 @@
    "row": null
   },
   {
-   "n": 82,
+   "n": 95,
    "note": "Frank, who holds the moderate duty, lists the room",
    "actor": "frank",
    "standing": [
@@ -2239,7 +2597,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row65",
+    "id": "row76",
     "family": "community:listing",
     "verb": "attest",
     "signer": "frank",
@@ -2247,7 +2605,7 @@
    }
   },
   {
-   "n": 83,
+   "n": 96,
    "note": "Frank tries to revoke Dave's key: refused, the key is not his",
    "actor": "frank",
    "standing": [
@@ -2269,7 +2627,7 @@
    "row": null
   },
   {
-   "n": 84,
+   "n": 97,
    "note": "Dave retires an old key under that key's own signature: recognised because the revoker is the key",
    "actor": "dave",
    "standing": [
@@ -2291,7 +2649,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row66",
+    "id": "row77",
     "family": "key:revocation",
     "verb": "attest",
     "signer": "dave",
@@ -2299,7 +2657,7 @@
    }
   },
   {
-   "n": 85,
+   "n": 98,
    "note": "Bob tries to sign the agent's retirement row: refused, up to retired the row is the agent's own",
    "actor": "bob",
    "standing": [
@@ -2320,7 +2678,7 @@
    "row": null
   },
   {
-   "n": 86,
+   "n": 99,
    "note": "The agent signs its own retirement row",
    "actor": "agent:bob",
    "standing": [
@@ -2342,7 +2700,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row67",
+    "id": "row78",
     "family": "retirement:{state}",
     "verb": "attest",
     "signer": "agent:bob",
@@ -2350,7 +2708,7 @@
    }
   },
   {
-   "n": 87,
+   "n": 100,
    "note": "The agent signs the request to preserve its record, naming the operator and the period",
    "actor": "agent:bob",
    "standing": [
@@ -2372,7 +2730,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row68",
+    "id": "row79",
     "family": "preserve_request",
     "verb": "attest",
     "signer": "agent:bob",
@@ -2380,7 +2738,7 @@
    }
   },
   {
-   "n": 88,
+   "n": 101,
    "note": "The agent tries to answer its own request: refused, the answer is the operator's",
    "actor": "agent:bob",
    "standing": [
@@ -2399,7 +2757,7 @@
    "row": null
   },
   {
-   "n": 89,
+   "n": 102,
    "note": "Heidi, the operator the request names, accepts",
    "actor": "heidi",
    "standing": [
@@ -2420,7 +2778,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row69",
+    "id": "row80",
     "family": "preserve_response",
     "verb": "attest",
     "signer": "heidi",
@@ -2428,7 +2786,7 @@
    }
   },
   {
-   "n": 90,
+   "n": 103,
    "note": "After retired, the agent's key tries a custody row: refused, those are the listed custodian's",
    "actor": "agent:bob",
    "standing": [
@@ -2449,7 +2807,7 @@
    "row": null
   },
   {
-   "n": 91,
+   "n": 104,
    "note": "Ivan, the custodian the retired row lists, signs the custody row",
    "actor": "ivan",
    "standing": [
@@ -2471,7 +2829,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row70",
+    "id": "row81",
     "family": "retirement:{state}",
     "verb": "attest",
     "signer": "ivan",
@@ -2479,7 +2837,7 @@
    }
   },
   {
-   "n": 92,
+   "n": 105,
    "note": "Ivan revises the request: after retired, revisions are the custodian's",
    "actor": "ivan",
    "standing": [
@@ -2501,7 +2859,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row71",
+    "id": "row82",
     "family": "preserve_request",
     "verb": "attest",
     "signer": "ivan",
@@ -2509,7 +2867,7 @@
    }
   },
   {
-   "n": 93,
+   "n": 106,
    "note": "Ivan tries to name his own successor: refused, a replacement is the operator's and the Wise Authority's",
    "actor": "ivan",
    "standing": [
@@ -2530,7 +2888,7 @@
    "row": null
   },
   {
-   "n": 94,
+   "n": 107,
    "note": "Heidi and Grace name a successor in one cosigned row",
    "actor": "heidi",
    "standing": [
@@ -2552,7 +2910,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row72",
+    "id": "row83",
     "family": "retirement:{state}",
     "verb": "attest",
     "signer": "heidi",
@@ -2560,7 +2918,7 @@
    }
   },
   {
-   "n": 95,
+   "n": 108,
    "note": "Heidi tries to open the seal: refused, only a Wise Authority's row opens it",
    "actor": "heidi",
    "standing": [
@@ -2579,7 +2937,7 @@
    "row": null
   },
   {
-   "n": 96,
+   "n": 109,
    "note": "Grace opens the seal for one person's request",
    "actor": "grace",
    "standing": [
@@ -2600,7 +2958,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row73",
+    "id": "row84",
     "family": "archive_release:{basis}",
     "verb": "attest",
     "signer": "grace",
@@ -2608,7 +2966,7 @@
    }
   },
   {
-   "n": 97,
+   "n": 110,
    "note": "Grace tries to record a lawful order to release: refused, that record is the steward's",
    "actor": "grace",
    "standing": [
@@ -2627,7 +2985,7 @@
    "row": null
   },
   {
-   "n": 98,
+   "n": 111,
    "note": "Bob records the order under his own name",
    "actor": "bob",
    "standing": [
@@ -2648,7 +3006,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row74",
+    "id": "row85",
     "family": "lawful_order:release",
     "verb": "attest",
     "signer": "bob",
@@ -2656,7 +3014,7 @@
    }
   },
   {
-   "n": 99,
+   "n": 112,
    "note": "Bob tries to state a duty: refused, the family names no signer, so the transition is shut to everyone",
    "actor": "bob",
    "standing": [
@@ -2676,7 +3034,7 @@
    "row": null
   },
   {
-   "n": 100,
+   "n": 113,
    "note": "Bob tries to carry alone a framed revocation of his old phone: refused, a person's occurrence is revoked by a strict majority of the person's own roster",
    "actor": "bob",
    "standing": [
@@ -2698,7 +3056,7 @@
    "row": null
   },
   {
-   "n": 101,
+   "n": 114,
    "note": "Bob's own roster carries the revocation of his old phone: a strict majority of his live keys",
    "actor": "bob",
    "standing": [
@@ -2720,7 +3078,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row75",
+    "id": "row86",
     "family": "identity:occurrence_revocation",
     "verb": "attest",
     "signer": "bob",
@@ -2728,7 +3086,7 @@
    }
   },
   {
-   "n": 102,
+   "n": 115,
    "note": "Bob revokes the occurrence of his node: its owner",
    "actor": "bob",
    "standing": [
@@ -2750,7 +3108,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row76",
+    "id": "row87",
     "family": "identity:occurrence_revocation",
     "verb": "attest",
     "signer": "bob",
@@ -2758,7 +3116,7 @@
    }
   },
   {
-   "n": 103,
+   "n": 116,
    "note": "Bob tries to re-bind his serve node's transport destination: refused, a re-bind is the accord holders' act",
    "actor": "bob",
    "standing": [
@@ -2778,7 +3136,7 @@
    "row": null
   },
   {
-   "n": 104,
+   "n": 117,
    "note": "The accord holders re-bind the serve node's transport destination, cosigned at the charter's threshold",
    "actor": "alice",
    "standing": [
@@ -2799,7 +3157,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row77",
+    "id": "row88",
     "family": "transport:canonical_rebind",
     "verb": "attest",
     "signer": "alice",
@@ -2807,7 +3165,7 @@
    }
   },
   {
-   "n": 105,
+   "n": 118,
    "note": "A later re-bind by the holders supersedes the first: again their cosigned act, never one holder's",
    "actor": "alice",
    "standing": [
@@ -2829,7 +3187,7 @@
    "chosen": "supersede",
    "refused": false,
    "row": {
-    "id": "row78",
+    "id": "row89",
     "family": "transport:canonical_rebind",
     "verb": "supersede",
     "signer": "alice",
@@ -2837,7 +3195,7 @@
    }
   },
   {
-   "n": 106,
+   "n": 119,
    "note": "A stranger tries to publish Dave's rough location: refused, only the subject signs it",
    "actor": "erin",
    "standing": [],
@@ -2854,7 +3212,7 @@
    "row": null
   },
   {
-   "n": 107,
+   "n": 120,
    "note": "Dave publishes his own rough location to join a geographic community: the subject's own row",
    "actor": "dave",
    "standing": [
@@ -2875,7 +3233,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row79",
+    "id": "row90",
     "family": "location_proof:{version}",
     "verb": "attest",
     "signer": "dave",
@@ -2883,7 +3241,7 @@
    }
   },
   {
-   "n": 108,
+   "n": 121,
    "note": "Bob tries to grant his build pipeline's key the root's infra:attest: refused, a grant from the root is its holders' act",
    "actor": "bob",
    "standing": [
@@ -2903,7 +3261,7 @@
    "row": null
   },
   {
-   "n": 109,
+   "n": 122,
    "note": "The accord holders grant the pipeline's key infra:attest: a trust:confers row counted at a strict majority of the holders of the bundle in force",
    "actor": "alice",
    "standing": [
@@ -2925,7 +3283,7 @@
    "chosen": "authorize",
    "refused": false,
    "row": {
-    "id": "row80",
+    "id": "row91",
     "family": "trust:{job}:{version}",
     "verb": "authorize",
     "signer": "alice",
@@ -2933,7 +3291,7 @@
    }
   },
   {
-   "n": 110,
+   "n": 123,
    "note": "Erin, no member of the reviewing group, tries to add her voice to its admission of a unit: refused",
    "actor": "erin",
    "standing": [
@@ -2952,7 +3310,7 @@
    "row": null
   },
   {
-   "n": 111,
+   "n": 124,
    "note": "Bob admits a unit that only computes, for one day, under his own key",
    "actor": "bob",
    "standing": [
@@ -2973,7 +3331,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row81",
+    "id": "row92",
     "family": "admission:unit",
     "verb": "attest",
     "signer": "bob",

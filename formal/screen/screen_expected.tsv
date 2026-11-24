@@ -10,8 +10,8 @@ property	break	verdict
 6	waiting_as_done	caught
 6	waiting_as_refused	caught
 6	waiting_unnamed	caught
-#	story steps	111
-#	grid views	46250
+#	story steps	124
+#	grid views	44400
 #	generated worlds	720
 #	breaches	0
 #	ways back the text states that no transition of the table offers (not drawable)	25

@@ -39,7 +39,7 @@ This section catalogs every prefix family, organized by owning component, each u
 | `accord:lifecycle` | Catalogue row (CC 3.1.7 R1); the accord heartbeat, wire `accord:lifecycle:v1`, [CC 3.4.1](part_3_the_namespace.md#3.4.1). | +1.0 only | **Yes — [CC 3.4.1](part_3_the_namespace.md#3.4.1)** |
 | `accord:lifecycle:{kind}` | Catalogue row (CC 3.1.7 R1); the two lifecycle rows that answer a `constitutional` halt: `{kind}` ∈ `active` \| `confirmed` — closed. `active` is resumption from the halt, [CC 4.2.1.3](part_4_composition_governance.md#4.2.1.3). `confirmed` is a strict majority's confirmation of a one-holder halt within its fuse, [CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1) / [CC 4.2.1.3](part_4_composition_governance.md#4.2.1.3). | +1.0 only | **Yes — [CC 3.4.1](part_3_the_namespace.md#3.4.1)** |
 | `accord:human_dignity` | Catalogue row (CC 3.1.7 R1); a leaf no accord holder signs, since accord authority gives no verdict on an agent's conduct, [CC 3.4.1](part_3_the_namespace.md#3.4.1). | signed | **Yes — [CC 3.4.1](part_3_the_namespace.md#3.4.1)** |
-| `accord:*` | **Reserved** — only `identity_type=accord_holder` may emit. **Closed**: the rows above are its whole leaf set. One of several reserved families in this table alone (`ownership:*`, `trust:*`), and more at [CC 3.4](part_3_the_namespace.md#3.4); the generated registry is the count of record. What is distinctive is the *keying*: this is the one reservation held by a **closed roster slot** rather than by a role conferred on the delegation plane, so no root can confer it. The roster occupying the slot is an instance parameter per the [CC 1](part_1_foundation.md) reading rule. | see [CC 3.4.1](part_3_the_namespace.md#3.4.1) | **Yes — [CC 3.4.1](part_3_the_namespace.md#3.4.1)** |
+| `accord:*` | **Reserved** — only `identity_type=accord_holder` may emit. **Closed**: the rows above are its whole leaf set. One of several reserved families in this table alone (`ownership:*`, `trust:*`), and more at [CC 3.4](part_3_the_namespace.md#3.4); the generated registry is the count of record. What is distinctive is the *keying*: with `transport:canonical_rebind` ([CC 3.4.7](part_3_the_namespace.md#3.4.7)), this reservation is held by a **closed roster slot** rather than by a role conferred on the delegation plane, so no root can confer it. The roster occupying the slot is an instance parameter per the [CC 1](part_1_foundation.md) reading rule. | see [CC 3.4.1](part_3_the_namespace.md#3.4.1) | **Yes — [CC 3.4.1](part_3_the_namespace.md#3.4.1)** |
 
 ### 3.1.2 `attestation` — CIRISVerify — attestation ladder, provenance, transparency
 
@@ -855,7 +855,7 @@ community {
     },...
   ]
   founded_at: rfc3339_canonical
-  consensus_protocol: ConsensusProtocol // the family's kinds; founder_only only on a publication's subscriber list or a room's own listing (CC 4.5.13), or on an affiliation under the countersign rule (CC 4.5.12.5)
+  consensus_protocol: ConsensusProtocol // the family's kinds; founder_only only on a publication's subscriber list or a room's own listing (CC 4.5.13), or on an affiliation under the countersign rule (CC 4.4.3.12)
   consensus_protocol_entrenched: bool // same semantics as family
   cohort_subkind_payload: Option<SubkindPayload> // subkind-specific fields; see below
 }
@@ -952,9 +952,9 @@ The community primitive plus location proofs, identity authority, and cohort-sco
 | **Public comment** | `chat_message` scoped to `cohort_scope: community` with `community_id` naming the relevant civic community; `topical_relation:comments_on` links to the ballot/initiative/hearing Contribution |
 | **Petition signing** | `consent_record` with `stance: granted` + `scope: [share, publish]` against the petition Contribution; signatures aggregate via the same consumer-side composition as ballot votes |
 | **Public official self-attestation** | Official's `identity_occurrence` links their personal identity_key to their `device_class: service` key on `city.gov`; cross-binding via `identity:canonical_binding:{canonical_hash}` authenticates their public statements |
-| **FOIA / public records request** | `consent_record` with `scope: [publish]` requested against a producer (city agency); SLA enforcement via the [CC 4.4.3.27](part_4_composition_governance.md#4.4.3.27) substrate-side watcher emits `hard_case:deletion_window_breach` ([CC 3.3.1](#3.3.1) D2) if the agency misses the response window |
+| **FOIA / public records request** | `consent_record` with `scope: [publish]` requested against a producer (city agency). A missed response window has no breach token: `hard_case:deletion_window_breach` is the deletion clock's alone ([CC 3.3.1](#3.3.1) D2), and the requester records the lapse as a claim of their own |
 | **Citizen-journalist coverage** | `news_article` sub_kind authored by an individual member; `cohort_scope: community` + `community_id: <municipal>` for local-first distribution, promotable via [CC 4.4.3.14](part_4_composition_governance.md#4.4.3.14) Tiered-Scope Composition to wider scope on consensus |
-| **Whistleblower disclosure** | `cohort_scope: self` for in-graph composition; promote via `supersedes` to `cohort_scope: community` (a trusted journalists' community with `cohort_subkind: professional` once that subkind is codified); `subject_key_ids` empty (no consent-revocation by the disclosed party). The CC 4.5.3 fast-path takedown coordination + CC 4.2 HUMANITY_ACCORD substrate-protective discipline apply to bad-actor takedown attempts against whistleblower content |
+| **Whistleblower disclosure** | `cohort_scope: self` for in-graph composition; promote via `supersedes` to `cohort_scope: community` (a trusted journalists' community with `cohort_subkind: professional` once that subkind is codified); `subject_key_ids` empty (no consent-revocation by the disclosed party). A bad-actor takedown attempt against whistleblower content is met by CC 4.5.3 takedown coordination under the CC 4.5.5 duty-holder gate; the CC 4.2 halt touches no data door and is no remedy here |
 | **Civic mutual-aid network** | `community` with `cohort_subkind: geographic` matching the neighborhood; `consent:scope:[retain, share]` for resource-sharing posts; `event_listing` for distribution events; the at-rest encryption for self/family scope keeps individual aid requests private while community-scoped offers federate |
 
 **Emergency messaging shapes** — same primitive composition, different authority + priority profile:
@@ -1002,7 +1002,7 @@ infrastructure_constraint {
 
 **Conformance requirements for an `infrastructure` community:**
 
-- `consensus_protocol` MUST be a `quorum:M/N` kind ([CC 4.4.3.6](part_4_composition_governance.md#4.4.3.6)); `founder_only` / `unanimous` / bare `majority` are NON-conformant for `infrastructure` (a single founder must not be able to admit unilaterally; a growable core must not require all-N). `founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing ([CC 4.5.13](part_4_composition_governance.md#4.5.13)). Any other community above the family that names it is refused, and an affiliation names it only under the one-voice countersign rule ([CC 4.5.12.5](part_4_composition_governance.md#4.5.12.5)).
+- `consensus_protocol` MUST be a `quorum:M/N` kind ([CC 4.4.3.6](part_4_composition_governance.md#4.4.3.6)); `founder_only` / `unanimous` / bare `majority` are NON-conformant for `infrastructure` (a single founder must not be able to admit unilaterally; a growable core must not require all-N). `founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing ([CC 4.5.13](part_4_composition_governance.md#4.5.13)). Any other community above the family that names it is refused, and an affiliation names it only under the one-voice countersign rule ([CC 4.4.3.12](part_4_composition_governance.md#4.4.3.12)).
 - `consensus_protocol_entrenched` MUST be `true` — the admission door cannot be lowered after founding. A `supersedes` that would weaken `consensus_protocol` or change `admission_quorum_basis` away from `founders` is a `hard_case:community_consensus_protocol_violation` ([CC 3.4.2](part_3_the_namespace.md#3.4.2)) and concludes nothing.
 - `M/N` is the absolute-`M` reading per [CC 4.4.3.18](part_4_composition_governance.md#4.4.3.18), evaluated over the **founder** subset (`role == founder`), independent of how many non-founder members exist. `N` is the founder count and `M` is its strict majority, ⌊N/2⌋+1, as for the accord ([CC 4.2.6](part_4_composition_governance.md#4.2.6)). A record naming any other `M`, such as `quorum:2/5` or `quorum:3/3`, is refused at founding and at a `supersedes`, with `federation_community_consensus_protocol_violation`.
 - `M ≥ 2`, and the founder set MUST be founded at **N ≥ M + 1** active human founders; a charter or admission floor that raises the effective `M` MUST be refused rather than applied silently. The liveness margin, the declared stalled state and the one bounded recovery row are T7 below. A resignation that leaves exactly `M` founders stalls the room, loudly and by design. Recovery is the conferring body's naming of an added founder seat, never a lowering of `M`.
@@ -1742,7 +1742,7 @@ Alice's household (a family subject_kind instance):
   consensus_protocol_entrenched: false // founders can amend the protocol
 
 When Alice's phone sends a family-scoped photo (e.g., dinner photo) at
-cohort_scope: family + family_id: acme-household:
+cohort_scope: family + family_id: <that derived id>:
   - Substrate wraps the DEK to each member's live occurrence encryption keys, one key_grant:content:v1 row per recipient (CC 3.3.2); a member whose occurrence carries no ML-KEM-768 key is fail-secure excluded
   - Photo bytes reach Bob's devices, the TV, the kitchen tablet,
     the hall thermostat — every admitted family node
@@ -2308,7 +2308,7 @@ The [CC 3.3.10](part_3_the_namespace.md#3.3.10) prohibition stands untouched: **
 ### 3.3.12 `namespace-multimedia` — Multimedia dimension families
 **Owning component**: NodeCore — `content_class` / `cw_class` / `content_rating` are catalogued at [CC 3.1.9.2](part_3_the_namespace.md#3.1.9.2) and the five media-type families at [CC 3.1.9](part_3_the_namespace.md#3.1.9) (content-ingestion families), per [CC 3.1.7](part_3_the_namespace.md#3.1.7) R1; `age_assurance:*` is Verify's ([CC 3.1.2](part_3_the_namespace.md#3.1.2)).
 
-All four families are **open vocabulary** per [CC 4.5.1.1](part_4_composition_governance.md#4.5.1.1) axis-vocabulary discipline; canonical kinds named here, additions via documentation-only registry entries.
+The first three families are **open vocabulary** per [CC 4.5.1.1](part_4_composition_governance.md#4.5.1.1) axis-vocabulary discipline; canonical kinds named here, additions via documentation-only registry entries. `age_assurance` is closed, as its row states.
 
 | Prefix | Description | Polarity |
 |---|---|---|

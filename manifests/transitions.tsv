@@ -44,7 +44,7 @@ audio:*	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	deriv
 audio:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 audio:*	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 audio:*	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-audit_chain:hash_continuity	attest	none	admitted	identity:substrate_persist	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+audit_chain:hash_continuity	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 audit_chain:hash_continuity	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 autonomy:{aspect}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 autonomy:{aspect}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
@@ -166,7 +166,7 @@ content_rating:{scheme}:{rating}	attest	none	admitted	registered	selfAct	true	wi
 content_rating:{scheme}:{rating}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 content_rating:{scheme}:{rating}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 contribution:{subject_kind}	attest	none	admitted	self	selfAct	false	none		true	derived	cc-table	cc-table
-corpus_health:n_eff_measurable	attest	none	admitted	identity:substrate_persist	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+corpus_health:n_eff_measurable	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 corpus_health:n_eff_measurable	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 credits:{domain}:{language}:{subject}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 credits:{domain}:{language}:{subject}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
@@ -180,19 +180,19 @@ deferral:response:{outcome}	attest	none	admitted	steward,wa	selfAct	true	withdra
 delivery:{class}	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 delivery:{class}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 delivery_ack:{stream_id}	attest	none	admitted	member	selfAct	true	withdraw	selfAct	true	derived	derived	derived
-detection:correlated_action:{axis}	attest	none	admitted	identity:lenscore_detector	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+detection:correlated_action:{axis}	attest	none	admitted	infra:detect	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 detection:correlated_action:{axis}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 detection:correlated_action:{axis}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
-detection:distributive:access:{resource_type}	attest	none	admitted	identity:lenscore_detector	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+detection:distributive:access:{resource_type}	attest	none	admitted	infra:detect	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 detection:distributive:access:{resource_type}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 detection:distributive:access:{resource_type}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
-detection:hash_chain_integrity	attest	none	admitted	identity:lenscore_detector	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+detection:hash_chain_integrity	attest	none	admitted	infra:detect	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 detection:hash_chain_integrity	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 detection:hash_chain_integrity	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
-detection:intra_agent_consistency	attest	none	admitted	identity:lenscore_detector	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+detection:intra_agent_consistency	attest	none	admitted	infra:detect	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 detection:intra_agent_consistency	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 detection:intra_agent_consistency	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
-detection:{detector}	attest	none	admitted	identity:lenscore_detector	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+detection:{detector}	attest	none	admitted	infra:detect	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 detection:{detector}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 detection:{detector}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 device:label	attest	none	admitted	owner	selfAct	true	withdraw	selfAct	true	derived	derived	derived
@@ -231,7 +231,7 @@ evidence:{suite}:{kind}:{cell}:{prefix}	supersede	admitted	superseded	author	sel
 expertise:{domain}:{language}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 expertise:{domain}:{language}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 expertise:{domain}:{language}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
-federation_directory:replication_lag	attest	none	admitted	identity:substrate_persist	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+federation_directory:replication_lag	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 federation_directory:replication_lag	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 fidelity:explainability_sla:{tier}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 fidelity:explainability_sla:{tier}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
@@ -253,7 +253,7 @@ goal:{scale}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct
 group:roster	attest	none	admitted	member	selfAct	true	withdraw	cosigned	true	derived	derived	derived
 group:roster	withdraw	admitted	withdrawn	member	cosigned	false	attest	selfAct	false	code-v61	code-v61	derived
 group:roster	supersede	admitted	superseded	member	cosigned	false	supersede	cosigned	false	code-v61	code-v61	derived
-hard_case:{kind}	attest	none	admitted	identity:substrate_persist	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+hard_case:{kind}	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 hard_case:{kind}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 hardware_custody:{platform}	attest	none	admitted	self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 hardware_custody:{platform}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
@@ -272,7 +272,7 @@ identity:occurrence	withdraw	admitted	withdrawn	author,subject	selfAct	false	att
 identity:occurrence	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
 identity:occurrence_revocation	attest	none	admitted	member,owner,self	selfAct	true	none		true	cc-table	derived	derived
 identity_amendment	attest	none	admitted	self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
-identity_continuity:relational_anchor	attest	none	admitted	identity:substrate_persist	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+identity_continuity:relational_anchor	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 identity_continuity:relational_anchor	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 image:*	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 image:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
@@ -419,7 +419,7 @@ slashing:{outcome}	attest	none	admitted	slash	cosigned	true	withdraw	selfAct	tru
 slashing:{outcome}	withdraw	admitted	withdrawn	author	selfAct	false	attest	cosigned	false	code-v61	code-v61	derived
 stream:head	attest	none	admitted	self	selfAct	false	none		true	derived	cc-table	cc-table
 stream:head	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
-system:*	attest	none	admitted	identity:substrate_persist	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+system:*	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 system:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 system:*	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 takedown_notice:{basis}	attest	none	admitted	takedown	cosigned	true	withdraw	selfAct	true	derived	cc-table	derived

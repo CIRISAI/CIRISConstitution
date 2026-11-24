@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "d9c9338d2a00fd717d4f39693abdc0c8303cda820e19a31e3be67c4bfdc56f62",
+  "registry_sha256": "1f55cb3beb1372f8351bbb5d443057a54669a4cb0ba01e96a6c9aba9cd559951",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -678,12 +678,12 @@
     }
    ],
    "typed_families": 76,
-   "statements": 155,
+   "statements": 153,
    "marks": {
     "agree": 3,
     "authority": 1,
     "boundary": 6,
-    "chain": 5,
+    "chain": 4,
     "deciding_seats": 1,
     "forward": 2,
     "founders": 5,
@@ -692,13 +692,13 @@
     "pair": 4,
     "present": 2,
     "proxy": 1,
-    "seated": 2,
+    "seated": 1,
     "seating": 1,
     "terminal": 3,
     "trusted": 6,
     "whole": 1
    },
-   "marks_total": 48
+   "marks_total": 46
   },
   "conferral": {
    "confers": {
@@ -34646,22 +34646,6 @@
        "state",
        "stands"
       ]
-     },
-     {
-      "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#deferral:response:{outcome} (CC 4.3)",
-      "answers": [
-       "state",
-       "stands"
-      ]
-     },
-     {
-      "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#deferral:response:{outcome} (CC 4.3)",
-      "answers": [
-       "state",
-       "stands"
-      ]
      }
     ]
    },
@@ -34739,12 +34723,6 @@
    },
    "fold": {
     "value": [
-     {
-      "fold": "over=seated@named/person",
-      "cc_ref": [
-       "CC 4.3"
-      ]
-     },
      {
       "fold": "over=present@named/person",
       "cc_ref": [
@@ -81414,12 +81392,6 @@
    },
    "fold": {
     "value": [
-     {
-      "fold": "@job=charter: reads=head; pick=chain(prev_head_digest)",
-      "cc_ref": [
-       "CC 3.2"
-      ]
-     },
      {
       "fold": "@job=accepts: reads=own+head&live; result=state(rooted|stalled|not_rooted); absent=refuse; by=node",
       "cc_ref": [
