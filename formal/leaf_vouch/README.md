@@ -26,20 +26,22 @@ reads otherwise is listed under [Where the text differs](#where-the-text-differs
 
 ## The model
 
-`leaf_vouch.py` holds two things that share no code. The **door** (`door_leaf`, `door_msg`, `door_remove`)
+`leaf_vouch.py` holds two things that share no code path. The **door** (`door_leaf`, `door_msg`, `door_remove`)
 decides from what is presented: a row with its digests, the disclosures, the LeafNode, the group's id, the
 room's roster. It runs under a rule, a table of switches. **What was signed** (`intended`, `sem_state`) reads
 the row's entries and the roster directly, and no switch reaches it. A signature is a field, a digest is a
-tuple and a salt is a name.
+tuple and a salt is a name. The two sides do share three constants: the cap, the digest counts and the list of
+member key kinds. `check_leaf_vouch.py` writes the last two out a second time and fails if they differ. The
+cap is the bound.
 
 `check_leaf_vouch.py` runs three parts.
 
-1. **The door.** Twenty rows (well formed, not padded, over the cap, without an end, withdrawn, for another
+1. **The door.** Twenty-one rows (well formed, not padded, over the cap, without an end, withdrawn, for another
    suite, badly signed, signed by an agent's key, a room key, a node key owner-bound to the member, a node key
-   a roster seats, a leaf key, the thief's key) presented at eight groups (the chat group and a call group of
+   a roster seats, a seated key of no member kind, a leaf key, the thief's key) presented at eight groups (the chat group and a call group of
    rooms A, B and the private room C, and a call group of A and of B under a random id) with zero, one or two
    disclosures or a made-up one, under each key named and one other, signed by its own key or not, as each of
-   six identities, at five instants: 70,560 presentations, 38 accepted.
+   seven identities, at five instants: 85,680 presentations, 38 accepted.
 2. **The life of a leaf.** Every interleaving, up to the horizon, of: the honest device P signing a vouch,
    joining the chat group and a call group of room A, renewing by Update, withdrawing a vouch, going offline
    until after its vouch has ended and coming back; the other members removing a lapsed leaf and adding P
@@ -62,29 +64,39 @@ names a leaf key the thief does not hold is forgotten: the thief presents it no 
 | the rule, a device that also signs a shorter term (one tick) | 540,501 | no property is violated |
 | the rule, where a leaf whose vouch was withdrawn signs no Update | 182,482 | no property is violated |
 | the rule, a device that signs vouches over the cap or with no end | 510,577 | no property is violated: each such vouch is refused |
+| the rule, a thief who is also a member of room A | 186,003 | no property is violated as the properties are stated below; see finding 9 |
+| the same thief, where an Update must keep the identity of the leaf it replaces | 183,107 | no property is violated |
+
+**The bound raised by one, run once by hand.** These runs are not part of the check command. Under the rule
+with the first device: horizon 6 gave 336,304 states, and horizon 6 with 4 vouching rows gave 748,353. With
+the device that also signs a shorter term, 4 vouching rows at horizon 5 gave 1,155,536. No property was
+violated in any of the three. A cap of 3 ticks at horizon 7, so a tick of 10 days and a renewal from one tick
+in, gave 773,016 states under the rule with the first device, and no property was violated. Each of these was
+one run of part 2 under the rule, with no plant.
 
 ## Properties
 
-Each property is checked in every run above. Under each the check prints the count of cases that reach its
-premise, and a count of zero fails the run.
+Each property is checked in every run that has the part it is stated over: parts 1 and 3 run once, under the
+rule, and part 2 runs in every row of the table above. Under each property the check prints the count of
+cases that reach its premise in the first run, and a count of zero fails the run.
 
 | Id | Statement | Rule |
 |---|---|---|
-| P1 `TERM` | From one term after the lift, no door accepts the copied key: not as a leaf, and not as the signer of any message. This holds whether or not the honest device renews. | R2, R5 |
+| P1 `TERM` | From one term after the lift, no door accepts the copied key as a leaf, and no door accepts an application message, a proposal or a commit it signed. This holds whether or not the honest device renews. It is stated for a device that makes a leaf key and signs its vouch in one step, the vouch starting then (finding 8), and for a thief who is seated in no room where it holds a copied leaf (finding 9). | R2, R5 |
 | P2 `RENEW` | The thief installs no leaf except the copied key itself, under a vouch that existed at the lift. It has no device key, so it cannot renew. | R1, R4, R5 |
 | P3 `ROOM` | A vouch for room A is accepted in no group of room B: the chat group, a call group, a call group under a random id. | R2, R7 |
 | P4 `ONE` | A presentation that discloses no entry, or two, is refused. | R3 |
 | P5 `LAPSED` | A leaf whose vouch is not in force has its signature accepted on nothing but the Update that replaces it. | R6 |
-| P6 `REJOIN` | A device whose leaf lapsed, and which signs a fresh vouch, replaces its leaf by its own Update. The Update's acceptance reads the old leaf's signature, the new LeafNode and the vouch, and no act of another member. | R5, R6 |
+| P6 `REJOIN` | A device whose leaf lapsed, and which signs a fresh vouch, replaces its leaf by its own Update. The door's decision on that Update reads the old leaf's signature, the new LeafNode and the vouch, and no act of another member. Whether MLS needs another member's commit to carry it is not modelled. | R5, R6 |
 | P7 `NODE` | No leaf is accepted under a vouch a node key signed: a node key owner-bound to the member, or a node key a roster seats. | R1 |
-| S1 `SOUND` | The door accepts a leaf only where the device key the roster seats for that member signed an entry for this leaf key, this room and this suite, in force now. | R4 |
+| S1 `SOUND` | The door accepts a leaf only where the device key the roster seats for that member, a person's, an agent's or a room key, signed an entry for this leaf key, this room and this suite, in force now. | R1, R4 |
 | S2 `COMPLETE` | The door refuses no such leaf when it is well presented. | R4 |
 | S3 `CALLS` | A vouch accepted in the room's chat group is accepted in the room's call groups. | R7 |
 | S4 `WITHDRAWN` | A withdrawn vouch admits no leaf and no message from the step it is withdrawn. | R8 |
 | S5 `POSSESS` | A leaf enters only signed by the leaf key it carries. | R5 |
 | S6 `DIGESTS` | A row of other than 1, 8 or 32 digests is refused. | R3 |
 | S7 `SUITE` | An entry for another suite is refused. | R2 |
-| S8 `REMOVE` | Only a leaf whose vouch ended is removed as lapsed. | R6 |
+| S8 `REMOVE` | Only a leaf whose vouch ended or was withdrawn is removed as lapsed. | R6 |
 | S9 `PADDING` | A room's door learns the count of the device's rooms only as one, up to 8, or up to 32. | R3 |
 
 ## Plants
@@ -99,8 +111,11 @@ differs from it fails.
 | the same, with a door that refuses an Update keeping the leaf key under a new vouch | P1 |
 | the door takes a vouch with no end or over the cap, and a device signs one | P1 |
 | the door does not compare now with the end | P1 |
-| a renewal's vouch may be signed by the leaf key it replaces | P2 |
+| the door takes a vouch on the instant of its end | P1 |
+| a device, not a door: it signs a vouch that starts a tick later, the leaf key already made | P1 |
+| a renewal's vouch may be signed by the leaf key it replaces, a leaf key taken as a member's kind of key | P2 |
 | the vouch's signer is not compared with the member's seated key | P2 |
+| the vouch's signer is any key the room seats, for whichever member | S1 |
 | the row's signature is not checked | P2 |
 | the disclosed entry's leaf key is not compared with the LeafNode's | P2 |
 | a disclosure's salted digest is not looked up in the row | P2 |
@@ -117,6 +132,8 @@ differs from it fails.
 | a row of 2 or 33 digests is accepted | S6 |
 | the door does not read a withdrawal | S4 |
 | the LeafNode's own signature is not checked against its leaf key | S5 |
+| on an Update the new LeafNode may be signed by the leaf key it replaces | S5 |
+| the door refuses a vouch whose end is sooner than the cap | S2 |
 | the vouch is good in the room's chat group only | S3 |
 | a live leaf may be removed as lapsed | S8 |
 | the row carries as many digests as it has entries | S9 |
@@ -146,14 +163,16 @@ Each is reached under the rule, and `--traces` prints the steps.
 - A withdrawn vouch refuses the copied key before its end.
 - A vouch over the cap is refused. A vouch without an end is refused.
 - The thief vouches the copied key as its own leaf in its own room. Nothing of P follows from that.
-- Each of the sixteen refusal reasons of the door is the first reason of some presentation.
+- Each of the seventeen refusal reasons of the door is the first reason of some presentation.
+- Where the thief is a member of room A: a copied key whose vouch has ended signs an Update that installs the
+  thief's own leaf. Where an Update must keep the identity of the leaf it replaces, this is absent.
 
 ## What the runs show beyond the properties
 
 1. **A fresh key per vouch is the device's duty, and a door cannot hold it to that.** A door that refuses an
    Update keeping the leaf key under a new vouch does not restore P1. The copied key comes back by an Add
-   under the new vouch, and a door at an Add has no earlier leaf to compare with. P1 holds for a device that
-   never signs a second vouch for a leaf key, and for no other.
+   under the new vouch, and a door at an Add has no earlier leaf to compare with. P1 is shown for a device that
+   never signs a second vouch for a leaf key. The device that signs one breaks it.
 2. **A renewal does not end the old vouch.** After the device has renewed, the copied key is accepted again by
    an Add under the old vouch until that vouch's own end. Only a withdrawal ends it sooner. Renewing at half
    term does not shorten the time a copy is good for.
@@ -168,6 +187,20 @@ Each is reached under the rule, and `--traces` prints the steps.
    a roster key the signer already says as much. A room key signs for its own room alone.
 7. **After a removal the Update is gone.** A device whose lapsed leaf was removed comes back only by another
    member's Add.
+8. **The term runs from the vouch's start, and the copy from the key's making.** A leaf key exists before its
+   vouch is signed. A device that signs a vouch starting one tick later, with the leaf key already in memory,
+   gives a copy taken at signing one tick more than the term. No door can tell: the row is well formed and
+   within the cap. The rule sentences R1 to R8 put no duty on the device here. P1 as stated needs one: the
+   vouch starts no later than the device makes the leaf key.
+9. **A copied key whose vouch has ended still signs one thing, and R6 says so.** Where the thief is itself a
+   member of the room, the copied key signs an Update whose new LeafNode is the thief's own leaf, under the
+   thief's own vouch, and every door takes it: 270,934 such Updates a term or more after the lift in that run.
+   The thief gains no leaf it could not have had added as itself, and loses the honest member a leaf the
+   members could have removed. It is still an accepted signature of the copied key with no end in time. A door
+   that requires an Update to keep the identity of the leaf it replaces refuses every one of them and changes
+   no other result. R5 and R6 do not say which. The model runs both and decides neither.
+10. **"Never a node key" is not the whole of R1.** A door that refuses only a node key takes a vouch from any
+    other key a roster seats. The door here asks for one of the three kinds R1 names.
 
 ## What is assumed and not checked
 
@@ -177,6 +210,10 @@ Each is reached under the rule, and `--traces` prints the steps.
 - The roster is fixed: nobody is seated or unseated during a run.
 - The thief holds the group's secrets, so every message it can sign is offered.
 - The device erases a leaf key once its leaf is replaced, and the thief lifts once.
+- The device makes a leaf key and signs its vouch in one step, and the vouch starts on that tick. The time
+  between the two is not modelled.
+- The thief copies one leaf key, the one for room A. The device's leaf key for room B is in the same memory
+  and is not copied.
 - A vouch is in force for `start <= now < end`.
 - A leaf whose vouch was withdrawn is treated as ended: it may be removed as lapsed. Whether it still signs its
   replacing Update is run both ways, and no property differs.
@@ -190,6 +227,11 @@ Each is reached under the rule, and `--traces` prints the steps.
   this model's own.
 - The bytes of a call group's id. The model has an id a door can recompute the room from and an id it cannot.
 - A member with two devices, a second lift, and a thief who stays on the device.
+- A device that makes a new leaf key each time it joins again. After a removal the device here comes back under
+  the vouch and key it has.
+- Whether a room is private. The door takes whichever key the room's roster seats, of the three kinds; that a
+  private room's roster seats room keys only is the roster's rule and is not checked here.
+- The honest device's leaves in room B over time. Room B is a target for the thief and for the door cases.
 - The end of a seat: a removal from the room, a revoked occurrence, a superseded device key.
 - The spread of a withdrawal, and two doors that hold different rows.
 - Custody classes and how many times a person is asked to touch a key.
@@ -210,7 +252,7 @@ Each is reached under the rule, and `--traces` prints the steps.
 ## Run
 
 ```
-python3 -I formal/leaf_vouch/check_leaf_vouch.py            # about two minutes, three workers each under 2 GiB, exit 0 or 1
+python3 -I formal/leaf_vouch/check_leaf_vouch.py            # two to three minutes, three workers each under 2 GiB, exit 0 or 1
 python3 -I formal/leaf_vouch/check_leaf_vouch.py --traces   # the same, with the steps to each witness and break
 ```
 

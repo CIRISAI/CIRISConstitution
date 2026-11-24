@@ -3,6 +3,8 @@ run	the rule as modelled	violated: none
 run	the rule, a device that also signs a shorter term	violated: none
 run	the rule, a withdrawn leaf signs no Update (the other reading)	violated: none
 run	the rule, a device that signs vouches over the cap or with no end	violated: none
+run	the rule, a thief who is also a member of room A	violated: none
+run	the same thief, where an Update must keep the identity of the leaf it replaces	violated: none
 property	TERM	holds
 property	RENEW	holds
 property	ROOM	holds
@@ -51,14 +53,19 @@ witness	life: a_withdrawn_leaf_signs_no_update	reached
 witness	life: a_withdrawn_leaf_is_replaced_by_its_own_update	reached
 witness	life: a_vouch_over_the_cap_is_refused	reached
 witness	life: a_vouch_without_an_end_is_refused	reached
+witness	life: a_copied_key_whose_vouch_ended_signs_an_update_that_installs_the_thiefs_own_leaf [the rule, a thief who is also a member of room A]	reached
+witness	life: a_copied_key_whose_vouch_ended_signs_an_update_that_installs_the_thiefs_own_leaf [the same thief, where an Update must keep the identity of the leaf it replaces]	absent
 plant	renewal_revouches_the_same_leaf_key	breaks: RENEW,TERM
 plant	same_key_and_the_door_refuses_a_same_key_update	breaks: CALLS,COMPLETE,REJOIN,RENEW,TERM
 plant	no_cap_on_the_term	breaks: LAPSED,SOUND,TERM
 plant	the_end_is_not_read	breaks: LAPSED,SOUND,TERM
+plant	the_end_is_inclusive	breaks: LAPSED,SOUND,TERM
+plant	the_vouch_starts_after_the_key_is_made	breaks: TERM
 plant	the_old_leaf_key_vouches_the_next	breaks: RENEW,SOUND
 plant	the_device_is_read_as_its_node	breaks: NODE,RENEW,SOUND
 plant	a_seated_node_key_vouches	breaks: NODE,SOUND
 plant	any_valid_signature	breaks: RENEW,SOUND
+plant	any_seated_key_of_the_room_vouches	breaks: RENEW,SOUND
 plant	the_signature_is_not_verified	breaks: RENEW,SOUND
 plant	the_leaf_key_is_not_compared	breaks: RENEW,ROOM,SOUND
 plant	the_disclosure_is_not_matched	breaks: RENEW,ROOM,SOUND
@@ -70,6 +77,8 @@ plant	the_suite_is_not_compared	breaks: SOUND,SUITE
 plant	any_digest_count	breaks: DIGESTS,SOUND
 plant	a_withdrawal_is_not_read	breaks: SOUND,WITHDRAWN
 plant	no_proof_of_possession	breaks: POSSESS,RENEW
+plant	the_replaced_leaf_key_signs_the_new_leafnode	breaks: POSSESS,RENEW
+plant	a_shorter_term_is_refused	breaks: CALLS,COMPLETE
 plant	a_lapsed_leafs_messages_are_held	breaks: LAPSED
 plant	a_lapsed_leaf_commits	breaks: LAPSED
 plant	a_lapsed_leaf_signs_nothing	breaks: COMPLETE,REJOIN

@@ -30,6 +30,9 @@ sys.dont_write_bytecode = True
 import leaf_vouch as LV  # noqa: E402
 
 SUITE, TERM = LV.SUITE, LV.TERM
+# written out here a second time, so that a changed constant in leaf_vouch.py fails the run
+COUNTS = (1, 8, 32)
+MEMBER_KINDS = ("person", "agent", "room")
 EXPECTED = os.path.join(HERE, "leaf_vouch_expected.tsv")
 
 # the bound of part 2
@@ -89,11 +92,12 @@ def e(key, room, suite=SUITE):
 
 
 SW = LV.World(
-    seats={"A": {"P": "dP", "G": "aG", "O": "dO", "Z": "nZ"},   # Z: a roster that seats a node key (it should not)
+    seats={"A": {"P": "dP", "G": "aG", "O": "dO", "Z": "nZ",    # Z: a roster that seats a node key (it should not)
+                 "X": "xX"},                                     # X: a roster that seats a key of no member kind
            "B": {"P": "dP", "T": "dT"},
            "C": {"S": "rS", "P": "rPC"}},                         # C is a private room: its seats are room keys
     kind={"dP": "person", "dO": "person", "dT": "person", "aG": "agent", "rS": "room", "rPC": "room",
-          "nP": "node", "nZ": "node", "nT": "node"},
+          "nP": "node", "nZ": "node", "nT": "node", "xX": "other"},
     owner={"nP": "P", "nT": "T"})
 
 SG = [LV.Group("A.chat", LV.gid_chat("A"), "A", SUITE, None),
@@ -128,6 +132,7 @@ def static_rows():
         mk("PinC", "dP", [e("kPx", "C")], 1, 0, TERM),            # P's roster key, for the private room
         mk("N1", "nP", [e("kN", "A")], 1, 0, TERM),               # P's node key, owner-bound to P
         mk("Z1", "nZ", [e("kZ", "A")], 1, 0, TERM),               # a node key a roster seats
+        mk("X1", "xX", [e("kX", "A")], 1, 0, TERM),               # a seated key that is no person's, agent's or room key
         mk("TB", "dT", [e("kT", "B")], 1, 0, TERM),
         mk("TA", "dT", [e("tF", "A")], 1, 0, TERM),
         mk("L1", "kPA", [e("tF", "A")], 1, 0, TERM),              # a leaf key vouching the next leaf
@@ -135,7 +140,7 @@ def static_rows():
 
 
 STATIC_NOW = tuple(sorted({-1, 0, TERM // 2, TERM - 1, TERM, TERM + 1}))
-STATIC_IDENTS = ("P", "G", "O", "S", "T", "Z")
+STATIC_IDENTS = ("P", "G", "O", "S", "T", "Z", "X")
 
 
 def static_run(rule):
@@ -175,11 +180,13 @@ def static_case(rule, res, row, g, discl, key, ln, ident, now):
         res.premise["ROOM.good_in_A_presented_at_" + g.name] += 1
     if SW.kind_of(row.signer) == "node":
         res.premise["NODE.node_signed"] += 1
+    if SW.kind_of(row.signer) not in MEMBER_KINDS + ("node", "leaf"):
+        res.premise["SOUND.signed_by_a_seated_key_of_no_member_kind"] += 1
     if it and well:
         res.premise["COMPLETE.signed_and_well_presented"] += 1
         if is_call:
             res.premise["CALLS.at_a_call_group"] += 1
-    if len(row.digests) not in LV.DIGEST_COUNTS:
+    if len(row.digests) not in COUNTS:
         res.premise["DIGESTS.other_count"] += 1
     if any(d[0][2] != g.suite for d in discl):
         res.premise["SUITE.other_suite_disclosed"] += 1
@@ -199,7 +206,7 @@ def static_case(rule, res, row, g, discl, key, ln, ident, now):
     res.w("accepted_under_a_%s_key" % SW.kind_of(row.signer), detail)
     if is_call:
         res.w("accepted_at_a_call_group", detail)
-    if len(row.digests) in LV.DIGEST_COUNTS:
+    if len(row.digests) in COUNTS:
         res.w("accepted_with_%d_digests" % len(row.digests), detail)
     if row.end is not None and row.end - row.start < TERM:
         res.w("accepted_with_a_shorter_term", detail)
@@ -213,7 +220,7 @@ def static_case(rule, res, row, g, discl, key, ln, ident, now):
         res.v("NODE", detail)
     if ln != key:
         res.v("POSSESS", detail)
-    if len(row.digests) not in LV.DIGEST_COUNTS:
+    if len(row.digests) not in COUNTS:
         res.v("DIGESTS", detail)
     if any(d[0][2] != g.suite for d in discl):
         res.v("SUITE", detail)
@@ -222,7 +229,7 @@ def static_case(rule, res, row, g, discl, key, ln, ident, now):
 
 
 STATIC_REASONS = ("group_not_of_a_room", "vouch_digest_count", "vouch_term", "vouch_signature",
-                  "vouch_not_the_members_key", "vouch_by_node_key", "vouch_discloses_nothing",
+                  "vouch_not_the_members_key", "vouch_by_node_key", "vouch_by_no_members_key", "vouch_discloses_nothing",
                   "vouch_discloses_more_than_one", "disclosure_not_in_vouch", "vouch_names_another_leaf",
                   "vouch_names_another_room", "vouch_names_another_suite", "vouch_not_started", "vouch_ended",
                   "vouch_withdrawn", "leaf_not_signed_by_its_key")
@@ -231,7 +238,8 @@ STATIC_WITNESSES = ("accepted_under_a_person_key", "accepted_under_a_agent_key",
                     "accepted_with_32_digests", "accepted_with_a_shorter_term")
 STATIC_PREMISES = ("ONE.none_disclosed", "ONE.two_disclosed", "ROOM.good_in_A_presented_at_B.chat",
                    "ROOM.good_in_A_presented_at_B.call", "ROOM.good_in_A_presented_at_B.random",
-                   "NODE.node_signed", "SOUND.leaf_accepted", "COMPLETE.signed_and_well_presented", "CALLS.at_a_call_group",
+                   "NODE.node_signed", "SOUND.leaf_accepted", "SOUND.signed_by_a_seated_key_of_no_member_kind",
+                   "COMPLETE.signed_and_well_presented", "CALLS.at_a_call_group",
                    "DIGESTS.other_count", "SUITE.other_suite_disclosed", "WITHDRAWN.static",
                    "POSSESS.not_signed_by_its_key")
 
@@ -240,6 +248,10 @@ STATIC_PREMISES = ("ONE.none_disclosed", "ONE.two_disclosed", "ROOM.good_in_A_pr
 DW = LV.World(seats={"A": {"P": "dP", "O": "dO"}, "B": {"P": "dP", "T": "dT"}},
               kind={"dP": "person", "dO": "person", "dT": "person", "nP": "node", "nT": "node"},
               owner={"nP": "P", "nT": "T"})
+# the same, with the thief seated in room A too: a member of the room who copies another member's leaf key
+DW_THIEF_IN_A = LV.World(seats={"A": {"P": "dP", "O": "dO", "T": "dT"}, "B": {"P": "dP", "T": "dT"}},
+                         kind=DW.kind, owner=DW.owner)
+WORLDS = {"apart": DW, "thief_in_A": DW_THIEF_IN_A}
 DG = [SGN[n] for n in ("A.chat", "A.call", "A.random", "B.chat", "B.call", "B.random")]
 DGN = {g.name: g for g in DG}
 SLOTS = ("A.chat", "A.call")     # the groups the honest device P holds a leaf in
@@ -248,6 +260,8 @@ DEVICE = {"fresh_key": True, "forms": (("ok", TERM),)}
 SHORT = {"fresh_key": True, "forms": (("ok", TERM), ("ok", TERM // 2))}
 LAZY = {"fresh_key": True, "forms": (("ok", TERM), ("long", 2 * TERM + 1), ("noend", None))}
 SAME_KEY = {"fresh_key": False, "forms": (("ok", TERM),)}
+# a device that signs a vouch one tick before the vouch starts, the leaf key already made and in memory
+AHEAD = {"fresh_key": True, "forms": (("ok", TERM), ("ahead", TERM))}
 
 
 @lru_cache(maxsize=None)
@@ -284,8 +298,9 @@ def thief_cands(g, now, lk, rows, curkey):
 
 
 class Life:
-    def __init__(self, rule, dev):
+    def __init__(self, rule, dev, world=None):
         self.rule, self.dev, self.res = rule, dev, Res()
+        self.w = world or DW
         self.memo = {}
 
     def cands(self, g, now, lk, rows, curkey, replaced):
@@ -296,7 +311,7 @@ class Life:
                 self.res.n["thief presentations"] += 1
                 if key == ("hA", lk):
                     n_lifted += 1
-                r = LV.door_leaf(self.rule, DW, g, ident, key, ln, row, discl, now, replaced)
+                r = LV.door_leaf(self.rule, self.w, g, ident, key, ln, row, discl, now, replaced)
                 if r is None:
                     acc.append((ident, key, ln, row, discl))
                 else:
@@ -306,7 +321,7 @@ class Life:
 
     def judge_leaf(self, S, actor, g, ident, key, ln, row, discl, now, lifted):
         res = self.res
-        it = LV.intended(DW, g, ident, key, row, now)
+        it = LV.intended(self.w, g, ident, key, row, now)
         res.premise["SOUND.leaf_accepted"] += 1
         detail = "%s: leaf accepted at %s as %s, key %s, row %s by %s, %d disclosed, now %d" % (
             actor, g.name, ident, key, row.rid[:2], row.signer, len(discl), now)
@@ -316,7 +331,7 @@ class Life:
             res.v("ONE", detail, S)
         if not any(x[0] == key and x[1] == g.room for x in LV.entries_of(row)) or any(d[0][1] != g.room for d in discl):
             res.v("ROOM", detail, S)
-        if DW.kind_of(row.signer) == "node":
+        if self.w.kind_of(row.signer) == "node":
             res.v("NODE", detail, S)
         if ln != key:
             res.v("POSSESS", detail, S)
@@ -358,10 +373,11 @@ class Life:
                     if form == "ok" and dur < TERM and sum(1 for r in rows if r and r[4] == "ok" and r[1] - r[0] < TERM) >= MAXSHORT:
                         continue
                     keyid = len(rows) if dev["fresh_key"] or not rows else rows[-1][3]
-                    end = None if dur is None else now + dur
+                    start = now + 1 if form == "ahead" else now
+                    end = None if dur is None else start + dur
                     label = "P's device key signs vouch %d: leaf key %d, start %d, end %s%s" % (
-                        len(rows), keyid, now, end, "" if form == "ok" else " (%s)" % form)
-                    out.append((label, mk(rows=rows + ((now, end, False, keyid, form),))))
+                        len(rows), keyid, start, end, "" if form == "ok" else " (%s)" % form)
+                    out.append((label, mk(rows=rows + ((start, end, False, keyid, form),))))
             if rows:
                 row = to_row(cur, rows[cur])
                 key = ("hA", rows[cur][3])
@@ -371,10 +387,10 @@ class Life:
                     g = DGN[gname]
                     if slots[gi] is None:
                         # an Add: another member commits it
-                        r = LV.door_leaf(rule, DW, g, "P", key, key, row, discl, now)
+                        r = LV.door_leaf(rule, self.w, g, "P", key, key, row, discl, now)
                         ok = self.honest_leaf(S, g, key, row, discl, now, r, None)
                         if gname == "A.call":
-                            rx = LV.door_leaf(rule, DW, DGN["A.random"], "P", key, key, row, discl, now)
+                            rx = LV.door_leaf(rule, self.w, DGN["A.random"], "P", key, key, row, discl, now)
                             if rx == "group_not_of_a_room":
                                 res.w("a_call_group_with_a_random_id_is_refused", "", S)
                         if ok:
@@ -394,8 +410,8 @@ class Life:
                         oldkey = ("hA", rows[old_i][3])
                         st = LV.sem_state(old, now)
                         m = LV.door_msg(rule, old, "update_replacing_self", now)
-                        r = m or LV.door_leaf(rule, DW, g, "P", key, key, row, discl, now, (oldkey, old))
-                        good = it(DW, g, "P", key, row, now)
+                        r = m or LV.door_leaf(rule, self.w, g, "P", key, key, row, discl, now, (oldkey, old, "P"))
+                        good = it(self.w, g, "P", key, row, now)
                         if st == "lapsed" and good:
                             res.premise["REJOIN.lapsed_leaf_with_a_fresh_vouch"] += 1
                             if r is not None:
@@ -481,7 +497,7 @@ class Life:
     def honest_leaf(self, S, g, key, row, discl, now, r, replaced):
         """P presents its own leaf, well formed. Returns whether the door took it."""
         res = self.res
-        it = LV.intended(DW, g, "P", key, row, now)
+        it = LV.intended(self.w, g, "P", key, row, now)
         expect = it
         if replaced is not None and replaced[2] == "withdrawn" and not self.rule["withdrawn_may_replace"]:
             expect = False
@@ -561,7 +577,7 @@ class Life:
             if m is not None:
                 res.refusals[m] += 1
                 continue
-            acc, n_lifted = self.cands(g, now, lk, rows, curkey, (lkey, old))
+            acc, n_lifted = self.cands(g, now, lk, rows, curkey, (lkey, old, "P"))
             if now >= t_l + TERM:
                 res.premise["TERM.lifted_key_tried_after_the_term"] += n_lifted
             if st == "lapsed" and not acc:
@@ -580,6 +596,21 @@ class Life:
                     else:
                         out.append(("the thief's Update at %s keeps key %d under vouch %d" % (gname, lk, j),
                                     mk(extras=(extras - {(gname, i)}) | {(gname, j)})))
+                elif ident == "T" and LV.intended(self.w, g, ident, key, row, now):
+                    # the thief is a member of this room: the copied key signs an Update whose new LeafNode is
+                    # the thief's own leaf, and the leaf it replaces is gone from the tree
+                    label = "the copied key %d signs an Update at %s that puts a leaf of the thief's in its place" % (lk, gname)
+                    if st != "live":
+                        res.w(IDENTITY_WITNESS, "at %s, the replaced leaf's vouch %s, now %d, lifted at %d" % (
+                            gname, st, now, t_l), S, label)
+                        if now >= t_l + TERM:
+                            res.n["Updates signed by the copied key and taken, a term or more after the lift"] += 1
+                    if is_slot:
+                        gi = SLOTS.index(gname)
+                        s2 = slots[:gi] + (None,) + slots[gi + 1:]
+                        out.append((label, mk(slots=s2, flags=(flags[0] and any(x is not None for x in s2), True))))
+                    else:
+                        out.append((label, mk(extras=extras - {(gname, i)})))
                 else:
                     res.n["thief leaves accepted and not carried into the tree"] += 1
         # an Add at every group: an honest member commits any LeafNode the door takes
@@ -607,6 +638,10 @@ class Life:
                     res.n["thief leaves accepted and not carried into the tree"] += 1
         return out
 
+
+IDENTITY_WITNESS = "a_copied_key_whose_vouch_ended_signs_an_update_that_installs_the_thiefs_own_leaf"
+THIEF_IN_A = "the rule, a thief who is also a member of room A"
+THIEF_IN_A_KEEPS = "the same thief, where an Update must keep the identity of the leaf it replaces"
 
 LIFE_WITNESSES = (
     "the_device_joins_the_chat_group", "the_same_leaf_and_vouch_join_a_call_group",
@@ -642,8 +677,8 @@ def canon(now, rows, online, slots, lifted, extras, flags):
     return (now, rows, online, slots, lifted, extras, flags)
 
 
-def life_run(rule, dev, stop_on=None):
-    L = Life(rule, dev)
+def life_run(rule, dev, stop_on=None, world=None):
+    L = Life(rule, dev, world)
     init = (0, (), True, (None, None), None, frozenset(), (False, False))
     parent = {init: None}
     queue = deque([init])
@@ -692,7 +727,10 @@ def padding_run(pad):
             res.v("PADDING", "rows in the bucket of %d show %d different digest counts" % (bucket, len(obs)))
     if LV.pad_count(33) is None:
         res.w("more_than_32_rooms_is_more_than_one_row")
-    res.n["what a door tells apart"] = len({o for s in seen.values() for o in s})
+    told = {o for s in seen.values() for o in s}
+    if pad and told != set(COUNTS):
+        res.v("PADDING", "a door tells apart the counts %s, not 1, 8 and 32" % sorted(told))
+    res.n["what a door tells apart"] = len(told)
     return res
 
 
@@ -706,14 +744,20 @@ PLANTS = [
     ("no_cap_on_the_term", "life+door", {"cap": False}, LAZY, "TERM",
      "the door takes a vouch with no end or a longer term; a device that signs one"),
     ("the_end_is_not_read", "life+door", {"covers": False}, DEVICE, "TERM", "the door does not compare now with the end"),
-    ("the_old_leaf_key_vouches_the_next", "life", {"signer": "old_leaf"}, DEVICE, "RENEW",
-     "a renewal's vouch may be signed by the leaf key it replaces"),
+    ("the_end_is_inclusive", "life+door", {"covers": "end_inclusive"}, DEVICE, "TERM",
+     "the door takes a vouch on the instant of its end: one tick more than the term"),
+    ("the_vouch_starts_after_the_key_is_made", "life", {}, AHEAD, "TERM",
+     "A DEVICE, NOT A DOOR: it signs a vouch that starts a tick later, the leaf key already in memory; no door can tell"),
+    ("the_old_leaf_key_vouches_the_next", "life", {"signer": "old_leaf", "kind": False}, DEVICE, "RENEW",
+     "a renewal's vouch may be signed by the leaf key it replaces (and a leaf key is taken as a member's kind of key)"),
     ("the_device_is_read_as_its_node", "life+door", {"signer": "owner_bound_node", "kind": False}, DEVICE, "NODE",
      "a node key owner-bound to the member may sign the vouch"),
     ("a_seated_node_key_vouches", "door", {"kind": False}, None, "NODE",
      "a key a roster seats may vouch whatever kind of key it is"),
     ("any_valid_signature", "life+door", {"signer": "any_key"}, DEVICE, "RENEW",
      "the vouch's signer is not compared with the member's seated key"),
+    ("any_seated_key_of_the_room_vouches", "life+door", {"signer": "any_seat"}, DEVICE, "SOUND",
+     "the vouch's signer is a key the room seats, for whichever member: one member vouches a leaf as another"),
     ("the_signature_is_not_verified", "life+door", {"sig": False}, DEVICE, "RENEW", "the row's signature is not checked"),
     ("the_leaf_key_is_not_compared", "life+door", {"entry_key": False}, DEVICE, "RENEW",
      "the disclosed entry's leaf key is not compared with the LeafNode's"),
@@ -733,6 +777,10 @@ PLANTS = [
      "the door does not read a withdrawal of the vouch"),
     ("no_proof_of_possession", "life+door", {"pop": False}, DEVICE, "POSSESS",
      "the LeafNode's own signature is not checked against the leaf key it carries"),
+    ("the_replaced_leaf_key_signs_the_new_leafnode", "life", {"pop": "or_replaced"}, DEVICE, "POSSESS",
+     "on an Update the new LeafNode may be signed by the leaf key it replaces: the thief installs P's next leaf for it"),
+    ("a_shorter_term_is_refused", "door", {"shorter_ok": False}, None, "COMPLETE",
+     "the door refuses a vouch whose end is sooner than the cap"),
     ("a_lapsed_leafs_messages_are_held", "life", {"lapsed": "app_ok"}, DEVICE, "LAPSED",
      "a lapsed leaf's application messages are taken"),
     ("a_lapsed_leaf_commits", "life", {"lapsed": "commit_ok"}, DEVICE, "LAPSED", "a lapsed leaf's proposals and commits are taken"),
@@ -747,7 +795,7 @@ PLANTS = [
 
 def run_case(case):
     resource.setrlimit(resource.RLIMIT_AS, (2 << 30, 2 << 30))
-    name, parts, rule_kw, dev, stop_on = case
+    name, parts, rule_kw, dev, stop_on, world = case
     rule = rule_with(**rule_kw)
     out = {"name": name, "viol": {}, "n": {}, "premise": {}, "witness": {}, "refusals": {}, "traces": {}}
 
@@ -768,7 +816,7 @@ def run_case(case):
     if "door" in parts:
         fold(static_run(rule), "door")
     if "life" in parts:
-        res, tr = life_run(rule, dev, stop_on)
+        res, tr = life_run(rule, dev, stop_on, WORLDS[world])
         fold(res, "life", tr)
     if "padding" in parts:
         fold(padding_run(pad=(name != "no_padding")), "padding")
@@ -778,12 +826,15 @@ def run_case(case):
 def main():
     want_traces = "--traces" in sys.argv
     write = "--write-expected" in sys.argv
-    cases = [("the rule as modelled", "door+life+padding", {}, DEVICE, None),
-             ("the rule, a device that also signs a shorter term", "life", {}, SHORT, None),
-             ("the rule, a withdrawn leaf signs no Update (the other reading)", "life", {"withdrawn_may_replace": False}, DEVICE, None),
-             ("the rule, a device that signs vouches over the cap or with no end", "life", {}, LAZY, None)]
+    cases = [("the rule as modelled", "door+life+padding", {}, DEVICE, None, "apart"),
+             ("the rule, a device that also signs a shorter term", "life", {}, SHORT, None, "apart"),
+             ("the rule, a withdrawn leaf signs no Update (the other reading)", "life", {"withdrawn_may_replace": False}, DEVICE, None, "apart"),
+             ("the rule, a device that signs vouches over the cap or with no end", "life", {}, LAZY, None, "apart"),
+             (THIEF_IN_A, "life", {}, DEVICE, None, "thief_in_A"),
+             (THIEF_IN_A_KEEPS, "life", {"update_keeps_identity": True}, DEVICE, None, "thief_in_A")]
+    nruns = len(cases)
     # a plant's search of part 2 stops at the first state that breaks the property named for it
-    cases += [(n, parts, kw, dev, must) for n, parts, kw, dev, must, _what in PLANTS]
+    cases += [(n, parts, kw, dev, must, "apart") for n, parts, kw, dev, must, _what in PLANTS]
     with multiprocessing.Pool(3) as pool:
         results = pool.map(run_case, cases, chunksize=1)
     by = {r["name"]: r for r in results}
@@ -796,7 +847,11 @@ def main():
     print("       rooms A and B (and a private room C at the door), one honest device, one thief, one lift.")
     print("       three workers, each capped at 2 GiB of address space.")
     base = by["the rule as modelled"]
-    for name in [c[0] for c in cases[:4]]:
+    if (LV.DIGEST_COUNTS, LV.SEAT_KINDS, LV.SUITE) != (COUNTS, MEMBER_KINDS, 0x004D):
+        rc = 1
+        print("A CONSTANT OF leaf_vouch.py IS NOT THE RULE'S: digest counts %r, member kinds %r, suite %#06x"
+              % (LV.DIGEST_COUNTS, LV.SEAT_KINDS, LV.SUITE))
+    for name in [c[0] for c in cases[:nruns]]:
         r = by[name]
         print("\n== %s" % name)
         for k in sorted(r["n"]):
@@ -850,6 +905,20 @@ def main():
             rc = 1
         print("   %-8s %s   [%s]" % ("reached" if got else "MISSING", wit, name))
         lines.append(("witness", wit, "reached" if got else "missing"))
+
+    # the reading the rule sentences leave open: where the thief is a member of the room, the copied key's
+    # signature is taken on an Update after its vouch ended, unless an Update must keep the leaf's identity
+    for name, want_reached in ((THIEF_IN_A, True), (THIEF_IN_A_KEEPS, False)):
+        got = ("life: " + IDENTITY_WITNESS) in by[name]["witness"]
+        if got != want_reached:
+            rc = 1
+        print("   %-8s life: %s   [%s]%s" % ("reached" if got else "absent", IDENTITY_WITNESS, name,
+                                             "" if got == want_reached else "   <-- NOT AS EXPECTED"))
+        lines.append(("witness", "life: %s [%s]" % (IDENTITY_WITNESS, name), "reached" if got else "absent"))
+        if want_traces and got:
+            print("            %s" % by[name]["witness"]["life: " + IDENTITY_WITNESS])
+            for i, step in enumerate(by[name]["traces"].get("witness:" + IDENTITY_WITNESS, [])):
+                print("            %2d. %s" % (i + 1, step))
 
     print("\n== refusal reasons at the door (each must be the first reason of some presentation)")
     for reason in STATIC_REASONS:

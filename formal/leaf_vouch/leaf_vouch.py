@@ -7,7 +7,8 @@ leaf_vouch.py: the MLS leaf vouch as a door reads it.
     door      what every member of an MLS group runs on a LeafNode (an Add, an Update, a Commit path) and on a
               message a leaf signed.
 
-Two things are written apart and never share code:
+Two things are written apart and share no code path (they share the constants TERM, DIGEST_COUNTS and SEAT_KINDS,
+the last two pinned a second time in check_leaf_vouch.py):
 
     door_leaf, door_msg, door_remove   what a door decides from the bytes presented, under a RULE (a dict of
                                        switches; the rule as modelled is RULE, a plant flips switches)
@@ -96,18 +97,20 @@ RULE = {
     "recompute_room": True,      # the door recomputes the room from the group's id
     "digest_count": True,        # 1, 8 or 32 digests
     "cap": True,                 # an end is required, at most TERM after the start
+    "shorter_ok": True,          # and a shorter end is allowed
     "sig": True,                 # the row's signature verifies
     "signer": "seat",            # under the key the room's roster seats for the credential's identity
-    "kind": True,                # and that key is no node key
+    "kind": True,                # and that key is a person's roster key, an agent's key or a room key; never a node key
     "one": "exactly_one",        # the presentation discloses exactly one entry
     "digest_match": True,        # whose salted digest is in the row
     "entry_key": True,           # naming this leaf key
     "entry_room": True,          # this room
     "entry_suite": True,         # this suite
     "bind": "room",              # the room, so its chat group and its call groups
-    "covers": True,              # start <= now < end
+    "covers": True,              # start <= now < end ("end_inclusive": start <= now <= end, a plant)
     "withdrawal": True,          # and not withdrawn
     "pop": True,                 # the LeafNode is signed by the leaf key it carries
+                                 # ("or_replaced": or, on an Update, by the leaf key it replaces; a plant)
     "lapsed": "update_only",     # a lapsed leaf signs exactly the Update that replaces it
     "remove": "lapsed_only",     # members may remove, as lapsed, a leaf that is
     # a reading, not a plant: does a leaf whose vouch was WITHDRAWN still sign its replacing Update
@@ -115,12 +118,21 @@ RULE = {
     # not in the rule as modelled; an experiment switch: the door refuses an Update that keeps the leaf key
     # under a different vouch
     "fresh_on_update": False,
+    # a reading the rule sentences leave open, run both ways: must an Update's new LeafNode carry the identity of
+    # the leaf it replaces
+    "update_keeps_identity": False,
 }
 
 
+def ended(rule, row, now):
+    if not rule["covers"] or row.end is None:
+        return False
+    return now > row.end if rule["covers"] == "end_inclusive" else now >= row.end
+
+
 def door_leaf(rule, w, g, ident, key, ln_signer, row, discl, now, replaced=None):
-    """A LeafNode at a door. None when accepted, else the first reason. `replaced` is (leaf key, row) of the leaf an
-    Update replaces. The reason names are this model's and are no registry tokens."""
+    """A LeafNode at a door. None when accepted, else the first reason. `replaced` is (leaf key, row, identity) of the
+    leaf an Update replaces. The reason names are this model's and are no registry tokens."""
     room = room_of(rule, g)
     if room is None:
         return "group_not_of_a_room"
@@ -130,6 +142,8 @@ def door_leaf(rule, w, g, ident, key, ln_signer, row, discl, now, replaced=None)
         return "vouch_digest_count"
     if rule["cap"] and (row.end is None or not 0 < row.end - row.start <= TERM):
         return "vouch_term"
+    if not rule["shorter_ok"] and row.end is not None and row.end - row.start < TERM:
+        return "vouch_term"
     if rule["sig"] and not row.sig_ok:
         return "vouch_signature"
     seat = w.seats[g.room].get(ident)
@@ -138,12 +152,14 @@ def door_leaf(rule, w, g, ident, key, ln_signer, row, discl, now, replaced=None)
         ok = ok or (seat is not None and w.owner.get(row.signer) == ident)
     elif rule["signer"] == "any_key":
         ok = True
+    elif rule["signer"] == "any_seat":
+        ok = row.signer in w.seats[g.room].values()
     elif rule["signer"] == "old_leaf":
         ok = ok or (replaced is not None and row.signer == replaced[0])
     if not ok:
         return "vouch_not_the_members_key"
-    if rule["kind"] and w.kind_of(row.signer) == "node":
-        return "vouch_by_node_key"
+    if rule["kind"] and w.kind_of(row.signer) not in SEAT_KINDS:
+        return "vouch_by_node_key" if w.kind_of(row.signer) == "node" else "vouch_by_no_members_key"
 
     def one(d):
         if rule["digest_match"] and digest(d) not in row.digests:
@@ -183,12 +199,15 @@ def door_leaf(rule, w, g, ident, key, ln_signer, row, discl, now, replaced=None)
     if rule["covers"]:
         if now < row.start:
             return "vouch_not_started"
-        if row.end is not None and now >= row.end:
+        if ended(rule, row, now):
             return "vouch_ended"
     if rule["withdrawal"] and row.withdrawn:
         return "vouch_withdrawn"
     if rule["pop"] and ln_signer != key:
-        return "leaf_not_signed_by_its_key"
+        if not (rule["pop"] == "or_replaced" and replaced is not None and ln_signer == replaced[0]):
+            return "leaf_not_signed_by_its_key"
+    if rule["update_keeps_identity"] and replaced is not None and ident != replaced[2]:
+        return "update_changes_the_identity"
     if rule["fresh_on_update"] and replaced is not None and key == replaced[0] and row.rid != replaced[1].rid:
         return "renewal_keeps_the_leaf_key"
     return None
@@ -200,7 +219,7 @@ KINDS = ("application", "proposal", "commit", "update_replacing_self")
 def door_msg(rule, row, kind, now):
     """A message signed by a leaf already in the tree, whose credential carries `row`. For an Update this is the old
     leaf's signature only; the new LeafNode is door_leaf's."""
-    lapsed = rule["covers"] and row.end is not None and now >= row.end
+    lapsed = ended(rule, row, now)
     withdrawn = rule["withdrawal"] and row.withdrawn
     if not lapsed and not withdrawn:
         return None
