@@ -750,7 +750,7 @@ All four are charter members, changed only by a later bundle. The window exceeds
 
 Such a row otherwise arrives over a sealed link, so a device that knows no one needs a first row from somewhere. For the seated serve nodes it is this bundle. Each serve seat's binding in the bundle therefore carries `dial_hints`, signed with the binding: an ordered list of places to dial in the hint types of the node code ([CC 2.6.8](part_2_the_grammar.md#2.6.8)), with at least one `tcp` hint. The list is a cold-start seed and nothing more. The seat's live signed route row supersedes it once a link is up, an operator's own configuration overrides it, and a counted re-bind MAY carry a new list.
 
-*A canonical node is one source of route rows, never a required party.* The premise of this document is a network with no company in the middle. A trust decides what a node serves ([CC 3.2](part_3_the_namespace.md#3.2) T8), not whether two keys may speak privately. Two peers holding each other's signed route rows seal, exchange the allegiance facts and root each other directly. They hold those rows from a contact code, from the owner's own hand at first contact (the contact rule of [CC 5.4.6](#5.4.6)), or, for an unowned node, from any relay of the bootstrap kinds.
+*A canonical node is one source of route rows, never a required party.* The premise of this document is a network with no company in the middle. A trust decides what a node serves ([CC 3.2](part_3_the_namespace.md#3.2) T8), not whether two keys may speak privately. Two peers holding each other's signed route rows seal, exchange their allegiance rows and root each other directly. They hold those rows from a contact code, from the owner's own hand at first contact (the contact rule of [CC 5.4.6](#5.4.6)), or, for an unowned node, from any relay of the bootstrap kinds.
 
 *What the bundle names.* The bundle names, by row id in `refs`, each seated serve node's signed `transport_destination` binding ([CC 3.3.6.2](part_3_the_namespace.md#3.3.6.2)), each carrying its transit key. Every holder's statement covers the payload that names them, so the count that seats a node seats its binding ([CC 2.6.1.11](part_2_the_grammar.md#2.6.1.11)). At bundle verification each binding MUST be authored by a serve node listed in the bundle's `serve_nodes` and MUST carry a key that passes the in-row separation. On any failure the bundle concludes nothing.
 
@@ -774,10 +774,12 @@ An **amend** is a later bundle. It names the verified bundle as `prev`, carries 
 
 **What crosses before Rooted (normative).** A trust decides what a node *serves*, never whether two keys may speak privately ([CC 2.7.5](part_2_the_grammar.md#2.7.5)). On a sealed link to a peer the node has not Rooted, what the peer's own standing admits still crosses:
 
-- the bootstrap kinds and the allegiance facts;
+- the bootstrap kinds and the allegiance rows;
 - the pairing plane;
 - rows addressed to the peer;
 - and every row a bounded cohort delivers to that peer as its member under [CC 5.2](#5.2) — `self`, `family`, `community`, `affiliations` — because cohort delivery is consent and membership, not service.
+
+A node's allegiance rows are its owner's acceptance edges, and its owner-binding where that binding is placed at `federation`. A binding placed at `self`, a family or a room is no allegiance row. It crosses to no link peer by virtue of the link.
 
 What waits for `Rooted` ([CC 3.2](part_3_the_namespace.md#3.2) T8) is what the node serves to a third party: a federation-tier row, and any self-authored row about someone other than the peer.
 
@@ -1140,7 +1142,7 @@ The fail-secure rule bans the targeted, non-broadcast per-destination *query* in
 A stranger carries, on a shaped link, only what needs nobody's consent to carry:
 
 - the link's own key exchange and route fetch and its cover;
-- the public self-authenticating rows, which are key records and revocations, occurrences, a sender's own allegiance rows and the routes of unowned nodes;
+- the public self-authenticating rows, which are key records and revocations, occurrences, a sender's own allegiance rows ([CC 5.3.4](#5.3.4)) and the routes of unowned nodes;
 - the sealed asks and answers by which a consent is reached, which are a device-join request, a contact request and its acceptance, an invitation and its answer and a group key wrap;
 - and the accord's rows and tombstones. The accord's rows are the halt, the notify and the drill, and the roster's confirmation, resumption and decisions ([CC 3.4.1](part_3_the_namespace.md#3.4.1), [CC 4.2.6](part_4_composition_governance.md#4.2.6)). A node carries an accord row only when its signature verifies as a seated holder's of the roster the row names ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)), and carries none it cannot verify. That is the bound on this path: only a holder can mint such a row. The holders' key records and the roster version that seats them are public rows of this set, so a node outside the root can verify and carry. Carrying is not obeying: only a node that holds an edge latches ([CC 4.2.1](part_4_composition_governance.md#4.2.1)).
 

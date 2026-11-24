@@ -289,6 +289,8 @@ This entry says which signed rows seat a key on the roster of a `family` or `com
 
 **The proposal is an invitation, not the group's decision.** It carries no quorum. The group decides on the **growth record**: a membership **widening**, the only door that adds anyone. Its primary signer and cosigners are judged under `consensus_protocol` exactly as before. That is one quorum check, not two. Under a quorum protocol K can accept and still not be admitted ("accepted, awaiting the group").
 
+**How an invitation and its answer travel (normative).** This carriage is for a room seated by identity keys: a family, a public room, and a room whose roster its members can read. An invitation and its answer each travel as a sealed envelope of ordinary rows. Each is sealed end to end to the recipient's occurrence key, so a carrier checks what it carries without opening it ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)). The invitation carries the `membership:proposal` and the inviter's occurrence rows, and nothing of the room's roster. The answer carries the `membership:acceptance`, the joiner's occurrence rows, and the joiner's owner-binding re-signed at the room's scope ([CC 3.2](#3.2)). Once the widening seats the joiner, the cohort's ordinary delivery serves it the roster, the members' occurrences and their bindings placed at the room. The welcome carries nothing more. An invitation is sealed to a key the inviter already holds. So a person with no announced node is invited only after a contact has been exchanged ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)). The envelope is no family and adds no member to any row: it holds rows that exist.
+
 **Admission (normative).** A widening seats a key K not active in the group only if all hold:
 
 - (1) an admitted `membership:acceptance:v1` by K references a proposal P for the same group (and, on a widening that assigns one, the same `role`);
@@ -1986,7 +1988,7 @@ An unauthenticated announce (no matching signed `transport_destination`) is **ad
 - a Rooted binding; or
 - the pairing pin of [CC 3.2](#3.2) adding a device (f).
 
-**Rooted standing is not required to seal.** It governs what the peer may be served ([CC 3.2](#3.2) T8). A not-yet-Rooted sealed link carries the bootstrap kinds, the allegiance facts and the pairing plane. It also carries rows addressed to the peer and the rows a bounded cohort delivers to it as a member ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). So two peers who hold each other's signed bindings seal and root each other with no canonical in the path.
+**Rooted standing is not required to seal.** It governs what the peer may be served ([CC 3.2](#3.2) T8). A not-yet-Rooted sealed link carries the bootstrap kinds, the allegiance rows and the pairing plane. It also carries rows addressed to the peer and the rows a bounded cohort delivers to it as a member ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). So two peers who hold each other's signed bindings seal and root each other with no canonical in the path.
 
 **A bare or unsigned announce never supplies a pair.** A dialler holding none fetches this row by the pre-seal route request of [CC 5.3.3.10](part_5_transport_substrate.md#5.3.3.10) E1, verifies it, and seals. It falls back to the pairing pin only where no responder can be reached.
 

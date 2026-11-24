@@ -1,10 +1,10 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "17534e1599ba12d71e28eb289cc18a0f3546cff50076d5665480df4afc8921fe",
+  "transitions_sha256": "fe9aa330e55139bd62f40aa109790e6e2c3324c9c5956e344d806e9c42fbd89f",
   "policy_sha256": "e0b21aea5959b3098e9392d23a7de823d5363fd88aa2084e5d739cecb53b1f00",
-  "steps": 124,
-  "rows": 92,
+  "steps": 133,
+  "rows": 97,
   "errors": []
  },
  "steps": [
@@ -3336,6 +3336,234 @@
     "verb": "attest",
     "signer": "bob",
     "object": "unit:2"
+   }
+  },
+  {
+   "n": 125,
+   "note": "A stranger tries to invite Judy to Ken's family: refused, an invitation is a member's",
+   "actor": "erin",
+   "standing": [],
+   "view": {
+    "object": "invite:judy",
+    "family": "membership:{stage}",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {
+     "stage": "proposal"
+    }
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 126,
+   "note": "Ken, whose device is unannounced, invites Judy, a contact whose device is unannounced too: his proposal, sealed to the occurrence key he holds from their contact",
+   "actor": "ken",
+   "standing": [
+    "member"
+   ],
+   "view": {
+    "object": "invite:judy",
+    "family": "membership:{stage}",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "stage": "proposal",
+     "last_attest_by": "ken"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row93",
+    "family": "membership:{stage}",
+    "verb": "attest",
+    "signer": "ken",
+    "object": "invite:judy"
+   }
+  },
+  {
+   "n": 127,
+   "note": "Ken tries to accept for Judy: refused, the acceptance is the joiner's own",
+   "actor": "ken",
+   "standing": [
+    "member"
+   ],
+   "view": {
+    "object": "accept:judy",
+    "family": "membership:{stage}",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {
+     "stage": "acceptance"
+    }
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 128,
+   "note": "Judy accepts: her own row, the first of her sealed answer",
+   "actor": "judy",
+   "standing": [
+    "self"
+   ],
+   "view": {
+    "object": "accept:judy",
+    "family": "membership:{stage}",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "stage": "acceptance",
+     "last_attest_by": "judy"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row94",
+    "family": "membership:{stage}",
+    "verb": "attest",
+    "signer": "judy",
+    "object": "accept:judy"
+   }
+  },
+  {
+   "n": 129,
+   "note": "Ken tries to sign the binding of Judy's device at the family's scope: refused, the owner alone signs the placed row",
+   "actor": "ken",
+   "standing": [
+    "member"
+   ],
+   "view": {
+    "object": "own:node-judy",
+    "family": "ownership:{relation}:{target_kind}:{version}",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 130,
+   "note": "Judy re-signs her device's binding at the family's scope, and it rides in her answer",
+   "actor": "judy",
+   "standing": [
+    "owner"
+   ],
+   "view": {
+    "object": "own:node-judy",
+    "family": "ownership:{relation}:{target_kind}:{version}",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "last_authorize_by": "judy"
+    }
+   },
+   "queue": [
+    "authorize"
+   ],
+   "chosen": "authorize",
+   "refused": false,
+   "row": {
+    "id": "row95",
+    "family": "ownership:{relation}:{target_kind}:{version}",
+    "verb": "authorize",
+    "signer": "judy",
+    "object": "own:node-judy"
+   }
+  },
+  {
+   "n": 131,
+   "note": "Judy tries to sign the widening that seats her: refused, a widening is the members' counted row",
+   "actor": "judy",
+   "standing": [
+    "self"
+   ],
+   "view": {
+    "object": "widen:judy",
+    "family": "membership:{stage}",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {
+     "stage": "widening"
+    }
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 132,
+   "note": "Ken signs the widening that seats Judy, citing her acceptance",
+   "actor": "ken",
+   "standing": [
+    "member"
+   ],
+   "view": {
+    "object": "widen:judy",
+    "family": "membership:{stage}",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "stage": "widening",
+     "last_attest_by": "ken"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row96",
+    "family": "membership:{stage}",
+    "verb": "attest",
+    "signer": "ken",
+    "object": "widen:judy"
+   }
+  },
+  {
+   "n": 133,
+   "note": "The edge on Ken's device serves a row of the family to Judy's node and reports the delivery",
+   "actor": "edge:ken",
+   "standing": [
+    "infra:attest"
+   ],
+   "view": {
+    "object": "deliver:judy",
+    "family": "delivery:{class}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "edge:ken"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row97",
+    "family": "delivery:{class}",
+    "verb": "attest",
+    "signer": "edge:ken",
+    "object": "deliver:judy"
    }
   }
  ]
