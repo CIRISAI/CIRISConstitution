@@ -403,19 +403,20 @@ def two_path(fam):
     over_c = "others" if f["cancel_over"] == "others" else "all"
     cl = []
     if not f["irreversible"] or "ignore_irreversible" in MUT: cl.append(("once", "approve", e, "all", "landed"))
-    if f["cancel_rule"]["kind"] != "none": cl.append(("close", "object", at_least_rule(f["cancel_rule"], mc), over_c, "cancelled"))
+    no = "refused" if f["at_window"] == "refused" else "cancelled"       # the self roster's word for a proposal that does not land (CC 3.3.6.4)
+    if f["cancel_rule"]["kind"] != "none": cl.append(("close", "object", at_least_rule(f["cancel_rule"], mc), over_c, no))
     cl.append(("close", "approve", e, "all", "landed"))
     if f["reverse_path"] and f["floor_rule"]["kind"] != "none" and "no_floor" not in MUT:
         cl.append(("close", "approve", at_least_rule(f["floor_rule"], mc), "all", "landed"))
     if "no_floor" in MUT and f["reverse_path"]:
         cl.append(("close", "approve", ("abs", 1), "all", "landed"))   # MUTATION: silence lands on the proposer alone
-    default = {"cancelled": "cancelled", "stay_open": "open"}[f["at_window"]]
+    default = {"cancelled": "cancelled", "stay_open": "open", "refused": "refused"}[f["at_window"]]
     silent = default if f["counted"]["target_silent"]["value"] == "yes" else None
     tv = f["counted"].get("target_voice", {}).get("value") == "yes" and "target_voice_ignored" not in MUT   # MUTATION: the cell not read
     spec = dict(policy=fam, kind="two_path", opener=f["counted"]["count_set"]["value"], counted=f["counted"]["count_set"]["value"],
                 extra=(), target_votes=tv, opener_says="approve", kinds=("approve", "object"), clauses=tuple(cl),
                 silent=silent, default=default, secs=f["window_secs"], concluder=f["counted"]["count_set"]["value"],
-                late="counts", outcomes=("landed", "cancelled", "open"),
+                late="counts", outcomes=("landed", no, "open"),
                 cells={"opener": "counted.count_set (a member proposes)", "answers": "counted.count_set, voices objection + approve",
                        "enact": "enact_rule %s" % json.dumps(f["enact_rule"]), "cancel": "cancel_rule %s over %s" % (json.dumps(f["cancel_rule"]), f["cancel_over"]),
                        "floor": "floor_rule %s, min_count %d" % (json.dumps(f["floor_rule"]), mc), "window": "window_secs %d" % f["window_secs"],

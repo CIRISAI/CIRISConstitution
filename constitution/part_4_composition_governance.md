@@ -2177,8 +2177,8 @@ The rows are these, generated into this section from the table:
 | `default_irreversible` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled |
 | `community_invite` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
 | `community_remove` | `member`, one voice a person, the set the proposal names | protocol | — | — | 259 200 s | cancelled |
-| `self_roster_add` | `self`, one voice a key, the set the proposal names | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | stay_open |
-| `self_roster_evict` | `self`, one voice a key, the set the proposal names, the target silent | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | stay_open |
+| `self_roster_add` | `self`, one voice a key, the set the proposal names | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | refused |
+| `self_roster_evict` | `self`, one voice a key, the set the proposal names, the target silent | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | refused |
 | `moderation_action` | `member`, one voice a person, the set the proposal names | role:moderate at 1 | — | more than 1/2 of those who voted, at least 2 voices | 172 800 s | tallied |
 | `moderation_overturn` | `member`, one voice a person, the set at the act | more than 1/2 | — | 2 voices | 172 800 s | lapsed |
 | `moderator_recall` | `member`, one voice a person, the set the proposal names | 2/3 | — | 2 voices | 259 200 s | cancelled |
@@ -2198,7 +2198,7 @@ Each row is stated where its act is. Invitation and removal are at [CC 3.1.3.2](
 Votes travel on `objection:{state}` ([CC 3.1.9.2](part_3_the_namespace.md#3.1.9.2)): `proposal`, `assent`, `raised`. Two further fields are on every row:
 
 - `cancel_over`, the denominator of the cancel fraction — the base for a community, the proposer counted; the *other* keys for a self roster, since the proposer is not asked to object to itself;
-- `at_window`, what becomes of a proposal that has not landed when its window closes — `cancelled` for a community row unless the table states another value, so a held change always resolves. It is `stay_open` for the self roster, cleared by the proposer's withdrawal or the target's act. The halt and a moderation overturn lapse. A moderation action and a poll are tallied, and a moderator election stays open.
+- `at_window`, what becomes of a proposal that has not landed when its window closes — `cancelled` for a community row unless the table states another value, so a held change always resolves. It is `refused` for the self roster: an eviction whose target signed inside the window is refused, and so is a proposal that a strict majority of the others objected to ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)). The halt and a moderation overturn lapse. A moderation action and a poll are tallied, and a moderator election stays open.
 
 **Who a row counts.** Each row also states who it counts, as typed cells. They are the roles whose seated keys make the set, whether a voice is a person or a key, and the instant the set is taken at. They also name the rows the voices travel on and whether the target must be silent. A cell this document does not state reads `unstated` in the table, and the build counts those cells so their number only falls. A row that removes from the set it counts fixes that set before the act, so the counted never choose who counts.
 

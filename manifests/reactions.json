@@ -24,14 +24,15 @@
    "by_concluder": {
     "author": 3,
     "infra:attest": 1,
-    "local": 10,
+    "local": 9,
     "member": 2,
+    "self": 1,
     "winner": 1
    },
    "by_late": {
     "closed": 3,
-    "counts": 6,
-    "unstated": 8
+    "counts": 7,
+    "unstated": 7
    },
    "clocks_with_no_landing": [
     "group:roster cover"
@@ -1940,7 +1941,9 @@
    "family": "identity:occurrence",
    "kind": "land",
    "name": "window",
-   "concluder": "local",
+   "concluder": "self",
+   "landing": "window:{state}",
+   "late": "counts",
    "cc_ref": [
     "CC 3.3.6.4"
    ]

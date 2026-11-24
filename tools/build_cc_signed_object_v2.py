@@ -1128,10 +1128,16 @@ def family_payload_rule(root, p, family=None):
     if root == "window-step":
         if dim not in ("window:held:v1", "window:landed:v1", "window:refused:v1") or "target" not in refs:
             return PAYLOAD_INVALID                        # the states are closed at held, landed and refused; the opener under target
-        if set(refs) != ({"target"} if dim == "window:held:v1" else {"target", "prev"} | ({"also"} & set(refs))):
-            return PAYLOAD_INVALID                        # a held row names the opener alone; a landing its held row too, and no head
-        if "also" in refs and (set(refs["also"]) != {"cites"} or not refs["also"]["cites"]):
-            return PAYLOAD_INVALID                        # the rows a landing counted stand under cites, and under no other role
+        if "head" in refs:
+            return PAYLOAD_INVALID                        # neither a held row nor a landing names a head
+        if dim == "window:held:v1":
+            if "prev" in refs:
+                return PAYLOAD_INVALID                    # a held row names no row under prev; it may name other rows
+        else:
+            if set(refs) != {"target", "prev"} | ({"also"} & set(refs)):
+                return PAYLOAD_INVALID                    # a landing names the opener and its signer's held row
+            if "also" in refs and (set(refs["also"]) != {"cites"} or not refs["also"]["cites"]):
+                return PAYLOAD_INVALID                    # the rows a landing counted stand under cites, and under no other role
     if root == "objection-vote":
         if dim not in ("objection:assent:v1", "objection:raised:v1") or "answers" not in refs:
             return PAYLOAD_INVALID                        # the states are closed at assent and raised (CC 3.1.9.2)
@@ -1344,6 +1350,8 @@ def family_payload_rule_checks():
         bad.append("a landing breaks its prose rule")
     if family_payload_rule("window-step", window_landing(dimension="window:refused:v1", refs={"target": _ref(27), "prev": _ref(28)})) is not None:
         bad.append("a landing that counted no row breaks its prose rule")
+    if family_payload_rule("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "also": {"cites": [_ref(29)]}})) is not None:
+        bad.append("a held row that names other rows breaks its prose rule")
     breaks = [
         ("membership-change", dict(P["membership-change"][1], dimension="membership:proposal:v1"), None),
         ("membership-change", _without(P["membership-change"][1], "joined_at"), None),
@@ -1430,7 +1438,6 @@ def family_payload_rule_checks():
         ("objection-vote", dict(P["objection-vote"][1], dimension="objection:proposal:v1"), None),
         ("objection-vote", dict(P["objection-vote"][1], dimension="objection:dismissed:v1"), None),
         ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "prev": _ref(28)}), None),
-        ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "also": {"cites": [_ref(29)]}}), None),
         ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "head": _ref(9)}), None),
         ("window-step", dict(P["window-step"][1], refs={"also": {"ack": [_ref(27)]}}), None),
         ("window-step", dict(P["window-step"][1], dimension="window:open:v1"), None),
@@ -1541,7 +1548,7 @@ FAMILY_RULE_HEAD = {
     "holon-claim": "holon:claim (CC 3.1.11): authored by the signer under its own name; one claim, type scores; sub is the holon's id as text. The declaration is an unsigned blob cited by its digest, which is among evidence_refs. In refs it names only rows of its own group: those it follows, under prev and further_prev, and on a supersedes the row it replaces, under target; no head.",
     "holon-claim-body": "The body of a holon:claim that states a bound (CC 3.1.11); a claim of exact agreement carries no body.",
     "leaf-vouch": "mls:leaf_vouch (CC 5.1, CC 3.1.4): authored by the member whose leaf it is and signed under that member's device key; type scores; author, iss and sub are the member. It vouches for the device's MLS leaf key in each room it names, as blinded elements; a presentation discloses one. It names no row, but for a room key the head of its voice roster.",
-    "window-step": "window:{state}, the states held, landed and refused (CC 3.1.3, CC 3.3.6.4): authored by a key seated in the counted set at the head the opener names; type scores, with no score. It names the opener under refs.target. A held row names nothing else. A landing names its signer's held row under prev and every row it counted under the also role cites, and no head.",
+    "window-step": "window:{state}, the states held, landed and refused (CC 3.1.3, CC 3.3.6.4): authored by a key seated in the counted set at the head the opener names; type scores, with no score. It names the opener under refs.target, and no head. A held row names no row under prev, and it MAY name other rows. A landing names its signer's held row under prev and every row it counted under the also role cites.",
     "objection-vote": "objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",
