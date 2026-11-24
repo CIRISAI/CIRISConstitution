@@ -2333,7 +2333,7 @@ def reader_checks():
             f"Valid; {caught} broken bundles give their own answer"), bad
 
 
-def cddl_checks(text):
+def cddl_checks(text, later=True):
     """(lines, problems): parse the CDDL and validate the samples, with the `cddl` gem when present."""
     tool = find_tool("cddl")
     if not tool:
@@ -2385,9 +2385,8 @@ def cddl_checks(text):
         lines.append(f"1 genesis bundle sample validates; {grefused} broken bundles are refused")
         acc = {root: (ok, broken) for root, ok, broken in accord_samples()}
         for root, (ok, broken), what in (("key-record-members", key_record_samples(), "key record with its custody member"),
-                                         ("key-record-members", room_key_record_samples(), "record of a room key"),
-                                         *room_binding_samples(),
-                                         *leaf_and_group_samples(),
+                                         *((("key-record-members", room_key_record_samples(), "record of a room key"),
+                                            *room_binding_samples(), *leaf_and_group_samples()) if later else ()),
                                          ("recovery-commitment-input", recovery_samples(), "recovery commitment input"),
                                          ("accord-invocation", acc["accord-invocation"], "accord invocation payload"),
                                          ("accord-lifecycle", acc["accord-lifecycle"], "accord lifecycle payload"),
