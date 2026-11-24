@@ -326,6 +326,7 @@ grant_contested	concludes_nothing		the text says neither counts
 grant_declined	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 grant_other_grantee	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 grant_withdrawn	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+grantee_has_no_owner	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
 group_dissolved	hold		a proposal to a dissolved group is held
 group_id_not_of_founding	refusal		the text says Invalid
 hard_case:admin_action	hard_case		record the substrate raises
