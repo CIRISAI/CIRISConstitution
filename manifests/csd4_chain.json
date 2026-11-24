@@ -32,14 +32,14 @@
    "invariants": 263,
    "claims": 610,
    "entries": 20,
-   "refusal_tokens": 133
+   "refusal_tokens": 134
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "19916b8ca5491e23796b3e21d8d6288f89f3a7feed433f17177252125b4ad127"
+  "chain_sha256": "687073b76fd0102742cd90a8f86048077e3bebc1cd03b90f028c89761a1f5047"
  },
  "chain": [
   {
@@ -54982,6 +54982,9 @@
   },
   "keeps_cites_no_end": {
    "3.1.3.2": "after_refusal"
+  },
+  "key_grant_recipient_not_seat": {
+   "4.4.3.16": "after_refusal"
   },
   "key_record_bad_attestation_evidence": {
    "4.2.2.1": "after_refusal"

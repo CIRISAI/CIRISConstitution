@@ -223,8 +223,8 @@ custody	custody-ack	"asserted_at"	asserted_at	payload	ms-time	always	3.1.3.3 2.6
 key_grant	key-grant	"author"	attesting_key_id	payload	identity-ref	always	3.3.2	The sealer.
 key_grant	key-grant	"dimension"	dimension	payload	tstr	always	3.3.2	key_grant:{axis}:v1.
 key_grant	key-grant	"axis"	axis	payload	"content" / "epoch" / "stream"	always	3.3.2	The same axis as the leaf.
-key_grant	key-grant	"wrap_algorithm"	wrap_algorithm	payload	"x25519_mlkem768_aes256_gcm_hkdf_sha256"	always	3.3.2	The v2 wire string, mandatory for every wrapped key.
-key_grant	key-grant	"wrapped_dek"	wrapped_dek	payload	bstr	always	3.3.2 2.6.1.2	The wrapped data-encryption key, as bytes.
+key_grant	key-grant	"wrap_algorithm"	wrap_algorithm	payload	"x25519_mlkem768_aes256_gcm_hkdf_sha256" / "xwing_hpke_aes256_gcm_hkdf_sha256"	always	3.3.2 2.6.1.11	The v2 wire string on a wrap to the content-KEM keys of an occurrence; the X-Wing string on a wrap to a room key, which carries no other.
+key_grant	key-grant	"wrapped_dek"	wrapped_dek	payload	bstr	always	3.3.2 2.6.1.2 2.6.1.11	The wrapped data-encryption key, as bytes. On a wrap to a room key: the X-Wing encapsulation of 1120 bytes, then the AEAD ciphertext of the sealed map.
 key_grant	key-grant	"at_rest_sha256"	at_rest_sha256	payload	hash-digest	on the content axis	3.3.2	The content's at-rest digest.
 key_grant	key-grant	"owner"	owner_key_id	payload	identity-ref	on the content and stream axes	3.3.2	The owner of the content or the stream.
 key_grant	key-grant	"community"	community_key_id	payload	group-ref	on the epoch axis	3.3.2	The community whose epoch key is wrapped.
@@ -302,6 +302,21 @@ room	seat-commitment-input	room	-	derived	group-ref	always	2.6.1.11 3.3.4	The ro
 room	seat-commitment-input	room_key	-	derived	kid	always	2.6.1.11	The room key's thumbprint.
 room	seat-commitment-input	person	-	derived	identity-ref	always	2.6.1.11	The person's identity reference.
 room	seat-commitment-input	nonce	-	derived	bstr .size 32	always	2.6.1.11	Thirty-two fresh random bytes.
+room_binding	binding-info-input	room	-	derived	group-ref	always	2.6.1.11	The room's derived id.
+room_binding	binding-info-input	room_key	-	derived	kid	always	2.6.1.11	The thumbprint of the room key the binding is of.
+room_binding	binding-info-input	addressee_key	-	derived	kid	always	2.6.1.11	The thumbprint of the addressee's room key, never a node key.
+room_binding	binding-info-input	seat_commitment	-	derived	hash-digest	always	2.6.1.11	The commitment on the room key's record.
+room_binding	binding-info-input	binding_key	-	derived	bstr .size 32	always	2.6.1.11 2.6.1.12	The thumbprint of the person's binding key; its encoding is open.
+room_binding	binding-opening	person	-	derived	identity-ref	always	2.6.1.11	The person the room key's holder names.
+room_binding	binding-opening	nonce	-	derived	bstr .size 32	always	2.6.1.11	The nonce under the seat commitment.
+room_binding	room-sealed	"dek"	-	object	bstr .size 32	on a wrap to a room key	2.6.1.11 3.3.2	The wrapped key. A sealed envelope outside a wrap carries none.
+room_binding	room-sealed	"claim"	-	object	binding-claim	where the sender names its person to the recipient	2.6.1.11 3.1.3.2	The first flow, from the room key's holder to the addressee.
+room_binding	room-sealed	"challenge"	-	object	bstr .size 1120	where the sender challenges the recipient's person	2.6.1.11 3.1.3.2	The second flow, from the addressee: an X-Wing encapsulation to the person's binding key.
+room_binding	room-sealed	"confirmation"	-	object	binding-confirmation	where the sender answers the recipient's challenge	2.6.1.11 3.1.3.2	The third flow, from the room key's holder: an HPKE seal in PSK mode to the addressee's room key.
+room_binding	binding-claim	"person"	-	object	identity-ref	always	2.6.1.11	The person claimed.
+room_binding	binding-claim	"occurrence"	-	object	[+ bstr]	where the addressee may hold no occurrence of the person	2.6.1.11 3.3.6.1	The statements of the person's identity:occurrence row that carries the binding key, as bytes: a sequence.
+room_binding	binding-confirmation	"enc"	-	object	bstr .size 1120	always	2.6.1.11	The confirmation's own X-Wing encapsulation, to the addressee's room key.
+room_binding	binding-confirmation	"ct"	-	object	bstr	always	2.6.1.11	The AEAD ciphertext over the opening.
 group_id	group-id-input	group_kind	-	derived	"family" / "community"	always	3.3.4 2.6.1.2	The first version's group_kind.
 group_id	group-id-input	first_members	-	derived	[+ identity-ref]	always	3.3.4 2.6.1.2	The key of every member the first version lists: a set.
 group_id	group-id-input	founded_at	-	derived	ms-time	always	3.3.4 2.6.1.2	The first version's founded_at.

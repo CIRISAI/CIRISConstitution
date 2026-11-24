@@ -103,6 +103,7 @@ OBJECTS = [
     ("rebind", "A canonical re-bind: the payload of a `transport:canonical_rebind` row"),
     ("binding", "The transport destination binding (`identity:occurrence`)"),
     ("room", "The seat commitment of a room key"),
+    ("room_binding", "The binding of a voice to its person, and what a wrap to a room key seals"),
     ("group_id", "The id of a group: what its first version derives it from"),
     ("disclosure", "A disclosure of a blinded member"),
     ("logical", "Logical names with no member of their own"),
@@ -446,6 +447,32 @@ def room_key_record_samples():
     ]
 
 
+def room_binding_samples():
+    """[(root, (valid, broken), what)]: the info and the opening of a binding's confirmation, and the sealed map of a wrap."""
+    kid, com = bytes([1]) * 32, [-16, bytes([7]) * 32]
+    info = ["CEG-binding/2", gref(5), kid, bytes([2]) * 32, com, bytes([3]) * 32]
+    opening = [iref(1), bytes([4]) * 32]
+    sealed = {"dek": bytes([5]) * 32, "claim": {"person": iref(1), "occurrence": [bytes(64), bytes(64)]},
+              "challenge": bytes(1120), "confirmation": {"enc": bytes(1120), "ct": bytes(130)}}
+    return [
+        ("binding-info-input", (cde(info), [
+            ("a binding info under the seat label", cde(["CEG-seat/2"] + info[1:])),
+            ("a binding info naming its room by a key id", cde([info[0], "A1"] + info[2:])),
+            ("a binding info naming the addressee by an identity reference", cde(info[:3] + [iref(2)] + info[4:])),
+            ("a binding info with no binding key", cde(info[:5]))]), "info of a binding's confirmation"),
+        ("binding-opening", (cde(opening), [
+            ("an opening with a nonce of 31 bytes", cde([iref(1), bytes(31)])),
+            ("an opening naming its person by a key id", cde(["A1", bytes(32)]))]), "opening of a binding"),
+        ("room-sealed", (cde(sealed), [
+            ("a challenge of 1119 bytes", cde(dict(sealed, challenge=bytes(1119)))),
+            ("a confirmation with no ciphertext", cde(dict(sealed, confirmation={"enc": bytes(1120)}))),
+            ("a confirmation whose encapsulation is the earlier pair's", cde(dict(sealed, confirmation={"enc": bytes(1088), "ct": bytes(130)}))),
+            ("a claim that names no person", cde(dict(sealed, claim={"occurrence": [bytes(64)]}))),
+            ("a wrapped key of 31 bytes", cde(dict(sealed, dek=bytes(31)))),
+            ("a tag beside the confirmation", cde(dict(sealed, tag=bytes(32))))]), "sealed map of a wrap to a room key"),
+    ]
+
+
 def room_key_record_rule(p):
     """The rule of a room key's record the schema cannot state (CC 2.6.1.11): room marks the record, and the KEM key
     and the commitment are present exactly where room is."""
@@ -576,6 +603,7 @@ def recovery_samples():
 
 # ---------------------------------------------------------------- the payloads of nine families (CC 2.6.1.4)
 PAYLOAD_INVALID = "edition2_payload_invalid"
+XWING_WRAP = "xwing_hpke_aes256_gcm_hkdf_sha256"         # the wrap_algorithm of a wrap to a room key (CC 2.6.1.11)
 TIPS_MAX, TIPS_TOO_MANY = 64, "trusted_through_too_many"   # refs.trusted_through on any row (CC 3.1.3.2)
 ACK_MAX, ACK_TOO_MANY = 256, "ack_names_too_many"          # the acts one receipt names under refs.also.ack (CC 3.1.3)
 FAMILY_UNREGISTERED = "namespace_family_unregistered"   # a family label under a retired stem (CC 3.1.7)
@@ -763,6 +791,9 @@ def family_payload_samples():
             ("a grant under the v1 wrap", W("key-grant", wrap_algorithm="hpke_rfc9180_base_x25519_aes_gcm")),
             ("a wrapped key in base64", W("key-grant", wrapped_dek="AAAA")),
             ("a grant with no axis", D("key-grant", "axis"))]),
+        ("key-grant", "key_grant:{axis} payload of a wrap to a room key",
+         W("key-grant", wrap_algorithm=XWING_WRAP, wrapped_dek=bytes(1120 + 16 + 40)), [
+            ("a wrap under an unnamed X-Wing string", W("key-grant", wrap_algorithm="xwing_aes256_gcm"))]),
         ("identity-occurrence", "a seat's binding as an identity:occurrence", binding_samples()[0], [
             ("a seat binding without refs.head", cde(_seat_binding_without_head()))]),
         ("identity-occurrence", "identity:occurrence payload", cde(P["identity-occurrence"]), [
@@ -939,6 +970,8 @@ def family_payload_rule(root, p, family=None):
                 "stream": ("stream_id", "epoch", "owner")}.get(p.get("axis"), ())
         if _segment(dim, 1) != p.get("axis") or any(m not in p for m in need):
             return PAYLOAD_INVALID
+        if p.get("wrap_algorithm") == XWING_WRAP and len(p.get("wrapped_dek", b"")) <= 1120 + 16:
+            return PAYLOAD_INVALID                        # the encapsulation, then a ciphertext that holds more than its tag (CC 2.6.1.11)
     if root == "delivery-ack" and _segment(dim, 1) != p.get("stream_id"):
         return PAYLOAD_INVALID
     if root == "takedown-notice":
@@ -1237,6 +1270,8 @@ def family_payload_rule_checks():
         ("custody-ack", _without(P["custody-ack"][1], "size"), None),
         ("key-grant", _without(P["key-grant"][1], "minter"), None),
         ("key-grant", dict(P["key-grant"][1], dimension="key_grant:content:v1"), None),
+        ("key-grant", dict(P["key-grant"][1], wrap_algorithm=XWING_WRAP, wrapped_dek=bytes(1120)), None),
+        ("key-grant", dict(P["key-grant"][1], wrap_algorithm=XWING_WRAP, wrapped_dek=bytes(1120 + 16)), None),
         ("delivery-ack", dict(P["delivery-ack"][1], stream_id="s2"), None),
         ("takedown-notice", dict(P["takedown-notice"][1], dimension="takedown_notice:steward_purge:v1",
                                  legal_basis="steward_purge"), None),
@@ -2289,6 +2324,7 @@ def cddl_checks(text):
         acc = {root: (ok, broken) for root, ok, broken in accord_samples()}
         for root, (ok, broken), what in (("key-record-members", key_record_samples(), "key record with its custody member"),
                                          ("key-record-members", room_key_record_samples(), "record of a room key"),
+                                         *room_binding_samples(),
                                          ("recovery-commitment-input", recovery_samples(), "recovery commitment input"),
                                          ("accord-invocation", acc["accord-invocation"], "accord invocation payload"),
                                          ("accord-lifecycle", acc["accord-lifecycle"], "accord lifecycle payload"),

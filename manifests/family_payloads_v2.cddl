@@ -159,8 +159,8 @@ key-grant = {
   "author": identity-ref,                   ; The sealer.
   "dimension": tstr,                        ; key_grant:{axis}:v1.
   "axis": "content" / "epoch" / "stream",   ; The same axis as the leaf.
-  "wrap_algorithm": "x25519_mlkem768_aes256_gcm_hkdf_sha256", ; The v2 wire string, mandatory for every wrapped key.
-  "wrapped_dek": bstr,                      ; The wrapped data-encryption key, as bytes.
+  "wrap_algorithm": "x25519_mlkem768_aes256_gcm_hkdf_sha256" / "xwing_hpke_aes256_gcm_hkdf_sha256", ; The v2 wire string on a wrap to the content-KEM keys of an occurrence; the X-Wing string on a wrap to a room key, which carries no other.
+  "wrapped_dek": bstr,                      ; The wrapped data-encryption key, as bytes. On a wrap to a room key: the X-Wing encapsulation of 1120 bytes, then the AEAD ciphertext of the sealed map.
   ? "at_rest_sha256": hash-digest,          ; The content's at-rest digest. (on the content axis)
   ? "owner": identity-ref,                  ; The owner of the content or the stream. (on the content and stream axes)
   ? "community": group-ref,                 ; The community whose epoch key is wrapped. (on the epoch axis)

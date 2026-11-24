@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "5683998b516c370da48e64fdae982ba6933aa3dd6068775abece357fac09ccae",
-   "formal/derivation/signer_kind.tsv": "6c83926e312ccc5bcce7a2f5b9be3d2cb983189db317febaedcff106e4a40234"
+   "manifests/transitions.json": "56e469e0a848eaa10723a612e95bc37be02b7489418c28412ec1786855286a5d",
+   "formal/derivation/signer_kind.tsv": "19d539a7792f7edcaebf622ac2292ed23af49755c5bae6030c6538987c31ec7a"
   },
   "kinds": [
    "person",
@@ -5833,7 +5833,8 @@
    "kinds": [
     "agent",
     "node",
-    "person"
+    "person",
+    "room"
    ],
    "open": false,
    "question": null,
@@ -10201,7 +10202,8 @@
   "room": [
    "@mls_keypackage",
    "@mls_leaf",
-   "@room_row"
+   "@room_row",
+   "key_grant:{axis}#attest:none>admitted"
   ],
   "ephemeral": [
    "@chunk_key"

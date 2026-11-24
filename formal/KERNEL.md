@@ -454,7 +454,8 @@ identity keys. The rule is CC 3.1.3.2, and the kernel is not changed by it: a ro
 In a private room the roster seats a **voice**, never an identity. A voice is a small counted roster of **room
 keys**, one for each device, made for that room only, and every row of the room is signed under a room key, a
 duty holder's verdict included. That a voice is a given person's is the **binding**. It is never a row and
-nobody signs it. It is made for one addressee, who can check it and cannot prove it to anyone else. The seat
+nobody signs it. It is made for one addressee, who can check it. The addressee can show others only that the
+room key's holder named the person. The seat
 row of a room key carries a commitment to its person, and a binding that does not open it is refused.
 
 No answer of section 5 reads a binding. It is read to show a member who spoke, to check a joiner before a
@@ -493,9 +494,11 @@ convinced when nobody but the person named could have.
   is refused; `private` on a body that is public by function is refused; of 434 sequences of later declarations
   none goes from public to private.
 
-**open**: the wire. The commitment, the two encapsulations, the key pair kept for bindings and the sealed
-invitation are planned for a later edition and are the implementer's (CC 3.1.3.2). **open**: no proof. The
-statements above are runs to a bound over a symbolic model.
+The wire is typed in the text: the record of a room key, the commitment, the three flows of a binding, the wrap
+to a room key and the key pair kept for bindings (CC 2.6.1.11, CC 3.1.3.2). **open**: no model reads that wire.
+The sealed carriage of a binding before a seat is stated and checked by no model, and the contents of the sealed
+invitation are the transport's to submit. **open**: no proof. The statements above are runs to a bound over a
+symbolic model.
 
 What a private room does not give, each marked as the check marks it:
 

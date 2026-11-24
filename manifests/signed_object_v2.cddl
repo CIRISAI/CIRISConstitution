@@ -10,6 +10,7 @@
 ceg-anything = ceg-statement / ceg-object-statement / second-consent / row-id-input / row-id
              / statement-id-input / statement-id / object-id-input / ceg-key / key-record-members
              / revocation-snapshot / ceg-genesis-bundle / recovery-commitment-input / seat-commitment-input / group-id-input
+             / binding-info-input / binding-opening / room-sealed
              / hpke-info / ceg-typ / accord-invocation / accord-lifecycle / transport-destination-binding
 
 ; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
@@ -388,10 +389,34 @@ seat-commitment-input = ["CEG-seat/2", room: group-ref, room_key: kid, person: i
 ; identity reference is a thumbprint URI, and a group's id is never one.
 group-ref = tstr .regexp "group-[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]"
 group-id-input = ["CEG-group/2", group_kind: "family" / "community", first_members: [+ identity-ref], founded_at: ms-time, nonce: bstr .size 32]
-; The HPKE info strings of a binding and of an invitation. The KEM key, the binding's two
-; encapsulations and the occurrence keys take their bytes from the X-Wing HPKE suite and are fixed
-; with that suite's known-answer vectors, not in this file; so does the binding seed's derivation label.
-hpke-info = "CEG-binding/2" / "CEG-invitation/2"
+; The binding of a voice to its person (CC 2.6.1.11, CC 3.1.3.2): a claim, a challenge and a confirmation. The
+; challenge is an X-Wing encapsulation to the person's binding key (1120 bytes). The confirmation is an RFC 9180 HPKE
+; seal in mode_psk (KEM 0x647a, HKDF-SHA256, AES-256-GCM) to the addressee's room key's kem_xwing_pubkey, with psk the
+; challenge's shared secret, psk_id SHA-256 over the challenge, info the deterministic encoding of
+; binding-info-input, empty aad and plaintext the deterministic encoding of binding-opening. No MAC and no seed.
+; `binding_key` is the thumbprint of the person's binding key; its encoding waits on its owner's submission.
+binding-info-input = ["CEG-binding/2", room: group-ref, room_key: kid, addressee_key: kid, seat_commitment: hash-digest, binding_key: bstr .size 32]
+binding-opening = [person: identity-ref, nonce: bstr .size 32]
+; What a wrap to a room key seals, and what a sealed envelope to one room key carries outside a wrap: the plaintext of
+; an HPKE mode_base seal under the same three identifiers. A wrap carries `dek`; an envelope carries none. Each flow
+; of a binding rides here and never as a cleartext member of a row.
+room-sealed = {
+  ? "dek": bstr .size 32,                    ; on a wrap to a room key: the wrapped key
+  ? "claim": binding-claim,                  ; from the room key's holder: the person it names
+  ? "challenge": bstr .size 1120,            ; from the addressee: the encapsulation to the person's binding key
+  ? "confirmation": binding-confirmation,    ; from the room key's holder: the seal the addressee opens
+}
+binding-claim = {
+  "person": identity-ref,
+  ? "occurrence": [+ bstr],                  ; the statements of the person's identity:occurrence row that carries the binding key
+}
+binding-confirmation = {
+  "enc": bstr .size 1120,                    ; the confirmation's own X-Wing encapsulation
+  "ct": bstr,                                ; the AEAD ciphertext over binding-opening
+}
+; The HPKE info of an invitation and of a wrap to a room key, as text. A confirmation's info is binding-info-input.
+; The bytes of each are fixed with the verifier's known-answer vectors, not in this file.
+hpke-info = "CEG-invitation/2" / "CEG-room-wrap/2"
 
 ; Verification has three answers, returned by a verifier and never on the wire: Valid; Invalid(reason);
 ; Waiting{missing key refs}. Invalid under a held key is final. A structural fault is Invalid whatever
