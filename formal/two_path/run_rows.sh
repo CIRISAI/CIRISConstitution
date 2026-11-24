@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run every configuration of TwoPathRows.tla and check each verdict against its expectation: the four
+# Run every configuration of TwoPathRows.tla and check each verdict against its expectation: the eight
 # scenarios close, each planted reading is caught by the invariant named beside it, and every witness
 # is reached under the scenario named beside it (a witness is the negation of a state the text names;
 # TLC must report it violated).
@@ -13,7 +13,7 @@ TLC=(java -Xmx"${TLC_XMX:-1500m}" -XX:+UseParallelGC -cp "$J" tlc2.TLC -workers 
 fail=0
 # config : expectation ("ok" = closes; otherwise the invariant TLC must report)
 expect=(
-  "evict:ok" "count:ok" "held:ok" "add:ok" "reopen:ok"
+  "evict:ok" "count:ok" "held:ok" "add:ok" "reopen:ok" "past:ok" "who:ok" "late:ok"
   "plant_node_clock:Inv_C1Unreachable"
   "plant_no_cascade:Inv_SameRowsSameOutcome"
   "plant_no_held_rule:Inv_TargetRowStopsLoneEviction"
@@ -21,6 +21,12 @@ expect=(
   "plant_landing_needed:Inv_MetCountDecides"
   "plant_withdrawal_first:Inv_MetCountDecides"
   "plant_wd_approval_counts:Inv_WithdrawalRefuses"
+  "plant_unseated_concludes:Inv_KnownWho"
+  "plant_others_held_row:Inv_KnownWho"
+  "plant_two_voices_count:Inv_KnownWho"
+  "plant_add_asks_silence:Inv_KnownAdd"
+  "plant_proposal_past_barred:Inv_KnownPast"
+  "plant_named_rows_recounted:Inv_KnownEvict"
 )
 # witness : the closing configuration it is reached under
 witness=(
@@ -28,6 +34,7 @@ witness=(
   "Wit_LoneLandingNotFinal:evict" "Wit_DifferWhileRowsDiffer:evict"
   "Wit_Landed:add" "Wit_Refused:add" "Wit_AddOneObjection:add"
   "Wit_Contested:held" "Wit_Open:count" "Wit_NamedRowReopens:reopen"
+  "Wit_LateObjectionsChangeNothing:late" "Wit_LateApprovalChangesNothing:late" "Wit_ProposalPastLanded:past"
 )
 report() { echo "$1  $2  (expected: $3; $(echo "$4" | grep -oE '[0-9]+ distinct states found' | tail -1); depth $(echo "$4" | grep -oE 'search is [0-9]+' | grep -oE '[0-9]+' | tail -1))"; }
 for e in "${expect[@]}"; do

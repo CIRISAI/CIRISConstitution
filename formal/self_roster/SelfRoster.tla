@@ -65,7 +65,8 @@
      owner_names_all    the owner's row names every landing it holds, the one against its key included
      ended_counts       a row of a key whose seat was ended counts wherever it is signed
      wd_approval_counts an approval that has the withdrawal in its past still approves
-     settle_contested   a reader takes a contested proposal as landed *)
+     settle_contested   a reader takes a contested proposal as landed
+     void_landing_counts a landing that states what the table over its past does not give concludes *)
 EXTENDS Naturals, FiniteSets
 
 CONSTANTS Devices, Initial, Mode, Window, StolenAuth, MaxStolen, MaxLost, OwnerPresent
@@ -78,6 +79,7 @@ PlantOwnerNamesAll == "owner_names_all"
 PlantEndedCounts == "ended_counts"
 PlantWdApprovalCounts == "wd_approval_counts"
 PlantSettleContested == "settle_contested"
+PlantVoidLandingCounts == "void_landing_counts"
 \* an owner proposes the eviction of a key that still signs only where its own keys can carry the
 \* count. A configuration sets this to see what the lone path is worth against such a key.
 OwnerTriesLone == FALSE
@@ -117,7 +119,8 @@ MetApprove(p) == Quorum /\ Majority(Appr(p), Cardinality(p.base))
 MetObject(p) == Lone /\ Majority(Obj(p), Cardinality(Voters(p)))
 Spent(late) == late /\ Plant # "ended_counts"
 HeldCounts(p) == (p.held = "ok" \/ (p.held = "bad" /\ Plant = "no_held_rule")) /\ ~Spent(p.heldLate)
-LandCounts(p) == Lone /\ p.land = "concl" /\ HeldCounts(p) /\ ~Spent(p.landLate)
+LandCounts(p) == /\ Lone /\ HeldCounts(p) /\ ~Spent(p.landLate)
+                 /\ p.land = "concl" \/ (p.land = "void" /\ Plant = "void_landing_counts")
 \* a row the target signed that the recount reads: not in the held row's past, and not naming the landing
 TgtCounted(p) == p.kind = "evict" /\ p.spoke = "yes" /\ p.held # "bad"
 Stands(p) == LandCounts(p) /\ ~p.wd /\ ~MetObject(p) /\ ~TgtCounted(p)
@@ -285,6 +288,11 @@ Inv_LoneNeedsSilence ==
 (* A row signed after its signer's seat was ended changes no outcome. *)
 Stripped(p) == [p EXCEPT !.held = IF p.heldLate THEN "none" ELSE @, !.land = IF p.heldLate \/ p.landLate THEN "none" ELSE @]
 Inv_SpentRowsCountNothing == \A p \in props : Outcome(p) = Outcome(Stripped(p))
+(* A landing that states what the table over its past does not give, and a landing on a held row that
+   has the target's row in its past, conclude nothing: the outcome is the one read without them (so
+   such a proposal is `open` and not `contested`). *)
+Inv_FalseRowsConcludeNothing ==
+  \A p \in props : (p.land = "void" \/ p.held = "bad") => Outcome(p) = Outcome([p EXCEPT !.land = "none"])
 (* A withdrawn proposal that no approval made without the withdrawal carries is refused. *)
 Inv_WithdrawalRefuses ==
   \A p \in props :
