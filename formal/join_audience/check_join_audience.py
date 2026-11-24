@@ -10,9 +10,11 @@ Each case is a bounded world and a setting of the rules (join_audience.py). The 
 every order of the enabled steps, capped at 2 GiB of address space. It is an enumeration over the stated bound and
 nothing more: no case is a proof.
 
-A case is one of four kinds.
+A case is one of five kinds.
 
     rule      the rules as given. Every property named must hold, and every witness must be reached.
+    repair    the rules as given plus one row the text does not define (the projection of a roster key's list, told
+              to the room and read closed). Read as a rule case; it shows what would close a finding, not what holds.
     plant     one rule changed. The property named must break; a plant that breaks nothing fails the check.
     reading   a place where the rules as given admit two readings. Both are run and the difference is printed.
     finding   the rules as given, in a world where a property as stated breaks. The break is expected, printed as a
@@ -33,10 +35,10 @@ EXPECTED = os.path.join(HERE, "join_audience_expected.tsv")
 
 # the four properties of the task, and the names the model reads them under
 GROUPS = (
-    ("1 no deadlock", ("N.join", "N.placed", "N.unplaced")),
+    ("1 no deadlock", ("N.join", "N.placed", "N.unplaced", "N.wrap")),
     ("2 no disclosure", ("D.relay", "D.room_binding", "D.self_binding", "D.contact_binding", "D.occurrence",
                          "D.occurrence_literal", "D.roster", "D.content", "D.invited_unannounced")),
-    ("3 the allow list", ("L.bytes", "L.wrap", "L.sealer")),
+    ("3 the allow list", ("L.bytes", "L.wrap", "L.sealer", "L.member")),
     ("4 announcing later", ("A.announce",)),
 )
 ALL = tuple(p for _g, ps in GROUPS for p in ps)
@@ -204,6 +206,27 @@ late_sealer = lists_world("A1 A2 B1, B1 both lists leave the room out, A2 writes
                           author="A2", people={"A": 2, "B": 1})
 b_other = lists_world("A1 B1 B2, contact A-B (made on B1), B answers on B2", {}, author=None, answer_on="B2")
 a_two = W("A1 A2 B1, contact A-B, A1 writes", {"A": 2, "B": 1}, author="A1", **TWO)
+a_two_ann = W("A1 A2 B1, contact A-B, B may announce", {"A": 2, "B": 1}, may_announce=["B"], **TWO)
+late_plain = W("A1 A2 B1, contact A-B, A2 writes", {"A": 2, "B": 1}, author="A2", **TWO)
+star = W("A1 B1 C1, A invites B and C, contacts A-B A-C", {"A": 1, "B": 1, "C": 1},
+         invites=[("B", "A1"), ("C", "A1")], contacts=[("A", "B"), ("A", "C")])
+three_write = W("A1 B1 C1, A invites B, B invites C, contacts A-B B-C, C1 writes", {"A": 1, "B": 1, "C": 1},
+                author="C1", invites=[("B", "A1"), ("C", "B1")], contacts=[("A", "B"), ("B", "C")])
+
+
+def w_two_joiners(w, rules, st):
+    return (frozenset("BC") not in st.contacts and ("bind", "C1", "room") in H(w, st, "B1")
+            and ("bind", "B1", "room") in H(w, st, "C1"))
+
+
+def w_wrap_never_contact(w, rules, st):
+    return any(r[0] == "wraps" and "A1" in r[1] for r in H(w, st, "A1")) and frozenset("AC") not in st.contacts
+
+
+def t_two_joiners_deadlock(w, rules, st):
+    made = M.created(st)
+    return (("seat", "B") in made and ("seat", "C") in made and ("roster0",) not in H(w, st, "B1")
+            and ("roster0",) not in H(w, st, "C1") and ("bind", "B1", "room") not in H(w, st, "A1"))
 
 WIT_JOIN = (("the invitee holds the proposal and the inviter's occurrence, and nothing of the roster", w_invitee_before_seat),
             ("the relay carries both envelopes and holds no row", w_relay_carries),
@@ -242,16 +265,6 @@ CASES = [
     ("L01", "rule", node_only, {}, (),
      (("B2 holds a wrap and no bytes", w_wrap_no_bytes("B2")),), T_SERVED, (),
      "only the node key's list set: the stated consequence"),
-    ("L02", "rule", roster_only, {"projection": "closed"}, (),
-     (("B2 holds the bytes and no wrap", w_bytes_no_wrap("B2")),), T_SERVED, (),
-     "only the roster key's list set, the room told of it"),
-    ("L03", "rule", both_off, {"projection": "closed"}, (),
-     (("B2 sits in the room and holds neither bytes nor a wrap", w_neither("B2")),), T_SERVED, (),
-     "both lists set, the room told of it"),
-    ("L04", "rule", all_off, {"projection": "closed"}, (), (ABSENT,), T_SERVED, (),
-     "every device of a member kept off, the room told of it: the member reads absent"),
-    ("L05", "rule", late_sealer, {"projection": "closed"}, (), (ABSENT,), T_SERVED, (),
-     "the same, sealed on a device that is served the joiner's rows one by one"),
     ("L06", "rule", author_off, {}, (), (("the write is refused", w_refused),), T_SERVED, (),
      "the author's own device is kept off"),
     ("L07", "rule", author_node_off, {}, (), (("the write is refused", w_refused),), T_SERVED, (),
@@ -259,6 +272,26 @@ CASES = [
     ("L08", "rule", own_sealer, {}, (),
      (("B2 sits in the room and holds neither bytes nor a wrap", w_neither("B2")),), T_SERVED, (),
      "the sealer is the owner's other device, which holds the lists at self"),
+    ("R13", "rule", star, {}, (),
+     WIT_JOIN + (("B and C, two joiners never contacts, each hold the other's binding at the room", w_two_joiners),),
+     T_SERVED, (), "one member invites two people who never met"),
+    ("R14", "rule", three_write, {}, ("N.wrap",),
+     WIT_JOIN + (("the last joiner's sealer wraps to A1, a member its owner never exchanged a contact with",
+                  w_wrap_never_contact),),
+     T_SERVED, (), "the second joiner writes: its sealer holds the occurrences placed at the room "
+     "(the wrap break is finding F05's)"),
+    ("R15", "rule", a_two_ann, {}, ("D.occurrence_literal",), WIT_JOIN, T_SERVED, (),
+     "the inviter has two devices and the joiner may announce at any point (the literal break is finding F01's)"),
+    ("L02", "repair", roster_only, {"projection": "closed"}, (),
+     (("B2 holds the bytes and no wrap", w_bytes_no_wrap("B2")),), T_SERVED, (),
+     "only the roster key's list set, the room told of it"),
+    ("L03", "repair", both_off, {"projection": "closed"}, (),
+     (("B2 sits in the room and holds neither bytes nor a wrap", w_neither("B2")),), T_SERVED, (),
+     "both lists set, the room told of it"),
+    ("L04", "repair", all_off, {"projection": "closed"}, (), (ABSENT,), T_SERVED, (),
+     "every device of a member kept off, the room told of it: the member reads absent"),
+    ("L05", "repair", late_sealer, {"projection": "closed"}, (), (ABSENT,), T_SERVED, (),
+     "the same, sealed on a device that is served the joiner's rows one by one"),
     ("F01", "finding", b_announced, {}, ("D.occurrence_literal",), WIT_JOIN, T_SERVED, (),
      "an unannounced inviter writes to an announced person who is no contact"),
     ("F02", "finding", roster_only, {}, ("L.sealer",), (("B2 holds the bytes and no wrap", w_bytes_no_wrap("B2")),),
@@ -267,6 +300,8 @@ CASES = [
      "every device kept off, the room told nothing: the member does not read absent"),
     ("F04", "finding", answers_off, {}, ("N.unplaced",), (), (), (),
      "the joiner answers on the device kept off the bytes: its other device is never served them"),
+    ("F05", "finding", late_plain, {}, ("N.wrap",), (), T_SERVED, (),
+     "the sealer is served the seat before the occurrence and writes between the two: the seated joiner gets no wrap"),
     ("G01", "reading", b_announced, {"strict_reply": True}, ("N.join", "D.occurrence_literal"), (), (), (),
      "the answer addressed only to a node the joiner holds a binding of: the join stalls"),
     ("G02", "reading", two_two, {"grain": "batch", "sibling_room_serve": False}, ("N.unplaced",), WIT_JOIN, (), (),
@@ -285,6 +320,15 @@ CASES = [
      "the same, the joiner answering on a device its contact never met"),
     ("G08", "reading", three, {"resolve": "any", "answer_binding": "none"}, (), WIT_JOIN, T_SERVED, (),
      "the same, a second joiner invited by the first"),
+    ("G09", "reading", answers_off, {"late_place": True}, (), (), T_SERVED, (),
+     "finding F04's world, the owner re-signing the other device's binding at the room after the answer"),
+    ("G10", "reading", two_two, {"grain": "batch", "sibling_room_serve": False, "late_place": True}, (), WIT_JOIN,
+     T_SERVED, (), "reading G02's world, the same later re-signing: the second device is served"),
+    ("G11", "reading", own_sealer, {"self_lists": "own"}, ("L.sealer",), (), (), (),
+     "CC 6.1.5.3 (3) by the letter, a node holding only its own list: the owner's own sealer wraps to the sibling's key"),
+    ("G12", "reading", ann_two, {"resign": "unannounced"}, ("D.occurrence_literal", "A.announce"), (), T_SERVED, (),
+     "CC 3.2 by the letter, only an unannounced node re-signed at the room: an announce before the answer leaves "
+     "the members without that row"),
     ("P01", "plant", two_plain, {"answer_binding": "none"}, ("N.placed",), (),
      (("the deadlock: A1 lacks B1's binding, B1 lacks the roster, and nothing more can move", t_deadlock),), (),
      "the answer carries no binding"),
@@ -304,7 +348,7 @@ CASES = [
      "the node key's list is read at neither end"),
     ("P08", "plant", both_off, {"projection": "closed", "roster_list": False}, ("L.wrap", "L.sealer"), (), (), (),
      "the roster key's list is read at neither end"),
-    ("P09", "plant", author_off, {"refusal": "letter"}, ("L.bytes",), (), (), (),
+    ("P09", "plant", author_off, {"refusal": "letter"}, ("N.wrap", "L.bytes"), (), (), (),
      "a write refused only when its author has no wrap target at all (CC 5.2 by the letter)"),
     ("P10", "plant", ann_three, {"announce_replaces": True}, ("N.placed", "D.occurrence_literal", "A.announce"), (), (), (),
      "a binding re-signed at federation replaces the row placed at the room"),
@@ -312,6 +356,18 @@ CASES = [
      (), (), (), "a row addressed to a contact is served to anyone once its owner announces"),
     ("P12", "plant", late_sealer, {"projection": "open"}, ("L.sealer",), (), (), (),
      "a wrap is made unless a held projection withholds it: the occurrence is served first"),
+    ("P13", "plant", two_plain, {"invitation_binding": True}, ("D.room_binding",), (), (), (),
+     "the invitation carries the inviter's binding placed at the room"),
+    ("P14", "plant", outsider, {"answer_openers": "all"}, ("D.room_binding",), (), (), (),
+     "the answer is sealed to every foreign occurrence the joiner holds: a contact outside the room opens it"),
+    ("P15", "plant", two, {"wrap_unseated": True}, ("L.member",), (), (), (),
+     "a sealer wraps to every occurrence it holds, seated or not: a contact not yet seated is wrapped to"),
+    ("P16", "plant", outsider, {"contact_all_bindings": True},
+     ("D.room_binding", "D.self_binding", "D.contact_binding"), (), (), (),
+     "a contact exchange hands over every binding of the device"),
+    ("P17", "plant", star, {"answer_binding": "none"}, ("N.placed",), (),
+     (("the deadlock between two joiners: both seated, neither holds the roster, the inviter holds no binding of either",
+       t_two_joiners_deadlock),), (), "the answer carries no binding, two joiners who never met"),
 ]
 
 
@@ -354,6 +410,7 @@ def main():
     total = 0
     last_kind = None
     titles = {"rule": "THE RULES AS GIVEN", "finding": "FINDINGS: the rules as given, where a property as stated breaks",
+              "repair": "REPAIR: the rules as given plus a projection row the text does not define",
               "reading": "READINGS: where the rules as given admit two", "plant": "PLANTED BREAKS: each must be caught"}
     for case in CASES:
         cid, kind, w, changed, expect, wits, twits, never, note = case

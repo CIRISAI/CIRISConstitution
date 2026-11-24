@@ -28,7 +28,10 @@ person's seat ONLY through the roster rows it holds. `Rules.resolve` says which 
 audience: "placed" (the binding placed at the room, at federation, or the server's own sibling binding at self) or
 "any" (a binding addressed to the server as a contact as well).
 
-The rules are data (Rules). A planted break is one field of Rules changed.
+The rules are data (Rules). A planted break is one field of Rules changed. Three defaults are narrower than the
+text and have a reading that follows it: the owner re-signs one binding, inside the answer (`late_place`); the
+joiner re-signs whether or not it is announced (`resign`); the owner's sealer holds every sibling's list
+(`self_lists`). The README lists them.
 """
 from collections import namedtuple
 
@@ -92,6 +95,13 @@ _RULES = dict(
     node_list_reach="bytes",     # READING: the node key's list withholds "bytes" | puts the node outside the "audience"
     sibling_room_serve=True,     # READING (False): a server's own sibling binding at self resolves no room audience
     grain="row",                 # one delivery moves one "row" | every row the receiver may be served ("batch")
+    late_place=False,            # READING (True): the owner re-signs a second device's binding at the room after the answer
+    self_lists="held",           # READING: a sealer reads its owner's lists for every sibling ("held") | its "own" device's only
+    resign="always",             # READING: the joiner re-signs at the room "always" | only while "unannounced" (CC 3.2's words)
+    invitation_binding=False,    # PLANT: the invitation carries the inviter's binding placed at the room
+    answer_openers="inviter",    # PLANT ("all"): the answer is sealed to every foreign occurrence the joiner holds
+    wrap_unseated=False,         # PLANT: a sealer wraps to every occurrence it holds, seated or not
+    contact_all_bindings=False,  # PLANT: a contact exchange hands over every binding of the device, not the addressed one
 )
 Rules = namedtuple("Rules", sorted(_RULES))
 RULES = Rules(**_RULES)
@@ -282,10 +292,10 @@ def sealer_wraps(w, rules, d, V):
             continue
         t = row[1]
         p = owner(t)
-        if not seated(w, p, V):
+        if not seated(w, p, V) and not rules.wrap_unseated:
             continue
         if rules.roster_list:
-            if p == me:
+            if p == me and (rules.self_lists == "held" or t == d):
                 if not w.rl(t):
                     continue                             # the owner's own lists are held at self
             elif rules.projection == "closed":
@@ -320,6 +330,9 @@ def steps(w, rules, st):
         ba, bb = ("bind", da, ("contact", b)), ("bind", db, ("contact", a))
         to_b = {ba} | set(r for r in st.H[w.idx[da]] if r[0] == "occ" and owner(r[1]) == a)
         to_a = {bb} | set(r for r in st.H[w.idx[db]] if r[0] == "occ" and owner(r[1]) == b)
+        if rules.contact_all_bindings:
+            to_b |= set(r for r in st.H[w.idx[da]] if r[0] == "bind" and r[1] == da)
+            to_a |= set(r for r in st.H[w.idx[db]] if r[0] == "bind" and r[1] == db)
         nxt = _put(w, st, {da: to_a | {ba}, db: to_b | {bb}})
         yield ("contact %s-%s" % (a, b), nxt._replace(contacts=st.contacts | {c}))
 
@@ -339,6 +352,8 @@ def steps(w, rules, st):
             rows.add(("proj", owner(a)))
         if rules.invitation_roster:
             rows |= set(r for r in V[a] if r[0] in ("roster0", "seat"))
+        if rules.invitation_binding:
+            rows |= set(r for r in V[a] if r[0] == "bind" and r[1] == a and r[2] == "room")
         env = ("env", "invitation", j, frozenset(rows), openers)
         yield ("invite %s by %s" % (j, a), _put(w, st, {a: {("prop", j)}, RELAY: {env}}))
 
@@ -362,6 +377,8 @@ def steps(w, rules, st):
             openers = frozenset(x for x in w.devs(inviter) if ("occ", x) in V[d])
             if not openers:
                 continue
+            if rules.answer_openers == "all":
+                openers = frozenset(r[1] for r in V[d] if r[0] == "occ" and owner(r[1]) != j)
             if rules.strict_reply and not any(r[0] == "bind" and owner(r[1]) == inviter for r in V[d]):
                 continue
             binds = set()
@@ -370,6 +387,8 @@ def steps(w, rules, st):
             elif rules.answer_binding == "all":
                 binds = set(("bind", x, "room") for x in w.devs(j) if ("bind", x, "self") in V[d])
             placed = {("bind", d, "room")} | binds       # the binding is re-signed either way; the plant is carriage
+            if rules.resign == "unannounced" and j in st.announced:
+                binds, placed = set(), set()             # an announced node joins: CC 3.2 asks for no row at the room
             rows = {("acc", j)} | binds | set(r for r in V[d] if r[0] == "occ" and owner(r[1]) == j)
             if rules.projection != "none":
                 rows.add(("proj", j))
@@ -383,6 +402,16 @@ def steps(w, rules, st):
         for d in w.devices:
             if seated(w, owner(d), V[d]) and ("prop", j) in V[d] and ("acc", j) in V[d]:
                 yield ("widen %s at %s" % (j, d), _put(w, st, {d: {("seat", j)}}))
+
+    # a later placement: the owner re-signs another of its devices' bindings at the room, once it has accepted (CC 3.2
+    # "When an unannounced node joins a group, the owner re-signs the binding at that group's scope")
+    if rules.late_place:
+        for j, _a in w.invites:
+            if ("acc", j) not in made:
+                continue
+            for d in w.devs(j):
+                if ("bind", d, "room") not in made and ("bind", d, "self") in V[d]:
+                    yield ("place %s at the room" % d, _put(w, st, {d: {("bind", d, "room")}}))
 
     # one write sealed under the room's content key (CC 5.2)
     d = w.author
@@ -492,6 +521,15 @@ def safety(w, rules, st):
             for t in row[1]:
                 if not w.rl(t):
                     bad.append(("L.sealer", "a sealer wrapped to %s, whose roster key's list leaves the room out" % t))
+                if owner(t) not in seats:
+                    bad.append(("L.member", "a sealer wrapped to %s, whose owner has no seat" % t))
+            # the other direction: a person the sealer itself read as seated, on a device no list keeps off, gets a wrap
+            for flag in st.flags:
+                if isinstance(flag, tuple) and flag[0] == "sealer_saw":
+                    for t in w.devs(flag[1]):
+                        if w.rl(t) and t not in row[1]:
+                            bad.append(("N.wrap", "the sealer read %s as seated and made no wrap to %s, which no list "
+                                        "keeps off" % (flag[1], t)))
     return bad
 
 
