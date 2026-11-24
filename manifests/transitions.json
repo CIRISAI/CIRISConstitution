@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "f6d42cbd4801c45f2c312d4d723481ade9c2b7f426e4f69f601f0a90b22192b5",
+  "source_sha256": "a687477dd4639b51dd9727d3aff7ac4ba529ffde8efd9b50dd3a6159537544d3",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -88,9 +88,9 @@
   "widens_when": "one rule reads every widens and confirm cell: the boolean never under-states, and `when` narrows it. widens.when is always, by_scope (a row signed at self scope does not widen, a row at any wider scope does) or by_scope_change (a replacing row widens when its scope is wider than the row it replaces, CC 4.4.3.14). confirm.when is always (the row widens at every scope, or this table offers no way back) or if_widens (a way back is offered, and the item is confirmed only when widens.when holds for the row as signed). A way back means this table offers a withdraw or recant of the row; a copy a peer took is not recalled",
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
-  "families": 185,
-  "transitions": 462,
-  "gap_cells": 1,
+  "families": 186,
+  "transitions": 464,
+  "gap_cells": 2,
   "confirmed": 254,
   "undo_gap_cells": 2,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
@@ -14982,6 +14982,98 @@
       "value": true,
       "source": "derived",
       "when": "if_widens"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
+   "family": "mls:leaf_vouch",
+   "kind": "Identity",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "self"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 5.1"
+      ],
+      "count": "none"
+     },
+     "widens": {
+      "value": false,
+      "source": "gap"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "withdraw",
+     "from": "admitted",
+     "to": "withdrawn",
+     "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 5.1",
+      "value": [
+       "author"
+      ]
+     },
+     "policy": {
+      "source": "cc-table",
+      "cc_ref": "CC 5.1",
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      }
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      },
      "guard": {
       "value": [],

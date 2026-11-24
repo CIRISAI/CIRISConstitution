@@ -1053,6 +1053,19 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `"unit"` | payload:body | `tstr .size (1..64)` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | The bound's unit: a token of the declaration's vocabulary, read from the blob. |
 | — | `"basis"` | payload:body | `"price" / "realised"` | always | [3.1.11](part_3_the_namespace.md#3.1.11) | What the bound is stated on. |
 
+**A leaf vouch: the payload of an `mls:leaf_vouch` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | always | [5.1](part_5_transport_substrate.md#5.1) [3.1.4](part_3_the_namespace.md#3.1.4) | The member whose leaf it is: a person, an agent, or in a private room a voice. The member's device key signs, and author, iss and sub are the member. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.4](part_3_the_namespace.md#3.1.4) | mls:leaf_vouch:v1; the row's type is scores. |
+| — | `"suite"` | payload | `77` | always | [5.1](part_5_transport_substrate.md#5.1) | The MLS ciphersuite the vouched leaf signs under: the constant 0x004D, as an unsigned integer. |
+| — | `"leaves"` | payload | `[1*1 redacted-element] / [8*8 redacted-element] / [32*32 redacted-element]` | always | [5.1](part_5_transport_substrate.md#5.1) [2.6.1.10](#2.6.1.10) | One blinded element for each room vouched for, padded with random digests to exactly 1, 8 or 32: a sequence. Each discloses as a leaf-vouch-entry. |
+| — | `"valid_from"` | payload | `ms-time` | always | [5.1](part_5_transport_substrate.md#5.1) [2.6.2](#2.6.2) | The start of the vouch, POSIX milliseconds. |
+| `valid_until` | `"valid_until"` | payload | `ms-time` | always | [5.1](part_5_transport_substrate.md#5.1) [2.6.2](#2.6.2) | Required. Later than valid_from, and at most leaf_vouch_max_secs after it. |
+| — | `"refs"` | payload | `refs` | iff a room key signs | [2.6.1.11](#2.6.1.11) [2.6.1.3](#2.6.1.3) | The head of the signer's voice roster, under the also role voice, and no other row. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
 **An occurrence: the payload of an `identity:occurrence` row**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
@@ -1176,6 +1189,14 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `"enc"` | object | `bstr .size 1120` | always | [2.6.1.11](#2.6.1.11) | The confirmation's own X-Wing encapsulation, to the addressee's room key. |
 | — | `"ct"` | object | `bstr` | always | [2.6.1.11](#2.6.1.11) | The AEAD ciphertext over the opening. |
 
+**A room's MLS group ids: what each is derived from**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| — | `room` | derived | `group-ref` | always | [2.6.1.11](#2.6.1.11) [5.1](part_5_transport_substrate.md#5.1) | The room's derived id. |
+| — | `room` | derived | `group-ref` | always | [2.6.1.11](#2.6.1.11) [5.1](part_5_transport_substrate.md#5.1) | The room's derived id. |
+| — | `call` | derived | `bstr` | always | [2.6.1.11](#2.6.1.11) [2.6.1.12](#2.6.1.12) | The call's id; the member that carries it is open. |
+
 **The id of a group: what its first version derives it from**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
@@ -1194,6 +1215,9 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `key` | object | `tstr` | always | [2.6.1.10](#2.6.1.10) | The blinded member's name; the digest is SHA-256 over the disclosure's bytes as sd_claims carries them. |
 | — | `salt` | object | `bstr .size 16` | always | [2.6.1.10](#2.6.1.10) | Sixteen random bytes; a blinded array element is disclosed as [salt, value]. |
 | — | `value` | object | `ceg-value` | always | [2.6.1.10](#2.6.1.10) | The blinded element's value. |
+| — | `leaf_key` | object | `bstr .size 32` | always | [5.1](part_5_transport_substrate.md#5.1) | The value a blinded element of a leaf vouch discloses: first the leaf's Ed25519 public key. |
+| — | `room` | object | `group-ref` | always | [5.1](part_5_transport_substrate.md#5.1) | The room the leaf is vouched for, by its derived id. |
+| — | `suite` | object | `77` | always | [5.1](part_5_transport_substrate.md#5.1) | The constant 0x004D, equal to the row's suite. |
 
 **Logical names with no member of their own**
 
@@ -1422,6 +1446,8 @@ pt       = the deterministic encoding of [person, nonce]
 
 **A wrap to a room key.** A wrap to a room key is a `key_grant` row whose `wrap_algorithm` is `xwing_hpke_aes256_gcm_hkdf_sha256`. It is HPKE base mode under the same three identifiers, to the `kem_xwing_pubkey` of the recipient room key's record, with `info` the text `CEG-room-wrap/2` and empty `aad`. `wrapped_dek` is the encapsulation `enc`, of 1120 bytes, then the AEAD ciphertext. The plaintext is the deterministic encoding of a map. The map carries `dek`, the wrapped key, and whichever flows of a binding ride that wrap: `claim`, `challenge` and `confirmation`. The row's signature covers the ciphertext alone, so no flow is a cleartext member of a row. No flow rides an MLS Welcome. A wrap's own encapsulation is never the confirmation. A wrap to a room key carries this `wrap_algorithm` and no other, and it is not a wrap of the earlier string. The same map with no `dek`, sealed the same way to one room key, is the sealed envelope of [CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2).
 
+**A room's MLS group ids** ([CC 5.1](part_5_transport_substrate.md#5.1)). The id of each MLS group of a room is derived, so a door recomputes which room a group is of. The chat group's id is SHA-256 over the deterministic encoding of `["CEG-mls-group/2", room]`. A call group's id is SHA-256 over the deterministic encoding of `["CEG-mls-call-group/2", room, call]`. `room` is the room's derived id ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). `call` is the call's id, and the member that carries it is an open encoding ([CC 2.6.1.12](#2.6.1.12)). A group whose id is neither is a group of no room.
+
 No Transparency Service or registrar decides what a node admits or serves: a reader's own trust decides that ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34)). Anyone MAY run a Transparency Service under their own key, and its receipt shows registration and confers nothing ([CC 2.7.11](#2.7.11)).
 
 #### 2.6.1.12 `earlier-form` — The earlier form and the cutover (normative)
@@ -1443,6 +1469,7 @@ The verifier publishes fourteen files of them ([edition-2-vectors]). Its vectors
 | The payload rule of `ceg-boot-manifest/2`. Its member `build_manifest_row`, a `row-ref`, is the server's and is fixed | [CC 2.6.1.11](#2.6.1.11), [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | server |
 | The member of a stream key binding that states the head interval | [CC 5.3.3.8](part_5_transport_substrate.md#5.3.3.8) | edge |
 | The family of the agent text manifest statement | [CC 2.6.1.11](#2.6.1.11), [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | agent |
+| The member that carries a call's id, which a call group's MLS group id is derived from | [CC 2.6.1.11](#2.6.1.11), [CC 5.1](part_5_transport_substrate.md#5.1) | edge |
 | The thumbprint of a binding key, as a binding's `info` carries it | [CC 2.6.1.11](#2.6.1.11) | verifier |
 | The contents of a sealed invitation and of its return beyond a binding's flows; the key a first invitation is sealed to; how a sealed envelope travels | [CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2) | edge |
 | The signing bytes of a skill import manifest | [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1) | agent |

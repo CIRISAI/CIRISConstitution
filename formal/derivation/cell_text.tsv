@@ -32,3 +32,4 @@ stream:head	cosign_rule	none	CC 3.1.3	nobody else writes its head
 contribution:{subject_kind}	cosign_rule	none	CC 3.1.9.3	The node signs it under its own key, at federation scope.
 holon:claim	placement	commons	CC 3.1.11	Its `cohort_scope` is `federation`.
 holon:claim	cosign_rule	none	CC 3.1.11	One signature carries the row, and no second signer signs it.
+mls:leaf_vouch	cosign_rule	none	CC 5.1	The member's device key signs one vouching row for that key and signs no MLS message.

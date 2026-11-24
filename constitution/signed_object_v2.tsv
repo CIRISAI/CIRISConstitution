@@ -239,6 +239,14 @@ delivery_ack	delivery-ack	"epoch"	epoch	payload	uint	always	5.3.3.11	The key-rot
 delivery_ack	delivery-ack	"k"	K	payload	uint	always	5.3.3.11	The chunk index acknowledged.
 delivery_ack	delivery-ack	"chunk_root"	chunk_root	payload	hash-digest	always	5.3.3.11	The published tree root the subscriber signs over.
 delivery_ack	delivery-ack	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+leaf_vouch	leaf-vouch	"author"	attesting_key_id	payload	identity-ref	always	5.1 3.1.4	The member whose leaf it is: a person, an agent, or in a private room a voice. The member's device key signs, and author, iss and sub are the member.
+leaf_vouch	leaf-vouch	"dimension"	dimension	payload	tstr	always	3.1.4	mls:leaf_vouch:v1; the row's type is scores.
+leaf_vouch	leaf-vouch	"suite"	-	payload	77	always	5.1	The MLS ciphersuite the vouched leaf signs under: the constant 0x004D, as an unsigned integer.
+leaf_vouch	leaf-vouch	"leaves"	-	payload	[1*1 redacted-element] / [8*8 redacted-element] / [32*32 redacted-element]	always	5.1 2.6.1.10	One blinded element for each room vouched for, padded with random digests to exactly 1, 8 or 32: a sequence. Each discloses as a leaf-vouch-entry.
+leaf_vouch	leaf-vouch	"valid_from"	-	payload	ms-time	always	5.1 2.6.2	The start of the vouch, POSIX milliseconds.
+leaf_vouch	leaf-vouch	"valid_until"	valid_until	payload	ms-time	always	5.1 2.6.2	Required. Later than valid_from, and at most leaf_vouch_max_secs after it.
+leaf_vouch	leaf-vouch	"refs"	-	payload	refs	iff a room key signs	2.6.1.11 2.6.1.3	The head of the signer's voice roster, under the also role voice, and no other row.
+leaf_vouch	leaf-vouch	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 occurrence	identity-occurrence	"author"	attesting_key_id	payload	identity-ref	always	3.3.6	A live roster key's identity: the identity named by identity_key_id.
 occurrence	identity-occurrence	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6	The identity the occurrence speaks for: a person's, or an agent's own; on a row that seats a further room key, the voice.
 occurrence	identity-occurrence	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6	The participant's key, equal to the CWT sub; its own statement over the payload is the second voice.
@@ -326,6 +334,12 @@ disclosure	salted-claim	value	-	object	ceg-value	always	2.6.1.10	The blinded mem
 disclosure	salted-claim	key	-	object	tstr	always	2.6.1.10	The blinded member's name; the digest is SHA-256 over the disclosure's bytes as sd_claims carries them.
 disclosure	salted-element	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes; a blinded array element is disclosed as [salt, value].
 disclosure	salted-element	value	-	object	ceg-value	always	2.6.1.10	The blinded element's value.
+disclosure	leaf-vouch-entry	leaf_key	-	object	bstr .size 32	always	5.1	The value a blinded element of a leaf vouch discloses: first the leaf's Ed25519 public key.
+disclosure	leaf-vouch-entry	room	-	object	group-ref	always	5.1	The room the leaf is vouched for, by its derived id.
+disclosure	leaf-vouch-entry	suite	-	object	77	always	5.1	The constant 0x004D, equal to the row's suite.
+mls_group	mls-group-id-input	room	-	derived	group-ref	always	2.6.1.11 5.1	The room's derived id.
+mls_group	mls-call-group-id-input	room	-	derived	group-ref	always	2.6.1.11 5.1	The room's derived id.
+mls_group	mls-call-group-id-input	call	-	derived	bstr	always	2.6.1.11 2.6.1.12	The call's id; the member that carries it is open.
 trust_accepts	trust-accepts	"author"	attesting_key_id	payload	identity-ref	always	4.4.3.34 3.2	The owner whose edge it is: a person, and any live key of their roster signs it. A node's own edge is read only while its owner has signed none.
 trust_accepts	trust-accepts	"dimension"	dimension	payload	tstr	always	4.4.3.34 3.2	trust:accepts:v1. The CWT sub is what the edge accepts: a lineage's name, a service's key thumbprint or identity, an author's identity or a group's id. The edge names no refs.head and carries no scope.
 trust_accepts	trust-accepts	"attached_head_digest"	attached_head_digest	payload	hash-digest	on an edge that attaches a root	3.2	The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). The member is what makes the edge one that attaches a root. A reader that holds a lineage of the name in sub refuses a new edge without it, trust_root_head_unnamed.

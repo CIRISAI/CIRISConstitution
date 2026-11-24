@@ -42,6 +42,7 @@ accord_roster_window_max_secs	604,800 s (7 d): unused; no rule reads it, since t
 consent_temporary_ttl_secs	14 days from `asserted_at` for a temporary grant that states no `valid_until`	4.4.3.31	manifests/reactions.json	
 epoch_key_retention_secs	30 days: the rotate-forward window after which holders delete past-epoch keys (the default mode)	3.2	manifests/reactions.json	
 unit_lease_max_secs	86,400 s (24 h): `valid_until − asserted_at` of an `admission:unit` row never exceeds it, and a host runs a unit on a row at most this long after first holding it	2.7.11	formal/admission	
+leaf_vouch_max_secs	2,592,000 s (30 × 86,400): `valid_until − valid_from` of an `mls:leaf_vouch` row never exceeds it	5.1		
 key_record_max_secs	31,536,000 s (365 × 86,400): `valid_until − asserted_at` of a `node` or `agent` key record never exceeds it	2.4.1.1	manifests/reactions.json	
 clock_skew_tolerance_secs	300 s (±5 minutes), the default maximum skew between an attester's clock and a consumer's clock in a freshness check; a future-dated row is malformed	2.6.7		
 owner_abandonment_window_floor_secs	90 days: a deployment's `owner_abandonment_window` is never shorter; a deployment MUST publish its window, and with none published no abandonment finding is admissible	3.2		

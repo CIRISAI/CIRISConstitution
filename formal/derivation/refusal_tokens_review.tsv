@@ -746,3 +746,5 @@ room_row_signer_not_room_key	refusal		the text says refused
 widening_binding_not_held	hold		the cosignature waits until the joiner binding is held
 key_grant_recipient_not_seat	refusal		the text says refused
 xwing_hpke_aes256_gcm_hkdf_sha256	not_a_token		a wrap_algorithm value
+leaf_key	not_a_token		an element of a leaf vouch entry
+leaf_vouch_max_secs	not_a_token		a constant

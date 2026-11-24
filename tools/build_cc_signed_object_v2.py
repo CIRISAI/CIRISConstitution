@@ -95,6 +95,7 @@ OBJECTS = [
     ("objection", "An objection vote: the payload of an `objection:{state}` row"),
     ("owner_binding", "An owner-binding: the payload of an `ownership:{relation}:{target_kind}:{version}` row"),
     ("holon_claim", "A holon claim: the payload of a `holon:claim` row"),
+    ("leaf_vouch", "A leaf vouch: the payload of an `mls:leaf_vouch` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
     ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
     ("admission", "An admission of a unit: the members of an `admission:unit` row"),
@@ -104,6 +105,7 @@ OBJECTS = [
     ("binding", "The transport destination binding (`identity:occurrence`)"),
     ("room", "The seat commitment of a room key"),
     ("room_binding", "The binding of a voice to its person, and what a wrap to a room key seals"),
+    ("mls_group", "A room's MLS group ids: what each is derived from"),
     ("group_id", "The id of a group: what its first version derives it from"),
     ("disclosure", "A disclosure of a blinded member"),
     ("logical", "Logical names with no member of their own"),
@@ -473,6 +475,24 @@ def room_binding_samples():
     ]
 
 
+def leaf_and_group_samples():
+    """[(root, (valid, broken), what)]: what a leaf vouch's element discloses, and the inputs of a room's MLS group ids."""
+    entry = [bytes([6]) * 32, gref(5), 77]
+    return [
+        ("leaf-vouch-entry", (cde(entry), [
+            ("an entry with a leaf key of 31 bytes", cde([bytes(31), gref(5), 77])),
+            ("an entry naming its room by a key id", cde([bytes(32), "A1", 77])),
+            ("an entry under another suite", cde([bytes(32), gref(5), 1])),
+            ("an entry that names an epoch", cde(entry + [3]))]), "entry of a leaf vouch"),
+        ("mls-group-id-input", (cde(["CEG-mls-group/2", gref(5)]), [
+            ("a chat group id under the call label", cde(["CEG-mls-call-group/2", gref(5)])),
+            ("a chat group id over a room string", cde(["CEG-mls-group/2", "chat:room:v1:abc"]))]), "chat group id input"),
+        ("mls-call-group-id-input", (cde(["CEG-mls-call-group/2", gref(5), bytes(32)]), [
+            ("a call group id with no call", cde(["CEG-mls-call-group/2", gref(5)])),
+            ("a call group id under the chat label", cde(["CEG-mls-group/2", gref(5), bytes(32)]))]), "call group id input"),
+    ]
+
+
 def room_key_record_rule(p):
     """The rule of a room key's record the schema cannot state (CC 2.6.1.11): room marks the record, and the KEM key
     and the commitment are present exactly where room is."""
@@ -603,6 +623,7 @@ def recovery_samples():
 
 # ---------------------------------------------------------------- the payloads of nine families (CC 2.6.1.4)
 PAYLOAD_INVALID = "edition2_payload_invalid"
+LEAF_VOUCH_MAX_MS = 2592000 * 1000                       # leaf_vouch_max_secs (CC 5.1)
 XWING_WRAP = "xwing_hpke_aes256_gcm_hkdf_sha256"         # the wrap_algorithm of a wrap to a room key (CC 2.6.1.11)
 TIPS_MAX, TIPS_TOO_MANY = 64, "trusted_through_too_many"   # refs.trusted_through on any row (CC 3.1.3.2)
 ACK_MAX, ACK_TOO_MANY = 256, "ack_names_too_many"          # the acts one receipt names under refs.also.ack (CC 3.1.3)
@@ -695,6 +716,9 @@ def family_payloads():
             "author": iref(0), "dimension": "ownership:responsible_party:node:v1", "delegation_purpose": "owner_binding",
             "scope": sorted(["infra:attest", "infra:serve"], key=cde), "delegation_valid_until": t + 86400000,
             "cohort_scope": "self", "asserted_at": t}),
+        "leaf-vouch": ("mls:leaf_vouch", {
+            "author": iref(1), "dimension": "mls:leaf_vouch:v1", "suite": 77, "leaves": [Tag(60, bytes([i]) * 32) for i in range(8)],
+            "valid_from": t, "valid_until": t + LEAF_VOUCH_MAX_MS, "asserted_at": t}),
         "holon-claim": ("holon:claim", {
             "author": iref(1), "dimension": "holon:claim:v1", "spec": "ciris/holon-decl/0", "holon": "sample.holon",
             "view": "sample.view", "consumer": "sample.consumer", "kind": "bound", "declaration": dig,
@@ -919,6 +943,25 @@ def family_payload_samples():
             ("an empty refs", cde(holon_follows(refs={})))]),
         ("holon-claim", "holon:claim payload of a claim of exact agreement", D("holon-claim", "body"), [
             ("an exact claim with a score as a decimal", cde(dict(_without(P["holon-claim"], "body"), score=Tag(4, [-1, 5]))))]),
+        ("leaf-vouch", "mls:leaf_vouch payload", cde(P["leaf-vouch"]), [
+            ("a vouch with no author", D("leaf-vouch", "author")),
+            ("a vouch with no suite", D("leaf-vouch", "suite")),
+            ("a vouch under another suite", W("leaf-vouch", suite=1)),
+            ("a suite as text", W("leaf-vouch", suite="0x004D")),
+            ("a vouch with no end", D("leaf-vouch", "valid_until")),
+            ("a vouch with no start", D("leaf-vouch", "valid_from")),
+            ("a vouch with no leaves", D("leaf-vouch", "leaves")),
+            ("an empty leaves", W("leaf-vouch", leaves=[])),
+            ("seven leaves", W("leaf-vouch", leaves=[Tag(60, bytes([i]) * 32) for i in range(7)])),
+            ("nine leaves", W("leaf-vouch", leaves=[Tag(60, bytes([i]) * 32) for i in range(9)])),
+            ("thirty-three leaves", W("leaf-vouch", leaves=[Tag(60, bytes([i]) * 32) for i in range(33)])),
+            ("a leaf entry in the clear", W("leaf-vouch", leaves=[[bytes(32), gref(5), 77]])),
+            ("a bare digest for an entry", W("leaf-vouch", leaves=[bytes(32)]))]),
+        ("leaf-vouch", "mls:leaf_vouch payload of a room key's vouch, one entry",
+         W("leaf-vouch", leaves=[Tag(60, bytes(32))], refs={"also": {"voice": [_ref(30)]}}), [
+            ("a digest of 31 bytes", W("leaf-vouch", leaves=[Tag(60, bytes(31))]))]),
+        ("leaf-vouch", "mls:leaf_vouch payload of thirty-two entries",
+         W("leaf-vouch", leaves=[Tag(60, bytes([i]) * 32) for i in range(32)]), []),
         ("objection-vote", "objection:{state} payload", cde(P["objection-vote"]), [
             ("a vote with no author", D("objection-vote", "author")),
             ("a vote with no cohort", D("objection-vote", "cohort")),
@@ -1047,6 +1090,13 @@ def family_payload_rule(root, p, family=None):
         b = p.get("body", {})
         if ("realised" in b) != (b.get("basis") == "realised"):
             return PAYLOAD_INVALID                        # a realised value only on a realised basis, and always there
+    if root == "leaf-vouch":
+        if dim != "mls:leaf_vouch:v1" or refs:
+            return PAYLOAD_INVALID                        # the one leaf; it names no row but a room key's voice head, set aside above
+        if not p["valid_from"] < p["valid_until"] <= p["valid_from"] + LEAF_VOUCH_MAX_MS:
+            return PAYLOAD_INVALID                        # a required end, at most leaf_vouch_max_secs after the start (CC 5.1)
+        if len(p["leaves"]) not in (1, 8, 32) or len(set(cde(x) for x in p["leaves"])) != len(p["leaves"]):
+            return PAYLOAD_INVALID                        # exactly 1, 8 or 32 digests, no two alike
     if root == "act-ack":
         acks = refs.get("also", {}).get("ack", [])
         if len(acks) > ACK_MAX:
@@ -1253,6 +1303,10 @@ def family_payload_rule_checks():
         bad.append("a holon claim that names two heads of its group breaks its prose rule")
     if family_payload_rule("holon-claim", holon_follows(refs={"target": _ref(25)})) is not None:
         bad.append("a holon claim that supersedes the row it names breaks its prose rule")
+    if family_payload_rule("leaf-vouch", dict(P["leaf-vouch"][1], leaves=[Tag(60, bytes(32))], refs={"also": {"voice": [_ref(30)]}})) is not None:
+        bad.append("a room key's vouch of one entry breaks its prose rule")
+    if family_payload_rule("leaf-vouch", dict(P["leaf-vouch"][1], valid_until=P["leaf-vouch"][1]["valid_from"] + 1)) is not None:
+        bad.append("a vouch with a short term breaks its prose rule")
     if family_payload_rule("act-ack", dict(P["act-ack"][1], refs={"also": dict(P["act-ack"][1]["refs"]["also"], voice=[_ref(30)])})) is not None:
         bad.append("a receipt of a private room that names its signer's voice head breaks its prose rule")
     if family_payload_rule("objection-vote", dict(P["objection-vote"][1], dimension="objection:assent:v1")) is not None:
@@ -1326,6 +1380,13 @@ def family_payload_rule_checks():
         ("holon-claim", dict(P["holon-claim"][1], holon="Sample.Holon"), None),
         ("holon-claim", dict(P["holon-claim"][1], view="sample..view"), None),
         ("holon-claim", dict(P["holon-claim"][1], consumer="engine/consumer"), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], dimension="mls:leaf_vouch:v2"), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], valid_until=P["leaf-vouch"][1]["valid_from"] + LEAF_VOUCH_MAX_MS + 1), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], valid_until=P["leaf-vouch"][1]["valid_from"]), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], refs={"head": _ref(9)}), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], leaves=[Tag(60, bytes(32))] * 8), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], leaves=[Tag(60, bytes([i]) * 32) for i in range(2)]), None),
         ("act-ack", dict(P["act-ack"][1], refs={"also": {"cites": [_ref(21)]}}), None),
         ("act-ack", dict(P["act-ack"][1], refs={"also": dict(P["act-ack"][1]["refs"]["also"], voice=sorted([_ref(30), _ref(31)], key=cde))}), None),
         ("act-ack", dict(P["act-ack"][1], refs={"also": {"voice": [_ref(30)]}}), None),
@@ -1406,7 +1467,7 @@ def family_cddl_checks(text, ftext):
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
 FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "delivery_ack",
                   "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts",
-                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding", "holon_claim")
+                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding", "holon_claim", "leaf_vouch")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
@@ -1431,6 +1492,7 @@ FAMILY_RULE_HEAD = {
     "owner-binding": "ownership:{relation}:{target_kind}:{version} (CC 3.2): the owner-binding, a delegates_to row authored by the owner; sub is the key owned, whose own statement over the same payload is the first-binding cosign. Its placement is cohort_scope with the group member that scope asks; a key held for an organisation names its affiliation in on_behalf_of.",
     "holon-claim": "holon:claim (CC 3.1.11): authored by the signer under its own name; one claim, type scores; sub is the holon's id as text. The declaration is an unsigned blob cited by its digest, which is among evidence_refs. In refs it names only rows of its own group: those it follows, under prev and further_prev, and on a supersedes the row it replaces, under target; no head.",
     "holon-claim-body": "The body of a holon:claim that states a bound (CC 3.1.11); a claim of exact agreement carries no body.",
+    "leaf-vouch": "mls:leaf_vouch (CC 5.1, CC 3.1.4): authored by the member whose leaf it is and signed under that member's device key; type scores; author, iss and sub are the member. It vouches for the device's MLS leaf key in each room it names, as blinded elements; a presentation discloses one. It names no row, but for a room key the head of its voice roster.",
     "objection-vote": "objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",
@@ -2325,6 +2387,7 @@ def cddl_checks(text):
         for root, (ok, broken), what in (("key-record-members", key_record_samples(), "key record with its custody member"),
                                          ("key-record-members", room_key_record_samples(), "record of a room key"),
                                          *room_binding_samples(),
+                                         *leaf_and_group_samples(),
                                          ("recovery-commitment-input", recovery_samples(), "recovery commitment input"),
                                          ("accord-invocation", acc["accord-invocation"], "accord invocation payload"),
                                          ("accord-lifecycle", acc["accord-lifecycle"], "accord lifecycle payload"),

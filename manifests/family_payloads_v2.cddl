@@ -183,6 +183,19 @@ delivery-ack = {
   * tstr => ceg-value,
 }
 
+; mls:leaf_vouch (CC 5.1, CC 3.1.4): authored by the member whose leaf it is and signed under that member's device key; type scores; author, iss and sub are the member. It vouches for the device's MLS leaf key in each room it names, as blinded elements; a presentation discloses one. It names no row, but for a room key the head of its voice roster.
+leaf-vouch = {
+  "author": identity-ref,                   ; The member whose leaf it is: a person, an agent, or in a private room a voice. The member's device key signs, and author, iss and sub are the member.
+  "dimension": tstr,                        ; mls:leaf_vouch:v1; the row's type is scores.
+  "suite": 77,                              ; The MLS ciphersuite the vouched leaf signs under: the constant 0x004D, as an unsigned integer.
+  "leaves": [1*1 redacted-element] / [8*8 redacted-element] / [32*32 redacted-element], ; One blinded element for each room vouched for, padded with random digests to exactly 1, 8 or 32: a sequence. Each discloses as a leaf-vouch-entry.
+  "valid_from": ms-time,                    ; The start of the vouch, POSIX milliseconds.
+  "valid_until": ms-time,                   ; Required. Later than valid_from, and at most leaf_vouch_max_secs after it.
+  ? "refs": refs,                           ; The head of the signer's voice roster, under the also role voice, and no other row. (iff a room key signs)
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
 ; identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.
 identity-occurrence = {
   "author": identity-ref,                   ; A live roster key's identity: the identity named by identity_key_id.

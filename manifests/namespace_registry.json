@@ -257,7 +257,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 10,
     "n_components_normative": 8,
-    "n_families": 185,
+    "n_families": 186,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
@@ -268,7 +268,7 @@
       "node": 51,
       "persist": 36,
       "registry": 20,
-      "transport-delivery": 7
+      "transport-delivery": 8
     },
     "polarity_classes": {
       "+1.0 only": {
@@ -328,7 +328,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "581e2de16c0740b3a6536a24c19db89f9a6bf1b7a30369d60032c4c76f5d42f1",
+    "registry_sha256": "058921ac8282152d17c7963d76da71dc5b92509be692e1c1cf96d4eccdc81ae6",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -343,7 +343,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "5a2f476d14c6212eff368d12ef5cde3711d8ad88af24207ba19d7f010b1a4183"
+    "source_sha256": "d7f2bc7b19d6e936d3ab78f7630926e785857713ceee668d08e71faf54f24886"
   },
   "families": [
     {
@@ -3506,6 +3506,29 @@
         {
           "class": "vocab",
           "segment": "{substrate_rung}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.4",
+      "description": "A member's vouch for the MLS leaf key of one of its devices (CC 5.1).",
+      "owning_component": "transport-delivery",
+      "owning_repo": "CIRISEdge",
+      "polarity": "positive-only",
+      "prefix": "mls:leaf_vouch",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "mls"
+        },
+        {
+          "class": "literal",
+          "segment": "leaf_vouch"
         }
       ]
     },

@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "56e469e0a848eaa10723a612e95bc37be02b7489418c28412ec1786855286a5d",
-   "formal/derivation/signer_kind.tsv": "19d539a7792f7edcaebf622ac2292ed23af49755c5bae6030c6538987c31ec7a"
+   "manifests/transitions.json": "181c27740b79279541a7c44272d89a7b619175692b1064c7adf710e3344f3051",
+   "formal/derivation/signer_kind.tsv": "41a0ec41a739ab2e84b2670951d60aed4e797ed716d7291d9dca443204d30423"
   },
   "kinds": [
    "person",
@@ -63,8 +63,8 @@
    ]
   },
   "counts": {
-   "uses": 503,
-   "transitions": 462,
+   "uses": 505,
+   "transitions": 464,
    "open_uses": 0,
    "open_questions": 0
   },
@@ -139,14 +139,12 @@
    "leaf": null,
    "roles": [],
    "kinds": [
-    "agent",
-    "person",
-    "room"
+    "ephemeral"
    ],
    "open": false,
    "question": null,
    "rule": "use",
-   "cc_ref": "CC 5.1 People, not infrastructure, join a room (a KeyPackage is signed by its leaf's key)",
+   "cc_ref": "CC 5.1 People, not infrastructure, join a room (a KeyPackage is signed by its leaf's key, a separate key the member's device key vouches for)",
    "at": "P5:80"
   },
   {
@@ -6624,6 +6622,44 @@
    "at": "P3:710, P3:2585, P3:2613"
   },
   {
+   "use": "mls:leaf_vouch#attest:none>admitted",
+   "family": "mls:leaf_vouch",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "self"
+   ],
+   "kinds": [
+    "agent",
+    "person",
+    "room"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "actor_content",
+   "cc_ref": "CC 3.1.4 (registry); CC 5.1 the member's device key signs the vouch, never a node key",
+   "at": "P3:461, P5:80"
+  },
+  {
+   "use": "mls:leaf_vouch#withdraw:admitted>withdrawn",
+   "family": "mls:leaf_vouch",
+   "verb": "withdraw",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "person",
+    "room"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "actor_content",
+   "cc_ref": "CC 3.1.4 (registry); CC 5.1 the member's device key signs the vouch, never a node key",
+   "at": "P3:461, P5:80"
+  },
+  {
    "use": "model_3d:*#attest:none>admitted",
    "family": "model_3d:*",
    "verb": "attest",
@@ -9228,7 +9264,6 @@
  ],
  "by_kind": {
   "person": [
-   "@mls_keypackage",
    "@mls_leaf",
    "@split_key_id",
    "@stream_key_binding",
@@ -9512,6 +9547,8 @@
    "method:{approach_id}:{substrate_rung}#attest:none>admitted",
    "method:{approach_id}:{substrate_rung}#supersede:admitted>superseded",
    "method:{approach_id}:{substrate_rung}#withdraw:admitted>withdrawn",
+   "mls:leaf_vouch#attest:none>admitted",
+   "mls:leaf_vouch#withdraw:admitted>withdrawn",
    "model_3d:*#attest:none>admitted",
    "model_3d:*#recant:admitted>recanted",
    "model_3d:*#supersede:admitted>superseded",
@@ -9651,7 +9688,6 @@
    "transport:canonical_rebind#supersede:admitted>superseded"
   ],
   "agent": [
-   "@mls_keypackage",
    "@mls_leaf",
    "@split_key_id",
    "@stream_key_binding",
@@ -9888,6 +9924,8 @@
    "method:{approach_id}:{substrate_rung}#attest:none>admitted",
    "method:{approach_id}:{substrate_rung}#supersede:admitted>superseded",
    "method:{approach_id}:{substrate_rung}#withdraw:admitted>withdrawn",
+   "mls:leaf_vouch#attest:none>admitted",
+   "mls:leaf_vouch#withdraw:admitted>withdrawn",
    "model_3d:*#attest:none>admitted",
    "model_3d:*#recant:admitted>recanted",
    "model_3d:*#supersede:admitted>superseded",
@@ -10200,13 +10238,15 @@
    "rendezvous:route#attest:none>admitted"
   ],
   "room": [
-   "@mls_keypackage",
    "@mls_leaf",
    "@room_row",
-   "key_grant:{axis}#attest:none>admitted"
+   "key_grant:{axis}#attest:none>admitted",
+   "mls:leaf_vouch#attest:none>admitted",
+   "mls:leaf_vouch#withdraw:admitted>withdrawn"
   ],
   "ephemeral": [
-   "@chunk_key"
+   "@chunk_key",
+   "@mls_keypackage"
   ],
   "kem": [
    "@content_kem",

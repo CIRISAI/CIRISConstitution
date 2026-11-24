@@ -11,6 +11,7 @@ ceg-anything = ceg-statement / ceg-object-statement / second-consent / row-id-in
              / statement-id-input / statement-id / object-id-input / ceg-key / key-record-members
              / revocation-snapshot / ceg-genesis-bundle / recovery-commitment-input / seat-commitment-input / group-id-input
              / binding-info-input / binding-opening / room-sealed
+             / leaf-vouch-entry / mls-group-id-input / mls-call-group-id-input
              / hpke-info / ceg-typ / accord-invocation / accord-lifecycle / transport-destination-binding
 
 ; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
@@ -131,6 +132,9 @@ count32 = 0..4294967295
 sd-disclosure = salted-claim / salted-element
 salted-claim = [salt: bstr .size 16, value: ceg-value, key: tstr]
 salted-element = [salt: bstr .size 16, value: ceg-value]
+; What a blinded element of a leaf vouch discloses (CC 5.1): the `value` of its salted-element. The leaf's Ed25519
+; public key, the room it is vouched for, and the suite, the constant 0x004D.
+leaf-vouch-entry = [leaf_key: bstr .size 32, room: group-ref, suite: 77]
 ms-time = uint                     ; POSIX milliseconds, no tag, never a float
 
 ; Integers at one fixed scale: fixed6 is the value times 10^6. Folds sum in checked i64 and refuse on
@@ -414,6 +418,10 @@ binding-confirmation = {
   "enc": bstr .size 1120,                    ; the confirmation's own X-Wing encapsulation
   "ct": bstr,                                ; the AEAD ciphertext over binding-opening
 }
+; A room's MLS group ids (CC 5.1): each is SHA-256 over the deterministic encoding of its array, so a door recomputes
+; which room a group is of. `call` is the call's id; the member that carries it waits on its owner's submission.
+mls-group-id-input = ["CEG-mls-group/2", room: group-ref]
+mls-call-group-id-input = ["CEG-mls-call-group/2", room: group-ref, call: bstr]
 ; The HPKE info of an invitation and of a wrap to a room key, as text. A confirmation's info is binding-info-input.
 ; The bytes of each are fixed with the verifier's known-answer vectors, not in this file.
 hpke-info = "CEG-invitation/2" / "CEG-room-wrap/2"
