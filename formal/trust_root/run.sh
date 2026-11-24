@@ -25,6 +25,7 @@ expect=(
   "plant_end_by_instant:Inv_EndNoInstant"
   "plant_first_seen_wins:Inv_vii"
   "plant_unmade_head_stays:Inv_viii"
+  "plant_bound_unmakes_first:Inv_FirstBundleStands"
   "plant_founder_margin:Inv_T7"
   "plant_own_charter:Prop_PredecessorSet"
   "plant_fork_freezes:Inv_ForkNeverFreezes"
@@ -36,7 +37,7 @@ expect=(
 # witness : the closing configuration it is reached under
 witness=(
   "Wit_Rooted:named" "Wit_Stalled:named" "Wit_RecoveredRooted:named" "Wit_Adopted:named"
-  "Wit_FellBack:named" "Wit_LineageUnmade:named" "Wit_SignerRevoked:named"
+  "Wit_FellBack:named" "Wit_SignerRevoked:named"
   "Wit_FrozenAttached:named" "Wit_ForkAttempt:named" "Wit_StaleStillRooted:named"
   "Wit_StalledAtEdge:named" "Wit_UnreceiptedStillRooted:revoked" "Wit_Rooted:revoked"
   "Wit_Rooted:anchored" "Wit_Stalled:anchored" "Wit_TipsWait:anchored"

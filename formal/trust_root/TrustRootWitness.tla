@@ -20,9 +20,6 @@ Wit_Adopted == ~(edge = "present" /\ cur \notin {NoHead, edgeHead} /\ edgeHead \
 (* (viii): the head the edge names no longer verifies and the node stands on an ancestor. *)
 Wit_FellBack == ~(edge = "present" /\ cur \notin {NoHead, edgeHead} /\ cur \in Chain(edgeHead))
 
-(* (viii): no bundle of the lineage verifies any more. *)
-Wit_LineageUnmade == ~(edge = "present" /\ edgeAt < orev /\ cur = NoHead)
-
 (* The edge's signer's revoked_after does not follow the edge's own instant. *)
 Wit_SignerRevoked == ~(edge = "present" /\ ~(edgeAt < orev))
 

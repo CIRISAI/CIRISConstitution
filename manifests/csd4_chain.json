@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "a98976fde5538dcb4eaa9da7a457b68e5c818db280773e1548cfb572cedbd748",
-   "invariants_sha256": "a4681c4d664a1032906d21537e47824ccfce2c5a8b3d09ab30d5754cd1150743",
+   "state_table_sha256": "901c02995f03912bb216b68e2c897f53f7f992095edfcd037f9edbf3771c9199",
+   "invariants_sha256": "b53ac62349eca862a1e5cdd66e44e402c6c71bd5970f0f00e1c37722f5f0a2ec",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "d9c9691840fda6225555990ee0ba789122cacfd4ee27433c452c9f151be81375",
+   "claims_sha256": "b6b12f9bba68b9cd7710968b6cd9b131028a78e5b168c8b9433b911cfdb07485",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -29,7 +29,7 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 262,
+   "invariants": 263,
    "claims": 610,
    "entries": 20,
    "refusal_tokens": 126
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "51687f0a7bfe9f7dafecb2a4343ea35e22ac3c490e9c6c852d45dfd1b5e2b4a1"
+  "chain_sha256": "d4f39712c0f77ae5cc2c89c90f4316fb9640b6fe6b60a9ce396016cfe4109b9b"
  },
  "chain": [
   {
@@ -319,6 +319,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.T4",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -513,6 +522,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -1368,6 +1378,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.T4",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -1562,6 +1581,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -2382,6 +2402,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.T4",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -2714,6 +2743,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -4350,6 +4380,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -5303,6 +5334,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -6443,6 +6475,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -8588,6 +8621,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -9429,7 +9463,7 @@
      "state": "NotRooted",
      "plane": "root",
      "cc_ref": "3.2 T8",
-     "enters_by": "no acceptance edge; the edge withdrawn, recanted or tombstoned; the edge's own instant not before its signer's revoked_after; no bundle of the lineage verifies",
+     "enters_by": "no acceptance edge; the edge withdrawn, recanted or tombstoned; the edge's own instant not before its signer's revoked_after",
      "signer": "node owner; revoking key",
      "model_ref": "trust_root.TrustRootVerdict.tla:VAt=NotRooted",
      "status": "modelled"
@@ -9460,6 +9494,15 @@
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Prop_vi",
      "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
     },
@@ -9796,6 +9839,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -12270,6 +12314,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.T4",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -12602,6 +12655,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -17574,6 +17628,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -19807,6 +19862,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -21379,6 +21435,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -22215,6 +22272,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -25138,6 +25196,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.T7",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -25209,6 +25276,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -26014,6 +26082,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -26819,6 +26888,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -27615,6 +27685,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -27687,6 +27758,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -27782,6 +27854,15 @@
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_viii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -27957,6 +28038,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -32204,6 +32286,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.freeze",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -32230,6 +32321,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -32494,6 +32586,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.freeze",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -32520,6 +32621,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -32784,6 +32886,15 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.freeze",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -32810,6 +32921,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -52274,6 +52386,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]

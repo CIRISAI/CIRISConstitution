@@ -1,7 +1,7 @@
 name: formal
 
-# The standing verdict's four configurations close (931,179 distinct states in all, the
-# largest 471,462 to depth 16); allow up to two hours on a small runner. State files go
+# The standing verdict's four configurations close (948,721 distinct states in all, the
+# largest 479,605 to depth 16); allow up to two hours on a small runner. State files go
 # to a temp dir.
 on:
   workflow_dispatch:
