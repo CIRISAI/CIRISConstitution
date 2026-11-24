@@ -3,10 +3,10 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "901c02995f03912bb216b68e2c897f53f7f992095edfcd037f9edbf3771c9199",
-   "invariants_sha256": "b53ac62349eca862a1e5cdd66e44e402c6c71bd5970f0f00e1c37722f5f0a2ec",
+   "invariants_sha256": "47a0ad4f49a84c6e65b21a664d94fe4dde539cbac4ce3f43a2cefef653e9e95d",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "b6b12f9bba68b9cd7710968b6cd9b131028a78e5b168c8b9433b911cfdb07485",
+   "claims_sha256": "32c7d13067966a9e87128258d3d7ce699c3da88eec1d0d0306dc9d1a3d290514",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -29,7 +29,7 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 263,
+   "invariants": 269,
    "claims": 610,
    "entries": 20,
    "refusal_tokens": 126
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "d4f39712c0f77ae5cc2c89c90f4316fb9640b6fe6b60a9ce396016cfe4109b9b"
+  "chain_sha256": "8af8597d95fe1028fbade01946d2e46f38250983159e42386a915f11ef330e71"
  },
  "chain": [
   {
@@ -14332,7 +14332,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -14510,7 +14510,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15434,7 +15434,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15576,7 +15576,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15783,7 +15783,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15935,7 +15935,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     },
     {
      "inv_id": "WA.goodhart",
@@ -16889,7 +16889,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -36344,7 +36344,7 @@
      "symbol": "Inv_RevokedOverridesGranted",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; no_boundary twin fails"
     },
     {
      "inv_id": "CN.stranger",
@@ -36353,7 +36353,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; instant twin fails"
     },
     {
      "inv_id": "CN.backdate",
@@ -36371,7 +36371,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes"
+     "verdict": "closes; no_W twin fails"
     },
     {
      "inv_id": "CN.scope",
@@ -36380,7 +36380,7 @@
      "symbol": "Inv_EmptyScopeMatchesNothing",
      "kind": "safety",
      "claim_id": "CLM-consent-scope-is-envelope-member",
-     "verdict": "closes"
+     "verdict": "closes; any_scope twin fails"
     },
     {
      "inv_id": "CN.decayfwd",
@@ -36389,7 +36389,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -36398,7 +36398,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     },
     {
      "inv_id": "CN.expiry",
@@ -36407,7 +36407,7 @@
      "symbol": "Inv_ExpiryEmittedBySubstrate",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; forged_expiry twin fails"
     }
    ],
    "claims": [
@@ -36645,6 +36645,10 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -36716,7 +36720,7 @@
      "symbol": "Inv_RevokedOverridesGranted",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; no_boundary twin fails"
     },
     {
      "inv_id": "CN.stranger",
@@ -36725,7 +36729,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; instant twin fails"
     },
     {
      "inv_id": "CN.backdate",
@@ -36743,7 +36747,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes"
+     "verdict": "closes; no_W twin fails"
     },
     {
      "inv_id": "CN.scope",
@@ -36752,7 +36756,7 @@
      "symbol": "Inv_EmptyScopeMatchesNothing",
      "kind": "safety",
      "claim_id": "CLM-consent-scope-is-envelope-member",
-     "verdict": "closes"
+     "verdict": "closes; any_scope twin fails"
     },
     {
      "inv_id": "CN.decayfwd",
@@ -36761,7 +36765,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -36770,7 +36774,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     },
     {
      "inv_id": "CN.expiry",
@@ -36779,7 +36783,7 @@
      "symbol": "Inv_ExpiryEmittedBySubstrate",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; forged_expiry twin fails"
     }
    ],
    "claims": [
@@ -37017,6 +37021,10 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37088,7 +37096,7 @@
      "symbol": "Inv_RevokedOverridesGranted",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; no_boundary twin fails"
     },
     {
      "inv_id": "CN.stranger",
@@ -37097,7 +37105,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; instant twin fails"
     },
     {
      "inv_id": "CN.backdate",
@@ -37115,7 +37123,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes"
+     "verdict": "closes; no_W twin fails"
     },
     {
      "inv_id": "CN.scope",
@@ -37124,7 +37132,7 @@
      "symbol": "Inv_EmptyScopeMatchesNothing",
      "kind": "safety",
      "claim_id": "CLM-consent-scope-is-envelope-member",
-     "verdict": "closes"
+     "verdict": "closes; any_scope twin fails"
     },
     {
      "inv_id": "CN.decayfwd",
@@ -37133,7 +37141,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -37142,7 +37150,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     },
     {
      "inv_id": "CN.expiry",
@@ -37151,7 +37159,7 @@
      "symbol": "Inv_ExpiryEmittedBySubstrate",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; forged_expiry twin fails"
     }
    ],
    "claims": [
@@ -37389,6 +37397,10 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37451,7 +37463,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decayrank",
@@ -37460,7 +37472,7 @@
      "symbol": "Prop_DecayForwardOnly",
      "kind": "safety-temporal",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_back twin fails"
     },
     {
      "inv_id": "CN.decaycomp",
@@ -37469,7 +37481,7 @@
      "symbol": "Prop_DecayCompletes",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_stalls twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -37478,7 +37490,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     }
    ],
    "claims": [
@@ -37684,6 +37696,10 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37746,7 +37762,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decayrank",
@@ -37755,7 +37771,7 @@
      "symbol": "Prop_DecayForwardOnly",
      "kind": "safety-temporal",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_back twin fails"
     },
     {
      "inv_id": "CN.decaycomp",
@@ -37764,7 +37780,7 @@
      "symbol": "Prop_DecayCompletes",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_stalls twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -37773,7 +37789,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     }
    ],
    "claims": [
@@ -37979,6 +37995,10 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38041,7 +38061,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decayrank",
@@ -38050,7 +38070,7 @@
      "symbol": "Prop_DecayForwardOnly",
      "kind": "safety-temporal",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_back twin fails"
     },
     {
      "inv_id": "CN.decaycomp",
@@ -38059,7 +38079,7 @@
      "symbol": "Prop_DecayCompletes",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_stalls twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -38068,7 +38088,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     }
    ],
    "claims": [
@@ -38274,6 +38294,10 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38355,6 +38379,60 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes; literal_signer twin fails"
+    },
+    {
+     "inv_id": "CN.headbackdate",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_BackdatedGrantRefused",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headinstant",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_InstantBuysNoStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headverdict",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_SameVerdictOnceHeld",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.headtransfer",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferMovesNoVerdict",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.transferfold",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferKeepsFold",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = counts; fails under InForce = ends; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.replacedends",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplacedBindingEndsGrant",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = ends; fails under InForce = counts; the text has both readings and neither is chosen"
     }
    ],
    "claims": [
@@ -38576,6 +38654,10 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38657,6 +38739,60 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes; literal_signer twin fails"
+    },
+    {
+     "inv_id": "CN.headbackdate",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_BackdatedGrantRefused",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headinstant",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_InstantBuysNoStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headverdict",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_SameVerdictOnceHeld",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.headtransfer",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferMovesNoVerdict",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.transferfold",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferKeepsFold",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = counts; fails under InForce = ends; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.replacedends",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplacedBindingEndsGrant",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = ends; fails under InForce = counts; the text has both readings and neither is chosen"
     }
    ],
    "claims": [
@@ -38878,6 +39014,10 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38940,7 +39080,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -40171,7 +40311,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -47842,7 +47982,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [

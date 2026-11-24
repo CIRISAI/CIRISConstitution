@@ -78,6 +78,7 @@ def ref_past(S, r):
 
 
 KEYS = ["u1", "u2", "n1"]
+PLAIN_TOP = ("signer", "attested", "subject", "object")
 
 
 OBJS = ["o1", "o2"]
@@ -236,6 +237,9 @@ class Ref:
                 who = re.match(r"([A-Z])\.", args[0]); row = bind.get(who.group(1)) if who else self.self
             lim = row.get("asserted_at") if row else None
             held = [x for x in held if not x["fam"].startswith("seat:") or (lim is not None and x["asserted_at"] <= lim)]
+        if a["at"] == "head":      # the rows named, directly or through others, by the row the key is taken from
+            who = re.match(r"([A-Z])\.", args[0]); row = bind.get(who.group(1)) if who else self.self
+            held = ref_past(self.held, row) if row else []
         if fn == "type": v = typeof(keyarg(args[0], bind, self.self)) == args[1]
         elif fn == "signs": v = keyarg(args[0], bind, self.self) in self.self.get("cosig", frozenset())
         elif fn in ("adult", "capacitated"):
@@ -285,6 +289,12 @@ class Ref:
             return res
         if o and o["do"] == "void" and self.unheld(c["atom"]) is not None:      # a row it names is not held: it waits, unjudged
             return {"wait(" + self.unheld(c["atom"]) + ")"}
+        a = c["atom"]
+        if o and o["do"] == "void" and a["atom"] == "key" and a["at"] == "head":   # the head is not whole here yet: it waits
+            who = re.match(r"([A-Z])\.", a["args"][0]); row = bind.get(who.group(1)) if who else self.self
+            have = {x["id"] for x in self.held}
+            if row and any(i not in have for i in row.get("names", ()) if i != row["id"]):
+                return {"wait(*)"}
         return set() if self.atom(c["atom"], bind) else {verdict}
 
     def unheld(self, a):
@@ -409,6 +419,46 @@ def guard_sets(family, clauses, seed, n=30, maxrows=5):
             rows += seats
         selfrow = proto; selfrow["id"] = "self"
         set_refs(rnd, selfrow, refs, rows)
+        heads = [a for a in walk_atoms(clauses) if a["atom"] == "key" and a.get("at") == "head"]
+        if heads:      # a standing read at a head: the row whose key is read names the rows that seat it, or some of
+            hr = random.Random(seed * 7919 + len(out))       # them, or none; by its own generator, so no other draw moves
+            if any(a["atom"] == "key" and a["fn"] == "type" and a["args"] == ["signer", "node"] for a in walk_atoms(clauses)) and hr.random() < .85:
+                selfrow["signer"] = "n1"
+            for a in heads:
+                tgt = selfrow
+                m = re.match(r"([A-Z])\.(.+)", a["args"][0])
+                if m:
+                    ra = next((x for x in walk_atoms(clauses) if x["atom"] == "row" and x["as"] == m.group(1)), None)
+                    plain = [x for x in rows if not x["fam"].startswith("seat:") and x["verb"] == "attest"]
+                    if ra and plain and "of" in ra["families"] and hr.random() < .8:     # the row the atom binds, as the guard asks for it
+                        x = hr.choice(plain); x["fam"] = fill(ra["families"]["of"][0], hr)
+                        for j in ra["joins"]:
+                            if j["op"] != "=" or j["left"]["of"] or j["right"]["of"]: continue
+                            if j["left"]["slot"] == "id" and j["right"]["slot"] == "ref" and j["right"]["arg"] != "*":
+                                selfrow["ref"][j["right"]["arg"]] = x["id"]; selfrow["names"] = selfrow["names"] | {x["id"]}
+                            elif j["left"]["slot"] in PLAIN_TOP and j["right"]["slot"] in PLAIN_TOP:
+                                x[j["left"]["slot"]] = selfrow.get(j["right"]["slot"])
+                    named = [x for x in rows if x["id"] in selfrow["names"] and not x["fam"].startswith("seat:")]
+                    if not named: continue
+                    tgt = hr.choice(named)
+                k = tgt.get(m.group(2) if m else a["args"][0]); obj = selfrow.get(a["args"][1], a["args"][1])
+                offers = [x for x in rows if x["fam"] == "seat:offer" and x["verb"] == "attest"]
+                pair = next(((o, c) for o in offers for c in rows if c["fam"] == "seat:accept" and o["id"] in c.get("names", ())), None)
+                if pair is None and len(rows) <= maxrows - 3 and isinstance(k, str):
+                    o = {"id": "h0", "fam": "seat:offer", "verb": "attest", "signer": obj, "attested": k, "object": obj, "val": {"role": a["fn"]},
+                         "names": frozenset(), "asserted_at": hr.randint(0, 4), "ref": {}}
+                    c = {"id": "h1", "fam": "seat:accept", "verb": "attest", "signer": k, "attested": k, "object": obj, "val": {},
+                         "names": frozenset(["h0"]), "asserted_at": hr.randint(0, 4), "ref": {"offer": "h0"}}
+                    rows += [o, c]; pair = (o, c)
+                elif pair and isinstance(k, str) and hr.random() < .85:     # the seat the atom asks about, more often than not
+                    o, c = pair
+                    o.update(signer=obj, attested=k, object=obj); o["val"]["role"] = a["fn"]; c.update(signer=k, attested=k, object=obj)
+                for x in rows:      # named by the row whose key is read, by the judged row alone, or by neither
+                    if not x["fam"].startswith("seat:"): continue
+                    u = hr.random()
+                    if u < .45: tgt["names"] = frozenset(tgt.get("names", ())) | {x["id"]}
+                    elif u < .8 and tgt is not selfrow: selfrow["names"] = selfrow["names"] | {x["id"]}
+                if hr.random() < .12: tgt["names"] = frozenset(tgt.get("names", ())) | {"unheld"}
         if leaves: selfrow["leafname"] = rnd.choice(sorted(leaves) * 3 + ["other"])
         selfrow["verb"] = rnd.choice(sorted(verbs) * 3 + ["attest"]) if verbs else "attest"
         for k, v in eachvals.items():

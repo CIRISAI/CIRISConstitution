@@ -376,18 +376,8 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: Both normative configurations close; each twin fails its named property
-        working-directory: formal/consent
-        run: |
-          set +e
-          java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/c-st" -deadlock -config Consent_ruled_st.cfg Consent.tla || exit 1
-          java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/c-ct" -deadlock -config Consent_ruled_ct.cfg Consent.tla || exit 1
-          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-nb" -deadlock -config Consent_no_boundary.cfg Consent.tla | tee nb.log
-          grep -q 'Invariant Inv_RevocationIsBoundary is violated' nb.log || exit 1
-          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-ls" -deadlock -config Consent_literal_signer.cfg Consent.tla | tee ls.log
-          grep -q 'Invariant Inv_OwnerCanRecant is violated' ls.log || exit 1
-          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-nw" -deadlock -config Consent_no_W.cfg Consent.tla | tee nw.log
-          grep -q 'Invariant Inv_BackdateBounded is violated' nw.log || exit 1
+      - name: Every configuration closes, every planted break fails its named property, every witness is reached
+        run: TLA_JAR="$PWD/tla2tools.jar" CONSENT_TMP="$RUNNER_TEMP/consent" CONSENT_WORKERS=auto bash formal/consent/check.sh
 
   two_path:
     name: TLC + Lean — the two-path decision and its corridor (formal/two_path)

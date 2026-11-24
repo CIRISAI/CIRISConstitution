@@ -128,6 +128,9 @@ def t_atom(a):
             raise ValueError("at its_asserted_at with no named row: whose instant is not stated")
         lim = f"{who.group(1)}.asserted_at" if who else "self.asserted_at"
         S = f"sel(held, \\x: or(not(isfam(x, 'seat:*')), le(x.asserted_at, {lim})))"
+    if a["at"] == "head":        # CC 2.4.1.1: the standing as the rows named by the row the key is taken from seat it; no instant
+        who = re.match(r"([A-Z])\.", args[0])
+        S = f"past({who.group(1) if who else 'self'})"
     if fn == "type": v = f"eq(typeof({t_keyarg(args[0])}), {q(args[1])})"
     elif fn == "signs": v = f"member({t_keyarg(args[0])}, cosigners(self))"
     elif fn in ("adult", "capacitated"):
@@ -170,6 +173,11 @@ def t_clause(c):
         f = named_field(c["atom"])
         if f and (c["else"] or {}).get("do") == "void":       # void: the row waits for what it names, and is judged once that is held
             body = f"first({t_waits(f)} -> wait({q(f)}), else -> {body})"
+        a = c["atom"]
+        if a["atom"] == "key" and a["at"] == "head" and (c["else"] or {}).get("do") == "void":
+            who = re.match(r"([A-Z])\.", a["args"][0])       # the standing is read once every row its row names is held (CC 3.3.1: held until the binding rows arrive)
+            w = f"and(not(isnone({who.group(1)})), some(missing({who.group(1)})))" if who else "some(missing(self))"
+            body = f"first({w} -> wait('*'), else -> {body})"
     if c["when"]:
         conds = []
         for w in c["when"]:
