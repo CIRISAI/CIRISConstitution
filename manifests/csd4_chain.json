@@ -6,7 +6,7 @@
    "invariants_sha256": "b53ac62349eca862a1e5cdd66e44e402c6c71bd5970f0f00e1c37722f5f0a2ec",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "0643c97a1de3742729c3185aa1b069ffd026cc6234309cf0d1b4f1aac85d7b99",
+   "claims_sha256": "b8611063dc3d806cc8e28123c2d4c03749f3562090062f82e26abc3f7f31b5df",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "5f5f6538e4c26b444d7c166539018e027e629bb59c7175936d23a912a9d8815f"
+  "chain_sha256": "ed969921121983cb6f7d11ca5d6166d90f8e03339c76c1fffe82f8df212a07ee"
  },
  "chain": [
   {
@@ -848,7 +848,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -960,7 +960,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -1163,7 +1163,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -1875,7 +1875,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -1987,7 +1987,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -2190,7 +2190,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3393,7 +3393,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3505,7 +3505,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3708,7 +3708,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -4159,7 +4159,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -4294,7 +4294,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -4497,7 +4497,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -8368,7 +8368,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -8503,7 +8503,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -8706,7 +8706,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -10393,7 +10393,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -10505,7 +10505,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -10708,7 +10708,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -13177,7 +13177,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -13289,7 +13289,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -13492,7 +13492,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -17279,7 +17279,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -17414,7 +17414,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -17617,7 +17617,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -19481,7 +19481,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -19616,7 +19616,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -19819,7 +19819,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21022,7 +21022,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21157,7 +21157,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21360,7 +21360,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21827,7 +21827,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21962,7 +21962,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -22165,7 +22165,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25238,7 +25238,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25350,7 +25350,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25553,7 +25553,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26012,7 +26012,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26124,7 +26124,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26327,7 +26327,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26786,7 +26786,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26898,7 +26898,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -27101,7 +27101,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -27916,7 +27916,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -28028,7 +28028,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -28231,7 +28231,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -51781,7 +51781,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -51916,7 +51916,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -52119,7 +52119,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
