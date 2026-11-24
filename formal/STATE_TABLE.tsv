@@ -43,12 +43,12 @@ root	root	root.count	two	3.2 4.2.1	two canonicals hold distinct roots	—	—	ro
 self	roster key	key.holder	owner	3.3.6.4	—	—	self_roster.SelfRoster.tla:holder=owner	key.holder.owner	modelled
 self	roster key	key.holder	thief	3.3.6.4 1.13.3	device stolen with authentication	adversary	self_roster.SelfRoster.tla:holder=thief	key.holder.thief	modelled
 self	roster key	key.holder	lost	3.3.6.4	device lost	—	self_roster.SelfRoster.tla:holder=lost	key.holder.lost	modelled
-self	roster key	key.membership	proposed_add	3.3.6.4	proposal by a live roster key (held: from two keys the add-device approval is a proposal until another key assents or W_self passes)	roster key	self_roster.SelfRoster.tla:pending(add)	key.membership.proposed_add device.join_requested	modelled
-self	roster key	key.membership	member	3.3.6 3.3.6.4	quorum path at once or lone path after W_self	roster majority / silence	self_roster.SelfRoster.tla:member	device.joined roster.visible person.multi_device	modelled
-self	roster key	key.membership	proposed_evict	3.3.6.4	eviction proposal	roster key	self_roster.SelfRoster.tla:pending(evict)	key.membership.proposed_evict	modelled
-self	roster key	key.membership	evicted	3.3.6 3.3.6.4	withdraws against the occurrence row lands	roster majority / silence	self_roster.SelfRoster.tla:Devices\member	key.membership.evicted	modelled
+self	roster key	key.membership	proposed_add	3.3.6.4	proposal by a live roster key (open or contested: from two keys the added key is not seated until the count is met or a lone landing stands)	roster key	self_roster.SelfRoster.tla:props(add)	key.membership.proposed_add device.join_requested	modelled
+self	roster key	key.membership	member	3.3.6 3.3.6.4	a met count, or a lone landing that stands (signed rows; no node's clock)	roster majority / a seated key's landing	self_roster.SelfRoster.tla:member	device.joined roster.visible person.multi_device	modelled
+self	roster key	key.membership	proposed_evict	3.3.6.4	eviction proposal (open or contested: the target stays seated)	roster key	self_roster.SelfRoster.tla:props(evict)	key.membership.proposed_evict	modelled
+self	roster key	key.membership	evicted	3.3.6 3.3.6.4	the eviction is read as landed: a met count, or a lone landing that stands	roster majority / a seated key's landing	self_roster.SelfRoster.tla:gone	key.membership.evicted	modelled
 self	roster	self.roster_size	one	3.3.6.4	genesis only; add is unilateral	owner	self_roster.SelfRoster_combined1_*.cfg	self.roster_size.one	modelled
-self	roster	self.roster_size	two	3.3.6.4	lone path; theft is a stalemate	—	self_roster.SelfRoster_combined2_*.cfg	person.multi_device	modelled
+self	roster	self.roster_size	two	3.3.6.4	lone path by signed rows; theft is a stalemate	—	self_roster.SelfRoster_combined2_*.cfg	person.multi_device	modelled
 self	roster	self.roster_size	three_or_more	3.3.6.4	two paths	—	self_roster.SelfRoster_combined3_*.cfg	self.roster_size.three_more	modelled
 self	key record	key.revocation	none	2.4.1.1	—	—	trust_root.TrustRootVerdict.tla:krev=Never	key.revocation.none	modelled
 self	key record	key.revocation	revoked_after	2.4.1.1	key:revocation:v1 with revoked_after	revoking key	trust_root.TrustRootVerdict.tla:krev	key.revocation.revoked_after	modelled-partial
