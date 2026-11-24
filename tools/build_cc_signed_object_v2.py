@@ -429,6 +429,49 @@ def key_record_samples():
     ]
 
 
+def room_key_record(**change):
+    """The record of a room key (CC 3.1.3.2, CC 2.6.1.11): an agent's, with its room, its KEM key and its seat commitment, and no end."""
+    return dict({"key": {1: 7, 3: -70100, -1: bytes(1984)}, "identity_type": ["agent"], "asserted_at": 1763078400000,
+                 "room": gref(5), "kem_xwing_pubkey": bytes([4]) * 1216, "seat_commitment": [-16, bytes([7]) * 32]}, **change)
+
+
+def room_key_record_samples():
+    """(valid, broken): the record of a room key, one member changed in each broken one."""
+    return cde(room_key_record()), [
+        ("a room named by a key id", cde(room_key_record(room="A1"))),
+        ("a room named by an identity reference", cde(room_key_record(room=iref(1)))),
+        ("a room key's KEM key of 1215 bytes", cde(room_key_record(kem_xwing_pubkey=bytes(1215)))),
+        ("a room key's KEM key as the earlier pair", cde(room_key_record(kem_xwing_pubkey={"x25519": bytes(32), "ml_kem_768": bytes(1184)}))),
+        ("a seat commitment in hex", cde(room_key_record(seat_commitment="07" * 32))),
+    ]
+
+
+def room_key_record_rule(p):
+    """The rule of a room key's record the schema cannot state (CC 2.6.1.11): room marks the record, and the KEM key
+    and the commitment are present exactly where room is."""
+    if len({m in p for m in ("room", "kem_xwing_pubkey", "seat_commitment")}) != 1:
+        return PAYLOAD_INVALID
+    return None
+
+
+ROOM_BINDING_REUSE = ("room_binding_ml_kem_768_reuse", "room_binding_x25519_reuse")
+
+
+def room_binding_reuse_rule(p):
+    """CC 3.3.6.1: neither half of an identity's binding key repeats a half of another KEM key on the same occurrence,
+    or the transport x25519. The first half is the ML-KEM-768 key (bytes 0..1184), the second the X25519 key."""
+    k = p.get("room_binding_xwing_pubkey")
+    if k is None:
+        return None
+    enc, td = p.get("encryption_pubkeys", {}), p.get("transport_destination", {})
+    others = [p[m] for m in ("transit_xwing_pubkey", "onion_hop_xwing_pubkey") if m in p]
+    if k[:1184] in [o[:1184] for o in others] + [enc.get("ml_kem_768")]:
+        return ROOM_BINDING_REUSE[0]
+    if k[1184:] in [o[1184:] for o in others] + [enc.get("x25519"), td.get("reticulum_x25519_pubkey")]:
+        return ROOM_BINDING_REUSE[1]
+    return None
+
+
 def accord_samples():
     """(valid, broken) for the accord's invocation and lifecycle payloads (CC 4.2.1.1, CC 4.2.1.3)."""
     inv = {"author": ISS, "accord_root": "humanity-accord", "invocation_id": "halt-1", "nonce": bytes(32), "asserted_at": 1763078400000,
@@ -579,7 +622,7 @@ def family_payloads():
         "identity-occurrence": ("identity:occurrence", {
             "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "device_class": "phone",
             "encryption_pubkeys": {"x25519": bytes([5]) * 32, "ml_kem_768": bytes([6]) * 1184},
-            "build_manifest_hash": dig, "refs": {"head": _ref(10), "further_heads": [_ref(11)], "also": {"cites": [_ref(4)]}},
+            "room_binding_xwing_pubkey": bytes([9]) * 1216, "build_manifest_hash": dig, "refs": {"head": _ref(10), "further_heads": [_ref(11)], "also": {"cites": [_ref(4)]}},
             "asserted_at": t, "valid_until": t + 1}),
         "identity-amendment": ("identity_amendment", {
             "author": iref(3), "amendment_digest": dig, "refs": {"also": {"cites": [_ref(5)]}}, "asserted_at": t}),
@@ -727,6 +770,8 @@ def family_payload_samples():
             ("an ML-KEM-768 key of 1183 bytes", W("identity-occurrence", encryption_pubkeys={"x25519": bytes(32), "ml_kem_768": bytes(1183)})),
             ("a build manifest hash in hex", W("identity-occurrence", build_manifest_hash="00" * 32)),
             ("an occurrence with no device_class", D("identity-occurrence", "device_class")),
+            ("a binding key of 1215 bytes", W("identity-occurrence", room_binding_xwing_pubkey=bytes(1215))),
+            ("a binding key as the content pair", W("identity-occurrence", room_binding_xwing_pubkey={"x25519": bytes(32), "ml_kem_768": bytes(1184)})),
             ("an occurrence naming no self-roster head", W("identity-occurrence", refs={"also": {"cites": [_ref(4)]}})),
             ("an occurrence whose refs carry a role a self-roster row does not", W("identity-occurrence", refs={"head": _ref(10), "answers": _ref(12)}))]),
         ("identity-amendment", "identity_amendment payload", cde(P["identity-amendment"]), [
@@ -1489,6 +1534,32 @@ def second_row_checks():
     for why, p, want in ocases:
         if occurrence_rule(p, types) != want:
             bad.append(f"occurrence rule: {why} gives {occurrence_rule(p, types)}, the text gives {want}")
+    bk = bytes([9]) * 1216
+    bocc = dict(occ, room_binding_xwing_pubkey=bk)
+    bcases = [("an occurrence with a binding key of its own", bocc, None),
+              ("an occurrence with no binding key", _without(occ, "room_binding_xwing_pubkey"), None),
+              ("a binding key whose first half is the content ML-KEM key",
+               dict(bocc, room_binding_xwing_pubkey=occ["encryption_pubkeys"]["ml_kem_768"] + bytes([9]) * 32), ROOM_BINDING_REUSE[0]),
+              ("a binding key whose second half is the content x25519 key",
+               dict(bocc, room_binding_xwing_pubkey=bytes([9]) * 1184 + occ["encryption_pubkeys"]["x25519"]), ROOM_BINDING_REUSE[1]),
+              ("a binding key that is the transit key", dict(bocc, transit_xwing_pubkey=bk), ROOM_BINDING_REUSE[0]),
+              ("a binding key whose second half is the hop key's", dict(bocc, onion_hop_xwing_pubkey=bytes([8]) * 1184 + bk[1184:]), ROOM_BINDING_REUSE[1]),
+              ("a binding key whose second half is the transport x25519",
+               dict(bocc, transport_destination={"reticulum_x25519_pubkey": bk[1184:]}), ROOM_BINDING_REUSE[1])]
+    for why, p, want in bcases:
+        if room_binding_reuse_rule(p) != want:
+            bad.append(f"binding key reuse rule: {why} gives {room_binding_reuse_rule(p)}, the text gives {want}")
+    rcases = [("a room key's record", room_key_record(), None),
+              ("a record of a key that is no room key", _without(room_key_record(), "room", "kem_xwing_pubkey", "seat_commitment"), None),
+              ("a room key's record with no commitment", _without(room_key_record(), "seat_commitment"), PAYLOAD_INVALID),
+              ("a room named and nothing else", _without(room_key_record(), "seat_commitment", "kem_xwing_pubkey"), PAYLOAD_INVALID),
+              ("a KEM key alone", _without(room_key_record(), "room", "seat_commitment"), PAYLOAD_INVALID),
+              ("a room key's record with no KEM key", _without(room_key_record(), "kem_xwing_pubkey"), PAYLOAD_INVALID),
+              ("a KEM key on a record that names no room", _without(room_key_record(), "room"), PAYLOAD_INVALID),
+              ("a commitment on a record that names no room", _without(room_key_record(), "room", "kem_xwing_pubkey"), PAYLOAD_INVALID)]
+    for why, p, want in rcases:
+        if room_key_record_rule(p) != want:
+            bad.append(f"room key record rule: {why} gives {room_key_record_rule(p)}, the text gives {want}")
     return (f"rules over a second row: {len(cases)} amendment cases ({AMENDMENT_MISMATCH} on a differing and on an absent digest), "
             f"{len(ocases)} occurrence cases ({OCCURRENCE_MIXED} on an agent key or device_class agent under a person)"), bad
 
@@ -2206,6 +2277,7 @@ def cddl_checks(text):
         lines.append(f"1 genesis bundle sample validates; {grefused} broken bundles are refused")
         acc = {root: (ok, broken) for root, ok, broken in accord_samples()}
         for root, (ok, broken), what in (("key-record-members", key_record_samples(), "key record with its custody member"),
+                                         ("key-record-members", room_key_record_samples(), "record of a room key"),
                                          ("recovery-commitment-input", recovery_samples(), "recovery commitment input"),
                                          ("accord-invocation", acc["accord-invocation"], "accord invocation payload"),
                                          ("accord-lifecycle", acc["accord-lifecycle"], "accord lifecycle payload"),

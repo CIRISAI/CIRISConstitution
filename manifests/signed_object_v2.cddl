@@ -99,7 +99,7 @@ attestation-envelope = {
   ? "refs": refs,                  ; EVERY row this row names, by row-ref
   ? "dimension": tstr,             ; the full scored dimension (leaf and :vN); it resolves to cty's family, refused otherwise
   ? "evidence_refs": [+ hash-digest],   ; the blobs the row cites, by content hash: a sequence, bytes never hex
-  ? "seat_commitment": hash-digest,; on a seat row of a private room: the commitment the binding opens (seat-commitment-input)
+  ? "seat_commitment": hash-digest,; on the key record of a room key: the commitment the binding opens (seat-commitment-input)
   ? "score": fixed6-score,         ; integers, never floats (see fixed6)
   ? "confidence": fixed6-unit,
   ? "weight": fixed6-weight,
@@ -206,13 +206,16 @@ ceg-key = { 1: 7, 3: composite-alg, -1: bstr .size 1984 }
 ; a SET of roles (CC 4.5.8). The end rule reads "contains", in prose (CC 2.4.1.1): a set mixing
 ; user or accord_holder with node or agent is refused; a record whose set contains user or
 ; accord_holder carries no valid_until; one whose set contains node or agent carries one, unless it
-; is a room key of a private room; a role outside both groups takes no end rule of its own; asserted_at < valid_until <= asserted_at +
+; is a room key, a record that carries `room`; a role outside both groups takes no end rule of its own; asserted_at < valid_until <= asserted_at +
 ; key_record_max_secs * 1000; refused key_record_out_of_window otherwise.
 key-record-members = {
   "key": ceg-key,
   "identity_type": [+ tstr],       ; a set
   "asserted_at": ms-time,
   ? "valid_until": ms-time,
+  ? "room": group-ref,             ; iff the key is a room key: the one room it is made for (CC 3.1.3.2); the end rule reads it
+  ? "kem_xwing_pubkey": bstr .size 1216,   ; iff the key is a room key: its X-Wing KEM key, the target of every wrap to it
+  ? "seat_commitment": hash-digest,; iff the key is a room key: this record is the key's seat row
   ? "attestation_evidence": attestation-evidence,
   * tstr => ceg-value,
 }
@@ -372,10 +375,11 @@ transport-destination = {
 }
 
 ; Room keys. The seat commitment of a private room: SHA-256 over the deterministic encoding of this
-; array, carried as "seat_commitment" on the seat row and opened by the binding. `room` is the room's
-; id; the member that carries it waits on its owner's submission. `nonce` is 32 fresh random bytes. The binding key and the content-KEM keys
-; of one identity are distinct bytes, refused at admission otherwise.
-seat-commitment-input = ["CEG-seat/2", room: tstr, room_key: kid, person: identity-ref, nonce: bstr .size 32]
+; array, carried as "seat_commitment" on the room key's own key record, which is its seat row, and opened by the
+; binding. `room` is the room's derived id, the `room` of that record. `nonce` is 32 fresh random bytes. The binding
+; key of an identity is the member room_binding_xwing_pubkey of its identity:occurrence; its halves and those of the
+; other KEM keys on that row are distinct bytes, refused at admission otherwise.
+seat-commitment-input = ["CEG-seat/2", room: group-ref, room_key: kid, person: identity-ref, nonce: bstr .size 32]
 
 ; A group's id (a family's, a community's, an affiliation's) is derived from its first version and chosen by nobody:
 ; "group-" followed by the base64url, without padding, of SHA-256 over the deterministic encoding of group-id-input.

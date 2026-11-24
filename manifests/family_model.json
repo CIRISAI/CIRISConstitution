@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "ff4c404c7360f001d1e8e2f41335f6cf2d623592650848a09c4f81bd8a6eb5a9",
+  "registry_sha256": "5c8374a387f57d3338bf828209e0b30dbd9a965e76df142f45b92ef8b937b95f",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -48596,6 +48596,14 @@
        "type": "encryption-pubkeys",
        "presence": "optional",
        "when": "where the occurrence is a wrap target",
+       "in_cddl": true,
+       "cc_ref": "CC 3.3.6.1"
+      },
+      {
+       "member": "room_binding_xwing_pubkey",
+       "type": "bstr .size 1216",
+       "presence": "optional",
+       "when": "where the identity makes bindings in private rooms",
        "in_cddl": true,
        "cc_ref": "CC 3.3.6.1"
       },

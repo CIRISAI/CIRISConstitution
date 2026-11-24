@@ -2742,7 +2742,7 @@ In time:
 - landing of `window`: each node for itself, nothing signed (CC 3.3.6.4)
 - while `window` is open: binds nobody until it lands (CC 3.3.6.4)
 
-Body: `author`, `identity_key_id`, `occurrence_key_id`, `device_class`, `hardware_attestation`, `transport_destination`, `encryption_pubkeys`, `build_manifest_hash`, `dial_hints`, `refs`, `asserted_at`, `valid_until`
+Body: `author`, `identity_key_id`, `occurrence_key_id`, `device_class`, `hardware_attestation`, `transport_destination`, `encryption_pubkeys`, `room_binding_xwing_pubkey`, `build_manifest_hash`, `dial_hints`, `refs`, `asserted_at`, `valid_until`
 
 **`identity:occurrence_revocation`** — Identity, thing
 

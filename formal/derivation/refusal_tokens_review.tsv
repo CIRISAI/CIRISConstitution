@@ -732,3 +732,10 @@ write_author_has_no_wrap_target	refusal		the text says the sealer refuses the wr
 x25519_base64	not_a_token		payload or envelope member
 x_private	not_a_token		family or row-type name
 yubi_hsm	not_a_token		enumeration value, not a fault
+kem_xwing_pubkey	not_a_token		a member of a room key record
+onion_hop_xwing_pubkey	not_a_token		a member of an occurrence
+room_binding_xwing_pubkey	not_a_token		a member of an occurrence
+seat_commitment	not_a_token		a member of a room key record
+room_binding_ml_kem_768_reuse	refusal		the text says refused
+room_binding_x25519_reuse	refusal		the text says refused
+key_revocation_not_own	concludes_nothing		a revocation signed by a key that is not the revoked key concludes nothing
