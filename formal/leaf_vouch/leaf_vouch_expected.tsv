@@ -1,0 +1,78 @@
+kind	name	result
+run	the rule as modelled	violated: none
+run	the rule, a device that also signs a shorter term	violated: none
+run	the rule, a withdrawn leaf signs no Update (the other reading)	violated: none
+run	the rule, a device that signs vouches over the cap or with no end	violated: none
+property	TERM	holds
+property	RENEW	holds
+property	ROOM	holds
+property	ONE	holds
+property	LAPSED	holds
+property	REJOIN	holds
+property	NODE	holds
+property	SOUND	holds
+property	COMPLETE	holds
+property	CALLS	holds
+property	WITHDRAWN	holds
+property	POSSESS	holds
+property	DIGESTS	holds
+property	SUITE	holds
+property	REMOVE	holds
+property	PADDING	holds
+witness	door: accepted_under_a_person_key	reached
+witness	door: accepted_under_a_agent_key	reached
+witness	door: accepted_under_a_room_key	reached
+witness	door: accepted_at_a_call_group	reached
+witness	door: accepted_with_1_digests	reached
+witness	door: accepted_with_8_digests	reached
+witness	door: accepted_with_32_digests	reached
+witness	door: accepted_with_a_shorter_term	reached
+witness	life: the_device_joins_the_chat_group	reached
+witness	life: the_same_leaf_and_vouch_join_a_call_group	reached
+witness	life: a_call_group_with_a_random_id_is_refused	reached
+witness	life: a_renewal_installs_a_fresh_leaf_key_by_one_update	reached
+witness	life: a_lapsed_leafs_application_message_is_refused	reached
+witness	life: offline_past_the_end_then_back_by_its_own_update	reached
+witness	life: members_remove_a_leaf_that_stays_lapsed	reached
+witness	life: a_live_leaf_is_not_removed_as_lapsed	reached
+witness	life: after_a_removal_the_device_comes_back_by_another_members_add	reached
+witness	life: the_thief_copies_a_leaf_key	reached
+witness	life: the_lifted_key_is_taken_while_its_vouch_runs	reached
+witness	life: the_lifted_key_is_taken_on_the_last_tick_of_the_term	reached
+witness	life: the_lifted_key_is_refused_once_its_vouch_ended	reached
+witness	life: the_thiefs_update_from_the_lapsed_leaf_is_refused	reached
+witness	life: the_thief_updates_the_leaf_in_place_while_its_vouch_runs	reached
+witness	life: beside_the_devices_newer_leaf_the_lifted_key_is_added_under_its_old_vouch	reached
+witness	life: a_withdrawn_vouch_refuses_the_lifted_key_before_its_end	reached
+witness	life: the_thief_vouches_the_copied_key_as_its_own_leaf_in_its_own_room	reached
+witness	padding: more_than_32_rooms_is_more_than_one_row	reached
+witness	life: a_renewal_takes_a_shorter_term	reached
+witness	life: a_withdrawn_leaf_signs_no_update	reached
+witness	life: a_withdrawn_leaf_is_replaced_by_its_own_update	reached
+witness	life: a_vouch_over_the_cap_is_refused	reached
+witness	life: a_vouch_without_an_end_is_refused	reached
+plant	renewal_revouches_the_same_leaf_key	breaks: RENEW,TERM
+plant	same_key_and_the_door_refuses_a_same_key_update	breaks: CALLS,COMPLETE,REJOIN,RENEW,TERM
+plant	no_cap_on_the_term	breaks: LAPSED,SOUND,TERM
+plant	the_end_is_not_read	breaks: LAPSED,SOUND,TERM
+plant	the_old_leaf_key_vouches_the_next	breaks: RENEW,SOUND
+plant	the_device_is_read_as_its_node	breaks: NODE,RENEW,SOUND
+plant	a_seated_node_key_vouches	breaks: NODE,SOUND
+plant	any_valid_signature	breaks: RENEW,SOUND
+plant	the_signature_is_not_verified	breaks: RENEW,SOUND
+plant	the_leaf_key_is_not_compared	breaks: RENEW,ROOM,SOUND
+plant	the_disclosure_is_not_matched	breaks: RENEW,ROOM,SOUND
+plant	the_room_is_not_compared	breaks: RENEW,ROOM,SOUND
+plant	the_room_is_not_recomputed	breaks: RENEW,ROOM,SOUND
+plant	any_disclosed_entry_will_do	breaks: ONE,ROOM
+plant	no_disclosure_needed	breaks: ONE,RENEW,ROOM,SOUND
+plant	the_suite_is_not_compared	breaks: SOUND,SUITE
+plant	any_digest_count	breaks: DIGESTS,SOUND
+plant	a_withdrawal_is_not_read	breaks: SOUND,WITHDRAWN
+plant	no_proof_of_possession	breaks: POSSESS,RENEW
+plant	a_lapsed_leafs_messages_are_held	breaks: LAPSED
+plant	a_lapsed_leaf_commits	breaks: LAPSED
+plant	a_lapsed_leaf_signs_nothing	breaks: COMPLETE,REJOIN
+plant	the_vouch_binds_one_group	breaks: CALLS,COMPLETE
+plant	any_leaf_removed_as_lapsed	breaks: REMOVE
+plant	no_padding	breaks: PADDING
