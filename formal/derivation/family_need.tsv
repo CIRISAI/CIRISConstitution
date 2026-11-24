@@ -124,7 +124,7 @@ licensure:{authority_id}	read by a rule	1	0	fold count react	reference	B094	1	gr
 locality:decision:{scale}	acts of its own	0	0	fold	-	B095	1	-
 location_proof:{version}	nothing shown	0	0	-	-	B096	1	-
 manifold_conformity:{cohort}	acts of its own	0	0	fold	-	B009	2	-
-membership:{stage}	read by a rule	3	1	fold count guard change expiry react land while	group:roster reference trust:{job}:{version}	B097	1	group:roster.change group:roster.fold key_grant:{axis}.reaction
+membership:{stage}	read by a rule	3	1	fold count guard change expiry react land while	group:roster reference	B097	1	group:roster.change group:roster.fold key_grant:{axis}.reaction
 mesh_config:{key}	acts of its own	0	0	fold expiry	-	B098	1	-
 method:{approach_id}:{substrate_rung}	nothing shown	0	0	-	-	B003	5	-
 model_3d:*	nothing shown	0	0	-	-	B002	10	-
@@ -176,7 +176,7 @@ trace:{form}:{version}	read by a rule	1	0	-	-	B131	1	consent:community_trust.cha
 trace_summary:{kind}	nothing shown	0	0	-	-	B132	1	-
 transport:canonical_rebind	read by a rule	2	0	count change	-	B133	1	identity:occurrence.change transport:{kind}.guard
 transport:{kind}	acts of its own	0	0	guard	transport:canonical_rebind	B134	1	-
-trust:{job}:{version}	read by a rule	4	1	fold change guard react expiry	-	B135	1	accord:*.fold group:roster.change membership:{stage}.guard mesh_config:{key}.signer_rule
+trust:{job}:{version}	read by a rule	3	1	fold change guard react expiry	-	B135	1	accord:*.fold group:roster.change mesh_config:{key}.signer_rule
 truth_grounding:{subject}	read by a rule	1	0	-	-	B001	17	moderation_track_record:{community_key_id}.fold
 video:*	nothing shown	0	0	-	-	B002	10	-
 vote:{contribution_id}	read by a rule	1	0	fold	-	B136	1	weighted_aggregate:{contribution_id}.fold

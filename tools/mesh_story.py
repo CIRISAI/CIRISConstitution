@@ -236,6 +236,16 @@ def more(s):
     # 22. a unit runs only by a row naming its digest: one person's for computing, a group's count for an effect
     one("unit:1", "admission:unit", "erin", ["registered"], "Erin, no member of the reviewing group, tries to add her voice to its admission of a unit: refused")
     one("unit:2", "admission:unit", "bob", ["author"], "Bob admits a unit that only computes, for one day, under his own key")
+    # 23. a join between two people whose devices are both unannounced (CC 3.1.3.2, how an invitation and its answer travel)
+    one("invite:judy", "membership:{stage}", "erin", [], "A stranger tries to invite Judy to Ken's family: refused, an invitation is a member's", stage="proposal")
+    one("invite:judy", "membership:{stage}", "ken", ["member"], "Ken, whose device is unannounced, invites Judy, a contact whose device is unannounced too: his proposal, sealed to the occurrence key he holds from their contact", stage="proposal")
+    one("accept:judy", "membership:{stage}", "ken", ["member"], "Ken tries to accept for Judy: refused, the acceptance is the joiner's own", stage="acceptance")
+    one("accept:judy", "membership:{stage}", "judy", ["self"], "Judy accepts: her own row, the first of her sealed answer", stage="acceptance")
+    one("own:node-judy", "ownership:{relation}:{target_kind}:{version}", "ken", ["member"], "Ken tries to sign the binding of Judy's device at the family's scope: refused, the owner alone signs the placed row", verb="authorize")
+    one("own:node-judy", "ownership:{relation}:{target_kind}:{version}", "judy", ["owner"], "Judy re-signs her device's binding at the family's scope, and it rides in her answer", verb="authorize")
+    one("widen:judy", "membership:{stage}", "judy", ["self"], "Judy tries to sign the widening that seats her: refused, a widening is the members' counted row", stage="widening")
+    one("widen:judy", "membership:{stage}", "ken", ["member"], "Ken signs the widening that seats Judy, citing her acceptance", stage="widening")
+    one("deliver:judy", "delivery:{class}", "edge:ken", ["infra:attest"], "The edge on Ken's device serves a row of the family to Judy's node and reports the delivery")
 
 def check(s):
     errs = []

@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "eb925cc46f7eabc6f749cd02d38f62b54560008821dbc26cfa23228a50d02aa9",
+  "source_sha256": "52d83d83153ff657c12276f847fdca17c4bcc7fc3de400db509067e89b1bf984",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -44,12 +44,12 @@
   },
   "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; a failed clause refuses the row only where it reads the row alone, and elsewhere the row is kept and the clause's word says how it is read (void, contested, exclude, withhold); an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
-   "statements": 58,
+   "statements": 57,
    "guarded_transitions": 27,
    "marks": {
-    "refuse": 30,
+    "refuse": 29,
     "ref:*": 9,
-    "landed": 2,
+    "landed": 1,
     "signs": 2,
     "commits": 1
    },
@@ -14534,13 +14534,6 @@
          "CC 4.4.3.6"
         ],
         "reach": "whole"
-       },
-       {
-        "guard": "each(subject) when(leaf=widening,type(key,node)) one trust:confers@landed[attested=key] else exclude",
-        "cc_ref": [
-         "CC 3.1.3.2"
-        ],
-        "reach": "partial"
        },
        {
         "guard": "when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation",
