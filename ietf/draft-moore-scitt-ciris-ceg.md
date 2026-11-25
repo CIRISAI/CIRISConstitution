@@ -5,7 +5,7 @@ category: info
 submissiontype: IETF
 docname: draft-moore-scitt-ciris-ceg-latest
 number:
-date: 2026-11-20
+date: 2026-11-25
 v: 3
 area: "Security"
 workgroup: "Supply Chain Integrity, Transparency, and Trust"
@@ -62,12 +62,12 @@ informative:
   RFC9964:
   SD-CWT: I-D.draft-ietf-spice-sd-cwt-09
   CC:
-    title: "CIRIS Constitution 1.0-rc21"
+    title: "CIRIS Constitution 1.0-rc22"
     author:
       org: CIRIS L3C
     date: 2026-11
-    target: https://github.com/CIRISAI/CIRISConstitution/tree/v1.0-rc21
-    annotation: "The tag v1.0-rc21 is commit b016df47a7697b6544e34177541be442ff6f24e9."
+    target: https://github.com/CIRISAI/CIRISConstitution/tree/v1.0-rc22
+    annotation: "The tag v1.0-rc22 is commit f4671933f2b22b33d2db868d4654036162104123."
   I-D.moore-scitt-ciris-trace:
     title: "The CIRIS Agent Reasoning Trace"
     author:
@@ -231,12 +231,14 @@ Producer, Consumer, Substrate:
   One node is usually all three.
 
 Reason, refusal token:
-: A fixed, case-sensitive ASCII string that names why a statement is
-  Invalid or why a row was refused, so that two implementations agree
-  on a refusal as well as on an acceptance.  Every reason and token
-  in this document is lower case, and is compared byte for byte.  A
-  reason may carry a detail after a colon, as in `malformed:refs`.
-  {{admission}} lists them all.
+: A fixed, case-sensitive ASCII string, so that two implementations
+  agree on a refusal as well as on an acceptance.  A reason is what a
+  verifier gives for answering Invalid.  A refusal token is what a
+  Substrate gives for refusing a row.  Every reason and token in this
+  document is lower case, and is compared byte for byte.  A reason
+  may carry a detail after a colon, as in `malformed:refs`.
+  {{admission}} lists them all, and says where one fault has both a
+  reason and a token.
 
 # The Signed Statement {#object}
 
@@ -285,6 +287,11 @@ version, in the payload member `dimension`.  A verifier MUST refuse a
 `dimension` that does not resolve to the family id the header
 carries.
 
+A `withdraws` or a `recants` row carries the family id of its target
+and no `dimension`, and its `sub` is its target's.  One that states a
+`dimension` is Invalid, `malformed:dimension`.  A `supersedes` row is
+a row of its own family and carries its own `dimension` (CC 2.6.1.1).
+
 ## Identity References {#idref}
 
 `iss` is the signer's stable identity reference: the COSE Key
@@ -297,6 +304,16 @@ Because `iss` names the genesis key, the issuer stays the same when
 the signing key rotates; `kid` names the key that signs.  `author`, a
 key named by `sub` or by an element of `subject_key_ids`, and every
 role party use this one spelling.  A verifier MUST refuse any other.
+
+`iss` is a claim.  The signature shows which key signed, and `kid`
+names that key.  That the key is a key of the identity `iss` names is
+a separate check of verification ({{key-of-iss}}).  A statement that fails
+it is Invalid, whatever its signature.
+
+In a private room a person signs with a room key made for that room.
+On a row a room key signs, `iss` is the voice: the identity reference
+of the voice's first room key.  It is never the person's (CC
+2.6.1.11).
 
 ## The Unprotected Header and External AAD
 
@@ -357,10 +374,14 @@ when it relays a row ({{relays}}).
 
 # The Five Row Types {#types}
 
-The row type label (-70001) takes exactly one of five values.  A
-Substrate MUST refuse any other value, compared byte for byte, with
-`attestation_type_unregistered`.  It MUST apply this check to rows it
-emits and to rows it receives.
+The row type label (-70001) takes exactly one of five values,
+compared byte for byte.  A statement that carries any other value
+does not meet the header's schema.  A verifier answers Invalid at
+step 2 of {{verify}}, with the reason `malformed:row-type`.  A
+Substrate MUST refuse such a row, both where it emits the row and
+where it receives it, and it reports the refusal with the token
+`attestation_type_unregistered` (CC 2.4).  The reason and the token
+name one fault ({{admission}}).
 
 scores:
 : A claim about the subject on the named dimension.  Every positive
@@ -428,8 +449,10 @@ be kept by every party.  Defaults documented in {{CC}} are applied
 when a row is read, never when it is encoded.
 
 An optional member is unset by being absent, never by null.  A
-Substrate MUST refuse a payload with null for an optional member,
-with `federation_malformed_row` and the reason `envelope_member_null`.
+payload with null for an optional member is Invalid, `malformed:` and
+the member ({{reason-names}}).  A Substrate MUST refuse it, with the
+token `federation_malformed_row` and the reason
+`envelope_member_null`.
 No value a family names, at any depth, is a float, a null, an
 undefined value, a tag or a simple value.  The exceptions are the
 redaction marks of {{erasable}} and the decimal fraction of
@@ -448,10 +471,11 @@ sequence, as its definition states.  Where no definition says, it is
 a set.
 
 - A set is sorted by the bytewise order of its elements'
-  deterministic encodings and holds no duplicate.  A verifier refuses
-  any other with `federation_set_semantics_unsorted`, naming the
-  member.  It never re-sorts the set, because that would change the
-  signed bytes.
+  deterministic encodings and holds no duplicate.  A verifier answers
+  Invalid for any other, `set_order:` and the member, and a Substrate
+  refuses it with the token `federation_set_semantics_unsorted`,
+  naming the member ({{tokens}}).  Neither ever re-sorts the set,
+  because that would change the signed bytes.
 
 - A sequence keeps its authored order.  The sequences are
   `evidence_refs`, the redacted-key arrays of {{erasable}}, and the
@@ -481,8 +505,10 @@ A number in a free-form body that is not an integer is a decimal
 fraction: CBOR tag 4 {{RFC8949}} over `[exponent, mantissa]`, with a
 negative exponent and a mantissa in CBOR's integer range that is not
 divisible by 10.  An integral number is a plain integer.  A number
-that cannot be so written is refused
-`body_number_unrepresentable` (CC 2.6.1.2).
+outside CBOR's integer range, alone or as a mantissa, is refused
+`body_number_unrepresentable`.  A decimal fraction that is not
+normalised is a second encoding of one value, and is refused as any
+other is, `not_deterministic:payload` (CC 2.6.1.2).
 
 A fold sums in signed 64-bit integers, and its arithmetic is checked:
 a fold that would overflow is refused, and never wraps.  A derived
@@ -507,7 +533,7 @@ carries one.
 A payload's deterministic encoding MUST NOT exceed 1 MiB (1,048,576
 bytes).  The bound is on the bytes the signature covers.  A Producer
 MUST NOT emit a larger payload.  A Substrate MUST refuse one at every
-write path, with `envelope_too_large` ({{admission}}).
+write path, with `envelope_too_large` ({{tokens}}).
 
 Every write path MUST also enforce a finite ceiling on the octets it
 buffers from an untrusted source.  It refuses at that ceiling in the
@@ -593,17 +619,30 @@ the row id.  `refs` is a map with these members:
 | prev | The predecessor in a signer's own series; on a content row, a content row its author signed in the same room |
 | further_prev | Further content rows of the same author in the same room, beside `prev` |
 | answers | The row this row answers: the proposal voted on or accepted, the window opened, the row replied to |
-| target | The row a `supersedes`, `withdraws` or `recants` row names, the act a cut ends or the member a removal removes, and, on a halt's confirmation or resumption, that halt ({{halt}}) |
+| target | The row a `supersedes`, `withdraws` or `recants` row names; on a rotation record, the old key's record ({{rotation}}); the act a cut ends or the member a removal removes; and, on a halt's confirmation or resumption, that halt ({{halt}}) |
 | trusted_through | On a key revocation, the last rows of the key held good; on a row that ends a member's seat and on a `keeps` row, the member's newest content rows held good.  At most 64 |
-| also | A map from a role, `ack`, `cites` or `under`, to a set of references |
+| also | A map from a role to a set of references.  The roles are `ack`, `cites`, `under`, `stands_on` and `voice` |
 {: title="Members of refs"}
 
 A holder reads the set of named rows from `refs` alone, without
-knowing the family.  The roles of `also` are a closed registry of
-three.  `ack` names a row acknowledged, as a receipt of acts does
-({{standing-end}}).  `cites` names a row the row cites.  `under`
-names the one edge a deputy's edge hangs from, and is a set of
-exactly one.
+knowing the family.  `target` is not confined to the three row types
+that replace or retract: a rotation record is a key record that names
+its predecessor there.
+
+The roles of `also` are a closed registry of five (CC 2.6.1.3):
+
+- `ack` names a row acknowledged, as a receipt of acts does
+  ({{standing-end}}).
+- `cites` names a row the row cites.
+- `under` names the one edge a deputy's edge hangs from.  It is a set
+  of exactly one.
+- `stands_on` names the one acceptance that a row signed under a root
+  grant stands on.  It is a set of exactly one ({{standing-end}}).
+- `voice` names the head of the key roster of the voice a room key
+  signs for.  It is a set of exactly one ({{idref}}).
+
+A role is a key of the `also` map and is not a member of `refs`.  Any
+other role is Invalid, `unexpected:also`.
 
 A row waits for the rows it names, with two exceptions that are named
 for the fold alone: `prev` and `further_prev` on a content row, and
@@ -612,6 +651,8 @@ for the fold alone: `prev` and `further_prev` on a content row, and
 
 Every array inside `refs` is a set, and a set out of order is
 refused.  An empty `refs` is refused: absence is its one encoding.
+An empty set inside `refs`, and an empty `also`, are refused in the
+same way.
 No row names an object of the earlier form of {{earlier}}.
 
 ## The Author {#author}
@@ -621,11 +662,17 @@ family.  An authored family's payload carries `author`, the `iss` of
 the one who authors the row.  The row id reads it from the payload.
 A counted family's author is null.
 
+Where a family is authored by its subject, the row is authored by
+the attested key: `author` MUST be the CWT `sub`, and a statement
+whose `iss` is another key is Invalid.
+
 A statement whose `iss` is not the payload's `author` is accepted
 only in a role its family names, such as a delegate or a bound node.
 Its `iss` MUST then be the party that role names in the payload.
 Where that party is the attested key, as a delegate is, it MUST be
-the CWT `sub`.  Any other `iss` is Invalid ({{verify}}).
+the CWT `sub`.  On an authored row that its family counts, a voice of
+that count is accepted too.  Any other `iss` is Invalid,
+`iss_not_in_role` ({{verify}}, CC 2.6.1.3).
 
 # Signatures and Keys {#sig}
 
@@ -664,21 +711,92 @@ it alone.
 A key is one composite COSE key of key type AKP (kty 7).  Its `pub`
 (label -1) is the ML-DSA-65 public key followed by the Ed25519 public
 key, 1984 bytes.  Its `kid` is its 32-byte SHA-256 thumbprint
-{{RFC9679}}, fixed for the key's life.  A key's displayed identity is
-that thumbprint.
+{{RFC9679}}, fixed for the key's life.  The thumbprint is over the
+deterministic encoding of the key with exactly its three members,
+`{1: 7, 3: -70100, -1: pub}`.  A key's displayed identity is that
+thumbprint.
 
-A key record is a row of the family `key:record`.  Its payload
-carries `key`, `identity_type`, `asserted_at` and, where its end rule
-requires, `valid_until`.  A key renews by a `supersedes` of its own
-record.  A rotation is a record of another key that names the old
-key's record and carries the old key's signature.
+### Key Records {#key-records}
+
+A key record is a row of the family `key:record`.  Its `sub` is the
+identity reference of the key it records.  Its payload carries `key`,
+`identity_type`, `asserted_at` and, where its end rule requires,
+`valid_until`.
 
 `identity_type` is a set of roles.  A set that mixes a person's role
 (`user` or `accord_holder`) with a machine's (`node` or `agent`) is
-refused.  A record whose set contains a person's role carries no
-`valid_until`.  One whose set contains `node` or `agent` carries one,
-with stated exceptions.  A record that breaks the rule is refused
-`key_record_out_of_window`.
+refused, `key_record_mixed_roles`.  A record whose set contains a
+person's role carries no `valid_until`.  One whose set contains
+`node` or `agent` carries one, unless it is a room key of a private
+room.  A pseudonym's record MAY carry one, and a role outside both
+groups takes no end rule of its own.  Where `valid_until` is present
+it is later than `asserted_at`, and no more than
+`key_record_max_secs` after it, a constant of {{CC}}.  A record whose
+`valid_until` is not later than its `asserted_at` is Invalid at step
+4 of {{verify}}, `valid_until_not_after_asserted_at`.  One that
+otherwise breaks the rule is refused `key_record_out_of_window` (CC
+2.4.1.1).  The check of a key record's payload alone has no step 4,
+and answers `key_record_out_of_window` for either fault.
+
+Each key's own holder signs its record.  A record makes its key live
+only where a statement over it by that key itself is held.  A record
+that only other keys have signed makes the key live nowhere, and no
+third party ends a key or revives one (CC 2.4.1.1).
+
+A record covers an instant that is at or after its `asserted_at`
+and, where it states `valid_until`, before it.  The end is not
+covered: a record whose `valid_until` is T does not cover T.
+
+A key is live at an instant when one of its records covers that
+instant and its own revocation has not taken effect by then.  Only
+the key's own revocation ends its liveness.  The key's owner and the
+roster that seats it may also revoke it.  That ends the owner's
+binding or the seat, not the key's liveness.  A revocation signed by
+any other key concludes nothing, `key_revocation_no_standing`.
+
+A key renews by signing a further record that `supersedes` its own
+earlier record.  Renewals that do not name each other all count, and
+the key lives to the greatest end they state.
+
+### Rotation {#rotation}
+
+`iss` names the signer's genesis key and stays the same when the
+signing key changes.  A rotation is what links the next key to that
+`iss`.  A rotation record has one shape (CC 3.1.3).  It is the key
+record of the new key, and:
+
+1. Its payload names the old key's record in `refs.target`, by row
+   id ({{refs}}).
+2. Its `iss` is the `iss` of the old key's record, in every statement
+   over it.
+3. It carries two statements over the one payload.  One is the new
+   key's own, which shows possession of the new key.  The other is
+   the old key's.
+4. The record it names is a valid record of the old key under that
+   `iss`, and it covers the rotation record's `asserted_at`.  That is
+   the instant of the old key's statement, which is thereby made
+   inside the old key's record.
+
+A record of any other shape links no key to an `iss`.  One that names
+no predecessor never does.  One that lacks either statement does not
+until that statement is held ({{key-of-iss}}).
+
+A rotation hands on what the old key may hand on, and never extends
+the old key.  A renewal on the way, a `supersedes` by a key of its
+own record, leaves the chain where it was.  A link stands where its
+predecessor's statement stands: made inside the predecessor's record,
+and before the `revoked_after` of a revocation by that key itself.
+So a link made while its predecessor was live stands after that key
+has ended, and no other voice's revocation cuts a chain.
+
+Two rotations of one key, neither naming the other, are contested.
+They hand on nothing until a rotation names both.  A statement that a
+contested successor signs under the old `iss` is Invalid,
+`kid_not_of_iss`.  A rotation is such a rival only where it meets
+item 4: one that names a record of the old key that does not cover
+its own instant blocks nothing (CC 2.4.1.1).
+
+### The Key of an Issuer {#key-of-iss}
 
 A statement's key MUST be a key of its `iss`.  A signature that
 verifies shows only that the holder of `kid`'s key signed.  It does
@@ -691,27 +809,61 @@ another as its issuer.  The key that `kid` resolves to is a key of
    key, or a room key signing as itself.
 2. The verifier holds a key record of that key whose own `iss` is the
    statement's `iss`, and that record reaches the genesis key's
-   record through rotation records.  Each rotation record names its
-   predecessor's record and carries the predecessor key's statement.
-3. The genesis bundle in force seats that key for that `iss`
-   ({{objects}}).
+   record through rotation records, each of the shape of
+   {{rotation}}.
+3. The genesis bundle in force seats that key for that `iss`, as a
+   recovery or a rotation by bundle does ({{objects}}).  The seat
+   ends at the first later bundle in force that does not seat the
+   key.
 4. A live occurrence of `iss` binds that key: an `identity:occurrence`
-   row of `iss` that the verifier holds, admitted, not evicted,
-   covering the statement's instant, and carrying the bound key's own
-   statement as proof of possession.
+   row of `iss` that the verifier holds, whose `occurrence_key_id` is
+   the key.  The row is admitted, not evicted, and covers the
+   statement's instant.  It carries the bound key's own statement
+   over the same payload, as proof of possession.
 
-Where none of the four holds and a row one of them needs is not held,
-the answer is Waiting on that row.  Otherwise the statement is
-Invalid, `kid_not_of_iss`.  A held record of the key under another
-identity is the plain case.  A verifier that holds bare keys and no
-rows can show only the first way.  A `node` or `agent` key is never a
-key of an identity whose genesis record is a person's.
+A `node` or `agent` key is never a key of an identity whose genesis
+record is a person's.
 
-A key is live at an instant when one of its records covers that
-instant and its own revocation has not taken effect by then.  Only
-the key's own revocation ends its liveness.  The key's owner and the
-roster that seats it may also revoke it.  That ends the owner's
-binding or the seat, not the key's liveness.
+Where none of the four holds, the answer is Waiting or Invalid, and
+what the verifier holds decides which.
+
+Waiting.
+: The answer is Waiting where a row that one of the ways needs is
+  known to the verifier and not held.  Waiting names that row.  It is
+  one of these: the record that a held rotation record names; a
+  statement that a held rotation record lacks, the new key's own or
+  the old key's; a statement that a held occurrence lacks, the bound
+  key's own or one of `iss`; an occurrence that covers the
+  statement's instant, where the one held has ended; and the bundle
+  in force, where the verifier knows of it and does not hold it.  A
+  row gains statements without changing its row id, so a record that
+  lacks a statement waits for it and is not refused (CC 3.1.3, CC
+  2.6.1.9).
+
+Invalid.
+: Otherwise the statement is Invalid, `kid_not_of_iss`.  Nothing that
+  the verifier could name is missing: each held record of the key is
+  of another identity, or the record names no predecessor, or the
+  chain does not reach the genesis key, or the rotation is contested,
+  or the occurrence that binds the key is of another identity or
+  evicted.  Where a link fails only by its predecessor's own
+  `revoked_after`, the reason carries the detail
+  `rotation_after_revocation`.
+
+Bare keys.
+: A verifier that holds bare keys and no rows can show only the first
+  way.  It holds no row that names another, so it can name nothing as
+  missing.  For a statement whose `kid` is not the thumbprint inside
+  `iss`, its answer is Invalid, `kid_not_of_iss`.
+
+`kid_not_of_iss` is an answer over the rows held.  {{CC}} states that
+a contested rotation is `kid_not_of_iss` until a rotation names both,
+so a later row can change it.  A bad signature is different: that
+answer is final ({{verify}}).
+
+The statements of a genesis bundle and of the accord's rows bind
+their key to the holder by the bundle in force instead (CC 2.6.1.11,
+CC 4.2.1.1).
 
 ## Counted Rows {#counted}
 
@@ -726,46 +878,96 @@ voice changes neither the payload nor the row id.  A delegation of a
 scoped kind seats only with a second statement over the same payload,
 signed by the delegate, the row's `sub`.
 
+Two statements over different payloads are two rows, whatever else
+they share.
+
 ## Verification Has Three Answers {#verify}
 
 Verifying a statement gives one of three answers: Valid, Invalid with
-a reason, or Waiting on the keys it names as missing.
+a reason, or Waiting on what it names as missing.  What is missing is
+a key at step 6 below, and a row or a statement of a row at step 8.
 
 - A bad signature under a held key is Invalid, and that answer is
   final.  A structural fault is Invalid whatever keys are held.
 - A statement whose key record is Waiting is Waiting, naming the
   deepest missing key.  A statement whose key record is Invalid is
-  Invalid.
+  Invalid, `key_not_valid`.
 - A key is one composite key.  A statement whose signer's key record
   is not held is Waiting on it, and a key never verifies on one half.
 - Waiting never becomes Valid by default and is never counted.  A
-  waiting statement is held inert until the key it names is held.
+  waiting statement is held inert until what it names is held.
 
 A verifier proceeds in this order:
 
 1. Decode strictly: tag 18, and the protected header and the payload
    in the deterministic encoding.
 2. Check the header: `typ` on the closed list; `alg` -70100; edition
-   2; `cty` the constant; a row's type and family labels present, an
-   object's absent.
+   2; `cty` the constant; a row's type and family labels present, the
+   type one of the five and the family registered; an object's
+   absent.
 3. Check the payload against the schema: no float or null, the sets,
    the ranges, `passed` and `total`, `dimension` resolving to the
    header's family, and the family's own payload rule.
 4. Check `iat`, `nbf` and `exp` against the payload, and that a
    `valid_until` is later than `asserted_at`.
 5. Run the family's static checks, the key record's end among them.
-6. Read `kid`; resolve the key record, or answer Waiting on it.
+6. Read `kid` and resolve the key record: a record of that key that
+   the key itself signed and that covers the statement's
+   `asserted_at`.  Answer Waiting where the key is not held, where
+   its own statement over a held record is not held, or where no held
+   record covers the instant.
 7. Verify the composite signature over the bytes received.
-8. Check that `kid`'s key is a key of `iss` ({{keys}}), or answer
-   Waiting on the row that check needs.
+8. Check that `kid`'s key is a key of `iss` ({{key-of-iss}}).  Answer
+   Waiting on a chain link, a statement, the bundle in force or an
+   occurrence that is not held; otherwise Invalid, `kid_not_of_iss`.
 9. Check `iss` against `author`, or against the party of a role the
    family names ({{author}}).
 10. On Valid, apply the defaults of {{CC}} to absent members, at
     interpretation time only, and then the Consumer's own policy.
 11. Store or forward the statement as received.
 
-A failure at steps 1 to 5, 7, 8 or 9 is Invalid.  Steps 6 and 8 alone
-answer Waiting.
+A failure at steps 1 to 5 or 7 to 9 is Invalid.  Steps 6 and 8 alone
+answer Waiting.  The reason is that of the first step that fails.
+
+Step 6 is where a key's liveness at the statement's instant is read.
+A statement whose `asserted_at` no held record of its key covers is
+not Invalid.  It waits for a record that covers the instant, as a
+statement signed by a key not yet held waits for the key (CC
+2.4.1.1).  A renewal signed later can supply that record.  A verifier
+that holds bare keys reads no record, so it reads no instant at this
+step.
+
+A Waiting answer says what is missing.  The vectors of {{vectors}}
+write it as `waiting:`, the kind of thing missing and, in the row
+statement files, what identifies it.
+
+| Step | What is missing | Answer |
+|---|---|---|
+| 6 | The key `kid` names, or the deepest key a chain of records needs | `waiting:kid:<kid>` |
+| 6 | The key's own statement over a held record of it | `waiting:voice:<kid>` |
+| 6 | A record of the key that covers the statement's instant | `waiting:covering_record:<kid>:<instant>` |
+| 8 | The record a held rotation record names | `waiting:record:<row id>` |
+| 8 | A statement that a held rotation record or occurrence lacks | `waiting:voice:<kid>` |
+| 8 | An occurrence of `iss` that covers the statement's instant | `waiting:covering_record:<kid>:<instant>` |
+| 8 | The bundle in force | `waiting:bundle` |
+{: #tab-waiting title="Waiting answers"}
+
+`<kid>` is the thumbprint of the key that is missing, of the key
+whose statement is missing, or of the key that lacks a covering
+record.  `<row id>` is the row id of the record named.  Each is 64
+lowercase hexadecimal digits.  `<instant>` is the statement's
+`asserted_at`, in decimal.  `voice` is the vectors' word for one
+signer's statement over a row.  The later key-of-issuer file of
+{{vectors}} writes each answer by its kind alone: `waiting:kid`,
+`waiting:voice`, `waiting:record`, `waiting:bundle`, and
+`waiting:covering` for a covering record.
+
+One further Waiting answer lies outside the eleven steps.  It arises
+when a row is read under its family.  A `withdraws` or a `recants`
+row takes the family of its target ({{family}}).  Where that family's
+authorship turns on the target's dimension and the target is not
+held, the reading waits on the target, as a row waits for the rows it
+names ({{refs}}).  The vectors write it `waiting:row:<row id>`.
 
 # Other Signed Objects and Receipts {#objects}
 
@@ -996,69 +1198,163 @@ of {{vectors}} carry the same strings.
 | Step | Check | Reason |
 |---|---|---|
 | 1 | The statement is a COSE_Sign1 under tag 18 | `not_cose_sign1` |
-| 1 | Statement, protected header and payload are deterministically encoded; no float | `not_deterministic:<part>` |
-| 2 | The protected header holds exactly the members of {{object}} | `unexpected:protected` |
+| 1 | Statement, protected header and payload are deterministically encoded; no float; a decimal fraction normalised ({{numbers}}) | `not_deterministic:<part>` |
+| 2 | The protected header holds exactly the members of {{object}}, or of {{objects}} for an object that is not a row | `unexpected:protected` |
 | 2 | The unprotected header holds only integer labels | `unexpected:unprotected` |
-| 2 | Each header member has its type and value: `cty`, `typ`, `row-type`, `family-id`, `edition`, `iss` | `malformed:<member>` |
+| 2 | Each header member has its type and value | `malformed:<member>` |
 | 2 | The family id is registered | `unregistered_family` |
-| 3 | Each payload member has its type and range; no null | `malformed:<member>` |
+| 3 | Each payload member has its type and range, and a required one is present; no null and no tag but those of {{canon}} | `malformed:<member>` |
 | 3 | A closed map holds only its members | `unexpected:<map>` |
 | 3 | Each set in `refs` is sorted and without duplicates | `set_order:<member>` |
-| 3 | A decimal fraction is in its one form ({{numbers}}) | `body_number_unrepresentable` |
+| 3 | A number is within CBOR's integer range ({{numbers}}) | `body_number_unrepresentable` |
+| 3 | Each disclosure is well formed | `malformed:sd-disclosure` |
 | 3 | Each disclosure opens one digest the payload carries, once | `disclosure_unmatched` |
 | 3 | No redaction digest appears twice | `duplicate_digest` |
 | 3 | `dimension` is claimed by a registered family | `dimension_unregistered` |
 | 3 | `dimension` resolves to the header's family | `dimension_family` |
 | 3 | `dimension` passes the namespace rules of {{CC}} | `dimension_refused:<token>` |
 | 3 | The payload meets its family's own rule | `edition2_payload_invalid` |
-| 4 | `iat`, `nbf` and `exp` equal the payload's instants | `time:<claim>` |
+| 4 | `iat`, `nbf` and `exp` equal the payload's instants, each present exactly where its payload member is | `time:<claim>` |
 | 4 | `valid_until` is later than `asserted_at` | `valid_until_not_after_asserted_at` |
-| 5 | A key record meets its end rule ({{keys}}) | `key_record_out_of_window` |
+| 5 | A key record's `identity_type` is a sorted set of text strings | `key_record_bad_identity_type` |
 | 5 | A key record's roles do not mix a person's with a machine's | `key_record_mixed_roles` |
+| 5 | A key record meets its end rule ({{key-records}}) | `key_record_out_of_window` |
+| 5 | A key record's `attestation_evidence` is a map, and its `pq_custody`, where present, one of the three values | `key_record_bad_pq_custody` |
+| 5 | A key record of a class whose mechanism has a chain carries `chain` | `key_record_bad_attestation_evidence` |
 | 6 | The held key has the thumbprint `kid` | `kid_mismatch` |
 | 6 | The signer's key record is not itself Invalid | `key_not_valid` |
 | 7 | The composite signature verifies | `bad_signature` |
-| 8 | `kid`'s key is a key of `iss` | `kid_not_of_iss` |
+| 8 | `kid`'s key is a key of `iss` ({{key-of-iss}}) | `kid_not_of_iss` |
+| 9 | Whether the family is authored or counted can be read | `authorship_undetermined` |
 | 9 | `author` is present on an authored family and absent on a counted one | `author_column` |
 | 9 | `iss` is the author or fills a role the family names | `iss_not_in_role` |
 | 9 | A family that scores a dimension carries one | `dimension_missing` |
+| 9 | A row supplied as the target of a `withdraws` or a `recants` is the row `refs.target` names | `target_mismatch` |
 {: #tab-verify title="Verification checks and their reasons"}
 
-A name in angle brackets stands for the part, member, map or claim
-at fault, as in `not_deterministic:payload`, `malformed:refs`,
-`unexpected:also` and `time:iat`.  The token after
-`dimension_refused:` is the namespace token of {{CC}}.  Step 6
-answers `waiting:kid:` and the thumbprint when the key is not held,
-and step 8 answers Waiting on the row it needs.
+Steps 6 and 8 also answer Waiting, as {{tab-waiting}} lists.
 
-A Substrate then applies the checks of {{tab-admit}} to a statement
-that verified.  Each refuses with one token.
+## How a Reason Is Written {#reason-names}
+
+A name in angle brackets stands for the part, member, map or claim at
+fault.
+
+`<part>` is `statement`, `protected` or `payload`: the encoded item
+that is not in the deterministic encoding.  A float and a decimal
+fraction that is not normalised are second encodings of the payload,
+`not_deterministic:payload`.
+
+`<claim>` is `iat`, `nbf` or `exp`.
+
+`<map>` is the closed map that holds a key it does not admit:
+`protected`, `unprotected`, `refs` or `also`.  A protected header
+that lacks a member it requires is `unexpected:protected` as well,
+since the header holds exactly its members.
+
+`<member>` follows one rule.  It is the innermost member of the row
+that the schema of {{cddl}} names and whose value holds the fault.
+The row is the protected header and the payload ({{object}}).
+
+- A member of the payload, of `refs` or of `body` is named by its
+  text key, as in `malformed:score`, `malformed:head` and
+  `set_order:further_heads`.
+- A member of the protected header or of the CWT claims has an
+  integer label, and is named `alg`, `cty`, `kid`, `typ`, `row-type`
+  (label -70001), `family-id` (label -70002), `iss`, `sub`, `iat`,
+  `nbf`, `exp` or `edition` (label -70003).
+- A fault in an element of an array is reported under the member that
+  holds the array.
+- A role of `also` is a key of a registry and not a member
+  ({{refs}}).  A fault in a role's set is reported as `also`.
+- A required member that is absent from the payload is reported under
+  its own name, as in `malformed:asserted_at`.
+
+Where no member that the schema names holds the fault, the name is
+that of the rule of {{cddl}} that the value fails.  There are two
+such places.  A family's own member is typed by the schema as
+`ceg-value` and is not named by it, so a fault in its value, at any
+depth, is `malformed:ceg-value`.  A disclosure travels beside the row
+and is no member of it, so a fault in one is
+`malformed:sd-disclosure`.  The key of a family's own member never
+stands in a reason, and the reasons stay a closed set.
+
+A statement with more than one fault is Invalid at the first step
+that fails.  This document fixes no order among the faults of one
+step.
+
+The token after `dimension_refused:` is the namespace token of
+{{CC}}.
+
+Three prefixes say at which level an answer was given.  A statement
+read alone answers `valid`, `invalid:` and a reason, or `waiting:`
+and what is missing.  A statement read under its family answers the
+checks of step 9 as `family_invalid:` and the reason, and where a
+role admits its signer it answers `valid:role:` and the role's name.
+The check of a key record's payload alone answers `ok` or the bare
+reason.  The files of {{vectors}} write them so, and the later
+key-of-issuer file writes `family:` for `family_invalid:`.  Several
+statements read as one row, where their payloads differ, answer
+`several_rows` ({{counted}}).
+
+## Refusal Tokens {#tokens}
+
+A Substrate refuses a row with a token.  {{CC}} names the tokens of
+{{tab-admit}} for the checks a Substrate makes at every write path.
 
 | Check | Token |
 |---|---|
 | Payload at most 1 MiB ({{canon}}) | `envelope_too_large` |
-| Type is one of the five | `attestation_type_unregistered` |
-| Termed delegation within 365 days | `delegation_term_required` |
+| Type is one of the five ({{types}}) | `attestation_type_unregistered` |
+| No optional member is null ({{relays}}) | `federation_malformed_row`, with the reason `envelope_member_null` |
+| Each set is sorted and without duplicates ({{canon}}) | `federation_set_semantics_unsorted`, naming the member |
+| Termed delegation within 365 days ({{types}}) | `delegation_term_required` |
 | Withdrawal meets {{withdraw-rule}} | `federation_withdraws_not_admitted` |
 {: #tab-admit title="Admission checks and their tokens"}
 
-The two tables are the complete list for a row statement read alone.
-What a fold concludes from several rows has its own names, such as
-those of {{standing-end}}, and {{CC}} lists them.  The reasons of
-{{tab-verify}} are those the verifier's vectors carry at the commits
-{{vectors}} pins.  {{CC}} names `kid_not_of_iss`,
-`key_record_out_of_window`, `valid_until_not_after_asserted_at`,
-`body_number_unrepresentable`, `edition2_payload_invalid` and the
-four tokens of {{tab-admit}} in its own text.  It states the
-remaining checks without a name.  The HTTP error codes of {{CC}}'s
-write path are transport status and are not reasons of this document.
-A refusal for size is `envelope_too_large` on every write path, and
-over HTTP it is carried as status 413 with the error code
-`ENVELOPE_TOO_LARGE` (CC 2.6.1.6, CC 5.3.6.1).
+The first check needs no verification: a Substrate refuses at its
+ceiling without completing the decode.  The last two are made on a
+statement that verified.
 
-Admission has a third outcome besides admit and refuse.  A row signed
-by a key whose record is not yet held is Waiting ({{verify}}).  It is
-held and retried, never counted, until the key is held.
+The other three are faults that verification also finds, so a
+statement that has one never verifies.  A verifier and a Substrate
+then name one fault in two vocabularies, and neither name is a second
+check:
+
+| Fault | Reason, from a verifier | Token, from a Substrate |
+|---|---|---|
+| A row type outside the five | `malformed:row-type`, at step 2 | `attestation_type_unregistered` |
+| A null member | `malformed:<member>`, at step 3 | `federation_malformed_row`, `envelope_member_null` |
+| A set out of order, or with a duplicate | `set_order:<member>`, at step 3 | `federation_set_semantics_unsorted` |
+{: #tab-both title="Faults that have a reason and a token"}
+
+A Substrate that emits a row checks its type before any statement
+exists, which is why {{CC}} states that check at admission and
+applies it to emission and to replication alike (CC 2.4).
+
+{{tab-verify}}, {{tab-waiting}} and {{tab-admit}} are the complete
+list for a row statement read alone or under its family.  What a
+fold concludes from several rows has its own names, such as those of
+{{standing-end}}, and {{CC}} lists them.  The reasons of
+{{tab-verify}} are those the verifier's vectors carry at the commit
+{{vectors}} pins, with three that no row statement vector carries:
+`kid_mismatch`, and `edition2_payload_invalid` and
+`key_record_bad_attestation_evidence`, which {{CC}} names.
+
+{{CC}} names in its own text `kid_not_of_iss`,
+`key_record_out_of_window`, `valid_until_not_after_asserted_at`,
+`body_number_unrepresentable`, `edition2_payload_invalid`,
+`key_record_bad_pq_custody`, `key_record_bad_attestation_evidence`
+and the tokens of {{tab-admit}}.  It states the remaining checks
+without a name, and it does not state the rule for `<member>` above.
+The HTTP error codes of {{CC}}'s write path are transport status and
+are not reasons of this document.  A refusal for size is
+`envelope_too_large` on every write path, and over HTTP it is carried
+as status 413 with the error code `ENVELOPE_TOO_LARGE` (CC 2.6.1.6,
+CC 5.3.6.1).
+
+Admission has a third outcome besides admit and refuse.  A row whose
+verification answers Waiting ({{verify}}) is held and retried, never
+counted, until what it waits on is held.
 
 The namespace rules that decide whether a dimension is registered,
 and their tokens, are defined in {{CC}} and are outside the scope of
@@ -1101,8 +1397,9 @@ decision or a moderation record.  {{CC}} lists the families it
 covers.  The named party's route is to contest the row.
 
 A key revocation is never withdrawn.  An entity revocation, an
-occurrence revocation, a key grant and a cosignature already sent are
-never withdrawn either.
+occurrence revocation, a key grant, a cosignature already sent and a
+receipt of acts ({{standing-end}}) are never withdrawn either (CC
+2.4.1.1).
 
 Recantation is not covered by these rules.  Only T's signer can
 recant T.
@@ -1118,9 +1415,13 @@ An act names its head.
 : A row signed in exercise of a standing names the head it is at, in
   `refs.head`.  The head is the newest its signer holds of the record
   that seats the standing: the roster version for a seat in a room or
-  a family, and the bundle in force for a grant from a root.  Where
-  one row between two keys is the whole record, as an owner's binding
-  is, that row is the head.  A row that exercises a standing and
+  a family, and the bundle in force for a grant from a root.  A row
+  signed under a root grant names that bundle, and names under the
+  `also` role `stands_on` the acceptance of the grant that it stands
+  on.  One that names the bundle alone, or names a binding, stands on
+  no acceptance and counts for nobody.  Where one row between two
+  keys is the whole record, as an owner's binding is, that row is the
+  head.  A row that exercises a standing and
   names no head concludes nothing, `act_names_no_head`.  An
   acceptance or a decline names none, since it names the row it
   answers.  A halt names none, since it fires at each node on receipt
@@ -1143,9 +1444,9 @@ Receipts.
   row of the family `act:ack`.  It names each act it acknowledges
   under the `also` role `ack`, at most 256 of them, and it names no
   head.  It has those acts in its past, and it is clean when that
-  past holds no cut of them by its own key.  The receipt is the conferrer's, another holder's of the
-  body the act was done for, or that of a receipter the offer names
-  in `receipter`.  It is never the act's own signer's and never a
+  past holds no cut of them by its own key.  The receipt is the
+  conferrer's, another holder's of the body the act was done for, or
+  that of a receipter the offer names in `receipter`.  It is never the act's own signer's and never a
   node's.  A receipt changes what is in force, never what counted.
 
 Lifting.
@@ -1401,9 +1702,16 @@ Statement content.
   out-of-band agreement.
 
 Waiting.
-: A CEG verifier can answer Waiting on a key it does not hold, and
-  hold the statement inert ({{verify}}).  A SCITT Registration Policy
-  admits or refuses.
+: A CEG verifier can answer Waiting on a key or a row it does not
+  hold, and hold the statement inert ({{verify}}).  A SCITT
+  Registration Policy admits or refuses.
+
+Statement identifier.
+: {{RFC9943}} defines no identifier for a Signed Statement.  The CEG
+  statement id is a name of this profile ({{names}}).  It covers the
+  protected header and the payload, as the COSE `Sig_structure` does
+  with an empty `external_aad`, and is a different digest from one
+  over the `Sig_structure` or over the whole COSE_Sign1.
 
 ## Registering a Head {#loghead}
 
@@ -1460,13 +1768,32 @@ Note to the RFC Editor: please remove this section before publication.
   its table of open encodings (CC 2.6.1.12).
 
 - {{CC}} names only some of the reasons of {{admission}} in its own
-  text ({{admission}} says which).  It is to adopt the rest as
-  written here.
+  text ({{tokens}} says which), and it does not state the rule by
+  which a reason names a member ({{reason-names}}).  It is to adopt
+  both as written here.
 
-- The reference to {{CC}} and the CDDL of {{cddl}} are those of
-  revision -03.  The text of this revision follows {{CC}} as it
-  stands after that tag, and both move to the next tag of {{CC}}
-  when this revision is cut.
+- {{CC}} lists two vector files at versions that predate its own
+  text, and this document pins their successors ({{vectors}}).
+
+- {{CC}} states its verification order with Waiting at steps 6 and 8
+  alone.  A `withdraws` or a `recants` row read under its family can
+  also wait on its target ({{verify}}), and {{CC}} gives that reading
+  no step.
+
+- {{CC}} does not state the row type of a rotation record, the
+  answer of a verifier that holds bare keys, the `iss` of the bound
+  key's statement over an occurrence, or the answer for a statement
+  dated at or after its key's own revocation.  For the first three
+  this document gives what the pinned vectors carry ({{key-of-iss}},
+  {{vectors}}).  For the fourth it gives only the rule of {{CC}}
+  ({{standing-end}}), and no vector carries a reason.
+
+- No row statement vector carries the detail
+  `rotation_after_revocation`, a role of `also` other than `ack` and
+  `cites`, or a pair of statements that differ only in the
+  unprotected header.  Such a pair
+  is proposed for the next row statements file;
+  {{kat-statement-id}} states what it shows.
 
 - Known-answer vectors of the revocation snapshot and the boot
   manifest are not yet published.
@@ -1494,7 +1821,10 @@ CIRISPersist:
   here.  <https://github.com/CIRISAI/CIRISPersist>
 
 No second, independent implementation of the full signing and
-admission path exists yet.
+admission path exists yet.  A reader working from the text of
+revision -03 alone has run the known-answer cases of a statement, a
+key record's payload, a value and an object, and this revision
+answers what that run found ({{vectors}}).
 
 # Security Considerations
 
@@ -1525,6 +1855,34 @@ Identity references.
 : `kid` and `iss` carry full 32-byte thumbprints, not short
   fingerprints.  A verifier resolves `kid` to a key record and
   verifies with the full composite key that record holds.
+
+The issuer is a claim.
+: `iss` is signed by whoever signs the statement, so a signature that
+  verifies does not show that the signer is the identity `iss`
+  names.  A verifier MUST check that `kid`'s key is a key of `iss`
+  ({{key-of-iss}}) before it treats the statement as that issuer's.
+  A Relying Party that reads `iss` from a statement it has not
+  verified through step 8 of {{verify}} reads an unchecked claim.
+
+A name is not a signature.
+: A row id, a statement id and an object id are digests of bytes.
+  Two parties that hold the same id hold the same bytes, and nothing
+  more follows.  An id is computed without any key, so anyone can
+  compute the id of a statement nobody signed.  A statement id leaves
+  out the signature and the unprotected header, so a statement with a
+  corrupted signature has the id of the valid one.  An id is evidence
+  of a statement only together with a verification of that statement
+  ({{names}}, {{verify}}).
+
+Rotation.
+: A rotation record links a new key to an identity only with the old
+  key's statement and the new key's own.  A verifier MUST NOT accept
+  a new key on the new key's word, or on the old key's alone.  Two
+  successors of one key hand on nothing, so a thief of an old key who
+  rotates it cannot displace the holder's own rotation: both are
+  refused until one rotation names both.  The thief can block the
+  hand-on in that way.  {{CC}} leaves the pair to the key's owner,
+  who binds one successor (CC 2.4.1.1, {{rotation}}).
 
 Withdrawal.
 : The withdrawal rules let parties other than the signer retract a
@@ -1604,37 +1962,35 @@ operator of {{RFC9165}}.
 # Test Vectors {#vectors}
 
 The known-answer vectors of this form are the verifier's
-{{CC-VECTORS}}.  {{CC}} 1.0-rc21 is the tag `v1.0-rc21`, commit
-b016df47a7697b6544e34177541be442ff6f24e9.  It pins each vector file
-at a tag of CIRISVerify (CC 2.6.5).  The tags are commits
-f878dee630de (v23.1.1), fc7fb02a8412 (v23.2.0) and ffd7af1f1b53
-(v23.3.0).  The files of this document, with the SHA-256 digest of
-each at its tag:
+{{CC-VECTORS}}.  {{CC}} 1.0-rc22 is the tag `v1.0-rc22`, commit
+f4671933f2b22b33d2db868d4654036162104123.  It vendors the models and
+proofs of its causal kernel (CC 2.7), the proof of the key-of-issuer
+check of {{key-of-iss}} among them, from the repository CIRISKernel
+at the tag `kernel-v0.3.0`, commit 5e5a40906eea.
+
+Every vector file of this document is pinned at one tag of
+CIRISVerify, v23.4.1, which is commit
+732c44847cc8d0e3bd2779fd186b504478584623, and by the SHA-256 digest
+of the file at that commit.
+
+The files for a row statement and its keys:
 
 ~~~
-edition2/row_statements_v3.json  (v23.3.0)
-  0c072516dea1d89132567e0f343ca47a2183df79697651685aa557d739cdf920
-edition2/key_of_iss_v1.json  (v23.3.0)
+edition2/row_statements_v4.json
+  ec83f2d8dc4080c62bc5482d7eaa99f778d374c8f126df884ee416cf67cb0b93
+edition2/key_of_iss_v3.json
+  371eebcb647e802d522bf44fd979d7faa338d87c42a6af0377e5ab4aaab3a8f9
+edition2/key_of_iss_v1.json
   bd584d9b31b7271dc86c05a29eec75044b5fe74aae8dd586701a227f09001333
-edition2/genesis/genesis_bundles_v2.json  (v23.2.0)
-  395819725ad28899fcff8ee75f238d09a319d5a0a8d3e242f91d7f973fa52153
-edition2/genesis/genesis_reseat_v1.json  (v23.3.0)
-  11cd3aba1af28cd9cf9d1d2328b529b1aed1efd80b552b0283cd6ed7e6abc0e2
-accord_halt/accord_halt_v2.json  (v23.3.0)
-  a70536271ee3d19af4390c4c603e17a4cba54fa18449d6296d3696f6756e9581
-recovery_commitment/recovery_commitment_v1.json  (v23.2.0)
-  cf552e323d06776c42c3da25ad8b2a01874e622402fcbbee0be77c41d0a521a2
-mldsa65_ed25519_draft_kats.json  (v23.1.1)
+edition2/composer_v1.json
+  a795e8a8cb0200d87d913882ce90dfcf9ce349232602f085036922bc9f0b6d08
+mldsa65_ed25519_draft_kats.json
   7dc03ce5e7da7d54c2e1616593bce53ff4a09b0cb52b787a0a6061a22eb102f3
 ~~~
 
-The first six files are under `src/ciris-verify-core/tests/vectors/`,
-and the last under `src/ciris-crypto/tests/vectors/composite/`.
-
-{{CC}} pins nine further files at the tag v23.4.1, commit
-732c44847cc8d0e3bd2779fd186b504478584623 (CC 2.6.5).  They are the
-known answers for the trust root of {{objects}}, the node code of
-{{nodecode}}, and the receipts and stream heads of {{heads}}:
+The files for the trust root of {{objects}}, the halt of {{halt}},
+the node code of {{nodecode}}, and the receipts and stream heads of
+{{heads}}:
 
 ~~~
 edition2/genesis/genesis_bundles_v6.json
@@ -1645,28 +2001,98 @@ edition2/genesis/genesis_commitments_v2.json
   b4220cc7bd61653f795b819c88d0ebf6499e1ab1df8f136798407c4fecd9ab82
 edition2/genesis/genesis_reseat_v4.json
   f95e69d1dc79530266f953344c53d62274b885e3610d22a9033ac98f36e44f90
+recovery_commitment/recovery_commitment_v1.json
+  cf552e323d06776c42c3da25ad8b2a01874e622402fcbbee0be77c41d0a521a2
+accord_halt/accord_halt_v2.json
+  a70536271ee3d19af4390c4c603e17a4cba54fa18449d6296d3696f6756e9581
 fedcode/fedcode_e2_v1.json
   f00bae960c2a498171b7eb3ff461cb09624c72832af001bdfd7590511db3b386
 edition2/receipts/receipts_v1.json
   d7e8cb35191c2094fa1cac744d8b28a0aa650e8d786e78be7689cbd8dbe474e8
 edition2/receipts/stream_heads_v1.json
   a8e88d02039c3631244ad191b482b59a601d0ac2e8470098d42883c077df3da2
-edition2/composer_v1.json
-  a795e8a8cb0200d87d913882ce90dfcf9ce349232602f085036922bc9f0b6d08
 stream_key_binding_v2_composite_v3.json
   4f2c4dd780fc19b428a693ed01022893cc721bc1f5f82bc17878ad0c4984740f
 ~~~
 
-The first eight are under `src/ciris-verify-core/tests/vectors/`, and
-the last under `src/ciris-crypto/tests/vectors/composite/`.  The
-composer file holds withdrawals and recantations.
+The two files whose names begin `mldsa65` and `stream_key_binding`
+are under `src/ciris-crypto/tests/vectors/composite/`.  The others
+are under `src/ciris-verify-core/tests/vectors/`.  The composite
+signature's vectors are checked against the examples of
+{{COMPOSITE-JOSE}}.
 
-The row statements file holds four valid statements and 42 refusals,
-with 17 key records.  Each refusal carries its reason of
-{{admission}}.  The key-of-issuer file holds 24 cases of the check of
-{{keys}}: an unrelated key (Invalid), a rotated successor (Valid) and
-a missing link (Waiting), under one `iss`.  The composite signature's
-vectors are checked against the examples of {{COMPOSITE-JOSE}}.
+A key of the vectors is made from a seed n: its ML-DSA-65 seed is 32
+bytes of the value n, and its Ed25519 seed is 32 bytes of the value
+n + 100.  Both signatures are deterministic, so a second
+implementation that signs the same input reproduces a valid
+statement byte for byte.
+
+## What the Files Hold
+
+The row statements file holds five valid statements and 50 refusals,
+each with its answer.  It holds 17 key record payloads read alone, 6
+statements read through a directory of key records, 6 statements of
+objects that are not rows, 11 values read as references, and 46
+statements read under a family.  A value read as a reference answers
+`row` for the array `[-16, digest]` over a 32-byte digest, `key` for
+an identity reference, and `neither` for anything else.
+
+The later key-of-issuer file, `key_of_iss_v3.json`, holds 32 cases of
+steps 4, 6, 8 and 9: the end rule, a record's cover of an instant, a
+rotation with and without each statement, a seat in the bundle in
+force, an occurrence that binds a key, and a row its subject authors.
+In it the bound key's statement over an occurrence carries that key's
+own identity reference as `iss`.  One that carries the identity's is not read as
+proof of possession, and the answer is Waiting on the key's
+statement.  A key that the bundle in force seats is read from the
+seat, with no key record of its own.  An eviction of an occurrence
+evicts nothing for a statement dated before the instant the eviction
+takes effect, and nothing at all where a key that is not of the
+identity signed it or where its signer's key is not held.
+
+The earlier, `key_of_iss_v1.json`, holds 24 cases, and is the file
+with the cases of a verifier that holds bare keys, of a contested
+rotation, of a rival that names a record which does not cover it, and
+of a chain of two rotations.  In both files a key record, a rotation
+record among them, is a `scores` row of the family `key:record` with
+no `author`.  The earlier file was written before {{CC}} stated that
+a row waits for a statement it lacks, and two kinds of its answers
+are read by that rule today:
+
+- where a key record or a rotation record lacks a statement, the file
+  answers `invalid:kid_not_of_iss`, and the answer of this document
+  is Waiting on that statement ({{key-of-iss}}), as in its cases
+  `rotation_without_predecessor_statement` and
+  `rotation_without_own_statement`;
+- in two cases where the record that a rotation names is not held,
+  `rotation_genesis_not_held` and `rotation_two_hops_middle_missing`,
+  the file answers `waiting:kid:` and the key of that record, and the
+  answer of this document is `waiting:record:` and that record's row
+  id.
+
+Every other answer of the file stands.  The cases of
+`key_of_iss_v3.json` whose names begin `rotation_` give the later
+answers.
+
+The composer file holds 15 cases of rows read under a family: a
+`withdraws` or a `recants` under the family of its target, and a
+`supersedes` under its own ({{family}}).
+
+One case of the row statements file has two faults.
+`names_earlier_form` carries a faulty reference in `refs.target` and
+faulty references under `refs.also`, and its reason names `also`,
+which comes first in the encoding of `refs`.
+
+{{CC}} lists the row statements file at its third version and the
+key-of-issuer file at its first alone, both at the tag v23.3.0 (CC
+2.6.5).  Revision -03 of this document pinned those.  The third
+version of the row statements file predates the rule that each key
+signs its own record, and the end rule of step 4.  The fourth differs from it in three places: its
+directory cases are read by a key's own statement over its record
+({{key-records}}), a key record whose `valid_until` equals its
+`asserted_at` is refused, and the cases of a decimal fraction are
+added ({{numbers}}).  The other 125 cases are the same bytes with the
+same answers.
 
 ## A Row Id Known Answer
 
@@ -1705,6 +2131,49 @@ The row id is the SHA-256 of those 382 bytes:
 4d7193e4b48b2313b7f03a9a79fbf8749202c988d94f8909e2fdc652ae74e1f5
 ~~~
 
+## A Statement Id Known Answer {#kat-statement-id}
+
+The protected header of the same statement is these 245 bytes:
+
+~~~
+a7013a000111d303781e6170706c69636174696f6e2f766e642e63697269732e726f
+772b63626f72045820d6f095b738a1e18fb62fa92478036189cb894203946d4c71a5
+2d9b27b41174630fa401784d75726e3a696574663a706172616d733a6f617574683a
+636b743a7368612d3235363a31764356747a696834592d324c366b6b65414e686963
+754a51674f5562557878705332624a37515264474d02697375626a6563742d31061a
+69184c003a000111720210696365672d726f772f323a000111706673636f7265733a
+00011171782365766964656e63653a2e73756974653a2e6b696e643a2e63656c6c3a
+2e707265666978
+~~~
+
+The statement id input of {{names}} is the three-element array
+`["CEG-statement-id/2", protected, payload]`.  Its deterministic
+encoding is 505 bytes: the 20 bytes
+`83724345472d73746174656d656e742d69642f32`, then the byte-string head
+`58f5` and the protected header above, then the byte-string head
+`58ec` and the payload of the row id known answer.  The statement id
+is the SHA-256 of those 505 bytes:
+
+~~~
+7d868e399743467fd3f01b0c92ab3e10a442ad1141f68a54261dd558c111bad4
+~~~
+
+The unprotected header is no part of that input.  The statement as
+the file holds it is 3864 bytes, and its unprotected header is the
+empty map, the one byte `a0` at offset 249.  Replace that byte with
+the seven bytes `a119018a814100`, the map `{394: [h'00']}`: one entry
+under the `receipts` label, holding a byte string that is no receipt.
+The result is a statement of 3870 bytes.  Its SHA-256 digest is
+f1792406ebff5cf5cd628390c660ffb7994b581aadc8278329c7ce29e92d6bbd.  Its
+protected header, payload and signature are unchanged.  It therefore
+has the same row id and the same statement id, and it verifies with
+the same answer, Valid, with the same `kid` and `iss`: no check of
+{{verify}} reads the entry, and a malformed receipt is ignored
+({{receipts}}).
+
+The vector files hold no such pair of their own.  {{open}} records
+that one is proposed.
+
 {{CC}} also builds schema samples, which are not known-answer
 vectors.  The build of this document checks that the CDDL of
 {{cddl}} admits each valid sample and refuses each broken one.
@@ -1723,9 +2192,53 @@ object of it.
 
 Note to the RFC Editor: please remove this section before publication.
 
+This revision brings the text to {{CC}} 1.0-rc22 and answers two
+readings of -03.  One was a run of the known-answer cases from the
+text of -03 alone, which found five places where the text did not
+give the vectors' answers.
+
+Those five:
+
+- A rotation is stated in full.  A rotation record names the old
+  key's record in `refs.target`, carries the new key's own statement
+  and the old key's, keeps the old record's `iss`, and is made inside
+  the old key's record.  A contested rotation hands on nothing
+  ({{rotation}}).  The table of `refs` says that `target` names the
+  old record ({{refs}}).
+- Invalid and Waiting have one answer each.  A row that is known and
+  not held, or a statement that a held row lacks, is Waiting.
+  Everything else is Invalid, `kid_not_of_iss`, and that includes a
+  verifier that holds bare keys ({{key-of-iss}}).  Waiting is said to
+  name a key at step 6 and a row at step 8, in every section
+  ({{verify}}).
+- A key's liveness at the statement's instant is read at step 6.  A
+  record covers an instant up to and not including its end, each key
+  signs its own record, and a statement that no held record covers
+  waits ({{key-records}}, {{verify}}).  The Waiting answers are a
+  table ({{tab-waiting}}).
+- A row type outside the five is Invalid at step 2,
+  `malformed:row-type`.  `attestation_type_unregistered` is the token
+  a Substrate reports for the same fault.  Reasons and tokens are
+  told apart, and the three faults that have both are a table
+  ({{types}}, {{tokens}}).
+- The list of reasons gains `key_record_bad_identity_type`,
+  `key_record_bad_pq_custody`, `key_record_bad_attestation_evidence`,
+  `authorship_undetermined`, `target_mismatch` and
+  `malformed:sd-disclosure`, with the Waiting answers.  One rule says
+  which member a reason names, and the prefixes of the three levels
+  of reading are stated ({{reason-names}}).
+
+The other reading:
+
 - The statement id is named the CEG statement id, a name of this
-  profile, and a match on an id is said to show nothing of who signed
-  ({{names}}).
+  profile, in the text and in the CDDL of {{cddl}}.  What it covers
+  is set beside the COSE `Sig_structure` ({{names}}, {{deltas}}).
+- A match on an id shows nothing of who signed, and `iss` is a claim
+  until the key-of-issuer check has passed ({{idref}}, {{names}},
+  Security Considerations).
+
+From {{CC}} 1.0-rc22:
+
 - A trust root is the lineage of a genesis bundle, and the bundle's
   `charter` carries its parameters ({{objects}}).
 - Transparency follows SCITT throughout.  A service keeps its own
@@ -1736,20 +2249,33 @@ Note to the RFC Editor: please remove this section before publication.
 - The end of a standing is described: an act names its head, an end
   names the head it acts from, what counts and what stays in force,
   and receipts ({{standing-end}}).
-- `refs` gains `further_prev` and the `also` role `under`, and
-  `head`, `answers` and `trusted_through` are stated in full
-  ({{refs}}).
+- `refs` gains `further_prev` and the `also` roles `under`,
+  `stands_on` and `voice`, and `head`, `answers` and
+  `trusted_through` are stated in full ({{refs}}).
+- On a row a room key signs, `iss` is the voice ({{idref}}).
+- A `withdraws` or a `recants` row carries the family of its target
+  and no `dimension` ({{family}}).
 - The node code `CIRIS-V4-` and its eight hint types are described
   ({{nodecode}}).
 - The composite algorithm identifier stays -70100 for a lineage's
   keys ({{sig}}).
 - The verification steps name the family's payload rule and its
-  reason, `edition2_payload_invalid` ({{verify}}, {{admission}}).
+  reason, `edition2_payload_invalid`, and a decimal fraction that is
+  not normalised is a second encoding ({{verify}}, {{numbers}}).
 - A node's owner, not the node, accepts and leaves a root, and a
   community names its duty holders ({{safety}}).
-- Cross-references to {{CC}} are corrected, and the vectors for the
-  trust root, the node code, receipts and stream heads are pinned
-  ({{vectors}}).
+- A receipt of acts is never withdrawn ({{withdraw-rule}}).
+
+Pins and known answers:
+
+- {{CC}} is pinned at 1.0-rc22 and every vector file at one tag of
+  the verifier.  The row statements file is its fourth version and
+  the key-of-issuer file its third, with the first kept for the cases
+  only it holds ({{vectors}}).
+- A statement id known answer is given in full, with a statement that
+  differs from it only in the unprotected header
+  ({{kat-statement-id}}).
+- The CDDL of {{cddl}} is the schema of {{CC}} 1.0-rc22.
 
 # Changes since draft-moore-scitt-ciris-ceg-02
 {:numbered="false"}
@@ -1824,7 +2350,18 @@ Andrii Sparysh reviewed revision -01 as an implementer would.  The
 complete list of reasons, the pinned digests, the row id known
 answer, the statement of what `refs.target` names and of a verifier's
 reported state, and the log-head proposal of {{loghead}} all follow
-from that review.
+from that review.  He then ran the known-answer cases from the text
+of revision -03 alone, with his answers fixed before he saw the
+expected ones.  The rotation rule of {{rotation}}, the one answer for
+Invalid and for Waiting, the step at which a key's liveness is read,
+the two names of a row type outside the five, and the rule for naming
+a member in a reason are the result.
+
+A reader of revision -03 pointed out that the statement id was named
+as if {{RFC9943}} defined it, that the text did not say how it stands
+to the COSE `Sig_structure`, and that a match on an id could be taken
+for evidence of the signer.  The text of {{names}} and the two
+security considerations on the issuer and on names are the result.
 
 The canonical-form rules in this document were found and fixed in
 review by the implementers of CIRISPersist, CIRISVerify and CIRISEdge.
