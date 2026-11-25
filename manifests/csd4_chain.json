@@ -32,14 +32,14 @@
    "invariants": 272,
    "claims": 608,
    "entries": 20,
-   "refusal_tokens": 136
+   "refusal_tokens": 147
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "9d82f1ecbcd41fbaaf7ff2873c8bae220d5af67b0881068a55c0d7dd0761832d"
+  "chain_sha256": "c44f358a12248fa1106eefa2da55cd12a95516b0df455267c3a16828a00c0f73"
  },
  "chain": [
   {
@@ -54587,6 +54587,12 @@
   "disclosure_posture": {
    "4.4.3.12": "bold"
   },
+  "duty_holders_after_founding": {
+   "4.5.4": "after_refusal"
+  },
+  "duty_holders_on_family": {
+   "4.5.4": "after_refusal"
+  },
   "edition2_payload_invalid": {
    "2.6.1.11": "after_refusal",
    "2.6.1.4": "after_refusal"
@@ -54658,6 +54664,18 @@
   "fold_source_count_exceeded": {
    "6.1.2.3": "after_refusal"
   },
+  "founding_duty_holder_node": {
+   "4.5.4": "after_refusal"
+  },
+  "founding_duty_holder_not_signer": {
+   "4.5.4": "after_refusal"
+  },
+  "founding_duty_holders_unnamed": {
+   "4.5.4": "after_refusal"
+  },
+  "founding_duty_unheld": {
+   "4.5.4": "after_refusal"
+  },
   "goal_meta_alignment_malformed": {
    "3.1.9.7": "after_refusal"
   },
@@ -54706,6 +54724,21 @@
   },
   "lawful_access": {
    "4.4.3.12": "bold"
+  },
+  "leaf_vouch_absent": {
+   "5.1": "after_refusal"
+  },
+  "leaf_vouch_ended": {
+   "5.1": "after_refusal"
+  },
+  "leaf_vouch_other_leaf": {
+   "5.1": "after_refusal"
+  },
+  "leaf_vouch_other_room": {
+   "5.1": "after_refusal"
+  },
+  "leaf_vouch_presentation_invalid": {
+   "5.1": "after_refusal"
   },
   "legal_hold": {
    "4.4.3.12": "bold"

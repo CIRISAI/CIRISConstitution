@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "6822d058a7303416af58bf99612d4cff7edb8652d8a4f198c48ff3442e735e3e",
+  "source_sha256": "3090fe18ab033f80c3b5b51cb9510cb6eb6fe084049eb704f36e7bbaec46a6fa",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -90,8 +90,8 @@
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 187,
   "transitions": 465,
-  "gap_cells": 2,
-  "confirmed": 255,
+  "gap_cells": 1,
+  "confirmed": 256,
   "undo_gap_cells": 2,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
@@ -14739,10 +14739,25 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "accord_majority"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 4.2.1"
+      ],
+      "count": "act=group => accord_majority@trust_root ; none",
+      "cases": [
+       {
+        "when": "act=group",
+        "policy": "cosigned",
+        "rows": [
+         "accord_majority"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -14794,7 +14809,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "selfAct",
+      "policy": "cosigned",
       "source": "derived"
      },
      "confirm": {
@@ -15013,8 +15028,10 @@
       "count": "none"
      },
      "widens": {
-      "value": false,
-      "source": "gap"
+      "source": "cc-table",
+      "cc_ref": "CC 5.1",
+      "value": true,
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -15023,8 +15040,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],

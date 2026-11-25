@@ -1,7 +1,7 @@
 {
  "_meta": {
   "cc_version": "1.0-rc22",
-  "family_model_sha256": "6822d058a7303416af58bf99612d4cff7edb8652d8a4f198c48ff3442e735e3e",
+  "family_model_sha256": "3090fe18ab033f80c3b5b51cb9510cb6eb6fe084049eb704f36e7bbaec46a6fa",
   "generator": "tools/cc_family_select.py",
   "contract": "every consumer replays these against its own evaluator: for each vector, bind the leaf of `dimension` under `family` (null: the leaf is unknown), take verb, identity, group, seats and act from `ctx` (an absent key is unknown), and read the `cell`. `expect` is the answer: a count's doors, authored or counted, the second signers as [{role, member}], `unknown`, `gap`, or null where every arm reads false; `decided_by` is the deciding arm's index. An arm is false if any test is false, else unknown if any test is unknown; an unknown arm before the decider makes the answer unknown. Where the answer is `subject`, `admits` says whether the statement is admitted: true when ctx `iss` equals ctx `sub`, false when it differs, `unknown` when either is absent. A vector with `voice` offers a statement in that role over the row: `admits` is true only when the second_signers answer names the role",
   "keys": {
@@ -16,17 +16,17 @@
   },
   "counts": {
    "false_beats_unknown": 8,
-   "holds": 89,
+   "holds": 93,
    "no_arm": 2,
-   "not_holds": 68,
+   "not_holds": 72,
    "order": 2,
    "subject_holds": 1,
    "subject_refused": 1,
    "subject_unknown": 1,
-   "unknown": 46,
+   "unknown": 48,
    "unknown_after_decider": 8,
    "voice_admitted": 11,
-   "voice_refused": 16,
+   "voice_refused": 17,
    "wildcard": 3
   }
  },
@@ -1511,6 +1511,142 @@
    "matcher_family": "membership:{stage}",
    "leaf": "widening",
    "ctx": {},
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "count",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "accord_majority@trust_root",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "count",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "count",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "count",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "none",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "count",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "accord_majority@trust_root",
+   "decided_by": 0,
+   "kind": "not_holds",
+   "why": "the `*` arm holds for every row, and an earlier arm decides first"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "authorship",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "group"
+   },
+   "expect": "counted",
+   "decided_by": 0,
+   "kind": "holds",
+   "why": "arm 0 (act=group) is the first that holds"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "authorship",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "not_holds",
+   "why": "arm 0 (act=group) does not hold; the answer is another arm's or none"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "authorship",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {},
+   "expect": "unknown",
+   "decided_by": "unknown",
+   "kind": "unknown",
+   "why": "act is not supplied, so arm 0 (act=group) is unknown and no later arm may decide"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "authorship",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": "authored",
+   "decided_by": 1,
+   "kind": "holds",
+   "why": "arm 1 (*) is the first that holds; every earlier arm reads false"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "authorship",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
+   "ctx": {
+    "act": "group"
+   },
    "expect": "counted",
    "decided_by": 0,
    "kind": "not_holds",
@@ -3206,6 +3342,21 @@
    "dimension": "licensure:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:v1",
    "matcher_family": "licensure:{authority_id}",
    "leaf": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+   "ctx": {
+    "act": "own"
+   },
+   "expect": [],
+   "kind": "voice_refused",
+   "why": "act=own: the row is its author's own, so a roster member's statement is in no role it names and is refused",
+   "voice": "roster_member",
+   "admits": false
+  },
+  {
+   "family": "mesh_config:{key}",
+   "cell": "second_signers",
+   "dimension": "mesh_config:sample:v1",
+   "matcher_family": "mesh_config:{key}",
+   "leaf": "sample",
    "ctx": {
     "act": "own"
    },
