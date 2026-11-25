@@ -1219,8 +1219,8 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    step.
 
    A Waiting answer says what is missing.  The vectors of Appendix B
-   write it as waiting:, the kind of thing missing and, in the row
-   statement files, what identifies it.
+   write it as waiting:, the kind of thing missing and, in some files,
+   what identifies it.
 
 
 
@@ -1257,13 +1257,13 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
    |      | held rotation   |                                         |
    |      | record names    |                                         |
    +------+-----------------+-----------------------------------------+
-   | 8    | A statement     | waiting:voice:<kid>                     |
+   | 8    | A statement     | waiting:voice                           |
    |      | that a held     |                                         |
    |      | rotation record |                                         |
    |      | or occurrence   |                                         |
    |      | lacks           |                                         |
    +------+-----------------+-----------------------------------------+
-   | 8    | An occurrence   | waiting:covering_record:<kid>:<instant> |
+   | 8    | An occurrence   | waiting:covering                        |
    |      | of iss that     |                                         |
    |      | covers the      |                                         |
    |      | statement's     |                                         |
@@ -1275,12 +1275,12 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
                          Table 3: Waiting answers
 
-
-
-
-
-
-
+   <kid> is the thumbprint of the key that is missing, of the key whose
+   statement is missing, or of the key that lacks a covering record.
+   <row id> is the row id of the record named.  Each is 64 lowercase
+   hexadecimal digits.  <instant> is the statement's asserted_at, in
+   decimal.  voice is the vectors' word for one signer's statement over
+   a row.
 
 
 
@@ -1290,14 +1290,14 @@ Moore                      Expires 29 May 2027                 [Page 23]
 Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
-   <kid> is the thumbprint of the key that is missing, of the key whose
-   statement is missing, or of the key that lacks a covering record.
-   <row id> is the row id of the record named.  Each is 64 lowercase
-   hexadecimal digits.  <instant> is the statement's asserted_at, in
-   decimal.  voice is the vectors' word for one signer's statement over
-   a row.  The later key-of-issuer file of Appendix B writes each answer
-   by its kind alone: waiting:kid, waiting:voice, waiting:record,
-   waiting:bundle, and waiting:covering for a covering record.
+   The row statements file writes the answers of step 6 in full, and the
+   earlier key-of-issuer file writes waiting:kid:<kid> and
+   waiting:record:<row id> in full.  The later key-of-issuer file writes
+   every answer by its kind alone: waiting:kid, waiting:voice,
+   waiting:record, waiting:bundle, and waiting:covering for a covering
+   record.  So the last three answers of Table 3 are known by kind only,
+   and no file says how the missing statement, occurrence or bundle is
+   identified.
 
    One further Waiting answer lies outside the eleven steps.  It arises
    when a row is read under its family.  A withdraws or a recants row
@@ -2612,9 +2612,9 @@ Internet-Draft       CEG Attestation Rows and SCITT        November 2026
       alone.  Two successors of one key hand on nothing, so a thief of
       an old key who rotates it cannot displace the holder's own
       rotation: both are refused until one rotation names both.  The
-      thief can block the hand-on in that way.  [CC] leaves the pair to
-      the key's owner, who binds one successor (CC 2.4.1.1,
-      Section 6.2.2).
+      thief can block the hand-on in that way.  [CC] has the key's owner
+      settle which successor the owner holds, and the hand-on stays
+      empty until a rotation names both (CC 2.4.1.1, Section 6.2.2).
 
    Withdrawal.  The withdrawal rules let parties other than the signer
       retract a row.  The rules in Section 8.3 stop a subject from

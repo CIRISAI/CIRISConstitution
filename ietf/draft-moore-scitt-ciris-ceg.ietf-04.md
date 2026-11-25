@@ -939,8 +939,8 @@ that holds bare keys reads no record, so it reads no instant at this
 step.
 
 A Waiting answer says what is missing.  The vectors of {{vectors}}
-write it as `waiting:`, the kind of thing missing and, in the row
-statement files, what identifies it.
+write it as `waiting:`, the kind of thing missing and, in some files,
+what identifies it.
 
 | Step | What is missing | Answer |
 |---|---|---|
@@ -948,8 +948,8 @@ statement files, what identifies it.
 | 6 | The key's own statement over a held record of it | `waiting:voice:<kid>` |
 | 6 | A record of the key that covers the statement's instant | `waiting:covering_record:<kid>:<instant>` |
 | 8 | The record a held rotation record names | `waiting:record:<row id>` |
-| 8 | A statement that a held rotation record or occurrence lacks | `waiting:voice:<kid>` |
-| 8 | An occurrence of `iss` that covers the statement's instant | `waiting:covering_record:<kid>:<instant>` |
+| 8 | A statement that a held rotation record or occurrence lacks | `waiting:voice` |
+| 8 | An occurrence of `iss` that covers the statement's instant | `waiting:covering` |
 | 8 | The bundle in force | `waiting:bundle` |
 {: #tab-waiting title="Waiting answers"}
 
@@ -958,10 +958,16 @@ whose statement is missing, or of the key that lacks a covering
 record.  `<row id>` is the row id of the record named.  Each is 64
 lowercase hexadecimal digits.  `<instant>` is the statement's
 `asserted_at`, in decimal.  `voice` is the vectors' word for one
-signer's statement over a row.  The later key-of-issuer file of
-{{vectors}} writes each answer by its kind alone: `waiting:kid`,
+signer's statement over a row.
+
+The row statements file writes the answers of step 6 in full, and the
+earlier key-of-issuer file writes `waiting:kid:<kid>` and
+`waiting:record:<row id>` in full.  The later key-of-issuer file
+writes every answer by its kind alone: `waiting:kid`,
 `waiting:voice`, `waiting:record`, `waiting:bundle`, and
-`waiting:covering` for a covering record.
+`waiting:covering` for a covering record.  So the last three answers
+of {{tab-waiting}} are known by kind only, and no file says how the
+missing statement, occurrence or bundle is identified.
 
 One further Waiting answer lies outside the eleven steps.  It arises
 when a row is read under its family.  A `withdraws` or a `recants`
@@ -1882,8 +1888,9 @@ Rotation.
   successors of one key hand on nothing, so a thief of an old key who
   rotates it cannot displace the holder's own rotation: both are
   refused until one rotation names both.  The thief can block the
-  hand-on in that way.  {{CC}} leaves the pair to the key's owner,
-  who binds one successor (CC 2.4.1.1, {{rotation}}).
+  hand-on in that way.  {{CC}} has the key's owner settle which
+  successor the owner holds, and the hand-on stays empty until a
+  rotation names both (CC 2.4.1.1, {{rotation}}).
 
 Withdrawal.
 : The withdrawal rules let parties other than the signer retract a
