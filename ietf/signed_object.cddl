@@ -16,7 +16,9 @@ ceg-anything = ceg-statement / ceg-object-statement / second-consent
   / statement-id-input / statement-id / object-id-input / ceg-key /
   key-record-members
   / revocation-snapshot / ceg-genesis-bundle /
-  recovery-commitment-input / seat-commitment-input
+  recovery-commitment-input / seat-commitment-input / group-id-input
+  / binding-info-input / binding-opening / room-sealed
+  / leaf-vouch-entry / mls-group-id-input / mls-call-group-id-input
   / hpke-info / ceg-typ / accord-invocation / accord-lifecycle /
   transport-destination-binding
 
@@ -110,8 +112,8 @@ family-id = tstr .regexp
 cwt-claims = {
   ; iss: the signer's stable identity reference (its genesis key's
   ; thumbprint URI), never the rotating kid; under a room key, iss is
-  ; the room key's own identity reference, never its person's genesis
-  ; key
+  ; the voice, the identity reference of the voice's first room key,
+  ; never its person's
   1: identity-ref,
   ; sub: what the row is about; a key subject is an identity-ref
   2: tstr,
@@ -164,7 +166,7 @@ attestation-envelope = {
   ; the blobs the row cites, by content hash: a sequence, bytes never
   ; hex
   ? "evidence_refs": [+ hash-digest],
-  ; on a seat row of a private room: the commitment the binding opens
+  ; on the key record of a room key: the commitment the binding opens
   ; (seat-commitment-input)
   ? "seat_commitment": hash-digest,
   ; integers, never floats (see fixed6)
@@ -186,6 +188,12 @@ attestation-envelope = {
   ; required where the content is low-entropy (a ballot, a census
   ; cell); bound by every signer
   ? "salt": bstr .size 16,
+  ; on a counted row that ends a standing: only the count's own
+  ; receipts keep an act in force
+  ? "lifts": true,
+  ; on an offer: whose receipts keep in force the acts exercised
+  ; under it
+  ? "receipter": identity-ref,
   ; SD-CWT simple(59): digests of the blinded members, in mint order
   ; (a sequence)
   ? redacted_claim_keys => [+ bstr .size 32],
@@ -212,6 +220,11 @@ count32 = 0..4294967295
 sd-disclosure = salted-claim / salted-element
 salted-claim = [salt: bstr .size 16, value: ceg-value, key: tstr]
 salted-element = [salt: bstr .size 16, value: ceg-value]
+; What a blinded element of a leaf vouch discloses (CC 5.1): the
+; `value` of its salted-element. The leaf's Ed25519 public key, the
+; room it is vouched for, and the suite, the constant 0x004D.
+leaf-vouch-entry = [leaf_key: bstr .size 32, room: group-ref, suite:
+  77]
 ; POSIX milliseconds, no tag, never a float
 ms-time = uint
 
@@ -262,31 +275,44 @@ row-ref-set = [+ row-ref]
 ; encoding.
 refs = refs-members .and nonempty-map
 refs-members = {
-  ; the roster head this row is counted over, or a version extends
+  ; the roster head this row is counted over, or a version extends;
+  ; the head an act is exercised at; the head an end acts from
   ? "head": row-ref,
   ? "further_heads": row-ref-set,  ; further tips named beside `head`
-  ; the predecessor in a signer's own series
+  ; the predecessor in a signer's own series; on a content row, a
+  ; content row its author signed in the same room
   ? "prev": row-ref,
+  ; on a content row: further content rows of the same author in the
+  ; same room, beside `prev` (CC 3.1.3.2)
+  ? "further_prev": row-ref-set,
   ; the proposal voted on or accepted, the window opened, the row
   ; replied to
   ? "answers": row-ref,
   ; the row superseded, withdrawn, recanted, cut or removed
   ? "target": row-ref,
-  ; on a key revocation: the last rows of the revoked key held good
+  ; on a key revocation: the last rows of the revoked key held good;
+  ; on a row that ends a member's seat and on a keeps row: the
+  ; member's newest content rows held good; at most 64
   ? "trusted_through": row-ref-set,
   ; any other named row, under a role of the closed registry
   ? "also": { + also-role => row-ref-set },
 }
-; The also roles, closed: "ack" names an acknowledgement (a
-; revocation snapshot's); "cites" names the row a row cites, as a
-; build attestation names its manifest contribution. Any other role
-; is a later registration.
-also-role = "ack" / "cites"
+; The also roles, closed: "ack" names a row acknowledged (a
+; revocation snapshot's scope head, the acts a receipt acknowledges);
+; "cites" names the row a row cites, as a build attestation names its
+; manifest contribution; "under" names the one row a deputy's edge
+; hangs from, a set of exactly one; "stands_on" names the one
+; acceptance a row signed under a root grant stands on, a set of
+; exactly one; "voice" names the head of the key roster of the voice
+; a room key signs for, a set of exactly one (CC 2.6.1.11). Any other
+; role is a later registration.
+also-role = "ack" / "cites" / "under" / "stands_on" / "voice"
 nonempty-map = { + any => any }
 
-; The statement id (RFC 9943 statement identity): SHA-256 over the
-; deterministic encoding of this labelled structure. It names a
-; statement, one voice; the row id names the row.
+; The CEG statement id (a name of this profile; RFC 9943 defines no
+; statement identifier): SHA-256 over the deterministic encoding of
+; this labelled structure. It names a statement, one voice; the row
+; id names the row.
 statement-id-input = ["CEG-statement-id/2", protected: bstr, payload:
   bstr]
 statement-id = hash-digest
@@ -316,15 +342,23 @@ ceg-key = { 1: 7, 3: composite-alg, -1: bstr .size 1984 }
 ; (CC 2.4.1.1): a set mixing user or accord_holder with node or agent
 ; is refused; a record whose set contains user or accord_holder
 ; carries no valid_until; one whose set contains node or agent
-; carries one, unless it is a room key of a private room; a role
-; outside both groups takes no end rule of its own; asserted_at <=
-; valid_until <= asserted_at + key_record_max_secs * 1000; refused
-; key_record_out_of_window otherwise.
+; carries one, unless it is a room key, a record that carries `room`;
+; a role outside both groups takes no end rule of its own;
+; asserted_at < valid_until <= asserted_at + key_record_max_secs *
+; 1000; refused key_record_out_of_window otherwise.
 key-record-members = {
   "key": ceg-key,
   "identity_type": [+ tstr],       ; a set
   "asserted_at": ms-time,
   ? "valid_until": ms-time,
+  ; iff the key is a room key: the one room it is made for (CC
+  ; 3.1.3.2); the end rule reads it
+  ? "room": group-ref,
+  ; iff the key is a room key: its X-Wing KEM key, the target of
+  ; every wrap to it
+  ? "kem_xwing_pubkey": bstr .size 1216,
+  ; iff the key is a room key: this record is the key's seat row
+  ? "seat_commitment": hash-digest,
   ? "attestation_evidence": attestation-evidence,
   * tstr => ceg-value,
 }
@@ -425,11 +459,12 @@ revoked-entry = [key: kid, revocation: row-ref, trusted_through: [*
 ; recovery key's key:record and the holder's new signing-key record;
 ; recovery_commitments[iss] is the next commitment. Checked in prose,
 ; not here: version is 1 iff refs has no prev; holders, serve_nodes
-; and witnesses are pairwise disjoint; the keys of
+; and transparency_services are pairwise disjoint; the keys of
 ; recovery_commitments are exactly holders; scope holds infra:attest
-; and infra:serve; the three witness members are present together or
-; not at all, and witness_quorum is floor(|witnesses| / 2) + 1; each
-; statement's iat is floor(asserted_at / 1000).
+; and infra:serve; the three transparency members are present
+; together or not at all, and receipt_quorum is
+; floor(|transparency_services| / 2) + 1; each statement's iat is
+; floor(asserted_at / 1000).
 ceg-genesis-bundle = {
   "refs": genesis-refs,
   "version": 1..4294967295,
@@ -459,12 +494,13 @@ genesis-charter = {
   ? "halt_fuse_secs": 1..4294967295,
   ; absent: attachable by an out-of-band anchor only (CC 3.2 T4a)
   ? "attach_window_secs": 1..4294967295,
-  ; witnessed mode: the three witness members together
-  ? "witness_cadence_secs": 1..4294967295,
-  ; absence is witnessed mode off; 0 is never written
-  ? "witness_quorum": 2..4294967295,
+  ; where the charter names services: the three transparency members
+  ; together
+  ? "receipt_cadence_secs": 1..4294967295,
+  ; absent where the charter names no services; 0 is never written
+  ? "receipt_quorum": 2..4294967295,
   ; a set; each one's key:record stands in refs.also "cites"
-  ? "witnesses": [+ identity-ref],
+  ? "transparency_services": [+ identity-ref],
 }
 
 ; The accord's rows (CC 4.2.1.1, CC 4.2.1.3): payloads of ordinary
@@ -529,6 +565,9 @@ transport-destination-binding = {
   ? "onion_hop_xwing_pubkey": bstr .size 1216,
   ; on a node that opts out of relaying, with no hop key
   ? "onion_relay": { "opt_out": true },
+  ; places to dial, most preferred first: each a type and a body, the
+  ; body that of the node code (CC 2.6.8)
+  ? "dial_hints": [1*8 [uint .le 255, bstr .size (0..255)]],
   ; on a seat's binding: its key record under also "cites"
   ? "refs": refs,
   ; the content-KEM keys of CC 3.3.6.1 where they ride this row
@@ -547,29 +586,92 @@ transport-destination = {
 
 ; Room keys. The seat commitment of a private room: SHA-256 over the
 ; deterministic encoding of this array, carried as "seat_commitment"
-; on the seat row and opened by the binding. `room` is the room's id;
-; the member that carries it waits on its owner's submission. `nonce`
-; is 32 fresh random bytes. The binding key and the content-KEM keys
-; of one identity are distinct bytes, refused at admission otherwise.
-seat-commitment-input = ["CEG-seat/2", room: tstr, room_key: kid,
-  person: identity-ref, nonce: bstr .size 32]
-; The HPKE info strings of a binding and of an invitation. The KEM
-; key, the binding's two encapsulations and the occurrence keys take
-; their bytes from the X-Wing HPKE suite and are fixed with that
-; suite's known-answer vectors, not in this file; so does the binding
-; seed's derivation label.
-hpke-info = "CEG-binding/2" / "CEG-invitation/2"
+; on the room key's own key record, which is its seat row, and opened
+; by the binding. `room` is the room's derived id, the `room` of that
+; record. `nonce` is 32 fresh random bytes. The binding key of an
+; identity is the member room_binding_xwing_pubkey of its
+; identity:occurrence; its halves and those of the other KEM keys on
+; that row are distinct bytes, refused at admission otherwise.
+seat-commitment-input = ["CEG-seat/2", room: group-ref, room_key:
+  kid, person: identity-ref, nonce: bstr .size 32]
+
+; A group's id (a family's, a community's, an affiliation's) is
+; derived from its first version and chosen by nobody: "group-"
+; followed by the base64url, without padding, of SHA-256 over the
+; deterministic encoding of group-id-input. `first_members` is the
+; key of every member the first version lists, a set. The form tells
+; a group from a key: a key's identity reference is a thumbprint URI,
+; and a group's id is never one.
+group-ref = tstr .regexp "group-[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]"
+group-id-input = ["CEG-group/2", group_kind: "family" / "community",
+  first_members: [+ identity-ref], founded_at: ms-time, nonce: bstr
+  .size 32]
+; The binding of a voice to its person (CC 2.6.1.11, CC 3.1.3.2): a
+; claim, a challenge and a confirmation. The challenge is an X-Wing
+; encapsulation to the person's binding key (1120 bytes). The
+; confirmation is an RFC 9180 HPKE seal in mode_psk (KEM 0x647a,
+; HKDF-SHA256, AES-256-GCM) to the addressee's room key's
+; kem_xwing_pubkey, with psk the challenge's shared secret, psk_id
+; SHA-256 over the challenge, info the deterministic encoding of
+; binding-info-input, empty aad and plaintext the deterministic
+; encoding of binding-opening. No MAC and no seed. `binding_key` is
+; the thumbprint of the person's binding key; its encoding waits on
+; its owner's submission.
+binding-info-input = ["CEG-binding/2", room: group-ref, room_key:
+  kid, addressee_key: kid, seat_commitment: hash-digest, binding_key:
+  bstr .size 32]
+binding-opening = [person: identity-ref, nonce: bstr .size 32]
+; What a wrap to a room key seals, and what a sealed envelope to one
+; room key carries outside a wrap: the plaintext of an HPKE mode_base
+; seal under the same three identifiers. A wrap carries `dek`; an
+; envelope carries none. Each flow of a binding rides here and never
+; as a cleartext member of a row.
+room-sealed = {
+  ; on a wrap to a room key: the wrapped key
+  ? "dek": bstr .size 32,
+  ; from the room key's holder: the person it names
+  ? "claim": binding-claim,
+  ; from the addressee: the encapsulation to the person's binding key
+  ? "challenge": bstr .size 1120,
+  ; from the room key's holder: the seal the addressee opens
+  ? "confirmation": binding-confirmation,
+}
+binding-claim = {
+  "person": identity-ref,
+  ; the statements of the person's identity:occurrence row that
+  ; carries the binding key
+  ? "occurrence": [+ bstr],
+}
+binding-confirmation = {
+  ; the confirmation's own X-Wing encapsulation
+  "enc": bstr .size 1120,
+  ; the AEAD ciphertext over binding-opening
+  "ct": bstr,
+}
+; A room's MLS group ids (CC 5.1): each is SHA-256 over the
+; deterministic encoding of its array, so a door recomputes which
+; room a group is of. `call` is the call's id; the member that
+; carries it waits on its owner's submission.
+mls-group-id-input = ["CEG-mls-group/2", room: group-ref]
+mls-call-group-id-input = ["CEG-mls-call-group/2", room: group-ref,
+  call: bstr]
+; The HPKE info of an invitation and of a wrap to a room key, as
+; text. A confirmation's info is binding-info-input. The bytes of
+; each are fixed with the verifier's known-answer vectors, not in
+; this file.
+hpke-info = "CEG-invitation/2" / "CEG-room-wrap/2"
 
 ; Verification has three answers, returned by a verifier and never on
 ; the wire: Valid; Invalid(reason); Waiting{missing key refs}.
 ; Invalid under a held key is final. A structural fault is Invalid
 ; whatever keys are held. A statement whose key record is Waiting is
 ; Waiting, naming the deepest missing key; a key record Invalid makes
-; the statement Invalid. A key held in part is Waiting on the missing
-; half. Waiting is never counted.
+; the statement Invalid. A key is one composite key: a statement
+; whose signer's key record is not held is Waiting on it. Waiting is
+; never counted.
 
-; Receipts over the provenance log and each stream's log are COSE
-; Receipts (RFC 9942) with vds = 1 (RFC9162_SHA256); each witness
-; issues its own receipt over the same root, with its instant in the
-; protected header; a receipt is issued per batch of a stream, never
-; per chunk.
+; Receipts are COSE Receipts (RFC 9942) with vds = 1
+; (RFC9162_SHA256); each Transparency Service registers a statement
+; in its own log and issues its own receipt over that log's root,
+; with its instant of issue; a receipt is issued per batch of a
+; stream, never per chunk.

@@ -834,8 +834,9 @@ Waiting.
   statement that a held rotation record lacks, the new key's own or
   the old key's; a statement that a held occurrence lacks, the bound
   key's own or one of `iss`; an occurrence that covers the
-  statement's instant, where the one held has ended; and the bundle
-  in force, where the verifier knows of it and does not hold it.  A
+  statement's instant, where the one held has ended; a row that the
+  admission of an occurrence needs; and the bundle in force, where
+  the verifier knows of it and does not hold it.  A
   row gains statements without changing its row id, so a record that
   lacks a statement waits for it and is not refused (CC 3.1.3, CC
   2.6.1.9).
