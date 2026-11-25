@@ -2501,6 +2501,8 @@ These are `hard_case` **event kinds** — the `kind` column of a hard-case event
 | `hard_case:community_liveness_stalled:{community_key_id}` | The named community's active founder set falls to `M` or fewer under `quorum:M/N` ([CC 3.2](part_3_the_namespace.md#3.2) T7): valid but non-admitting from this instant. Emitted by the substrate that admitted the row (or holds the `revoked_after` bound) whose crossing moved the count, `event_id` keyed on that row; peers re-derive and do not emit | Same. |
 | `hard_case:community_liveness_restored:{community_key_id}` | The named community's active founder set returns to `M + 1` or more by the T7 recovery widening ([CC 3.2](part_3_the_namespace.md#3.2) T7); same emitter rule as `_stalled` | Same. |
 
+**Placement (normative).** A `hard_case:community_membership_change` event is a row of the community it names. The node MUST place it at that community's own scope, under the community's `community_id`, and MUST NOT serve it beyond that community's audience ([CC 5.2](part_5_transport_substrate.md#5.2)). Its payload names a member and an instant, so placed wider it would publish the roster. Federation placement is for a kind that names no private cohort. So no node outside the community holds a record that a member was added or removed, and none can audit it.
+
 Composes with [CC 3.4.3](#3.4.3) + [CC 3.4.4](#3.4.4) — part of the same substrate-self-report discipline. A row on these kinds from any other signer concludes nothing ([CC 3.4.7](#3.4.7)).
 
 ### 3.4.3 `system` — Substrate-self-report reservations (`system:*`)
@@ -2534,6 +2536,8 @@ hard_case:family_membership_change:{family_key_id} (payload)
 ```
 
 So the removal-time substrate signal is `change_kind: "removed"` on the existing prefix — consumers and the forward-secrecy re-key key on `effective_at`. Same shape for `community_membership_change` (CC 3.4.2) and the `identity_occurrence` removal (a `withdraws` against the occurrence; the substrate emits `family_membership_change` / `community_membership_change` where the occurrence was a member).
+
+**Placement (normative).** A `hard_case:family_membership_change` event is a row of the family it names. The node MUST place it at that family's own scope, under the family's `family_id`, and MUST NOT serve it beyond that family's audience ([CC 5.2](part_5_transport_substrate.md#5.2)). A `hard_case:recipient_excluded` event is placed the same way, at the scope it names, and reaches that audience only. A `hard_case:community_membership_change` event is placed at its community's scope ([CC 3.4.2](#3.4.2)). Federation placement is for a kind that names no private cohort. So no node outside the cohort holds a record of the change, and none can audit it.
 
 Composes with [CC 3.4.3](#3.4.3) — these are part of the same substrate-self-report discipline. A row on these kinds from any other signer concludes nothing ([CC 3.4.7](#3.4.7)).
 
