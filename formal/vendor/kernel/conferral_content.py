@@ -172,13 +172,15 @@ def seats(rows):
     """{row id: its seat} for every content row, end and tips row. A seat is the set of the newest admitting
     heads in the past of the head the row names, that head included (the empty set where none admits: the one
     seat of a history with no re-admission). None for a row that names a head at which the member does not
-    sit, a head that is not held, or (a tips row) an end that is not held: it belongs to no seat."""
+    sit, a head that is not held, or (a tips row) an end that is not held: it belongs to no seat. A removal is
+    the member's end and also a version of the roster: a row that names an end as its head names a head at
+    which the member is out."""
     by, anc = _past(rows)
     admits = [r["id"] for r in rows if r["kind"] == "head" and r.get("seat") == "admits"]
 
     def of_head(h):
-        if h not in by or by[h].get("seat") == "out":
-            return None
+        if h not in by or by[h].get("seat") == "out" or by[h]["kind"] == "end":
+            return None                       # an end of the member's seat named as a head: the member is out at it
         mine = [a for a in admits if a == h or a in anc(h)]
         return frozenset(a for a in mine if not any(a in anc(b) for b in mine))
     out = {}
@@ -462,6 +464,11 @@ CASES = [
      "re-admission): it belongs to no seat and does not count",
      [H0, HX, HA, M1, end("E", "H0", ["m1"]), act("g1", "HX", "m1")], {},
      {"m1": KEPT, "g1": (F, F, "no_seat")}),
+    ("row_naming_the_removal_as_its_head", "the removal is the member's end and a version of the roster: a row of "
+     "the member that names it as its head names a head at which the member is out, and does not count; a version "
+     "built on the removal admits the member again and a row there is in a new seat",
+     [H0, M1, end("E", "H0", ["m1"]), act("g1", "E", "m1"), head("HR", "E", seat="admits"), act("n1", "HR")], {},
+     {"m1": KEPT, "g1": (F, F, "no_seat"), "n1": (T, T, "no_end")}),
     ("second_seat_tip_reaches_left_out_row", "the hole a second seat would open: the member rejoins, posts n1 "
      "naming m2 (which the first end left out) as its predecessor, and leaves again with n1 as the tip. The "
      "walk does not cross seats: n1 is kept, m2 stays out",

@@ -62,6 +62,13 @@ def ruled_share(cells):
     return r, n
 
 
+ENGINE_OUTPUT = {"model_output", "compute_output"}
+# The closed list of non-row inputs. compute_output is an engine run's result: a quantum job, an inference, a module.
+INPUT_CLASSES = {"arrival_order", "cache", "caller_claim", "compute_output", "config", "first_held", "link_state",
+                 "model_output", "none", "own_keys", "peer_holdings", "prior_call", "process_memory", "prompt_text",
+                 "signed_instant", "trust_set", "unstated", "wall_clock"}
+
+
 def main():
     prim = collections.OrderedDict((p["id"], p) for p in tsv("kernel_primitives.tsv"))
     sites = tsv("kernel_sites.tsv")
@@ -78,6 +85,26 @@ def main():
     for s in sites:
         if s["computes"].startswith("other:"): other[s["computes"]] += w(s)
         elif s["computes"] not in prim: fails.append(f"{s['site_id']} computes {s['computes']!r}, which is not a primitive")
+    # A kernel answer takes rows. A site that answers one from an engine's output fails unless a tracking reference
+    # is recorded for it, and every site that reads such an output carries a one-line review.
+    refs = {r["site_id"]: r for r in tsv("kernel_site_refs.tsv")}
+    def engine_gate(rows):
+        out = []
+        for s in rows:
+            eng = sorted(set(s["non_row_inputs"].split("|")) & ENGINE_OUTPUT)
+            if not eng: continue
+            r = refs.get(s["site_id"])
+            if s["kernel_side"] == "kernel" and not (r and r["tracking_ref"].startswith("https://")):
+                out.append(f"{s['site_id']} answers a kernel question from {'|'.join(eng)} and names no tracking reference")
+            elif not (r and r["review"].strip()):
+                out.append(f"{s['site_id']} reads {'|'.join(eng)} and carries no review in kernel_site_refs.tsv")
+        return out
+    fails += engine_gate(sites)
+    plant = dict(sites[0], site_id="PLANT", kernel_side="kernel", non_row_inputs="model_output")
+    if not engine_gate([plant]): fails.append("the engine-output gate does not catch its planted site")
+    for s in sites:
+        bad = [i for i in s["non_row_inputs"].split("|") if i and i != "-" and i not in INPUT_CLASSES]
+        if bad: fails.append(f"{s['site_id']} names a non-row input outside the closed list: {bad}")
     missing = [r for r in REPOS if not any(s["repo"] == r for s in sites)]
     if missing: fails.append("no sites from: " + ", ".join(missing))
 

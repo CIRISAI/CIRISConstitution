@@ -1,0 +1,13 @@
+# One row for each decision site whose non-row inputs include an engine's output (model_output, compute_output).
+# A site that is kernel-side MUST name a tracking reference; every site carries a one-line review. Read by tools/kernel_requirements.py.
+site_id	tracking_ref	review
+A017	-	The deferral's domain hint and need category shape the agent's own request; the Wise Authority's standing is read from rows.
+A046	https://github.com/CIRISAI/CIRISAgent/issues/1374	The reply's destination is taken from the model's parameters with no audience check; tracked until the destination is checked against the audience the rows give.
+A051	-	An entropy threshold turns the agent's own action into PONDER; it answers nothing about standing, audience or authority.
+A052	-	A coherence threshold turns the agent's own action into PONDER; it answers nothing about standing, audience or authority.
+A053	-	The optimisation veto stops or defers the agent's own action; it confers nothing on another node.
+A054	-	The epistemic-humility check gates the agent's own action; it confers nothing on another node.
+A058	-	The evaluator's score triggers re-runs of the agent's own reasoning; no row is admitted or refused by it.
+A077	-	A prose rule on wording that reaches code only through the coherence score, which gates the agent's own action; kernel_side stays unclear until the agent's census names the code path.
+A088	-	A prose rule for the agent's own estimate of source independence; no kernel answer reads it, and kernel_side stays unclear until the agent's census names the code path.
+A089	-	Certainty bands in a prompt; code reads only the verb, which gates the agent's own action.

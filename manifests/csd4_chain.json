@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "901c02995f03912bb216b68e2c897f53f7f992095edfcd037f9edbf3771c9199",
-   "invariants_sha256": "b53ac62349eca862a1e5cdd66e44e402c6c71bd5970f0f00e1c37722f5f0a2ec",
+   "state_table_sha256": "49806bf07e99955b159a5dbc4939e46ea976b30c93ea7e2580ec2a101a60de9f",
+   "invariants_sha256": "e1b09d1e61ee68e403e252962d2b975b4a9ace0d28a9c3ff69ab1afd4c3c32cc",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "f616cbea43dc14aa8b08f1e0b3fec886c37414cc462f3a470ebb7c208f41c85c",
+   "claims_sha256": "b61d8e02d8bf5af943357d462a216e5d0ac00657050ae4a0cac503fe8395250a",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -29,7 +29,7 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 263,
+   "invariants": 272,
    "claims": 608,
    "entries": 20,
    "refusal_tokens": 136
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "33297df4397fd325d77f61dd4604bd7668783459e54ccb8e19037cd05d28a40e"
+  "chain_sha256": "9d82f1ecbcd41fbaaf7ff2873c8bae220d5af67b0881068a55c0d7dd0761832d"
  },
  "chain": [
   {
@@ -8808,8 +8808,8 @@
      "state": "member",
      "plane": "self",
      "cc_ref": "3.3.6 3.3.6.4",
-     "enters_by": "quorum path at once or lone path after W_self",
-     "signer": "roster majority / silence",
+     "enters_by": "a met count, or a lone landing that stands (signed rows; no node's clock)",
+     "signer": "roster majority / a seated key's landing",
      "model_ref": "self_roster.SelfRoster.tla:member",
      "status": "modelled"
     },
@@ -8818,7 +8818,7 @@
      "state": "two",
      "plane": "self",
      "cc_ref": "3.3.6.4",
-     "enters_by": "lone path; theft is a stalemate",
+     "enters_by": "lone path by signed rows; theft is a stalemate",
      "signer": "—",
      "model_ref": "self_roster.SelfRoster_combined2_*.cfg",
      "status": "modelled"
@@ -8832,7 +8832,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -8841,7 +8841,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -8859,7 +8859,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -10820,9 +10820,9 @@
      "state": "proposed_add",
      "plane": "self",
      "cc_ref": "3.3.6.4",
-     "enters_by": "proposal by a live roster key (held: from two keys the add-device approval is a proposal until another key assents or W_self passes)",
+     "enters_by": "proposal by a live roster key (open or contested: from two keys the added key is not seated until the count is met or a lone landing stands)",
      "signer": "roster key",
-     "model_ref": "self_roster.SelfRoster.tla:pending(add)",
+     "model_ref": "self_roster.SelfRoster.tla:props(add)",
      "status": "modelled"
     },
     {
@@ -10844,7 +10844,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -10853,7 +10853,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -10871,7 +10871,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -11379,8 +11379,8 @@
      "state": "member",
      "plane": "self",
      "cc_ref": "3.3.6 3.3.6.4",
-     "enters_by": "quorum path at once or lone path after W_self",
-     "signer": "roster majority / silence",
+     "enters_by": "a met count, or a lone landing that stands (signed rows; no node's clock)",
+     "signer": "roster majority / a seated key's landing",
      "model_ref": "self_roster.SelfRoster.tla:member",
      "status": "modelled"
     },
@@ -11403,7 +11403,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -11412,7 +11412,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -11430,7 +11430,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -14108,7 +14108,16 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
+    },
+    {
+     "inv_id": "CN.replstanding",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationGrantHasStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes; stranger_repl twin fails"
     }
    ],
    "claims": [
@@ -14286,7 +14295,16 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
+    },
+    {
+     "inv_id": "CN.replstanding",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationGrantHasStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes; stranger_repl twin fails"
     }
    ],
    "claims": [
@@ -15210,7 +15228,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15352,7 +15370,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15559,7 +15577,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15711,7 +15729,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     },
     {
      "inv_id": "WA.goodhart",
@@ -16303,8 +16321,8 @@
      "state": "member",
      "plane": "self",
      "cc_ref": "3.3.6 3.3.6.4",
-     "enters_by": "quorum path at once or lone path after W_self",
-     "signer": "roster majority / silence",
+     "enters_by": "a met count, or a lone landing that stands (signed rows; no node's clock)",
+     "signer": "roster majority / a seated key's landing",
      "model_ref": "self_roster.SelfRoster.tla:member",
      "status": "modelled"
     }
@@ -16317,7 +16335,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -16326,7 +16344,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -16344,7 +16362,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -16665,7 +16683,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -30399,7 +30417,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -30408,7 +30426,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -30426,7 +30444,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -30558,7 +30576,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -30567,7 +30585,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -30585,7 +30603,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -30717,7 +30735,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -30726,7 +30744,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -30744,7 +30762,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -30862,9 +30880,9 @@
      "state": "proposed_evict",
      "plane": "self",
      "cc_ref": "3.3.6.4",
-     "enters_by": "eviction proposal",
+     "enters_by": "eviction proposal (open or contested: the target stays seated)",
      "signer": "roster key",
-     "model_ref": "self_roster.SelfRoster.tla:pending(evict)",
+     "model_ref": "self_roster.SelfRoster.tla:props(evict)",
      "status": "modelled"
     }
    ],
@@ -30876,7 +30894,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -30885,7 +30903,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -30903,7 +30921,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -31194,9 +31212,9 @@
      "state": "evicted",
      "plane": "self",
      "cc_ref": "3.3.6 3.3.6.4",
-     "enters_by": "withdraws against the occurrence row lands",
-     "signer": "roster majority / silence",
-     "model_ref": "self_roster.SelfRoster.tla:Devices\\member",
+     "enters_by": "the eviction is read as landed: a met count, or a lone landing that stands",
+     "signer": "roster majority / a seated key's landing",
+     "model_ref": "self_roster.SelfRoster.tla:gone",
      "status": "modelled"
     }
    ],
@@ -31208,7 +31226,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -31217,7 +31235,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -31235,7 +31253,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -31521,7 +31539,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -31653,7 +31671,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -35864,7 +35882,7 @@
      "symbol": "Inv_RevokedOverridesGranted",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; no_boundary twin fails"
     },
     {
      "inv_id": "CN.stranger",
@@ -35873,7 +35891,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; instant and stranger_ok twins fail"
     },
     {
      "inv_id": "CN.backdate",
@@ -35891,7 +35909,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes"
+     "verdict": "closes; no_W twin fails; fails of a revocation that waited (Inv_LateRevocationWithinW_Waited)"
     },
     {
      "inv_id": "CN.scope",
@@ -35900,7 +35918,7 @@
      "symbol": "Inv_EmptyScopeMatchesNothing",
      "kind": "safety",
      "claim_id": "CLM-consent-scope-is-envelope-member",
-     "verdict": "closes"
+     "verdict": "closes; any_scope twin fails"
     },
     {
      "inv_id": "CN.decayfwd",
@@ -35909,7 +35927,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -35918,7 +35936,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     },
     {
      "inv_id": "CN.expiry",
@@ -35927,7 +35945,16 @@
      "symbol": "Inv_ExpiryEmittedBySubstrate",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; forged_expiry twin fails"
+    },
+    {
+     "inv_id": "CN.tieid",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_TieOnSmallestId",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; tie_largest twin fails"
     }
    ],
    "claims": [
@@ -36165,6 +36192,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -36236,7 +36268,7 @@
      "symbol": "Inv_RevokedOverridesGranted",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; no_boundary twin fails"
     },
     {
      "inv_id": "CN.stranger",
@@ -36245,7 +36277,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; instant and stranger_ok twins fail"
     },
     {
      "inv_id": "CN.backdate",
@@ -36263,7 +36295,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes"
+     "verdict": "closes; no_W twin fails; fails of a revocation that waited (Inv_LateRevocationWithinW_Waited)"
     },
     {
      "inv_id": "CN.scope",
@@ -36272,7 +36304,7 @@
      "symbol": "Inv_EmptyScopeMatchesNothing",
      "kind": "safety",
      "claim_id": "CLM-consent-scope-is-envelope-member",
-     "verdict": "closes"
+     "verdict": "closes; any_scope twin fails"
     },
     {
      "inv_id": "CN.decayfwd",
@@ -36281,7 +36313,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -36290,7 +36322,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     },
     {
      "inv_id": "CN.expiry",
@@ -36299,7 +36331,16 @@
      "symbol": "Inv_ExpiryEmittedBySubstrate",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; forged_expiry twin fails"
+    },
+    {
+     "inv_id": "CN.tieid",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_TieOnSmallestId",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; tie_largest twin fails"
     }
    ],
    "claims": [
@@ -36537,6 +36578,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -36608,7 +36654,7 @@
      "symbol": "Inv_RevokedOverridesGranted",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; no_boundary twin fails"
     },
     {
      "inv_id": "CN.stranger",
@@ -36617,7 +36663,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; instant and stranger_ok twins fail"
     },
     {
      "inv_id": "CN.backdate",
@@ -36635,7 +36681,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes"
+     "verdict": "closes; no_W twin fails; fails of a revocation that waited (Inv_LateRevocationWithinW_Waited)"
     },
     {
      "inv_id": "CN.scope",
@@ -36644,7 +36690,7 @@
      "symbol": "Inv_EmptyScopeMatchesNothing",
      "kind": "safety",
      "claim_id": "CLM-consent-scope-is-envelope-member",
-     "verdict": "closes"
+     "verdict": "closes; any_scope twin fails"
     },
     {
      "inv_id": "CN.decayfwd",
@@ -36653,7 +36699,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -36662,7 +36708,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     },
     {
      "inv_id": "CN.expiry",
@@ -36671,7 +36717,16 @@
      "symbol": "Inv_ExpiryEmittedBySubstrate",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; forged_expiry twin fails"
+    },
+    {
+     "inv_id": "CN.tieid",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_TieOnSmallestId",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; tie_largest twin fails"
     }
    ],
    "claims": [
@@ -36909,6 +36964,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -36971,7 +37031,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decayrank",
@@ -36980,7 +37040,7 @@
      "symbol": "Prop_DecayForwardOnly",
      "kind": "safety-temporal",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_back twin fails"
     },
     {
      "inv_id": "CN.decaycomp",
@@ -36989,7 +37049,7 @@
      "symbol": "Prop_DecayCompletes",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_stalls twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -36998,7 +37058,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     }
    ],
    "claims": [
@@ -37204,6 +37264,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37266,7 +37331,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decayrank",
@@ -37275,7 +37340,7 @@
      "symbol": "Prop_DecayForwardOnly",
      "kind": "safety-temporal",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_back twin fails"
     },
     {
      "inv_id": "CN.decaycomp",
@@ -37284,7 +37349,7 @@
      "symbol": "Prop_DecayCompletes",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_stalls twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -37293,7 +37358,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     }
    ],
    "claims": [
@@ -37499,6 +37564,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37561,7 +37631,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decayrank",
@@ -37570,7 +37640,7 @@
      "symbol": "Prop_DecayForwardOnly",
      "kind": "safety-temporal",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_back twin fails"
     },
     {
      "inv_id": "CN.decaycomp",
@@ -37579,7 +37649,7 @@
      "symbol": "Prop_DecayCompletes",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_stalls twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -37588,7 +37658,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     }
    ],
    "claims": [
@@ -37794,6 +37864,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37875,6 +37950,69 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes; literal_signer twin fails"
+    },
+    {
+     "inv_id": "CN.headbackdate",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_BackdatedGrantRefused",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headinstant",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_InstantBuysNoStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headverdict",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_SameVerdictOnceHeld",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.headtransfer",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferMovesNoVerdict",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.transferfold",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferKeepsFold",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = counts; fails under InForce = ends; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.replacedends",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplacedBindingEndsGrant",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = ends; fails under InForce = counts; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.heldwait",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_HeldUntilBindingArrives",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; no_wait twin fails"
     }
    ],
    "claims": [
@@ -38096,6 +38234,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38177,6 +38320,69 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes; literal_signer twin fails"
+    },
+    {
+     "inv_id": "CN.headbackdate",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_BackdatedGrantRefused",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headinstant",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_InstantBuysNoStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headverdict",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_SameVerdictOnceHeld",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.headtransfer",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferMovesNoVerdict",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.transferfold",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferKeepsFold",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = counts; fails under InForce = ends; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.replacedends",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplacedBindingEndsGrant",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = ends; fails under InForce = counts; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.heldwait",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_HeldUntilBindingArrives",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; no_wait twin fails"
     }
    ],
    "claims": [
@@ -38398,6 +38604,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38460,7 +38671,16 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
+    },
+    {
+     "inv_id": "CN.replstanding",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationGrantHasStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes; stranger_repl twin fails"
     }
    ],
    "claims": [
@@ -39691,7 +39911,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -46675,9 +46895,9 @@
      "state": "proposed_add",
      "plane": "self",
      "cc_ref": "3.3.6.4",
-     "enters_by": "proposal by a live roster key (held: from two keys the add-device approval is a proposal until another key assents or W_self passes)",
+     "enters_by": "proposal by a live roster key (open or contested: from two keys the added key is not seated until the count is met or a lone landing stands)",
      "signer": "roster key",
-     "model_ref": "self_roster.SelfRoster.tla:pending(add)",
+     "model_ref": "self_roster.SelfRoster.tla:props(add)",
      "status": "modelled"
     }
    ],
@@ -46689,7 +46909,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -46698,7 +46918,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -46716,7 +46936,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -47362,7 +47582,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [

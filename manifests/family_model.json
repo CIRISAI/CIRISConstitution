@@ -52407,6 +52407,13 @@
       ]
      },
      {
+      "grammar": "guard",
+      "cell": "formal/derivation/guard_text.tsv#key:record (CC 2.4.1.1)",
+      "answers": [
+       "may"
+      ]
+     },
+     {
       "grammar": "reaction",
       "cell": "formal/derivation/reaction_text.tsv#key:record (CC 4.2.1)",
       "answers": [

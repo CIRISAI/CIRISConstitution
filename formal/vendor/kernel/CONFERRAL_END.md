@@ -462,7 +462,7 @@ content: section E already says "an ender who acks an old tip keeps only what li
 
 **The reference and the run.** `models/causal_kernel/conferral_content.py` is the reference, and
 `check_conferral_content.py` (a `./check.sh` step) checks it:
-- 55 cases with a hand-written answer for every content row, each in every arrival order;
+- 56 cases with a hand-written answer for every content row, each in every arrival order;
 - every history of up to four rows: 850,987 histories, 3,569,415 extensions compared, over three sets of
   roster heads (the member seated throughout; admitted again at the second head, with a co-member also
   signing; seated, not listed, admitted again, one row shallower).
@@ -560,7 +560,7 @@ content: section E already says "an ender who acks an old tip keeps only what li
 **The node-local fallback** (a row a reader held before it held the end stays shown to that reader) is not part
 of the proposal, and the reference keeps it apart (`shown_first_held`).
 - It is the spec's `arrival` plant: an answer latched on arrival, which `Inv_Fold` and `Inv_NodesAgree` exist
-  to catch. In 23 of the 55 cases two arrival orders of one set of rows show different rooms.
+  to catch. In 24 of the 56 cases two arrival orders of one set of rows show different rooms.
 - In 24 cases it shows a row the proposal keeps out. That includes a row the member signed after the removal
   that reached a node before the removal did, so it does not keep such rows out "everywhere": it keeps them
   out only at nodes the end reached first.
