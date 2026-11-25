@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "88a474abfcae8055273170aa8f9fbee21b140b3ed5e8e7f338735e1b4999a276",
+  "registry_sha256": "322b71946a1759aa7a977437dc0609d804700c649afe3fdd7a0128bfdff0809b",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -52399,6 +52399,13 @@
     "source": "cc-table",
     "rule": "cells",
     "by": [
+     {
+      "grammar": "guard",
+      "cell": "formal/derivation/guard_text.tsv#key:record (CC 2.4.1.1)",
+      "answers": [
+       "may"
+      ]
+     },
      {
       "grammar": "guard",
       "cell": "formal/derivation/guard_text.tsv#key:record (CC 2.4.1.1)",

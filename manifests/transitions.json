@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "5c682c64378319fe8722b91fda1bddb22e18146e9bfecba11041f0e1517dfbb5",
+  "source_sha256": "82ffdc2596bf3364d36da6120801a27656fa1e6bae825bb2b70d067c122d07a5",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -44,7 +44,7 @@
   },
   "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; a failed clause refuses the row only where it reads the row alone, and elsewhere the row is kept and the clause's word says how it is read (void, contested, exclude, withhold); an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
-   "statements": 57,
+   "statements": 59,
    "guarded_transitions": 27,
    "marks": {
     "refuse": 29,
@@ -6287,7 +6287,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(type(signer,node)) owner(subject,attested) at asserted_at else exclude",
+        "guard": "when(type(signer,node)) owner(subject,attested) at head else void",
         "cc_ref": [
          "CC 3.3.1"
         ],
@@ -12581,7 +12581,7 @@
      "guard": {
       "value": [
        {
-        "guard": "one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else exclude(identity_amendment_unauthorized)",
+        "guard": "one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at head else void(identity_amendment_unauthorized)",
         "cc_ref": [
          "CC 3.1.5"
         ],
