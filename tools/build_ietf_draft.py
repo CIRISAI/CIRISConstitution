@@ -200,7 +200,9 @@ def build_draft(rev, out, cddl, source=SRC):
             sys.exit(r.stderr)
         for fmt in ("--text", "--html"):
             r = subprocess.run([tool("xml2rfc"), "--v3", fmt, os.path.basename(xml)], cwd=out, capture_output=True, text=True)
-            warn = [l for l in (r.stdout + r.stderr).splitlines() if "Warning" in l or "Error" in l]
+            # A published draft keeps its date, so xml2rfc's note that the date is not today's is not a fault.
+            warn = [l for l in (r.stdout + r.stderr).splitlines()
+                    if ("Warning" in l or "Error" in l) and "The document date" not in l]
             if r.returncode or warn:
                 sys.exit("\n".join(warn) or r.stderr)
     finally:
