@@ -41,8 +41,6 @@ FM = json.loads((ROOT / "manifests" / "family_model.json").read_text())
 # row in formal/derivation/signer_rule_text.tsv or transition_text.tsv (or a census cell) and the
 # removal of its line here; the check fails on a gap that is not listed and on a line that has closed.
 PINNED = {
-    ("mls:leaf_vouch", "attest", "widens"):
-        "CC 5.1 carries a leaf vouch in the LeafNode's credential and states no placement for the row; at which scope is an mls:leaf_vouch row placed, and so does signing one widen?",
     ("duty:{kind}", "attest", "roles"):
         "CC 2.7.5 places a duty by the object's own key; which role token names the signer of the permission a duty attaches to?",
 }

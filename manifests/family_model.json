@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "88a474abfcae8055273170aa8f9fbee21b140b3ed5e8e7f338735e1b4999a276",
+  "registry_sha256": "322b71946a1759aa7a977437dc0609d804700c649afe3fdd7a0128bfdff0809b",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -119,12 +119,12 @@
     "gap": 0
    },
    "placement": {
-    "cc-table": 164,
+    "cc-table": 165,
     "code-v61": 9,
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 7
+    "gap": 6
    },
    "signer_rule": {
     "cc-table": 53,
@@ -343,17 +343,17 @@
     "gap": 0
    },
    "count": {
-    "cc-table": 26,
+    "cc-table": 27,
     "code-v61": 0,
-    "generic": 157,
+    "generic": 156,
     "prose": 0,
     "mixed": 0,
     "gap": 4
    },
    "authorship": {
-    "cc-table": 25,
+    "cc-table": 26,
     "code-v61": 0,
-    "generic": 162,
+    "generic": 161,
     "prose": 0,
     "mixed": 0,
     "gap": 0
@@ -870,10 +870,10 @@
   "authorship": {
    "source": "formal/derivation/authorship_text.tsv",
    "families": {
-    "authored": 168,
+    "authored": 167,
     "subject": 1,
     "counted": 3,
-    "mixed": 15,
+    "mixed": 16,
     "gap": 0
    },
    "second_signers": {
@@ -1063,9 +1063,9 @@
    "cells": {
     "subject_may_withdraw": {
      "by_value": {
-      "by_selector": 9,
+      "by_selector": 10,
       "false": 26,
-      "true": 152
+      "true": 151
      },
      "by_source": {
       "derived": 164,
@@ -59037,7 +59037,8 @@
    "read_by": {
     "value": [
      "state",
-     "stands"
+     "stands",
+     "tally"
     ],
     "source": "cc-table",
     "rule": "cells",
@@ -59047,6 +59048,13 @@
       "cell": "formal/derivation/fold_text.tsv#mesh_config:{key} (CC 3.1.9.2)",
       "answers": [
        "state"
+      ]
+     },
+     {
+      "grammar": "count",
+      "cell": "formal/derivation/count_text.tsv#mesh_config:{key}",
+      "answers": [
+       "tally"
       ]
      }
     ]
@@ -59068,10 +59076,11 @@
     "rule": "class"
    },
    "names_head": {
-    "value": "by_placement",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "placed at a room or a family and elsewhere",
+    "value": "roster",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the bundle in force of the root: a durable setting and emergency relief each name it",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -59086,11 +59095,15 @@
     "cc_ref": "CC 6.1.5"
    },
    "subject_may_withdraw": {
-    "value": true,
+    "value": {
+     "act=group": false,
+     "*": true
+    },
     "source": "derived",
     "from": "authorship",
-    "note": "a named party may retire a row about itself; the family is on no kept list",
-    "cc_ref": "CC 2.4.1.1"
+    "note": "false on the arms the authorship column gives as counted; true for a row one party authors",
+    "cc_ref": "CC 2.4.1.1",
+    "per_selector": true
    },
    "accountability_record": {
     "value": false,
@@ -59108,7 +59121,7 @@
     "value": "exercise",
     "source": "derived",
     "from": "names_head",
-    "note": "its rows name a head (by_placement)",
+    "note": "its rows name a head (roster)",
     "cc_ref": "CC 2.4.1.1"
    },
    "room_content": {
@@ -59141,14 +59154,43 @@
     ]
    },
    "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "value": "act=group => accord_majority@trust_root ; none",
+    "arms": [
+     {
+      "when": "act=group",
+      "doors": "accord_majority@trust_root",
+      "cc_ref": "CC 4.2.1"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 4.2.1"
+     }
+    ],
+    "source": "cc-table"
    },
    "authorship": {
-    "value": "authored",
-    "source": "generic",
-    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+    "value": "act=group => counted ; authored",
+    "source": "cc-table",
+    "arms": [
+     {
+      "when": "act=group",
+      "value": "counted",
+      "cc_ref": [
+       "CC 4.2.1"
+      ]
+     },
+     {
+      "when": "*",
+      "value": "authored",
+      "cc_ref": [
+       "CC 4.2.1"
+      ]
+     }
+    ],
+    "cc_ref": [
+     "CC 4.2.1"
+    ]
    },
    "second_signers": {
     "value": [],
@@ -59630,9 +59672,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": [
+     "self_collective",
+     "targeted_room"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_room",
+    "note": "self_collective | targeted_room",
+    "cc_ref": "CC 5.1",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -59820,7 +59871,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "a vouch names no head; a room key's vouch names the head of its voice roster under the also role voice",
-    "derived": null,
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {

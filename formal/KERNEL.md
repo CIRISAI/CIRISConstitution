@@ -357,7 +357,7 @@ shapes is **measured**.
 | no shape, and the text says why | 9 |
 
 No parameter is guessed. Key revocation states its three revokers (CC 2.4.1.1), and all three are **run**: the key's own, the roster's
-count, and the owner's, by the one owner its owner-bindings name over the revocation's own past. Nineteen content
+count, and the owner's, by the one owner its owner-bindings name over the revocation's own past. The three have three effects: the key's own revocation ends its liveness, the owner's ends the owner-binding's standing and leaves the key live and unowned, and the roster's count ends the seat. Nineteen content
 families take their audience from the default placement, the scope each row carries, and state none of their own. The seal's release runs as a door of one row by its stated seat (CC 3.4.7). Two consents cannot run: no
 sentence names who confers a partner role or who signs an entity revocation. Nine families take no shape, and
 the table says why with its source: five census rows are field sums over secret shares, with no window that
@@ -395,8 +395,10 @@ already named it. **proved**: `only_removals_stop_counting`, `sign_after_removal
 A group's roster is a lineage: each version names the heads it extends and is counted over their members.
 Every other row takes its place from the roster head it names. Nothing else is ordered.
 
-Two versions of one head wait. The roster is then the members common to all tips, until a version naming the
-tips makes one head again. **run** (`formal/roster_fork/fork_check.py`): over every set of up to three
+At several tips the roster is the fold of every tip's changes, and tips that differ in protocol or policy wait
+(CC 2.7.8). The fold is the kernel's rule, proved in its bounds and checked by its own run; no model of this
+repository runs it. What this repository ran is the rule that every pair of tips waits: the roster is then the
+members common to all tips, until a version naming the tips makes one head again. **run** (`formal/roster_fork/fork_check.py`): over every set of up to three
 versions an adversary below the count can cause, in three settings under two counting protocols, the roster is
 a function of the set, no removed key is listed, and a removal naming an old head gains nothing. Four further
 protocols were run once at the same bound and are not in the check.

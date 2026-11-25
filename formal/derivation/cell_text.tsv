@@ -34,3 +34,4 @@ holon:claim	placement	commons	CC 3.1.11	Its `cohort_scope` is `federation`.
 holon:claim	cosign_rule	none	CC 3.1.11	One signature carries the row, and no second signer signs it.
 mls:leaf_vouch	cosign_rule	none	CC 5.1	The member's device key signs one vouching row for that key and signs no MLS message.
 window:{state}	cosign_rule	none	CC 3.3.6.4	One key signs each row, and no second signer signs it.
+mls:leaf_vouch	placement	self_collective | targeted_room	CC 5.1	It is placed at that room's scope and reaches that room's audience. A row that vouches for several rooms is placed at `self`, and each room sees only its presentation.
