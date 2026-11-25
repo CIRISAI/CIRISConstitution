@@ -2,7 +2,7 @@
 
 > CIRIS is building the infrastructure for a world where no one has to surrender their agency to participate in something greater than themselves.
 
-This page says what CIRIS is for, in plain words, and how the technology serves it. It is written to be cited: by the website, by talks, and by anyone explaining the project. Every statement about the system names where it is kept, and each one says whether it works today. The figures are at edition 1.0-rc20 and `kernel-v0.2.0`.
+This page says what CIRIS is for, in plain words, and how the technology serves it. It is written to be cited: by the website, by talks, and by anyone explaining the project. Every statement about the system names where it is kept, and each one says whether it works today. The figures are at edition 1.0-rc22 and `kernel-v0.3.0`.
 
 ## 1. What we want
 
@@ -48,7 +48,7 @@ Each human need above rests on one mechanism. The technology exists for these, a
 
 **Your own name: everything is a signed row.** Every act on the network, from a message, a vote or a membership to consent, moderation or the halt, is a *row*: one signed statement, of one of five kinds ([CC 2](constitution/part_2_the_grammar.md)). There is no account a company holds for you. Identity is your key and the rows it signs.
 
-**No middleman: every device works it out for itself.** A device holds the rows it has received and nothing else. One published function, the **causal kernel**, reads them and answers every question: is this live, who stands in which relation, has this vote passed, what may I do ([CC 2.7](constitution/part_2_the_grammar.md)). Two devices holding the same rows reach the same answers whatever order the rows arrived in. That is proved in Lean as part of 602 theorems (`kernel-v0.2.0`). So there is no coordinator, no global ledger and no consensus protocol to capture. The kernel is a *causal* kernel, not a consensus kernel: what a row names fixes its place, and no one has to agree an order. Where an answer cannot be given yet, the device says what it is waiting for.
+**No middleman: every device works it out for itself.** A device holds the rows it has received and nothing else. One published function, the **causal kernel**, reads them and answers every question: is this live, who stands in which relation, has this vote passed, what may I do ([CC 2.7](constitution/part_2_the_grammar.md)). Two devices holding the same rows reach the same answers whatever order the rows arrived in. That is proved in Lean as part of 754 theorems (`kernel-v0.3.0`). So there is no coordinator, no global ledger and no consensus protocol to capture. The kernel is a *causal* kernel, not a consensus kernel: what a row names fixes its place, and no one has to agree an order. Where an answer cannot be given yet, the device says what it is waiting for.
 
 **Leaving: trust starts from your own key.** Which authorities a device follows is itself rows the person signed. Trust is a walk outward from your own key, so stopping following a root removes exactly what came through it and nothing else ([CC 4.2.1](constitution/part_4_composition_governance.md#4.2.1); `formal/trust_set`, proved). The shipped root is a default, not a gatekeeper.
 
@@ -73,7 +73,7 @@ The vision is not evidence for the safety claim, and the safety claim does not p
 ## 6. Where it stands
 
 - **Running:** the CIRIS app on both mobile stores, with published packages; five open-source components that carry the rows and are tested against each other; the causal kernel as a released Rust crate (`no_std`, no dependencies) that agrees with its models on 7,148,733 cases.
-- **Checked:** 602 Lean theorems in the kernel; sixteen machine-checked models in this repository; an evidence register that ties each rule to the code, test or proof behind it, or says that nothing does yet ([claims.tsv](constitution/claims.tsv)).
+- **Checked:** 754 Lean theorems in the kernel; seventeen machine-checked models in this repository; an evidence register that ties each rule to the code, test or proof behind it, or says that nothing does yet ([claims.tsv](constitution/claims.tsv)).
 - **Open, and said so:**
   - whether independent roots stay independent as the network grows;
   - whether admission through accountable humans resists manufactured identities, since a key is not proved to be a living person;
