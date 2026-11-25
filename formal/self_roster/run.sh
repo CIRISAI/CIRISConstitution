@@ -28,6 +28,7 @@ expect=(
   "plant_ended_counts:Inv_SpentRowsCountNothing"
   "plant_wd_approval_counts:Inv_WithdrawalRefuses"
   "plant_settle_contested:Prop_NothingChangesUnlessLanded"
+  "plant_void_landing_counts:Inv_FalseRowsConcludeNothing"
 )
 # witness : the configuration it is reached under   (an action-property witness is marked with "!")
 witness=(

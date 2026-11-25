@@ -52,7 +52,20 @@
      landing_unchecked    a landing concludes on its word, whatever the table gives over its past.
      landing_needed       a met count gives no outcome until a landing states it.
      withdrawal_first     the withdrawal is read before the majority's approval.
-     wd_approval_counts   an approval that has the withdrawal in its past still approves. *)
+     wd_approval_counts   an approval that has the withdrawal in its past still approves.
+     unseated_concludes   a landing by a key that holds no seat in the roster concludes.
+     others_held_row      a landing may name a held row another key signed.
+     two_voices_count     a signer who answered both ways is counted as approving.
+     add_asks_silence     an addition asks the silence of the key it adds, as an eviction does of its target.
+     proposal_past_barred a held row may have no row of the target in its past at all, the rows the
+                          proposal has in its own past included.
+     named_rows_recounted a row that names a landing is recounted against it like a concurrent one.
+
+   Two readings the scenarios fix and the text has not ruled (ScLate; see the README):
+     an answer that names a landing is not counted against it, so a strict majority of the others
+     objecting AFTER a lone landing, each naming it, leaves it landed; and a strict majority approving,
+     each naming a standing `refused` landing, leaves it refused. Inv_MetCountDecides is therefore
+     stated over answers that name no landing. *)
 EXTENDS Naturals, FiniteSets
 
 CONSTANTS Nodes
@@ -65,19 +78,25 @@ PlantLandingUnchecked == "landing_unchecked"
 PlantLandingNeeded == "landing_needed"
 PlantWithdrawalFirst == "withdrawal_first"
 PlantWdApprovalCounts == "wd_approval_counts"
+PlantUnseatedConcludes == "unseated_concludes"
+PlantOthersHeldRow == "others_held_row"
+PlantTwoVoicesCount == "two_voices_count"
+PlantAddAsksSilence == "add_asks_silence"
+PlantProposalPastBarred == "proposal_past_barred"
+PlantNamedRowsRecounted == "named_rows_recounted"
 
 Base == {"K1", "K2", "K3"}
 By == "K1"
 
 R(id, kind, by, past, says, el, held) ==
   [id |-> id, kind |-> kind, by |-> by, past |-> past, says |-> says, el |-> el, held |-> held]
-P0 == R("p", "open", By, {}, "-", FALSE, "-")
+Pp == R("p", "open", By, {}, "-", FALSE, "-")
 
 (* ---- the scenarios: each a kind, a target, and the rows that may ever be signed ---- *)
 \* an eviction of K2. x: the target signs a row and leaves every landing unnamed. xn: the target signs a
 \* row that names the landing L1. L1: the proposer lands alone. L3: K3 lands "refused", naming L1 and x.
 ScEvict == [kind |-> "evict", target |-> "K2", rows |-> {
-  P0,
+  Pp,
   R("x",  "note",     "K2", {"p"}, "-", FALSE, "-"),
   R("xn", "note",     "K2", {"p", "h1", "L1"}, "-", FALSE, "-"),
   R("o3", "answer",   "K3", {"p"}, "object", FALSE, "-"),
@@ -89,7 +108,7 @@ ScEvict == [kind |-> "evict", target |-> "K2", rows |-> {
 \* the counts: a3 approves; a3w approves with the withdrawal in its past; o2 and o3 object; Lf is a
 \* landing that states "landed" with both objections in its past; Le is a landing whose span is short.
 ScCount == [kind |-> "evict", target |-> "K2", rows |-> {
-  P0,
+  Pp,
   R("a3",  "answer",   "K3", {"p"}, "approve", FALSE, "-"),
   R("a3w", "answer",   "K3", {"p", "w"}, "approve", FALSE, "-"),
   R("w",   "withdraw", "K1", {"p"}, "-", FALSE, "-"),
@@ -101,7 +120,7 @@ ScCount == [kind |-> "evict", target |-> "K2", rows |-> {
 \* the held row: hb has the target's row x in its past, and Lb is landed on it. Lx is a landing by K3
 \* that states "refused", names L1, and has nothing in its past that gives a refusal.
 ScHeld == [kind |-> "evict", target |-> "K2", rows |-> {
-  P0,
+  Pp,
   R("x",  "note",    "K2", {"p"}, "-", FALSE, "-"),
   R("hb", "held",    "K1", {"p", "x"}, "-", FALSE, "-"),
   R("Lb", "landing", "K1", {"p", "x", "hb"}, "landed", TRUE, "hb"),
@@ -109,13 +128,14 @@ ScHeld == [kind |-> "evict", target |-> "K2", rows |-> {
   R("L1", "landing", "K1", {"p", "h1"}, "landed", TRUE, "h1"),
   R("h3", "held",    "K3", {"p"}, "-", FALSE, "-"),
   R("Lx", "landing", "K3", {"p", "h3", "h1", "L1"}, "refused", TRUE, "h3") }]
-\* an addition of K4, which is no member and signs nothing. o2 and o3 object; L1 lands alone; L1o lands
-\* with one objection in its past; Lf states "landed" with both objections in its past.
+\* an addition of K4, which is no member. x is a row K4 signs (the "target" of an addition is the key it
+\* adds, and the table asks no silence of it). o2 and o3 object; L1 lands alone; L1o lands with one
+\* objection in its past; Lf states "landed" with both objections in its past.
 ScAdd == [kind |-> "add", target |-> "K4", rows |-> {
-  P0,
+  Pp,
   R("o2",  "answer",   "K2", {"p"}, "object", FALSE, "-"),
   R("o3",  "answer",   "K3", {"p"}, "object", FALSE, "-"),
-  R("x",   "note",     "K2", {"p"}, "-", FALSE, "-"),
+  R("x",   "note",     "K4", {"p"}, "-", FALSE, "-"),
   R("h1",  "held",     "K1", {"p"}, "-", FALSE, "-"),
   R("L1",  "landing",  "K1", {"p", "h1"}, "landed", TRUE, "h1"),
   R("h1b", "held",     "K1", {"p"}, "-", FALSE, "-"),
@@ -125,14 +145,54 @@ ScAdd == [kind |-> "add", target |-> "K4", rows |-> {
 
 \* a row of the target that names the landing, and a second landing that counts that row
 ScReopen == [kind |-> "evict", target |-> "K2", rows |-> {
-  P0,
+  Pp,
   R("h1",  "held",    "K1", {"p"}, "-", FALSE, "-"),
   R("L1",  "landing", "K1", {"p", "h1"}, "landed", TRUE, "h1"),
   R("xn",  "note",    "K2", {"p", "h1", "L1"}, "-", FALSE, "-"),
   R("h3",  "held",    "K3", {"p"}, "-", FALSE, "-"),
   R("L3n", "landing", "K3", {"p", "h3", "h1", "L1", "xn"}, "refused", TRUE, "h3") }]
 
+Of_(X, k) == {r \in X : r.kind = k}
+\* the proposal's own past: the target signed x0 BEFORE the proposal, and the proposal names it. A held
+\* row may have x0 in its past (it is not beyond what the proposal has in its own past), and x0 is no row
+\* signed inside the window. x is the target's row after the proposal; hb has x in its past.
+ScPast == [kind |-> "evict", target |-> "K2", rows |-> {
+  R("x0", "note",    "K2", {}, "-", FALSE, "-"),
+  R("p",  "open",    "K1", {"x0"}, "-", FALSE, "-"),
+  R("h1", "held",    "K1", {"x0", "p"}, "-", FALSE, "-"),
+  R("L1", "landing", "K1", {"x0", "p", "h1"}, "landed", TRUE, "h1"),
+  R("x",  "note",    "K2", {"x0", "p"}, "-", FALSE, "-"),
+  R("hb", "held",    "K1", {"x0", "p", "x"}, "-", FALSE, "-"),
+  R("Lb", "landing", "K1", {"x0", "p", "x", "hb"}, "landed", TRUE, "hb") }]
+\* who concludes, and whose voice counts. K9 holds no seat: h9 and L9 are its held row and landing.
+\* Lz is a landing by K3 that names K1's held row. Ln is a landing by K1 that names, as its held row, a
+\* row that is no held row. a3 and o3 are K3 answering both ways.
+ScWho == [kind |-> "evict", target |-> "K2", rows |-> {
+  Pp,
+  R("h1", "held",    "K1", {"p"}, "-", FALSE, "-"),
+  R("h9", "held",    "K9", {"p"}, "-", FALSE, "-"),
+  R("L9", "landing", "K9", {"p", "h9"}, "landed", TRUE, "h9"),
+  R("Lz", "landing", "K3", {"p", "h1"}, "landed", TRUE, "h1"),
+  R("n1", "note",    "K1", {"p"}, "-", FALSE, "-"),
+  R("Ln", "landing", "K1", {"p", "n1"}, "landed", TRUE, "n1"),
+  R("a3", "answer",  "K3", {"p"}, "approve", FALSE, "-"),
+  R("o3", "answer",  "K3", {"p"}, "object", FALSE, "-") }]
+\* answers that NAME a landing. o2n and o3n object after the lone landing L1 and name it. L3 is K3's
+\* landing "refused" on the target's row x; a3n is K3's approval that names L3.
+ScLate == [kind |-> "evict", target |-> "K2", rows |-> {
+  Pp,
+  R("h1",  "held",    "K1", {"p"}, "-", FALSE, "-"),
+  R("L1",  "landing", "K1", {"p", "h1"}, "landed", TRUE, "h1"),
+  R("o2n", "answer",  "K2", {"p", "h1", "L1"}, "object", FALSE, "-"),
+  R("o3n", "answer",  "K3", {"p", "h1", "L1"}, "object", FALSE, "-"),
+  R("x",   "note",    "K2", {"p"}, "-", FALSE, "-"),
+  R("h3",  "held",    "K3", {"p"}, "-", FALSE, "-"),
+  R("L3",  "landing", "K3", {"p", "h3", "x"}, "refused", TRUE, "h3"),
+  R("a3n", "answer",  "K3", {"p", "h3", "x", "L3"}, "approve", FALSE, "-") }]
+
 Sc == ScEvict
+P0 == CHOOSE r \in Sc.rows : r.kind = "open"
+ASSUME Cardinality(Of_(Sc.rows, "open")) = 1 /\ P0.id = "p" /\ P0.by = By
 ASSUME \A r \in Sc.rows : r.past \subseteq {q.id : q \in Sc.rows}
 ASSUME \A r \in Sc.rows : \A q \in Sc.rows : q.id \in r.past => q.past \subseteq r.past   \* pasts are closed
 ASSUME \A r, q \in Sc.rows : r.id = q.id => r = q
@@ -149,7 +209,7 @@ Said(X, v) == {a.by : a \in {b \in Of(X, "answer") : b.says = v}} \cap Others
 \* a voice that says two things says nothing
 Approvers(X) ==
   LET good == {a.by : a \in {b \in Of(X, "answer") : b.says = "approve" /\ (Plant = "wd_approval_counts" \/ ~HasWd(b))}} \cap Others
-  IN  (good \ Said(X, "object")) \cup {By}
+  IN  (good \ (IF Plant = "two_voices_count" THEN {} ELSE Said(X, "object"))) \cup {By}
 Objectors(X) == Said(X, "object") \ Said(X, "approve")
 MetApprove(X) == Maj(Approvers(X), Cardinality(Base))
 MetObject(X) == Maj(Objectors(X), Cardinality(Others))
@@ -160,7 +220,7 @@ Table(X, el, tIn) ==
   ELSE IF Wds(X) # {} THEN "refused"
   ELSE IF MetObject(X) THEN "refused"
   ELSE IF ~el THEN "none"
-  ELSE IF Sc.kind = "evict" /\ tIn THEN "refused"
+  ELSE IF (Sc.kind = "evict" \/ Plant = "add_asks_silence") /\ tIn THEN "refused"
   ELSE "landed"
 
 PastOf(X, r) == {q \in X : q.id \in r.past}
@@ -169,14 +229,17 @@ TgtIn(X, h) == \E t \in X : t.by = Sc.target /\ t.id \notin h.past /\ t.id # h.i
 HeldOk(X, L) ==
   /\ L.held \in Ids(X)
   /\ LET h == Row(L.held)
-     IN  /\ h.kind = "held" /\ h.by = L.by /\ h.by \in Base
-         /\ Plant = "no_held_rule" \/ ~\E t \in PastOf(Sc.rows, h) : t.by = Sc.target /\ t.id \notin P0.past
+     IN  /\ h.kind = "held"
+         /\ h.by = L.by \/ Plant = "others_held_row"
+         /\ L.by \in Base \/ Plant = "unseated_concludes"
+         /\ Plant = "no_held_rule" \/ ~\E t \in PastOf(Sc.rows, h) :
+                                         t.by = Sc.target /\ (Plant = "proposal_past_barred" \/ t.id \notin P0.past)
 Concluded(X, L) ==
   /\ HeldOk(X, L)
   /\ Plant = "landing_unchecked" \/ Table(PastOf(X, L), L.el, TgtIn(PastOf(X, L), Row(L.held))) = L.says
 Stands(X, L) ==
   /\ Concluded(X, L)
-  /\ LET Y == {r \in X : L.id \notin r.past /\ r.id # L.id}
+  /\ LET Y == {r \in X : (Plant = "named_rows_recounted" \/ L.id \notin r.past) /\ r.id # L.id}
      IN  Table(Y, L.el, TgtIn(Y, Row(L.held))) = L.says
 Conc(X) == {L \in Of(X, "landing") : Concluded(X, L)}
 Frontier(X) == {L \in Conc(X) : ~\E M \in Conc(X) : L.id \in M.past}
@@ -252,8 +315,11 @@ C(n) == counted[n]
 \* a met count gives its outcome with no landing row, and the proposer's withdrawal comes after the
 \* majority's approval
 GoodApprovals(X) == {a \in Of(X, "answer") : a.says = "approve" /\ a.by \in Others /\ ~\E w \in Wds(Sc.rows) : w.id \in a.past}
+\* no answer the node counts names a landing (an answer that names a landing came after it; what such
+\* answers do is fixed by Inv_KnownLate and is a question for the text)
+NoLateAnswer(n) == ~\E a \in Of(C(n), "answer") : \E L \in Of(Sc.rows, "landing") : L.id \in a.past
 Inv_MetCountDecides ==
-  \A n \in Nodes :
+  \A n \in Nodes : NoLateAnswer(n) =>
     /\ (P0 \in C(n) /\ Cardinality({a.by : a \in GoodApprovals(C(n))} \cup {By}) * 2 > 3
           /\ Said(C(n), "object") \cap {a.by : a \in GoodApprovals(C(n))} = {}) => Reading(n) = "landed"
     /\ (P0 \in C(n) /\ GoodApprovals(C(n)) = {} /\ Said(C(n), "approve") = {} /\ Cardinality(Said(C(n), "object")) = 2)
@@ -261,12 +327,12 @@ Inv_MetCountDecides ==
 \* a withdrawal the node counts, with no approval made without it: refused, whatever landings say
 Inv_WithdrawalRefuses ==
   \A n \in Nodes : (Wds(C(n)) # {} /\ GoodApprovals(C(n)) = {}) => Reading(n) = "refused"
-\* a lone eviction is never read as landed while the node counts a row the target signed after the
-\* proposal that names no landing
+\* a lone eviction is never read as landed while the node counts a row the target signed that is not in
+\* the proposal's own past and names no landing
 Inv_TargetRowStopsLoneEviction ==
   \A n \in Nodes :
     (Sc.kind = "evict" /\ Reading(n) = "landed" /\ GoodApprovals(C(n)) = {})
-      => ~\E t \in C(n) : t.by = Sc.target /\ ~\E L \in Of(Sc.rows, "landing") : L.id \in t.past
+      => ~\E t \in C(n) : t.by = Sc.target /\ t.id \notin P0.past /\ ~\E L \in Of(Sc.rows, "landing") : L.id \in t.past
 \* nothing but the rule's four outcomes (and "none" before the proposal is counted)
 Inv_FourOutcomes == \A n \in Nodes : Reading(n) \in {"none", "open", "contested", "landed", "refused"}
 
@@ -309,6 +375,27 @@ Inv_KnownAdd ==
   /\ Known({"p", "h1", "L1", "o2", "o3"}, "refused")               \* a strict majority of the others does
   /\ Known({"p", "o2", "o3"}, "refused")
   /\ Known({"p", "o2", "o3", "h3", "Lf"}, "refused")               \* "landed" over both objections concludes nothing
+  /\ Known({"p", "h1b", "L1o", "o2", "o3"}, "refused")             \* recount: the objection in the landing's past and the concurrent one are counted together
+Inv_KnownPast ==
+  /\ Known({"x0", "p"}, "open")
+  /\ Known({"x0", "p", "h1", "L1"}, "landed")                      \* the target's row in the proposal's own past stops nothing
+  /\ Known({"x0", "p", "h1", "L1", "x"}, "contested")              \* its row after the proposal does
+  /\ Known({"x0", "p", "x", "hb", "Lb"}, "open")                   \* a held row with that later row in its past
+Inv_KnownWho ==
+  /\ Known({"p", "h9", "L9"}, "open")                              \* a landing by a key with no seat concludes nothing
+  /\ Known({"p", "h1", "Lz"}, "open")                              \* nor one that names another key's held row
+  /\ Known({"p", "n1", "Ln"}, "open")                              \* nor one whose "held row" is no held row
+  /\ Known({"p", "a3"}, "landed")
+  /\ Known({"p", "o3"}, "open")
+  /\ Known({"p", "a3", "o3"}, "open")                              \* a signer who answers both ways says nothing
+\* answers that name a landing, read by the sentence "an answer that names the landing came after it and
+\* changes nothing". Whether a met count made of such answers should prevail is not ruled.
+Inv_KnownLate ==
+  /\ Known({"p", "h1", "L1", "o2n"}, "landed")
+  /\ Known({"p", "h1", "L1", "o2n", "o3n"}, "landed")              \* both others object after the landing, naming it
+  /\ Known({"p", "x", "h3", "L3"}, "refused")
+  /\ Known({"p", "x", "h3", "L3", "a3n"}, "refused")               \* a strict majority approves after a refusal, naming it
+  /\ Known({"p", "h1", "L1", "x", "h3", "L3"}, "refused")          \* two frontier landings, one stands
 
 (* ---- witnesses: each is the negation of a state the text names; a run must violate it ---- *)
 Wit_Open      == ~\E n \in Nodes : Reading(n) = "open"
@@ -328,6 +415,15 @@ Wit_AddOneObjection ==
 Wit_NamedRowReopens ==
   ~\E a, b \in Nodes : /\ Ids(C(a)) = {"p", "h1", "L1", "xn"} /\ Reading(a) = "landed"
                         /\ Ids(C(b)) = {"p", "h1", "L1", "xn", "h3", "L3n"} /\ Reading(b) = "refused"
+\* not ruled by the text: both others object after a lone landing, each naming it, and it stays landed
+Wit_LateObjectionsChangeNothing ==
+  ~\E n \in Nodes : Reading(n) = "landed" /\ MetObject(C(n)) /\ ~MetApprove(C(n))
+\* not ruled by the text: a strict majority approves, naming a standing refusal, and it stays refused
+Wit_LateApprovalChangesNothing ==
+  ~\E n \in Nodes : Reading(n) = "refused" /\ MetApprove(C(n))
+\* the proposal has a row of the target in its own past and is read as landed on a lone landing
+Wit_ProposalPastLanded ==
+  ~\E n \in Nodes : Reading(n) = "landed" /\ \E t \in C(n) : t.by = Sc.target /\ t.id \in P0.past
 \* two nodes hold different rows and differ: nothing wrong, and reachable
 Wit_DifferWhileRowsDiffer == ~\E a, b \in Nodes : has[a] # has[b] /\ Reading(a) = "landed" /\ Reading(b) = "refused"
 =============================================================================

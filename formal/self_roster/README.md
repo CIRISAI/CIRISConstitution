@@ -93,11 +93,12 @@ means every device the owner holds has answered a proposal before a reader settl
 | Property | Statement |
 |---|---|
 | `Inv_ThiefCannotEvictHonest` | no reader settles a thief's eviction of an owner-held key |
-| `Inv_OwnerRowStopsThief` | a thief whose keys are no strict majority never has its eviction of an owner's key read as landed once that key has signed any row beyond the proposal's past; no other presence is assumed |
+| `Inv_OwnerRowStopsThief` | a thief whose keys are no strict majority does not have its eviction of an owner's key read as landed while that key has signed a row beyond the proposal's past. Three conditions bound it: the row leaves the thief's landing unnamed (`plant_owner_names_all` is the other case); the row is signed after that proposal, since a new proposal has the owner's earlier rows in its own past and asks a new row; and the reader has not yet settled the eviction, since the module stops following a landing at `Settle` |
 | `Inv_LoneNeedsSilence` | short of the count, no eviction is read as landed while its target has signed a row |
 | `Inv_ThiefNeverMajority` | thief-held keys are never a strict majority while the owner holds one |
 | `Inv_SelfSurvives` | the owner never holds no key |
-| `Inv_SpentRowsCountNothing` | a row signed after its signer's seat was ended changes no outcome |
+| `Inv_SpentRowsCountNothing` | a held row or a landing signed after its signer's seat was ended changes no outcome. Its premise is reached only in `combined3_stale`; elsewhere a settled change voids every other open proposal |
+| `Inv_FalseRowsConcludeNothing` | a landing that states what the table over its past does not give, and a landing on a held row with the target's row in its past, leave the outcome as it is read without them (`open`, not `contested`) |
 | `Inv_WithdrawalRefuses` | a withdrawn proposal that no approval made without the withdrawal carries is refused |
 | `Prop_NothingChangesUnlessLanded` | the roster moves only by a proposal read as landed |
 | `Prop_MetCountFinal` | a met approval is not unmade by any later row |
@@ -112,6 +113,20 @@ means every device the owner holds has answered a proposal before a reader settl
 | `plant_ended_counts` | a row of a key whose seat was ended counts wherever it is signed | `Inv_SpentRowsCountNothing` |
 | `plant_wd_approval_counts` | an approval with the withdrawal in its past still approves | `Inv_WithdrawalRefuses` |
 | `plant_settle_contested` | a reader takes a contested proposal as landed | `Prop_NothingChangesUnlessLanded` |
+| `plant_void_landing_counts` | a landing that states what the table over its past does not give concludes | `Inv_FalseRowsConcludeNothing` |
+
+Fifteen more changes to the rule were run once by hand against the three-key configurations and
+their witnesses; they are not kept as configurations. Thirteen were caught, by a configuration
+that no longer gave its expected verdict or by a witness that was no longer reached: a recount
+that ignores the target's row; a landing that beats the withdrawal; a withdrawal that beats a met
+approval; the objection counted over the roster and not the others (caught only at two keys); half
+the roster approving; a reader that settles an open proposal; one objection stopping an addition;
+one objection refusing anything; an answer that is no row of the target; the proposer not counted;
+`contested` read as `landed`; a landing with no held row; an added key seated while its proposal
+is open. Two were not caught. A void landing that concludes was not, and
+`Inv_FalseRowsConcludeNothing` and its plant were added for it. A row of a key whose seat ended
+that still marks its signer as having signed was not, and is not now: it changes only a second
+eviction of a key that is already out.
 
 The planted reading that restores each node's own clock, and reaches the two nodes that differ for
 good (`formal/derivation/order/witnesses.tsv` row C1), is in `formal/two_path` (`plant_node_clock`).
@@ -144,6 +159,14 @@ stands on it.
 
 Run: `TLA2TOOLS=/path/to/tla2tools.jar ./run.sh` (the three-key runs finish in seconds,
 `combined4_mixed` in about five minutes at 4.5 GB of heap).
+
+**One bound raised by hand.** `combined3_stolen` with two spare devices in place of one closes at
+1,891,529 states, depth 22, with every invariant and the three properties of that configuration.
+It is not kept as a configuration.
+
+**What gates these runs.** The `formal` workflow runs eight of these configurations (the five
+normative ones and three twins). The other configurations, every planted break and every witness
+are run by `run.sh` only, and `run.sh` is not a step of the workflow.
 
 ## Traces for implementers (`traces/`, `dump_traces.py`)
 

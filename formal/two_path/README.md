@@ -126,18 +126,23 @@ roster approving, the proposer counted, is `landed`; else the proposer's withdra
 else a strict majority of the others objecting is `refused`; else, with a full span, an eviction
 whose target signed inside the window is `refused` and anything else is `landed`. An approval
 with the withdrawal in its past approves nothing. An addition has the same table without the
-target's silence. A landing **concludes** where its held row is its own signer's, has no row of
-the target beyond the proposal's past in its past, and the table over the landing's own past gives
-what it states. It **stands** where the table over every row that does not name it still does. The
+target's silence. A signer who answers both ways says nothing. A landing **concludes** where its
+signer holds a seat, its held row is a held row of its own signer that has no row of the target
+beyond the proposal's past in its past, and the table over the landing's own past gives what it
+states. It **stands** where the table over every row that does not name it still does. The
 outcome is what the standing landings on the frontier state (`contested` where two differ); with
 none standing, the met count's or the withdrawal's outcome with no landing row; else `open` where
 no landing concluded and `contested` otherwise.
 
-**Bound.** A roster of three keys, K1 the proposer. Five scenarios, each a fixed set of at most ten
+**Bound.** A roster of three keys, K1 the proposer. Eight scenarios, each a fixed set of at most ten
 rows that may ever be signed, with fixed pasts; two nodes; every order of arrival, a row before
 its past included. The span of a window is a boolean each landing states (no instant of one signer
 is compared with another's). Not here: two proposals at once, a seat ended by another proposal,
-the roster head a proposal names, a signer who answers both ways.
+the roster head a proposal names, a landing or a held row signed by the target of an eviction.
+Every property below is a run over these scenarios and no more: a set of rows that no scenario
+holds is not read. At three keys a strict majority of the two others and a strict majority of the
+roster are both two voices, so no run here tells the two bases of the objection apart; the
+four-key configurations of `formal/self_roster` are where they differ.
 
 | Config | Scenario | Verdict |
 |---|---|---|
@@ -146,16 +151,19 @@ the roster head a proposal names, a signer who answers both ways.
 | `TwoPathRows_held` | a held row with the target's row in its past and a landing on it; a landing that states what the table does not | closes, 65,536 |
 | `TwoPathRows_add` | an addition: two objections, a lone landing, a landing that counted one objection, `landed` stated over both | closes, 1,048,576 |
 | `TwoPathRows_reopen` | the target's row that names the landing, and a second landing that counts it | closes, 4,096 |
+| `TwoPathRows_past` | the proposal has a row of the target in its own past; a held row with that row in its past, and one with the target's later row | closes, 16,384 |
+| `TwoPathRows_who` | a landing by a key with no seat, a landing that names another key's held row, a landing whose held row is no held row, a signer who answers both ways | closes, 262,144 |
+| `TwoPathRows_late` | answers that name a landing: both others object after a lone landing; a strict majority approves after a refusal | closes, 262,144 |
 
 | Property | Statement |
 |---|---|
 | `Inv_SameRowsSameOutcome` | two nodes that hold the same rows count the same rows and read the same outcome, in whatever order the rows arrived |
 | `Inv_C1Unreachable` | no two nodes hold every row and read one `landed`, the other `refused` (`formal/derivation/order/witnesses.tsv` row C1) |
 | `Inv_CountedIsClosure` | what a node counts, kept as rows arrive, is the rows it holds whose pasts it holds |
-| `Inv_MetCountDecides` | a met count gives its outcome with no landing row, and a met approval beats the withdrawal |
+| `Inv_MetCountDecides` | where no counted answer names a landing: a met count gives its outcome with no landing row, and a met approval beats the withdrawal. It is false without that condition (see the two readings below) |
 | `Inv_WithdrawalRefuses` | a counted withdrawal, with no approval made without it, is `refused` |
-| `Inv_TargetRowStopsLoneEviction` | no eviction is read as landed, short of the count, while the node counts a row of the target that names no landing |
-| `Inv_KnownEvict`, `Inv_KnownCount`, `Inv_KnownHeld`, `Inv_KnownAdd` | 32 known answers worked from the text by hand, each read at any node that counts exactly the rows named |
+| `Inv_TargetRowStopsLoneEviction` | no eviction is read as landed, short of the count, while the node counts a row of the target that is not in the proposal's own past and names no landing |
+| `Inv_KnownEvict`, `Inv_KnownCount`, `Inv_KnownHeld`, `Inv_KnownAdd`, `Inv_KnownPast`, `Inv_KnownWho`, `Inv_KnownLate` | 48 known answers worked from the text by hand, each read at any node that counts exactly the rows named |
 
 **What the first three say and do not say.** Under the rule a node's reading takes the rows it
 counts and nothing else of the node, so equal rows give equal readings by the form of the
@@ -173,12 +181,29 @@ their pasts, comes to the same set in every order, and that no reading takes a c
 | `plant_landing_needed` | a met count gives no outcome until a landing states it | `Inv_MetCountDecides` |
 | `plant_withdrawal_first` | the withdrawal is read before the majority's approval | `Inv_MetCountDecides` |
 | `plant_wd_approval_counts` | an approval with the withdrawal in its past still approves | `Inv_WithdrawalRefuses` |
+| `plant_unseated_concludes` | a landing by a key that holds no seat concludes | `Inv_KnownWho` |
+| `plant_others_held_row` | a landing may name a held row another key signed | `Inv_KnownWho` |
+| `plant_two_voices_count` | a signer who answered both ways is counted as approving | `Inv_KnownWho` |
+| `plant_add_asks_silence` | an addition asks the silence of the key it adds | `Inv_KnownAdd` |
+| `plant_proposal_past_barred` | a held row may have no row of the target in its past, the rows in the proposal's own past included | `Inv_KnownPast` |
+| `plant_named_rows_recounted` | a row that names a landing is recounted against it | `Inv_KnownEvict` |
+
+Eleven more changes to the rule were run once by hand against the suite and are not kept as
+configurations. Nine were caught: no recount; no frontier (caught only by the loss of
+`Wit_NamedRowReopens`, and by no invariant); a landing judged over every counted row and not its
+own past; a recount of the concurrent rows without the landing's past; a span that is ignored; the
+target's silence dropped; a `contested` read as `landed`; a row of the target in the held row's
+past counted as signed inside the window; a landing whose held row is no held row. Two were not
+caught and cannot be at three keys: the objection counted over the roster and not over the others,
+and the objection read before the approval (the two counts are never both met among three keys).
 
 **Witnesses**, each reached: the four outcomes (`Wit_Open`, `Wit_Contested`, `Wit_Landed`,
 `Wit_Refused`); a row waiting for its past (`Wit_Waiting`); a lone landing that is not final
 (`Wit_LoneLandingNotFinal`: one node reads `landed`, and another that holds those rows and one more
 reads `contested`); an addition landed with one objection counted (`Wit_AddOneObjection`); two
-nodes that hold different rows and differ (`Wit_DifferWhileRowsDiffer`).
+nodes that hold different rows and differ (`Wit_DifferWhileRowsDiffer`); a proposal with a row of
+the target in its own past read as landed on a lone landing (`Wit_ProposalPastLanded`); and the two
+readings below (`Wit_LateObjectionsChangeNothing`, `Wit_LateApprovalChangesNothing`).
 
 **A question the runs show, for the text** (`Wit_NamedRowReopens`). The target signs a row that
 names the landing. By itself that row changes nothing: the eviction still reads `landed`. A second
@@ -187,7 +212,30 @@ past and not in its held row's past. The text says both things; whether a row th
 landing may be counted by a second landing is not settled here, and the module follows the
 sentences as written.
 
-Run: `TLA2TOOLS=/path/to/tla2tools.jar ./run_rows.sh` (about three minutes at 1.5 GB of heap).
+**Two readings the runs fix that the text has not ruled** (`TwoPathRows_late`). The text says an
+answer that names a landing came after it and changes nothing. It also says a met count gives its
+outcome at once. The module follows the first sentence, and so:
+
+- A thief lands an eviction alone. Both of the owner's other keys then object, and each objection
+  names the landing, as a client that names what it holds would. The eviction still reads `landed`
+  (`Wit_LateObjectionsChangeNothing`). The same two objections leaving the landing unnamed read
+  `refused`.
+- A landing states `refused` and stands. A strict majority then approves, each approval naming that
+  landing. The proposal still reads `refused` (`Wit_LateApprovalChangesNothing`).
+
+So "a met count decides" holds here only for answers that name no landing, and
+`Inv_MetCountDecides` is stated with that condition. `formal/self_roster` has no answer that names a
+landing, so its `Prop_MetCountFinal` does not meet these cases. Which sentence yields is a question
+for the text.
+
+**One bound raised by hand.** With three nodes in place of two, `reopen` closes at 262,144 states
+and `past` closes too (its final count was not kept; the last progress line read 1,776,213 states), each with every invariant but the known answers. `held` with three nodes
+(16,777,216 states) was stopped unfinished after 29 minutes; nothing was reported up to there.
+
+**What gates these runs.** `run_rows.sh` runs every configuration, plant and witness. It is not yet
+a step of the `formal` workflow, so nothing in CI runs this module.
+
+Run: `TLA2TOOLS=/path/to/tla2tools.jar ./run_rows.sh` (about four minutes at 1.5 GB of heap).
 
 ## `PolicyCorridor.lean` — the limits
 
