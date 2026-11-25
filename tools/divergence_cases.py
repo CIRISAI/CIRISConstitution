@@ -240,7 +240,7 @@ def cases():
         [], [["attester"]], "withdraws_by: {attester}",
         [fam("v", "A", "revocation:{entity_type}:{reason}", (), subject="S"), wd("x", "A", "v")], "v"))
     E.append(lifecycle_entry("persist", "objection:{state}", ["C476"], "CC 4.5.13",
-        "The act is lifted when a strict majority of the roster at the head the act names has objected within the 48-hour window.",
+        "The act is lifted when a strict majority of the members seated at the head the act names, the act's author apart, has objected within the 48-hour window.",
         [["attester"]], [["attester"], ["subject"]], "withdraws_by: {attester, subject}",
         [fam("ob", "M", "objection:{state}", (), subject="X"), wd("x", "X", "ob")], "ob"))
     E.append(lifecycle_entry("persist", "trace:{form}:{version}", ["C228"], "CC 3.1.5",

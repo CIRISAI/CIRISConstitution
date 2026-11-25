@@ -132,6 +132,11 @@ jobs:
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/l1" -deadlock -config ModerationLift_at_act.cfg ModerationLift.tla || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l2" -deadlock -config ModerationLift_live_brigade.cfg ModerationLift.tla | tee g.log
           grep -q 'Invariant Inv_SeatedMajority is violated' g.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l3" -deadlock -config ModerationLift_four.cfg ModerationLift.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l4" -deadlock -config ModerationLift_plant_author_votes.cfg ModerationLift.tla | tee g2.log
+          grep -q 'Invariant Inv_AuthorNoVoice is violated' g2.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l5" -deadlock -config ModerationLift_witness_two_of_three.cfg ModerationLift.tla | tee g3.log
+          grep -q 'Invariant Inv_NoLiftByTwoOfFour is violated' g3.log || exit 1
       - name: The kernel in a world whose schedule is the adversary's; every screen state is reached, and the same rows are shown to differ in standing
         working-directory: formal/kernel_world
         run: |

@@ -701,7 +701,7 @@ build:registered:{target}	signer_rule	agree	CC 3.1.1	Build manifest registered a
 conscience:entropy	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 credits:{domain}:{language}:{subject}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 manifold_conformity:{cohort}	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
-objection:{state}	signer_rule	agree	CC 4.5.13	Members object by signing `objection:raised` rows that name the act. The act is lifted when a strict majority of the roster at the head the act names has objected
+objection:{state}	signer_rule	agree	CC 4.5.13	Members object by signing `objection:raised` rows that name the act. The act is lifted when a strict majority of the members seated at the head the act names, the act's author apart, has objected
 ratchet:flag:coordinated_voting_cluster	signer_rule	agree	CC 3.4	Most of the namespace is open-vocabulary — anyone may emit, and trust is composed downstream
 community:listing	subject_rule	agree	CC 3.1.1	signed by a current `moderate`-holder of the community it names; one live row per community
 custody:{kind}	subject_rule	agree	CC 3.1.3.3	`attesting_key_id` is the device the report is about; nobody reports custody for another device

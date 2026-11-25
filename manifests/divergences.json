@@ -3986,7 +3986,7 @@
      ]
     ],
     "cc_ref": "CC 4.5.13",
-    "quote": "The act is lifted when a strict majority of the roster at the head the act names has objected within the 48-hour window.",
+    "quote": "The act is lifted when a strict majority of the members seated at the head the act names, the act's author apart, has objected within the 48-hour window.",
     "param": {
      "family": "objection:{state}",
      "withdraws_by": [

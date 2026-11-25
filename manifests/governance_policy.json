@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "c258e6484838b74bf65b87f2e953980b75ac01043bc3337c0252c2e3650fecfb",
+  "policy_sha256": "bdac88a31498057ee51bca3f9315b5d53a36e363931db9dc32b3ff802d94c5b3",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -556,7 +556,7 @@
    "family": "moderation_overturn",
    "cc_ref": "4.5.13",
    "kind": "mirror",
-   "standing_set": "the community's roster as it stood at the instant of the moderator's act",
+   "standing_set": "the community's roster at the head the act names, less the act's author",
    "base": "standing",
    "enact": "more than 1/2",
    "cancel": null,
@@ -609,7 +609,7 @@
     "4.5.13"
    ],
    "status": "normative",
-   "note": "the members' check: a strict majority of those seated before the act lift a duty holder's single-signature act within the window; below that the act stands; a restored item returns consent-gated"
+   "note": "the members' check: a strict majority of those seated at the head the act names, its author apart, lift a duty holder's single-signature act within the window; below that the act stands; a restored item returns consent-gated"
   },
   {
    "family": "moderator_recall",

@@ -29,12 +29,12 @@ VARIABLES roster,      \* who is in the room now
           open,        \* the window is open
           lifted,      \* moderators whose act on this item was lifted
           everActed,
-          lastLift     \* a record of the last lift: <<objectors, roster at the act, basis>>
+          lastLift     \* a record of the last lift: <<voices heard, the count's base, basis, the act's author>>
 vars == <<roster, item, actor, basis, atAct, objections, open, lifted, everActed, lastLift>>
 
 Init == /\ roster = Members /\ item = "visible" /\ actor = None /\ basis = "ordinary"
         /\ atAct = {} /\ objections = {} /\ open = FALSE /\ lifted = {} /\ everActed = FALSE
-        /\ lastLift = <<{}, {}, "none">>
+        /\ lastLift = <<{}, {}, "none", None>>
 
 Join(n) == /\ n \in Late /\ n \notin roster /\ roster' = roster \cup {n}
            /\ UNCHANGED <<item, actor, basis, atAct, objections, open, lifted, everActed, lastLift>>
@@ -50,14 +50,21 @@ Object(n) == /\ actor # None /\ open /\ n \in roster /\ n \notin objections
              /\ objections' = objections \cup {n}
              /\ UNCHANGED <<roster, item, actor, basis, atAct, open, lifted, everActed, lastLift>>
 
-Heard == IF Count = "at_act" THEN objections \cap atAct ELSE objections
-Base  == IF Count = "at_act" THEN atAct ELSE roster
+\* The count is over the members seated when the moderator acted, less the act's author. The
+\* author's own objection is no voice, and the author is not in the count it is measured against.
+\* "author_votes" is the reading not taken: the author is counted and may object to its own act.
+Heard == CASE Count = "at_act"       -> (objections \cap atAct) \ {actor}
+           [] Count = "author_votes" -> objections \cap atAct
+           [] OTHER                  -> objections \ {actor}
+Base  == CASE Count = "at_act"       -> atAct \ {actor}
+           [] Count = "author_votes" -> atAct
+           [] OTHER                  -> roster \ {actor}
 Carries == /\ Cardinality(Heard) * 2 > Cardinality(Base)
            /\ Cardinality(Heard) >= 2
 
 Lift == /\ actor # None /\ open /\ basis = "ordinary" /\ Carries
         /\ item' = "gated" /\ lifted' = lifted \cup {actor}
-        /\ lastLift' = <<objections, atAct, basis>>
+        /\ lastLift' = <<Heard, atAct \ {actor}, basis, actor>>
         /\ actor' = None /\ open' = FALSE /\ objections' = {}
         /\ UNCHANGED <<roster, basis, atAct, everActed>>
 
@@ -71,11 +78,15 @@ Next == \/ \E n \in Late : Join(n)
 Spec == Init /\ [][Next]_vars
 
 (* ---- properties ---------------------------------------------------------------------- *)
-\* M1 A lift was carried by a strict majority of those seated when the moderator acted.
+\* M1 A lift was carried by a strict majority of those seated when the moderator acted, the author apart.
 Inv_SeatedMajority ==
   lastLift[3] # "none" =>
     Cardinality(lastLift[1] \cap lastLift[2]) * 2 > Cardinality(lastLift[2])
 \* M2 Never one voice.
+\* M1a The act's author is no voice in the lift of its own act, and is not in the count.
+Inv_AuthorNoVoice == lastLift[3] # "none" => lastLift[4] \notin lastLift[1]
+\* A reachability statement, false by design: it fails where two voices lift an act among four.
+Inv_NoLiftByTwoOfFour == ~(lastLift[3] # "none" /\ Cardinality(lastLift[1]) = 2 /\ Cardinality(lastLift[2]) = 3)
 Inv_TwoVoices == lastLift[3] # "none" => Cardinality(lastLift[1] \cap lastLift[2]) >= 2
 \* M3 Only an ordinary act is lifted: an immediate-removal basis and a private-report ruling stand.
 Inv_Untouchable == lastLift[3] \in {"none", "ordinary"}
