@@ -21,7 +21,8 @@ Row form (JSON): every row has `id`, `kind`, `signer`, `names` (the ids it names
 A `withdraw` or `recant` naming a `fam` row of the governed family is judged by the parameter's lifecycle.
 
 Parameter (JSON): {"family": F, "gate": DNF, "withdraws_by": DNF, "verbs": [...], "refuse": [...] (a refusal by the row
-alone: withdraw_without_ref, missing_subject_digest, names_no_grant; a shipped refusal that reads other rows:
+alone: withdraw_without_ref, missing_subject_digest, names_no_grant, family_unregistered (the row's family is a
+name the registry refuses, CC 3.1.7); a shipped refusal that reads other rows:
 gate_fails, the row refused at admission where its gate fails over the rows it names),
 "policy": {name: [kind, num, den]}, "audience": token, "fold": name, "owed": name, "window_secs": n}.
 A DNF is a list of conjunctions of tokens; a row passes when every token of one conjunction holds. The tokens:
@@ -248,6 +249,7 @@ def make_wf(param, rows):
         t = by.get(r.get("target"))
         gov = t is not None and t.get("family") == param.get("family")
         if "withdraw_without_ref" in refuse and r["kind"] == "withdraw" and gov and not r.get("ref"): return False
+        if "family_unregistered" in refuse and r["kind"] == "fam" and r.get("family") == param.get("family"): return False
         if "missing_subject_digest" in refuse and r["kind"] == "fam" and r.get("family") == param.get("family") \
                 and not r.get("subject_digest"): return False
         if "gate_fails" in refuse and r["kind"] == "fam" and r.get("family") == param.get("family") and "gate" in param:

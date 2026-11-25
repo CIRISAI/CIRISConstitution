@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "7dbb1b3d3e50ba851edccc606f9df64c0d66ad47e3b7a737d39226988658a60e",
-   "formal/derivation/signer_kind.tsv": "f5fb62a4515c90907eb7be07a300022ce83543b408f9cc5363bbb4c68874a6cb"
+   "manifests/transitions.json": "b76e984128f0a7960f42a2bc933a8573f9a78e17deab58f202e989bd8c7f5538",
+   "formal/derivation/signer_kind.tsv": "189a8904547c5598a734c203dcbfe8c20443aadb6e99879f686ad590e58999ef"
   },
   "kinds": [
    "person",
@@ -43,6 +43,9 @@
    "infra:attest": [
     "node"
    ],
+   "infra:detect": [
+    "detector"
+   ],
    "owner": [
     "person"
    ],
@@ -60,7 +63,7 @@
    ]
   },
   "counts": {
-   "uses": 503,
+   "uses": 506,
    "transitions": 465,
    "open_uses": 0,
    "open_questions": 0
@@ -136,14 +139,12 @@
    "leaf": null,
    "roles": [],
    "kinds": [
-    "agent",
-    "person",
-    "room"
+    "ephemeral"
    ],
    "open": false,
    "question": null,
    "rule": "use",
-   "cc_ref": "CC 5.1 People, not infrastructure, join a room (a KeyPackage is signed by its leaf's key)",
+   "cc_ref": "CC 5.1 People, not infrastructure, join a room (a KeyPackage is signed by its leaf's key, a separate key the member's device key vouches for)",
    "at": "P5:80"
   },
   {
@@ -430,6 +431,24 @@
    "at": "P3:40, P3:2478, P3:2543"
   },
   {
+   "use": "act:ack#attest:none>admitted",
+   "family": "act:ack",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "member"
+   ],
+   "kinds": [
+    "agent",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "actor_content",
+   "cc_ref": "CC 3.1.3 (registry); CC 2.7.5 receipts",
+   "at": "P3:150, P3:150"
+  },
+  {
    "use": "activity_tier:{period}#attest:none>admitted",
    "family": "activity_tier:{period}",
    "verb": "attest",
@@ -567,7 +586,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "self"
    ],
    "kinds": [
     "agent",
@@ -938,7 +957,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "self"
    ],
    "kinds": [
     "agent",
@@ -1050,7 +1069,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -3384,12 +3403,29 @@
    "at": "P3:649, P3:2585, P3:2613"
   },
   {
+   "use": "contribution:{subject_kind}#attest:none>admitted",
+   "family": "contribution:{subject_kind}",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "self"
+   ],
+   "kinds": [
+    "node"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "machine_claim",
+   "cc_ref": "CC 3.1.9.3 (registry)",
+   "at": "P3:661, P3:661"
+  },
+  {
    "use": "corpus_health:n_eff_measurable#attest:none>admitted",
    "family": "corpus_health:n_eff_measurable",
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -3417,42 +3453,6 @@
    "rule": "node_infra",
    "cc_ref": "CC 3.1.3 (registry); CC 3.4.3 reserved emitters",
    "at": "P3:2481"
-  },
-  {
-   "use": "cosign:{state}#attest:none>admitted",
-   "family": "cosign:{state}",
-   "verb": "attest",
-   "leaf": null,
-   "roles": [
-    "member"
-   ],
-   "kinds": [
-    "agent",
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "actor_content",
-   "cc_ref": "CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E",
-   "at": "P3:148, P3:2585, P3:2613"
-  },
-  {
-   "use": "cosign:{state}#withdraw:admitted>withdrawn",
-   "family": "cosign:{state}",
-   "verb": "withdraw",
-   "leaf": null,
-   "roles": [
-    "author"
-   ],
-   "kinds": [
-    "agent",
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "actor_content",
-   "cc_ref": "CC 3.1.3 (registry); CC 3.4.7.3 Clause C, Clause E",
-   "at": "P3:148, P3:2585, P3:2613"
   },
   {
    "use": "credits:{domain}:{language}:{subject}#attest:none>admitted",
@@ -3654,8 +3654,8 @@
    "at": "P3:353"
   },
   {
-   "use": "delivery_receipt:{stream_id}#attest:none>admitted",
-   "family": "delivery_receipt:{stream_id}",
+   "use": "delivery_ack:{stream_id}#attest:none>admitted",
+   "family": "delivery_ack:{stream_id}",
    "verb": "attest",
    "leaf": null,
    "roles": [
@@ -3677,7 +3677,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -3728,7 +3728,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -3779,7 +3779,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -3830,7 +3830,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -3881,7 +3881,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:lenscore_detector"
+    "infra:detect"
    ],
    "kinds": [
     "detector"
@@ -4476,15 +4476,14 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "infra:attest"
    ],
    "kinds": [
-    "agent",
-    "person"
+    "node"
    ],
    "open": false,
    "question": null,
-   "rule": "actor_content",
+   "rule": "node_infra",
    "cc_ref": "CC 3.1.5.5 (registry); CC 3.4.7.3 Clause C, Clause E",
    "at": "P3:454, P3:2585, P3:2613"
   },
@@ -4497,12 +4496,11 @@
     "author"
    ],
    "kinds": [
-    "agent",
-    "person"
+    "node"
    ],
    "open": false,
    "question": null,
-   "rule": "actor_content",
+   "rule": "node_infra",
    "cc_ref": "CC 3.1.5.5 (registry); CC 3.4.7.3 Clause C, Clause E",
    "at": "P3:454, P3:2585, P3:2613"
   },
@@ -4516,12 +4514,11 @@
     "subject"
    ],
    "kinds": [
-    "agent",
-    "person"
+    "node"
    ],
    "open": false,
    "question": null,
-   "rule": "actor_content",
+   "rule": "node_infra",
    "cc_ref": "CC 3.1.5.5 (registry); CC 3.4.7.3 Clause C, Clause E",
    "at": "P3:454, P3:2585, P3:2613"
   },
@@ -4586,7 +4583,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -4982,7 +4979,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -5016,7 +5013,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "self"
    ],
    "kinds": [
     "agent",
@@ -5125,6 +5122,82 @@
    "rule": "machine_claim",
    "cc_ref": "CC 3.1.9.4 (registry); the family's row: a claim a machine may make",
    "at": "P3:679"
+  },
+  {
+   "use": "holon:claim#attest:none>admitted",
+   "family": "holon:claim",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "registered"
+   ],
+   "kinds": [
+    "agent",
+    "node",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "machine_claim",
+   "cc_ref": "CC 3.1.11 (registry); the family's row: any key may sign under its own name",
+   "at": "P3:816"
+  },
+  {
+   "use": "holon:claim#recant:admitted>recanted",
+   "family": "holon:claim",
+   "verb": "recant",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "node",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "machine_claim",
+   "cc_ref": "CC 3.1.11 (registry); the family's row: any key may sign under its own name",
+   "at": "P3:816"
+  },
+  {
+   "use": "holon:claim#supersede:admitted>superseded",
+   "family": "holon:claim",
+   "verb": "supersede",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "node",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "machine_claim",
+   "cc_ref": "CC 3.1.11 (registry); the family's row: any key may sign under its own name",
+   "at": "P3:816"
+  },
+  {
+   "use": "holon:claim#withdraw:admitted>withdrawn",
+   "family": "holon:claim",
+   "verb": "withdraw",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "node",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "machine_claim",
+   "cc_ref": "CC 3.1.11 (registry); the family's row: any key may sign under its own name",
+   "at": "P3:816"
   },
   {
    "use": "identity:canonical_binding:{canonical_hash}#attest:none>admitted",
@@ -5363,7 +5436,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -5758,7 +5831,8 @@
    "kinds": [
     "agent",
     "node",
-    "person"
+    "person",
+    "room"
    ],
    "open": false,
    "question": null,
@@ -5949,42 +6023,6 @@
    "at": "P3:23"
   },
   {
-   "use": "lineage_witness:{stage}#attest:none>admitted",
-   "family": "lineage_witness:{stage}",
-   "verb": "attest",
-   "leaf": null,
-   "roles": [
-    "founder",
-    "owner"
-   ],
-   "kinds": [
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "vote",
-   "cc_ref": "CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
-   "at": "P3:176, P1:199, P4:2178"
-  },
-  {
-   "use": "lineage_witness:{stage}#withdraw:admitted>withdrawn",
-   "family": "lineage_witness:{stage}",
-   "verb": "withdraw",
-   "leaf": null,
-   "roles": [
-    "author",
-    "subject"
-   ],
-   "kinds": [
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "vote",
-   "cc_ref": "CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
-   "at": "P3:176, P1:199, P4:2178"
-  },
-  {
    "use": "locality:decision:{scale}#attest:none>admitted",
    "family": "locality:decision:{scale}",
    "verb": "attest",
@@ -6102,6 +6140,7 @@
    "verb": "attest",
    "leaf": "acceptance",
    "roles": [
+    "founder",
     "member",
     "self"
    ],
@@ -6157,6 +6196,7 @@
    "verb": "attest",
    "leaf": "decline",
    "roles": [
+    "founder",
     "member",
     "self"
    ],
@@ -6207,11 +6247,65 @@
    "at": "P3:228"
   },
   {
+   "use": "membership:{stage}[keeps]#attest",
+   "family": "membership:{stage}",
+   "verb": "attest",
+   "leaf": "keeps",
+   "roles": [
+    "founder",
+    "member",
+    "self"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "vote",
+   "cc_ref": "CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
+   "at": "P1:199, P4:2178"
+  },
+  {
+   "use": "membership:{stage}[keeps]#supersede",
+   "family": "membership:{stage}",
+   "verb": "supersede",
+   "leaf": "keeps",
+   "roles": [
+    "member"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "vote",
+   "cc_ref": "CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
+   "at": "P1:199, P4:2178"
+  },
+  {
+   "use": "membership:{stage}[keeps]#withdraw",
+   "family": "membership:{stage}",
+   "verb": "withdraw",
+   "leaf": "keeps",
+   "roles": [
+    "member"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "vote",
+   "cc_ref": "CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
+   "at": "P1:199, P4:2178"
+  },
+  {
    "use": "membership:{stage}[proposal]#attest",
    "family": "membership:{stage}",
    "verb": "attest",
    "leaf": "proposal",
    "roles": [
+    "founder",
     "member",
     "self"
    ],
@@ -6264,6 +6358,7 @@
    "verb": "attest",
    "leaf": "removal",
    "roles": [
+    "founder",
     "member",
     "self"
    ],
@@ -6316,6 +6411,7 @@
    "verb": "attest",
    "leaf": "resignation",
    "roles": [
+    "founder",
     "member",
     "self"
    ],
@@ -6371,6 +6467,7 @@
    "verb": "attest",
    "leaf": "widening",
    "roles": [
+    "founder",
     "member",
     "self"
    ],
@@ -6523,6 +6620,44 @@
    "rule": "actor_content",
    "cc_ref": "CC 3.1.9.7 (registry); CC 3.4.7.3 Clause C, Clause E",
    "at": "P3:710, P3:2585, P3:2613"
+  },
+  {
+   "use": "mls:leaf_vouch#attest:none>admitted",
+   "family": "mls:leaf_vouch",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "self"
+   ],
+   "kinds": [
+    "agent",
+    "person",
+    "room"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "actor_content",
+   "cc_ref": "CC 3.1.4 (registry); CC 5.1 the member's device key signs the vouch, never a node key",
+   "at": "P3:461, P5:80"
+  },
+  {
+   "use": "mls:leaf_vouch#withdraw:admitted>withdrawn",
+   "family": "mls:leaf_vouch",
+   "verb": "withdraw",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "person",
+    "room"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "actor_content",
+   "cc_ref": "CC 3.1.4 (registry); CC 5.1 the member's device key signs the vouch, never a node key",
+   "at": "P3:461, P5:80"
   },
   {
    "use": "model_3d:*#attest:none>admitted",
@@ -8307,7 +8442,7 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "slash"
    ],
    "kinds": [
     "agent",
@@ -8338,12 +8473,48 @@
    "at": "P3:644, P3:2585, P3:2613"
   },
   {
+   "use": "stream:head#attest:none>admitted",
+   "family": "stream:head",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "self"
+   ],
+   "kinds": [
+    "agent",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "actor_content",
+   "cc_ref": "CC 3.1.3 (registry); CC 5.3.3.8 the stream's producer",
+   "at": "P3:134, P3:134"
+  },
+  {
+   "use": "stream:head#supersede:admitted>superseded",
+   "family": "stream:head",
+   "verb": "supersede",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "agent",
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "actor_content",
+   "cc_ref": "CC 3.1.3 (registry); CC 5.3.3.8 the stream's producer",
+   "at": "P3:134, P3:134"
+  },
+  {
    "use": "system:*#attest:none>admitted",
    "family": "system:*",
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "identity:substrate_persist"
+    "infra:attest"
    ],
    "kinds": [
     "node"
@@ -8588,101 +8759,6 @@
    "at": "P3:396, P3:2399, P3:1821"
   },
   {
-   "use": "transparency_log:consistency#attest:none>admitted",
-   "family": "transparency_log:consistency",
-   "verb": "attest",
-   "leaf": null,
-   "roles": [
-    "registered"
-   ],
-   "kinds": [
-    "agent",
-    "node",
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "machine_claim",
-   "cc_ref": "CC 3.1.2 (registry); the family's row: a claim a machine may make",
-   "at": "P3:60"
-  },
-  {
-   "use": "transparency_log:consistency#withdraw:admitted>withdrawn",
-   "family": "transparency_log:consistency",
-   "verb": "withdraw",
-   "leaf": null,
-   "roles": [
-    "author",
-    "subject"
-   ],
-   "kinds": [
-    "agent",
-    "node",
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "machine_claim",
-   "cc_ref": "CC 3.1.2 (registry); the family's row: a claim a machine may make",
-   "at": "P3:60"
-  },
-  {
-   "use": "transparency_log:cosigned:{tree_size}#attest:none>admitted",
-   "family": "transparency_log:cosigned:{tree_size}",
-   "verb": "attest",
-   "leaf": null,
-   "roles": [
-    "attest"
-   ],
-   "kinds": [
-    "witness"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "witness",
-   "cc_ref": "CC 3.1.2 (registry); CC 3.1.2 reserved emitters",
-   "at": "P3:61, P3:2484"
-  },
-  {
-   "use": "transparency_log:inclusion#attest:none>admitted",
-   "family": "transparency_log:inclusion",
-   "verb": "attest",
-   "leaf": null,
-   "roles": [
-    "registered"
-   ],
-   "kinds": [
-    "agent",
-    "node",
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "machine_claim",
-   "cc_ref": "CC 3.1.2 (registry); the family's row: a claim a machine may make",
-   "at": "P3:59"
-  },
-  {
-   "use": "transparency_log:inclusion#withdraw:admitted>withdrawn",
-   "family": "transparency_log:inclusion",
-   "verb": "withdraw",
-   "leaf": null,
-   "roles": [
-    "author",
-    "subject"
-   ],
-   "kinds": [
-    "agent",
-    "node",
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "machine_claim",
-   "cc_ref": "CC 3.1.2 (registry); the family's row: a claim a machine may make",
-   "at": "P3:59"
-  },
-  {
    "use": "transport:canonical_rebind#attest:none>admitted",
    "family": "transport:canonical_rebind",
    "verb": "attest",
@@ -8767,40 +8843,6 @@
    "rule": "node_transport",
    "cc_ref": "CC 3.1.4 (registry); CC 3.1.4",
    "at": "P3:353"
-  },
-  {
-   "use": "trust:blessing#attest:none>admitted",
-   "family": "trust:blessing",
-   "verb": "attest",
-   "leaf": null,
-   "roles": [
-    "member"
-   ],
-   "kinds": [
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "vote",
-   "cc_ref": "CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
-   "at": "P3:142, P1:199, P4:2178"
-  },
-  {
-   "use": "trust:blessing#withdraw:admitted>withdrawn",
-   "family": "trust:blessing",
-   "verb": "withdraw",
-   "leaf": null,
-   "roles": [
-    "member"
-   ],
-   "kinds": [
-    "person"
-   ],
-   "open": false,
-   "question": null,
-   "rule": "vote",
-   "cc_ref": "CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
-   "at": "P3:142, P1:199, P4:2178"
   },
   {
    "use": "trust:{job}:{version}#authorize:none>admitted",
@@ -9092,7 +9134,8 @@
    "verb": "attest",
    "leaf": null,
    "roles": [
-    "registered"
+    "moderate",
+    "takedown"
    ],
    "kinds": [
     "agent",
@@ -9180,6 +9223,23 @@
    "at": "P3:662"
   },
   {
+   "use": "window:{state}#attest:none>admitted",
+   "family": "window:{state}",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "member"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "window_step",
+   "cc_ref": "CC 3.1.3 (registry); CC 3.3.6.4 Who concludes (a key of a person's own roster; the door is a person's)",
+   "at": "P3:209, P3:2087"
+  },
+  {
    "use": "witness_diversity:{contribution_id}#attest:none>admitted",
    "family": "witness_diversity:{contribution_id}",
    "verb": "attest",
@@ -9221,10 +9281,10 @@
  ],
  "by_kind": {
   "person": [
-   "@mls_keypackage",
    "@mls_leaf",
    "@split_key_id",
    "@stream_key_binding",
+   "act:ack#attest:none>admitted",
    "activity_tier:{period}#attest:none>admitted",
    "activity_tier:{period}#supersede:admitted>superseded",
    "admission:unit#attest:none>admitted",
@@ -9369,8 +9429,6 @@
    "content_rating:{scheme}:{rating}#attest:none>admitted",
    "content_rating:{scheme}:{rating}#supersede:admitted>superseded",
    "content_rating:{scheme}:{rating}#withdraw:admitted>withdrawn",
-   "cosign:{state}#attest:none>admitted",
-   "cosign:{state}#withdraw:admitted>withdrawn",
    "credits:{domain}:{language}:{subject}#attest:none>admitted",
    "credits:{domain}:{language}:{subject}#withdraw:admitted>withdrawn",
    "cw_class:{class}#attest:none>admitted",
@@ -9378,7 +9436,7 @@
    "deferral:request#attest:none>admitted",
    "deferral:request#withdraw:admitted>withdrawn",
    "deferral:response:{outcome}#attest:none>admitted",
-   "delivery_receipt:{stream_id}#attest:none>admitted",
+   "delivery_ack:{stream_id}#attest:none>admitted",
    "device:label#attest:none>admitted",
    "device:label#supersede:admitted>superseded",
    "device:label#withdraw:admitted>withdrawn",
@@ -9409,9 +9467,6 @@
    "event:rsvp_count#attest:none>admitted",
    "event:rsvp_count#supersede:admitted>superseded",
    "event:rsvp_count#withdraw:admitted>withdrawn",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#attest:none>admitted",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#supersede:admitted>superseded",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#withdraw:admitted>withdrawn",
    "expertise:{domain}:{language}#attest:none>admitted",
    "expertise:{domain}:{language}#recant:admitted>recanted",
    "expertise:{domain}:{language}#withdraw:admitted>withdrawn",
@@ -9441,6 +9496,10 @@
    "health:liveness:{version}#attest:none>admitted",
    "health:liveness:{version}#supersede:admitted>superseded",
    "health:liveness:{version}#withdraw:admitted>withdrawn",
+   "holon:claim#attest:none>admitted",
+   "holon:claim#recant:admitted>recanted",
+   "holon:claim#supersede:admitted>superseded",
+   "holon:claim#withdraw:admitted>withdrawn",
    "identity:canonical_binding:{canonical_hash}#attest:none>admitted",
    "identity:canonical_binding:{canonical_hash}#withdraw:admitted>withdrawn",
    "identity:occurrence[agent]#attest",
@@ -9472,8 +9531,6 @@
    "licensure:{authority_id}#attest:none>admitted",
    "licensure:{authority_id}#supersede:admitted>superseded",
    "licensure:{authority_id}#withdraw:admitted>withdrawn",
-   "lineage_witness:{stage}#attest:none>admitted",
-   "lineage_witness:{stage}#withdraw:admitted>withdrawn",
    "locality:decision:{scale}#attest:none>admitted",
    "location_proof:{version}#attest:none>admitted",
    "location_proof:{version}#withdraw:admitted>withdrawn",
@@ -9486,6 +9543,9 @@
    "membership:{stage}[decline]#attest",
    "membership:{stage}[decline]#supersede",
    "membership:{stage}[decline]#withdraw",
+   "membership:{stage}[keeps]#attest",
+   "membership:{stage}[keeps]#supersede",
+   "membership:{stage}[keeps]#withdraw",
    "membership:{stage}[proposal]#attest",
    "membership:{stage}[proposal]#supersede",
    "membership:{stage}[proposal]#withdraw",
@@ -9504,6 +9564,8 @@
    "method:{approach_id}:{substrate_rung}#attest:none>admitted",
    "method:{approach_id}:{substrate_rung}#supersede:admitted>superseded",
    "method:{approach_id}:{substrate_rung}#withdraw:admitted>withdrawn",
+   "mls:leaf_vouch#attest:none>admitted",
+   "mls:leaf_vouch#withdraw:admitted>withdrawn",
    "model_3d:*#attest:none>admitted",
    "model_3d:*#recant:admitted>recanted",
    "model_3d:*#supersede:admitted>superseded",
@@ -9594,6 +9656,8 @@
    "settlement:*#withdraw:admitted>withdrawn",
    "slashing:{outcome}#attest:none>admitted",
    "slashing:{outcome}#withdraw:admitted>withdrawn",
+   "stream:head#attest:none>admitted",
+   "stream:head#supersede:admitted>superseded",
    "takedown_notice:{basis}#attest:none>admitted",
    "takedown_notice:{basis}#withdraw:admitted>withdrawn",
    "testimonial_witness:{kind}#attest:none>admitted",
@@ -9601,12 +9665,6 @@
    "testimonial_witness:{kind}#withdraw:admitted>withdrawn",
    "topical_relation:{kind}#attest:none>admitted",
    "topical_relation:{kind}#withdraw:admitted>withdrawn",
-   "transparency_log:consistency#attest:none>admitted",
-   "transparency_log:consistency#withdraw:admitted>withdrawn",
-   "transparency_log:inclusion#attest:none>admitted",
-   "transparency_log:inclusion#withdraw:admitted>withdrawn",
-   "trust:blessing#attest:none>admitted",
-   "trust:blessing#withdraw:admitted>withdrawn",
    "trust:{job}:{version}#authorize:none>admitted",
    "trust:{job}:{version}#supersede:admitted>superseded",
    "trust:{job}:{version}#withdraw:admitted>withdrawn",
@@ -9628,6 +9686,7 @@
    "watchlist:{id}#withdraw:admitted>withdrawn",
    "weighted_aggregate:{contribution_id}#attest:none>admitted",
    "weighted_aggregate:{contribution_id}#supersede:admitted>superseded",
+   "window:{state}#attest:none>admitted",
    "witness_diversity:{contribution_id}#attest:none>admitted",
    "witness_diversity:{contribution_id}#withdraw:admitted>withdrawn"
   ],
@@ -9647,10 +9706,10 @@
    "transport:canonical_rebind#supersede:admitted>superseded"
   ],
   "agent": [
-   "@mls_keypackage",
    "@mls_leaf",
    "@split_key_id",
    "@stream_key_binding",
+   "act:ack#attest:none>admitted",
    "activity_tier:{period}#attest:none>admitted",
    "activity_tier:{period}#supersede:admitted>superseded",
    "age_assurance:{level}:{band}:{version}#attest:none>admitted",
@@ -9769,8 +9828,6 @@
    "content_rating:{scheme}:{rating}#attest:none>admitted",
    "content_rating:{scheme}:{rating}#supersede:admitted>superseded",
    "content_rating:{scheme}:{rating}#withdraw:admitted>withdrawn",
-   "cosign:{state}#attest:none>admitted",
-   "cosign:{state}#withdraw:admitted>withdrawn",
    "credits:{domain}:{language}:{subject}#attest:none>admitted",
    "credits:{domain}:{language}:{subject}#withdraw:admitted>withdrawn",
    "cw_class:{class}#attest:none>admitted",
@@ -9778,7 +9835,7 @@
    "deferral:request#attest:none>admitted",
    "deferral:request#withdraw:admitted>withdrawn",
    "deferral:response:{outcome}#attest:none>admitted",
-   "delivery_receipt:{stream_id}#attest:none>admitted",
+   "delivery_ack:{stream_id}#attest:none>admitted",
    "dma:csdma:*#attest:none>admitted",
    "dma:csdma:*#recant:admitted>recanted",
    "dma:csdma:*#withdraw:admitted>withdrawn",
@@ -9806,9 +9863,6 @@
    "event:rsvp_count#attest:none>admitted",
    "event:rsvp_count#supersede:admitted>superseded",
    "event:rsvp_count#withdraw:admitted>withdrawn",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#attest:none>admitted",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#supersede:admitted>superseded",
-   "evidence:{suite}:{kind}:{cell}:{prefix}#withdraw:admitted>withdrawn",
    "expertise:{domain}:{language}#attest:none>admitted",
    "expertise:{domain}:{language}#recant:admitted>recanted",
    "expertise:{domain}:{language}#withdraw:admitted>withdrawn",
@@ -9835,6 +9889,10 @@
    "health:liveness:{version}#attest:none>admitted",
    "health:liveness:{version}#supersede:admitted>superseded",
    "health:liveness:{version}#withdraw:admitted>withdrawn",
+   "holon:claim#attest:none>admitted",
+   "holon:claim#recant:admitted>recanted",
+   "holon:claim#supersede:admitted>superseded",
+   "holon:claim#withdraw:admitted>withdrawn",
    "identity:canonical_binding:{canonical_hash}#attest:none>admitted",
    "identity:canonical_binding:{canonical_hash}#withdraw:admitted>withdrawn",
    "identity:occurrence_revocation#attest:none>admitted",
@@ -9884,6 +9942,8 @@
    "method:{approach_id}:{substrate_rung}#attest:none>admitted",
    "method:{approach_id}:{substrate_rung}#supersede:admitted>superseded",
    "method:{approach_id}:{substrate_rung}#withdraw:admitted>withdrawn",
+   "mls:leaf_vouch#attest:none>admitted",
+   "mls:leaf_vouch#withdraw:admitted>withdrawn",
    "model_3d:*#attest:none>admitted",
    "model_3d:*#recant:admitted>recanted",
    "model_3d:*#supersede:admitted>superseded",
@@ -9965,6 +10025,8 @@
    "settlement:*#withdraw:admitted>withdrawn",
    "slashing:{outcome}#attest:none>admitted",
    "slashing:{outcome}#withdraw:admitted>withdrawn",
+   "stream:head#attest:none>admitted",
+   "stream:head#supersede:admitted>superseded",
    "takedown_notice:{basis}#attest:none>admitted",
    "takedown_notice:{basis}#withdraw:admitted>withdrawn",
    "testimonial_witness:{kind}#attest:none>admitted",
@@ -9976,10 +10038,6 @@
    "trace:{form}:{version}#withdraw:admitted>withdrawn",
    "trace_summary:{kind}#attest:none>admitted",
    "trace_summary:{kind}#withdraw:admitted>withdrawn",
-   "transparency_log:consistency#attest:none>admitted",
-   "transparency_log:consistency#withdraw:admitted>withdrawn",
-   "transparency_log:inclusion#attest:none>admitted",
-   "transparency_log:inclusion#withdraw:admitted>withdrawn",
    "truth_grounding:{subject}#attest:none>admitted",
    "truth_grounding:{subject}#recant:admitted>recanted",
    "truth_grounding:{subject}#withdraw:admitted>withdrawn",
@@ -10072,12 +10130,16 @@
    "consent:{kind}#attest:none>admitted",
    "consent:{kind}#supersede:admitted>superseded",
    "consent:{kind}#withdraw:admitted>withdrawn",
+   "contribution:{subject_kind}#attest:none>admitted",
    "corpus_health:n_eff_measurable#attest:none>admitted",
    "corpus_health:n_eff_measurable#withdraw:admitted>withdrawn",
    "custody:{kind}#attest:none>admitted",
    "custody:{kind}#withdraw:admitted>withdrawn",
    "delivery:{class}#attest:none>admitted",
    "delivery:{class}#withdraw:admitted>withdrawn",
+   "evidence:{suite}:{kind}:{cell}:{prefix}#attest:none>admitted",
+   "evidence:{suite}:{kind}:{cell}:{prefix}#supersede:admitted>superseded",
+   "evidence:{suite}:{kind}:{cell}:{prefix}#withdraw:admitted>withdrawn",
    "federation_directory:replication_lag#attest:none>admitted",
    "federation_directory:replication_lag#supersede:admitted>superseded",
    "hard_case:{kind}#attest:none>admitted",
@@ -10088,6 +10150,10 @@
    "health:liveness:{version}#attest:none>admitted",
    "health:liveness:{version}#supersede:admitted>superseded",
    "health:liveness:{version}#withdraw:admitted>withdrawn",
+   "holon:claim#attest:none>admitted",
+   "holon:claim#recant:admitted>recanted",
+   "holon:claim#supersede:admitted>superseded",
+   "holon:claim#withdraw:admitted>withdrawn",
    "identity:occurrence[node]#attest",
    "identity:occurrence[node]#supersede",
    "identity:occurrence[node]#withdraw",
@@ -10160,10 +10226,6 @@
    "system:*#attest:none>admitted",
    "system:*#supersede:admitted>superseded",
    "system:*#withdraw:admitted>withdrawn",
-   "transparency_log:consistency#attest:none>admitted",
-   "transparency_log:consistency#withdraw:admitted>withdrawn",
-   "transparency_log:inclusion#attest:none>admitted",
-   "transparency_log:inclusion#withdraw:admitted>withdrawn",
    "transport:{kind}#attest:none>admitted",
    "transport:{kind}#supersede:admitted>superseded",
    "transport:{kind}#withdraw:admitted>withdrawn",
@@ -10189,19 +10251,20 @@
    "detection:{detector}#recant:admitted>recanted",
    "detection:{detector}#withdraw:admitted>withdrawn"
   ],
-  "witness": [
-   "transparency_log:cosigned:{tree_size}#attest:none>admitted"
-  ],
+  "witness": [],
   "rendezvous": [
    "rendezvous:route#attest:none>admitted"
   ],
   "room": [
-   "@mls_keypackage",
    "@mls_leaf",
-   "@room_row"
+   "@room_row",
+   "key_grant:{axis}#attest:none>admitted",
+   "mls:leaf_vouch#attest:none>admitted",
+   "mls:leaf_vouch#withdraw:admitted>withdrawn"
   ],
   "ephemeral": [
-   "@chunk_key"
+   "@chunk_key",
+   "@mls_keypackage"
   ],
   "kem": [
    "@content_kem",

@@ -1,0 +1,1 @@
+Withheld from this package: each of the three pre-signed halts' signatures, and so each halt's full signed bytes (trace.json: cose_hex = null). Each halt's decoded protected header, decoded payload and sha256 are published. Nothing else is withheld.

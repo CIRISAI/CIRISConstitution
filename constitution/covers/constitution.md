@@ -6,6 +6,6 @@
 
 **What it promises.** Every act of power is signed by a named person and can be contested. A halt is one holder's row, lapses in a day by default unless a majority confirms it, moves no trust state and touches nothing but an agent's act gate and an admitted unit's effect. A root can only tell a node to share less. Any person may found a root, and any person may leave one. Nobody who cannot answer for themselves is on the network alone. No hand bans a community; what is not hidden is stated, and withdrawal is node by node.
 
-**What it leaves out.** The byte shapes of the rows these powers ride on, which are in *The Wire*; the family-by-family admission rules, which are in *The Dictionary*; and the question of which of these rules have code behind them today, which only *The Evidence Register* answers.
+**What it leaves out.** The byte shapes of the rows these powers ride on, which are in *The Wire*, except the halt's invocation bytes, printed with the halt because the power is read from them; the family-by-family admission rules, which are in *The Dictionary*; and the question of which of these rules have code behind them today, which only *The Evidence Register* answers.
 
 **Where the rest lives.** The reasons behind the design are in *The Charter*. The trust assumptions a reviewer should attack are in *The Threat Model*. The formal models that check the halt, the roster and the standing verdict are named in the register's witness column.

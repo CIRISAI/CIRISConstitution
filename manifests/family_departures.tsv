@@ -9,6 +9,15 @@ accord:invoke:drill:{drill_id}	subject_rule	accord_named	{"attested_party": ["Ta
 accord:invoke:notify:{notify_id}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle:{kind}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
+act:ack	placement	unbuilt	null
+act:ack	subject_rule	unbuilt	null
+act:ack	cosign_rule	unbuilt	null
+act:ack	freshness	unbuilt	null
+act:ack	lifecycle	unbuilt	null
+act:ack	replication	unbuilt	null
+act:ack	projection	unbuilt	null
+act:ack	erasure_route	unbuilt	null
+act:ack	governance	unbuilt	null
 admission:unit	placement	unbuilt	null
 admission:unit	subject_rule	unbuilt	null
 admission:unit	cosign_rule	unbuilt	null
@@ -79,14 +88,14 @@ consent:replication:{version}	projection	derived_no_rebuild	{"rebuild": "none", 
 consent:state:{stance}	subject_rule	consent_addressed	{"for_key_id": ["recipient (the node)", "scope tokens parsed"]}
 consent:state:{stance}	freshness	standing_at_signing	{"W": "W on the owner's standing", "judged_at": "signed_instant_with_W"}
 content_class:{class}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "withdrawal clears only its emitter's flag (read)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
-cosign:{state}	placement	unbuilt	["targeted_family", "targeted_room"]
-cosign:{state}	subject_rule	unbuilt	null
-cosign:{state}	freshness	unbuilt	null
-cosign:{state}	lifecycle	unbuilt	null
-cosign:{state}	replication	unbuilt	null
-cosign:{state}	projection	unbuilt	null
-cosign:{state}	erasure_route	unbuilt	null
-cosign:{state}	governance	unbuilt	null
+contribution:{subject_kind}	placement	unbuilt	null
+contribution:{subject_kind}	subject_rule	unbuilt	null
+contribution:{subject_kind}	freshness	unbuilt	null
+contribution:{subject_kind}	lifecycle	unbuilt	null
+contribution:{subject_kind}	replication	unbuilt	null
+contribution:{subject_kind}	projection	unbuilt	null
+contribution:{subject_kind}	erasure_route	unbuilt	null
+contribution:{subject_kind}	governance	unbuilt	null
 credits:{domain}:{language}:{subject}	projection	typed_view	{"rebuild": "byte_equal", "table": "credits_ledger"}
 custody:{kind}	placement	custody_scope	"the blob's held claim scope (holding_claim::check_holding_claim_scope)"
 custody:{kind}	subject_rule	custody_own_report	{"for_key_id": "none", "kind": ["the device", "attested == attester", "evidence_refs exactly 1 blob digest"]}
@@ -121,6 +130,14 @@ group:roster	projection	typed_view	{"rebuild": "byte_equal", "table": ["federati
 hard_case:{kind}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 hard_case:{kind}	projection	typed_view	{"rebuild": "byte_equal", "table": "hard_case_events"}
 hard_case:{kind}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
+holon:claim	placement	unbuilt	"commons"
+holon:claim	subject_rule	unbuilt	null
+holon:claim	freshness	unbuilt	null
+holon:claim	lifecycle	unbuilt	null
+holon:claim	replication	unbuilt	null
+holon:claim	projection	unbuilt	null
+holon:claim	erasure_route	unbuilt	null
+holon:claim	governance	unbuilt	null
 identity:canonical_binding:{canonical_hash}	subject_rule	outside_name	"subject: the canonical hash in the dimension (read: issuer's own rows)"
 identity:occurrence	placement	key	"minted by the key plane"
 identity:occurrence	cosign_rule	quorum	"self-roster two_path over policy rows self_roster_add/evict (no vocabulary value)"
@@ -177,6 +194,14 @@ membership:{stage}	replication	group_plane	{"audience": "may_receive_group_plane
 membership:{stage}	projection	typed_view	{"rebuild": "byte_equal", "table": "federation_{family,community}_membership_{widenings,revocations}"}
 membership:{stage}	governance	room_door_policy	"none (community_invite / community_remove rows vendored, not read)"
 mesh_config:{key}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "read-time clamp (fold_mesh_config)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
+mls:leaf_vouch	placement	unbuilt	["self_collective", "targeted_room"]
+mls:leaf_vouch	subject_rule	unbuilt	null
+mls:leaf_vouch	freshness	unbuilt	null
+mls:leaf_vouch	lifecycle	unbuilt	null
+mls:leaf_vouch	replication	unbuilt	null
+mls:leaf_vouch	projection	unbuilt	null
+mls:leaf_vouch	erasure_route	unbuilt	null
+mls:leaf_vouch	governance	unbuilt	null
 moderation:{allegation_type}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 moderation:{allegation_type}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
 moderation:{allegation_type}	governance	room_door_policy	"none (moderation_action mirror row vendored, not read)"
@@ -218,6 +243,14 @@ session:{kind}	subject_rule	own_record	{"kind": ["occurrence", "attested == atte
 session:{kind}	lifecycle	earliest_claim	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "earliest claimed_at wins (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 slashing:{outcome}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 slashing:{outcome}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
+stream:head	placement	unbuilt	null
+stream:head	subject_rule	unbuilt	null
+stream:head	freshness	unbuilt	null
+stream:head	lifecycle	unbuilt	null
+stream:head	replication	unbuilt	null
+stream:head	projection	unbuilt	null
+stream:head	erasure_route	unbuilt	null
+stream:head	governance	unbuilt	null
 takedown_notice:{basis}	subject_rule	notice_shape	"content_sha256 + legal_basis from the notice shape"
 takedown_notice:{basis}	cosign_rule	quorum	"legal bases: none; steward_purge: GAP (CC trust root's consensus_protocol; held shut)"
 takedown_notice:{basis}	lifecycle	adverse	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
@@ -226,17 +259,16 @@ trace:{form}:{version}	subject_rule	own_record	{"kind": "cardinality >= 1, subje
 trace:{form}:{version}	projection	trace_store_columns	{"rebuild": "none", "table": "trace_events + trace_llm_calls"}
 trace:{form}:{version}	erasure_route	trace_signer_erases	["dsar (trace corpus hard delete)", "purge"]
 transport:canonical_rebind	cosign_rule	quorum	"holder quorum (CC 5.3.4)"
-trust:blessing	placement	unbuilt	null
-trust:blessing	subject_rule	unbuilt	null
-trust:blessing	cosign_rule	unbuilt	null
-trust:blessing	freshness	unbuilt	null
-trust:blessing	lifecycle	unbuilt	null
-trust:blessing	replication	unbuilt	null
-trust:blessing	projection	unbuilt	null
-trust:blessing	erasure_route	unbuilt	null
-trust:blessing	governance	unbuilt	null
 trust:{job}:{version}	subject_rule	trust_edge_is_a_delegation	"delegation term required, no cycle, node agency scopes infra-only"
 trust:{job}:{version}	cosign_rule	quorum	"family charter witness quorum (check_charter_witness_quorum)"
 trust:{job}:{version}	freshness	standing_at_signing	{"W": "attach freshness window W (check_attach_freshness, CC 2.6.7); charter/cycle read received_at", "judged_at": "signed_instant_with_W"}
 wa_adjudication:{state}	cosign_rule	quorum	"WA quorum re-derived (no vocabulary value; CC moderator_quorum? no)"
 watchlist:{id}	placement	watchlist_per_group	"targeted_room"
+window:{state}	placement	unbuilt	null
+window:{state}	subject_rule	unbuilt	null
+window:{state}	freshness	unbuilt	null
+window:{state}	lifecycle	unbuilt	null
+window:{state}	replication	unbuilt	null
+window:{state}	projection	unbuilt	null
+window:{state}	erasure_route	unbuilt	null
+window:{state}	governance	unbuilt	null

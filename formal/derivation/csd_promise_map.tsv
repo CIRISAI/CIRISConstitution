@@ -54,7 +54,7 @@ CSD-067	Accord (Trust Root) — kill switch, roster, four kinds	building	See whe
 CSD-068	Provision Accord Holder (custody floor)	testable	Mint a holder identity from a FIPS YubiKey and ML-DSA USB	hardware_custody:*, key_boundary:*	4b	FORCED	4b: holders with hardware-attested keys; someone must be able to provision one
 CSD-069	Accord Genesis Ceremony	building	Three humans stand up a new mesh's kill switch	accord:*, hardware_custody:*	4b,4c	FORCED	4b/4c: founding a root takes a charter and named holders; anyone may found one
 CSD-070	Commons (1-of-N to protect, m-of-n to undo)	building	Raise a brake on a pending commons act; lift it by m-of-n	objection:*, vote:*, weighted_aggregate:*	2c,6a	SUPPORTS	Objection on the record resembles 2c; no promise names the reverse quorum
-CSD-071	Audit (one card, five homes)	building	Read what acted, on what, with what outcome, as a chain	audit_chain:*, transparency_log:*	2b,2a,8a	FORCED	2b: signed, hash-chained record; 8a: the record of who did what is what CIRIS supplies
+CSD-071	Audit (one card, five homes)	building	Read what acted, on what, with what outcome, as a chain	audit_chain:*	2b,2a,8a	FORCED	2b: signed, hash-chained record; 8a: the record of who did what is what CIRIS supplies
 CSD-080	Startup	building	Say what is happening before the shell exists; failure is not slow success	health:*	OPS	OPS	Boot screen
 CSD-081	Login	building	Sign in; name the bound owner on refusal	ownership:*, session:*	OPS	OPS	Session door
 CSD-082	Setup, the with-AI pass	building	Who are you, do you join, what powers it; nothing written unanswered	age_self_declared:*, attestation:*, consent:*, ownership:*	3c,1e	FORCED	3c: self-declared band, minor default fail-secure; 9c engagement declaration and 3e tier absent

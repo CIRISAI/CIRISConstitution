@@ -181,11 +181,43 @@ def cases():
             [["seat:infra:detect@root"]], [["type:lenscore_detector", "seat:infra:detect@root"]],
             "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect)",
             [keyrec("kd", "D")] + root_seat("D", "infra:detect") + [fam("h", "D", f, ("kd", "a1"), root="Rt")], "h"))
-    E.append(signer_entry("persist", "transparency_log:cosigned:{tree_size}", ["C564"], "CC 3.4.7", "`infra:attest_assurance`",
-        [["seat:infra:attest_assurance@root"]], [["type:witness", "seat:infra:attest_assurance@root"]],
-        "seat_role(attest) x delegates_to(infra:attest_assurance) x {}; + identity_type contains witness",
-        [keyrec("kw", "W")] + root_seat("W", "infra:attest_assurance")
-        + [fam("h", "W", "transparency_log:cosigned:{tree_size}", ("kw", "a1"), root="Rt")], "h"))
+    # ---- names the text retires or renames with no alias: the registry refuses a row of the name, the shipped store keeps it
+    VENDORED = "constitution/vendor/evidence/CIRISPersist.cc_impl.tsv"
+    for f, srcs, cc, q, sdnf, sw, rows in [
+        ("transparency_log:cosigned:{tree_size}", ["CLM-witness-emitter"], "CC 3.4.10",
+         "A row of one of those names is refused `namespace_family_unregistered`",
+         [["type:witness", "seat:infra:attest_assurance@root"]],
+         "seat_role(attest) x delegates_to(infra:attest_assurance) x {}; + identity_type contains witness",
+         [keyrec("kw", "W", "witness")] + root_seat("W", "infra:attest_assurance")
+         + [fam("h", "W", "transparency_log:cosigned:{tree_size}", ("kw", "a1"), root="Rt")]),
+        ("transparency_log:inclusion", ["CLM-witness-emitter"], "CC 3.4.10",
+         "A row of one of those names is refused `namespace_family_unregistered`", [["registered"]],
+         "any_registered x none x {}", [keyrec("ka", "A"), fam("h", "A", "transparency_log:inclusion", ("ka",))]),
+        ("transparency_log:consistency", ["CLM-witness-emitter"], "CC 3.4.10",
+         "A row of one of those names is refused `namespace_family_unregistered`", [["registered"]],
+         "any_registered x none x {}", [keyrec("ka", "A"), fam("h", "A", "transparency_log:consistency", ("ka",))]),
+        ("lineage_witness:{stage}", ["CLM-lineage-witness-consent"], "CC 3.1.3",
+         "a row under the stem `lineage_witness:` is refused `namespace_family_unregistered`", [["registered"]],
+         "GAP: any_registered (family gate not built)", [keyrec("ka", "A"), fam("h", "A", "lineage_witness:{stage}", ("ka",))]),
+        ("delivery_receipt:{stream_id}", ["CLM-reservation-delivery"], "CC 3.1.7",
+         "So is a stem marked `kind: retired`, under which no family stands", [["registered"]],
+         "GAP: any_registered (CC reserves; no gate)", [keyrec("ka", "A"), fam("h", "A", "delivery_receipt:{stream_id}", ("ka",))]),
+        # the census carries no row of this name: the shipped value is read from the vendored evidence of the store's release
+        ("cosign:{state}", ["CLM-cosign-collection-held"], "CC 3.1.3",
+         "a row under the stem `cosign:` is refused `namespace_family_unregistered`", [["seat:member@group"]],
+         "a peer-fed pending or signature statement signed by a member is admitted and counts nothing (src/federation/cosign.rs#admit_row)",
+         group() + [fam("h", "A", "cosign:{state}", ("g",), group="g", head=("g",))]),
+    ]:
+        E.append({"implementer": "persist", "family": f, "where": "family name", "kind": "door", "sources": srcs, "cc_ref": cc,
+                  "quote": q, "text_value": "refused by name: the registry carries no family of this name",
+                  "text_param": {"family": f, "refuse": ["family_unregistered"]},
+                  "shipped_param": {"family": f, "gate": sdnf}, "shipped_value": sw,
+                  "census": None if f == "cosign:{state}" else (f, SIGNER[0]),
+                  "rows": rows, "ask": {"answer": "state", "target": "h"},
+                  "note": "formal/derivation/census_names.tsv records how the census row of this name is read"})
+        if f == "cosign:{state}":
+            E[-1]["shipped_source"] = VENDORED + " CLM-cosign-collection-held (the store's release pinned there; the census carries no row of this name)"
+            E[-1]["note"] = "formal/derivation/census_names.tsv records that the census carries no row of this name"
     for f, duty, srcs in [("age_assurance:{level}:{band}:{version}", "assure:age", ["C423", "C483", "C564"]),
                           ("capacity_assurance:{level}:{domain}:{band}:{version}", "assure:capacity", ["C483", "C564"]),
                           ("capacity_assurance:reversible_excluded:{domain}:{version}", "assure:capacity", ["C483", "C564"]),
@@ -208,7 +240,7 @@ def cases():
         [], [["attester"]], "withdraws_by: {attester}",
         [fam("v", "A", "revocation:{entity_type}:{reason}", (), subject="S"), wd("x", "A", "v")], "v"))
     E.append(lifecycle_entry("persist", "objection:{state}", ["C476"], "CC 4.5.13",
-        "The act is lifted when a strict majority of the roster at the head the act names has objected within the 48-hour window.",
+        "The act is lifted when a strict majority of the members seated at the head the act names, the act's author apart, has objected within the 48-hour window.",
         [["attester"]], [["attester"], ["subject"]], "withdraws_by: {attester, subject}",
         [fam("ob", "M", "objection:{state}", (), subject="X"), wd("x", "X", "ob")], "ob"))
     E.append(lifecycle_entry("persist", "trace:{form}:{version}", ["C228"], "CC 3.1.5",
@@ -441,16 +473,19 @@ def cases():
         "this predicate is **consumer policy**, NOT registry-normative",
         "no claim and no model states the shipped rule", "no shipped value",
         "no claim, census cell or model records what the shipped store does with two halves, so there is no shipped verdict to compute"))
-    E.append(stated("persist", "licensure:{authority_id}", "freshness.judged_at", "freshness", ["C372"], "CC 2.6.7",
-        "is judged at its signed `asserted_at`", "receipt future-skew <=5 min, us resolution (check_instant_binding); no W",
-        "time", "judging at a signed instant bounded by W is neither of the kernel's two notions of time (a row's own end, "
-        "a window with a landing); KERNEL.md 5 leaves such clocks without a meaning", census=("licensure:{authority_id}", "8_freshness")))
+    E.append(stated("persist", "licensure:{authority_id}", "freshness.W", "freshness", ["C372"], "CC 2.6.7",
+        "The substrate MUST refuse such a row whose `asserted_at` precedes the receiver's clock by more than `W`",
+        "receipt future-skew <=5 min, us resolution (check_instant_binding); no W",
+        "time", "the text checks the row's age at the node that first receives it and refuses one older than W; the shipped door "
+        "applies no W. A window timed from a signed instant and judged at receipt is neither of the kernel's two notions of time "
+        "(a row's own end, a window with a landing); KERNEL.md 5 leaves such clocks without a meaning",
+        census=("licensure:{authority_id}", "8_freshness")))
     for impl, sw, why in [
         ("persist", "no reader of the binding's signed profile", "the guard reads the binding's signed `profile` (CC 5.3.3.5); the shipped store reads no such member, and the kernel's rows carry no binding"),
         ("edge", "a binding with no profile member at the shipped release", "the guard reads the binding's signed `profile` (CC 5.3.3.5); the binding the edge ships carries no such member, so no shipped rule reads one"),
     ]:
-        E.append(stated(impl, "transparency_log:cosigned:{tree_size}", "guard[accountable stream]", "door", ["C433"], "CC 5.3.3.11",
-            'For accountable streams, "published" means **witness-cosigned**', sw, "wire", why,
+        E.append(stated(impl, "delivery_ack:{stream_id}", "guard[accountable stream]", "door", ["C433"], "CC 5.3.3.11",
+            "For an accountable stream the head counts only once it is published", sw, "wire", why,
             shipped_source="CC 8.10 card guard (text_conflicts C433); the implementer's answer for the edition"))
     E.append(stated("edge", "(link handshake)", "transit handshake", "door", ["CLM-transit-kem-handshake-planned"], "CC 5.3.3.10",
         "both statics are used and both ends are authenticated by the handshake itself",
@@ -492,7 +527,7 @@ def cases():
     E.append(signer_entry("persist", lic, ["CLM-licence-authority-quorum"], "CC 2.4",
         "a row short of its protocol by signatures alone is not refused; it waits",
         [["count:protocol@group"]], [["count:protocol@group"], ["any"]],
-        "short of the count, the row is admitted as testimony (LicensureIssuance::Testimony), not held as cosign:pending",
+        "short of the count, the row is admitted as testimony (LicensureIssuance::Testimony), not held",
         group() + [fam("h", "A", lic, ("g",), group="g", head=("g",))], "h", census=None, kind="cosign",
         where="cosign_rule[short of the count]"))
     E[-1]["shipped_source"] = lic_src
@@ -519,8 +554,8 @@ def cases():
         ("licensure:{authority_id}", "license", ["CLM-licence-judged-at-issuance"], "CC 2.4.1.3",
          "It is judged over the issuance's own causal past under the cosigned-row rule, never at receipt",
          "authority at issuance"),
-        ("self:delegates_to", "moderate", ["CLM-licence-judged-at-issuance"], "CC 4.5.5",
-         "for every act that has the withdrawal in its own past or is concurrent with it",
+        ("self:delegates_to", "moderate", ["CLM-licence-judged-at-issuance"], "CC 2.4.1.1",
+         "An act with the end in its past does not count",
          "acts under a withdrawn delegates_to"),
     ]:
         rows = [SEAT.offer("dl", "Au", "D", scope, "Au", "self"), SEAT.accept("da", "D", "dl"), wd("w", "Au", "dl", at=9),

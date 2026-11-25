@@ -13,7 +13,7 @@ constants the harness builds it from, and the coverage gate says where no model 
 | `catalog/` | the twenty entries `T0`–`T19` and `requirements.yaml`, vendored from CIRISServer `main` (tag `v0.5.245`, catalogue version 5; `PIN.tsv` names the commit), the same bytes apart from CC section numbers re-cut to this edition's, each file's two hashes recorded in [`../vendor/VENDOR.tsv`](../vendor/VENDOR.tsv); CC re-vendors at every `catalogue_version` bump |
 | `generated/<Tn>/` | written by `python3 tools/topology_to_cfg.py --all`; CI regenerates and diffs. Per entry: `trust_root_<root>.cfg`, `accord_halt_<root>.cfg`, `accord_fuse_<root>.cfg` (infrastructure roots), `self_roster_<person>_{stolen,lost}.cfg` (every person), `root_reach.cfg`, `MeshNet_<Tn>.tla` + `mesh_net.cfg` (a wrapper instantiating the parametric `MeshNet`), `closure.json` |
 | `generated/SUMMARY.json` | the catalogue's maxima (roots 2, canonicals 2, nodes 4, persons 3, devices per person 2, holders 3) and the atom coverage count |
-| `../STATE_TABLE.tsv`, `../INVARIANTS.tsv` | the normalized state vector (242 states, 81 variables, 12 planes) and the 247 properties restated over it; `tools/check_formal_tables.py` gates them |
+| `../STATE_TABLE.tsv`, `../INVARIANTS.tsv` | the normalized state vector (242 states, 81 variables, 12 planes) and the 272 properties restated over it; `tools/check_formal_tables.py` gates them |
 | `manifests/topology_vocabulary.json` | the 156 atoms (catalogue version 6), each mapped to a state-table predicate; `closure.json` reads it |
 
 ## Running a generated configuration
@@ -36,8 +36,8 @@ point, not its arity.
 
 For every atom the entry promises: its plane, the state-table predicate, the CC decimal and the plane
 model that constrains it, or "no model". Across the catalogue every promised atom has a plane model
-behind it (`generated/SUMMARY.json` carries the count). The report also records the bounds the entry sits on: a root with no witness
-directory is witnessed-mode-off, which `TrustRootVerdict` does not cover (residual E); a person with
+behind it (`generated/SUMMARY.json` carries the count). The report also records the bounds the entry sits on: a root that names no
+Transparency Services is checked by `TrustRootVerdict` on the holders' count from the anchored genesis; a person with
 one initial key meets the one-key bound and with two the two-key stalemate of CC 3.3.6.4.
 
 A generated configuration proves what its plane model proves, under the entry's constants. It does

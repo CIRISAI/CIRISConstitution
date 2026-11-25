@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "family_key_id": "humanity-accord",
+  "t0_ms": 1795302284535,
+  "scope": [
+    "assure:age",
+    "infra:serve",
+    "infra:attest",
+    "infra:detect",
+    "assure:capacity",
+    "infra:attest_assurance"
+  ],
+  "halt_fuse_secs": 86400,
+  "halt_validity_ms": 31536000000
+}

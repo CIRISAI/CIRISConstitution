@@ -6,7 +6,7 @@ node	node	node.announce	announced	5.4.6 4.2.1	widening of the owner-binding to f
 node	node	node.occurrence	pending	2.6.8 3.3.6	node self-registers a pending identity_occurrence	node	mesh_life.MeshLife.tla:DeviceClaims	device.join_requested	modelled
 node	node	node.occurrence	owned	3.3.6 3.3.6.4	owner approves; occurrence admitted	owner (a live roster key)	self_roster.SelfRoster.tla:member	device.joined	modelled
 node	node	node.subscribed	no	3.2 4.2.1	no trust:accepts:v1 edge, or edge deleted	node owner	mesh_net.RootReach.tla:sub=FALSE	party.outside_roots	modelled
-node	node	node.subscribed	yes	3.2 T3 T4a	trust:accepts:v1 on a fresh witnessed head	node owner	mesh_net.RootReach.tla:sub=TRUE	root.rooted pair.rooted	modelled
+node	node	node.subscribed	yes	3.2 T3 T4a	trust:accepts:v1 naming a head that is receipted and fresh at the edge's own signed instant; the anchored head where the charter names no services	node owner	mesh_net.RootReach.tla:sub=TRUE	root.rooted pair.rooted	modelled
 node	node	node.halt_latch	clear	4.2.1.1	initial; lapse; accord:lifecycle:active	—	accord_halt.AccordHalt.tla:halted=FALSE	root.resumed	modelled
 node	node	node.halt_latch	latched	4.2.1.1	one holder's constitutional halt row received	accord holder	accord_halt.AccordHalt.tla:halted=TRUE	root.halted	modelled
 node	node	node.serve	not_serving	3.2 T8	no seat or edge	—	mesh_life.MeshLife.tla:CanonicalRetires	—	modelled
@@ -19,17 +19,17 @@ node	node	node.layer	none	5.4.6	not dealt this period (capped out, floor failed,
 node	node	node.layer	one	5.4.6	dealt to the first layer by H(key_id ‖ period), seat-like first	—	onion_layers.OnionLayers.tla:viewA	—	model-only
 node	node	node.layer	two	5.4.6	dealt to the second layer	—	onion_layers.OnionLayers.tla:viewA	—	model-only
 node	node	node.layer	three	5.4.6	dealt to the third layer	—	onion_layers.OnionLayers.tla:viewA	—	model-only
-root	root	root.standing	NotRooted	3.2 T8	no edge; edge deleted; head removes a leg	evaluating node	trust_root.TrustRootVerdict.tla:V=NotRooted	party.outside_roots	modelled
-root	root	root.standing	Stalled	3.2 T7 T8	revocation/withdraws/revoked_after leaves ≤ M active	founders	trust_root.TrustRootVerdict.tla:V=Stalled	root.standing.Stalled	modelled
-root	root	root.standing	Rooted	3.2 T8	acceptance edge on a fresh witnessed head; T7 recovery widening	evaluating node; conferred human	trust_root.TrustRootVerdict.tla:V=Rooted	root.rooted pair.rooted	modelled
-root	root	root.liveness	live	3.2 T7	≥ M+1 active human founders	—	trust_root.TrustRootVerdict.tla:Inv_T7	root.liveness.live	modelled
-root	root	root.liveness	stalled	3.2 T7	≤ M active; hard_case:community_liveness_stalled	the admitting substrate	trust_root.TrustRootVerdict.tla:Inv_T7	root.liveness.stalled	modelled
-root	seat	seat.identity_type	human	3.4.7.1 3.2	key record identity_type (a key is substrate or actor, never both)	key holder	trust_root.TrustRootVerdict.tla:Founders\NodeKeys	seat.identity_type.human	modelled
-root	seat	seat.identity_type	node_bearing	3.4.7.1 3.2 T8	identity_type ⊇ {node}; never counted as a seat	key holder	trust_root.TrustRootVerdict.tla:NodeKeys	seat.identity_type.node_bearing	modelled
-root	root	root.head	none	3.2 T4a T6	no version chain (a key root)	—	trust_root.TrustRootVerdict.tla:heads=<<>>	root.key	modelled
-root	root	root.head	witnessed_fresh	3.2 T6	K cosignatures newer than attach_window	witness directory	trust_root.TrustRootVerdict.tla:cosig	root.infrastructure	modelled
-root	root	root.head	stale	3.2 T4a	newest counted cosignature older than attach_window	—	trust_root.TrustRootVerdict.tla:AttachWindow	root.head.stale	modelled
-root	root	root.head	frozen	3.2 T6 3.1.9	hard_case:lineage_equivocation (two heads at one size)	persist	—	—	text-only
+root	root	root.standing	NotRooted	3.2 T8	no acceptance edge; the edge withdrawn, recanted or tombstoned; the edge's own instant not before its signer's revoked_after	node owner; revoking key	trust_root.TrustRootVerdict.tla:VAt=NotRooted	party.outside_roots	modelled
+root	root	root.standing	Stalled	3.2 T8 4.2.6	a key revocation or revoked_after crossing leaves fewer live holders than a strict majority of the bundle in force; an edge written at such a head	revoking key; node owner	trust_root.TrustRootVerdict.tla:VAt=Stalled	root.standing.Stalled	modelled
+root	root	root.standing	Rooted	3.2 T8	acceptance edge naming a receipted fresh head, or the anchored head where no services are named; a holder's recovery bundle that restores the majority	node owner; the recovering holder	trust_root.TrustRootVerdict.tla:VAt=Rooted	root.rooted pair.rooted	modelled
+root	root	root.liveness	live	3.2 T8 4.2.6	a strict majority of the holders of the bundle in force each seated at a key with no revocation in effect	—	trust_root.TrustRootVerdict.tla:LiveHolders	root.liveness.live	modelled
+root	root	root.liveness	stalled	3.2 T8 4.2.6	fewer live holders than a strict majority; valid, and seats nothing new until a holder's recovery bundle	revoking key	trust_root.TrustRootVerdict.tla:Inv_Stalled	root.liveness.stalled	modelled
+root	seat	seat.identity_type	human	3.4.7.1 3.2	key record identity_type (a key is substrate or actor, never both); a holder of the bundle	key holder	trust_root.TrustRootVerdict.tla:Holders	seat.identity_type.human	modelled
+root	seat	seat.identity_type	node_bearing	3.4.7.1 3.2 T8	identity_type ⊇ {node}; a serve node of the bundle, whose own signature never moves a state	key holder	trust_root.TrustRootVerdict.tla:Inv_i	seat.identity_type.node_bearing	modelled
+root	root	root.head	none	3.2 T5 T8	no lineage accepted, or no bundle of the accepted lineage verifies	—	trust_root.TrustRootVerdict.tla:cur=NoHead	root.key	modelled
+root	root	root.head	receipted_fresh	3.2 T6 T4a	Receipts from receipt_quorum independent Transparency Services the predecessor's charter names, the newest issued within attach_window_secs before the attaching edge's own instant	the named Transparency Services	trust_root.TrustRootVerdict.tla:FreshAt	root.infrastructure	modelled
+root	root	root.head	stale	3.2 T4a	newest counted Receipt older than attach_window_secs at the attaching edge's own instant; at attach only (trust_root_head_stale)	—	trust_root.TrustRootVerdict.tla:FreshAt	root.head.stale	modelled
+root	root	root.head	frozen	3.2 T6 3.1.9	hard_case:lineage_equivocation (two receipted heads at one version, neither descending from the other); head adoption only	the admitting substrate	trust_root.TrustRootVerdict.tla:Frozen	—	modelled
 root	accord	root.halt	not_halted	4.2.1.1	initial; lapse at halt_fuse_secs; majority lifecycle:active	strict majority of the standing roster	accord_halt.AccordHaltFuse.tla:halted=FALSE	root.resumed	modelled
 root	accord	root.halt	latched_lone	4.2.1.1	one holder's constitutional halt	one holder	accord_halt.AccordHaltFuse.tla:halted∧¬confirmed	root.halted	modelled
 root	accord	root.halt	confirmed	4.2.1.3	cosigned accord:lifecycle:confirmed within the fuse	strict majority	accord_halt.AccordHaltFuse.tla:confirmed	root.halt_confirmed	modelled
@@ -43,16 +43,16 @@ root	root	root.count	two	3.2 4.2.1	two canonicals hold distinct roots	—	—	ro
 self	roster key	key.holder	owner	3.3.6.4	—	—	self_roster.SelfRoster.tla:holder=owner	key.holder.owner	modelled
 self	roster key	key.holder	thief	3.3.6.4 1.13.3	device stolen with authentication	adversary	self_roster.SelfRoster.tla:holder=thief	key.holder.thief	modelled
 self	roster key	key.holder	lost	3.3.6.4	device lost	—	self_roster.SelfRoster.tla:holder=lost	key.holder.lost	modelled
-self	roster key	key.membership	proposed_add	3.3.6.4	proposal by a live roster key (held: from two keys the add-device approval is a proposal until another key assents or W_self passes)	roster key	self_roster.SelfRoster.tla:pending(add)	key.membership.proposed_add device.join_requested	modelled
-self	roster key	key.membership	member	3.3.6 3.3.6.4	quorum path at once or lone path after W_self	roster majority / silence	self_roster.SelfRoster.tla:member	device.joined roster.visible person.multi_device	modelled
-self	roster key	key.membership	proposed_evict	3.3.6.4	eviction proposal	roster key	self_roster.SelfRoster.tla:pending(evict)	key.membership.proposed_evict	modelled
-self	roster key	key.membership	evicted	3.3.6 3.3.6.4	withdraws against the occurrence row lands	roster majority / silence	self_roster.SelfRoster.tla:Devices\member	key.membership.evicted	modelled
+self	roster key	key.membership	proposed_add	3.3.6.4	proposal by a live roster key (open or contested: from two keys the added key is not seated until the count is met or a lone landing stands)	roster key	self_roster.SelfRoster.tla:props(add)	key.membership.proposed_add device.join_requested	modelled
+self	roster key	key.membership	member	3.3.6 3.3.6.4	a met count, or a lone landing that stands (signed rows; no node's clock)	roster majority / a seated key's landing	self_roster.SelfRoster.tla:member	device.joined roster.visible person.multi_device	modelled
+self	roster key	key.membership	proposed_evict	3.3.6.4	eviction proposal (open or contested: the target stays seated)	roster key	self_roster.SelfRoster.tla:props(evict)	key.membership.proposed_evict	modelled
+self	roster key	key.membership	evicted	3.3.6 3.3.6.4	the eviction is read as landed: a met count, or a lone landing that stands	roster majority / a seated key's landing	self_roster.SelfRoster.tla:gone	key.membership.evicted	modelled
 self	roster	self.roster_size	one	3.3.6.4	genesis only; add is unilateral	owner	self_roster.SelfRoster_combined1_*.cfg	self.roster_size.one	modelled
-self	roster	self.roster_size	two	3.3.6.4	lone path; theft is a stalemate	—	self_roster.SelfRoster_combined2_*.cfg	person.multi_device	modelled
+self	roster	self.roster_size	two	3.3.6.4	lone path by signed rows; theft is a stalemate	—	self_roster.SelfRoster_combined2_*.cfg	person.multi_device	modelled
 self	roster	self.roster_size	three_or_more	3.3.6.4	two paths	—	self_roster.SelfRoster_combined3_*.cfg	self.roster_size.three_more	modelled
-self	key record	key.revocation	none	2.4.1.1	—	—	trust_root.TrustRootVerdict.tla:revokedAll=∅	key.revocation.none	modelled
-self	key record	key.revocation	revoked_after	2.4.1.1	key:revocation:v1 with revoked_after	revoking key	trust_root.TrustRootVerdict.tla:revokedAll (all-form only)	key.revocation.revoked_after	modelled-partial
-self	key record	key.revocation	revoked_all	2.4.1.1	key:revocation:v1 without bound	revoking key	trust_root.TrustRootVerdict.tla:revokedAll	key.revocation.revoked_all	modelled
+self	key record	key.revocation	none	2.4.1.1	—	—	trust_root.TrustRootVerdict.tla:krev=Never	key.revocation.none	modelled
+self	key record	key.revocation	revoked_after	2.4.1.1	key:revocation:v1 with revoked_after	revoking key	trust_root.TrustRootVerdict.tla:krev	key.revocation.revoked_after	modelled-partial
+self	key record	key.revocation	revoked_all	2.4.1.1	key:revocation:v1 without bound	revoking key	trust_root.TrustRootVerdict.tla:krev=0	key.revocation.revoked_all	modelled
 self	key record	key.pqc	pending	5.3.2.8	Ed25519 registered, ML-DSA-65 in flight	—	mesh_life.MeshLife.tla:PqcCompletes	—	modelled
 self	key record	key.pqc	complete	5.3.2.8	both halves bound	key holder	mesh_life.MeshLife.tla:Inv_AnnouncedIsPqcComplete	—	modelled
 self	device join	device.join	requested	3.3.6.4 (FSD/ADD_DEVICE)	join request on the first-contact plane	new device	CIRISServer formal/add_device	device.join_requested	modelled-elsewhere

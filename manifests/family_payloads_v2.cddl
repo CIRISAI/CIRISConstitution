@@ -7,16 +7,16 @@
 ; family's record carried as a co-signature is a further statement over the same payload, a counted voice
 ; (CC 2.6.1.9), never a member. A payload that breaks its family's rule is refused edition2_payload_invalid
 ; (CC 2.6.1.8 step 3). A member required only on one stage, axis or state is optional here and checked in prose.
-; A cosign:{state} row has no payload of its own: each state is a statement over the event's own payload (CC 3.1.3).
 
 ; group:roster: a counted row, with no author; sub is the group's identity reference.
 group-roster = {
   "group_kind": "family" / "community",     ; Which record the version is: a family's or a community's.
-  "group": identity-ref,                    ; The group's identity reference, equal to the CWT sub.
+  "group": group-ref,                       ; The group's id, equal to the CWT sub. It is derived from the first version (group-id-input), and nobody chooses it.
   "name": tstr,                             ; Human-readable and not unique.
   "version": uint,                          ; The version's place in the lineage's chain; a consistency check, never ranked.
   "members": [* roster-member],             ; The roster at this version: a set.
   "founded_at": ms-time,                    ; POSIX milliseconds.
+  ? "nonce": bstr .size 32,                 ; Thirty-two fresh random bytes that the group's id covers. Absent on every later version. (on the first version, and on no other)
   "consensus_protocol": tstr,               ; One of the closed vocabulary of CC 3.3.4.
   ? "consensus_protocol_entrenched": bool,  ; Absent reads false. (where the group entrenches its protocol)
   ? "cohort_subkind": tstr,                 ; The community's subkind: open vocabulary. (on a community's record)
@@ -24,7 +24,10 @@ group-roster = {
   ? "membership": "private" / "public",     ; Absent reads public. (where a community declares how its roster is seated)
   ? "dissolved_at": ms-time,                ; POSIX milliseconds. (where the group is dissolved)
   ? "policy": { * tstr => ceg-value },      ; The members the record declares at creation beyond those above. (where the record carries the group's policy)
-  ? "refs": refs,                           ; The predecessor version in refs.head, and the trust:charter:v1 row in force under the also role cites. (on every version after the first)
+  ? "duty_holders": { + tstr => [+ identity-ref] }, ; A duty name (moderate, or one the record declares in policy.duties) to the set of members who hold it at founding. Each is a listed member who signed the record. On the first version of a community only: later seats move by conferral, withdrawal, resignation and election. (on a community's founding record that names who holds its duties)
+  ? "transparency_services": [2* identity-ref], ; The transparency services the room names: a set of at least two identity references, each resolved through its own key record. One of the two members without the other is refused, transparency_members_partial. (where a community names the services its accountable streams register with)
+  ? "receipt_quorum": uint .ge 2,           ; How many of the named services must register a head: exactly ⌊n/2⌋+1 of the n named. Any other value is refused, receipt_quorum_mismatch. (where transparency_services is present, and never without it)
+  ? "refs": refs,                           ; The predecessor version in refs.head. charter_digest names nothing in this form: no row carries a charter, and a root's charter is its bundle's charter member. (on every version after the first)
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }
@@ -40,7 +43,7 @@ roster-member = {
 membership-change = {
   "dimension": tstr,                        ; membership:widening:v1 or membership:removal:v1.
   "group_kind": "family" / "community",     ; Which group the change is to.
-  "group": identity-ref,                    ; The group's identity reference.
+  "group": group-ref,                       ; The group's id.
   "member": identity-ref,                   ; The key seated or removed, equal to the CWT sub.
   ? "joined_at": ms-time,                   ; POSIX milliseconds. (on a widening)
   ? "removed_at": ms-time,                  ; POSIX milliseconds. (on a removal)
@@ -49,7 +52,30 @@ membership-change = {
   ? "witness_set": [* identity-ref],        ; The keys that vouch for the removal, never signatures: a set. (on a removal that names its witnesses)
   ? "valid_until": ms-time,                 ; The seat lapses at this instant. (on a time-boxed guest's widening)
   ? "reason": uint,                         ; A code from the closed registry; free text stands in body.note. (where the change carries a reason)
-  "refs": refs,                             ; The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites.
+  "refs": refs,                             ; The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites; a removal MAY carry trusted_through, the member's content rows held good.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; membership:keeps (CC 3.1.3.2): counted over the roster head refs.head names, with no author; sub is the member whose content it keeps. It cites exactly one end of that member's seat and names 1 to 64 tips.
+membership-keeps = {
+  "dimension": tstr,                        ; membership:keeps:v1.
+  "group_kind": "family" / "community",     ; Which group the room is.
+  "group": group-ref,                       ; The group's id.
+  "member": identity-ref,                   ; The member whose content the row keeps.
+  "refs": refs,                             ; The roster head the row is counted over in refs.head; exactly one end of that member's seat under the also role cites; 1 to 64 tips in trusted_through.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; membership:acceptance and membership:decline (CC 3.1.3.2, CC 3.1.2.1): authored by the invitee, or on the reply to a grant by the owner of the key the grant names, at federation scope. It names the one row it answers in refs.answers, and no head and no target.
+membership-reply = {
+  "author": identity-ref,                   ; The invitee; on the reply to a grant, the owner of the key the grant names: a person, never the grantee's own key.
+  "dimension": tstr,                        ; membership:acceptance:v1 or membership:decline:v1.
+  ? "group_kind": "family" / "community",   ; Which group the proposal is to. (where the reply answers a membership proposal)
+  ? "group": group-ref,                     ; The group's id, the group the proposal targets. (where the reply answers a membership proposal)
+  ? "role": tstr,                           ; The role the proposal offered. (on an acceptance that restates the role offered)
+  "refs": refs,                             ; The one row answered, under answers: the proposal, or the grant. A reply names no head and no target. One that carries proposal_hash is refused.
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }
@@ -92,12 +118,12 @@ entity-revocation = {
   * tstr => ceg-value,
 }
 
-; takedown_notice:{basis}: authored, or counted on a steward purge; sub is the claimant.
+; takedown_notice:{basis}: authored, or counted where an affiliation has one deciding seat (CC 4.4.3.12), with sub the claimant; or on a steward purge counted over the holders of the bundle in force, with no author and no claimant, sub the lineage's name and the bundle in refs.head.
 takedown-notice = {
-  ? "author": identity-ref,                 ; A steward purge is counted and carries none. (iff the notice is authored)
+  ? "author": identity-ref,                 ; A steward purge is counted and carries none, and so is the notice of an affiliation with one deciding seat. (iff the notice is authored)
   "dimension": tstr,                        ; takedown_notice:{basis} with its version.
   "legal_basis": legal-basis,               ; The wire string of the closed set; the basis leaf names the same.
-  "claimant": identity-ref,                 ; The identity issuing the notice.
+  ? "claimant": identity-ref,               ; The identity issuing the notice. A steward purge is counted and carries none; its sub is the lineage's name. (unless a steward purge)
   "content_sha256": hash-digest,            ; SHA-256 of the content; on a steward purge, the selection digest.
   "content_holders": [* identity-ref],      ; Peers known to hold the bytes: a set.
   "jurisdiction": tstr,                     ; ISO 3166-1 alpha-2 with an optional subdivision.
@@ -108,6 +134,7 @@ takedown-notice = {
   ? "counter_notice_channel": tstr,         ; A URI where counter-notices may be filed. (where the notice names one)
   ? "selection_counts": { * tstr => ceg-value }, ; The counts of the purge's selection by plane. (on a steward purge that states its counts)
   ? "expires_at": ms-time,                  ; POSIX milliseconds. (where the notice states its own end)
+  ? "refs": refs,                           ; The bundle in force, under head: the purge is counted over its holders. (on a steward purge)
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   * tstr => ceg-value,
 }
@@ -132,11 +159,11 @@ key-grant = {
   "author": identity-ref,                   ; The sealer.
   "dimension": tstr,                        ; key_grant:{axis}:v1.
   "axis": "content" / "epoch" / "stream",   ; The same axis as the leaf.
-  "wrap_algorithm": "x25519_mlkem768_aes256_gcm_hkdf_sha256", ; The v2 wire string, mandatory for every wrapped key.
-  "wrapped_dek": bstr,                      ; The wrapped data-encryption key, as bytes.
+  "wrap_algorithm": "x25519_mlkem768_aes256_gcm_hkdf_sha256" / "xwing_hpke_aes256_gcm_hkdf_sha256", ; The v2 wire string on a wrap to the content-KEM keys of an occurrence; the X-Wing string on a wrap to a room key, which carries no other.
+  "wrapped_dek": bstr,                      ; The wrapped data-encryption key, as bytes. On a wrap to a room key: the X-Wing encapsulation of 1120 bytes, then the AEAD ciphertext of the sealed map.
   ? "at_rest_sha256": hash-digest,          ; The content's at-rest digest. (on the content axis)
   ? "owner": identity-ref,                  ; The owner of the content or the stream. (on the content and stream axes)
-  ? "community": identity-ref,              ; The community whose epoch key is wrapped. (on the epoch axis)
+  ? "community": group-ref,                 ; The community whose epoch key is wrapped. (on the epoch axis)
   ? "minter": identity-ref,                 ; The epoch's minter. (on the epoch axis)
   ? "epoch": uint,                          ; The epoch index. (on the epoch and stream axes)
   ? "stream_id": tstr,                      ; The stream. (on the stream axis)
@@ -144,10 +171,10 @@ key-grant = {
   * tstr => ceg-value,
 }
 
-; delivery_receipt:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.
-delivery-receipt = {
+; delivery_ack:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.
+delivery-ack = {
   "author": identity-ref,                   ; The subscriber, equal to iss and the CWT sub.
-  "dimension": tstr,                        ; delivery_receipt:{stream_id} with its version.
+  "dimension": tstr,                        ; delivery_ack:{stream_id} with its version.
   "stream_id": tstr,                        ; The same stream as the leaf.
   "epoch": uint,                            ; The key-rotation index.
   "k": uint,                                ; The chunk index acknowledged.
@@ -156,16 +183,31 @@ delivery-receipt = {
   * tstr => ceg-value,
 }
 
+; mls:leaf_vouch (CC 5.1, CC 3.1.4): authored by the member whose leaf it is and signed under that member's device key; type scores; author, iss and sub are the member. It vouches for the device's MLS leaf key in each room it names, as blinded elements; a presentation discloses one. It names no row, but for a room key the head of its voice roster.
+leaf-vouch = {
+  "author": identity-ref,                   ; The member whose leaf it is: a person, an agent, or in a private room a voice. The member's device key signs, and author, iss and sub are the member.
+  "dimension": tstr,                        ; mls:leaf_vouch:v1; the row's type is scores.
+  "suite": 77,                              ; The MLS ciphersuite the vouched leaf signs under: the constant 0x004D, as an unsigned integer.
+  "leaves": [1*1 redacted-element] / [8*8 redacted-element] / [32*32 redacted-element], ; One blinded element for each room vouched for, padded with random digests to exactly 1, 8 or 32: a sequence. Each discloses as a leaf-vouch-entry.
+  "valid_from": ms-time,                    ; The start of the vouch, POSIX milliseconds.
+  "valid_until": ms-time,                   ; Required. Later than valid_from, and at most leaf_vouch_max_secs after it.
+  ? "refs": refs,                           ; The head of the signer's voice roster, under the also role voice, and no other row. (iff a room key signs)
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
 ; identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.
 identity-occurrence = {
   "author": identity-ref,                   ; A live roster key's identity: the identity named by identity_key_id.
-  "identity_key_id": identity-ref,          ; The identity the occurrence speaks for: a person's, or an agent's own.
+  "identity_key_id": identity-ref,          ; The identity the occurrence speaks for: a person's, or an agent's own; on a row that seats a further room key, the voice.
   "occurrence_key_id": identity-ref,        ; The participant's key, equal to the CWT sub; its own statement over the payload is the second voice.
   "device_class": "phone" / "laptop" / "server" / "embedded" / "agent" / "service", ; A closed set; agent stands only under an agent's own identity.
   ? "hardware_attestation": bstr,           ; The attestation blob, as bytes. (where the occurrence carries one)
   ? "transport_destination": transport-destination, ; The RNS members of the binding's table. (where the occurrence binds an address)
   ? "encryption_pubkeys": encryption-pubkeys, ; The content-KEM keys. (where the occurrence is a wrap target)
+  ? "room_binding_xwing_pubkey": bstr .size 1216, ; The identity's binding key on this device: an X-Wing public key, the ML-KEM-768 key of 1184 bytes then the X25519 key of 32 bytes. Neither half repeats a half of another KEM key on the row. (where the identity makes bindings in private rooms)
   ? "build_manifest_hash": hash-digest,     ; The hash of the pipeline-signed manifest. (where the occurrence names its build)
+  ? "dial_hints": [1*8 [uint .le 255, bstr .size (0..255)]], ; An ordered sequence, most preferred first, of at most eight hints. Each is a type and a body, the body byte for byte that of the node code (CC 2.6.8). Never empty: absence is its one encoding. (where the occurrence gives places to dial; on a serve seat's binding in a genesis bundle)
   "refs": self-roster-refs,                 ; The self-roster head the signer stood on; a merge's further tips; and the rows the occurrence cites.
   "asserted_at": ms-time,                   ; POSIX milliseconds.
   ? "valid_until": ms-time,                 ; Later than asserted_at (CC 2.6.2). (where the occurrence states its own end)
@@ -241,13 +283,126 @@ canonical-rebind = {
   * tstr => ceg-value,
 }
 
-; trust:accepts (CC 4.4.3.34, CC 2.7.11): the reader's own edge; the members this form names, its further members are the store's.
+; trust:accepts (CC 3.2 T3, CC 4.4.3.34, CC 2.7.11): the owner's edge, signed by any live key of the owner's roster; a node's own edge is read only while its owner has signed none. sub is what the edge accepts: a lineage's name where it attaches a root, a Transparency Service's key thumbprint or identity, or on the admission walk an author's identity or a group's id. The edge names no refs.head and carries no scope. The members this form names; its further members are the store's.
 trust-accepts = {
-  "author": identity-ref,                   ; The reader whose edge it is.
-  "dimension": tstr,                        ; trust:accepts:v1.
+  "author": identity-ref,                   ; The owner whose edge it is: a person, and any live key of their roster signs it. A node's own edge is read only while its owner has signed none.
+  "dimension": tstr,                        ; trust:accepts:v1. The CWT sub is what the edge accepts: a lineage's name, a service's key thumbprint or identity, an author's identity or a group's id. The edge names no refs.head and carries no scope.
+  ? "attached_head_digest": hash-digest,    ; The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). The member is what makes the edge one that attaches a root. A reader that holds a lineage of the name in sub refuses a new edge without it, trust_root_head_unnamed. (on an edge that attaches a root)
   ? "trust_classes": [+ tstr],              ; A set of class ids; absent, every class the charter declares. (where the edge narrows its classes)
   ? "trust_depth": 0..5,                    ; Absent reads 0. (where the edge reaches further)
   ? "service_key": { 1: int, 3: int, * int => any } / identity-ref, ; The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record. (on an edge of the class transparency)
   "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; provenance:build_manifest:{target} (CC 3.1.2.1): authored by the pipeline's key; one claim, type scores; the manifest blob is unsigned and cited by its digest.
+build-manifest-row = {
+  "author": identity-ref,                   ; The pipeline's key, equal to iss.
+  "dimension": tstr,                        ; provenance:build_manifest:{target} with its version.
+  "build": build-descriptor,                ; The descriptor of the manifest blob the row cites.
+  "evidence_refs": [+ hash-digest],         ; The manifest blob, by its digest: the digest of build.manifest_hash is among them.
+  "refs": refs,                             ; The bundle in force when the row is signed, in refs.head: the one the pipeline's grant names or a later bundle of the same lineage.
+  "asserted_at": ms-time,                   ; POSIX milliseconds: the signed instant of the manifest, which the blob does not state.
+  * tstr => ceg-value,
+}
+
+; The descriptor of a manifest blob (CC 3.1.2.1, CC 5.3.2.11): a closed map of exactly four members.
+build-descriptor = {
+  "project": tstr,                          ; The project, equal to the blob's project and listed by the pipeline's grant.
+  "version": tstr,                          ; The version, equal to the blob's version.
+  "manifest_hash": hash-digest,             ; The digest of the manifest blob.
+  "manifest_size": uint .ge 1,              ; The blob's length in bytes, checked before the digest.
+}
+
+; trust:confers (CC 3.1.2.1, CC 4.2.1): a delegates_to row counted over the holders of the bundle in force, with no author; sub is the key the grant names.
+trust-confers = {
+  "dimension": tstr,                        ; trust:confers:v1.
+  "scope": [+ tstr],                        ; A set of scope tokens; a pipeline's holds infra:attest:provenance:build_manifest or infra:attest and no other.
+  ? "projects": [+ tstr],                   ; A set of project names; absent, the grant confers a build manifest for no project. (on a build pipeline's grant)
+  "refs": refs,                             ; The bundle in force the grant is counted over, in refs.head.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; The withdraws row that ends a grant (CC 4.2.1, CC 2.4.1.1): counted over the holders of the bundle in force, with no author.
+grant-withdrawal = {
+  "refs": refs,                             ; The grant withdrawn, under target; the head the withdrawal acts from, under head.
+  ? "lifts": true,                          ; Present only as true. (where the count lifts single receipts)
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; act:ack (CC 3.1.3, CC 2.7.5): a receipt, type scores; one voice's, or a body's count with no author. It names 1 to 256 acts under refs.also ack, and no head. In a private room a seated duty holder's receipt of a joiner's acceptance, under its room key, is its acknowledgement of that joiner's binding, and the widening cites it (CC 4.5.5).
+act-ack = {
+  ? "author": identity-ref,                 ; The one voice that acknowledges; a body's receipt is counted and carries none, and its subject (sub) is the body: its group id, or for the accord the lineage's name. (unless a body's count receipts)
+  "dimension": tstr,                        ; act:ack:v1; the row's type is scores.
+  "refs": refs,                             ; The acts acknowledged, under the also role ack: 1 to 256 of them. A receipt names no head; one that names more than 256 acts is refused, ack_names_too_many.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.
+objection-vote = {
+  "author": identity-ref,                   ; The voter.
+  "dimension": tstr,                        ; objection:assent:v1 or objection:raised:v1; the states are closed at these two.
+  "cohort": tstr,                           ; The scope of the standing set the vote is cast in; self for the self-roster door.
+  "cohort_key_id": tstr,                    ; The standing set the vote is cast in; for the self-roster door the fedID.
+  ? "grounds": tstr,                        ; The voter's grounds. (where the vote states its grounds)
+  "refs": refs,                             ; Exactly one row, under answers: the proposal answered or the act objected to. A vote that carries objects_to_attestation_id or dismisses_objection_id is refused.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; ownership:{relation}:{target_kind}:{version} (CC 3.2): the owner-binding, a delegates_to row authored by the owner; sub is the key owned, whose own statement over the same payload is the first-binding cosign. Its placement is cohort_scope with the group member that scope asks; a key held for an organisation names its affiliation in on_behalf_of.
+owner-binding = {
+  "author": identity-ref,                   ; The owner: an adult person, and any live key of their roster signs. The CWT sub is the key owned, an identity reference; that key's own statement over the same payload is the first-binding cosign.
+  "dimension": tstr,                        ; ownership:responsible_party:node:v1 or ownership:responsible_party:agent:v1; the row's type is delegates_to.
+  "delegation_purpose": "owner_binding",    ; The one single-valued purpose; a row of this family with another purpose is refused.
+  ? "scope": [+ tstr],                      ; A set of scope tokens: a node's binding carries its infra tokens. Absent on an agent's binding, whose role is its template's (CC 2.7.11). (where the owner confers scopes)
+  ? "delegation_valid_from": ms-time,       ; POSIX milliseconds; absent reads asserted_at. (where the binding states a start)
+  ? "delegation_valid_until": ms-time,      ; POSIX milliseconds, later than the start; the binding lapses at this instant. (where the binding states its end)
+  "cohort_scope": "self" / "family" / "community" / "affiliations" / "species" / "biosphere" / "federation", ; Where the row is placed: the scope its owner first places the node at, and a row re-signed at another scope stands beside it.
+  ? "community_id": group-ref,              ; The group the row is placed in. It places the row and says nothing of who answers for the key. (iff cohort_scope is community or affiliations)
+  ? "family_id": group-ref,                 ; The family the row is placed in. (iff cohort_scope is family)
+  ? "on_behalf_of": group-ref,              ; The organisation's affiliation, which answers alongside the owner. One that names no affiliation is refused, owner_binding_not_an_affiliation. (where the owner holds the key for an organisation)
+  ? "refs": refs,                           ; The affiliation's roster version, under head, and no other role; the affiliation's voices are further statements counted at that head. (iff the row carries on_behalf_of)
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; holon:claim (CC 3.1.11): authored by the signer under its own name; one claim, type scores; sub is the holon's id as text. The declaration is an unsigned blob cited by its digest, which is among evidence_refs. In refs it names only rows of its own group: those it follows, under prev and further_prev, and on a supersedes the row it replaces, under target; no head.
+holon-claim = {
+  "author": identity-ref,                   ; The signer, under its own name. The CWT sub is the holon's id as text.
+  "dimension": tstr,                        ; holon:claim:v1; the row's type is scores.
+  "spec": tstr .size (1..128),              ; The declaration format whose checks were run, as ciris/holon-decl/0.
+  "holon": tstr .size (1..128),             ; The holon's id: lower-case words joined by full stops, at most 128 bytes.
+  "view": tstr .size (1..128),              ; The view's id, in the form of the holon's id.
+  "consumer": tstr .size (1..128),          ; The consumer's id, in the form of the holon's id.
+  "kind": tstr .size (1..64),               ; A token of the declaration's vocabulary, read from the blob; this document closes no set of kinds.
+  "declaration": hash-digest,               ; The SHA-256 digest of the declaration blob's stored bytes; it is among evidence_refs.
+  "evidence_refs": [+ hash-digest],         ; The declaration and every file the claim cites, each by its digest: a sequence.
+  "score": fixed6-score,                    ; +10^6 where the signer says the checks held; -10^6 where the signer ran them and they did not hold; no other value.
+  ? "confidence": fixed6-unit,              ; fixed6 in [0, 10^6]. (where the signer states a confidence)
+  ? "body": holon-claim-body,               ; The bound the claim states; a claim of exact agreement carries no bound. (where the claim states a bound)
+  ? "refs": refs,                           ; The row it follows, under prev, and further heads of the same group under further_prev; on a supersedes, a recants or a withdraws, the row acted on under target. No head and no other role. (where the row follows an earlier row of its signer for the same claim)
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}
+
+; The body of a holon:claim that states a bound (CC 3.1.11); a claim of exact agreement carries no body.
+holon-claim-body = {
+  "bound": body-decimal,                    ; The bound, a decimal fraction (tag 4); it MAY be negative.
+  ? "realised": body-decimal,               ; The value realised, a decimal fraction (tag 4). (iff basis is realised)
+  "unit": tstr .size (1..64),               ; The bound's unit: a token of the declaration's vocabulary, read from the blob.
+  "basis": "price" / "realised",            ; What the bound is stated on.
+  * tstr => ceg-value,
+}
+
+; window:{state}, the states held, landed and refused (CC 3.1.3, CC 3.3.6.4): authored by a key seated in the counted set at the head the opener names; type scores, with no score. It names the opener under refs.target, and no head. A held row names no row under prev, and it MAY name other rows. A landing names its signer's held row under prev and every row it counted under the also role cites.
+window-step = {
+  "author": identity-ref,                   ; The key that holds the opener, or that lands the window: a key seated in the counted set at the head the opener names.
+  "dimension": tstr,                        ; window:held:v1, window:landed:v1 or window:refused:v1; the states are closed at these three. The row's type is scores.
+  "refs": refs,                             ; The opener, under target, and no head. A held row names no row under prev, and it MAY name other rows. A landing names its signer's held row under prev, exactly one row, and every row it counted under the also role cites, absent where it counted none, and no other role.
+  "asserted_at": ms-time,                   ; POSIX milliseconds: the held row's instant, or the landing's. The window's length is read between the two.
   * tstr => ceg-value,
 }

@@ -1,0 +1,34 @@
+{
+  "holders": [
+    {
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:mkABfy3E4WaNxm51g02c43ZODhR3EAxaPxpnZGSpMt0",
+      "recovery_commitment": "29817377d3ae23b373e4e89d9efc247128a1c4cc97f71cebaaf53de6a595478d"
+    },
+    {
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:t22YNA-ICKYKWyyYJ8clnnufqynYg1KFoW0IVsTruAo",
+      "recovery_commitment": "aae944c7a30564a80639f917862088c4e5cfa6e970adcac58ff9066a4bc057e4"
+    },
+    {
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:lu4E9zfCraWxZAUp6akry3PzMJjGSAX9xvv-iktfqjk",
+      "recovery_commitment": "6123149e508f973af95eaa454bcbfa52c0c0da14e40eb44b67b6557c9510f112"
+    }
+  ],
+  "signing_key_commitments": [
+    {
+      "commitment": "fcc41471d61cbe2826b9bc832293644cb93a7e00790326d4e91ba2177b4e1e9f",
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:mkABfy3E4WaNxm51g02c43ZODhR3EAxaPxpnZGSpMt0"
+    },
+    {
+      "commitment": "11dbb0fe339b9405292607cd515c39bf7a3035d2076fcf2712915e4e7edd9aca",
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:t22YNA-ICKYKWyyYJ8clnnufqynYg1KFoW0IVsTruAo"
+    },
+    {
+      "commitment": "63289421ad27054dd67458d98127e74740ce6ac4c3604e351a114aae18bb615a",
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:lu4E9zfCraWxZAUp6akry3PzMJjGSAX9xvv-iktfqjk"
+    },
+    {
+      "commitment": "44b62b590be8fba31ba7f5408cfad7bba11a9efc61742413c1353c06b1596f97",
+      "identity_ref": "urn:ietf:params:oauth:ckt:sha-256:IiG-eTvirkDbYiqa-tuv3MxShjEDJen7FQMkiItujzQ"
+    }
+  ]
+}

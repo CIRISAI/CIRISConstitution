@@ -1,0 +1,4 @@
+# The value a column takes for every family the text gives no rule of its own, with the sentence that states it.
+# The quote stands verbatim in the cited section. Read by tools/family_text_coverage.py: a cell on its column's default is stated by this sentence.
+column	value	cc_ref	quote
+cosign_rule	none	CC 2.6.1.1	A row is one statement, or several over one payload where the row is counted ([CC 2.6.1.9](#2.6.1.9)).

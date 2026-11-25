@@ -12,17 +12,17 @@ protected	statement-protected	-70002	-	header:protected	family-id	always	2.6.1.1
 protected	statement-protected	4	attesting_key_id	header:protected	kid	always	2.6.1.7	kid: the 32-byte thumbprint of the signer's composite key, fixed for the key's life.
 protected	statement-protected	15	-	header:protected	cwt-claims	always	2.6.1.1	The CWT claims.
 protected	statement-protected	16	-	header:protected	"ceg-row/2"	always	2.6.1.1 2.6.1.11	typ: ceg-row/2 for every row.
-cwt	cwt-claims	1	attesting_key_id	header:cwt	identity-ref	always	2.6.1.1 2.6.1.7	iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the room key's own. kid's key is a key of it.
+cwt	cwt-claims	1	attesting_key_id	header:cwt	identity-ref	always	2.6.1.1 2.6.1.7	iss: the signer's stable identity reference, the thumbprint URI of its genesis key; under a room key, the voice: the identity reference of the voice's first room key, never the person's. kid's key is a key of it.
 cwt	cwt-claims	2	attested_key_id	header:cwt	tstr	always	2.6.1.1 2.6.1.3	sub: what the row is about; a key subject is an identity reference; the row id reads it.
 cwt	cwt-claims	6	-	header:cwt	uint	always	2.6.2	iat: floor(asserted_at / 1000); a disagreement is refused.
 cwt	cwt-claims	5	-	header:cwt	uint	iff the payload carries valid_from	2.6.2	nbf: floor(valid_from / 1000); a disagreement is refused.
 cwt	cwt-claims	4	-	header:cwt	uint	iff the payload carries valid_until	2.6.2	exp: floor(valid_until / 1000); a disagreement is refused.
 cwt	cwt-claims	-70003	-	header:cwt	2	always	2.6.1.1	edition: the constant 2.
-payload	attestation-envelope	"author"	attesting_key_id	payload	identity-ref	iff the family is authored	2.6.1.3 2.6.1.9	The iss of the author, read by the row id from the payload. A counted family carries none, and its row id takes null.
+payload	attestation-envelope	"author"	attesting_key_id	payload	identity-ref	iff the family is authored	2.6.1.3 2.6.1.9	The iss of the author, read by the row id from the payload; in a private room, the voice. A counted family carries none, and its row id takes null.
 payload	attestation-envelope	"refs"	references_attestation_id	payload	refs	iff the row names a row	2.6.1.3	Every row this row names, and the only member that names a row; never empty.
 payload	attestation-envelope	"dimension"	dimension	payload	tstr	where the family scores a dimension	2.6.1.1	The full scored dimension, leaf and version; it resolves to the family id of label -70002, and is refused otherwise.
 payload	attestation-envelope	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	where the row cites a blob	2.6.1.6 2.6.1.2	The blobs the row cites, by content hash: a sequence, bytes never hex.
-payload	attestation-envelope	"seat_commitment"	-	payload	hash-digest	on the seat row of a room key of a private room	2.6.1.11	The commitment to the seat's person, which the binding opens.
+payload	attestation-envelope	"seat_commitment"	-	payload	hash-digest	on the key record of a room key	2.6.1.11 3.1.3.2	The commitment to the seat's person, which the binding opens. The seat row of a room key is its own key record, so a row carries one commitment.
 payload	attestation-envelope	"score"	score	payload	fixed6-score	where the family carries a score	2.6.1.5	fixed6 in [-10^6, 10^6]; an indeterminate result has none.
 payload	attestation-envelope	"confidence"	confidence	payload	fixed6-unit	where the family carries a confidence	2.6.1.5	fixed6 in [0, 10^6].
 payload	attestation-envelope	"weight"	weight	payload	fixed6-weight	where the family carries a weight	2.6.1.5	fixed6 in [0, 10^6] unless the family states a wider range.
@@ -34,19 +34,22 @@ payload	attestation-envelope	"valid_until"	valid_until	payload	ms-time	where the
 payload	attestation-envelope	"expires_at"	expires_at	payload	ms-time	where the family states it	2.6.2	POSIX milliseconds.
 payload	attestation-envelope	"reason"	reason	payload	uint	where the family carries a reason	2.6.1.10	A code from a closed registry; 0 is unspecified.
 payload	attestation-envelope	"salt"	salt	payload	bstr .size 16	where the content is low-entropy	2.6.1.3	Sixteen random bytes bound by every signer, so neither the row id nor a statement id confirms a guess.
+payload	attestation-envelope	"lifts"	-	payload	true	on a counted row that ends a standing, where the count lifts single receipts	2.4.1.1	Present only as true. On an end by the one whose standing it is, it is refused, lifts_on_own_end.
+payload	attestation-envelope	"receipter"	-	payload	identity-ref	on an offer that names who acknowledges the acts exercised under it	2.4.1.1 3.4.7.3	A person or an agent, never a node. Its receipts keep an act in force after the standing ends.
 payload	attestation-envelope	redacted_claim_keys	-	payload	[+ bstr .size 32]	where a member of the payload was minted blind	2.6.1.10	SD-CWT simple(59): the digests of the payload's blinded members, in mint order: a sequence.
 payload	attestation-envelope	"body"	-	payload	body	where the family carries a body	2.6.1.10	The family's body.
 payload	body	"note"	context	payload:body	tstr .size (0..2048)	where the row carries a note	2.6.1.10	At most 2,048 bytes; blinded first where the family's erasure route is a subject request or a purge.
 payload	body	redacted_claim_keys	-	payload:body	[+ bstr .size 32]	where a member of the body was minted blind	2.6.1.10	SD-CWT simple(59): the digests of the body's blinded members, body.note among them; a sequence.
 payload	body-decimal	exponent	-	payload:body	nint	always	2.6.1.2	A decimal fraction's exponent, negative: tag 4 in a free-form body.
 payload	body-decimal	mantissa	-	payload:body	int	always	2.6.1.2	In CBOR's integer range and not divisible by 10; a number outside it is body_number_unrepresentable.
-refs	refs-members	"head"	-	payload:refs	row-ref	on a counted row, and on a roster version	2.6.1.9	The roster head the row is counted over, inside what every voice signs.
+refs	refs-members	"head"	-	payload:refs	row-ref	on a counted row, on a roster version, and on a row that exercises or ends a standing	2.6.1.9 2.4.1.1	The head the row is at: the roster head a counted row is counted over, inside what every voice signs; the head an act is exercised at; the head an end acts from.
 refs	refs-members	"further_heads"	-	payload:refs	row-ref-set	where a row names further tips	2.6.1.9 2.6.1.2	Further tips beside head: a set.
-refs	refs-members	"prev"	-	payload:refs	row-ref	where a signer's own series names its predecessor	2.6.1.11	The predecessor in a signer's own series.
+refs	refs-members	"prev"	-	payload:refs	row-ref	where a signer's own series names its predecessor	2.6.1.11 3.1.3.2	The predecessor in a signer's own series; on a content row, a content row its author signed in the same room.
+refs	refs-members	"further_prev"	-	payload:refs	row-ref-set	where a row names further predecessors beside prev	3.1.3.2 3.1.11 2.6.1.3	Further content rows of the same author in the same room, or further heads of a claim's group, beside prev: a set.
 refs	refs-members	"answers"	-	payload:refs	row-ref	where the row answers a row	2.6.1.3	The proposal voted on or accepted, the window opened, the row replied to.
 refs	refs-members	"target"	-	payload:refs	row-ref	on a supersession, withdrawal, recantation, cut or removal	2.6.1.3	The row superseded, withdrawn, recanted, cut or removed.
-refs	refs-members	"trusted_through"	-	payload:refs	row-ref-set	on a key revocation that names rows held good	2.6.1.11 2.6.1.2	The last rows of the revoked key held good: a set.
-refs	refs-members	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names any other row	2.6.1.3 2.6.1.2	Any other named row, under a role of the closed registry: ack or cites; each list a set.
+refs	refs-members	"trusted_through"	-	payload:refs	row-ref-set	on a key revocation that names rows held good; on a row that ends a member's seat and on a keeps row	2.6.1.11 3.1.3.2 2.6.1.2	The last rows of the revoked key held good, or the newest content rows of the member held good: a set of at most 64.
+refs	refs-members	"also"	-	payload:refs	{ + also-role => row-ref-set }	where the row names any other row	2.6.1.3 2.6.1.2	Any other named row, under a role of the closed registry: ack, cites, under, stands_on or voice; each list a set, and under, stands_on and voice each a set of exactly one.
 row_id	row-id-input	type	attestation_type	derived	row-type	always	2.6.1.3	The type of label -70001, one of the five, as a text string.
 row_id	row-id-input	family	-	derived	family-id	always	2.6.1.3	The family id of label -70002, as a text string.
 row_id	row-id-input	sub	-	derived	tstr	always	2.6.1.3	The CWT sub.
@@ -65,6 +68,9 @@ key_record	key-record-members	"key"	-	payload	ceg-key	always	2.6.1.7	The composi
 key_record	key-record-members	"identity_type"	identity_type	payload	[+ tstr]	always	2.6.1.7 2.4.1.1	A set of roles; user or accord_holder never with node or agent.
 key_record	key-record-members	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 key_record	key-record-members	"valid_until"	valid_until	payload	ms-time	as the key's end rule states	2.6.1.7	Absent where the set contains user or accord_holder; required where it contains node or agent, unless a room key of a private room; a set mixing the two groups is refused. At most key_record_max_secs after asserted_at.
+key_record	key-record-members	"room"	-	payload	group-ref	iff the key is a room key	3.1.3.2 2.4.1.1	The one room the key is made for, by the room's derived id. Its presence makes the record a room key's, and the end rule reads it.
+key_record	key-record-members	"kem_xwing_pubkey"	-	payload	bstr .size 1216	iff the key is a room key	3.1.3.2 2.6.1.11	The room key's KEM key: an X-Wing public key, the ML-KEM-768 key of 1184 bytes then the X25519 key of 32 bytes. Every wrap to the room key is made to it.
+key_record	key-record-members	"seat_commitment"	-	payload	hash-digest	iff the key is a room key	2.6.1.11 3.1.3.2	The commitment to the key's person, which the binding opens; this record is the key's seat row.
 key_record	key-record-members	"attestation_evidence"	-	payload	attestation-evidence	where the record asserts a hardware class	4.2.2 4.2.2.1	The custody of the key's Ed25519 half and where its ML-DSA-65 half is held.
 key_record	attestation-evidence	"hardware_class"	-	payload	tstr	always	4.2.2	A class of the CC 4.2.2 table; an unlisted class is read at multiplier 0.0.
 key_record	attestation-evidence	"pq_custody"	-	payload	"same_element" / "removable_offline" / "software_wrapped"	where the record asserts a class	4.2.2.1	Absent: read at multiplier 0.0; any other value is refused key_record_bad_pq_custody.
@@ -99,14 +105,14 @@ genesis	ceg-genesis-bundle	"serve_nodes"	-	object	[+ identity-ref]	always	5.3.4 
 genesis	ceg-genesis-bundle	"charter"	-	object	genesis-charter	always	2.1 4.2.6	The accord's parameters, which no row carries.
 genesis	genesis-refs	"prev"	-	object	row-ref	on every bundle after the first	2.6.1.11	The predecessor bundle's object id.
 genesis	genesis-refs	"also"	-	object	map	always	2.6.1.3	The one role cites, and no other.
-genesis	genesis-refs	"also"."cites"	-	object	row-ref-set	always	2.6.1.3 2.6.1.2	Every row the bundle names: each holder's and each seat's key record, each witness's, and each seat's binding; a set.
+genesis	genesis-refs	"also"."cites"	-	object	row-ref-set	always	2.6.1.3 2.6.1.2	Every row the bundle names: each holder's and each seat's key record, each named transparency service's, and each seat's binding; a set.
 genesis	genesis-charter	"recovery_commitments"	-	object	{ + identity-ref => hash-digest }	always	4.2.6 3.2	One entry per holder, keyed by its identity reference; each the commitment over that holder's one recovery key.
 genesis	genesis-charter	"scope"	-	object	[+ tstr]	always	3.2 2.6.1.2	A set; it holds infra:attest and infra:serve.
 genesis	genesis-charter	"halt_fuse_secs"	-	object	1..4294967295	where the charter states a fuse	4.2.1.1 2.1	Absent means 86400.
 genesis	genesis-charter	"attach_window_secs"	-	object	1..4294967295	where the charter states a window	3.2 5.3.4	Absent: attachable through an out-of-band anchor only.
-genesis	genesis-charter	"witness_cadence_secs"	-	object	1..4294967295	where witnessed mode is on	3.2 2.1	Present with witness_quorum and witnesses, or none of the three.
-genesis	genesis-charter	"witness_quorum"	-	object	2..4294967295	where witnessed mode is on	3.2 2.1	floor(|witnesses| / 2) + 1; absence is witnessed mode off, and 0 is never written.
-genesis	genesis-charter	"witnesses"	-	object	[+ identity-ref]	where witnessed mode is on	3.2 2.1 2.6.1.2	The witness directory: a set, disjoint from holders and serve_nodes; each witness's key record stands in refs.
+genesis	genesis-charter	"receipt_cadence_secs"	-	object	1..4294967295	where the charter names services	3.2 2.1	Present with receipt_quorum and transparency_services, or none of the three.
+genesis	genesis-charter	"receipt_quorum"	-	object	2..4294967295	where the charter names services	3.2 2.1	floor(|transparency_services| / 2) + 1; a charter without it names no services, and 0 is never written.
+genesis	genesis-charter	"transparency_services"	-	object	[+ identity-ref]	where the charter names services	3.2 2.1 2.6.1.2	The transparency services the lineage registers its heads with: a set, disjoint from holders and serve_nodes; each service's key record stands in refs.
 genesis	recovery-commitment-input	keys	-	derived	[+ ceg-key]	always	3.2 4.2.6 2.6.1.2	The committed composite keys, a set; one for a holder's recovery commitment. The commitment is [-16, SHA-256] over the array.
 accord	accord-invocation	"author"	attesting_key_id	payload	identity-ref	always	4.2.1.1 2.6.1.3	The holder who signs: the statement's iss. One holder's statement is the halt.
 accord	accord-invocation	"accord_root"	-	payload	tstr	always	4.2.1.1 2.1	The accord's family_key_id; it picks the bundle in force the row is verified against.
@@ -125,11 +131,12 @@ accord	accord-lifecycle	"valid_until"	valid_until	payload	ms-time	always	4.2.1.3
 accord	accord-lifecycle-refs	"head"	-	payload:refs	row-ref	always	4.2.1.3 2.6.1.9	The bundle in force the row is counted over, by its object id.
 accord	accord-lifecycle-refs	"target"	-	payload:refs	row-ref	always	4.2.1.3	The halt row the lifecycle row confirms or ends; a statement counts for that halt only.
 roster	group-roster	"group_kind"	-	payload	"family" / "community"	always	3.1.3 3.2	Which record the version is: a family's or a community's.
-roster	group-roster	"group"	family_key_id, community_key_id	payload	identity-ref	always	3.1.3 3.3.4	The group's identity reference, equal to the CWT sub.
+roster	group-roster	"group"	family_key_id, community_key_id	payload	group-ref	always	3.1.3 3.3.4	The group's id, equal to the CWT sub. It is derived from the first version (group-id-input), and nobody chooses it.
 roster	group-roster	"name"	family_name, community_name	payload	tstr	always	3.2 3.3.4	Human-readable and not unique.
 roster	group-roster	"version"	-	payload	uint	always	3.2	The version's place in the lineage's chain; a consistency check, never ranked.
 roster	group-roster	"members"	members	payload	[* roster-member]	always	3.2 3.3.4 2.6.1.2	The roster at this version: a set.
 roster	group-roster	"founded_at"	founded_at	payload	ms-time	always	3.2 3.3.4 2.6.2	POSIX milliseconds.
+roster	group-roster	"nonce"	-	payload	bstr .size 32	on the first version, and on no other	3.2 3.3.4 2.6.2	Thirty-two fresh random bytes that the group's id covers. Absent on every later version.
 roster	group-roster	"consensus_protocol"	consensus_protocol	payload	tstr	always	3.3.4	One of the closed vocabulary of CC 3.3.4.
 roster	group-roster	"consensus_protocol_entrenched"	consensus_protocol_entrenched	payload	bool	where the group entrenches its protocol	3.3.4	Absent reads false.
 roster	group-roster	"cohort_subkind"	cohort_subkind	payload	tstr	on a community's record	3.2	The community's subkind: open vocabulary.
@@ -137,14 +144,17 @@ roster	group-roster	"cohort_subkind_payload"	cohort_subkind_payload	payload	{ * 
 roster	group-roster	"membership"	membership	payload	"private" / "public"	where a community declares how its roster is seated	3.1.3.2	Absent reads public.
 roster	group-roster	"dissolved_at"	-	payload	ms-time	where the group is dissolved	3.3.4 2.6.2	POSIX milliseconds.
 roster	group-roster	"policy"	-	payload	{ * tstr => ceg-value }	where the record carries the group's policy	4.4.3.12	The members the record declares at creation beyond those above.
-roster	group-roster	"refs"	prev_head_digest, charter_digest	payload	refs	on every version after the first	3.2 2.6.1.3	The predecessor version in refs.head, and the trust:charter:v1 row in force under the also role cites.
+roster	group-roster	"duty_holders"	-	payload	{ + tstr => [+ identity-ref] }	on a community's founding record that names who holds its duties	4.5.4 3.2 2.6.1.2	A duty name (moderate, or one the record declares in policy.duties) to the set of members who hold it at founding. Each is a listed member who signed the record. On the first version of a community only: later seats move by conferral, withdrawal, resignation and election.
+roster	group-roster	"transparency_services"	-	payload	[2* identity-ref]	where a community names the services its accountable streams register with	5.3.3.8 2.6.1.2	The transparency services the room names: a set of at least two identity references, each resolved through its own key record. One of the two members without the other is refused, transparency_members_partial.
+roster	group-roster	"receipt_quorum"	-	payload	uint .ge 2	where transparency_services is present, and never without it	5.3.3.8	How many of the named services must register a head: exactly ⌊n/2⌋+1 of the n named. Any other value is refused, receipt_quorum_mismatch.
+roster	group-roster	"refs"	prev_head_digest, charter_digest	payload	refs	on every version after the first	3.2 2.6.1.3	The predecessor version in refs.head. charter_digest names nothing in this form: no row carries a charter, and a root's charter is its bundle's charter member.
 roster	group-roster	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 roster	roster-member	"key"	key_id	payload	identity-ref	always	3.2 3.3.4	The member's identity, never an occurrence.
 roster	roster-member	"joined_at"	joined_at	payload	ms-time	always	3.2 3.3.4 2.6.2	POSIX milliseconds.
 roster	roster-member	"role"	role	payload	tstr	where the record gives the member a role	3.3.4	founder or member; absent, never null.
 membership	membership-change	"dimension"	dimension	payload	tstr	always	3.1.3.2	membership:widening:v1 or membership:removal:v1.
 membership	membership-change	"group_kind"	group_kind	payload	"family" / "community"	always	3.1.3.2	Which group the change is to.
-membership	membership-change	"group"	family_key_id, community_key_id	payload	identity-ref	always	3.1.3.2	The group's identity reference.
+membership	membership-change	"group"	family_key_id, community_key_id	payload	group-ref	always	3.1.3.2	The group's id.
 membership	membership-change	"member"	-	payload	identity-ref	always	3.1.3.2	The key seated or removed, equal to the CWT sub.
 membership	membership-change	"joined_at"	joined_at	payload	ms-time	on a widening	3.1.3.2 2.6.2	POSIX milliseconds.
 membership	membership-change	"removed_at"	-	payload	ms-time	on a removal	3.1.3.2 2.6.2	POSIX milliseconds.
@@ -153,8 +163,21 @@ membership	membership-change	"role"	role	payload	tstr	on a widening that assigns
 membership	membership-change	"witness_set"	-	payload	[* identity-ref]	on a removal that names its witnesses	3.1.3.2 2.6.1.2	The keys that vouch for the removal, never signatures: a set.
 membership	membership-change	"valid_until"	valid_until	payload	ms-time	on a time-boxed guest's widening	3.3.4 2.6.2	The seat lapses at this instant.
 membership	membership-change	"reason"	reason	payload	uint	where the change carries a reason	2.6.1.10	A code from the closed registry; free text stands in body.note.
-membership	membership-change	"refs"	-	payload	refs	always	3.1.3.2 2.6.1.9	The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites.
+membership	membership-change	"refs"	-	payload	refs	always	3.1.3.2 2.6.1.9	The roster head the change is counted over in refs.head; on a widening, the joiner's acceptance under the also role cites; a removal MAY carry trusted_through, the member's content rows held good.
 membership	membership-change	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+membership	membership-keeps	"dimension"	dimension	payload	tstr	always	3.1.3.2	membership:keeps:v1.
+membership	membership-keeps	"group_kind"	group_kind	payload	"family" / "community"	always	3.1.3.2	Which group the room is.
+membership	membership-keeps	"group"	family_key_id, community_key_id	payload	group-ref	always	3.1.3.2	The group's id.
+membership	membership-keeps	"member"	-	payload	identity-ref	always	3.1.3.2	The member whose content the row keeps.
+membership	membership-keeps	"refs"	-	payload	refs	always	3.1.3.2 2.6.1.9	The roster head the row is counted over in refs.head; exactly one end of that member's seat under the also role cites; 1 to 64 tips in trusted_through.
+membership	membership-keeps	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+membership	membership-reply	"author"	attesting_key_id	payload	identity-ref	always	3.1.3.2 3.1.2.1	The invitee; on the reply to a grant, the owner of the key the grant names: a person, never the grantee's own key.
+membership	membership-reply	"dimension"	dimension	payload	tstr	always	3.1.3.2	membership:acceptance:v1 or membership:decline:v1.
+membership	membership-reply	"group_kind"	group_kind	payload	"family" / "community"	where the reply answers a membership proposal	3.1.3.2	Which group the proposal is to.
+membership	membership-reply	"group"	family_key_id, community_key_id	payload	group-ref	where the reply answers a membership proposal	3.1.3.2	The group's id, the group the proposal targets.
+membership	membership-reply	"role"	role	payload	tstr	on an acceptance that restates the role offered	3.1.3.2	The role the proposal offered.
+membership	membership-reply	"refs"	-	payload	refs	always	3.1.3.2 3.1.2.1 2.6.1.3	The one row answered, under answers: the proposal, or the grant. A reply names no head and no target. One that carries proposal_hash is refused.
+membership	membership-reply	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 occurrence_revocation	occurrence-revocation	"author"	attesting_key_id	payload	identity-ref	unless the occurrence is of a user self	3.1.3 3.3.6.4	The revoker; a user self's revocation is counted over its roster at the head refs names and carries none.
 occurrence_revocation	occurrence-revocation	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6.4	The identity whose occurrence is revoked.
 occurrence_revocation	occurrence-revocation	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6.4	The occurrence revoked, equal to the CWT sub.
@@ -175,10 +198,10 @@ revocation	entity-revocation	"effective_at"	effective_at	payload	ms-time	always	
 revocation	entity-revocation	"revoked_after"	revoked_after	payload	ms-time	where the revocation bounds what it ends	2.4.1.1 2.6.2	POSIX milliseconds.
 revocation	entity-revocation	"refs"	-	payload	refs	where the revoked entity is a row	2.6.1.3	The revoked row under target.
 revocation	entity-revocation	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
-takedown	takedown-notice	"author"	attesting_key_id	payload	identity-ref	iff the notice is authored	3.1.1 3.3.2	A steward purge is counted and carries none.
+takedown	takedown-notice	"author"	attesting_key_id	payload	identity-ref	iff the notice is authored	3.1.1 3.3.2 4.4.3.12	A steward purge is counted and carries none, and so is the notice of an affiliation with one deciding seat.
 takedown	takedown-notice	"dimension"	dimension	payload	tstr	always	3.1.1	takedown_notice:{basis} with its version.
 takedown	takedown-notice	"legal_basis"	legal_basis	payload	legal-basis	always	3.3.2	The wire string of the closed set; the basis leaf names the same.
-takedown	takedown-notice	"claimant"	claimant_key_id	payload	identity-ref	always	3.3.2	The identity issuing the notice.
+takedown	takedown-notice	"claimant"	claimant_key_id	payload	identity-ref	unless a steward purge	3.3.2	The identity issuing the notice. A steward purge is counted and carries none; its sub is the lineage's name.
 takedown	takedown-notice	"content_sha256"	content_sha256	payload	hash-digest	always	3.3.2	SHA-256 of the content; on a steward purge, the selection digest.
 takedown	takedown-notice	"content_holders"	content_holder_key_ids	payload	[* identity-ref]	always	3.3.2 2.6.1.2	Peers known to hold the bytes: a set.
 takedown	takedown-notice	"jurisdiction"	jurisdiction	payload	tstr	always	3.3.2	ISO 3166-1 alpha-2 with an optional subdivision.
@@ -189,6 +212,7 @@ takedown	takedown-notice	"perceptual_hash"	perceptual_hash	payload	ceg-value	whe
 takedown	takedown-notice	"counter_notice_channel"	counter_notice_channel	payload	tstr	where the notice names one	3.3.2	A URI where counter-notices may be filed.
 takedown	takedown-notice	"selection_counts"	-	payload	{ * tstr => ceg-value }	on a steward purge that states its counts	3.3.2	The counts of the purge's selection by plane.
 takedown	takedown-notice	"expires_at"	expires_at	payload	ms-time	where the notice states its own end	3.3.2 2.6.2	POSIX milliseconds.
+takedown	takedown-notice	"refs"	-	payload	refs	on a steward purge	2.4.1.1 3.1.1	The bundle in force, under head: the purge is counted over its holders.
 takedown	takedown-notice	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 custody	custody-ack	"author"	attesting_key_id	payload	identity-ref	always	3.1.3.3	The device the report is about, equal to iss and the CWT sub.
 custody	custody-ack	"dimension"	dimension	payload	tstr	always	3.1.3.3	custody:ack:v1.
@@ -199,30 +223,40 @@ custody	custody-ack	"asserted_at"	asserted_at	payload	ms-time	always	3.1.3.3 2.6
 key_grant	key-grant	"author"	attesting_key_id	payload	identity-ref	always	3.3.2	The sealer.
 key_grant	key-grant	"dimension"	dimension	payload	tstr	always	3.3.2	key_grant:{axis}:v1.
 key_grant	key-grant	"axis"	axis	payload	"content" / "epoch" / "stream"	always	3.3.2	The same axis as the leaf.
-key_grant	key-grant	"wrap_algorithm"	wrap_algorithm	payload	"x25519_mlkem768_aes256_gcm_hkdf_sha256"	always	3.3.2	The v2 wire string, mandatory for every wrapped key.
-key_grant	key-grant	"wrapped_dek"	wrapped_dek	payload	bstr	always	3.3.2 2.6.1.2	The wrapped data-encryption key, as bytes.
+key_grant	key-grant	"wrap_algorithm"	wrap_algorithm	payload	"x25519_mlkem768_aes256_gcm_hkdf_sha256" / "xwing_hpke_aes256_gcm_hkdf_sha256"	always	3.3.2 2.6.1.11	The v2 wire string on a wrap to the content-KEM keys of an occurrence; the X-Wing string on a wrap to a room key, which carries no other.
+key_grant	key-grant	"wrapped_dek"	wrapped_dek	payload	bstr	always	3.3.2 2.6.1.2 2.6.1.11	The wrapped data-encryption key, as bytes. On a wrap to a room key: the X-Wing encapsulation of 1120 bytes, then the AEAD ciphertext of the sealed map.
 key_grant	key-grant	"at_rest_sha256"	at_rest_sha256	payload	hash-digest	on the content axis	3.3.2	The content's at-rest digest.
 key_grant	key-grant	"owner"	owner_key_id	payload	identity-ref	on the content and stream axes	3.3.2	The owner of the content or the stream.
-key_grant	key-grant	"community"	community_key_id	payload	identity-ref	on the epoch axis	3.3.2	The community whose epoch key is wrapped.
+key_grant	key-grant	"community"	community_key_id	payload	group-ref	on the epoch axis	3.3.2	The community whose epoch key is wrapped.
 key_grant	key-grant	"minter"	minter_key_id	payload	identity-ref	on the epoch axis	3.3.2	The epoch's minter.
 key_grant	key-grant	"epoch"	epoch	payload	uint	on the epoch and stream axes	3.3.2	The epoch index.
 key_grant	key-grant	"stream_id"	stream_id	payload	tstr	on the stream axis	3.3.2	The stream.
 key_grant	key-grant	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
-receipt	delivery-receipt	"author"	attesting_key_id	payload	identity-ref	always	5.3.3.11	The subscriber, equal to iss and the CWT sub.
-receipt	delivery-receipt	"dimension"	dimension	payload	tstr	always	3.4.6	delivery_receipt:{stream_id} with its version.
-receipt	delivery-receipt	"stream_id"	stream_id	payload	tstr	always	5.3.3.11	The same stream as the leaf.
-receipt	delivery-receipt	"epoch"	epoch	payload	uint	always	5.3.3.11	The key-rotation index.
-receipt	delivery-receipt	"k"	K	payload	uint	always	5.3.3.11	The chunk index acknowledged.
-receipt	delivery-receipt	"chunk_root"	chunk_root	payload	hash-digest	always	5.3.3.11	The published tree root the subscriber signs over.
-receipt	delivery-receipt	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+delivery_ack	delivery-ack	"author"	attesting_key_id	payload	identity-ref	always	5.3.3.11	The subscriber, equal to iss and the CWT sub.
+delivery_ack	delivery-ack	"dimension"	dimension	payload	tstr	always	3.4.6	delivery_ack:{stream_id} with its version.
+delivery_ack	delivery-ack	"stream_id"	stream_id	payload	tstr	always	5.3.3.11	The same stream as the leaf.
+delivery_ack	delivery-ack	"epoch"	epoch	payload	uint	always	5.3.3.11	The key-rotation index.
+delivery_ack	delivery-ack	"k"	K	payload	uint	always	5.3.3.11	The chunk index acknowledged.
+delivery_ack	delivery-ack	"chunk_root"	chunk_root	payload	hash-digest	always	5.3.3.11	The published tree root the subscriber signs over.
+delivery_ack	delivery-ack	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+leaf_vouch	leaf-vouch	"author"	attesting_key_id	payload	identity-ref	always	5.1 3.1.4	The member whose leaf it is: a person, an agent, or in a private room a voice. The member's device key signs, and author, iss and sub are the member.
+leaf_vouch	leaf-vouch	"dimension"	dimension	payload	tstr	always	3.1.4	mls:leaf_vouch:v1; the row's type is scores.
+leaf_vouch	leaf-vouch	"suite"	-	payload	77	always	5.1	The MLS ciphersuite the vouched leaf signs under: the constant 0x004D, as an unsigned integer.
+leaf_vouch	leaf-vouch	"leaves"	-	payload	[1*1 redacted-element] / [8*8 redacted-element] / [32*32 redacted-element]	always	5.1 2.6.1.10	One blinded element for each room vouched for, padded with random digests to exactly 1, 8 or 32: a sequence. Each discloses as a leaf-vouch-entry.
+leaf_vouch	leaf-vouch	"valid_from"	-	payload	ms-time	always	5.1 2.6.2	The start of the vouch, POSIX milliseconds.
+leaf_vouch	leaf-vouch	"valid_until"	valid_until	payload	ms-time	always	5.1 2.6.2	Required. Later than valid_from, and at most leaf_vouch_max_secs after it.
+leaf_vouch	leaf-vouch	"refs"	-	payload	refs	iff a room key signs	2.6.1.11 2.6.1.3	The head of the signer's voice roster, under the also role voice, and no other row.
+leaf_vouch	leaf-vouch	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 occurrence	identity-occurrence	"author"	attesting_key_id	payload	identity-ref	always	3.3.6	A live roster key's identity: the identity named by identity_key_id.
-occurrence	identity-occurrence	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6	The identity the occurrence speaks for: a person's, or an agent's own.
+occurrence	identity-occurrence	"identity_key_id"	identity_key_id	payload	identity-ref	always	3.3.6	The identity the occurrence speaks for: a person's, or an agent's own; on a row that seats a further room key, the voice.
 occurrence	identity-occurrence	"occurrence_key_id"	occurrence_key_id	payload	identity-ref	always	3.3.6	The participant's key, equal to the CWT sub; its own statement over the payload is the second voice.
 occurrence	identity-occurrence	"device_class"	device_class	payload	"phone" / "laptop" / "server" / "embedded" / "agent" / "service"	always	3.3.6	A closed set; agent stands only under an agent's own identity.
 occurrence	identity-occurrence	"hardware_attestation"	hardware_attestation	payload	bstr	where the occurrence carries one	3.3.6 2.6.1.2	The attestation blob, as bytes.
 occurrence	identity-occurrence	"transport_destination"	transport_destination	payload	transport-destination	where the occurrence binds an address	3.3.6.2 3.3.6.3	The RNS members of the binding's table.
 occurrence	identity-occurrence	"encryption_pubkeys"	encryption_pubkeys	payload	encryption-pubkeys	where the occurrence is a wrap target	3.3.6.1	The content-KEM keys.
+occurrence	identity-occurrence	"room_binding_xwing_pubkey"	-	payload	bstr .size 1216	where the identity makes bindings in private rooms	3.3.6.1 3.1.3.2	The identity's binding key on this device: an X-Wing public key, the ML-KEM-768 key of 1184 bytes then the X25519 key of 32 bytes. Neither half repeats a half of another KEM key on the row.
 occurrence	identity-occurrence	"build_manifest_hash"	build_manifest_hash	payload	hash-digest	where the occurrence names its build	3.3.6 3.1.2	The hash of the pipeline-signed manifest.
+occurrence	identity-occurrence	"dial_hints"	-	payload	[1*8 [uint .le 255, bstr .size (0..255)]]	where the occurrence gives places to dial; on a serve seat's binding in a genesis bundle	3.3.6.2 2.6.8 5.3.4	An ordered sequence, most preferred first, of at most eight hints. Each is a type and a body, the body byte for byte that of the node code (CC 2.6.8). Never empty: absence is its one encoding.
 occurrence	identity-occurrence	"refs"	build_manifest_ref	payload	self-roster-refs	always	3.3.6.4 2.6.1.3	The self-roster head the signer stood on; a merge's further tips; and the rows the occurrence cites.
 occurrence	identity-occurrence	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 occurrence	identity-occurrence	"valid_until"	valid_until	payload	ms-time	where the occurrence states its own end	3.3.6 2.6.2	Later than asserted_at (CC 2.6.2).
@@ -263,6 +297,7 @@ rebind	canonical-rebind	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	P
 binding	transport-destination-binding	"transport_destination"	transport_destination	payload	transport-destination	always	3.3.6.2 3.3.6.3	The RNS members, from which destination_hash is recomputed.
 binding	transport-destination-binding	"transit_xwing_pubkey"	-	payload	bstr .size 1216	on a node that relays, and on every seat	3.3.6.2	At the payload's top level, beside transport_destination; a seat's is taken from the bundle or a counted re-bind.
 binding	transport-destination-binding	"onion_hop_xwing_pubkey"	-	payload	bstr .size 1216	on a node that relays, and on every serve node	3.3.6.2	At the payload's top level, beside transport_destination.
+binding	transport-destination-binding	"dial_hints"	-	payload	[1*8 [uint .le 255, bstr .size (0..255)]]	on a serve seat's binding in a genesis bundle, with at least one tcp hint; optional elsewhere	3.3.6.2 2.6.8 5.3.4	At the payload's top level, beside transport_destination, inside what the seat signs. A cold-start seed only: the seat's live signed route row supersedes it once linked.
 binding	transport-destination-binding	"onion_relay"	-	payload	map	on a node that opts out of relaying	3.3.6.2 5.4.6	The opt-out marker; a node carrying it carries no hop key.
 binding	transport-destination-binding	"onion_relay"."opt_out"	-	payload	true	always	3.3.6.2	The constant true.
 binding	transport-destination-binding	"refs"	references_attestation_id	payload	refs	on a seat's binding	3.3.6.2 2.6.1.11	The seat's own key record, under the also role cites.
@@ -271,21 +306,76 @@ binding	transport-destination	"reticulum_ed25519_pubkey"	-	payload	bstr .size 32
 binding	transport-destination	"app_name"	-	payload	tstr	always	3.3.6.3	The RNS application name.
 binding	transport-destination	"aspects"	-	payload	[* tstr]	always	3.3.6.3 2.6.1.2	A sequence: the hash reads the aspects in this order.
 binding	transport-destination	"destination_hash"	-	payload	bstr .size 16	always	3.3.6.3	Recomputed by the two-stage hash; a disagreement is refused.
-room	seat-commitment-input	room	-	derived	tstr	always	2.6.1.11	The room's id as its rows carry it.
+room	seat-commitment-input	room	-	derived	group-ref	always	2.6.1.11 3.3.4	The room's derived id: the room member of the key record that carries the commitment.
 room	seat-commitment-input	room_key	-	derived	kid	always	2.6.1.11	The room key's thumbprint.
 room	seat-commitment-input	person	-	derived	identity-ref	always	2.6.1.11	The person's identity reference.
 room	seat-commitment-input	nonce	-	derived	bstr .size 32	always	2.6.1.11	Thirty-two fresh random bytes.
+room_binding	binding-info-input	room	-	derived	group-ref	always	2.6.1.11	The room's derived id.
+room_binding	binding-info-input	room_key	-	derived	kid	always	2.6.1.11	The thumbprint of the room key the binding is of.
+room_binding	binding-info-input	addressee_key	-	derived	kid	always	2.6.1.11	The thumbprint of the addressee's room key, never a node key.
+room_binding	binding-info-input	seat_commitment	-	derived	hash-digest	always	2.6.1.11	The commitment on the room key's record.
+room_binding	binding-info-input	binding_key	-	derived	bstr .size 32	always	2.6.1.11 2.6.1.12	The thumbprint of the person's binding key; its encoding is open.
+room_binding	binding-opening	person	-	derived	identity-ref	always	2.6.1.11	The person the room key's holder names.
+room_binding	binding-opening	nonce	-	derived	bstr .size 32	always	2.6.1.11	The nonce under the seat commitment.
+room_binding	room-sealed	"dek"	-	object	bstr .size 32	on a wrap to a room key	2.6.1.11 3.3.2	The wrapped key. A sealed envelope outside a wrap carries none.
+room_binding	room-sealed	"claim"	-	object	binding-claim	where the sender names its person to the recipient	2.6.1.11 3.1.3.2	The first flow, from the room key's holder to the addressee.
+room_binding	room-sealed	"challenge"	-	object	bstr .size 1120	where the sender challenges the recipient's person	2.6.1.11 3.1.3.2	The second flow, from the addressee: an X-Wing encapsulation to the person's binding key.
+room_binding	room-sealed	"confirmation"	-	object	binding-confirmation	where the sender answers the recipient's challenge	2.6.1.11 3.1.3.2	The third flow, from the room key's holder: an HPKE seal in PSK mode to the addressee's room key.
+room_binding	binding-claim	"person"	-	object	identity-ref	always	2.6.1.11	The person claimed.
+room_binding	binding-claim	"occurrence"	-	object	[+ bstr]	where the addressee may hold no occurrence of the person	2.6.1.11 3.3.6.1	The statements of the person's identity:occurrence row that carries the binding key, as bytes: a sequence.
+room_binding	binding-confirmation	"enc"	-	object	bstr .size 1120	always	2.6.1.11	The confirmation's own X-Wing encapsulation, to the addressee's room key.
+room_binding	binding-confirmation	"ct"	-	object	bstr	always	2.6.1.11	The AEAD ciphertext over the opening.
+group_id	group-id-input	group_kind	-	derived	"family" / "community"	always	3.3.4 2.6.1.2	The first version's group_kind.
+group_id	group-id-input	first_members	-	derived	[+ identity-ref]	always	3.3.4 2.6.1.2	The key of every member the first version lists: a set.
+group_id	group-id-input	founded_at	-	derived	ms-time	always	3.3.4 2.6.1.2	The first version's founded_at.
+group_id	group-id-input	nonce	-	derived	bstr .size 32	always	3.3.4 2.6.1.2	The first version's nonce.
 disclosure	salted-claim	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes; a blinded map member is disclosed as [salt, value, key].
 disclosure	salted-claim	value	-	object	ceg-value	always	2.6.1.10	The blinded member's value.
 disclosure	salted-claim	key	-	object	tstr	always	2.6.1.10	The blinded member's name; the digest is SHA-256 over the disclosure's bytes as sd_claims carries them.
 disclosure	salted-element	salt	-	object	bstr .size 16	always	2.6.1.10	Sixteen random bytes; a blinded array element is disclosed as [salt, value].
 disclosure	salted-element	value	-	object	ceg-value	always	2.6.1.10	The blinded element's value.
-trust_accepts	trust-accepts	"author"	attesting_key_id	payload	identity-ref	always	4.4.3.34	The reader whose edge it is.
-trust_accepts	trust-accepts	"dimension"	dimension	payload	tstr	always	4.4.3.34	trust:accepts:v1.
+disclosure	leaf-vouch-entry	leaf_key	-	object	bstr .size 32	always	5.1	The value a blinded element of a leaf vouch discloses: first the leaf's Ed25519 public key.
+disclosure	leaf-vouch-entry	room	-	object	group-ref	always	5.1	The room the leaf is vouched for, by its derived id.
+disclosure	leaf-vouch-entry	suite	-	object	77	always	5.1	The constant 0x004D, equal to the row's suite.
+mls_group	mls-group-id-input	room	-	derived	group-ref	always	2.6.1.11 5.1	The room's derived id.
+mls_group	mls-call-group-id-input	room	-	derived	group-ref	always	2.6.1.11 5.1	The room's derived id.
+mls_group	mls-call-group-id-input	call	-	derived	bstr	always	2.6.1.11 2.6.1.12	The call's id; the member that carries it is open.
+trust_accepts	trust-accepts	"author"	attesting_key_id	payload	identity-ref	always	4.4.3.34 3.2	The owner whose edge it is: a person, and any live key of their roster signs it. A node's own edge is read only while its owner has signed none.
+trust_accepts	trust-accepts	"dimension"	dimension	payload	tstr	always	4.4.3.34 3.2	trust:accepts:v1. The CWT sub is what the edge accepts: a lineage's name, a service's key thumbprint or identity, an author's identity or a group's id. The edge names no refs.head and carries no scope.
+trust_accepts	trust-accepts	"attached_head_digest"	attached_head_digest	payload	hash-digest	on an edge that attaches a root	3.2	The object id of the bundle in force that the edge attaches on (CC 3.2 T4a). The member is what makes the edge one that attaches a root. A reader that holds a lineage of the name in sub refuses a new edge without it, trust_root_head_unnamed.
 trust_accepts	trust-accepts	"trust_classes"	trust_classes	payload	[+ tstr]	where the edge narrows its classes	4.4.3.34 2.6.1.2	A set of class ids; absent, every class the charter declares.
 trust_accepts	trust-accepts	"trust_depth"	trust_depth	payload	0..5	where the edge reaches further	4.4.3.34	Absent reads 0.
 trust_accepts	trust-accepts	"service_key"	-	payload	{ 1: int, 3: int, * int => any } / identity-ref	on an edge of the class transparency	2.7.11 4.4.3.34	The Transparency Service's key: a COSE key with its kty and alg, or an identity reference whose key is its key:record.
 trust_accepts	trust-accepts	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+build_manifest	build-manifest-row	"author"	attesting_key_id	payload	identity-ref	always	3.1.2.1	The pipeline's key, equal to iss.
+build_manifest	build-manifest-row	"dimension"	dimension	payload	tstr	always	3.1.2.1	provenance:build_manifest:{target} with its version.
+build_manifest	build-manifest-row	"build"	-	payload	build-descriptor	always	3.1.2.1 5.3.2.11	The descriptor of the manifest blob the row cites.
+build_manifest	build-manifest-row	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	always	3.1.2.1 2.6.1.6	The manifest blob, by its digest: the digest of build.manifest_hash is among them.
+build_manifest	build-manifest-row	"refs"	-	payload	refs	always	3.1.2.1 2.4.1.1	The bundle in force when the row is signed, in refs.head: the one the pipeline's grant names or a later bundle of the same lineage.
+build_manifest	build-manifest-row	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds: the signed instant of the manifest, which the blob does not state.
+build_manifest	build-descriptor	"project"	-	payload	tstr	always	3.1.2.1	The project, equal to the blob's project and listed by the pipeline's grant.
+build_manifest	build-descriptor	"version"	-	payload	tstr	always	3.1.2.1	The version, equal to the blob's version.
+build_manifest	build-descriptor	"manifest_hash"	-	payload	hash-digest	always	3.1.2.1 5.3.2.11	The digest of the manifest blob.
+build_manifest	build-descriptor	"manifest_size"	-	payload	uint .ge 1	always	3.1.2.1 5.3.2.11	The blob's length in bytes, checked before the digest.
+grant	trust-confers	"dimension"	dimension	payload	tstr	always	3.1.1	trust:confers:v1.
+grant	trust-confers	"scope"	scope	payload	[+ tstr]	always	2.1 4.5.5	A set of scope tokens; a pipeline's holds infra:attest:provenance:build_manifest or infra:attest and no other.
+grant	trust-confers	"projects"	-	payload	[+ tstr]	on a build pipeline's grant	3.1.2.1 2.6.1.2	A set of project names; absent, the grant confers a build manifest for no project.
+grant	trust-confers	"refs"	-	payload	refs	always	4.2.1 2.6.1.9	The bundle in force the grant is counted over, in refs.head.
+grant	trust-confers	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+grant_withdrawal	grant-withdrawal	"refs"	-	payload	refs	always	4.2.1 2.4.1.1	The grant withdrawn, under target; the head the withdrawal acts from, under head.
+grant_withdrawal	grant-withdrawal	"lifts"	-	payload	true	where the count lifts single receipts	2.4.1.1	Present only as true.
+grant_withdrawal	grant-withdrawal	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+receipt	act-ack	"author"	attesting_key_id	payload	identity-ref	unless a body's count receipts	3.1.3 2.7.5	The one voice that acknowledges; a body's receipt is counted and carries none, and its subject (sub) is the body: its group id, or for the accord the lineage's name.
+receipt	act-ack	"dimension"	dimension	payload	tstr	always	3.1.3	act:ack:v1; the row's type is scores.
+receipt	act-ack	"refs"	-	payload	refs	always	3.1.3 2.7.5	The acts acknowledged, under the also role ack: 1 to 256 of them. A receipt names no head; one that names more than 256 acts is refused, ack_names_too_many.
+receipt	act-ack	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+objection	objection-vote	"author"	attesting_key_id	payload	identity-ref	always	3.1.9.2	The voter.
+objection	objection-vote	"dimension"	dimension	payload	tstr	always	3.1.9.2	objection:assent:v1 or objection:raised:v1; the states are closed at these two.
+objection	objection-vote	"cohort"	cohort	payload	tstr	always	3.1.9.2 3.3.6.4	The scope of the standing set the vote is cast in; self for the self-roster door.
+objection	objection-vote	"cohort_key_id"	cohort_key_id	payload	tstr	always	3.1.9.2 3.3.6.4	The standing set the vote is cast in; for the self-roster door the fedID.
+objection	objection-vote	"grounds"	grounds	payload	tstr	where the vote states its grounds	3.3.6.4	The voter's grounds.
+objection	objection-vote	"refs"	-	payload	refs	always	3.1.9.2 2.6.1.3	Exactly one row, under answers: the proposal answered or the act objected to. A vote that carries objects_to_attestation_id or dismisses_objection_id is refused.
+objection	objection-vote	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
 logical	-	the row id	attestation_id	none	-	-	2.6.1.3	Computed by every holder from the statement; the same for every voice of a counted row.
 logical	-	kid, iss and author	attesting_key_id	none	-	-	2.6.1.7	kid names the signing key; iss the signer's stable identity; author the author of an authored row.
 logical	-	label -70001	attestation_type	none	-	-	2.6.1.1	One of the five.
@@ -297,4 +387,37 @@ logical	-	none	original_content_hash	none	-	-	2.6.1.3	The earlier form's content
 logical	-	none	row	none	-	-	2.6.1.1	The protected header carries type, family and kid; the CWT claims carry iss and sub.
 logical	-	body.note	context	none	-	-	2.6.1.10	Bounded; no free text outside it.
 logical	-	a co-signature of these families	cosignatures, quorum_signatures	none	-	-	2.6.1.9	A further statement over the same payload, counted; never a payload member.
-logical	-	a cosign:pending or cosign:signature row	cosign:{state}	none	-	-	3.1.3 2.6.1.9	A statement over the event's own payload, named by the event's row id; it carries no member of its own.
+owner_binding	owner-binding	"author"	attesting_key_id	payload	identity-ref	always	3.2 2.7.5	The owner: an adult person, and any live key of their roster signs. The CWT sub is the key owned, an identity reference; that key's own statement over the same payload is the first-binding cosign.
+owner_binding	owner-binding	"dimension"	dimension	payload	tstr	always	3.2 2.4.1.2	ownership:responsible_party:node:v1 or ownership:responsible_party:agent:v1; the row's type is delegates_to.
+owner_binding	owner-binding	"delegation_purpose"	delegation_purpose	payload	"owner_binding"	always	3.2 2.4.1.2	The one single-valued purpose; a row of this family with another purpose is refused.
+owner_binding	owner-binding	"scope"	scope	payload	[+ tstr]	where the owner confers scopes	2.1 3.2	A set of scope tokens: a node's binding carries its infra tokens. Absent on an agent's binding, whose role is its template's (CC 2.7.11).
+owner_binding	owner-binding	"delegation_valid_from"	delegation_valid_from	payload	ms-time	where the binding states a start	2.4.1 2.6.2	POSIX milliseconds; absent reads asserted_at.
+owner_binding	owner-binding	"delegation_valid_until"	delegation_valid_until	payload	ms-time	where the binding states its end	3.2 2.4.1	POSIX milliseconds, later than the start; the binding lapses at this instant.
+owner_binding	owner-binding	"cohort_scope"	cohort_scope	payload	"self" / "family" / "community" / "affiliations" / "species" / "biosphere" / "federation"	always	2.1 3.2	Where the row is placed: the scope its owner first places the node at, and a row re-signed at another scope stands beside it.
+owner_binding	owner-binding	"community_id"	community_id	payload	group-ref	iff cohort_scope is community or affiliations	2.1 3.3.4	The group the row is placed in. It places the row and says nothing of who answers for the key.
+owner_binding	owner-binding	"family_id"	family_id	payload	group-ref	iff cohort_scope is family	2.1 3.3.4	The family the row is placed in.
+owner_binding	owner-binding	"on_behalf_of"	on_behalf_of	payload	group-ref	where the owner holds the key for an organisation	3.2 2.4	The organisation's affiliation, which answers alongside the owner. One that names no affiliation is refused, owner_binding_not_an_affiliation.
+owner_binding	owner-binding	"refs"	-	payload	refs	iff the row carries on_behalf_of	3.2 2.6.1.3	The affiliation's roster version, under head, and no other role; the affiliation's voices are further statements counted at that head.
+owner_binding	owner-binding	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+holon_claim	holon-claim	"author"	attesting_key_id	payload	identity-ref	always	3.1.11	The signer, under its own name. The CWT sub is the holon's id as text.
+holon_claim	holon-claim	"dimension"	dimension	payload	tstr	always	3.1.11	holon:claim:v1; the row's type is scores.
+holon_claim	holon-claim	"spec"	-	payload	tstr .size (1..128)	always	3.1.11	The declaration format whose checks were run, as ciris/holon-decl/0.
+holon_claim	holon-claim	"holon"	-	payload	tstr .size (1..128)	always	3.1.11	The holon's id: lower-case words joined by full stops, at most 128 bytes.
+holon_claim	holon-claim	"view"	-	payload	tstr .size (1..128)	always	3.1.11	The view's id, in the form of the holon's id.
+holon_claim	holon-claim	"consumer"	-	payload	tstr .size (1..128)	always	3.1.11	The consumer's id, in the form of the holon's id.
+holon_claim	holon-claim	"kind"	-	payload	tstr .size (1..64)	always	3.1.11	A token of the declaration's vocabulary, read from the blob; this document closes no set of kinds.
+holon_claim	holon-claim	"declaration"	-	payload	hash-digest	always	3.1.11 2.6.1.6	The SHA-256 digest of the declaration blob's stored bytes; it is among evidence_refs.
+holon_claim	holon-claim	"evidence_refs"	evidence_refs	payload	[+ hash-digest]	always	3.1.11 2.6.1.6	The declaration and every file the claim cites, each by its digest: a sequence.
+holon_claim	holon-claim	"score"	score	payload	fixed6-score	always	3.1.11 2.6.1.5	+10^6 where the signer says the checks held; -10^6 where the signer ran them and they did not hold; no other value.
+holon_claim	holon-claim	"confidence"	confidence	payload	fixed6-unit	where the signer states a confidence	2.6.1.5	fixed6 in [0, 10^6].
+holon_claim	holon-claim	"body"	-	payload	holon-claim-body	where the claim states a bound	3.1.11 2.6.1.10	The bound the claim states; a claim of exact agreement carries no bound.
+holon_claim	holon-claim	"refs"	-	payload	refs	where the row follows an earlier row of its signer for the same claim	3.1.11 2.6.1.3	The row it follows, under prev, and further heads of the same group under further_prev; on a supersedes, a recants or a withdraws, the row acted on under target. No head and no other role.
+holon_claim	holon-claim	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
+holon_claim	holon-claim-body	"bound"	-	payload:body	body-decimal	always	3.1.11 2.6.1.2	The bound, a decimal fraction (tag 4); it MAY be negative.
+holon_claim	holon-claim-body	"realised"	-	payload:body	body-decimal	iff basis is realised	3.1.11 2.6.1.2	The value realised, a decimal fraction (tag 4).
+holon_claim	holon-claim-body	"unit"	-	payload:body	tstr .size (1..64)	always	3.1.11	The bound's unit: a token of the declaration's vocabulary, read from the blob.
+holon_claim	holon-claim-body	"basis"	-	payload:body	"price" / "realised"	always	3.1.11	What the bound is stated on.
+window_step	window-step	"author"	attesting_key_id	payload	identity-ref	always	3.3.6.4	The key that holds the opener, or that lands the window: a key seated in the counted set at the head the opener names.
+window_step	window-step	"dimension"	dimension	payload	tstr	always	3.1.3	window:held:v1, window:landed:v1 or window:refused:v1; the states are closed at these three. The row's type is scores.
+window_step	window-step	"refs"	-	payload	refs	always	3.3.6.4 2.6.1.3	The opener, under target, and no head. A held row names no row under prev, and it MAY name other rows. A landing names its signer's held row under prev, exactly one row, and every row it counted under the also role cites, absent where it counted none, and no other role.
+window_step	window-step	"asserted_at"	asserted_at	payload	ms-time	always	3.3.6.4 2.6.2	POSIX milliseconds: the held row's instant, or the landing's. The window's length is read between the two.

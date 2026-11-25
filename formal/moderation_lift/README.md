@@ -1,7 +1,7 @@
 # `formal/moderation_lift` — the members' check on a moderator's act
 
 **The rule (CC 4.5.13).** One moderator's signature takes effect at once, and the members may
-lift it: a strict majority of the roster at the head the act names, objecting
+lift it: a strict majority of the members seated at the head the act names, the act's author apart, objecting
 inside the 48-hour window, with a floor of two voices. A lifted item returns consent-gated and
 never to plain view. An act on an immediate-removal basis and a ruling on a privately filed
 report are not objectable. The moderator whose act was lifted does not take it again on the
@@ -13,7 +13,10 @@ moderators, two people who may join later, one item.
 
 | Config | Result |
 |---|---|
-| `ModerationLift_at_act.cfg` | every property holds (41,050 states): a lift was carried by a strict majority of those seated when the moderator acted (`Inv_SeatedMajority`) and never by one voice (`Inv_TwoVoices`); only an ordinary act is lifted (`Inv_Untouchable`); once a moderator has acted, the item never returns to plain view (`Inv_NeverPlain`); the moderator whose act was lifted is never the actor again on the item (`Inv_NoSecondBite`); an act not lifted inside its window stands (`Inv_StandsAfterWindow`); the act is in force from the step it is taken (`Inv_AtOnce`) |
+| `ModerationLift_at_act.cfg` | every property holds (14,504 states): a lift was carried by a strict majority of those seated when the moderator acted, the author apart (`Inv_SeatedMajority`), the author's own objection is no voice (`Inv_AuthorNoVoice`) and never by one voice (`Inv_TwoVoices`); only an ordinary act is lifted (`Inv_Untouchable`); once a moderator has acted, the item never returns to plain view (`Inv_NeverPlain`); the moderator whose act was lifted is never the actor again on the item (`Inv_NoSecondBite`); an act not lifted inside its window stands (`Inv_StandsAfterWindow`); the act is in force from the step it is taken (`Inv_AtOnce`) |
+| `ModerationLift_four.cfg` | the same properties in a room of four with one later joiner (6,774 states) |
+| `ModerationLift_plant_author_votes.cfg` | the reading not taken, the author counted and heard: `Inv_AuthorNoVoice` violated |
+| `ModerationLift_witness_two_of_three.cfg` | a witness: in a room of four, two of the three members who are not the author lift the act (`Inv_NoLiftByTwoOfFour` violated, as it must be) |
 | `ModerationLift_live_brigade.cfg` | the contrast, the count taken over whoever is in the room when the objections are counted: `Inv_SeatedMajority` violated. Two people join after the act and carry the lift with one member |
 
 **What it does not model.** The recall of an elected moderator (a cosigned row at more than two

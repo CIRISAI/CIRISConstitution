@@ -16,7 +16,8 @@ accord:lifecycle:{kind}	authorship	*	counted	CC 4.2.1.3	It is a counted row of a
 accord:*	authorship	leaf=lifecycle:{kind}	counted	CC 3.4.1	a strict majority of the standing roster, one cosigned row naming the halt
 accord:*	authorship	*	authored	CC 3.4.1	One accord holder's signed row
 accord:invoke:constitutional:{halt_id}	authorship	*	authored	CC 3.4.1	pre-signable, fired on receipt, no vote
-membership:{stage}	authorship	leaf=widening|removal	counted	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	authorship	leaf=widening|removal|keeps	counted	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	authorship	leaf=widening|removal|keeps	counted	CC 3.1.3.2	A `keeps` row is counted under the group's `consensus_protocol`
 membership:{stage}	authorship	*	authored	CC 3.1.3.2	The first three are single-signer (below)
 membership:{stage}	authorship	*	authored	CC 3.1.3.2	a resignation is signed by the leaving member
 identity:occurrence_revocation	authorship	identity=user	counted	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's roster at the head it names**
@@ -37,7 +38,7 @@ ballot:moderator	authorship	*	authored	CC 4.5.13	There is **one ballot per perso
 ballot:moderator_acceptance	authorship	*	authored	CC 4.5.13	**The winner accepts by their own row**
 content_class:{class}	authorship	*	authored	CC 3.3.12	a member of a room signs it against a row at the room's scope
 collection:{kind}	authorship	act=group	counted	CC 3.1.3.4	a row that is the cohort's act is counted
-trust:{job}:{version}	authorship	act=group	counted	CC 3.4.5	A row that is a keyless family root's act, its roster reaching its `consensus_protocol`, is counted
+trust:{job}:{version}	authorship	act=group	counted	CC 3.4.5	A `trust:confers:v1` row is counted
 licensure:{authority_id}	authorship	act=group	counted	CC 2.4	A `licensure:{authority_id}` row that is the authority community's act under that protocol is counted
 key:record	authorship	act=group	counted	CC 3.1.3	so a record that is the anchors' act is counted
 self:delegates_to	second_signers	act=own	delegate=sub	CC 2.6.1.9	a second statement over the same payload, signed by the delegate, the row's `sub`
@@ -52,10 +53,12 @@ key:record	second_signers	*	predecessor_key=target	CC 3.1.3	The next key's recor
 retirement:{state}	second_signers	leaf=retired|custodian_minted	custodian=custodian	CC 7.5.5	holds custody only with its own consent: its signature on that row, or a row of its own that names it
 group:roster	second_signers	*	listed_member=members	CC 3.1.3.2	The record lists its members in `members`, each by its `key_id`, read as an identity.
 location_proof:{version}	authorship	*	subject	CC 4.5.9	is emitted **only** by the subject themselves
-trust:blessing	authorship	*	counted	CC 3.1.3	cosigned under the root's conferring family's `consensus_protocol`
 self:delegates_to	authorship	act=group	counted	CC 4.4.3.12	Appointment is the body's signature under its protocol together with the appointee's own `membership:acceptance`
 ownership:{relation}:{target_kind}:{version}	authorship	*	authored	CC 3.2	the signature is the claim of ownership
 admission:unit	authorship	act=group	counted	CC 3.1.3	A row naming an effect is counted over the head in `refs.head`
 admission:unit	authorship	*	authored	CC 3.1.3	any other row MAY carry `author`
 identity:occurrence	second_signers	*	occurrence=occurrence_key_id	CC 3.3.6	It also carries the occurrence key's own statement over the same payload, its proof of possession
 identity:occurrence	second_signers	*	occurrence=occurrence_key_id	CC 3.3.6.4	the bound key's own statement is its proof of possession, never a second authority
+act:ack	authorship	act=group	counted	CC 3.1.3	One voice signs it, or a body's count does.
+mesh_config:{key}	authorship	act=group	counted	CC 4.2.1	It is a row counted over a strict majority of the holders of the bundle in force, and it names that bundle in `refs.head`.
+mesh_config:{key}	authorship	*	authored	CC 4.2.1	Emergency relief is one holder's row, TTL ≤ 72 h.

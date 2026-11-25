@@ -10,5 +10,5 @@ To return an entry whose verdict you hold wrong, add a row to `formal/derivation
 
 | id | family | where | the sentence | the case | assert |
 |---|---|---|---|---|---|
-| edge/transparency_log:cosigned:{tree_size}/guard[accountable stream] | transparency_log:cosigned:{tree_size} | guard[accountable stream] | CC 5.3.3.11: For accountable streams, "published" means **witness-cosigned** | (stated) the guard reads the binding's signed `profile` (CC 5.3.3.5); the binding the edge ships carries no such member, so no shipped rule reads one | - |
+| edge/delivery_ack:{stream_id}/guard[accountable stream] | delivery_ack:{stream_id} | guard[accountable stream] | CC 5.3.3.11: For an accountable stream the head counts only once it is published | (stated) the guard reads the binding's signed `profile` (CC 5.3.3.5); the binding the edge ships carries no such member, so no shipped rule reads one | - |
 | edge/(link handshake)/transit handshake | (link handshake) | transit handshake | CC 5.3.3.10: both statics are used and both ends are authenticated by the handshake itself | (stated) the text's handshake and the shipped exchange differ in bytes and in who is authenticated; the kernel's rows carry no link and no handshake | - |

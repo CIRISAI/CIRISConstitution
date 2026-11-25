@@ -7,7 +7,7 @@ Single-source-of-truth codegen. Parses CC Part 3 "The Namespace"
 catalog of every dimension prefix family to manifests/namespace_registry.json — the file
 downstream crates vendor.
 
-Section CC 3.1 (`### 3.1.1` … `### 3.1.10`, minus the 3.1.7 summary) catalogs the prefix
+Section CC 3.1 (`### 3.1.1` … `### 3.1.11`, minus the 3.1.7 summary) catalogs the prefix
 families by owning component; section CC 3.4 (`### 3.4.1` …) defines the reserved-emit
 rules that this generator cross-references onto each family.
 
@@ -41,7 +41,7 @@ EXPECTED_FAMILIES = None
 # it checks the claim the prose actually makes — the MISSION.md-committed set, not the
 # catalogued total, which is legitimately 9.
 EXPECTED_NORMATIVE_COMPONENTS = 8       # CC 3.1: components committed by a sibling MISSION.md
-CATALOGUED_NOT_NORMATIVE = {"cirisbench"}   # CC 3.1.10 — README-cited, the ninth
+CATALOGUED_NOT_NORMATIVE = {"cirisbench", "holon"}   # CC 3.1.10, CC 3.1.11 — catalogued without a MISSION.md: the ninth and the tenth
 
 # ---- owning components -------------------------------------------------------
 # Every top-level `### 3.1.N` heading (N != 7 summary) is one owning component.
@@ -56,6 +56,7 @@ COMPONENT_REPO = {
     "lens": "CIRISLensCore",
     "node": "CIRISNodeCore",
     "cirisbench": "CIRISBench",
+    "holon": "CIRISHolon",
 }
 # CC 3.1.7 R1 — a fold keeps the row and moves the owner. Previous owning repos per
 # component, oldest first; the row carries `owning_repo_history` only when non-empty,
@@ -91,6 +92,18 @@ GATED_STEMS = [
 # CC 2.4 — the row-type slot is closed: the five primitives and the
 # registered carriers. A consumer builds its admission ALLOWLIST from this; the table in
 # constitution/part_2_the_grammar.md is the authority and main() refuses to build if the two differ.
+# Stems whose families are retired or renamed with no alias: no row claims a leaf beneath one,
+# and a dimension beneath one is refused namespace_family_unregistered, never read as open
+# vocabulary. Published beside the reserved and gated stems with `kind: retired`. Each is the
+# retired family's own stem and no wider: `transparency_log:` as a whole stays open vocabulary.
+RETIRED_STEMS = [
+    ("transparency_log:cosigned:", "retired: no family; a Transparency Service's own signed act is its Receipt", "CC 3.4.10"),
+    ("transparency_log:inclusion:", "retired: no family; an inclusion proof rides in a Receipt", "CC 3.4.10"),
+    ("transparency_log:consistency:", "retired: no family; a Transparency Service's Receipt carries the proof", "CC 3.4.10"),
+    ("lineage_witness:", "retired: no family; a charter names its Transparency Services", "CC 3.2"),
+    ("delivery_receipt:", "renamed with no alias: the family is delivery_ack:{stream_id}", "CC 3.4.6"),
+    ("cosign:", "retired: no family; a counted row short of its count is held as its own voices", "CC 3.3.4"),
+]
 ROW_TYPES_SOURCE_REL = "constitution/part_2_the_grammar.md"
 STRUCTURAL_ROW_TYPES = ["scores", "delegates_to", "supersedes", "withdraws", "recants"]
 CARRIER_ROW_TYPES = [   # (token, envelope kind, full-match pattern, sample) — EMPTY: the slot is the five
@@ -173,8 +186,7 @@ def check_row_types_table():
 
 RESERVED_STEMS = [
     ("accord:", "accord_holder-only", "CC 3.4.1"),
-    ("transparency_log:cosigned:", "witness-emitter (identity_type contains witness)", "CC 3.4.10"),
-    ("detection:", "detector-only (identity_type contains lenscore_detector)", "CC 3.4.8"),
+    ("detection:", "detector-only (the signer holds infra:detect)", "CC 3.4.8"),
     ("capacity:", "no-self-emit (attesting_key_id != attested_key_id)", "CC 3.4.5"),
     ("age_assurance:", "witness-reserved, subject-not-self", "CC 3.4.11"),
     ("capacity_assurance:", "witness-reserved, subject-not-self, attester != steward", "CC 3.4.12"),
@@ -200,8 +212,6 @@ def _reserved_rules():
         # CC 3.1.3 planes as rows: cosigned or possession-admitted, never substrate self-reports.
         (lambda p, c: p.startswith("group:roster"),
          "cosigned under the group's consensus_protocol; withdrawn only by a cosigned withdraws", "CC 3.1.3"),
-        (lambda p, c: p.startswith("trust:blessing"),
-         "cosigned under the conferring family's consensus_protocol (for the accord, a strict majority of the standing roster); withdrawn only by a cosigned withdraws", "CC 3.1.3"),
         (lambda p, c: p.startswith("key:record"),
          "self only (attesting_key_id == attested_key_id == the key), admitted by proof of possession", "CC 3.1.3"),
         (lambda p, c: p.startswith("key:revocation"),
@@ -251,18 +261,21 @@ def _reserved_rules():
         # CC 3.1.9.4: a witness's first-person record of the view it scored through.
         (lambda p, c: p.startswith("observation:access_assumption"),
          "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids non-empty, the observed agent; never the subject itself)", "CC 3.1.9.4"),
-        # CC 3.2 T6: the lineage-witness consent ceremony — per-leaf emitter.
-        (lambda p, c: p.startswith("lineage_witness:"),
-         "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)", "CC 3.2"),
         # CC 3.1.3.2: the membership ceremony — per-leaf emitter, not a substrate self-report.
-        # CC 3.1.3 cosignature collection: member-signed, never a substrate self-report.
-        (lambda p, c: p.startswith("cosign:"),
-         "per-leaf: pending = the event's primary signer, an active member of the group at the roster head the event names; signature = the member whose signature it carries; served to the group's active members only; only the proposer withdraws a pending row; a signature row is never withdrawn", "CC 3.1.3"),
+        # CC 5.3.3.8: a stream's signed head, written by whoever produces the stream.
+        (lambda p, c: p == "stream:head",
+         "self: the signer is the row's author and the stream's producer, a member's key and never a node's; sub is stream: and the stream's id; no second signer", "CC 5.3.3.8"),
+        # CC 2.7.5 / CC 2.4.1.1: a receipt of acts, by a voice at the head the acts name.
+        (lambda p, c: p == "act:ack",
+         "a voice at the head the acts name: the conferrer, another holder of the body the acts were done for, or a receipter an offer names; never the signer of an act it names, and never a node; one voice or the body's count", "CC 2.4.1.1"),
+        # CC 2.7 / CC 3.3.6.4: the held row and the landing of a window that binds others.
+        (lambda p, c: p == "window:{state}",
+         "a key seated in the counted set at the head the opener names; for the self roster, a key of the roster; a landing by any other key concludes nothing", "CC 3.3.6.4"),
         (lambda p, c: p.startswith("membership:"),
-         "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member", "CC 3.1.3.2"),
+         "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member; keeps = counted under the group's consensus_protocol", "CC 3.1.3.2"),
         # CC 3.4.6: a SUBSCRIBER's signed acknowledgement, membership-gated — the row says
         # "not a substrate-self-report", so it must come before the edge-wide rule.
-        (lambda p, c: p.startswith("delivery_receipt:"),
+        (lambda p, c: p.startswith("delivery_ack:"),
          "subscriber-only (attesting_key_id is a current subscriber/member of the named stream; not a substrate self-report)", "CC 3.4.6"),
         # CC 3.3.10.1: an in-grammar
         # ledger is owner-serialized content, not a substrate self-report — the table cell says so.
@@ -270,7 +283,16 @@ def _reserved_rules():
          "the ledger's single owner (the steward-bound identity of its ledger_id triple); a delegation confers no write on a ledger", "CC 3.3.10.1"),
         # CC 3.4.2 / 3.4.4: the hard-case kinds are open and the emitter is reserved to the substrate.
         (lambda p, c: p.startswith("hard_case:"),
-         "substrate-emitted (identity_type substrate_persist); the kinds are open, the emitter is reserved; a non-substrate emission is a category error", "CC 3.4.4"),
+         "substrate-emitted (the node that admitted or refused the row, under infra:attest); the kinds are open, the emitter is reserved; a non-substrate emission is a category error", "CC 3.4.4"),
+        # CC 2.7.11, CC 4.5.13, CC 3.3.6.2: a person's or a holder's row in a substrate-owned family, never a substrate self-report.
+        (lambda p, c: p == "admission:unit",
+         "a person's key, alone or as a voice of the group whose head the row names; never a substrate self-report", "CC 2.7.11"),
+        (lambda p, c: p == "ballot:moderator",
+         "a member of the roster the election names, one ballot a person; never a substrate self-report", "CC 4.5.13"),
+        (lambda p, c: p == "ballot:moderator_acceptance",
+         "the count's winner over the bound ballot set; never a substrate self-report", "CC 4.5.13"),
+        (lambda p, c: p == "transport:canonical_rebind",
+         "the accord's holders, counted at a strict majority of the holders of the bundle in force; never a substrate self-report", "CC 3.3.6.2"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),
@@ -295,7 +317,7 @@ PLACEHOLDER_CLASS = {
         "detector", "domain", "entity_type", "factor", "form", "grounds", "job", "key", "kind", "language",
         "layer", "level", "network", "outcome", "period", "platform", "platform_or_target",
         "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",
-        "scope", "stage", "stance", "state", "substrate_rung", "suite", "target_kind", "tier", "version",
+        "scope", "stage", "stance", "state", "subject_kind", "substrate_rung", "suite", "target_kind", "tier", "version",
     },
     "external": {"currency", "lang_code", "rating", "unit"},
     "value": {
@@ -790,7 +812,8 @@ def main():
         ("external_standards", OrderedDict(      # CC 3.1.7 R3 `external`
             (n, OrderedDict([("standard", s), ("pattern", p)])) for n, (s, p) in sorted(EXTERNAL_STANDARDS.items()))),
         ("reserved_stems", [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c), ("kind", "reserved")]) for s, r, c in RESERVED_STEMS]
-                         + [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c), ("kind", "gated")]) for s, r, c in GATED_STEMS]),
+                         + [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c), ("kind", "gated")]) for s, r, c in GATED_STEMS]
+                         + [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c), ("kind", "retired")]) for s, r, c in RETIRED_STEMS]),
         ("refusal_tokens", OrderedDict([         # the matcher's tokens — never bespoke
             ("case_malformed", "namespace_dimension_case_malformed"),
             ("vocab_value_unregistered", "namespace_vocab_value_unregistered"),
@@ -917,6 +940,16 @@ def main():
         "detection:cross_agent_divergence",    # -> detection:{detector}
         "detection:temporal_drift",            # -> detection:{detector}
         "credits:{domain}:{language}:substrate_building",   # -> credits:{domain}:{language}:{subject}; a {subject} value
+        # The transparency plane is Transparency Services with their own logs and Receipts (CC 3.2 T6,
+        # CC 5.3.1): no row family carries a cosignature, an inclusion proof or a consistency proof.
+        "transparency_log:cosigned:{tree_size}",   # retired; its stem is fenced (RETIRED_STEMS)
+        "transparency_log:inclusion",              # retired; its stem is fenced
+        "transparency_log:consistency",            # retired; its stem is fenced
+        "lineage_witness:{stage}",                 # retired; the stem is fenced
+        "trust:blessing",                          # retired; a pipeline's grant is a trust:confers:v1 row
+        "delivery_receipt:{stream_id}",            # -> delivery_ack:{stream_id}; no alias, the old stem is fenced
+        # A counted row short of its count is held as its own voices (CC 3.3.4): no family collects them.
+        "cosign:{state}",                          # retired; the stem is fenced
     }
     if os.path.exists(OUT):
         try:

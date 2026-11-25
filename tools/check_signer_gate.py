@@ -31,21 +31,19 @@ import guard_grammar as gg
 
 J = lambda p: json.load(open(os.path.join(ROOT, "manifests", p), encoding="utf-8"))
 ENTRY = ("attest", "authorize")
-SUBSTRATE = ("identity:substrate_persist", "identity:substrate_edge", "identity:lenscore_detector")
+SUBSTRATE = ("infra:attest", "identity:substrate_persist", "identity:substrate_edge", "identity:lenscore_detector")
 # (property, family or `family <- emitter`) -> the conflict that records it
-# Families whose signer cell is the shipped store's and still reads a declared type or the undivided assurance duty.
-# They move to the duty of CC 3.4.7 when the store's gates do (C564); the list only shrinks.
-STAGED = ("system:*", "audit_chain:hash_continuity", "corpus_health:n_eff_measurable", "federation_directory:replication_lag",
-          "identity_continuity:relational_anchor", "hard_case:{kind}", "detection:correlated_action:{axis}",
-          "detection:distributive:access:{resource_type}", "detection:hash_chain_integrity", "detection:intra_agent_consistency",
-          "detection:{detector}", "transparency_log:cosigned:{tree_size}", "age_assurance:{level}:{band}:{version}",
+# Families whose signer cell is the shipped store's and still reads the undivided assurance duty.
+# They move to the duty of CC 3.4.7 when the store's gates do (C564); the list only shrinks. The node's self-reports,
+# the hard cases and the detections carry the duty of CC 3.4.7 as a text cell (formal/derivation/transition_text.tsv);
+# the store's gate on a declared type is a recorded departure (tools/divergence_cases.py, C564).
+STAGED = ("age_assurance:{level}:{band}:{version}",
           "capacity_assurance:reversible_excluded:{domain}:{version}", "capacity_assurance:reversible_pending:{domain}:{version}",
           "capacity_assurance:{level}:{domain}:{band}:{version}")
 KNOWN = {
     **{("seat", f): "C564: the signer cell is the shipped store's gate; CC 3.4.7 names a duty the store does not yet check" for f in STAGED},
-    ("emitter", "consent:state:{stance} <- identity:substrate_persist"): "C450: the text gives the expired stance to the store alone; the signer cell (the shipped store) admits the subject and the owner only",
+    ("emitter", "consent:state:{stance} <- infra:attest"): "C450: the text gives the expired stance to the store alone; the signer cell (the shipped store) admits the subject and the owner only",
     ("duty", "takedown_notice:{basis}"): "C536: the signer cell is typed as a takedown holder alone. The store has admitted the content's subject since its v55, so that part is this table's to correct; the detecting node's owner on a hash match is staged on the store (the node signs a detection row, the owner the notice naming it)",
-    ("duty", "slashing:{outcome}"): "C447, C458: the signer cell (the shipped store) admits any registered key; CC 4.5.5 admits a slash duty-holder",
 }
 
 
@@ -113,6 +111,18 @@ def main():
             pol = t["policy"]["value"]["policy"]
             if pol != "selfAct" and not t["roles"]["value"] and t["roles"]["source"] != "gap":
                 fails.append(("counted", f"{f} {t['verb']}", f"runs {pol} and names no role"))
+
+    # 4b. the registry and the family model agree on who a substrate self-report is: a node about itself
+    fm = {r["family"]: r for r in json.load(open(os.path.join(ROOT, "manifests", "family_model.json"), encoding="utf-8"))["rows"]}
+    for f in reg["families"]:
+        rule = (f.get("reserved_rule") or {}).get("rule", "")
+        if rule != "substrate-self-report" or f["prefix"] not in fm: continue
+        sr = fm[f["prefix"]]["signer_rule"]["value"]
+        who = sr.get("who", "") if isinstance(sr, dict) else str(sr)
+        if not ("substrate" in who or who == "seat_role(infra:attest)" or who == "self"):
+            fails.append(("self_report", f["prefix"], f"the registry reserves it as a substrate self-report and the family model's signer is {who!r}"))
+        if isinstance(sr, dict) and "person" in (fm[f["prefix"]]["signer_rule"].get("qualifier") or ""):
+            fails.append(("self_report", f["prefix"], "the registry reserves it as a substrate self-report and the family model gives a person's key"))
 
     # 5. duty
     from build_family_model import section_span

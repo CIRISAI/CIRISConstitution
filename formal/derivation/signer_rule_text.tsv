@@ -32,19 +32,14 @@ consent:{kind}	self | owner_of_subject(for_key_id) x none x {}	CC 3.3.1	replicat
 consent:{kind}	self x delegates_to(chain rooted at a subject) x {}	CC 3.3.1	scope
 consent:{kind}	self | owner_of_subject(for_key_id) x delegates_to(chain rooted at a subject) x {} ; the stance expired is the store's alone (CC 3.4.5)	CC 3.3.1	state
 consent:{kind}	self x delegates_to(chain rooted at a subject) x {}	CC 3.3.1	stream
-cosign:{state}	roster_member(at) x none x {} ; the event's primary signer, an active member of the group	CC 3.1.3	pending
-cosign:{state}	roster_member(at) x none x {} ; the member whose signature the row carries	CC 3.1.3	signature
 deferral:request	self x none x {}	CC 3.1.9.4	
 deferral:response:{outcome}	seat_role(wa) | steward x delegates_to(resolve_deferral, depth-capped, revocable per link) x {} ; the conferrer, or a key on a live chain from the conferrer	CC 4.3	
 delivery:{class}	seat_role(infra:attest) x none x {}	CC 3.4.3	
-delivery_receipt:{stream_id}	roster_member(at) x none x {} ; a current member of the community or stream the receipt names	CC 3.4.6	
+delivery_ack:{stream_id}	roster_member(at) x none x {} ; a current member of the community or stream the receipt names	CC 3.4.6	
 device:label	owner_of_subject x none x {} ; about an occurrence the signer owns	CC 3.1.1	
 file:{version}	self x none x {} ; the file's author, or a device that author acts through	CC 3.1.3.4	
 key_boundary:{scope}	seat_role(infra:attest) x none x {}	CC 3.4.3	
 lawful_order:release	steward x none x {} ; the steward of the retired agent	CC 3.1.5	
-lineage_witness:{stage}	founder x none x {} ; an active founder of the lineage named	CC 3.1.3	proposal
-lineage_witness:{stage}	owner_of_subject x none x {} ; the owner of the node named, never the node and never a founder	CC 3.1.3	acceptance
-lineage_witness:{stage}	owner_of_subject x none x {} ; the owner of the node named, never the node and never a founder	CC 3.1.3	decline
 observation:access_assumption	self x none x {} ; a first-person observation	CC 3.1.9.4	
 observation:reachability	self x none x {} ; a first-person observation	CC 3.1.9.4	
 peer_reachability:{network}	seat_role(infra:attest) x none x {}	CC 3.4.3	
@@ -60,5 +55,17 @@ retirement:{state}	seat_role(operator) | seat_role(wa) x none x {} ; one row cos
 trace_summary:{kind}	self x none x {} ; the attester is among the subjects	CC 3.4.5	
 transport:{kind}	seat_role(infra:attest) x none x {}	CC 3.4.3	
 location_proof:{version}	self x none x {} ; the subject, attesting_key_id is the subject	CC 4.5.9	
-trust:blessing	roster_member(at) x none x {} ; a voice of the conferring roster, counted under its consensus_protocol	CC 3.1.3	
 admission:unit	self x none x {} | roster_member(at) x none x {} ; a person's key, alone or as a voice of the group whose head the row names	CC 3.1.3	
+stream:head	self x none x {}	CC 3.1.3	
+contribution:{subject_kind}	self x none x {}	CC 3.1.9.3	
+slashing:{outcome}	seat_role(slash) x delegates_to(slash) x {} ; any other signer concludes nothing	CC 3.4.7	
+community:listing	seat_role(moderate) x delegates_to(moderate) x {} ; a holder of the community's moderate duty	CC 3.4.7	
+evidence:{suite}:{kind}:{cell}:{prefix}	seat_role(infra:attest) x none x {} ; delegated by the root or conferred by an accord count over its key record	CC 3.1.5.5	
+age_self_declared:band:{band}:{version}	self x none x {} ; the subject's own occurrence or an admitted occurrence of it	CC 3.4.11	
+attestation:self_verify	self x none x {} ; the running node about itself	CC 3.1.2.1	
+hardware_custody:{platform}	self x none x {} ; a statement about the emitter itself	CC 3.4.5	
+watchlist:{id}	seat_role(moderate) | seat_role(takedown) x none x {} ; for the group the watchlist is enabled in	CC 3.1.9.4	
+act:ack	roster_member(at) x none x {} ; the conferrer (a count where the conferrer is one), another holder of the body the acts were done for, or the receipter the offer names; never the signer of an act it names	CC 3.1.3	
+holon:claim	any_registered x none x {} ; any key under its own name, whose claim the reader's trust set weighs	CC 3.1.11	
+mls:leaf_vouch	self x none x {} ; the member whose leaf it is, under its own key on the device	CC 3.1.4	
+window:{state}	roster_member(at) x none x {} ; a key seated in the counted set at the head the opener names; for the self roster, a key of the roster	CC 3.3.6.4	

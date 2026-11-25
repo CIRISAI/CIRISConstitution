@@ -1,0 +1,62 @@
+; CC 3.1.2.1 — the build-manifest blob, ciris-binary-manifest/1 (FSD-008 §6; accepted by CC 2026-11-22).
+; Written by CIRISVerify for CC to vendor as manifests/binary_manifest_v1.cddl; hand-written. RFC 8610 CDDL over CBOR with CBOR Common
+; Deterministic Encoding (draft-ietf-cbor-cde-13, updating RFC 8949), as CC 2.6.1.2 encodes every object.
+; The blob is NOT a signed object: no typ, no key, no signature. A build row (provenance:build_manifest:{target}:v1)
+; cites it by content hash in evidence_refs; the row is its signature. No floats; no tag-4 decimals.
+; The known-answer vectors are CIRISVerify's (binary_manifest_v1_vectors.json, from gen_binary_manifest_v1.py, beside this file); this file mints none.
+;
+; "format" is a member, checked before any other member: it cannot be the first bytes, since CDE orders map
+; keys by the bytewise order of their encodings (so "tool" precedes "format" on the wire).
+; The blob is a pure function of (file, project, version, target, tool): it carries nothing about the run, so
+; two producers given the same final file emit the same bytes. A generated_at (or any other member) is refused.
+; Every hash is a plain bstr .size 32, with no [-16, digest] wrapper: the format string pins SHA-256 for v1.
+; A row whose build.project / build.version (or its dimension's {target}) differs from the blob's is refused
+; build_manifest_descriptor_mismatch, the same token a size or hash mismatch between row and blob takes.
+
+ceg-anything = build-manifest-blob / function-leaf
+
+build-manifest-blob = {
+  "format": "ciris-binary-manifest/1",     ; a member, checked before any other member; any other value is refused
+  "project": descriptor-project,           ; = the row's build.project, byte for byte (project, version, target: text as given)
+  "version": descriptor-version,           ; = the row's build.version, compared byte for byte
+  "target": target-triple,                 ; = the row's dimension {target} = the reader's current target
+  "binary_hash": sha256,                   ; canonical_binary_hash of the final file (whole file; Mach-O: the __TEXT region)
+  "functions_root": sha256,                ; always: the Merkle root over the function table (below)
+  ? "functions": function-table,           ; optional inline table; when present its root equals functions_root
+  "tool": tstr .size (1..128),             ; the generator and its version, e.g. "ciris-manifest-tool/23.6.0", and
+                                           ; NOTHING about the run (no host, path, time or build id): constant for a release
+}
+
+descriptor-project = tstr .regexp "[a-z0-9-]{1,64}"
+descriptor-version = tstr .size (1..64)
+target-triple = tstr .regexp "[!-~]{1,64}"          ; printable ASCII, no space
+sha256 = bstr .size 32                              ; a SHA-256 digest: plain bytes, never hex text, never [-16, digest]
+
+; One entry per function, keyed by its symbol name. Zero functions is refused.
+; offset is relative to the base the runtime resolves for the image that holds the code:
+;   ELF     symbol vaddr - p_vaddr of the executable PT_LOAD segment containing .text
+;   Mach-O  symbol vaddr - vmaddr of the __TEXT segment (the image's Mach-O header)
+;   PE      the export's RVA (relative to the image base, the module handle)
+; hash is SHA-256 of the function's size bytes at that offset.
+function-table = { + function-name => function-entry }
+function-name = tstr .size (1..1024)
+function-entry = {
+  "offset": uint,
+  "size": uint,
+  "hash": sha256,
+}
+
+; functions_root, the locale tree's construction (CC 3.1.2.1, the paragraphs beginning "A locale manifest is a
+; Merkle tree of one leaf per locale" and "Locale ordering: ... Padding: repeat the last leaf to the next power of
+; two"; the generic known answers are the vectors' merkle_tree section):
+;   leaves      one per function, in the BYTE ORDER OF THE NAMES (not the length-first CDE key order of function-table)
+;   leaf        CDE(function-leaf), hashed SHA-256(0x00 || leaf)        (RFC 6962 leaf prefix)
+;   parent      SHA-256(0x01 || left || right)                          (RFC 6962 node prefix)
+;   padding     a non-power-of-two count is padded by repeating the last leaf to the next power of two
+;               (not RFC 6962's split, and not the per-level duplication of CC 6.1.1); one leaf is its own root
+function-leaf = {
+  "name": function-name,
+  "offset": uint,
+  "size": uint,
+  "hash": sha256,
+}

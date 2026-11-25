@@ -94,6 +94,7 @@
         "state": "vocab",
         "stream_id": "value",
         "subject": "value",
+        "subject_kind": "vocab",
         "substrate_rung": "vocab",
         "suite": "vocab",
         "target": "value",
@@ -131,15 +132,9 @@
           "stem": "accord:"
         },
         {
-          "cc_ref": "CC 3.4.10",
-          "kind": "reserved",
-          "rule": "witness-emitter (identity_type contains witness)",
-          "stem": "transparency_log:cosigned:"
-        },
-        {
           "cc_ref": "CC 3.4.8",
           "kind": "reserved",
-          "rule": "detector-only (identity_type contains lenscore_detector)",
+          "rule": "detector-only (the signer holds infra:detect)",
           "stem": "detection:"
         },
         {
@@ -195,6 +190,42 @@
           "kind": "gated",
           "rule": "closed: takedown_notice:{basis}:v1 is the only family",
           "stem": "takedown_notice:"
+        },
+        {
+          "cc_ref": "CC 3.4.10",
+          "kind": "retired",
+          "rule": "retired: no family; a Transparency Service's own signed act is its Receipt",
+          "stem": "transparency_log:cosigned:"
+        },
+        {
+          "cc_ref": "CC 3.4.10",
+          "kind": "retired",
+          "rule": "retired: no family; an inclusion proof rides in a Receipt",
+          "stem": "transparency_log:inclusion:"
+        },
+        {
+          "cc_ref": "CC 3.4.10",
+          "kind": "retired",
+          "rule": "retired: no family; a Transparency Service's Receipt carries the proof",
+          "stem": "transparency_log:consistency:"
+        },
+        {
+          "cc_ref": "CC 3.2",
+          "kind": "retired",
+          "rule": "retired: no family; a charter names its Transparency Services",
+          "stem": "lineage_witness:"
+        },
+        {
+          "cc_ref": "CC 3.4.6",
+          "kind": "retired",
+          "rule": "renamed with no alias: the family is delivery_ack:{stream_id}",
+          "stem": "delivery_receipt:"
+        },
+        {
+          "cc_ref": "CC 3.3.4",
+          "kind": "retired",
+          "rule": "retired: no family; a counted row short of its count is held as its own voices",
+          "stem": "cosign:"
         }
       ],
       "version_segment": {
@@ -218,24 +249,26 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc21",
+    "cc_version": "1.0-rc22",
     "components_outside_normative": [
-      "cirisbench"
+      "cirisbench",
+      "holon"
     ],
     "generator": "tools/build_cc_namespace.py",
-    "n_components": 9,
+    "n_components": 10,
     "n_components_normative": 8,
     "n_families": 187,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
-      "attestation": 21,
+      "attestation": 18,
       "cirisbench": 1,
+      "holon": 1,
       "lens": 9,
-      "node": 50,
+      "node": 51,
       "persist": 37,
       "registry": 20,
-      "transport-delivery": 7
+      "transport-delivery": 8
     },
     "polarity_classes": {
       "+1.0 only": {
@@ -295,7 +328,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "1f81a1b1ab6f29b645d292f70d8d15810b475fbde5d6444ffe33b4ee68845bd2",
+    "registry_sha256": "5f8ff71fd1415c88179b73a8b7d9a047613b22cb81f609909ca9ab9ccc2a8d69",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +343,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "ede8773f5d38b821b9b5cd240bc4be5a2db15145fdf46cffd30c997bbd9b647f"
+    "source_sha256": "b7d87df89be792d6dce014aa22c64b724cafb9657a0eb6b07683782988cc67d7"
   },
   "families": [
     {
@@ -518,6 +551,29 @@
       ]
     },
     {
+      "cc_section": "3.1.3",
+      "description": "A receipt of one or more acts (registered under CC 3.1.7 R2(a); CC 2.7.5, CC 2.4.1.1): the signer acknowledges the acts it names under refs.also ack, at most 256 of them, and names no head.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "act:ack",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 2.4.1.1",
+        "rule": "a voice at the head the acts name: the conferrer, another holder of the body the acts were done for, or a receipter an offer names; never the signer of an act it names, and never a node; one voice or the body's count"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "act"
+        },
+        {
+          "class": "literal",
+          "segment": "ack"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.9.6",
       "description": "Active vs Below-Active per 30-day window.",
       "owning_component": "node",
@@ -545,8 +601,8 @@
       "prefix": "admission:unit",
       "reserved": true,
       "reserved_rule": {
-        "cc_ref": "CC 3.4.3",
-        "rule": "substrate-self-report"
+        "cc_ref": "CC 2.7.11",
+        "rule": "a person's key, alone or as a voice of the group whose head the row names; never a substrate self-report"
       },
       "segments": [
         {
@@ -876,8 +932,8 @@
       "prefix": "ballot:moderator",
       "reserved": true,
       "reserved_rule": {
-        "cc_ref": "CC 3.4.3",
-        "rule": "substrate-self-report"
+        "cc_ref": "CC 4.5.13",
+        "rule": "a member of the roster the election names, one ballot a person; never a substrate self-report"
       },
       "segments": [
         {
@@ -899,8 +955,8 @@
       "prefix": "ballot:moderator_acceptance",
       "reserved": true,
       "reserved_rule": {
-        "cc_ref": "CC 3.4.3",
-        "rule": "substrate-self-report"
+        "cc_ref": "CC 4.5.13",
+        "rule": "the count's winner over the bound ballot set; never a substrate self-report"
       },
       "segments": [
         {
@@ -1967,6 +2023,25 @@
       ]
     },
     {
+      "cc_section": "3.1.9.3",
+      "description": "A node's Contribution on a subject kind: the row a vote, a tally and a diversity check name by its row id.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "contribution:{subject_kind}",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "contribution"
+        },
+        {
+          "class": "vocab",
+          "segment": "{subject_kind}"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.3",
       "description": "",
       "owning_component": "persist",
@@ -1986,34 +2061,6 @@
         {
           "class": "literal",
           "segment": "n_eff_measurable"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.3",
-      "description": "The collection of cosignatures for an event its protocol has not yet admitted (registered under CC 3.1.7 R2(a); the hold of CC 3.3.4, general to any cosigned row of CC 2.4): {state} \u2208 pending | signature \u2014 closed; wire cosign:pending:v1, co",
-      "owning_component": "persist",
-      "owning_repo": "CIRISPersist",
-      "polarity": "positive-only",
-      "prefix": "cosign:{state}",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.1.3",
-        "rule": "per-leaf: pending = the event's primary signer, an active member of the group at the roster head the event names; signature = the member whose signature it carries; served to the group's active members only; only the proposer withdraws a pending row; a signature row is never withdrawn"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "cosign"
-        },
-        {
-          "class": "vocab",
-          "open": false,
-          "segment": "{state}",
-          "values": [
-            "pending",
-            "signature"
-          ]
         }
       ]
     },
@@ -2174,7 +2221,7 @@
       "owning_component": "transport-delivery",
       "owning_repo": "CIRISEdge",
       "polarity": "signed",
-      "prefix": "delivery_receipt:{stream_id}",
+      "prefix": "delivery_ack:{stream_id}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.6",
@@ -2183,7 +2230,7 @@
       "segments": [
         {
           "class": "literal",
-          "segment": "delivery_receipt"
+          "segment": "delivery_ack"
         },
         {
           "class": "value",
@@ -2201,7 +2248,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2229,7 +2276,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2264,7 +2311,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2287,7 +2334,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2310,7 +2357,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
+        "rule": "detector-only (the signer holds infra:detect)"
       },
       "segments": [
         {
@@ -2767,7 +2814,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "A family's or community's roster version: the signed roster record at a version that CC 3.2 T6 makes the lineage head, as a cosigned scores row.",
+      "description": "A family's or community's roster version: the signed roster record at a version, as a cosigned scores row.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -2798,7 +2845,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.4",
-        "rule": "substrate-emitted (identity_type substrate_persist); the kinds are open, the emitter is reserved; a non-substrate emission is a category error"
+        "rule": "substrate-emitted (the node that admitted or refused the row, under infra:attest); the kinds are open, the emitter is reserved; a non-substrate emission is a category error"
       },
       "segments": [
         {
@@ -2866,6 +2913,25 @@
         {
           "class": "vocab",
           "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.11",
+      "description": "A signer's statement that the checks of a holon declaration's spec held for one claim over the digests the row cites.",
+      "owning_component": "holon",
+      "owning_repo": "CIRISHolon",
+      "polarity": "boolean-via-score",
+      "prefix": "holon:claim",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "holon"
+        },
+        {
+          "class": "literal",
+          "segment": "claim"
         }
       ]
     },
@@ -3297,35 +3363,6 @@
       ]
     },
     {
-      "cc_section": "3.1.3",
-      "description": "The ceremony by which a node becomes a witness of a trust-root lineage (CC 3.2 T6), one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline \u2014 closed.",
-      "owning_component": "persist",
-      "owning_repo": "CIRISPersist",
-      "polarity": "positive-only",
-      "prefix": "lineage_witness:{stage}",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.2",
-        "rule": "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "lineage_witness"
-        },
-        {
-          "class": "vocab",
-          "open": false,
-          "segment": "{stage}",
-          "values": [
-            "proposal",
-            "acceptance",
-            "decline"
-          ]
-        }
-      ]
-    },
-    {
       "cc_section": "3.1.9.5",
       "description": "Names the scale at which a decision is being made.",
       "owning_component": "node",
@@ -3399,7 +3436,7 @@
     },
     {
       "cc_section": "3.1.3.2",
-      "description": "The membership ceremony, one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline | widening | removal | resignation \u2014 closed.",
+      "description": "The membership ceremony, one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline | widening | removal | resignation | keeps \u2014 closed.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -3407,7 +3444,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.3.2",
-        "rule": "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member"
+        "rule": "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member; keeps = counted under the group's consensus_protocol"
       },
       "segments": [
         {
@@ -3424,14 +3461,15 @@
             "decline",
             "widening",
             "removal",
-            "resignation"
+            "resignation",
+            "keeps"
           ]
         }
       ]
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Mesh-configuration row (CC 4.2.1): trust-root-emitted, a scores row authored under the root's trust:confers:v1 edge on the delegation plane (a delegates_to needs a delegate; a configuration names none); relieve-never-expand; most-restrictiv",
+      "description": "Mesh-configuration row (CC 4.2.1): trust-root-emitted, a scores row authored under a grant counted over the holders of the bundle in force (a delegates_to needs a delegate; a configuration names none); relieve-never-expand; most-restrictive",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -3468,6 +3506,29 @@
         {
           "class": "vocab",
           "segment": "{substrate_rung}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.4",
+      "description": "A member's vouch for the MLS leaf key of one of its devices (CC 5.1).",
+      "owning_component": "transport-delivery",
+      "owning_repo": "CIRISEdge",
+      "polarity": "positive-only",
+      "prefix": "mls:leaf_vouch",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "mls"
+        },
+        {
+          "class": "literal",
+          "segment": "leaf_vouch"
         }
       ]
     },
@@ -3645,10 +3706,9 @@
         },
         {
           "class": "vocab",
-          "open": true,
+          "open": false,
           "segment": "{state}",
           "values": [
-            "proposal",
             "assent",
             "raised"
           ]
@@ -4408,6 +4468,29 @@
     },
     {
       "cc_section": "3.1.3",
+      "description": "A stream's signed head (registered under CC 3.1.7 R2(a); CC 5.3.3.5, CC 5.3.3.8): the stream's epoch, its tree size and its root at one instant, with the room where the stream is accountable.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "stream:head",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 5.3.3.8",
+        "rule": "self: the signer is the row's author and the stream's producer, a member's key and never a node's; sub is stream: and the stream's id; no second signer"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "stream"
+        },
+        {
+          "class": "literal",
+          "segment": "head"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
       "description": "",
       "leaves": [],
       "leaves_closed": false,
@@ -4558,72 +4641,6 @@
       ]
     },
     {
-      "cc_section": "3.1.2",
-      "description": "RFC 6962 consistency proof between two STHs.",
-      "owning_component": "attestation",
-      "owning_repo": "CIRISVerify",
-      "polarity": "boolean-via-score",
-      "prefix": "transparency_log:consistency",
-      "reserved": false,
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "transparency_log"
-        },
-        {
-          "class": "literal",
-          "segment": "consistency"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.2",
-      "description": "Witness cosignature on an STH (substrate-conformance path; see CC 5.3.1 endpoints).",
-      "owning_component": "attestation",
-      "owning_repo": "CIRISVerify",
-      "polarity": "signed",
-      "prefix": "transparency_log:cosigned:{tree_size}",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.10",
-        "rule": "witness-emitter (identity_type contains witness)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "transparency_log"
-        },
-        {
-          "class": "literal",
-          "segment": "cosigned"
-        },
-        {
-          "class": "value",
-          "pattern": "^[0-9]+$",
-          "segment": "{tree_size}"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.2",
-      "description": "RFC 6962 inclusion proof for an audit leaf.",
-      "owning_component": "attestation",
-      "owning_repo": "CIRISVerify",
-      "polarity": "boolean-via-score",
-      "prefix": "transparency_log:inclusion",
-      "reserved": false,
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "transparency_log"
-        },
-        {
-          "class": "literal",
-          "segment": "inclusion"
-        }
-      ]
-    },
-    {
       "cc_section": "3.1.3",
       "description": "The holders' re-bind of a seated serve node's transport destination and transit pair (registered under CC 3.1.7 R2(a); the quorum act of CC 3.3.6.2 and CC 5.3.4): an attestation row about a seated serve node, a counted row the accord's hold",
       "owning_component": "persist",
@@ -4632,8 +4649,8 @@
       "prefix": "transport:canonical_rebind",
       "reserved": true,
       "reserved_rule": {
-        "cc_ref": "CC 3.4.3",
-        "rule": "substrate-self-report"
+        "cc_ref": "CC 3.3.6.2",
+        "rule": "the accord's holders, counted at a strict majority of the holders of the bundle in force; never a substrate self-report"
       },
       "segments": [
         {
@@ -4670,31 +4687,8 @@
       ]
     },
     {
-      "cc_section": "3.1.3",
-      "description": "A conferring roster's counted conferral on the ceremony plane (CC 3.2 T2): a scores row cosigned under the root's conferring family's consensus_protocol, whose payload names the subject's key record by row id and carries the roles conferred",
-      "owning_component": "persist",
-      "owning_repo": "CIRISPersist",
-      "polarity": "positive-only",
-      "prefix": "trust:blessing",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.1.3",
-        "rule": "cosigned under the conferring family's consensus_protocol (for the accord, a strict majority of the standing roster); withdrawn only by a cosigned withdraws"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "trust"
-        },
-        {
-          "class": "literal",
-          "segment": "blessing"
-        }
-      ]
-    },
-    {
       "cc_section": "3.1.1",
-      "description": "The trust-root conferral and acceptance edges, carried as dimension values on delegates_to rows \u2014 the wire type is unchanged, so 1+4 is untouched.",
+      "description": "The trust-root grant and acceptance edges, carried as dimension values on delegates_to rows \u2014 the wire type is unchanged, so 1+4 is untouched.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "positive-only",
@@ -4840,6 +4834,35 @@
         {
           "class": "value",
           "segment": "{contribution_id}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "The two rows by which a window that binds others is closed (registered under CC 3.1.7 R2(a); CC 2.7, the window).",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "window:{state}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.3.6.4",
+        "rule": "a key seated in the counted set at the head the opener names; for the self roster, a key of the roster; a landing by any other key concludes nothing"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "window"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{state}",
+          "values": [
+            "held",
+            "landed",
+            "refused"
+          ]
         }
       ]
     },

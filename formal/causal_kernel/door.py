@@ -56,7 +56,7 @@ RX = json.load(open(os.path.join(ROOT, "manifests", "reactions.json"), encoding=
 BASE_LAW = PTAB["base_law"]                      # base(N) = N for N <= k: the sizes run (3 and 4) are all below k
 DOOR_TEXT_PATH = os.path.join(ROOT, "formal", "derivation", "door_text.tsv")
 DOOR_TEXT = list(csv.DictReader((l for l in open(DOOR_TEXT_PATH, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE))
-SEAT = {"identity:substrate_persist": "substrate"}      # a role token of the manifest -> the seat name the worlds use
+SEAT = {"identity:substrate_persist": "substrate", "infra:attest": "substrate"}      # a role token of the manifest -> the seat name the worlds use
 
 # the door -> the clock or expiry of reactions.json it runs: (family, leaf or None, name)
 LANDS = {
@@ -72,7 +72,7 @@ LANDS = {
     "invitation": ("membership:{stage}", "proposal", "expiry"),
     "deferral": ("deferral:request", None, "expiry"),
 }
-HOLD = ("cosign:{state}", "pending", "hold")            # the close of a cosigned row's hold
+HOLD = ("group:roster", None, "hold")                  # the close of a counted row's hold (CC 3.3.4)
 
 
 def land_entry(family, leaf, name):
@@ -178,6 +178,8 @@ def apply_text(name, spec):
         spec["unstated"] = [u for u in spec["unstated"] if not u.startswith(drop + move)]
         if t["parameter"] == "concluder" and t["value"] == "local" and not spec.get("landing_row"):
             spec["landing_row"] = "none: each node reads its own close (run as the key in '%s')" % spec["concluder"]
+        if t["parameter"] == "concluder" and " as " in t["value"] and not spec.get("landing_row"):
+            spec["landing_row"] = t["value"].split(" as ", 1)[1]      # `SEAT as FAMILY`: the seat that lands and the row it signs
     return spec
 
 
@@ -401,19 +403,20 @@ def two_path(fam):
     over_c = "others" if f["cancel_over"] == "others" else "all"
     cl = []
     if not f["irreversible"] or "ignore_irreversible" in MUT: cl.append(("once", "approve", e, "all", "landed"))
-    if f["cancel_rule"]["kind"] != "none": cl.append(("close", "object", at_least_rule(f["cancel_rule"], mc), over_c, "cancelled"))
+    no = "refused" if f["at_window"] == "refused" else "cancelled"       # the self roster's word for a proposal that does not land (CC 3.3.6.4)
+    if f["cancel_rule"]["kind"] != "none": cl.append(("close", "object", at_least_rule(f["cancel_rule"], mc), over_c, no))
     cl.append(("close", "approve", e, "all", "landed"))
     if f["reverse_path"] and f["floor_rule"]["kind"] != "none" and "no_floor" not in MUT:
         cl.append(("close", "approve", at_least_rule(f["floor_rule"], mc), "all", "landed"))
     if "no_floor" in MUT and f["reverse_path"]:
         cl.append(("close", "approve", ("abs", 1), "all", "landed"))   # MUTATION: silence lands on the proposer alone
-    default = {"cancelled": "cancelled", "stay_open": "open"}[f["at_window"]]
+    default = {"cancelled": "cancelled", "stay_open": "open", "refused": "refused"}[f["at_window"]]
     silent = default if f["counted"]["target_silent"]["value"] == "yes" else None
     tv = f["counted"].get("target_voice", {}).get("value") == "yes" and "target_voice_ignored" not in MUT   # MUTATION: the cell not read
     spec = dict(policy=fam, kind="two_path", opener=f["counted"]["count_set"]["value"], counted=f["counted"]["count_set"]["value"],
                 extra=(), target_votes=tv, opener_says="approve", kinds=("approve", "object"), clauses=tuple(cl),
                 silent=silent, default=default, secs=f["window_secs"], concluder=f["counted"]["count_set"]["value"],
-                late="counts", outcomes=("landed", "cancelled", "open"),
+                late="counts", outcomes=("landed", no, "open"),
                 cells={"opener": "counted.count_set (a member proposes)", "answers": "counted.count_set, voices objection + approve",
                        "enact": "enact_rule %s" % json.dumps(f["enact_rule"]), "cancel": "cancel_rule %s over %s" % (json.dumps(f["cancel_rule"]), f["cancel_over"]),
                        "floor": "floor_rule %s, min_count %d" % (json.dumps(f["floor_rule"]), mc), "window": "window_secs %d" % f["window_secs"],
@@ -447,7 +450,7 @@ def door_specs():
             cells={"enact": "protocol: the founding row's consensus_protocol -> protocols.kinds[KIND].removal_rule over its removal_set, never fewer than two voices (CC 3.3.4, CC 4.5.13)",
                    "declared": "the world's founding row declares %s%s" % (kind, " with m = 2" if "quorum" in kind else ""),
                    "window": "window_secs %d (hold)" % f["window_secs"], "default": "at_window cancelled", "counted_at": "signed (the head the row names)"},
-            unstated=["concluder at the close: a node's own drop (cosign:{state} hold is local)"]))
+            unstated=["concluder at the close: a node's own drop (the hold's close is local, CC 3.3.4)"]))
     D["community_invite-invitee"] = dict(D["community_invite"], target_votes=False,
         contrast="not the table's reading: the invitee's own yes is not a voice (the row's target_voice cell read as no)")
     f = POLICY["moderation_action"]
@@ -526,7 +529,7 @@ def door_specs():
         opener_says=None, kinds=("deleted",), clauses=(("once", "deleted", ("abs", 1), "all", "deleted"),), silent=None, default="breached",
         secs=30 * 86400, concluder="substrate", late="counts", outcomes=("deleted", "breached", "open"),
         cells={"clock": "sla, dur self.days (the opener row's own member)", "answers": "unless withdrawn/superseded/purged by producer",
-               "close": "emit hard_case:deletion_window_breach by identity:substrate_persist"},
+               "close": "emit hard_case:deletion_window_breach by infra:attest"},
         unstated=[]), "deletion_sla", "substrate")
     D["harm_report"] = stated(dict(policy="content_class:{class}[reported]", kind="clock", opener="member", counted="member", extra=("moderate",),
         target_votes=False, opener_says=None, kinds=("keep",),
@@ -590,7 +593,7 @@ def door_specs():
                "declared": "the world's founding row declares majority",
                "counted": "counted.count_set wa, voice person, counted_at named: the full seated roster the finding names",
                "window": "window_secs %d (hold)" % f["window_secs"], "default": "at_window cancelled"},
-        unstated=["concluder at the close: a node's own drop (cosign:{state} hold is local)"]))
+        unstated=["concluder at the close: a node's own drop (the hold's close is local, CC 3.3.4)"]))
     # ---- a deferral (CC 4.3): the request states its own end; no default answers it; at the end it goes up ----------
     D["deferral"] = stated(dict(policy="deferral:request", kind="extra", opener="deferring", counted="resolve_deferral", extra=(), target_votes=False,
         opener_says=None, kinds=("approved", "rejected"),

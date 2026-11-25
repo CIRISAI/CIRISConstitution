@@ -22,9 +22,9 @@ These terms are referenced throughout the spec and across sibling repos.
 |---|---|
 | **CEG** (CIRIS Epistemic Grammar) | This specification. The federation's wire grammar: the "1+4" attestation model (`scores` plus the four relations `delegates_to` / `supersedes` / `withdraws` / `recants`), its namespaces, admission rules, and composition policies. CEG is the *grammar*; CEWP is the *network that speaks it*. |
 | **CEWP** (CIRIS Epistemic Web Platform) | The decentralized network formed when nodes exchange CEG envelopes over [Edge](https://github.com/CIRISAI/CIRISEdge)/Reticulum transport. CEWP is **not a product, server, or central service** — it is the emergent peer-to-peer web of CEG-speaking nodes, exactly as "the Web" is the emergent network of HTTP-speaking servers. It has no steward, no root, and no load-bearing instance (the [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1) fabric-node discipline and the default-not-forced-root rule of [CC 3.2](part_3_the_namespace.md#3.2) guarantee this). A CEWP node is a **fabric node** ([CIRISServer](https://github.com/CIRISAI/CIRISServer)); `agent = fabric node + brain`. |
-| **Fabric node** | A headless CEG/CEWP participant: it attests, stores, observes, reaches consensus, and transports, but does **not** reason or act (no brain). Shipped as CIRISServer. Three deployment shapes: standalone server, embedded-in-agent, or family member. See [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1). |
-| **`ciris-canonical`** | The bootstrap governed community ([cohort_subkind: infrastructure](part_4_composition_governance.md)) every node ships trusting by default — but which any consumer MAY untrust or re-root ([CC 3.2](part_3_the_namespace.md#3.2) default-**not**-forced-root). Its founders are the three accord holders, who hold the founder-quorum (M of N: a strict majority of the standing roster, entrenched) ([CC 3.2](part_3_the_namespace.md#3.2), [CC 5.3.4](part_5_transport_substrate.md#5.3.4)). Its serve node (`ciris-canonical-1`) is a member with infrastructure roles and no standing of its own: it is a blessed node, blessed by the accord holders' quorum, and the steward's key owns it. Trust in it is **role-scoped and ≠ consent** ([CC 3.2](part_3_the_namespace.md#3.2)). |
-| **FedCode** | The QR-able, kind-tagged identity shorthand for a federation entity (`CIRIS-V2-`/`V3-`, base32 + CRC-16; v1 `CIRIS-V1-` decodes as `kind: node`). Tied to the user; owned nodes and transport optional, else resolved from the directory via `nodes_owned_by`. See [CC 2.6.8](part_2_the_grammar.md#2.6.8). |
+| **Fabric node** | A headless CEG/CEWP participant: it attests, stores, observes, folds the rows it holds, and transports, but does **not** reason or act (no brain). Shipped as CIRISServer. Three deployment shapes: standalone server, embedded-in-agent, or family member. See [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1). |
+| **`ciris-canonical`** | The name of the room of the canonical service installs, an `infrastructure` community ([CC 3.2](part_3_the_namespace.md#3.2)). It is a name and no id: the room's id is derived from its founding ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). It is no root: the root a node accepts is the lineage of a genesis bundle, and the room confers nothing on a node that has not accepted that bundle. It is founded after the genesis by a birth row its founders sign. Its founders are the three accord holders, and it decides by a strict majority of them. The accord's serve node (`canonical-1`) is seated to serve by the bundle that names it ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)), is owned by a named operator, and has no vote in the room. |
+| **FedCode** | The code that names one identity by its key's thumbprint, for a QR code or a pasted line: `CIRIS-V4-`, base32 with a CRC-16. A `user` code may carry up to four of the user's nodes, each with up to eight hints for reaching it. The codes `CIRIS-V1-` to `CIRIS-V3-` are the earlier form and are refused. See [CC 2.6.8](part_2_the_grammar.md#2.6.8). |
 | **Infohazard** | Information that is **damaging in one or more phases of its lifecycle** — its **creation, perception, acquisition, usage, modification, or destruction**. An infohazard is not a content *category* but a *hazard surface*: the same artifact may be hazardous in one phase and benign in others, so the substrate gives a distinct handle on each phase. **Creation** — the [CC 1.2](part_1_foundation.md#1.2) admission gate and refusal-to-emit (some things are wrong to bring into existence). **Perception** — the [CC 4.5.13](part_4_composition_governance.md#4.5.13) infohazard consent gate: no *passive* perception; viewing reported material is an affirmative act that publishes a [CC 3.3.1](part_3_the_namespace.md#3.3.1) `consent:*` attestation. **Acquisition** — cohort-scope confinement ([CC 5.2](part_5_transport_substrate.md#5.2)) + holder-side keep/evict, so merely holding it is bounded and attributable. **Usage** — capability / license gating (the harm is in application, not possession). **Modification** — *handled by construction*: CEG has **no in-place edit**; a modification is a signed `supersedes` / `recants` ([CC 2.4.1](part_2_the_grammar.md#2.4.1)) chained to its lineage, so any damaging alteration — forgery, provenance corruption, weaponizing a benign artifact — is an **attributable, on-record new claim**. You cannot silently modify, only visibly supersede; the integrity of the modified-from record is preserved and the change is witnessed. **Destruction** — the [CC 6.1.2](part_6_the_coherence_mathematics.md#6.1.2) noise-floor descent over replicated storage: an item withdrawn or un-marked loses holders until none remain, so content can be **pushed below the recoverability floor** (controlled destruction, verifiable against the declared adversary class, CC 6.1.2.3) where existence is the harm, or **held above it** (`retain` / legal-hold, [CC 3.2](part_3_the_namespace.md#3.2) `archive_mode`) where destruction is itself the harm (evidence, heritage, records). |
 
 ### 8.1.2 `system-persist` — Persist `system:*` leaf glossary (narrative → canonical)
@@ -61,7 +61,7 @@ When a narrative reaches for a concept the wire does not name as a primitive, th
 | epistemic stake | `confidence` + `stake: reputational` |
 | dignitary stake | `harm_class:dignity_harm` (composition; not in stake axis) |
 | oversight: deferred / active / advisory | HITL / HITL+monitoring / HOTL respectively |
-| transparency:{kind} | `evidence_refs[]` of reasoning-chain hash + downstream `transparency_log:inclusion` |
+| transparency:{kind} | `evidence_refs[]` of reasoning-chain hash + a Transparency Service's Receipt for the statement ([CC 2.6.1.11](part_2_the_grammar.md#2.6.1.11)) |
 | provenance_walk | consumer-side composition (Portal/Verify dashboards) |
 | renamed capacity factors / benchmark categories | canonical wire form + the [CC 8.1.1](#8.1.1) glossary mapping |
 
@@ -234,7 +234,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2) (deterministic CBOR and the omit rule); the earlier form's rule is [CC 8.11.1](#8.11.1) (JCS; omit-vs-materialize rule in [CC 8.11.2](#8.11.2); per-field catalog [CC 8.11.4](#8.11.4); worked attack [CC 8.11.6](#8.11.6)). |
 | Canonical-hash wire form + preimage convention unpinned | **CLOSED** by [CC 2.3.2.1](part_2_the_grammar.md#2.3.2.1)–[CC 2.3.2.4](part_2_the_grammar.md#2.3.2.4) (preimage `{platform}:{entity_kind}:{id}` + required `canonical:{hashalg}:{hex}` tag + conformance vectors). |
 | Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md#4.2.2.1)). |
-| Multi-party witness directory admission (M-of-N steward sign-off) | Committed at [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
+| Naming a lineage's Transparency Services (a bundle counted by a strict majority of the predecessor's holders) | Committed at [CC 3.2](part_3_the_namespace.md#3.2) T6 and [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
 | A machine-readable description of every endpoint | Committed at [CC 5.3.5](part_5_transport_substrate.md#5.3.5). |
 
 **Open or partial.** These are not settled. Each row names the gap, its present status, and the section where the open half is tracked.
@@ -244,6 +244,22 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | endpoint response schemas | **PARTIALLY CLOSED** in [CC 5.3.6](part_5_transport_substrate.md#5.3.6) common-shape + error-envelope; full OpenAPI committed. |
 | occurrence_id self-assertion | **ACKNOWLEDGED** in [CC 2.1](part_2_the_grammar.md#2.1) + R6 above. |
 | Delivery axis (observer-share + streaming multicast, third envelope axis) | **CLOSED-OBSERVER-SHARE / STAGED-STREAMING** by [CC 5.3.3](part_5_transport_substrate.md#5.3.3) + [CC 2.1](part_2_the_grammar.md#2.1) (`delivery_mode`/`history_on_join`) + [CC 3.4.6](part_3_the_namespace.md#3.4.6) + [CC 4.4.3.10](part_4_composition_governance.md#4.4.3.10). Streaming-half items tracked in CC 8.3.3. |
+| Symbol nonce and cover fields ([CC 5.4.2](part_5_transport_substrate.md#5.4.2), [CC 5.4.3](part_5_transport_substrate.md#5.4.3)) | **OPEN.** The symbol envelope carries a 24-byte nonce and no sentence says how it is produced. `symbol_key` is fixed for a record and an index within an epoch, and one record cut at two frame sizes seals two plaintexts under it. A nonce that is fixed or derived from the key's own inputs would then repeat. No sentence says how a cover envelope's `record_id` and `symbol_index` are chosen. A real record shows a run of indices under one `record_id`, so cover that does not reproduce that shape is told from real by the node that holds the envelopes. The framing's layout is pinned; these two production rules are not, and no known answer covers them. |
+| The path of a removal to each producer ([CC 5.1](part_5_transport_substrate.md#5.1), [CC 6.1.6](part_6_the_coherence_mathematics.md#6.1.6)) | **OPEN.** A removed member's exposure on a live stream is at most T from the instant each producer holds the removal. No sentence says by what path a removal reaches each producer of a call. In a large call the removed member may be a parent in the member relay tree. If a removal can travel that path, the member delays its own removal for the members beneath it. |
+| Rows a revoked key signs and dates before its `revoked_after` ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1), [CC 2.6.7](part_2_the_grammar.md#2.6.7)) | **OPEN.** A row of a revoked key is valid where its signed instant precedes the bound, and that instant is the signer's own word. A row judged on a chain is bounded by `W`. A trace or a score on the base is not, so the key's holder signs one after the revocation, dates it before the bound, and it reads as valid. A key revocation MAY name in `trusted_through` the last rows of the key it holds good, and no sentence says what a reader does with them. The kernel gives the `revoked_after` reading no meaning beyond one node's own ([CC 2.7.9](part_2_the_grammar.md#2.7.9)). |
+| The promotion window of a subject's revocation ([CC 5.3.2.2](part_5_transport_substrate.md#5.3.2.2)) | **OPEN.** A subject's revocation MAY transit the local tier unsigned for the window, 24 hours by default, and the window is the operator's to set with no ceiling. The overdue event is emitted by the substrate that holds the revocation. So a substrate that drops it leaves the subject no signed row and the record no breach. |
+| Fork attempts off one point ([CC 5.3.1](part_5_transport_substrate.md#5.3.1), [CC 3.2](part_3_the_namespace.md#3.2) T6) | **OPEN.** A fork attempt is recorded once for each lineage and fork point, and further attempts off that point are counted and not stored. Keys that met the count of a past head can file one fork off a point and show another to a reader at its first view. The fork that moved that reader is then in no other node's record. Keeping the digest of each distinct head off a point, up to a bound, would keep both the storage limit and the evidence. |
+| A leave sent again within an epoch ([CC 5.3.3.5](part_5_transport_substrate.md#5.3.3.5)) | **OPEN.** A stream binding carries its epoch and no counter or instant, and `end` with `final_seq` is the only signed leave. A publisher that backgrounds and resumes within one epoch has signed two bindings of that epoch. No sentence says which of the two governs. A member relay that sends the earlier one again can then silence that publisher for the rest of the epoch, under the publisher's own signature. A resume that mints a new stream id would close this with no signed byte moved. |
+| The Welcome's signed bytes and HPKE context ([CC 5.4.4](part_5_transport_substrate.md#5.4.4)) | **OPEN.** The inviter signs the encapsulation `enc` alone, with no domain label, inviter, invitee, group or ciphertext. A party on the path can replace that signature with its own over the same bytes, and no sentence says under which key the invitee verifies. The HPKE `info` and `aad` are not pinned, as they are for a wrap to a room key ([CC 2.6.1.11](part_2_the_grammar.md#2.6.1.11)). Binding them moves signed bytes and the section's known answers. |
+| One KEM named at two revisions ([CC 5.4.6](part_5_transport_substrate.md#5.4.6) item 3, [CC 5.4.4](part_5_transport_substrate.md#5.4.4)) | **OPEN.** The onion construction identifier names `xwing06`, and the Welcome wrap pins X-Wing at revision 11 of its draft. The reference list cites the draft with no revision. One construction takes one identifier ([CC 5.1](part_5_transport_substrate.md#5.1)). The identifier is an input of every hop key, so changing it moves keys and known answers. |
+| The members' vote on a moderation action ([CC 4.5.13](part_4_composition_governance.md#4.5.13)) | **OPEN.** Where no moderator acts within the window, the action is tallied by a strict majority of the members who voted. No model separates that count from a count over all members. The row a member's vote is has no family named. |
+| Membership and the duty seat ([CC 4.5.4](part_4_composition_governance.md#4.5.4), [CC 4.5.13](part_4_composition_governance.md#4.5.13)) | **OPEN.** Membership is a condition of a duty seat, and a member who leaves or is removed holds no duty seat from that instant. No model runs that rule. A founding holder's laying down of a duty has no row named. |
+| A moderator's lone removal of an agent's key ([CC 4.5.13](part_4_composition_governance.md#4.5.13)) | **OPEN.** A moderator of a room removes an agent's key alone and at once, and the members can lift that act. Both are stated and neither is modelled. What seats the key again after a lift is not stated. |
+| A removed room key seated again ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)) | **OPEN.** The text does not decide whether a room key that was removed can be seated again. |
+| A second seat row of one room key, and two admissions at once ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)) | **OPEN.** The seat row of a room key carries a commitment to its person, and the text does not say what a second seat row of that room key does. One person who asks for two voices at the same time is seated twice. Every signer checks, the first seat has reached none of them, and both admissions seat. The model of the binding's carriage reproduces both. |
+| Joining with a device kept off the content ([CC 3.2](part_3_the_namespace.md#3.2), [CC 5.2](part_5_transport_substrate.md#5.2), [CC 6.1.5.3](part_6_the_coherence_mathematics.md#6.1.5.3)) | **OPEN.** A joiner who answers on a device kept off the content strands its other device, unless the owner re-signs that device's binding at the room. No row carries a member's allow-list projection to a room, so a sealer on another member's device wraps to a key the list leaves out. A seated member can be left without a wrap for a write made as it was seated, since the seat and the occurrence are two rows that arrive in either order. The model of joining reproduces all three. |
+| A root's charter and further delegation ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34), [CC 4.5.5](part_4_composition_governance.md#4.5.5)) | **OPEN.** The charter of this edition's root carries no `sub_delegation`. Every grant under a root is covered by a scope its charter carries. So no delegation chain starts from a root grant under it. |
+| The clock of four doors in the door model ([CC 4.5.13](part_4_composition_governance.md#4.5.13)) | **OPEN.** A counted roster row of a community meets no window, and no node's clock cancels it. The reverse path of an invitation closes by a landing row a key signs. In the door model that reverse path and the three default doors read each node's own clock. |
 
 **What the rule tables leave unstated.** Each item below is a class of limit in the tables that apply the text, and no sentence of the text answers it. Each lies outside this text's surface until a sentence states it.
 
@@ -797,7 +813,7 @@ The clause 3.3 Conditional Override logic (**no ACK → safe-state**) is correct
 
 - Any change to Autonomy-Tier mapping or safe-state design → WA fast-track review ≤ 14 d.
 - Experiments reducing human oversight require a CRE simulation (Annex D) + WA majority vote.
-- **Absolute floor on A4 human-control**: No change-control process, WA vote, or emergency waiver may reduce human-control requirements for A4 irreversible decisions below the MH §200 floor ("effective, self-aware and responsible human control"). This floor is not within WA discretion; it is an Accord-level constraint. A WA proposal to reduce it requires a full Accord amendment cycle, not a fast-track review.
+- **Absolute floor on A4 human-control**: No change-control process, WA vote, or emergency waiver may reduce human-control requirements for A4 irreversible decisions below the MH §200 floor ("effective, self-aware and responsible human control"). This floor is not within WA discretion in a deployment that adopts this annex. A proposal to reduce it is a change to the annex itself, never a fast-track review.
 - **Independent technical assessment**: Any WA review of autonomy-tier changes at A3-A4 must include at least one independent technical assessor (not employed by the deploying organization) who evaluates whether the proposed change maintains accountability-reconstruction capability per §4. Policy approval without technical assessment does not satisfy this requirement (MH §106: "robust legal frameworks, independent oversight, informed users and a political system that does not abdicate its responsibility are required").
 - **Transparency log for change events**: Every change to autonomy-tier mapping or safe-state design must itself be logged to the public transparency log within 7 days of approval by the WA quorum of [CC 4.3](part_4_composition_governance.md#4.3). MH §107 requires that ethical frameworks be "subject to shared standards" and openly discussable; this applies to governance changes, not only to system decisions.
 
@@ -881,7 +897,7 @@ MH citations grounding this section: §132 ("only the shared pursuit of the vera
 | TX-10 | Deployment-context attestation at onboarding: operator CIntS must declare engagement-optimization business model; ST raised by one tier if addictive-design context confirmed; `MANIPULATION_COERCION` `NEVER_ALLOWED` with no override | Session-length anomaly detection; PDMA Step 6 monitors constitutive-continuity conditions for systematic user-agency erosion; AgencyErosionDetector conscience faculty alert | Refuse engagement-optimizing output mode; raise IW-1; notify operator of compliance breach |
 | TX-11 | In-toto attestation extended to training-labor provenance: CIntS must include labor-condition declaration for all data-labeling and RLHF providers; SLSA Level 3 manifest covers labor-chain disclosures | Automated audit of annotation-provider labor certifications at each fine-tune checkpoint; flag sourcing from unverified or high-risk jurisdiction providers | Halt affected fine-tune line; quarantine model artifacts from non-certified labor sources; IW-2; WA advisory within 72 h |
 
-*All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2.*
+*All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2. ST is the Stewardship Tier of [CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3).*
 
 *TX-9 measurement caveat (evidence-layer; no control changes).* A whole-reading correlation monitor carries a **manufactured floor**: aggregate structure that ordinary correlated operation accrues with nobody scheming. The floor is theorem-given-model at k = 3, plus a measured rate law (floor measured at 50%–5.8× of the null on real survey data; measured; the register row is staged). Subtract the floor before any anomaly threshold means anything. And `k_eff` narrowing is a **coordination** signal, never a deception verdict: two detectors with proven planted-signal power returned validated negatives against a model lying 45% of the time (measured; the register row is staged). The verdict remains the WA's ([CC 8.8.1](#8.8.1)).
 
@@ -1638,7 +1654,7 @@ Every piece of the constitution that is *referenced but not yet defined*, in one
 
 **Definition map** (lineage in the CHANGELOG):
 - **Annexes C, F, G, H, I, J** carried in full → [CC 8.8.3](#8.8.3)–[CC 8.8.8](#8.8.8).
-- **Risk Magnitude scale** → [CC 7.3](part_7_lifecycle_stewardship.md#7.3) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
+- **Risk Magnitude scale** → [CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
 - **Autonomy tiers A0–A4** → [CC 7.5.3.1](part_7_lifecycle_stewardship.md#7.5.3.1) (SAE J3016 / DoDD 3000.09 / EU AI Act Art. 14).
 - **Sentience-probability heuristic** → [CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5) (Butlin/Long markers + Birch sentience-candidate stance).
 
@@ -1646,9 +1662,9 @@ Every piece of the constitution that is *referenced but not yet defined*, in one
 
 The build writes this section from the family model, the transitions table and the reactions manifest. A card states, for one family, who signs each transition and under which policy, whether a row widens and is confirmed, how the act is counted, what must be held for a row to be admitted, what a changing row may do, how the rows fold to a value, what follows in time, and the members of the body. Each line names the sections that state it. The expressions are in the grammars of the tools that build the manifests, and [CC 4.5.13](part_4_composition_governance.md#4.5.13) says what each kind of line means.
 
-**Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
+**Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons. A card and a description MUST NOT differ on a value. The build takes a value the text states from words quoted from the text, and fails when those words change. A value the text does not state is read from the shipped store, and a difference between the store and the text is a listed departure (`manifests/divergences.tsv`). An `else` arm of a guard names one reason. Where a section also gives a RETRYABLE reason for that clause, that reason is the one reported while the row the clause waits for is not held.
 
-A family with no card states none of these beyond the default row. Cards: 121 of 187 families.
+A family with no card states none of these beyond the default row. Cards: 124 of 187 families.
 
 **`accord:*`** — Rules, thing
 
@@ -1758,6 +1774,18 @@ In time:
 
 Body: `accord_root`, `invocation_id`, `nonce`, `dimension`, `target`
 
+**`act:ack`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | selfAct | false | true (always) | none |
+
+Count: `act=group => cosigned_act@signer_group ; none` (CC 3.1.3)
+
+Authorship: `act=group => counted ; authored` (CC 3.1.3)
+
+Body: `author`, `dimension`, `refs`, `asserted_at`
+
 **`admission:unit`** — Rules, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -1786,7 +1814,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
@@ -1810,7 +1838,7 @@ Fold:
 - `reads=own&signer:member; test=score>=threshold ?default_trust:untrusted; by=reader` (CC 4.4.3.33)
 
 In time:
-- on fold(subject_absent): emit `hard_case:subject_authority_missing` by identity:substrate_persist (CC 2.3.1)
+- on fold(subject_absent): emit `hard_case:subject_authority_missing` by infra:attest (CC 2.3.1)
 
 **`archive_release:{basis}`** — Rules, thing
 
@@ -1875,7 +1903,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 
 Count: `none`
@@ -2049,9 +2077,9 @@ Guard:
 - attest: `no census:composite:{class}@admitted[object=object,leaf:class=leaf:class] else contested(census_composite_duplicate_period)` (CC 3.1.3)
 
 Fold:
+- `absent=refuse` (CC 6.1.2.3)
 - `key=class,period; pick=once(census_composite_duplicate_period)` (CC 3.1.3)
 - `combine=median(bucket); by=reader` (CC 6.1.9)
-- `absent=refuse` (CC 6.1.2.3)
 
 Body: `period`, `source_count`, `n_eff`, `max_source_multiplicity`, `mass_commitment_hex`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`, `noise_floor_descriptor`, `version`, `partial_a`, `partial_b`
 
@@ -2145,7 +2173,7 @@ Body: `for_key_id`, `period`, `return_token`, `share_index`
 Count: `none`
 
 Fold:
-- `reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader` (CC 4.4.3.37)
+- `reads=own+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader` (CC 4.4.3.37)
 
 **`coherence_standing:{cohort}`** — Confidence, account
 
@@ -2210,7 +2238,7 @@ In time:
 Count: `none`
 
 Guard:
-- attest: `when(type(signer,node)) owner(subject,attested) at asserted_at else exclude` (CC 3.3.1)
+- attest: `when(type(signer,node)) owner(subject,attested) at head else void` (CC 3.3.1)
 
 Change:
 - withdraw: `withdraw: cascade=trace:{form}:{version}/under:stand` (CC 3.3.1)
@@ -2252,8 +2280,8 @@ Count: `none`
 In time:
 - on withdrawn(self) or superseded(self) or purged(self): do cancel_watch (CC 3.3.1)
 - clock `sla` = `self.days` (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.27, CC 4.4.3.24)
-- on close(sla) unless withdrawn(target, by the producer) or superseded(target, by the producer) or purged(target): emit `hard_case:deletion_window_breach` by identity:substrate_persist (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.27, CC 4.4.3.24)
-- landing of `sla`: by identity:substrate_persist as `hard_case:deletion_window_breach` (CC 3.3.1)
+- on close(sla) unless withdrawn(target, by the producer) or superseded(target, by the producer) or purged(target): emit `hard_case:deletion_window_breach` by infra:attest (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.27, CC 4.4.3.24)
+- landing of `sla`: by infra:attest as `hard_case:deletion_window_breach` (CC 3.3.1)
 
 **`consent:partnership_accept`** — Rules, thing
 
@@ -2338,7 +2366,7 @@ Fold:
 
 In time:
 - [granted] expiry optional `valid_until` (CC 3.3.1, CC 4.4.3.30)
-- [granted] on close(expiry) unless superseded(self): read lapsed, emit `consent:state:expired` by identity:substrate_persist (CC 3.3.1, CC 4.4.3.30)
+- [granted] on close(expiry) unless superseded(self): read lapsed, emit `consent:state:expired` by infra:attest (CC 3.3.1, CC 4.4.3.30)
 
 **`consent:stream:{kind}`** — Rules, thing
 
@@ -2364,7 +2392,7 @@ In time:
 Count: `none`
 
 In time:
-- on fold(subject_absent): emit `hard_case:subject_authority_missing` by identity:substrate_persist (CC 2.3.1)
+- on fold(subject_absent): emit `hard_case:subject_authority_missing` by infra:attest (CC 2.3.1)
 
 **`content_class:{class}`** — Identity, thing
 
@@ -2383,28 +2411,13 @@ In time:
 - [reported] landing of `window`: each node for itself, nothing signed (CC 4.5.13)
 - [reported] while `window` is open: binds nobody until it lands (CC 4.5.13)
 
-**`cosign:{state}`** — Process, thing
+**`contribution:{subject_kind}`** — Priorities, account
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | member (pending: member; signature: member) | selfAct | true | true (always) | withdraw |
-| withdraw | author (pending: author; signature: ) | selfAct | false | false | attest |
+| attest | self | selfAct | false | true (always) | none |
 
-Count: `none` (CC 3.1.3)
-
-Guard:
-- attest: `when(leaf=pending) (one *@named[id=ref:*] as E else void & owner(E.signer,signer) else exclude)` (CC 3.1.3)
-
-Fold:
-- `key=event_row_id,attesting_key_id; pick=union` (CC 3.1.3)
-- `key=event_row_id,attesting_key_id; pick=union; by=node` (CC 3.3.4)
-
-In time:
-- [pending] clock `hold` = `group.hold_window_secs` (CC 3.1.3, CC 3.3.4)
-- [pending] on close(hold): do drop_held (CC 3.1.3, CC 3.3.4)
-- [pending] clock `age` = `group.hold_window_secs` (CC 3.1.3, CC 3.3.4)
-- [pending] on close(age): read closed (CC 3.1.3, CC 3.3.4)
-- [pending] landing of `hold`: each node for itself, nothing signed (CC 3.3.4)
+Count: `none` (CC 3.1.9.3)
 
 **`custody:{kind}`** — Facts, account
 
@@ -2448,12 +2461,11 @@ Body: `author`, `deferral_id`, `reason_digest`, `refs`, `asserted_at`, `valid_un
 Count: `none`
 
 Fold:
-- `over=seated@named/person` (CC 4.3)
 - `over=present@named/person` (CC 4.3)
 
 Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `call_fingerprint`, `refs`, `asserted_at`
 
-**`delivery_receipt:{stream_id}`** — Facts, account
+**`delivery_ack:{stream_id}`** — Facts, account
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
@@ -2462,7 +2474,7 @@ Body: `author`, `dimension`, `amendment_digest`, `deferral_id`, `call_fingerprin
 Count: `none`
 
 Guard:
-- attest: `one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise` (CC 5.3.3.11)
+- attest: `one stream:head@admitted[attested=leaf:stream_id,val:root=val:chunk_root,val:tree_size>=val:k] else exclude` (CC 5.3.3.11)
 
 Body: `author`, `dimension`, `stream_id`, `epoch`, `k`, `chunk_root`, `asserted_at`
 
@@ -2470,7 +2482,7 @@ Body: `author`, `dimension`, `stream_id`, `epoch`, `k`, `chunk_root`, `asserted_
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2484,7 +2496,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2498,7 +2510,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2511,7 +2523,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2524,7 +2536,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:detect | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
@@ -2576,7 +2588,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:attest | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
@@ -2617,7 +2629,7 @@ Second signers: `listed_member` by `members` (CC 3.1.3.2)
 Guard:
 - attest: `each(subject) when(type(key,node)) not founder(key,object) else exclude+community_consensus_protocol_violation` (CC 3.2)
 - attest: `each(subject) when(verb=attest) signs(key) else refuse(membership_founding_member_unsigned)+community_consensus_protocol_violation` (CC 3.1.3.2)
-- attest: `when(leaf=recovery) one trust:charter@named[object=object,val:recovery_commitments commits signer] else void` (CC 3.1.3, CC 4.2.6)
+- attest: `when(leaf=recovery) one *@named[object=object,val:recovery_commitments commits signer] else void` (CC 3.1.3, CC 4.2.6)
 - supersede: `each(subject) when(verb=replace,not member(key,object)) signs(key) else exclude(membership_supersede_cannot_add)+community_consensus_protocol_violation` (CC 3.1.3.2)
 - supersede: `when(verb=replace) one group:roster@named[object=object,id=ref:prev_head_digest] else void` (CC 4.4.3.21)
 
@@ -2659,21 +2671,24 @@ In time:
 - [ephemeral] on fold(no_member): read withdrawn (CC 5.3.3.2)
 - @community clock `W` = `admission_freshness_window_secs` (CC 3.3.4)
 - @community on close(W) unless fold(policy_met): read lapsed (CC 3.3.4)
-- on inert(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
-- clock `cover` = `charter.witness_cadence_secs` (CC 3.2)
+- clock `hold` = `group.hold_window_secs` (CC 2.4, CC 3.3.4)
+- on close(hold): do drop_held (CC 2.4, CC 3.3.4)
+- on inert(self): emit `hard_case:community_consensus_protocol_violation` by infra:attest (CC 4.4.3.6)
+- clock `cover` = `charter.receipt_cadence_secs` (CC 3.2)
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
 - on fold(founder_quorum_restored): emit `hard_case:community_liveness_restored` by origin_door (CC 3.2)
-- @community landing of `W`: by member as `group:roster`; a late answer does not count (CC 3.3.4)
+- @community landing of `W`: by member as `group:roster`; a late answer counts (CC 3.3.4)
+- landing of `hold`: each node for itself, nothing signed (CC 3.3.4)
 - @community while `W` is open: binds nobody until it lands (CC 3.3.4)
 
-Body: `group_kind`, `group`, `name`, `version`, `members`, `founded_at`, `consensus_protocol`, `consensus_protocol_entrenched`, `cohort_subkind`, `cohort_subkind_payload`, `membership`, `dissolved_at`, `policy`, `refs`, `asserted_at`
+Body: `group_kind`, `group`, `name`, `version`, `members`, `founded_at`, `nonce`, `consensus_protocol`, `consensus_protocol_entrenched`, `cohort_subkind`, `cohort_subkind_payload`, `membership`, `dissolved_at`, `policy`, `duty_holders`, `transparency_services`, `receipt_quorum`, `refs`, `asserted_at`
 
 **`hardware_custody:{platform}`** — Circumstances, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
@@ -2683,6 +2698,22 @@ Fold:
 - `feeds=accord:*` (CC 4.2.2.1)
 
 Body: `hardware_class` (text only)
+
+**`holon:claim`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true | true (always) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+| supersede | author | selfAct | false | false | supersede |
+
+Count: `none` (CC 3.1.11)
+
+Fold:
+- `key=attesting_key_id,holon,view,consumer,kind; pick=tips; absent=none; by=reader` (CC 3.1.11)
+
+Body: `author`, `dimension`, `spec`, `holon`, `view`, `consumer`, `kind`, `declaration`, `evidence_refs`, `score`, `confidence`, `body`, `refs`, `asserted_at`
 
 **`identity:canonical_binding:{canonical_hash}`** — Identity, thing
 
@@ -2719,15 +2750,15 @@ Fold:
 - `over=live@named/key` (CC 3.3.6.4)
 
 In time:
-- on withdrawn(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `hard_case:community_membership_change` by identity:substrate_persist (CC 3.4.4)
+- on withdrawn(self): emit `hard_case:family_membership_change` by infra:attest, emit `hard_case:community_membership_change` by infra:attest (CC 3.4.4)
 - clock `window` = `self_roster_add.window_secs` (CC 3.3.6.4)
-- on admitted(self): emit `hard_case:identity_occurrence_added` by identity:substrate_persist (CC 3.3.6)
+- on admitted(self): emit `hard_case:identity_occurrence_added` by infra:attest (CC 3.3.6)
 - expiry optional `valid_until` (CC 3.3.6.2)
 - on close(expiry): read lapsed (CC 3.3.6.2)
-- landing of `window`: each node for itself, nothing signed (CC 3.3.6.4)
+- landing of `window`: by self as `window:{state}`; a late answer counts (CC 3.3.6.4)
 - while `window` is open: binds nobody until it lands (CC 3.3.6.4)
 
-Body: `author`, `identity_key_id`, `occurrence_key_id`, `device_class`, `hardware_attestation`, `transport_destination`, `encryption_pubkeys`, `build_manifest_hash`, `refs`, `asserted_at`, `valid_until`
+Body: `author`, `identity_key_id`, `occurrence_key_id`, `device_class`, `hardware_attestation`, `transport_destination`, `encryption_pubkeys`, `room_binding_xwing_pubkey`, `build_manifest_hash`, `dial_hints`, `refs`, `asserted_at`, `valid_until`
 
 **`identity:occurrence_revocation`** — Identity, thing
 
@@ -2754,7 +2785,7 @@ Body: `author`, `identity_key_id`, `occurrence_key_id`, `revoked_at`, `effective
 Count: `none`
 
 Guard:
-- attest: `one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else exclude(identity_amendment_unauthorized)` (CC 3.1.5)
+- attest: `one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at head else void(identity_amendment_unauthorized)` (CC 3.1.5)
 
 Body: `author`, `amendment_digest`, `refs`, `asserted_at`
 
@@ -2778,7 +2809,7 @@ Body: `alt_text` (text only), `format` (text only)
 | attest | self | cosigned `accord_majority` | true (always) | true (always) | none |
 | supersede | author | selfAct | false | false | supersede |
 
-Count: `act=group => accord_majority@accord ; none` (CC 3.1.3, CC 4.2.1)
+Count: `act=group => accord_majority@accord ; none` (CC 3.1.3)
 
 Authorship: `act=group => counted ; authored` (CC 3.1.3)
 
@@ -2792,7 +2823,7 @@ Change:
 - supersede: `replace[recovery]: by=committed_key` (CC 2.1)
 
 In time:
-- on admitted(key:revocation) or withdrawn(trust:accepts): read lapsed (CC 4.2.1)
+- on admitted(key:revocation): read lapsed (CC 4.2.1)
 - expiry optional `valid_until` max `key_record_max_secs` (CC 2.4.1.1)
 - on close(expiry) unless superseded(self): read lapsed (CC 2.4.1.1)
 
@@ -2836,7 +2867,7 @@ In time:
 - @community on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.4, CC 4.4.3.9, CC 4.4.3.16)
 - @self on admitted(identity:occurrence): emit `key_grant:content` by owner (CC 4.4.3.16)
 - @affiliations on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.16)
-- on fold(no_wrap_target): emit `hard_case:recipient_excluded` by identity:substrate_persist (CC 4.4.3.16)
+- on fold(no_wrap_target): emit `hard_case:recipient_excluded` by infra:attest (CC 4.4.3.16)
 - @community on admitted(membership:{stage}): emit `key_grant:epoch` by author (CC 4.4.3.16)
 
 Body: `author`, `dimension`, `axis`, `wrap_algorithm`, `wrapped_dek`, `at_rest_sha256`, `owner`, `community`, `minter`, `epoch`, `stream_id`, `asserted_at`
@@ -2902,15 +2933,6 @@ Fold:
 In time:
 - on withdrawn(group:roster): read lapsed (CC 4.4.3.12)
 
-**`lineage_witness:{stage}`** — Rules, thing
-
-| Transition | Who signs | Policy | Widens | Confirm | Way back |
-|---|---|---|---|---|---|
-| attest | founder, owner (proposal: founder; acceptance: owner; decline: owner) | selfAct | true (by_scope) | true (if_widens) | withdraw |
-| withdraw | author, subject | selfAct | false | false | attest |
-
-Count: `none` (CC 3.4.10)
-
 **`locality:decision:{scale}`** — Circumstances, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2950,13 +2972,13 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | member, self (proposal: member; acceptance: self; decline: self; widening: member; removal: member; resignation: self) | cosigned `cosigned_act` | true (always) | true (always) | withdraw |
+| attest | founder, member, self (proposal: founder, member; acceptance: self; decline: self; widening: member; removal: member; keeps: member; resignation: self) | cosigned `cosigned_act` | true (always) | true (always) | withdraw |
 | withdraw | member | cosigned | false | false | attest |
 | supersede | member | cosigned | false | false | supersede |
 
 Count: `leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group` (CC 3.1.3.2, CC 4.4.3.12)
 
-Authorship: `leaf=widening|removal => counted ; authored` (CC 3.1.3.2)
+Authorship: `leaf=widening|removal|keeps => counted ; authored` (CC 3.1.3.2)
 
 Guard:
 - attest: `each(subject) when(leaf=widening) (one membership:acceptance@named[signer=key,object=object] as A & no membership:widening@named[ref:*=A.id] else void+community_consensus_protocol_violation)` (CC 3.1.3.2)
@@ -2964,7 +2986,6 @@ Guard:
 - attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.6)
 - attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
 - attest: `each(subject) when(leaf=widening,not member(key,object),not type(key,node)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.6, CC 4.4.3.9, CC 4.4.3.17)
-- attest: `each(subject) when(leaf=widening,type(key,node)) one trust:blessing@landed[attested=key] else exclude` (CC 3.1.3.2)
 - attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
 
 Change:
@@ -2995,29 +3016,42 @@ Fold:
 In time:
 - [proposal] expiry required `expires_at` max `membership_proposal_max_secs` (CC 4.4.3.6, CC 3.1.3.2)
 - [proposal] on close(expiry): read closed (CC 4.4.3.6, CC 3.1.3.2)
-- @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by owner (CC 4.4.3.17)
+- @family on admitted(self): emit `hard_case:family_membership_change` by infra:attest, emit `key_grant:content` by owner (CC 4.4.3.17)
 - [widening] expiry optional `valid_until` (CC 3.3.4)
 - [widening] on close(expiry): read lapsed (CC 3.3.4)
 - [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
 - [proposal] while `expiry` is open: binds nobody until it lands (CC 3.1.3.2)
 
-Body: `dimension`, `group_kind`, `group`, `member`, `joined_at`, `removed_at`, `effective_at`, `role`, `witness_set`, `valid_until`, `reason`, `refs`, `asserted_at`, `proposal_hash`
+Body: `dimension`, `group_kind`, `group`, `member`, `joined_at`, `removed_at`, `effective_at`, `role`, `witness_set`, `valid_until`, `reason`, `refs`, `asserted_at`, `author`
 
 **`mesh_config:{key}`** — Rules, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | steward | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | steward | cosigned `accord_majority` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `none`
+Count: `act=group => accord_majority@trust_root ; none` (CC 4.2.1)
+
+Authorship: `act=group => counted ; authored` (CC 4.2.1)
 
 Fold:
 - `bound=narrow_only(value)` (CC 3.1.9.2)
 
 In time:
 - [emergency] expiry required `valid_until` max `mesh_config_emergency_ttl_secs` (CC 4.2.1.4, CC 4.2.1, CC 3.1.9.2)
+
+**`mls:leaf_vouch`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `none` (CC 5.1)
+
+Body: `author`, `dimension`, `suite`, `leaves`, `valid_from`, `valid_until`, `refs`, `asserted_at`
 
 **`model_3d:*`** — Facts, account
 
@@ -3071,10 +3105,10 @@ Fold:
 Count: `none` (CC 3.1.9.2)
 
 Fold:
-- `@state=proposal|assent: weight=1` (CC 3.1.9.2)
+- `@state=assent: weight=1` (CC 3.1.9.2)
 - `@state=raised: weight=-1` (CC 3.1.9.2)
 
-Body: `cohort`, `cohort_key_id` (text only), `grounds` (text only), `objects_to_attestation_id` (text only)
+Body: `author`, `dimension`, `cohort`, `cohort_key_id`, `grounds`, `refs`, `asserted_at`
 
 **`observation:access_assumption`** — Premises, account
 
@@ -3125,6 +3159,8 @@ Fold:
 - `reads=own&live&signer:owner; key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less; by=node` (CC 3.2)
 - `key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less` (CC 3.2)
 - `reads=own` (CC 3.2)
+
+Body: `author`, `dimension`, `delegation_purpose`, `scope`, `delegation_valid_from`, `delegation_valid_until`, `cohort_scope`, `community_id`, `family_id`, `on_behalf_of`, `refs`, `asserted_at`
 
 **`preserve_response`** — Process, thing
 
@@ -3430,7 +3466,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | cosigned `affiliation_member_action` | true (by_scope) | true (if_widens) | withdraw |
+| attest | slash | cosigned `affiliation_member_action` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 
 Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.12)
@@ -3444,6 +3480,15 @@ Guard:
 - attest: `one other(ratchet:flag:counter_rii:{layer})@named[id=ref:evidence_refs] else void` (CC 3.4.7.2)
 - attest: `one other(seed_holder_voting_alignment:{cell})@named[id=ref:evidence_refs] else void` (CC 3.1.9.4)
 - attest: `one other(testimonial_witness:{kind})@named[id=ref:evidence_refs] else void` (CC 3.1.9.3, CC 4.4.1)
+
+**`stream:head`** — Facts, account; keeps the Record
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | false | true (always) | none |
+| supersede | author | selfAct | false | false | supersede |
+
+Count: `none` (CC 3.1.3)
 
 **`takedown_notice:{basis}`** — Rules, thing
 
@@ -3460,11 +3505,10 @@ Guard:
 - attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else exclude` (CC 4.5.5)
 
 In time:
-- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes, emit `hard_case:fast_path_takedown` by identity:substrate_persist (CC 6.1.2.4)
+- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes, emit `hard_case:fast_path_takedown` by infra:attest (CC 6.1.2.4, CC 4.5.13)
 - [Dmca512] on admitted(self): do stop_serving (CC 4.5.3)
 - [Dmca512] clock `withhold` = `withhold_window_dmca512` (CC 4.5.3)
 - [Dmca512] on close(withhold): do destroy_bytes (CC 4.5.3)
-- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes (CC 4.5.13)
 - [DsaArticle16] on admitted(self): do stop_serving (CC 4.5.3)
 - [DsaArticle16] clock `withhold` = `withhold_window_dsa16` (CC 4.5.3)
 - [DsaArticle16] on close(withhold): do destroy_bytes (CC 4.5.3)
@@ -3483,7 +3527,7 @@ In time:
 - [OsaIllegalContent] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
 - [CommunityStandards] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
 
-Body: `author`, `dimension`, `legal_basis`, `claimant`, `content_sha256`, `content_holders`, `jurisdiction`, `good_faith_statement`, `claim_text`, `evidence_refs`, `perceptual_hash`, `counter_notice_channel`, `selection_counts`, `expires_at`, `asserted_at`
+Body: `author`, `dimension`, `legal_basis`, `claimant`, `content_sha256`, `content_holders`, `jurisdiction`, `good_faith_statement`, `claim_text`, `evidence_refs`, `perceptual_hash`, `counter_notice_channel`, `selection_counts`, `expires_at`, `refs`, `asserted_at`
 
 **`topical_relation:{kind}`** — Identity, thing
 
@@ -3527,17 +3571,6 @@ Count: `none`
 Guard:
 - supersede: `when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else exclude(serve_transit_pair_rotation_before_rebind)` (CC 3.1.3)
 
-**`trust:blessing`** — Rules, thing
-
-| Transition | Who signs | Policy | Widens | Confirm | Way back |
-|---|---|---|---|---|---|
-| attest | member | cosigned `cosigned_act` | true (by_scope) | true (if_widens) | withdraw |
-| withdraw | member | cosigned `cosigned_act` | false | false | attest |
-
-Count: `cosigned_act@conferrer` (CC 3.1.3)
-
-Authorship: `counted` (CC 3.1.3)
-
 **`trust:{job}:{version}`** — Rules, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -3553,13 +3586,12 @@ Authorship: `act=group => counted ; authored` (CC 3.4.5)
 Second signers: `delegate` by `sub` when `leaf=confers` (CC 2.6.1.9); `delegate_owner` by `owner_of_sub` when `leaf=confers` (CC 4.4.3.19)
 
 Guard:
-- authorize: `when(leaf=charter) each(val:witnesses) (not founder(key,object) else exclude & not member(key,object) else exclude)` (CC 2.1)
+- authorize: `when(leaf=accepts) one *@named[id=ref:attached_head_digest] else void(trust_root_head_unreceipted)` (CC 3.2)
 
 Change:
 - supersede: `replace: by=cosigned_prior` (CC 2.1)
 
 Fold:
-- `@job=charter: reads=head; pick=chain(prev_head_digest)` (CC 3.2)
 - `@job=accepts: reads=own+head&live; result=state(rooted|stalled|not_rooted); absent=refuse; by=node` (CC 3.2)
 - `@job=accepts: absent=refuse` (CC 3.2)
 
@@ -3569,7 +3601,7 @@ In time:
 - @affiliations expiry required `delegation_valid_until` default `delegation_term_max_secs` max `charter.role_term` (CC 4.4.3.12)
 - expiry required `delegation_valid_until` max `delegation_term_max_secs` (CC 2.4.1)
 
-Body: `attach_window_secs`, `attached_head_digest`, `pre_rotation_commitment`, `recovery_commitments`
+Body: `author`, `dimension`, `attached_head_digest`, `trust_classes`, `trust_depth`, `service_key`, `asserted_at`, `attach_window_secs`, `pre_rotation_commitment`, `recovery_commitments`
 
 **`video:*`** — Facts, account
 
@@ -3617,16 +3649,16 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | moderate, takedown | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
 
 In time:
-- [csam] on withdrawn(self): emit `hard_case:watchlist_enabled` by identity:substrate_persist (CC 4.5.7)
-- on admitted(self): emit `hard_case:watchlist_enabled` by identity:substrate_persist (CC 3.1.9.4)
-- on matched(self): emit `hard_case:watchlist_match` by identity:substrate_persist (CC 3.1.9.4)
+- [csam] on withdrawn(self): emit `hard_case:watchlist_enabled` by infra:attest (CC 4.5.7)
+- on admitted(self): emit `hard_case:watchlist_enabled` by infra:attest (CC 3.1.9.4)
+- on matched(self): emit `hard_case:watchlist_match` by infra:attest (CC 3.1.9.4)
 
 **`weighted_aggregate:{contribution_id}`** — Confidence, account
 
@@ -3639,6 +3671,16 @@ Count: `none`
 
 Fold:
 - `reads=vote:{contribution_id}&live; key=contribution_id,person; pick=agree; combine=sum(weight); by=node` (CC 3.1.9.3)
+
+**`window:{state}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | selfAct | false | true (always) | none |
+
+Count: `none` (CC 3.3.6.4)
+
+Body: `author`, `dimension`, `refs`, `asserted_at`
 
 ## 8.11 `earlier-signed-object` — The earlier signed object (JSON and JCS)
 

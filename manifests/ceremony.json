@@ -1,0 +1,279 @@
+{
+ "_meta": {
+  "source": "formal/ceremony/CEREMONY.md section 3, steps 1 to 4; formal/ceremony/check_trace.py",
+  "model": "formal/ceremony/ceremony.py (P1 to P11), formal/ceremony/Cutover.tla",
+  "trace": "statements: one entry per signed statement, in ceremony order: step, kind, index, protected (alg, content_type, kid, cwt_claims, typ, the row labels), payload, sha256, and cose_hex, the signed bytes. holders: for each holder, identity_ref, device_serial (the integer the custody leaf names, or null with device_serial_absent_reason) and recovery_commitment. signing_key_commitments: for each holder and seat, identity_ref and the commitment over its signing key",
+  "editions": [
+   "rc21",
+   "rc22"
+  ]
+ },
+ "steps": [
+  {
+   "step": 1,
+   "kind": "key:record",
+   "signer": "holder",
+   "per": "each holder",
+   "after": [],
+   "what": "each holder's key record: accord_holder, no valid_until, attested custody"
+  },
+  {
+   "step": 2,
+   "kind": "key:record",
+   "signer": "seat",
+   "per": "each serve seat",
+   "after": [],
+   "what": "each seat's key record: node, valid_until within 365 days"
+  },
+  {
+   "step": 2,
+   "kind": "identity:occurrence",
+   "signer": "seat",
+   "per": "each serve seat",
+   "after": [
+    2
+   ],
+   "what": "each seat's transport destination binding, citing its key record"
+  },
+  {
+   "step": 3,
+   "kind": "accord:invoke:constitutional",
+   "signer": "holder",
+   "per": "each holder",
+   "after": [
+    1
+   ],
+   "what": "each holder's pre-signed halt, sealed"
+  },
+  {
+   "step": 4,
+   "kind": "ceg-genesis-bundle/2",
+   "signer": "holder",
+   "per": "every holder, one payload",
+   "after": [
+    1,
+    2,
+    3
+   ],
+   "what": "the genesis bundle, signed by every holder"
+  }
+ ],
+ "invariants": [
+  {
+   "id": "C01",
+   "since": "rc21",
+   "cc": "2.6.1.7",
+   "statement": "every statement is one composite signature (alg -70100) under edition 2, with iss, and a row carries the row content type and typ ceg-row/2"
+  },
+  {
+   "id": "C02",
+   "since": "rc21",
+   "cc": "5.3.4",
+   "statement": "the statements come in the order of the steps, and the bundle is last"
+  },
+  {
+   "id": "C03",
+   "since": "rc21",
+   "cc": "2.6.1.8",
+   "statement": "iat is the payload's asserted_at in seconds, exp is its valid_until where it has one and absent where it has none, and kid is the thumbprint inside iss"
+  },
+  {
+   "id": "C04",
+   "since": "rc21",
+   "cc": "4.2.3",
+   "statement": "a holder's key record is accord_holder alone, carries no valid_until, and attests custody with the post-quantum half removable_offline and a chain"
+  },
+  {
+   "id": "C05",
+   "since": "rc21",
+   "cc": "2.6.1.7",
+   "statement": "a seat's key record is node alone and ends within 365 days of its asserted_at"
+  },
+  {
+   "id": "C06",
+   "since": "rc21",
+   "cc": "2.6.1.4",
+   "statement": "a seat's binding is signed by the seat, cites its key record, and carries its X-Wing keys beside transport_destination, never inside it"
+  },
+  {
+   "id": "C07",
+   "since": "rc22",
+   "cc": "5.3.4",
+   "statement": "a serve seat's binding carries dial_hints with at least one tcp hint"
+  },
+  {
+   "id": "C08",
+   "since": "rc21",
+   "cc": "4.2.1.1",
+   "statement": "every holder has exactly one pre-signed halt, with the closed payload, a 32-byte nonce, its own invocation id, and sub equal to accord_root"
+  },
+  {
+   "id": "C09",
+   "since": "rc21",
+   "cc": "5.3.4",
+   "statement": "every holder signs the bundle, over one payload, and nobody else does"
+  },
+  {
+   "id": "C10",
+   "since": "rc21",
+   "cc": "2.6.1.11",
+   "statement": "the bundle is version 1 with no prev, names the holders of step 1 and the seats of step 2, and cites their records"
+  },
+  {
+   "id": "C11",
+   "since": "rc21",
+   "cc": "4.2.6",
+   "statement": "the charter commits one recovery key for each holder, with a halt fuse, and its scope carries infra:serve and infra:attest and none of the scopes only an owner grants"
+  },
+  {
+   "id": "C12",
+   "since": "rc22",
+   "cc": "4.2.6",
+   "statement": "no two holders share a recovery commitment"
+  },
+  {
+   "id": "C13",
+   "since": "rc21",
+   "cc": "3.2",
+   "statement": "a charter in witnessed mode off carries none of the witnessing members, and no member is written as zero"
+  },
+  {
+   "id": "C14",
+   "since": "rc22",
+   "cc": "2.6.1.11",
+   "statement": "a bundle voice's sub is the bundle's family_key_id"
+  },
+  {
+   "id": "C15",
+   "since": "rc21",
+   "cc": "4.2.1.1",
+   "statement": "a halt of this form exists for every holder before the bundle, and names the bundle's lineage"
+  },
+  {
+   "id": "C16",
+   "since": "rc21",
+   "cc": "2.6.2",
+   "statement": "no record is dated after the bundle that cites it, and every valid_until is later than its asserted_at"
+  },
+  {
+   "id": "C18",
+   "since": "rc21",
+   "cc": "4.2.3",
+   "statement": "no two holders name one device in their custody leaves, and no leaf's device serial is malformed; a leaf that names no device and a certificate shared above the devices are no fault"
+  },
+  {
+   "id": "C19",
+   "since": "rc22",
+   "cc": "4.2.6",
+   "statement": "each holder's recovery commitment is the one the charter carries, and it commits no key that signs for a holder or a seat"
+  },
+  {
+   "id": "C17",
+   "since": "rc21",
+   "cc": "2.6.1.2",
+   "statement": "where the signed bytes are given, an independent decoding agrees with the trace, and every cites resolves to a statement of the trace"
+  }
+ ],
+ "plants": [
+  {
+   "invariant": "C01",
+   "plant": "a statement under another algorithm"
+  },
+  {
+   "invariant": "C02",
+   "plant": "a bundle voice before the records"
+  },
+  {
+   "invariant": "C03",
+   "plant": "an exp on a holder's record"
+  },
+  {
+   "invariant": "C04",
+   "plant": "a holder's post-quantum half on the token"
+  },
+  {
+   "invariant": "C04",
+   "plant": "a holder's record with a valid_until"
+  },
+  {
+   "invariant": "C05",
+   "plant": "a seat's record that ends after two years"
+  },
+  {
+   "invariant": "C06",
+   "plant": "an X-Wing key inside transport_destination"
+  },
+  {
+   "invariant": "C06",
+   "plant": "a binding that cites nothing"
+  },
+  {
+   "invariant": "C07",
+   "plant": "a seat with no tcp dial hint"
+  },
+  {
+   "invariant": "C08",
+   "plant": "a halt with a member outside the closed payload"
+  },
+  {
+   "invariant": "C08",
+   "plant": "a holder with no halt"
+  },
+  {
+   "invariant": "C09",
+   "plant": "a bundle one holder did not sign"
+  },
+  {
+   "invariant": "C10",
+   "plant": "a bundle that names a prev"
+  },
+  {
+   "invariant": "C11",
+   "plant": "a charter with no halt fuse"
+  },
+  {
+   "invariant": "C11",
+   "plant": "a charter that carries a scope only an owner grants"
+  },
+  {
+   "invariant": "C12",
+   "plant": "two holders sharing a recovery commitment"
+  },
+  {
+   "invariant": "C13",
+   "plant": "a witness quorum written as zero"
+  },
+  {
+   "invariant": "C13",
+   "plant": "an attach window in a witnessed-off charter"
+  },
+  {
+   "invariant": "C14",
+   "plant": "a bundle voice with no sub"
+  },
+  {
+   "invariant": "C15",
+   "plant": "a halt naming another lineage"
+  },
+  {
+   "invariant": "C18",
+   "plant": "two holders on one device"
+  },
+  {
+   "invariant": "C18",
+   "plant": "a holder whose device serial is malformed"
+  },
+  {
+   "invariant": "C19",
+   "plant": "a recovery key that is a holder's signing key"
+  },
+  {
+   "invariant": "C19",
+   "plant": "a recovery commitment that is not the charter's"
+  },
+  {
+   "invariant": "C16",
+   "plant": "a record dated after the bundle"
+  }
+ ]
+}

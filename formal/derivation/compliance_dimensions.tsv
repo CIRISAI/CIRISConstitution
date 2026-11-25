@@ -15,7 +15,7 @@ D13	testimonial_witness:{kind}	STRONG-4	11	2	2	1	testimonial_witness:{kind}	3.1.
 D14	witness_diversity:*	STRONG-4	3	3	16	2	witness_diversity:{contribution_id}	3.1.9.3
 D15	moderation:*	STRONG-4	2	2	1	1	moderation:{allegation_type}	3.1.9.2
 D16	method:*	STRONG-4	2	12	136	36	method:{approach_id}:{substrate_rung}	3.1.9.7
-D17	transparency_log:*	STRONG-3	2	5	23	10	transparency_log:consistency transparency_log:cosigned:{tree_size} transparency_log:inclusion	3.1.2
+D17	transparency_log:*	STRONG-3	2	5	23	10	stream:head	3.1.3
 D18	attestation:l{3,5}:*	STRONG-3	2	4	5	0	attestation:agent_integrity attestation:hardware_rooted attestation:license_validity attestation:registry_consensus attestation:self_verify	3.1.2
 D19	partner_role:*	STRONG-3	0	1	19	1	partner_role:{role}	3.1.1
 D20	approach:*	STRONG-3	5	3	23	1	approach:{goal_id}	3.1.9.7

@@ -3,12 +3,12 @@
 Run from formal/self_roster:  python3 dump_traces.py <tla2tools.jar>
 
 Six traces, written to traces/<config>.json:
-  refuse  unilateral3_stolen   — the thief's lone eviction lands at once; a conforming door REFUSES it
+  refuse  unilateral3_stolen   — the thief's eviction is read as landed on its word; a conforming reader does not
   bound   combined1_stolen     — one key, stolen: Inv_SelfSurvives fails; the stated one-key bound
   bound   combined2_stolen     — two keys, one stolen: the stalemate; the stated two-key bound (a
                                  behaviour that never reaches Recovered; printed as a lasso)
   land    combined3_stolen / combined3_lost / combined4_mixed — the shortest behaviour reaching
-                                 Recovered under the combined policy; every Execute in it must land
+                                 Recovered under the combined policy; every Settle in it reads `landed`
 
 Each state carries the model variables and a derived `step` naming the transition that produced it.
 stdlib only; TLC output parsed, never edited by hand."""
@@ -25,7 +25,7 @@ CASES = [("unilateral3_stolen", "refuse", "Inv_ThiefCannotEvictHonest"),
          ("combined4_mixed", "land", "Inv_NotRecovered")]
 
 # ---- a small parser for the TLA+ values TLC prints ----
-TOK = re.compile(r'\s*(\|->|:>|@@|[{}\[\]\(\),]|"[^"]*"|-?\d+|[A-Za-z_][A-Za-z0-9_]*)')
+TOK = re.compile(r'\s*(\|->|:>|@@|<<|>>|[{}\[\]\(\),]|"[^"]*"|-?\d+|[A-Za-z_][A-Za-z0-9_]*)')
 def tokens(s):
     pos, out = 0, []
     while pos < len(s):
@@ -52,6 +52,12 @@ def parse(toks):
                 k = take(); assert take() == "|->"; rec[k] = value()
                 if peek() == ",": take()
             take(); return rec
+        if t == "<<":   # a tuple; TLC prints a function with an empty domain as << >>
+            items = []
+            while peek() != ">>":
+                items.append(value())
+                if peek() == ",": take()
+            take(); return items if items else {}
         if t == "(":
             fn = {}
             while True:
@@ -85,22 +91,34 @@ def parse_states(text):
     return states
 
 def step_name(prev, cur):
+    """The transition, named from what changed between the two states."""
     if prev is None: return "init"
-    if cur["holder"] != prev["holder"] and cur["member"] == prev["member"]:
+    key = lambda p: (p["kind"], p["by"], p["target"])
+    pk = {key(p): p for p in prev["props"]}; ck = {key(p): p for p in cur["props"]}
+    if cur["holder"] != prev["holder"] and cur["member"] == prev["member"] and not pk:
         d = next(k for k in cur["holder"] if cur["holder"][k] != prev["holder"][k])
-        return f"{'Steal' if cur['holder'][d]=='thief' else 'Lose'}({d})"
+        return f"{'Steal' if cur['holder'][d] == 'thief' else 'Lose'}({d})"
+    if set(ck) - set(pk):
+        k, by, tg = sorted(set(ck) - set(pk))[0]; return f"Propose({k}, by={by}, target={tg})"
     if cur["member"] != prev["member"]:
-        gone = set(prev["member"]) - set(cur["member"]); new = set(cur["member"]) - set(prev["member"])
-        return f"Execute(evict {sorted(gone)[0]})" if gone else f"Execute(add {sorted(new)[0]})"
-    pk = {(p["kind"], p["by"], p["target"]) for p in prev["pending"]}
-    ck = {(p["kind"], p["by"], p["target"]) for p in cur["pending"]}
-    if ck - pk:
-        k, by, tg = sorted(ck - pk)[0]; return f"Propose({k}, by={by}, target={tg})"
-    if cur["acted"] == [] and prev["acted"] != [] or any(c["age"] > p["age"] for c in cur["pending"] for p in prev["pending"] if (c["kind"],c["by"],c["target"])==(p["kind"],p["by"],p["target"])):
-        return "Tick"
-    if set(cur["acted"]) - set(prev["acted"]):
-        return f"React({sorted(set(cur['acted']) - set(prev['acted']))[0]})"
-    return cur["tlc_action"]
+        out = set(prev["member"]) - set(cur["member"]); new = set(cur["member"]) - set(prev["member"])
+        k, by, tg = next(q for q in pk if q[2] in (out | new))
+        return f"Settle({k} {tg} by {by}: landed)"
+    if set(pk) - set(ck):
+        k, by, tg = sorted(set(pk) - set(ck))[0]; return f"Settle({k} {tg} by {by}: refused)"
+    note = None
+    for q in sorted(ck):
+        a, b = pk[q], ck[q]
+        if a == b: continue
+        k, by, tg = q
+        if a["ans"] != b["ans"]:
+            d = next(x for x in b["ans"] if b["ans"][x] != a["ans"][x])
+            return f"Answer({d}: {b['ans'][d]} on {k} {tg} by {by})"
+        if a["wd"] != b["wd"]: return f"Withdraw({k} {tg} by {by})"
+        if a["held"] != b["held"]: return f"Hold({k} {tg} by {by}: {b['held']})"
+        if a["land"] != b["land"]: return f"Land({k} {tg} by {by}: {b['land']})"
+        note = f"Note({tg})"
+    return note or cur["tlc_action"]
 
 def run(config, kind, prop):
     with tempfile.TemporaryDirectory() as td:
@@ -109,6 +127,9 @@ def run(config, kind, prop):
         if kind == "land":   # swap the liveness property for the witness invariant
             cfg = re.sub(r"PROPERTIES.*\n?", "", cfg)
             cfg = re.sub(r"INVARIANTS.*", "INVARIANTS TypeOK Inv_NotRecovered", cfg)
+        elif prop.startswith("Inv_"):   # report the named invariant, whatever else the configuration lists
+            cfg = re.sub(r"PROPERTIES.*\n?", "", cfg)
+            cfg = re.sub(r"INVARIANTS.*", "INVARIANTS TypeOK " + prop, cfg)
         open(os.path.join(td, "run.cfg"), "w").write(cfg)
         out = subprocess.run(["java", "-Xmx3g", "-cp", JAR, "tlc2.TLC", "-workers", "1", "-metadir",
                               os.path.join(td, "m"), "-deadlock", "-config", "run.cfg", "SelfRoster.tla"],
@@ -122,9 +143,9 @@ def run(config, kind, prop):
         s["step"] = step_name(prev, s); prev = s
     return {"config": config, "kind": kind, "checked": prop,
             "tlc": violated.group(1) if violated else "no violation (unexpected)",
-            "reading": {"refuse": "the last Execute in this trace is the one a conforming door refuses",
+            "reading": {"refuse": "the last Settle in this trace is the one a conforming reader never makes",
                         "bound": "a stated bound: no policy on the wire resolves this behaviour",
-                        "land": "every Execute in this trace lands under the combined two-path policy; the final state is Recovered"}[kind],
+                        "land": "every Settle in this trace reads landed under the rule of CC 3.3.6.4 (a met count, or a lone landing that stands); the final state is Recovered"}[kind],
             "lasso_back_to_state": int(lasso.group(1)) if lasso else ("stutter" if stutter else None),
             "states": states}
 

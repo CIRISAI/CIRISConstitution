@@ -17,11 +17,11 @@
  "vectors": [],
  "not_runnable": [
   {
-   "id": "edge/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
+   "id": "edge/delivery_ack:{stream_id}/guard[accountable stream]",
    "status": "stated",
    "reason": "the guard reads the binding's signed `profile` (CC 5.3.3.5); the binding the edge ships carries no such member, so no shipped rule reads one",
    "cc_ref": "CC 5.3.3.11",
-   "quote": "For accountable streams, \"published\" means **witness-cosigned**"
+   "quote": "For an accountable stream the head counts only once it is published"
   },
   {
    "id": "edge/(link handshake)/transit handshake",

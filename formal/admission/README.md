@@ -10,7 +10,7 @@ the rows a host holds, the host owner's key and the host's clock:
 | Function | Answers | CC |
 |---|---|---|
 | `admit` | whether a unit's digest is admitted at a host (whose owner its owner-binding names), with which capabilities, or why not | 2.7.11, 3.1.3, 3.2 |
-| `built_in` | whether a unit runs under the attested build: its manifest names the digest and its pipeline's blessing is held | 2.7.11, 3.1.2.1 |
+| `built_in` | whether a unit runs under the attested build: its manifest names the digest and its pipeline's grant is held | 2.7.11, 3.1.2.1 |
 | `may` | whether an admitted unit may use a capability now: the parent's capabilities, the halt | 2.7.11, 4.2.1.1 |
 | `submit` | whether a host runs a unit another host submitted | 2.7.11 |
 | `halted` | the accord's halt at a host: one holder latches, the fuse, a majority confirms or resumes | 4.2.1.1, 4.2.1.3 |
@@ -50,8 +50,13 @@ exact decimal value: four of the call cases are refused, `call_argument_unrepres
 **What it does not model.** Bytes, encodings and signatures (the signed object's vectors carry them); the walk's
 classes beyond `admission`; a roster's own lineage (`formal/accord_roster`, `formal/roster_fork`); the halt's
 interleavings (`formal/accord_halt`); how often an untrusted text reaches a stage that must see it, which is
-measured elsewhere and is a declared residual, not a model claim. That code and profile admission is the kernel's seat
-walk at one voice, and action admission the same walk at a count, is argued here and run, not proved in Lean.
+measured elsewhere and is a declared residual, not a model claim. That the three admissions are one walk is argued here and run. It holds with two qualifications. Code is at
+one voice only for a unit that names no effect, or for the host owner's own row on its own host; any other unit that
+names an effect needs a count of at least two persons. An action differs in more than its count: its root and stander
+are the agent's own key, and its voices are the agent's four faculties, not persons. A Lean proof of the walk, with
+both qualifications and all fourteen properties over every row set, is the kernel's, vendored at
+[`../vendor/kernel/Admission.lean`](../vendor/kernel/Admission.lean) (CIRISKernel 7f4fb7cbcae5). It reads a set where this model reads a first
+row, so the two agree wherever one such row is held.
 
     python3 -I formal/admission/check_admission.py           # compare with admission_expected.tsv
     python3 -I formal/admission/check_admission.py --write   # write it

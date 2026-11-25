@@ -127,12 +127,12 @@ consent:state:{stance}	subject_key_id	unstated	unstated	no	CC 3.3.5	stance: Cons
 consent:state:{stance}	target_key_id	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	valid_until	unstated	optional	yes	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 deferral:request	domain	unstated	unstated	yes	CC 4.3	A deferral names its domain or none.
-delivery_receipt:{stream_id}	K	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
-delivery_receipt:{stream_id}	chunk_root	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
-delivery_receipt:{stream_id}	epoch	unstated	unstated	no	CC 3.4.6	Subscriber's signed acknowledgement that they received chunk K under the named stream + epoch.
-delivery_receipt:{stream_id}	epoch	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
-delivery_receipt:{stream_id}	stream_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
-delivery_receipt:{stream_id}	subscriber_key_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	K	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	chunk_root	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	epoch	unstated	unstated	no	CC 3.4.6	Subscriber's signed acknowledgement that they received chunk K under the named stream + epoch.
+delivery_ack:{stream_id}	epoch	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	stream_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
+delivery_ack:{stream_id}	subscriber_key_id	unstated	unstated	no	CC 5.3.3.11	both required (each names a distinct authorization scope)
 detection:correlated_action:{axis}	epistemic_mode	"derivative"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
 detection:correlated_action:{axis}	witness_relation	"derived"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
 detection:distributive:access:{resource_type}	epistemic_mode	"derivative"	unstated	yes	CC 2.1	Detector-derived attestations carry both: `epistemic_mode: derivative` and `witness_relation: derived`.
@@ -150,8 +150,6 @@ fidelity:explainability_sla:{tier}	fallback_reason	unstated	optional	no	CC 3.1.5
 group:roster	baa	unstated	unstated	no	CC 4.4.3.12	with `marking_binds_to_record` so a class's classification + export marking + retention obligation **travel across the cohort boundary**
 group:roster	breach_notification	unstated	unstated	no	CC 4.4.3.12	SLA and notifier identity
 group:roster	chain_of_custody	unstated	unstated	no	CC 4.4.3.12	Rides `supersedes` + holding claims. Default: none.
-group:roster	charter_digest	row-ref	unstated	no	CC 2.4	- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` in `refs`
-group:roster	charter_digest	row-ref	unstated	no	CC 3.1.3	Its `attested_key_id` is the group, and its payload carries the fold (seats, roles, `effective_at`s, bounds), with `prev_head_digest` and `charter_digest` in `refs`.
 group:roster	classification_scheme	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
 group:roster	cohort_subkind	tstr	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
 group:roster	cohort_subkind	unstated	unstated	no	CC 4.4.3.4	Two `cohort_subkind` values **opt OUT of the mandatory DEK cascade and are Commons-tier (plaintext, holding claims at federation scope, no DEK)**
@@ -162,38 +160,31 @@ group:roster	compartment	unstated	unstated	no	CC 4.4.3.12	Each class entry binds
 group:roster	compartments	unstated	unstated	no	CC 4.4.3.12	named need-to-know sub-cohorts *within* the affiliation, membership ⊆ roster
 group:roster	consensus_protocol	unstated	required	no	CC 3.3.4	consensus_protocol: ConsensusProtocol // REQUIRED — see below
 group:roster	consensus_protocol	unstated	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
-group:roster	consensus_protocol	unstated	unstated	no	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
 group:roster	consensus_protocol_entrenched	bool	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
 group:roster	consensus_protocol_entrenched	bool	unstated	no	CC 3.3.4	consensus_protocol: ConsensusProtocol // REQUIRED — see below
-group:roster	consensus_protocol_entrenched	unstated	unstated	no	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
 group:roster	crypto_tier	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
 group:roster	declared_cohort	unstated	unstated	no	CC 4.4.3.12	The community record declares its cohort kind in one member, `declared_cohort` (`community` or `affiliations`).
 group:roster	designated_officials	unstated	unstated	no	CC 4.4.3.12	named accountable-human roots gating specific operations
 group:roster	disclosure_bar	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
 group:roster	erasure_exempt	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
 group:roster	external_controller	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
-group:roster	family_key_id	unstated	unstated	no	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
-group:roster	family_name	unstated	unstated	no	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
 group:roster	founded_at	unstated	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
 group:roster	geographic_constraint	unstated	unstated	no	CC 4.5.9.4	communities MAY scope themselves at any resolution by their own choice
 group:roster	hierarchy	unstated	unstated	no	CC 4.4.3.12	`hierarchy` supports **multi-parent DAG** roles
 group:roster	jurisdiction	unstated	unstated	no	CC 4.4.3.12	`regulatory_profile` and `jurisdiction[]` are **open lists**
-group:roster	key_id	unstated	unstated	yes	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
 group:roster	lawful_access	unstated	unstated	no	CC 4.4.3.12	Each authority declares a **type**, a `statutory_basis`, a **per-authority `transparency_mode`**, and optional **carve-out compartments** lawful access cannot reach
 group:roster	legal_weight	unstated	unstated	no	CC 4.4.3.12	as `licence_classes`, a list of the class names the authority issues under, each with its `legal_weight` stated true or false
 group:roster	licence_classes	unstated	unstated	no	CC 4.4.3.12	as `licence_classes`, a list of the class names the authority issues under, each with its `legal_weight` stated true or false
 group:roster	marking_binds_to_record	unstated	unstated	no	CC 4.4.3.12	with `marking_binds_to_record` so a class's classification + export marking + retention obligation **travel across the cohort boundary**
 group:roster	members	[* { key_id, joined_at, ? role }]	unstated	yes	CC 3.2	community_name: string // human-readable; non-unique
-group:roster	members	unstated	unstated	yes	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
 group:roster	membership_basis	unstated	unstated	no	CC 4.4.3.12	carried by an explicit `membership_basis` field
-group:roster	prev_head_digest	row-ref	unstated	no	CC 2.4	- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` in `refs`
-group:roster	prev_head_digest	row-ref	unstated	no	CC 3.1.3	Its `attested_key_id` is the group, and its payload carries the fold (seats, roles, `effective_at`s, bounds), with `prev_head_digest` and `charter_digest` in `refs`.
+group:roster	prev_head_digest	row-ref	unstated	no	CC 2.4	- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` in `refs`
+group:roster	prev_head_digest	row-ref	unstated	no	CC 3.1.3	Its `attested_key_id` is the group, and its payload carries the fold (seats, roles, `effective_at`s, bounds), with `prev_head_digest` in `refs`.
 group:roster	prev_head_digest	unstated	unstated	no	CC 4.4.3.6	admitted under the group's quorum and chained by `prev_head_digest`
 group:roster	prev_head_digest	unstated	unstated	no	CC 4.4.3.17	admitted under the group's quorum and chained by `prev_head_digest`
 group:roster	processor_chain	unstated	unstated	no	CC 4.4.3.12	with `marking_binds_to_record` so a class's classification + export marking + retention obligation **travel across the cohort boundary**
 group:roster	regulatory_profile	unstated	unstated	no	CC 4.4.3.12	`regulatory_profile` and `jurisdiction[]` are **open lists**
 group:roster	retention	unstated	unstated	no	CC 4.4.3.12	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
-group:roster	role	unstated	unstated	yes	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
 group:roster	statutory_basis	unstated	unstated	no	CC 4.4.3.12	Each authority declares a **type**, a `statutory_basis`, a **per-authority `transparency_mode`**, and optional **carve-out compartments** lawful access cannot reach
 group:roster	transparency_mode	unstated	unstated	no	CC 4.4.3.12	Each authority declares a **type**, a `statutory_basis`, a **per-authority `transparency_mode`**, and optional **carve-out compartments** lawful access cannot reach
 group:roster	transparency_obligations	unstated	unstated	no	CC 4.4.3.12	transparency here is a *duty to publish*, not an *access concession*. Default: none.
@@ -256,13 +247,11 @@ moderation:{allegation_type}	exposure	unstated	unstated	no	CC 4.5.13	The record 
 moderation:{allegation_type}	outcome	unstated	unstated	no	CC 4.5.13	The record is a `moderation:*` row naming the duty, the purpose, the report or removal that followed, and the exposure.
 moderation:{allegation_type}	purpose	unstated	unstated	no	CC 4.5.13	The record is a `moderation:*` row naming the duty, the purpose, the report or removal that followed, and the exposure.
 moderation:{allegation_type}	subject_sha256_ed25519_raw	unstated	unstated	yes	CC 4.5.13	The record is a `moderation:*` row naming the duty, the purpose, the report or removal that followed, and the exposure.
-objection:{state}	cohort	"self"	unstated	yes	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
-objection:{state}	cohort	unstated	unstated	yes	CC 3.1.9.2	Each carries `cohort`, `cohort_key_id` (the standing set it votes in; `self` and the fedID for the roster door) and `objects_to_attestation_id` (the proposal it answers, or
-objection:{state}	cohort_key_id	key-id	unstated	no	CC 3.1.9.2	Each carries `cohort`, `cohort_key_id` (the standing set it votes in; `self` and the fedID for the roster door) and `objects_to_attestation_id` (the proposal it answers, or
-objection:{state}	cohort_key_id	key-id	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
-objection:{state}	grounds	unstated	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
-objection:{state}	objects_to_attestation_id	uuid	unstated	no	CC 3.1.9.2	Each carries `cohort`, `cohort_key_id` (the standing set it votes in; `self` and the fedID for the roster door) and `objects_to_attestation_id` (the proposal it answers, or
-objection:{state}	objects_to_attestation_id	uuid	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:proposal:v1`, `objection:assent:v1`, `objection:raised:v1`; proposal id domain `ciris:objection:proposal:v1:`; an answer carries `cohort` = `self`, `cohort_key_id`,
+objection:{state}	cohort	"self"	unstated	yes	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:assent:v1` and `objection:raised:v1`; an answer carries `cohort` = `self`, `cohort_key_id` and `grounds`, and names the proposal in `refs.answers`). The proposal is the proposer's own occurrence or revocation row, named by its row id.
+objection:{state}	cohort	unstated	unstated	yes	CC 3.1.9.2	Each row carries `cohort` and `cohort_key_id` (the standing set it votes in; `self` and the fedID for the roster door).
+objection:{state}	cohort_key_id	key-id	unstated	no	CC 3.1.9.2	Each row carries `cohort` and `cohort_key_id` (the standing set it votes in; `self` and the fedID for the roster door).
+objection:{state}	cohort_key_id	key-id	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:assent:v1` and `objection:raised:v1`; an answer carries `cohort` = `self`, `cohort_key_id` and `grounds`, and names the proposal in `refs.answers`). The proposal is the proposer's own occurrence or revocation row, named by its row id.
+objection:{state}	grounds	unstated	unstated	no	CC 3.3.6.4	*The votes and the policy.* Votes travel on `objection:{state}` ([CC 3.1.9.2](#3.1.9.2): `objection:assent:v1` and `objection:raised:v1`; an answer carries `cohort` = `self`, `cohort_key_id` and `grounds`, and names the proposal in `refs.answers`). The proposal is the proposer's own occurrence or revocation row, named by its row id.
 observation:access_assumption	consent_basis	[* consent-basis]	optional	yes	CC 8.11.9	The grants a witness relied on.
 observation:access_assumption	consent_basis	[* consent-basis]	optional	yes	CC 3.1.9.4	Unlike reachability, the observed party has keys, so `subject_key_ids` is **REQUIRED and non-empty**: the observed agent's key or keys.
 observation:access_assumption	evidence_refs	[+ tstr]	required	yes	CC 3.1.9.4	Unlike reachability, the observed party has keys, so `subject_key_ids` is **REQUIRED and non-empty**: the observed agent's key or keys.
@@ -273,8 +262,8 @@ progress_measure:{method_id}	computation	unstated	required	no	CC 3.1.9.7	Require
 progress_measure:{method_id}	goodhart_resistance	unstated	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
 progress_measure:{method_id}	tracks	[* any]	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
 progress_measure:{method_id}	validity_window	unstated	required	no	CC 3.1.9.7	Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`.
-provenance:build_manifest:{target}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	A build manifest is published as **one** claim: a `scores` Contribution on `provenance:build_manifest:{target}`, signed by the pipeline that built it, citing the manifest's bytes from
-provenance:build_manifest:{target}:locale:{lang_code}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	A build manifest is published as **one** claim: a `scores` Contribution on `provenance:build_manifest:{target}`, signed by the pipeline that built it, citing the manifest's bytes from
+provenance:build_manifest:{target}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	The row MUST cite the blob by its digest in `evidence_refs[]`.
+provenance:build_manifest:{target}:locale:{lang_code}	evidence_refs	[+ tstr]	required	yes	CC 3.1.2.1	The row MUST cite the blob by its digest in `evidence_refs[]`.
 provenance:skill_import:{source}	capability_declaration	unstated	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.
 provenance:skill_import:{source}	import_timestamp	unstated	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.
 provenance:skill_import:{source}	signer_identity	unstated	unstated	no	CC 3.1.2	Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`.

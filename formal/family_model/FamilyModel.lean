@@ -323,7 +323,7 @@ def f59 : FamilyRow :=
   ⟨"delivery:{class}", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit59 : fits f59 = true := by decide
 def f60 : FamilyRow :=
-  ⟨"delivery_receipt:{stream_id}", ⟨.facts, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"delivery_ack:{stream_id}", ⟨.facts, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit60 : fits f60 = true := by decide
 def f61 : FamilyRow :=
   ⟨"detection:correlated_action:{axis}", ⟨.facts, [.attest, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
@@ -443,13 +443,13 @@ def f99 : FamilyRow :=
   ⟨"ledger:head:{unit}:{version}", ⟨.facts, [.attest, .replace], none⟩, ⟨true, .legalHold, .byteEqual⟩⟩
 theorem fit99 : fits f99 = true := by decide
 def f100 : FamilyRow :=
-  ⟨"ledger:promotion:{version}", ⟨.facts, [.attest, .replace], none⟩, ⟨true, .legalHold, .byteEqual⟩⟩
+  ⟨"stream:head", ⟨.facts, [.attest, .replace], none⟩, ⟨true, .legalHold, .byteEqual⟩⟩
 theorem fit100 : fits f100 = true := by decide
 def f101 : FamilyRow :=
-  ⟨"licensure:{authority_id}", ⟨.rules, [.attest, .replace, .withdraw], some ⟨.pre, some .rules⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"ledger:promotion:{version}", ⟨.facts, [.attest, .replace], none⟩, ⟨true, .legalHold, .byteEqual⟩⟩
 theorem fit101 : fits f101 = true := by decide
 def f102 : FamilyRow :=
-  ⟨"lineage_witness:{stage}", ⟨.rules, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"licensure:{authority_id}", ⟨.rules, [.attest, .replace, .withdraw], some ⟨.pre, some .rules⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit102 : fits f102 = true := by decide
 def f103 : FamilyRow :=
   ⟨"locality:decision:{scale}", ⟨.circumstances, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
@@ -590,118 +590,118 @@ def f148 : FamilyRow :=
   ⟨"trace_summary:{kind}", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit148 : fits f148 = true := by decide
 def f149 : FamilyRow :=
-  ⟨"transparency_log:consistency", ⟨.facts, [.attest, .withdraw], none⟩, ⟨true, .legalHold, .byteEqual⟩⟩
+  ⟨"transport:{kind}", ⟨.circumstances, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit149 : fits f149 = true := by decide
 def f150 : FamilyRow :=
-  ⟨"transparency_log:cosigned:{tree_size}", ⟨.facts, [.attest], none⟩, ⟨true, .legalHold, .byteEqual⟩⟩
+  ⟨"trust:{job}:{version}", ⟨.rules, [.authorize, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit150 : fits f150 = true := by decide
 def f151 : FamilyRow :=
-  ⟨"transparency_log:inclusion", ⟨.facts, [.attest, .withdraw], none⟩, ⟨true, .legalHold, .byteEqual⟩⟩
+  ⟨"truth_grounding:{subject}", ⟨.facts, [.attest, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit151 : fits f151 = true := by decide
 def f152 : FamilyRow :=
-  ⟨"transport:{kind}", ⟨.circumstances, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"video:*", ⟨.facts, [.attest, .replace, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit152 : fits f152 = true := by decide
 def f153 : FamilyRow :=
-  ⟨"trust:{job}:{version}", ⟨.rules, [.authorize, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"contribution:{subject_kind}", ⟨.priorities, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit153 : fits f153 = true := by decide
 def f154 : FamilyRow :=
-  ⟨"truth_grounding:{subject}", ⟨.facts, [.attest, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"vote:{contribution_id}", ⟨.priorities, [.attest, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit154 : fits f154 = true := by decide
 def f155 : FamilyRow :=
-  ⟨"video:*", ⟨.facts, [.attest, .replace, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"wa_adjudication:{state}", ⟨.rules, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit155 : fits f155 = true := by decide
 def f156 : FamilyRow :=
-  ⟨"vote:{contribution_id}", ⟨.priorities, [.attest, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"watchlist:{id}", ⟨.rules, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit156 : fits f156 = true := by decide
 def f157 : FamilyRow :=
-  ⟨"wa_adjudication:{state}", ⟨.rules, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"weighted_aggregate:{contribution_id}", ⟨.confidence, [.attest, .replace], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit157 : fits f157 = true := by decide
 def f158 : FamilyRow :=
-  ⟨"watchlist:{id}", ⟨.rules, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"witness_diversity:{contribution_id}", ⟨.confidence, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit158 : fits f158 = true := by decide
 def f159 : FamilyRow :=
-  ⟨"weighted_aggregate:{contribution_id}", ⟨.confidence, [.attest, .replace], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"archive_release:{basis}", ⟨.rules, [.attest], some ⟨.pre, some .rules⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit159 : fits f159 = true := by decide
 def f160 : FamilyRow :=
-  ⟨"witness_diversity:{contribution_id}", ⟨.confidence, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"ballot:tally:{poll_id}", ⟨.facts, [.attest, .withdraw], some ⟨.pre, some .facts⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit160 : fits f160 = true := by decide
 def f161 : FamilyRow :=
-  ⟨"archive_release:{basis}", ⟨.rules, [.attest], some ⟨.pre, some .rules⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"census:composite:{class}", ⟨.facts, [.attest, .replace, .withdraw], some ⟨.pre, some .facts⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit161 : fits f161 = true := by decide
 def f162 : FamilyRow :=
-  ⟨"ballot:tally:{poll_id}", ⟨.facts, [.attest, .withdraw], some ⟨.pre, some .facts⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"census:expected_active", ⟨.facts, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit162 : fits f162 = true := by decide
 def f163 : FamilyRow :=
-  ⟨"census:composite:{class}", ⟨.facts, [.attest, .replace, .withdraw], some ⟨.pre, some .facts⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"census:member:partial", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit163 : fits f163 = true := by decide
 def f164 : FamilyRow :=
-  ⟨"census:expected_active", ⟨.facts, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"census:member:share", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit164 : fits f164 = true := by decide
 def f165 : FamilyRow :=
-  ⟨"census:member:partial", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"census:partial:{class}", ⟨.facts, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit165 : fits f165 = true := by decide
 def f166 : FamilyRow :=
-  ⟨"census:member:share", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"census:share:{class}", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit166 : fits f166 = true := by decide
 def f167 : FamilyRow :=
-  ⟨"census:partial:{class}", ⟨.facts, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"deferral:request", ⟨.process, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit167 : fits f167 = true := by decide
 def f168 : FamilyRow :=
-  ⟨"census:share:{class}", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"deferral:response:{outcome}", ⟨.rules, [.attest], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit168 : fits f168 = true := by decide
 def f169 : FamilyRow :=
-  ⟨"deferral:request", ⟨.process, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"evidence:{suite}:{kind}:{cell}:{prefix}", ⟨.facts, [.attest, .replace, .withdraw], some ⟨.pre, some .premises⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit169 : fits f169 = true := by decide
 def f170 : FamilyRow :=
-  ⟨"deferral:response:{outcome}", ⟨.rules, [.attest], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"identity:occurrence_revocation", ⟨.identity, [.attest], some ⟨.pre, some .identity⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit170 : fits f170 = true := by decide
 def f171 : FamilyRow :=
-  ⟨"evidence:{suite}:{kind}:{cell}:{prefix}", ⟨.facts, [.attest, .replace, .withdraw], some ⟨.pre, some .premises⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"identity_amendment", ⟨.identity, [.attest], some ⟨.pre, some .rules⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit171 : fits f171 = true := by decide
 def f172 : FamilyRow :=
-  ⟨"identity:occurrence_revocation", ⟨.identity, [.attest], some ⟨.pre, some .identity⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"lawful_order:release", ⟨.rules, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit172 : fits f172 = true := by decide
 def f173 : FamilyRow :=
-  ⟨"identity_amendment", ⟨.identity, [.attest], some ⟨.pre, some .rules⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"observation:access_assumption", ⟨.premises, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit173 : fits f173 = true := by decide
 def f174 : FamilyRow :=
-  ⟨"lawful_order:release", ⟨.rules, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"preserve_request", ⟨.process, [.attest, .withdraw], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit174 : fits f174 = true := by decide
 def f175 : FamilyRow :=
-  ⟨"observation:access_assumption", ⟨.premises, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"preserve_response", ⟨.process, [.attest], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit175 : fits f175 = true := by decide
 def f176 : FamilyRow :=
-  ⟨"preserve_request", ⟨.process, [.attest, .withdraw], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"rendezvous:route", ⟨.circumstances, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit176 : fits f176 = true := by decide
 def f177 : FamilyRow :=
-  ⟨"preserve_response", ⟨.process, [.attest], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"retirement:{state}", ⟨.process, [.attest, .withdraw], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit177 : fits f177 = true := by decide
 def f178 : FamilyRow :=
-  ⟨"rendezvous:route", ⟨.circumstances, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"transport:canonical_rebind", ⟨.identity, [.attest, .replace], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit178 : fits f178 = true := by decide
 def f179 : FamilyRow :=
-  ⟨"retirement:{state}", ⟨.process, [.attest, .withdraw], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"ballot:moderator", ⟨.structure, [.attest, .withdraw], some ⟨.pre, some .identity⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit179 : fits f179 = true := by decide
 def f180 : FamilyRow :=
-  ⟨"transport:canonical_rebind", ⟨.identity, [.attest, .replace], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"ballot:moderator_acceptance", ⟨.structure, [.attest], some ⟨.pre, some .structure⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit180 : fits f180 = true := by decide
 def f181 : FamilyRow :=
-  ⟨"ballot:moderator", ⟨.structure, [.attest, .withdraw], some ⟨.pre, some .identity⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"act:ack", ⟨.facts, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit181 : fits f181 = true := by decide
 def f182 : FamilyRow :=
-  ⟨"ballot:moderator_acceptance", ⟨.structure, [.attest], some ⟨.pre, some .structure⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"location_proof:{version}", ⟨.circumstances, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit182 : fits f182 = true := by decide
 def f183 : FamilyRow :=
-  ⟨"cosign:{state}", ⟨.process, [.attest, .withdraw], some ⟨.pre, none⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"admission:unit", ⟨.rules, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit183 : fits f183 = true := by decide
 def f184 : FamilyRow :=
-  ⟨"location_proof:{version}", ⟨.circumstances, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"holon:claim", ⟨.facts, [.attest, .replace, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit184 : fits f184 = true := by decide
 def f185 : FamilyRow :=
-  ⟨"trust:blessing", ⟨.rules, [.attest, .withdraw], some ⟨.pre, some .identity⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"mls:leaf_vouch", ⟨.identity, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit185 : fits f185 = true := by decide
 def f186 : FamilyRow :=
-  ⟨"admission:unit", ⟨.rules, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"window:{state}", ⟨.facts, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit186 : fits f186 = true := by decide
 
 def families : List FamilyRow := [f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23, f24, f25, f26, f27, f28, f29, f30, f31, f32, f33, f34, f35, f36, f37, f38, f39, f40, f41, f42, f43, f44, f45, f46, f47, f48, f49, f50, f51, f52, f53, f54, f55, f56, f57, f58, f59, f60, f61, f62, f63, f64, f65, f66, f67, f68, f69, f70, f71, f72, f73, f74, f75, f76, f77, f78, f79, f80, f81, f82, f83, f84, f85, f86, f87, f88, f89, f90, f91, f92, f93, f94, f95, f96, f97, f98, f99, f100, f101, f102, f103, f104, f105, f106, f107, f108, f109, f110, f111, f112, f113, f114, f115, f116, f117, f118, f119, f120, f121, f122, f123, f124, f125, f126, f127, f128, f129, f130, f131, f132, f133, f134, f135, f136, f137, f138, f139, f140, f141, f142, f143, f144, f145, f146, f147, f148, f149, f150, f151, f152, f153, f154, f155, f156, f157, f158, f159, f160, f161, f162, f163, f164, f165, f166, f167, f168, f169, f170, f171, f172, f173, f174, f175, f176, f177, f178, f179, f180, f181, f182, f183, f184, f185, f186]

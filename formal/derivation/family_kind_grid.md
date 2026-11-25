@@ -33,7 +33,7 @@ The profile each kind admits, and the carries firewall, are checked as a machine
 - (Circumstances, carries): small gap. A reachability observation arriving as a liveness verdict is carries in all but name.
 - (Process, authorize): gap. The right to advance a lifecycle (confirm a halt, run a decay stage) is real but lives in Rules families (trust:{job}).
 - (Process, recant): principled. A step taken is superseded by the next state, not unsaid.
-- (Process, carries): gap by construction. Ceremony steps arriving as membership changes are carries; classifying membership and lineage_witness as Rules folded it away.
+- (Process, carries): gap by construction. Ceremony steps arriving as membership changes are carries; classifying membership as Rules folded it away.
 - (Model, authorize): principled.
 - (Model, replace): gap. A newer judge model or DMA version superseding a verdict is natural and no family versions it.
 - (Model, carries): gap. A DMA verdict arriving as a conscience verdict (Structure) is the agent's designed pipeline, unexpressed on the wire.

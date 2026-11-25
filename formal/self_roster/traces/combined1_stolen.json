@@ -9,39 +9,39 @@
   {
    "n": 1,
    "tlc_action": "Initial predicate",
+   "member": [
+    "d1"
+   ],
+   "gone": [],
+   "stolen": 0,
    "holder": {
     "d1": "owner",
     "d2": "owner",
     "d3": "owner"
    },
-   "pending": [],
-   "member": [
-    "d1"
-   ],
-   "acted": [],
-   "lostN": 0,
    "wrong": false,
+   "lostN": 0,
+   "props": [],
    "started": false,
-   "stolen": 0,
    "step": "init"
   },
   {
    "n": 2,
    "tlc_action": "Steal",
+   "member": [
+    "d1"
+   ],
+   "gone": [],
+   "stolen": 1,
    "holder": {
     "d1": "thief",
     "d2": "owner",
     "d3": "owner"
    },
-   "pending": [],
-   "member": [
-    "d1"
-   ],
-   "acted": [],
-   "lostN": 0,
    "wrong": false,
+   "lostN": 0,
+   "props": [],
    "started": false,
-   "stolen": 1,
    "step": "Steal(d1)"
   }
  ]

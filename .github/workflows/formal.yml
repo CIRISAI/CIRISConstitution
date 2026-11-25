@@ -1,7 +1,8 @@
 name: formal
 
-# The checked-in configuration closes (22,152,480 distinct states, depth 25, ~9 min on
-# 8 workers); allow up to two hours on a small runner. State files go to a temp dir.
+# The standing verdict's four configurations close (948,721 distinct states in all, the
+# largest 479,605 to depth 16); allow up to two hours on a small runner. State files go
+# to a temp dir.
 on:
   workflow_dispatch:
   push:
@@ -36,9 +37,9 @@ jobs:
           java-version: '21'
       - name: Fetch tla2tools (pinned release)
         run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: Model-check TrustRootVerdict
+      - name: The three configurations close; each planted fault fails its named property; every witness is reached
         working-directory: formal/trust_root
-        run: java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc" -deadlock TrustRootVerdict.tla
+        run: TLA2TOOLS=../../tla2tools.jar ./run.sh
 
   mesh:
     name: TLC — the mesh net invariants (formal/mesh_net)
@@ -131,6 +132,11 @@ jobs:
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/l1" -deadlock -config ModerationLift_at_act.cfg ModerationLift.tla || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l2" -deadlock -config ModerationLift_live_brigade.cfg ModerationLift.tla | tee g.log
           grep -q 'Invariant Inv_SeatedMajority is violated' g.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l3" -deadlock -config ModerationLift_four.cfg ModerationLift.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l4" -deadlock -config ModerationLift_plant_author_votes.cfg ModerationLift.tla | tee g2.log
+          grep -q 'Invariant Inv_AuthorNoVoice is violated' g2.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l5" -deadlock -config ModerationLift_witness_two_of_three.cfg ModerationLift.tla | tee g3.log
+          grep -q 'Invariant Inv_NoLiftByTwoOfFour is violated' g3.log || exit 1
       - name: The kernel in a world whose schedule is the adversary's; every screen state is reached, and the same rows are shown to differ in standing
         working-directory: formal/kernel_world
         run: |
@@ -244,6 +250,8 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      # The lone path is read from signed rows (CC 3.3.6.4); the module has no clock. formal/self_roster/run.sh runs
+      # every configuration, planted break and witness; the steps below are the subset this job has always run.
       - name: The normative configurations close; each must-fail twin fails its named property
         working-directory: formal/self_roster
         run: |
@@ -336,6 +344,9 @@ jobs:
           python3 -I ../causal_kernel/check_lock.py
           python3 -I ../causal_kernel/check_attacks.py
           python3 -I ../causal_kernel/check_roomkey.py
+          python3 -I ../leaf_vouch/check_leaf_vouch.py
+          python3 -I ../binding_carriage/check_binding_carriage.py
+          python3 -I ../join_audience/check_join_audience.py
           python3 -I ../causal_kernel/check_rosters.py
           python3 -I ../causal_kernel/check_door.py
           python3 -I ../causal_kernel/check_time.py
@@ -375,18 +386,8 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: Both normative configurations close; each twin fails its named property
-        working-directory: formal/consent
-        run: |
-          set +e
-          java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/c-st" -deadlock -config Consent_ruled_st.cfg Consent.tla || exit 1
-          java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/c-ct" -deadlock -config Consent_ruled_ct.cfg Consent.tla || exit 1
-          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-nb" -deadlock -config Consent_no_boundary.cfg Consent.tla | tee nb.log
-          grep -q 'Invariant Inv_RevocationIsBoundary is violated' nb.log || exit 1
-          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-ls" -deadlock -config Consent_literal_signer.cfg Consent.tla | tee ls.log
-          grep -q 'Invariant Inv_OwnerCanRecant is violated' ls.log || exit 1
-          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-nw" -deadlock -config Consent_no_W.cfg Consent.tla | tee nw.log
-          grep -q 'Invariant Inv_BackdateBounded is violated' nw.log || exit 1
+      - name: Every configuration closes, every planted break fails its named property, every witness is reached
+        run: TLA_JAR="$PWD/tla2tools.jar" CONSENT_TMP="$RUNNER_TEMP/consent" CONSENT_WORKERS=auto bash formal/consent/check.sh
 
   two_path:
     name: TLC + Lean — the two-path decision and its corridor (formal/two_path)
@@ -399,6 +400,8 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      # TwoPath.tla is the count at one reader. The lone path as a window of rows at two nodes is TwoPathRows.tla,
+      # run by formal/two_path/run_rows.sh (not yet a step of this job).
       - name: Seven instances close, and every row of the governance policy table as an instance
         working-directory: formal/two_path
         run: |
@@ -439,6 +442,8 @@ jobs:
         run: bash formal/ceremony/run_tlc.sh "$PWD/tla2tools.jar" "$RUNNER_TEMP/cutover"
       - name: The ceremony's worlds (eleven properties, every planted break caught)
         run: python3 -I formal/ceremony/check_ceremony.py
+      - name: A ceremony's signed output is checked against the model, and every planted fault is caught
+        run: python3 -I formal/ceremony/check_trace.py --check
 
   membership:
     name: TLC — the membership ceremony (formal/membership)

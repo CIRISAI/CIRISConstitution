@@ -37,6 +37,7 @@ community_key_id	key	a key id (the digest of a key: ordering by it is ordering b
 confidence	value
 consensus_protocol	value
 consensus_protocol_entrenched	value	a roster record's flag, set at creation (CC 3.3.4)
+consumer	value	identifier; read by equality only
 content_hash	digest
 contribution_id	value	identifier; read by equality only
 credits	value
@@ -57,9 +58,12 @@ expires_at	signed_instant	an instant its signer states
 grade	value
 halt_id	value	identifier; read by equality only
 hardware_class	value
+holon	value	identifier; read by equality only
 id	digest	a row's digest
 identity_key_id	key	a key id (the digest of a key: ordering by it is ordering by a digest)	self
+k	value	a chunk index
 key_id	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+kind	value	identifier; read by equality only
 landed	value
 leafname	value
 licence_class	value
@@ -84,6 +88,7 @@ revision	value	a counter the signer sets
 revoked_after	signed_instant	an instant its signer states
 revoked_key_sha256_ed25519_raw	key	a key id (the digest of a key: ordering by it is ordering by a digest)
 role	value
+root	digest	a Merkle root
 root_hash	digest	a Merkle root
 scope	value
 score	value
@@ -101,11 +106,13 @@ target	key	the key a policy door acts on (policy_text.tsv: -target, target_silen
 terminal	value
 token	value	a return token; equality only
 transfer_id	value	identifier; read by equality only
+tree_size	value	a counter
 unit	value
 valid_until	signed_instant	an instant its signer states
 value	value
 verb	value
 version	value	a counter
 via	value
+view	value	identifier; read by equality only
 wa_adjudication_ref	digest	the digest of the row referenced
 weight	value

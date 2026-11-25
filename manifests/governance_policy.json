@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "96edc650156b080724037c9ac7b6cf42a8386a577fd935713b02b77bd8554eaf",
+  "policy_sha256": "bdac88a31498057ee51bca3f9315b5d53a36e363931db9dc32b3ff802d94c5b3",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -331,7 +331,7 @@
     },
     "counted_at": {
      "value": "named",
-     "cc_ref": "CC 3.1.3"
+     "cc_ref": "CC 2.4"
     },
     "voices": {
      "value": "scrubs",
@@ -413,7 +413,7 @@
     }
    },
    "cancel_over": "others",
-   "at_window": "stay_open",
+   "at_window": "refused",
    "window_secs": 86400,
    "window_class": "ruled_24h",
    "irreversible": false,
@@ -478,7 +478,7 @@
     }
    },
    "cancel_over": "others",
-   "at_window": "stay_open",
+   "at_window": "refused",
    "window_secs": 86400,
    "window_class": "ruled_24h",
    "irreversible": false,
@@ -556,7 +556,7 @@
    "family": "moderation_overturn",
    "cc_ref": "4.5.13",
    "kind": "mirror",
-   "standing_set": "the community's roster as it stood at the instant of the moderator's act",
+   "standing_set": "the community's roster at the head the act names, less the act's author",
    "base": "standing",
    "enact": "more than 1/2",
    "cancel": null,
@@ -609,7 +609,7 @@
     "4.5.13"
    ],
    "status": "normative",
-   "note": "the members' check: a strict majority of those seated before the act lift a duty holder's single-signature act within the window; below that the act stands; a restored item returns consent-gated"
+   "note": "the members' check: a strict majority of those seated at the head the act names, its author apart, lift a duty holder's single-signature act within the window; below that the act stands; a restored item returns consent-gated"
   },
   {
    "family": "moderator_recall",
@@ -646,7 +646,7 @@
     },
     "counted_at": {
      "value": "named",
-     "cc_ref": "CC 3.1.3"
+     "cc_ref": "CC 2.4"
     },
     "voices": {
      "value": "scrubs",
@@ -942,7 +942,7 @@
     },
     "counted_at": {
      "value": "named",
-     "cc_ref": "CC 3.1.3"
+     "cc_ref": "CC 2.4"
     },
     "voices": {
      "value": "scrubs",
@@ -1442,7 +1442,7 @@
     "verdict": "condition",
     "condition": "entrenched=true",
     "refusal": "—",
-    "cc_ref": "CC 3.3.4"
+    "cc_ref": "CC 4.2.6"
    },
    {
     "group": "accord",

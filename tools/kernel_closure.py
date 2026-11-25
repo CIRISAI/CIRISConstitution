@@ -36,7 +36,8 @@ OUTPUTS = collections.OrderedDict([
     ("moves", (("fm", "placement"), ("fm", "replication"), ("fm", "evidence"), ("fm", "derived"))),
     ("effects", (("rx", "timed"), ("fm", "erasure_route"))),
 ])
-FLOORS = {"fold": 76, "guard": 26, "roles": 311, "signer_rule": 56, "placement": 28, "count": 16, "timed": 33, "body": 81, "confers": 25, "derived": 3, "read_by": 101}
+# fold, placement and confers each fell by one when cosign:{state} left the registry (CC 3.1.3): its cells went with it.
+FLOORS = {"fold": 75, "guard": 26, "roles": 311, "signer_rule": 56, "placement": 27, "count": 16, "timed": 33, "body": 81, "confers": 24, "derived": 3, "read_by": 101}
 
 
 def main():

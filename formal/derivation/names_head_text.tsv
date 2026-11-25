@@ -1,0 +1,40 @@
+# Which head a row of a family names in refs.head, where the derivation from the placement and signer cells does not give it.
+# Applied by tools/build_family_model.py over the derived value. selector: * for the whole family, or leaf=NAME / act=group / act=own
+# where one value does not describe the family. value: roster | standing | none | by_placement.
+# what: the record the head is, in words. Read by a store's payload builder and its door through one function.
+family	selector	value	what
+custody:{kind}	*	standing	the node's owner-binding row, wherever the blob is placed: a node's report about itself
+contribution:{subject_kind}	*	standing	the owner-binding row of the node whose key signs it
+census:share:{class}	*	standing	the node's owner-binding row
+census:member:share	*	standing	the node's owner-binding row
+census:composite:{class}	*	standing	the seat's owner-binding row, or the bundle that seats it
+census:partial:{class}	*	standing	the seat's owner-binding row, or the bundle that seats it
+device:label	*	none	an owner naming their own device acts as themselves
+ownership:{relation}:{target_kind}:{version}	*	none	an owner binding their own key acts as themselves; a binding that names an affiliation names that affiliation's roster version
+location_proof:{version}	*	none	the subject's own row
+trust:{job}:{version}	leaf=accepts	none	an acceptance is the acceptor's own consent; the attached head stays the envelope member it is
+trust:{job}:{version}	leaf=confers	standing	the bundle in force, by its object id
+trust:{job}:{version}	leaf=charter	none	a root's charter is its bundle's member
+attestation:registry_consensus	*	roster	the canonical room's roster version
+community:listing	*	roster	the listed room's roster version
+duty:{kind}	*	by_placement	a duty exercised in a room names that room's roster version
+act:ack	*	none	a receipt names the acts it acknowledges and no head; it is read by its causal past alone
+stream:head	*	by_placement	the room's roster version where the head carries a room; none where it carries none
+admission:unit	act=group	roster	the roster version the row is counted over
+admission:unit	act=own	none	a person's own row at self scope
+membership:{stage}	leaf=proposal	roster	the roster version the proposer is a member at
+membership:{stage}	leaf=acceptance	none	the joiner's own consent; it names the proposal it answers, and that row names the head
+membership:{stage}	leaf=decline	none	the invitee's own answer; it names the proposal it answers
+membership:{stage}	leaf=widening	roster	the roster version the change is counted over
+membership:{stage}	leaf=removal	roster	the roster version the change is counted over
+membership:{stage}	leaf=resignation	roster	the roster version the leaving member acts from
+membership:{stage}	leaf=keeps	roster	the roster version the keeps row is counted over
+ballot:moderator_acceptance	*	none	the winner's own consent; it names the election and the ballot set it was counted over
+accord:invoke:constitutional:{halt_id}	*	none	a halt fires at each node on receipt, under the roster that node holds; its payload is closed and names no head
+accord:invoke:notify:{notify_id}	*	none	as the halt: read on receipt, under the roster the node holds
+accord:invoke:drill:{drill_id}	*	none	as the halt: read on receipt, under the roster the node holds
+provenance:build_manifest:{target}	*	standing	the bundle in force when the row is signed: the one the pipeline's grant names or a later bundle of the same lineage
+holon:claim	*	none	a claim names no head; in refs it names only the rows of its own group that it follows
+mls:leaf_vouch	*	none	a vouch names no head; a room key's vouch names the head of its voice roster under the also role voice
+window:{state}	*	none	a held row and a landing name no head; a landing is read over its own causal past
+mesh_config:{key}	*	roster	the bundle in force of the root: a durable setting and emergency relief each name it

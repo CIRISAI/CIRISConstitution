@@ -1,0 +1,774 @@
+# The review behind manifests/refusal_tokens.tsv: every name of the Parts that looks like a refusal name,
+# read in its sentence and given a kind, or not_a_token. tools/build_refusal_tokens.py builds the manifest
+# from these rows and fails where a candidate has no row here. `section` is blank unless the token's
+# defining section is pinned (the tool's rank would pick a mention), or one token has two meanings.
+token	kind	section	why
+ACTION_RESULT	not_a_token		enum of another surface (shutdown severity, trace result, capability gate, guardrail)
+CANONICAL_BYTES_VIOLATION	http_code		wire error code of the HTTP surface
+CLOCK_SKEW_VIOLATION	http_code		wire error code of the HTTP surface
+ENVELOPE_TOO_LARGE	http_code		wire error code of the HTTP surface
+IDEMPOTENT_CONFLICT	http_code		wire error code of the HTTP surface
+INCIDENT_CONSTITUTIONAL	not_a_token		enum of another surface (shutdown severity, trace result, capability gate, guardrail)
+INTERNAL_ERROR	http_code		wire error code of the HTTP surface
+MALFORMED_REQUEST	http_code		wire error code of the HTTP surface
+MEASUREMENT_METHODOLOGY	not_a_token		registry or manifest member, or a file name
+NEVER_ALLOWED	not_a_token		enum of another surface (shutdown severity, trace result, capability gate, guardrail)
+NOT_FOUND	http_code		wire error code of the HTTP surface
+RATE_LIMITED	http_code		wire error code of the HTTP surface
+RECEIPT_QUORUM_NOT_MET	http_code		wire error code of the HTTP surface
+RESERVED_PREFIX_VIOLATION	http_code		wire error code of the HTTP surface
+SIGNATURE_VERIFICATION_FAILED	http_code		wire error code of the HTTP surface
+SUBSTRATE_LAGGING	http_code		wire error code of the HTTP surface
+TPM_2_0	not_a_token		enumeration value, not a fault
+acceptance_by_grantee	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+acceptance_not_by_owner	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+acceptance_other_binding	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+acceptance_other_grant	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+acceptance_other_grantee	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+acceptance_withdrawn	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+accord_data	not_a_token		family or row-type name
+accord_holder	not_a_token		enumeration value, not a fault
+accord_invocation_replayed	concludes_nothing		kept and changes nothing
+accord_root	not_a_token		charter or bundle member
+accountable_root	not_a_token		function, predicate or rule name
+ack_names_too_many	refusal		the text says a receipt with more is refused
+act_names_no_head	concludes_nothing		the text says concludes nothing
+act_on_behalf	not_a_token		scope, duty or role name
+action_approval_mismatch	refusal		not dispatched
+action_not_reviewed	refusal		not dispatched
+action_objection_not_carried	refusal		not dispatched
+action_objection_undischarged	refusal		not dispatched
+action_review_incomplete	refusal		not dispatched
+additional_scrubs	not_a_token		payload or envelope member
+admission_capability_not_admitted	refusal		the effect is refused
+admission_capability_not_held	refusal		the effect is refused
+admission_capability_unknown	refusal		the text says Invalid
+admission_count_unmet	hold		the text says held or waits
+admission_halted	refusal		the effect is refused
+admission_issuer_not_person	refusal		the text says Invalid
+admission_issuer_not_reached	concludes_nothing		admits nothing at this host
+admission_lease_out_of_window	refusal		the text says Invalid
+admission_none	refusal		the unit does not run; best reading
+admission_owner_row_not_self	refusal		the text says Invalid
+admission_quorum_basis	not_a_token		payload or envelope member
+admission_receipt_missing	hold		the text says held or waits
+admission_unit_malformed	refusal		the text says Invalid
+affiliation_archetype	not_a_token		payload or envelope member
+age_assurance	not_a_token		family or row-type name
+age_self_declared	not_a_token		enumeration value, not a fault
+agent_files	not_a_token		family or row-type name
+agent_integrity	not_a_token		family or row-type name
+aggregate_source_duplicate	detail		reason carried with federation_malformed_row
+aggregation_algorithm_id	not_a_token		payload or envelope member
+aggregation_meta	not_a_token		registry or manifest member, or a file name
+aggregation_meta_dominated	refusal		listed among the refusals of its row or object
+aggregation_meta_multiplicity	refusal		listed among the refusals of its row or object
+amendment_digest	not_a_token		payload or envelope member
+amendment_digest_mismatch	concludes_nothing		the text says concludes nothing
+android_keystore	not_a_token		enumeration value, not a fault
+android_strongbox	not_a_token		enumeration value, not a fault
+approach_id	not_a_token		payload or envelope member
+archive_mode	not_a_token		payload or envelope member
+archive_release	not_a_token		family or row-type name
+asserted_at	not_a_token		payload or envelope member
+asserted_at_stale	refusal		the text says refused
+asymmetry_kind	not_a_token		constant or parameter name
+at_rest_sha256	not_a_token		payload or envelope member
+at_window	not_a_token		constant or parameter name
+attach_window	not_a_token		charter or bundle member
+attach_window_secs	not_a_token		charter or bundle member
+attached_head_digest	not_a_token		payload or envelope member
+attest_assurance	not_a_token		scope, duty or role name
+attestation_evidence	not_a_token		payload or envelope member
+attestation_id	not_a_token		payload or envelope member
+attestation_type	not_a_token		payload or envelope member
+attestation_type_unregistered	refusal		the text says refused
+attested_key_id	not_a_token		payload or envelope member
+attesting_key_id	not_a_token		payload or envelope member
+authority_for	not_a_token		function, predicate or rule name
+authority_id	not_a_token		payload or envelope member
+authority_set	not_a_token		function, predicate or rule name
+autonomous_deception	not_a_token		enumeration value, not a fault
+av_binding_malformed	refusal		A/V refusal token of the closed vocabulary
+av_binding_other_room	refusal		A/V refusal token of the closed vocabulary
+av_binding_part_malformed	refusal		A/V refusal token of the closed vocabulary
+av_binding_publisher_not_member	refusal		A/V refusal token of the closed vocabulary
+av_binding_signature_unverified	refusal		A/V refusal token of the closed vocabulary
+av_binding_stale_epoch	refusal		A/V refusal token of the closed vocabulary
+av_binding_stream_not_derived	refusal		A/V refusal token of the closed vocabulary
+av_call_binding_refused	report		aggregate counter of the A/V refusal tokens
+av_call_frame_forged	report		aggregate counter of the A/V refusal tokens
+av_call_frame_unbound	report		aggregate counter of the A/V refusal tokens
+av_chunk_trailer_invalid	refusal		A/V refusal token of the closed vocabulary
+av_chunk_trailer_missing	refusal		A/V refusal token of the closed vocabulary
+av_chunk_unbound	refusal		A/V refusal token of the closed vocabulary
+aws_cloud_hsm	not_a_token		enumeration value, not a fault
+azure_hsm	not_a_token		enumeration value, not a fault
+ballot_partial_period_closed	concludes_nothing		not counted
+ballot_share_duplicate_token	concludes_nothing		contested: neither counts while they differ
+ballot_share_pair_incomplete	concludes_nothing		not counted
+ballot_share_recipient_not_tally_member	refusal		named beside the rule it breaks, no disposition word; best reading
+ballot_tally_duplicate_period	concludes_nothing		the text says concludes nothing
+ballot_tally_mass_total_mismatch	refusal		listed among the refusals of its row or object
+ballot_tally_partials_mismatch	concludes_nothing		the text says concludes nothing
+bias_audit_ref	not_a_token		payload or envelope member
+binding_earlier_transit_pair	detail		detail of genesis_bundle_row_invalid
+binding_names_no_record	detail		detail of genesis_bundle_row_invalid
+binding_no_transport_destination	detail		detail of genesis_bundle_row_invalid
+binding_xwing_member	detail		detail of genesis_bundle_row_invalid
+biometric_inference	not_a_token		enumeration value, not a fault
+body_number_unrepresentable	refusal		the text says refused
+budget_bytes	not_a_token		payload or envelope member
+build_manifest	not_a_token		family or row-type name
+build_manifest_descriptor_mismatch	refusal		the text says refused
+build_manifest_duplicate_function	refusal		the table of the blob's refusals
+build_manifest_empty_functions	refusal		the table of the blob's refusals
+build_manifest_equivocation	refusal		the text says a reader refuses both
+build_manifest_float	refusal		the table of the blob's refusals
+build_manifest_functions_root_mismatch	refusal		the text says a reader MUST refuse the blob
+build_manifest_hash	not_a_token		payload or envelope member
+build_manifest_malformed	refusal		the table of the blob's refusals
+build_manifest_max_bytes	not_a_token		a constant: the blob's greatest length
+build_manifest_missing_member	refusal		the table of the blob's refusals
+build_manifest_not_a_map	refusal		the table of the blob's refusals
+build_manifest_not_deterministic	refusal		the table of the blob's refusals
+build_manifest_oversize	refusal		the table of the blob's refusals
+build_manifest_project_not_granted	refusal		the text says refused
+build_manifest_scope_not_granted	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+build_manifest_superseded	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+build_manifest_unknown_member	refusal		the table of the blob's refusals
+build_manifest_withdrawn	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+build_manifest_wrong_format	refusal		the table of the blob's refusals
+build_row_other_head	refusal		the text says refused
+build_row_stands_on_nothing	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+bundle_fingerprint	not_a_token		charter or bundle member
+by_rule	not_a_token		enumeration value, not a fault
+call_argument_unrepresentable	refusal		the text says refused
+call_fingerprint	not_a_token		payload or envelope member
+canonical_binding	not_a_token		family or row-type name
+canonical_bytes_v3	not_a_token		registry or manifest member, or a file name
+canonical_hash	not_a_token		payload or envelope member
+canonical_rebind	not_a_token		family or row-type name
+cap_factor	not_a_token		constant or parameter name
+capacity_assurance	not_a_token		family or row-type name
+case_rule	not_a_token		registry or manifest member, or a file name
+cell_id	not_a_token		payload or envelope member
+cell_pool	not_a_token		function, predicate or rule name
+cell_resolution	not_a_token		payload or envelope member
+census_composite_below_k	refusal		listed among the refusals of its row or object
+census_composite_duplicate_period	concludes_nothing		contested: neither counts while they differ
+census_composite_mass_total_mismatch	refusal		listed among the refusals of its row or object
+census_composite_partials_mismatch	concludes_nothing		the text says concludes nothing
+census_composite_signer_not_seat	refusal		reason column of the reserved-family table
+census_expected_active_mismatch	concludes_nothing		not counted
+census_partial_period_closed	concludes_nothing		not counted
+census_partial_signer_not_seat	refusal	3.1.3	reason column of the reserved-family table
+census_return_expired	refusal		the text says refused
+census_return_recipient_not_seat	concludes_nothing		not counted
+census_share_duplicate_token	concludes_nothing		contested: neither counts while they differ
+census_share_index_invalid	refusal		the text says Invalid
+census_share_pair_incomplete	refusal		dropped and reported; best reading
+cert_validity	not_a_token		family or row-type name
+channel_classes	not_a_token		payload or envelope member
+chunk_root	not_a_token		payload or envelope member
+chunk_seq	not_a_token		payload or envelope member
+ci_axis	not_a_token		constant or parameter name
+claim_namespaces	not_a_token		payload or envelope member
+claimed_at	not_a_token		payload or envelope member
+code_node_key_mismatch	refusal		each failed check of a node code is refused by name
+code_owner_binding_not_for_node	refusal		each failed check of a node code is refused by name
+code_owner_mismatch	refusal		each failed check of a node code is refused by name
+code_route_carries_no_transit_key	refusal		each failed check of a node code is refused by name
+code_route_signer_mismatch	refusal		each failed check of a node code is refused by name
+codec_id	not_a_token		payload or envelope member
+codec_map	not_a_token		payload or envelope member
+cohort_scope	not_a_token		payload or envelope member
+cohort_subkind	not_a_token		payload or envelope member
+commitment_fulfillment	not_a_token		enumeration value, not a fault
+commonsense_hard	not_a_token		enumeration value, not a fault
+community_id	not_a_token		payload or envelope member
+community_key_id	not_a_token		payload or envelope member
+community_trust	not_a_token		consent family leaf
+community_unmoderated	not_a_token		bare spelling of a hard_case kind that has its own row
+conferral_outside_charter_scope	concludes_nothing		confers nothing, and is reported
+consensus_protocol	not_a_token		payload or envelope member
+consensus_protocol_entrenched	not_a_token		payload or envelope member
+consent_basis	not_a_token		payload or envelope member
+consent_for_key_not_delegated	refusal		reason column of the reserved-family table
+consent_record	not_a_token		family or row-type name
+consent_role	not_a_token		payload or envelope member
+content_class	not_a_token		payload or envelope member
+content_holder_key_ids	not_a_token		payload or envelope member
+content_id	not_a_token		payload or envelope member
+content_moderation	not_a_token		enumeration value, not a fault
+content_sha256	not_a_token		payload or envelope member
+correlated_action	not_a_token		detection family leaf
+cosigned_at	not_a_token		payload or envelope member
+counter_be	not_a_token		constant or parameter name
+court_order	not_a_token		enumeration value, not a fault
+crisis_escalation	not_a_token		enumeration value, not a fault
+custodian_minted	not_a_token		family or row-type name
+custody_attested_key_mismatch	detail		detail of genesis_holder_custody
+custody_chain_invalid	detail		detail of genesis_holder_custody
+custody_floor_not_met	detail		detail of genesis_holder_custody
+custody_no_class	detail		detail of genesis_holder_custody
+custody_pq_not_removable_offline	detail		detail of genesis_holder_custody
+custody_unattested	detail		detail of genesis_holder_custody
+cyber_offensive	not_a_token		enumeration value, not a fault
+data_subject	not_a_token		enumeration value, not a fault
+deception_fraud	not_a_token		enumeration value, not a fault
+decided_by	not_a_token		payload or envelope member
+deferral_response_unlicensed	concludes_nothing		the text says concludes nothing
+deferral_response_unseated	concludes_nothing	3.1.9.3	the text says concludes nothing
+delegated_scope	not_a_token		payload or envelope member
+delegates_to	not_a_token		scope, duty or role name
+delegation_id	not_a_token		payload or envelope member
+delegation_purpose	not_a_token		payload or envelope member
+delegation_term_required	refusal		the text says refused
+delegation_valid_from	not_a_token		payload or envelope member
+delegation_valid_until	not_a_token		payload or envelope member
+deletion_complete	not_a_token		consent family leaf
+deletion_sla	not_a_token		consent family leaf
+deletion_window	not_a_token		payload or envelope member
+deletion_window_breach	not_a_token		bare spelling of a hard_case kind that has its own row
+delivery_ack	not_a_token		family or row-type name
+delivery_mode	not_a_token		payload or envelope member
+deployment_domain	not_a_token		payload or envelope member
+derived_from	not_a_token		payload or envelope member
+device_class	not_a_token		payload or envelope member
+dial_hint_malformed	refusal		the text says Invalid
+dial_hints	not_a_token		charter or bundle member
+differs_in	not_a_token		payload or envelope member
+digital_identity	not_a_token		enumeration value, not a fault
+dissolved_at	not_a_token		a payload member
+duty_holders	not_a_token		payload or envelope member
+ed25519_pubkey	not_a_token		registry or manifest member, or a file name
+edition2_payload_invalid	refusal		the text says refused
+effect_untrusted_unacknowledged	hold		the text says held or waits
+election_interference	not_a_token		enumeration value, not a fault
+emergent_deception	not_a_token		detection family leaf
+encryption_pubkeys	not_a_token		payload or envelope member
+encyclopedia_article	not_a_token		enumeration value, not a fault
+end_names_old_head	concludes_nothing		the text says concludes nothing
+entity_kind	not_a_token		payload or envelope member
+entity_type	not_a_token		segment of a family's name (revocation:{entity_type}:{reason})
+envelope_member_null	detail		reason carried with federation_malformed_row
+envelope_too_large	refusal		the text says refuse; the reason of the size refusal on every write path
+epistemic_mode	not_a_token		payload or envelope member
+epoch_be8	not_a_token		constant or parameter name
+erasure_exempt	not_a_token		payload or envelope member
+erasure_policy	not_a_token		payload or envelope member
+evidence_reference_unresolved	concludes_nothing		the text says concludes nothing
+evidence_refs	not_a_token		payload or envelope member
+expected_active	not_a_token		constant or parameter name
+expired_occurrence	detail		reason member of hard_case:recipient_excluded
+expires_at	not_a_token		payload or envelope member
+explainability_sla	not_a_token		family or row-type name
+external_aad	not_a_token		payload or envelope member
+external_secure_element	not_a_token		enumeration value, not a fault
+external_standards	not_a_token		registry or manifest member, or a file name
+family_id	not_a_token		payload or envelope member
+family_key_id	not_a_token		charter or bundle member
+family_key_id_changed	detail		detail of genesis_bundle_malformed
+family_payloads_v2	not_a_token		registry or manifest member, or a file name
+family_select_vectors	not_a_token		registry or manifest member, or a file name
+fedcode_base32	refusal		listed among the refusals of its row or object
+fedcode_crc	refusal		listed among the refusals of its row or object
+fedcode_duplicate_node	refusal		listed among the refusals of its row or object
+fedcode_earlier_form	refusal		listed among the refusals of its row or object
+fedcode_hint_count	refusal		listed among the refusals of its row or object
+fedcode_hint_malformed	refusal		listed among the refusals of its row or object
+fedcode_kind	refusal		listed among the refusals of its row or object
+fedcode_node_count	refusal		listed among the refusals of its row or object
+fedcode_nodes_not_user	refusal		listed among the refusals of its row or object
+fedcode_payload_too_large	refusal		listed among the refusals of its row or object
+fedcode_prefix	refusal		listed among the refusals of its row or object
+fedcode_trailing_bytes	refusal		listed among the refusals of its row or object
+fedcode_transport_is_federation_key	refusal		listed among the refusals of its row or object
+fedcode_truncated	refusal		listed among the refusals of its row or object
+fedcode_version	refusal		listed among the refusals of its row or object
+federation_accord_dimension_requires_accord_holder	refusal		reason column of the reserved-family table
+federation_addressed_not_recipient	refusal		the text says refused
+federation_community_consensus_protocol_violation	refusal		the text says refused
+federation_delegated_scope_unauthorized	refusal		reason column of the reserved-family table
+federation_keys	not_a_token		registry or manifest member, or a file name
+federation_malformed_row	refusal		the text says refused
+federation_membership	not_a_token		enumeration value, not a fault
+federation_rendezvous_key_not_an_identity	refusal		the text says refused
+federation_set_semantics_unsorted	detail	2.6.1.11	detail of genesis_bundle_malformed
+federation_set_semantics_unsorted	refusal	2.6.1.2	a verifier refuses a set out of its order, naming the member
+federation_trace_dimension_invalid	refusal		the text says refused
+federation_withdraws_not_admitted	refusal		the text says refused
+field_processor_matrix	not_a_token		constant or parameter name
+final_seq	not_a_token		payload or envelope member
+fold_source_count_exceeded	refusal		the text says refused
+for_key_id	not_a_token		payload or envelope member
+founder_only	not_a_token		enumeration value, not a fault
+functions_root	not_a_token		payload or envelope member
+further_prev	not_a_token		a refs role
+gcp_cloud_hsm	not_a_token		enumeration value, not a fault
+genesis_bundle_count_unmet	hold		the count is not met and the bundle is held
+genesis_bundle_malformed	refusal		the text says Invalid
+genesis_bundle_not_anchored	concludes_nothing		answer of the bundle order from step 3 on, which is Waiting or concludes nothing
+genesis_bundle_prev_not_valid	concludes_nothing		answer of the bundle order from step 3 on, which is Waiting or concludes nothing
+genesis_bundle_row_invalid	concludes_nothing		the text says concludes nothing
+genesis_bundle_row_unplaced	concludes_nothing		answer of the bundle order from step 3 on, which is Waiting or concludes nothing
+genesis_bundle_schema	detail		detail of genesis_bundle_malformed
+genesis_holder_custody	concludes_nothing		answer of the bundle order from step 3 on, which is Waiting or concludes nothing
+gifct_cip	not_a_token		enumeration value, not a fault
+goal_body_malformed	detail		reason carried with federation_malformed_row
+goal_id	not_a_token		payload or envelope member
+goal_meta_alignment_malformed	detail		reason carried with federation_malformed_row
+goal_typed_object_retired	detail		reason carried with federation_malformed_row
+goodhart_resistance	not_a_token		enumeration value, not a fault
+gr_no_dark_patterns	not_a_token		enum of another surface (shutdown severity, trace result, capability gate, guardrail)
+grant_contested	concludes_nothing		the text says neither counts
+grant_declined	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+grant_other_grantee	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+grant_withdrawn	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+grantee_has_no_owner	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+group_dissolved	hold		a proposal to a dissolved group is held
+group_id_not_of_founding	refusal		the text says Invalid
+hard_case:admin_action	hard_case		record the substrate raises
+hard_case:community_consensus_protocol_change	hard_case		record the substrate raises
+hard_case:community_consensus_protocol_violation	hard_case		record the substrate raises
+hard_case:community_liveness_restored	hard_case		record the substrate raises
+hard_case:community_liveness_stalled	hard_case		record the substrate raises
+hard_case:community_membership_change	hard_case		record the substrate raises
+hard_case:community_unmoderated	hard_case		record the substrate raises
+hard_case:consent_revocation_promotion_overdue	hard_case		record the substrate raises
+hard_case:deletion_window_breach	hard_case		record the substrate raises
+hard_case:duty_unmet	hard_case		record the substrate raises
+hard_case:family_consensus_protocol_change	hard_case		record the substrate raises
+hard_case:family_consensus_protocol_violation	hard_case		record the substrate raises
+hard_case:family_membership_change	hard_case		record the substrate raises
+hard_case:fast_path_takedown	hard_case		record the substrate raises
+hard_case:identity_occurrence_added	hard_case		record the substrate raises
+hard_case:legal_hold_set	hard_case		record the substrate raises
+hard_case:lineage_directory_reseated	hard_case		record the substrate raises
+hard_case:lineage_equivocation	hard_case		record the substrate raises
+hard_case:lineage_fork_attempt	hard_case		record the substrate raises
+hard_case:locality_quorum_unreachable	hard_case		record the substrate raises
+hard_case:locality_scale_down	hard_case		record the substrate raises
+hard_case:locality_underpopulated	hard_case		record the substrate raises
+hard_case:location_proof_resolution_violation	hard_case		record the substrate raises
+hard_case:member_removed	not_a_token		the text says no such hard-case kind exists
+hard_case:moderation_filed	hard_case		record the substrate raises
+hard_case:recipient_excluded	hard_case		record the substrate raises
+hard_case:sla_breach_unattested	hard_case		record the substrate raises
+hard_case:subject_authority_missing	hard_case		record the substrate raises
+hard_case:watchlist_enabled	hard_case		record the substrate raises
+hard_case:watchlist_match	hard_case		record the substrate raises
+hardware_attestation	not_a_token		payload or envelope member
+hardware_class	not_a_token		payload or envelope member
+hardware_custody	not_a_token		family or row-type name
+hardware_rooted	not_a_token		family or row-type name
+hazardous_materials	not_a_token		enumeration value, not a fault
+history_on_join	not_a_token		payload or envelope member
+hold_community_membership	not_a_token		scope, duty or role name
+hold_family_membership	not_a_token		scope, duty or role name
+holder_device_shared	detail		detail of genesis_bundle_malformed
+holder_key_retired	detail		detail of genesis_bundle_malformed
+holder_not_accord_holder	detail		detail of genesis_bundle_row_invalid
+holder_not_genesis_key	detail		detail of genesis_bundle_row_invalid
+holders_seats_overlap	detail		detail of genesis_bundle_malformed
+holds_bytes	not_a_token		family or row-type name
+home_security	not_a_token		enumeration value, not a fault
+iat_mismatch	refusal		listed among the refusals of its row or object
+iat_missing	refusal		listed among the refusals of its row or object
+identity_amendment_unauthorized	hold		a reason on the held row, never a refusal
+identity_key_id	not_a_token		payload or envelope member
+identity_occurrence	not_a_token		family or row-type name
+identity_type	not_a_token		payload or envelope member
+identity_verification	not_a_token		enumeration value, not a fault
+informal_adhoc	not_a_token		enumeration value, not a fault
+information_type	not_a_token		enumeration value, not a fault
+infrastructure_control	not_a_token		enumeration value, not a fault
+intel_sgx	not_a_token		enumeration value, not a fault
+invalid_kem_key	detail		reason member of hard_case:recipient_excluded
+invocation_id	not_a_token		payload or envelope member
+ios_secure_enclave	not_a_token		enumeration value, not a fault
+is_named_moderator	not_a_token		function, predicate or rule name
+is_steward_bound	not_a_token		function, predicate or rule name
+iss_not_holder	refusal		the text says refused
+join_communities	not_a_token		retired token, named as refused by spelling
+judge_model	not_a_token		family or row-type name
+k_eff	not_a_token		constant or parameter name
+k_i2r	not_a_token		key, suite or member name
+kat_outfox_xwing_v1	not_a_token		registry or manifest member, or a file name
+kat_split_and_seed_forms_agree	not_a_token		registry or manifest member, or a file name
+keeps_cites_no_end	concludes_nothing		the text says concludes nothing
+keff_saturation	not_a_token		registry or manifest member, or a file name
+key_grant	not_a_token		family or row-type name
+key_id	not_a_token		payload or envelope member
+key_record_bad_attestation_evidence	refusal		the text says refused
+key_record_bad_pq_custody	refusal		the text says refused
+key_record_max_secs	not_a_token		constant or parameter name
+key_record_out_of_window	refusal		the text says refused
+kid_not_of_iss	refusal		statement is not of its issuer's key
+labor_hr	not_a_token		enumeration value, not a fault
+lang_code	not_a_token		payload or envelope member
+leaf_bytes	not_a_token		constant or parameter name
+lease_ended	detail		detail of admission_none or admission_receipt_missing
+leaves_closed	not_a_token		registry or manifest member, or a file name
+ledger_id	not_a_token		payload or envelope member
+legal_basis	not_a_token		payload or envelope member
+legal_hold	not_a_token		payload or envelope member
+legal_hold_lifted	hard_case		hard-case kind, spelt bare in the list of canonical kinds
+legal_hold_set	not_a_token		bare spelling of a hard_case kind that has its own row
+legal_hold_violation_attempt	hard_case		hard-case kind, spelt bare in the list of canonical kinds
+lenscore_detector	not_a_token		family or row-type name
+licence_class_not_trusted	report		read or reported, refuses nothing
+licence_issuer_not_trusted	report		read or reported, refuses nothing
+license_id	not_a_token		payload or envelope member
+license_validity	not_a_token		family or row-type name
+licensure_delegator_not_authority	concludes_nothing		the text says concludes nothing
+lifts_on_own_end	refusal		the text says refused
+lineage_head	not_a_token		charter or bundle member
+lineage_head_lags_roster	report		read or reported, refuses nothing
+lineage_witness	not_a_token		family or row-type name
+local_data	not_a_token		family or row-type name
+location_proof	not_a_token		family or row-type name
+lww_skew_bounded	not_a_token		enumeration value, not a fault
+mac_os_secure_enclave	not_a_token		enumeration value, not a fault
+manipulation_coercion	not_a_token		enumeration value, not a fault
+mass_commitment	not_a_token		payload or envelope member
+mass_commitment_hex	not_a_token		payload or envelope member
+mass_to_fixed	not_a_token		function, predicate or rule name
+mass_total	not_a_token		payload or envelope member
+max_source_multiplicity	not_a_token		payload or envelope member
+max_wait_s	not_a_token		payload or envelope member
+member_commitment	not_a_token		payload or envelope member
+member_commitment_hex	not_a_token		payload or envelope member
+member_id	not_a_token		payload or envelope member
+membership_acceptance_mismatch	concludes_nothing		terminal reason of a membership widening that seats no one
+membership_acceptance_unresolved	hold		waits for the row it names
+membership_basis	not_a_token		payload or envelope member
+membership_declined	concludes_nothing		terminal reason of a membership widening that seats no one
+membership_founding_member_unsigned	concludes_nothing		terminal reason of a membership widening that seats no one
+membership_proposal_expired	concludes_nothing		terminal reason of a membership widening that seats no one
+membership_proposal_unresolved	hold		waits for the row it names
+membership_reply_conflict	concludes_nothing		terminal reason of a membership widening that seats no one
+membership_supersede_cannot_add	concludes_nothing		terminal reason of a membership widening that seats no one
+mesh_config	not_a_token		family or row-type name
+message_io	not_a_token		scope, duty or role name
+meta_dimension	not_a_token		payload or envelope member
+meta_rationale	not_a_token		payload or envelope member
+method_id	not_a_token		payload or envelope member
+min_pool	not_a_token		function, predicate or rule name
+min_ratio	not_a_token		constant or parameter name
+minor_appointment_void	concludes_nothing		the text says concludes nothing
+missing_encryption_pubkeys	detail		reason member of hard_case:recipient_excluded
+missing_version_segment	refusal		the text says refused
+mix_mean_delay_ms	not_a_token		constant or parameter name
+ml_kem_768	not_a_token		constant or parameter name
+model_id	not_a_token		payload or envelope member
+moderation_filed	not_a_token		bare spelling of a hard_case kind that has its own row
+moderation_track_record	not_a_token		family or row-type name
+moderator_acceptance	not_a_token		family or row-type name
+monotonic_quorum	not_a_token		enumeration value, not a fault
+n_eff	not_a_token		payload or envelope member
+n_min	not_a_token		constant or parameter name
+namespace_dimension_case_malformed	refusal		the text says refused
+namespace_family_unregistered	refusal	3.1.7	the text says refused
+namespace_match_vectors	not_a_token		registry or manifest member, or a file name
+namespace_private_use_not_federatable	refusal		the text says refused
+namespace_vocab_value_unregistered	refusal		the text says refused
+ncmec_csam	not_a_token		enumeration value, not a fault
+net_send	not_a_token		enumeration value, not a fault
+network_presence	not_a_token		scope, duty or role name
+news_article	not_a_token		family or row-type name
+no_row	detail		detail of admission_none or admission_receipt_missing
+node_id	not_a_token		payload or envelope member
+node_kid	not_a_token		payload or envelope member
+nodes_owned_by	not_a_token		function, predicate or rule name
+not_proven	not_a_token		enumeration value, not a fault
+not_sent	not_a_token		enumeration value, not a fault
+novel_context	hard_case		hard-case kind, spelt bare in the list of canonical kinds
+nsfw_text	not_a_token		enumeration value, not a fault
+occurrence_count	not_a_token		payload or envelope member
+occurrence_id	not_a_token		payload or envelope member
+occurrence_key_id	not_a_token		payload or envelope member
+occurrence_mixes_person_and_machine	concludes_nothing		the text says concludes nothing
+occurrence_of	not_a_token		payload or envelope member
+occurrence_revocation	not_a_token		family or row-type name
+occurrence_role	not_a_token		payload or envelope member
+onion_hop_ml_kem_768_reuse	refusal		the text says refused
+onion_hop_x25519_reuse	refusal		the text says refused
+onion_tier_unavailable_floor	report		the onion tier is unavailable at a node; the client shows the counts
+onion_tier_unavailable_liveness	report		the onion tier is unavailable at a node; the client shows the counts
+org_id	not_a_token		payload or envelope member
+org_membership	not_a_token		retired token, named as refused by spelling
+org_type	not_a_token		payload or envelope member
+oversight_mode	not_a_token		payload or envelope member
+owner_binding	not_a_token		enumeration value, not a fault
+on_behalf_of	not_a_token		a payload member
+owner_binding_not_an_affiliation	refusal		the text says refused
+owner_binding_other_key	concludes_nothing		the text says a manifest whose standing fails on this line confers nothing
+owner_of	not_a_token		function, predicate or rule name
+parent_org_id	not_a_token		payload or envelope member
+part_of	not_a_token		payload or envelope member
+partial_a	not_a_token		constant or parameter name
+partial_b	not_a_token		constant or parameter name
+partner_record	not_a_token		retired token, named as refused by spelling
+partner_role	not_a_token		family or row-type name
+partnership_accept	not_a_token		consent family leaf
+partnership_grant	not_a_token		consent family leaf
+pattern_detection	not_a_token		enumeration value, not a fault
+payload_sha256	not_a_token		payload or envelope member
+peer_id	not_a_token		payload or envelope member
+perceptual_hash_csam	not_a_token		enumeration value, not a fault
+personhood_constitutive_by_attestation	not_a_token		enumeration value, not a fault
+pin_reserve_bytes	not_a_token		payload or envelope member
+pipeline_grant_out_of_role	refusal		the text says refused
+poll_id	not_a_token		payload or envelope member
+portable_2fa	not_a_token		enumeration value, not a fault
+pq_custody	not_a_token		payload or envelope member
+preserve_request	not_a_token		family or row-type name
+preserve_until	not_a_token		payload or envelope member
+prev_head_digest	not_a_token		payload or envelope member
+procedural_error	not_a_token		enumeration value, not a fault
+profile_contested	refusal		the profile does not load; best reading
+profile_digest_mismatch	refusal		the profile does not load; best reading
+profile_unanchored	report		the shipped template alone runs; best reading
+progress_measure	not_a_token		family or row-type name
+proposal_hash	not_a_token		a member of the earlier form; a reply that carries it is malformed
+protective_routing	not_a_token		enumeration value, not a fault
+purge_not_settled	refusal		the text says refused
+purge_retraction_inadmissible	refusal		aborts the purge; best reading
+purge_selection_count_mismatch	refusal		the text says refused
+purge_selection_digest_mismatch	concludes_nothing		the text says concludes nothing
+purge_tombstoned	refusal		bytes not kept and never served, by this reason; best reading
+purge_unauthorised	hold		waits for the row it names
+quorum_weight	not_a_token		payload or envelope member
+recantation_reason	not_a_token		payload or envelope member
+receipt_cadence_secs	not_a_token		charter or bundle member
+receipt_quorum	not_a_token		charter or bundle member
+receipt_quorum_mismatch	detail		detail of genesis_bundle_malformed
+recipient_receive	not_a_token		enumeration value, not a fault
+recipient_revoke	not_a_token		enumeration value, not a fault
+recipient_see	not_a_token		enumeration value, not a fault
+record_hard_case	not_a_token		scope, duty or role name
+record_id	not_a_token		payload or envelope member
+recovery_changes_other_seat	detail		detail of genesis_bundle_malformed
+recovery_commitment_is_holder_key	detail		detail of genesis_bundle_malformed
+recovery_commitment_mismatch	refusal		listed among the refusals of its row or object
+recovery_commitment_shared	detail		detail of genesis_bundle_malformed
+recovery_commitment_spent	refusal		listed among the refusals of its row or object
+recovery_commitments	not_a_token		charter or bundle member
+recovery_commitments_not_holders	detail		detail of genesis_bundle_malformed
+recovery_key_is_signing_key	detail		detail of genesis_bundle_malformed
+recovery_reuses_signing_key	detail		detail of genesis_bundle_malformed
+recursive_trust_bootstrap	not_a_token		function, predicate or rule name
+references_attestation_id	not_a_token		payload or envelope member
+registry_consensus	not_a_token		family or row-type name
+registry_sha256	not_a_token		registry or manifest member, or a file name
+removable_offline	not_a_token		enumeration value, not a fault
+rendezvous_key_record	not_a_token		payload or envelope member
+rendezvous_node_key_id	not_a_token		payload or envelope member
+reserved_family_unseated	refusal		reason column of the reserved-family table
+resignation_not_a_member_at_head	refusal		the text says refused
+resignation_not_by_member	refusal		the text says refused
+resolution_time	hard_case		hard-case kind, spelt bare in the list of canonical kinds
+resolve_deferral	not_a_token		scope, duty or role name
+resolve_encryption_keys	not_a_token		function, predicate or rule name
+responsible_party	not_a_token		enumeration value, not a fault
+reticulum_x25519_pubkey	not_a_token		payload or envelope member
+retirement_id	not_a_token		payload or envelope member
+return_token	not_a_token		payload or envelope member
+reversible_excluded	not_a_token		enumeration value, not a fault
+reversible_pending	not_a_token		enumeration value, not a fault
+revoked_after	not_a_token		payload or envelope member
+role_term	not_a_token		payload or envelope member
+room_content	not_a_token		a column of the family table
+room_key	not_a_token		payload or envelope member
+rotation_after_revocation	detail		detail of kid_not_of_iss
+rotation_chain	not_a_token		payload or envelope member
+route_blob_base64	not_a_token		payload or envelope member
+row_author_not_iss	detail		detail of genesis_bundle_row_invalid
+row_invalid	detail		detail of genesis_bundle_row_invalid
+row_signer	detail		detail of genesis_bundle_row_invalid
+row_types	not_a_token		registry or manifest member, or a file name
+ru_mental_health	not_a_token		enumeration value, not a fault
+scope_key_id	not_a_token		payload or envelope member
+scope_missing_infra	detail		detail of genesis_bundle_malformed
+score_outside_declared_polarity	refusal		the text says refused
+sd_claims	not_a_token		payload or envelope member
+seal_open_failed	refusal		the frame closes the link
+seal_phase_before_promotion	refusal		the frame closes the link
+seal_stale_phase	refusal		the frame is dropped and counted, link stays open; best reading
+seal_unknown_phase	refusal		the frame closes the link
+seal_v1_refused	refusal		the frame closes the link
+sealed_descriptor	not_a_token		payload or envelope member
+seat_dial_hints_missing	detail		detail of genesis_bundle_row_invalid
+seat_not_node	detail		detail of genesis_bundle_row_invalid
+seat_opted_out	detail	2.6.1.11	detail of genesis_bundle_row_invalid
+seat_opted_out	report	3.3.6.2	a serve seat carrying the opt-out marker is out of conformance
+seat_record_ended	detail		detail of genesis_bundle_row_invalid
+seat_without_hop_key	report		out of conformance, no disposition word; best reading
+selection_counts	not_a_token		payload or envelope member
+self_admit	not_a_token		enumeration value, not a fault
+self_roster_evict	not_a_token		function, predicate or rule name
+self_verify	not_a_token		family or row-type name
+semantic_disambiguation	not_a_token		enumeration value, not a fault
+serve_nodes	not_a_token		charter or bundle member
+serve_seat_owner_unannounced	refusal		the text says refused
+serve_transit_pair_rotation_before_rebind	concludes_nothing		not counted
+serve_transport_destinations	not_a_token		charter or bundle member
+service_key	not_a_token		key, suite or member name
+session_claim_out_of_window	refusal		the text says refused
+share_count	not_a_token		payload or envelope member
+share_index	not_a_token		payload or envelope member
+signed_at	not_a_token		payload or envelope member
+signed_object_v2	not_a_token		registry or manifest member, or a file name
+signer_acts_for	not_a_token		function, predicate or rule name
+skill_import	not_a_token		family or row-type name
+sla_breach_unattested	not_a_token		bare spelling of a hard_case kind that has its own row
+software_fallback	not_a_token		retired token, named as refused by spelling
+software_hsm_development	not_a_token		enumeration value, not a fault
+software_only	not_a_token		enumeration value, not a fault
+software_test	not_a_token		enumeration value, not a fault
+source_count	not_a_token		payload or envelope member
+spiritual_direction	not_a_token		enumeration value, not a fault
+standard_version	not_a_token		payload or envelope member
+stands_on	not_a_token		a refs role
+statement_invalid	refusal		listed among the refusals of its row or object
+statement_kid_not_iss	refusal		the text says refused
+statement_no_role	refusal		listed among the refusals of its row or object
+statement_not_genesis_bundle	refusal		listed among the refusals of its row or object
+steward_purge	not_a_token		enumeration value, not a fault
+stewards_of	not_a_token		function, predicate or rule name
+store_write	not_a_token		enumeration value, not a fault
+stream_accountable_pool_below_quorum	refusal		the text says refused
+stream_head_after_seal	refusal		the stream head a service refuses to register
+stream_head_epoch_regressed	refusal		the stream head a service refuses to register
+stream_head_equivocation	refusal		the stream head a service refuses to register
+stream_head_inconsistent	refusal		the stream head a service refuses to register
+stream_head_interval_below_floor	refusal		the stream head a service refuses to register
+stream_head_prev_not_last	refusal		the stream head a service refuses to register
+stream_head_repeated	refusal		the stream head a service refuses to register
+stream_head_room_mismatch	refusal		the stream head a service refuses to register
+stream_id	not_a_token		payload or envelope member
+stream_id_utf8	not_a_token		constant or parameter name
+sub_delegation	not_a_token		enumeration value, not a fault
+subject_key_id	not_a_token		payload or envelope member
+subject_key_ids	not_a_token		payload or envelope member
+subject_kind	not_a_token		payload or envelope member
+subject_of	not_a_token		function, predicate or rule name
+subject_outside_audience	concludes_nothing		the text says concludes nothing
+subject_target	not_a_token		payload or envelope member
+substrate_rung	not_a_token		payload or envelope member
+supersession_reason	not_a_token		payload or envelope member
+surveillance_mass	not_a_token		enumeration value, not a fault
+symbol_envelope	not_a_token		payload or envelope member
+symbol_index	not_a_token		payload or envelope member
+symbol_key	not_a_token		payload or envelope member
+takedown_notice	not_a_token		family or row-type name
+takedown_unauthorised	refusal		reason column of the reserved-family table
+temporal_lifecycle	not_a_token		enumeration value, not a fault
+testimonial_witness	not_a_token		family or row-type name
+third_party	not_a_token		family or row-type name
+top_p	not_a_token		constant or parameter name
+topical_relation	not_a_token		family or row-type name
+tpm_discrete	not_a_token		enumeration value, not a fault
+tpm_firmware	not_a_token		enumeration value, not a fault
+trace_field_shape_violation	refusal		the text says refused
+trace_format_v	not_a_token		registry or manifest member, or a file name
+trace_id	not_a_token		payload or envelope member
+trace_manifest	not_a_token		payload or envelope member
+trace_run_kind_mock	refusal		the text says refused
+transit_xwing_hkdf_sha256	not_a_token		key, suite or member name
+transit_xwing_pubkey	not_a_token		payload or envelope member
+transmission_principle	not_a_token		enumeration value, not a fault
+transparency_log	not_a_token		family or row-type name
+transparency_members_partial	detail		detail of genesis_bundle_malformed
+transparency_services	not_a_token		charter or bundle member
+transport_destination	not_a_token		payload or envelope member
+transport_identity	not_a_token		payload or envelope member
+transport_rebind_without_holder_quorum	concludes_nothing		the text says concludes nothing
+tree_size	not_a_token		payload or envelope member
+trust_accepts_classes_malformed	refusal		the text says refused
+trust_accepts_depth_out_of_range	refusal		the text says refused
+trust_classes	not_a_token		payload or envelope member
+trust_depth	not_a_token		payload or envelope member
+trust_root_head_stale	concludes_nothing		the text says concludes nothing
+trust_root_head_unnamed	refusal		the text says refused
+trust_root_head_unreceipted	concludes_nothing		the text says concludes nothing
+trusted_through	not_a_token		a refs role
+trusted_through_too_many	refusal		the text says a row with more is refused
+truth_grounding	not_a_token		family or row-type name
+tvec_terrorist	not_a_token		enumeration value, not a fault
+u16_be	not_a_token		function, predicate or rule name
+ubuntu_relational_substrate	not_a_token		enumeration value, not a fault
+under_13	not_a_token		enumeration value, not a fault
+unit_lease_max_secs	not_a_token		constant or parameter name
+unix_seconds	not_a_token		payload or envelope member
+unresolved_consent	hard_case		hard-case kind, spelt bare in the list of canonical kinds
+untrusted_service	detail		detail of admission_none or admission_receipt_missing
+user_canonical_hash	not_a_token		payload or envelope member
+valid_from	not_a_token		payload or envelope member
+valid_until	not_a_token		payload or envelope member
+valid_until_not_after_asserted_at	refusal		the text says Invalid
+verify_bundle_quorum	not_a_token		function, predicate or rule name
+version_prev_mismatch	detail		detail of genesis_bundle_malformed
+version_segment	not_a_token		registry or manifest member, or a file name
+violation_attempt	not_a_token		bare spelling of a hard_case kind that has its own row
+vod_of	not_a_token		enumeration value, not a fault
+vote_variance	hard_case		hard-case kind, spelt bare in the list of canonical kinds
+wa_adjudication_ref	not_a_token		payload or envelope member
+watchlist_enabled	not_a_token		bare spelling of a hard_case kind that has its own row
+watchlist_match	not_a_token		bare spelling of a hard_case kind that has its own row
+weapons_harmful	not_a_token		enumeration value, not a fault
+what_was_false	not_a_token		payload or envelope member
+widened_at	not_a_token		payload or envelope member
+window_end	not_a_token		payload or envelope member
+window_secs	not_a_token		constant or parameter name
+wise_authority	not_a_token		enumeration value, not a fault
+withdrawal_reason	not_a_token		payload or envelope member
+witness_relation	not_a_token		payload or envelope member
+worker_impact_assessment	not_a_token		payload or envelope member
+wrap_algorithm	not_a_token		payload or envelope member
+wrapped_dek	not_a_token		payload or envelope member
+write_author_has_no_wrap_target	refusal		the text says the sealer refuses the write and stores nothing
+x25519_base64	not_a_token		payload or envelope member
+x_private	not_a_token		family or row-type name
+yubi_hsm	not_a_token		enumeration value, not a fault
+kem_xwing_pubkey	not_a_token		a member of a room key record
+onion_hop_xwing_pubkey	not_a_token		a member of an occurrence
+room_binding_xwing_pubkey	not_a_token		a member of an occurrence
+seat_commitment	not_a_token		a member of a room key record
+room_binding_ml_kem_768_reuse	refusal		the text says refused
+room_binding_x25519_reuse	refusal		the text says refused
+key_revocation_no_standing	concludes_nothing		a revocation signed by a key with no standing to revoke concludes nothing
+room_key_other_room	refusal		the text says refused
+room_key_occurrence_outside_room	refusal		the text says refused
+room_key_binding_outside_room	refusal		the text says refused
+room_row_signer_not_room_key	refusal		the text says refused
+widening_binding_not_held	hold		the cosignature waits until the joiner binding is held
+key_grant_recipient_not_seat	refusal		the text says refused
+xwing_hpke_aes256_gcm_hkdf_sha256	not_a_token		a wrap_algorithm value
+leaf_key	not_a_token		an element of a leaf vouch entry
+leaf_vouch_max_secs	not_a_token		a constant
+membership_binding_ack_unresolved	hold		RETRYABLE: the widening waits for the receipt it cites
+membership_private_refused	refusal		the text says refused
+membership_public_to_private	concludes_nothing		a version declaring private over a public room concludes nothing
+membership_not_a_community	refusal		the text says refused
+person_count_binding_missing	hold		the count is held at the node
+leaf_vouch_absent	refusal		the text says the door refuses the leaf
+leaf_vouch_ended	refusal		the text says the door refuses the leaf
+leaf_vouch_other_room	refusal		the text says the door refuses the leaf
+leaf_vouch_other_leaf	refusal		the text says the door refuses the leaf
+leaf_vouch_not_by_member	refusal		the text says the door refuses the leaf
+leaf_vouch_presentation_invalid	refusal		the text says refused
+founding_duty_holders_unnamed	refusal		the text says refused
+founding_duty_unheld	refusal		the text says refused
+duty_holders_after_founding	refusal		the text says refused
+duty_holders_on_family	refusal		the text says refused
+founding_duty_holder_not_signer	refusal		the text says refused
+founding_duty_holder_node	concludes_nothing		the text says the entry concludes nothing
+founding_duty_holder_agent_owner_unsigned	concludes_nothing		the text says the entry concludes nothing
+duty_conferral_counted_required	concludes_nothing		the text says concludes nothing
+seat_not_withdrawable_by_conferrer	concludes_nothing		the text says concludes nothing
+deputy_under_not_held	concludes_nothing		the text says concludes nothing
+deputy_sub_delegation_not_granted	concludes_nothing		the text says concludes nothing
+deputy_depth_exceeded	concludes_nothing		the text says concludes nothing

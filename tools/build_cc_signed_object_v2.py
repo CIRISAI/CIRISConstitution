@@ -43,12 +43,14 @@ Checks (every run, before writing):
   (CC 3.1.3 `key:record`) that must each give their own answer.
   The payloads of nine families (CC 2.6.1.4): one valid payload of each family rule validates and broken ones are
   refused; the rules the CDDL cannot state (a member required on one stage, axis or state; a dimension leaf equal to
-  its member; a cosign:{state} row with a payload of its own) refuse edition2_payload_invalid, over deliberate breaks.
+  its member) refuse edition2_payload_invalid, over deliberate breaks; a receipt of more than 256 acts is refused
+  ack_names_too_many, as more than 64 tips are refused trusted_through_too_many. A statement labelled with a retired family
+  (cosign:{state}, CC 3.1.3) is refused namespace_family_unregistered before any payload rule, over a deliberate break.
   --check   check, and compare the block with what the Part holds; write nothing (exit 1 when stale)
 
 stdlib only. Run:  python3 tools/build_cc_signed_object_v2.py [--check]
 """
-import csv, glob, hashlib, os, re, subprocess, sys, tempfile
+import base64, csv, glob, hashlib, os, re, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -78,14 +80,23 @@ OBJECTS = [
     ("genesis", "The genesis bundle (typ `ceg-genesis-bundle/2`)"),
     ("accord", "The accord's rows: an invocation and a lifecycle row"),
     ("roster", "The roster version: the payload of a `group:roster` row"),
-    ("membership", "A membership change: the payload of a `membership:{stage}` row at the stages `widening` and `removal`"),
+    ("membership", "A membership change, a keeps row and a reply: the payloads of a `membership:{stage}` row at the stages `widening`, `removal`, `keeps`, `acceptance` and `decline`"),
     ("occurrence_revocation", "An occurrence revocation: the payload of an `identity:occurrence_revocation` row"),
     ("revocation", "An entity revocation: the payload of a `revocation:{entity_type}:{reason}` row"),
     ("takedown", "A takedown notice: the payload of a `takedown_notice:{basis}` row"),
     ("custody", "A custody report: the payload of a `custody:{kind}` row"),
     ("key_grant", "A key grant: the payload of a `key_grant:{axis}` row"),
-    ("receipt", "A delivery receipt: the payload of a `delivery_receipt:{stream_id}` row"),
+    ("delivery_ack", "A delivery ack: the payload of a `delivery_ack:{stream_id}` row"),
     ("trust_accepts", "An acceptance edge: the members this form names of a `trust:accepts` row"),
+    ("build_manifest", "A build manifest: the payload of a `provenance:build_manifest:{target}` row"),
+    ("grant", "A grant: the members this form names of a `trust:confers` row"),
+    ("grant_withdrawal", "The holders' withdrawal of a grant: the payload of a counted `withdraws` row"),
+    ("receipt", "A receipt: the payload of an `act:ack` row"),
+    ("objection", "An objection vote: the payload of an `objection:{state}` row"),
+    ("window_step", "A step of a window: the payload of a `window:{state}` row"),
+    ("owner_binding", "An owner-binding: the payload of an `ownership:{relation}:{target_kind}:{version}` row"),
+    ("holon_claim", "A holon claim: the payload of a `holon:claim` row"),
+    ("leaf_vouch", "A leaf vouch: the payload of an `mls:leaf_vouch` row"),
     ("occurrence", "An occurrence: the payload of an `identity:occurrence` row"),
     ("amendment", "An identity amendment: the payload of an `identity_amendment` row"),
     ("admission", "An admission of a unit: the members of an `admission:unit` row"),
@@ -94,6 +105,9 @@ OBJECTS = [
     ("rebind", "A canonical re-bind: the payload of a `transport:canonical_rebind` row"),
     ("binding", "The transport destination binding (`identity:occurrence`)"),
     ("room", "The seat commitment of a room key"),
+    ("room_binding", "The binding of a voice to its person, and what a wrap to a room key seals"),
+    ("mls_group", "A room's MLS group ids: what each is derived from"),
+    ("group_id", "The id of a group: what its first version derives it from"),
     ("disclosure", "A disclosure of a blinded member"),
     ("logical", "Logical names with no member of their own"),
 ]
@@ -400,7 +414,7 @@ def genesis_samples():
         ("a holder named by a key id", genesis_payload(holders=["A1"])),
         ("a recovery commitment in hex", genesis_payload(charter=dict(charter, recovery_commitments={iref(0): "00" * 32}))),
         ("a charter with no scope", genesis_payload(charter={"recovery_commitments": charter["recovery_commitments"]})),
-        ("a witness quorum of 1", genesis_payload(charter=dict(charter, witness_quorum=1))),
+        ("a witness quorum of 1", genesis_payload(charter=dict(charter, receipt_quorum=1))),
         ("a bundle with an author", genesis_payload(author=iref(0))),
         ("a bundle with a count member", genesis_payload(count="majority")),
     ]
@@ -417,6 +431,93 @@ def key_record_samples():
         ("a chain in hex", rec(chain=["3082"])),
         ("an empty chain", rec(chain=[])),
     ]
+
+
+def room_key_record(**change):
+    """The record of a room key (CC 3.1.3.2, CC 2.6.1.11): an agent's, with its room, its KEM key and its seat commitment, and no end."""
+    return dict({"key": {1: 7, 3: -70100, -1: bytes(1984)}, "identity_type": ["agent"], "asserted_at": 1763078400000,
+                 "room": gref(5), "kem_xwing_pubkey": bytes([4]) * 1216, "seat_commitment": [-16, bytes([7]) * 32]}, **change)
+
+
+def room_key_record_samples():
+    """(valid, broken): the record of a room key, one member changed in each broken one."""
+    return cde(room_key_record()), [
+        ("a room named by a key id", cde(room_key_record(room="A1"))),
+        ("a room named by an identity reference", cde(room_key_record(room=iref(1)))),
+        ("a room key's KEM key of 1215 bytes", cde(room_key_record(kem_xwing_pubkey=bytes(1215)))),
+        ("a room key's KEM key as the earlier pair", cde(room_key_record(kem_xwing_pubkey={"x25519": bytes(32), "ml_kem_768": bytes(1184)}))),
+        ("a seat commitment in hex", cde(room_key_record(seat_commitment="07" * 32))),
+    ]
+
+
+def room_binding_samples():
+    """[(root, (valid, broken), what)]: the info and the opening of a binding's confirmation, and the sealed map of a wrap."""
+    kid, com = bytes([1]) * 32, [-16, bytes([7]) * 32]
+    info = ["CEG-binding/2", gref(5), kid, bytes([2]) * 32, com, bytes([3]) * 32]
+    opening = [iref(1), bytes([4]) * 32]
+    sealed = {"dek": bytes([5]) * 32, "claim": {"person": iref(1), "occurrence": [bytes(64), bytes(64)]},
+              "challenge": bytes(1120), "confirmation": {"enc": bytes(1120), "ct": bytes(130)}}
+    return [
+        ("binding-info-input", (cde(info), [
+            ("a binding info under the seat label", cde(["CEG-seat/2"] + info[1:])),
+            ("a binding info naming its room by a key id", cde([info[0], "A1"] + info[2:])),
+            ("a binding info naming the addressee by an identity reference", cde(info[:3] + [iref(2)] + info[4:])),
+            ("a binding info with no binding key", cde(info[:5]))]), "info of a binding's confirmation"),
+        ("binding-opening", (cde(opening), [
+            ("an opening with a nonce of 31 bytes", cde([iref(1), bytes(31)])),
+            ("an opening naming its person by a key id", cde(["A1", bytes(32)]))]), "opening of a binding"),
+        ("room-sealed", (cde(sealed), [
+            ("a challenge of 1119 bytes", cde(dict(sealed, challenge=bytes(1119)))),
+            ("a confirmation with no ciphertext", cde(dict(sealed, confirmation={"enc": bytes(1120)}))),
+            ("a confirmation whose encapsulation is the earlier pair's", cde(dict(sealed, confirmation={"enc": bytes(1088), "ct": bytes(130)}))),
+            ("a claim that names no person", cde(dict(sealed, claim={"occurrence": [bytes(64)]}))),
+            ("a wrapped key of 31 bytes", cde(dict(sealed, dek=bytes(31)))),
+            ("a tag beside the confirmation", cde(dict(sealed, tag=bytes(32))))]), "sealed map of a wrap to a room key"),
+    ]
+
+
+def leaf_and_group_samples():
+    """[(root, (valid, broken), what)]: what a leaf vouch's element discloses, and the inputs of a room's MLS group ids."""
+    entry = [bytes([6]) * 32, gref(5), 77]
+    return [
+        ("leaf-vouch-entry", (cde(entry), [
+            ("an entry with a leaf key of 31 bytes", cde([bytes(31), gref(5), 77])),
+            ("an entry naming its room by a key id", cde([bytes(32), "A1", 77])),
+            ("an entry under another suite", cde([bytes(32), gref(5), 1])),
+            ("an entry that names an epoch", cde(entry + [3]))]), "entry of a leaf vouch"),
+        ("mls-group-id-input", (cde(["CEG-mls-group/2", gref(5)]), [
+            ("a chat group id under the call label", cde(["CEG-mls-call-group/2", gref(5)])),
+            ("a chat group id over a room string", cde(["CEG-mls-group/2", "chat:room:v1:abc"]))]), "chat group id input"),
+        ("mls-call-group-id-input", (cde(["CEG-mls-call-group/2", gref(5), bytes(32)]), [
+            ("a call group id with no call", cde(["CEG-mls-call-group/2", gref(5)])),
+            ("a call group id under the chat label", cde(["CEG-mls-group/2", gref(5), bytes(32)]))]), "call group id input"),
+    ]
+
+
+def room_key_record_rule(p):
+    """The rule of a room key's record the schema cannot state (CC 2.6.1.11): room marks the record, and the KEM key
+    and the commitment are present exactly where room is."""
+    if len({m in p for m in ("room", "kem_xwing_pubkey", "seat_commitment")}) != 1:
+        return PAYLOAD_INVALID
+    return None
+
+
+ROOM_BINDING_REUSE = ("room_binding_ml_kem_768_reuse", "room_binding_x25519_reuse")
+
+
+def room_binding_reuse_rule(p):
+    """CC 3.3.6.1: neither half of an identity's binding key repeats a half of another KEM key on the same occurrence,
+    or the transport x25519. The first half is the ML-KEM-768 key (bytes 0..1184), the second the X25519 key."""
+    k = p.get("room_binding_xwing_pubkey")
+    if k is None:
+        return None
+    enc, td = p.get("encryption_pubkeys", {}), p.get("transport_destination", {})
+    others = [p[m] for m in ("transit_xwing_pubkey", "onion_hop_xwing_pubkey") if m in p]
+    if k[:1184] in [o[:1184] for o in others] + [enc.get("ml_kem_768")]:
+        return ROOM_BINDING_REUSE[0]
+    if k[1184:] in [o[1184:] for o in others] + [enc.get("x25519"), td.get("reticulum_x25519_pubkey")]:
+        return ROOM_BINDING_REUSE[1]
+    return None
 
 
 def accord_samples():
@@ -454,6 +555,13 @@ def family_ids():
     import json, re as _re
     reg = json.load(open(os.path.join(ROOT, "manifests", "namespace_registry.json"), encoding="utf-8"))
     return {_re.sub(r"\{([a-z_]+)\}", r".\1", f["prefix"]).replace("*", ".") for f in reg["families"]}
+
+
+def retired_stems():
+    """The stems the registry marks `kind: retired` (CC 3.1.7): no family stands under one."""
+    import json
+    reg = json.load(open(os.path.join(ROOT, "manifests", "namespace_registry.json"), encoding="utf-8"))
+    return [s["stem"] for s in reg["_meta"]["case_rule"]["reserved_stems"] if s.get("kind") == "retired"]
 
 
 def family_checks():
@@ -516,6 +624,11 @@ def recovery_samples():
 
 # ---------------------------------------------------------------- the payloads of nine families (CC 2.6.1.4)
 PAYLOAD_INVALID = "edition2_payload_invalid"
+LEAF_VOUCH_MAX_MS = 2592000 * 1000                       # leaf_vouch_max_secs (CC 5.1)
+XWING_WRAP = "xwing_hpke_aes256_gcm_hkdf_sha256"         # the wrap_algorithm of a wrap to a room key (CC 2.6.1.11)
+TIPS_MAX, TIPS_TOO_MANY = 64, "trusted_through_too_many"   # refs.trusted_through on any row (CC 3.1.3.2)
+ACK_MAX, ACK_TOO_MANY = 256, "ack_names_too_many"          # the acts one receipt names under refs.also.ack (CC 3.1.3)
+FAMILY_UNREGISTERED = "namespace_family_unregistered"   # a family label under a retired stem (CC 3.1.7)
 
 
 def _ref(n):
@@ -528,13 +641,17 @@ def family_payloads():
     members = sorted([{"key": iref(0), "joined_at": t, "role": "founder"}, {"key": iref(1), "joined_at": t}], key=cde)
     return {
         "group-roster": ("group:roster", {
-            "group_kind": "community", "group": iref(5), "name": "Austin", "version": 2, "members": members,
+            "group_kind": "community", "group": gref(5), "name": "Austin", "version": 2, "members": members,
             "founded_at": t, "consensus_protocol": "majority", "consensus_protocol_entrenched": False,
             "cohort_subkind": "geographic", "membership": "public",
             "refs": {"head": _ref(1), "also": {"cites": [_ref(2)]}}, "asserted_at": t}),
         "membership-change": ("membership:.stage", {
-            "dimension": "membership:widening:v1", "group_kind": "family", "group": iref(5), "member": iref(2),
+            "dimension": "membership:widening:v1", "group_kind": "family", "group": gref(5), "member": iref(2),
             "joined_at": t, "effective_at": t, "refs": {"head": _ref(1), "also": {"cites": [_ref(3)]}}, "asserted_at": t}),
+        "membership-keeps": ("membership:.stage", {
+            "dimension": "membership:keeps:v1", "group_kind": "community", "group": gref(5), "member": iref(2),
+            "refs": {"head": _ref(1), "also": {"cites": [_ref(16)]}, "trusted_through": sorted([_ref(17), _ref(18)], key=cde)},
+            "asserted_at": t}),
         "occurrence-revocation": ("identity:occurrence_revocation", {
             "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "revoked_at": t, "effective_at": t,
             "refs": {"head": _ref(10), "also": {"cites": sorted([_ref(13), _ref(14)], key=cde)}}, "asserted_at": t}),
@@ -550,12 +667,12 @@ def family_payloads():
             "asserted_at": t}),
         "key-grant": ("key_grant:.axis", {
             "author": iref(0), "dimension": "key_grant:epoch:v1", "axis": "epoch",
-            "wrap_algorithm": "x25519_mlkem768_aes256_gcm_hkdf_sha256", "wrapped_dek": bytes(40), "community": iref(5),
+            "wrap_algorithm": "x25519_mlkem768_aes256_gcm_hkdf_sha256", "wrapped_dek": bytes(40), "community": gref(5),
             "minter": iref(0), "epoch": 3, "asserted_at": t}),
         "identity-occurrence": ("identity:occurrence", {
             "author": iref(0), "identity_key_id": iref(0), "occurrence_key_id": iref(3), "device_class": "phone",
             "encryption_pubkeys": {"x25519": bytes([5]) * 32, "ml_kem_768": bytes([6]) * 1184},
-            "build_manifest_hash": dig, "refs": {"head": _ref(10), "further_heads": [_ref(11)], "also": {"cites": [_ref(4)]}},
+            "room_binding_xwing_pubkey": bytes([9]) * 1216, "build_manifest_hash": dig, "refs": {"head": _ref(10), "further_heads": [_ref(11)], "also": {"cites": [_ref(4)]}},
             "asserted_at": t, "valid_until": t + 1}),
         "identity-amendment": ("identity_amendment", {
             "author": iref(3), "amendment_digest": dig, "refs": {"also": {"cites": [_ref(5)]}}, "asserted_at": t}),
@@ -574,12 +691,88 @@ def family_payloads():
             "author": iref(0), "unit": dig, "capabilities": ["read", "compute"], "cohort_scope": "self", "asserted_at": t,
             "valid_until": t + 86400000}),
         "trust-accepts": ("trust:accepts", {
-            "author": iref(0), "dimension": "trust:accepts:v1", "trust_classes": ["transparency"],
-            "service_key": {1: 2, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32)}, "asserted_at": t}),
-        "delivery-receipt": ("delivery_receipt:.stream_id", {
-            "author": iref(1), "dimension": "delivery_receipt:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
+            "author": iref(0), "dimension": "trust:accepts:v1", "attached_head_digest": dig, "trust_depth": 1, "asserted_at": t}),
+        "delivery-ack": ("delivery_ack:.stream_id", {
+            "author": iref(1), "dimension": "delivery_ack:s1:v1", "stream_id": "s1", "epoch": 3, "k": 12,
             "chunk_root": dig, "asserted_at": t}),
+        "build-manifest-row": ("provenance:build_manifest:.target", {
+            "author": iref(4), "dimension": "provenance:build_manifest:x86_64-unknown-linux-gnu:v1",
+            "build": {"project": "ciris-verify", "version": "1.2.3", "manifest_hash": dig, "manifest_size": 2048},
+            "evidence_refs": [dig], "refs": {"head": _ref(9), "also": {"stands_on": [_ref(15)]}}, "asserted_at": t}),
+        "trust-confers": ("trust:.job:.version", {
+            "dimension": "trust:confers:v1", "scope": [PIPELINE_SCOPE],
+            "projects": sorted(["ciris-agent", "ciris-verify"], key=cde), "refs": {"head": _ref(9)}, "asserted_at": t}),
+        "membership-reply": ("membership:.stage", {
+            "author": iref(2), "dimension": "membership:acceptance:v1", "group_kind": "family", "group": gref(5),
+            "role": "member", "refs": {"answers": _ref(20)}, "asserted_at": t}),
+        "grant-withdrawal": ("trust:.job:.version", {
+            "refs": {"head": _ref(9), "target": _ref(15)}, "lifts": True, "asserted_at": t}),
+        "act-ack": ("act:ack", {
+            "author": iref(1), "dimension": "act:ack:v1",
+            "refs": {"also": {"ack": sorted([_ref(21), _ref(22)], key=cde)}}, "asserted_at": t}),
+        "objection-vote": ("objection:.state", {
+            "author": iref(1), "dimension": "objection:raised:v1", "cohort": "self", "cohort_key_id": "fed-1",
+            "grounds": "sample", "refs": {"answers": _ref(23)}, "asserted_at": t}),
+        "window-step": ("window:.state", {
+            "author": iref(1), "dimension": "window:held:v1", "refs": {"target": _ref(27)}, "asserted_at": t}),
+        "owner-binding": ("ownership:.relation:.target_kind:.version", {
+            "author": iref(0), "dimension": "ownership:responsible_party:node:v1", "delegation_purpose": "owner_binding",
+            "scope": sorted(["infra:attest", "infra:serve"], key=cde), "delegation_valid_until": t + 86400000,
+            "cohort_scope": "self", "asserted_at": t}),
+        "leaf-vouch": ("mls:leaf_vouch", {
+            "author": iref(1), "dimension": "mls:leaf_vouch:v1", "suite": 77, "leaves": [Tag(60, bytes([i]) * 32) for i in range(8)],
+            "valid_from": t, "valid_until": t + LEAF_VOUCH_MAX_MS, "asserted_at": t}),
+        "holon-claim": ("holon:claim", {
+            "author": iref(1), "dimension": "holon:claim:v1", "spec": "ciris/holon-decl/0", "holon": "sample.holon",
+            "view": "sample.view", "consumer": "sample.consumer", "kind": "bound", "declaration": dig,
+            "evidence_refs": [dig, [-16, bytes([8]) * 32]], "score": 1000000, "confidence": 900000,
+            "body": {"bound": Tag(4, [-2, 5]), "unit": "ratio", "basis": "price"}, "asserted_at": t}),
     }
+
+
+def service_edge(**change):
+    """An acceptance edge to a Transparency Service (CC 2.7.11): the class transparency and the service's key; it
+    attaches no root, so it names no head digest."""
+    p = _without(family_payloads()["trust-accepts"][1], "attached_head_digest", "trust_depth")
+    return dict(dict(p, trust_classes=["transparency"], service_key={1: 2, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32)}), **change)
+
+
+def admission_edge(**change):
+    """An acceptance edge on the admission walk (CC 2.7.11): the class admission; its subject is an author or a group."""
+    p = _without(family_payloads()["trust-accepts"][1], "attached_head_digest", "trust_depth")
+    return dict(dict(p, trust_classes=["admission"]), **change)
+
+
+def purge_notice():
+    """A steward purge (CC 2.4.1.1): counted over the holders of the bundle in force, with no author and no claimant."""
+    p = _without(family_payloads()["takedown-notice"][1], "author", "claimant")
+    return dict(p, dimension="takedown_notice:steward_purge:v1", legal_basis="steward_purge", content_holders=[],
+                refs={"head": _ref(9)})
+
+
+def org_binding(**change):
+    """An owner-binding of a key held for an organisation (CC 3.2): an agent's, placed in a community, naming the
+    organisation's affiliation and that affiliation's roster version."""
+    p = _without(family_payloads()["owner-binding"][1], "scope")
+    return dict(dict(p, dimension="ownership:responsible_party:agent:v1", cohort_scope="community", community_id=gref(5),
+                     on_behalf_of=gref(6), refs={"head": _ref(24)}), **change)
+
+
+def holon_follows(**change):
+    """A holon claim that follows an earlier row of its signer for the same claim (CC 3.1.11): it names that row in refs.prev."""
+    return dict(dict(family_payloads()["holon-claim"][1], refs={"prev": _ref(25)}), **change)
+
+
+def window_landing(**change):
+    """The landing of a window (CC 3.3.6.4): it names the opener, its signer's held row under prev and the rows it counted."""
+    return dict(dict(family_payloads()["window-step"][1], dimension="window:landed:v1", asserted_at=1763078400000 + 86400000,
+                     refs={"target": _ref(27), "prev": _ref(28), "also": {"cites": sorted([_ref(29), _ref(30)], key=cde)}}), **change)
+
+
+def grant_reply(**change):
+    """The reply to a grant (CC 3.1.2.1): the membership-reply payload with no group members, by the grantee's owner."""
+    p = _without(family_payloads()["membership-reply"][1], "group_kind", "group", "role")
+    return dict(dict(p, author=iref(0), refs={"answers": _ref(15), "also": {"cites": [_ref(20)]}}), **change)
 
 
 def _without(p, *keys):
@@ -602,6 +795,12 @@ def family_payload_samples():
             ("a widening with no refs", D("membership-change", "refs")),
             ("a change to a group of another kind", W("membership-change", group_kind="room")),
             ("a reason in free text", W("membership-change", reason="spam"))]),
+        ("membership-keeps", "membership:keeps payload", cde(P["membership-keeps"]), [
+            ("a keeps row naming no member", D("membership-keeps", "member")),
+            ("a keeps row with no refs", D("membership-keeps", "refs")),
+            ("a keeps row in a group of another kind", W("membership-keeps", group_kind="room")),
+            ("tips as one bare reference", W("membership-keeps", refs=dict(P["membership-keeps"]["refs"], trusted_through=_ref(17)))),
+            ("an empty set of tips", W("membership-keeps", refs=dict(P["membership-keeps"]["refs"], trusted_through=[])))]),
         ("occurrence-revocation", "identity:occurrence_revocation payload", cde(P["occurrence-revocation"]), [
             ("a revocation with no occurrence_key_id", D("occurrence-revocation", "occurrence_key_id")),
             ("an effective_at as text", W("occurrence-revocation", effective_at="2026-11-14T00:00:00Z")),
@@ -615,7 +814,9 @@ def family_payload_samples():
         ("takedown-notice", "takedown_notice:{basis} payload", cde(P["takedown-notice"]), [
             ("a notice on an unlisted basis", W("takedown-notice", legal_basis="DMCA512")),
             ("a content digest in hex", W("takedown-notice", content_sha256="00" * 32)),
-            ("a notice with no claimant", D("takedown-notice", "claimant"))]),
+            ("a claimant that is a key id", W("takedown-notice", claimant="A1"))]),
+        ("takedown-notice", "takedown_notice:steward_purge payload", cde(purge_notice()), [
+            ("a purge whose refs are a bare reference", cde(dict(purge_notice(), refs=_ref(9))))]),
         ("custody-ack", "custody:{kind} payload", cde(P["custody-ack"]), [
             ("a report on two blobs", W("custody-ack", evidence_refs=[[-16, bytes([7]) * 32], [-16, bytes([8]) * 32]])),
             ("a custody_state outside the two", W("custody-ack", custody_state="lost"))]),
@@ -623,6 +824,9 @@ def family_payload_samples():
             ("a grant under the v1 wrap", W("key-grant", wrap_algorithm="hpke_rfc9180_base_x25519_aes_gcm")),
             ("a wrapped key in base64", W("key-grant", wrapped_dek="AAAA")),
             ("a grant with no axis", D("key-grant", "axis"))]),
+        ("key-grant", "key_grant:{axis} payload of a wrap to a room key",
+         W("key-grant", wrap_algorithm=XWING_WRAP, wrapped_dek=bytes(1120 + 16 + 40)), [
+            ("a wrap under an unnamed X-Wing string", W("key-grant", wrap_algorithm="xwing_aes256_gcm"))]),
         ("identity-occurrence", "a seat's binding as an identity:occurrence", binding_samples()[0], [
             ("a seat binding without refs.head", cde(_seat_binding_without_head()))]),
         ("identity-occurrence", "identity:occurrence payload", cde(P["identity-occurrence"]), [
@@ -630,6 +834,8 @@ def family_payload_samples():
             ("an ML-KEM-768 key of 1183 bytes", W("identity-occurrence", encryption_pubkeys={"x25519": bytes(32), "ml_kem_768": bytes(1183)})),
             ("a build manifest hash in hex", W("identity-occurrence", build_manifest_hash="00" * 32)),
             ("an occurrence with no device_class", D("identity-occurrence", "device_class")),
+            ("a binding key of 1215 bytes", W("identity-occurrence", room_binding_xwing_pubkey=bytes(1215))),
+            ("a binding key as the content pair", W("identity-occurrence", room_binding_xwing_pubkey={"x25519": bytes(32), "ml_kem_768": bytes(1184)})),
             ("an occurrence naming no self-roster head", W("identity-occurrence", refs={"also": {"cites": [_ref(4)]}})),
             ("an occurrence whose refs carry a role a self-roster row does not", W("identity-occurrence", refs={"head": _ref(10), "answers": _ref(12)}))]),
         ("identity-amendment", "identity_amendment payload", cde(P["identity-amendment"]), [
@@ -664,17 +870,134 @@ def family_payload_samples():
          statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: []}), []),
         ("ceg-statement", "an admission:unit statement whose receipt is no COSE_Sign1",
          statement(P["admission-unit"], rtype="scores", family="admission:unit", unprotected={394: [cde([bytes(4), {}, None, bytes(64)])]}), []),
-        ("trust-accepts", "a transparency edge carrying its service's COSE key", cde(family_payloads()["trust-accepts"][1]), [
-            ("a service key that is a key id, not an identity reference", cde(dict(family_payloads()["trust-accepts"][1], service_key="A1"))),
+        ("trust-accepts", "an acceptance edge that attaches a root", cde(family_payloads()["trust-accepts"][1]), [
+            ("an attached head digest as hex text", cde(dict(family_payloads()["trust-accepts"][1], attached_head_digest="07" * 32))),
             ("a trust depth of 6", cde(dict(family_payloads()["trust-accepts"][1], trust_depth=6)))]),
-        ("delivery-receipt", "delivery_receipt:{stream_id} payload", cde(P["delivery-receipt"]), [
-            ("a receipt with no chunk index", D("delivery-receipt", "k")),
-            ("a chunk root as bare bytes", W("delivery-receipt", chunk_root=bytes(32)))]),
+        ("trust-accepts", "a transparency edge carrying its service's COSE key", cde(service_edge()), [
+            ("a service key that is a key id, not an identity reference", cde(service_edge(service_key="A1"))),
+            ("an empty set of classes", cde(service_edge(trust_classes=[])))]),
+        ("trust-accepts", "an edge on the admission walk", cde(admission_edge()), [
+            ("an edge with no author", cde(_without(admission_edge(), "author")))]),
+        ("delivery-ack", "delivery_ack:{stream_id} payload", cde(P["delivery-ack"]), [
+            ("an ack with no chunk index", D("delivery-ack", "k")),
+            ("a chunk root as bare bytes", W("delivery-ack", chunk_root=bytes(32)))]),
+        ("build-manifest-row", "provenance:build_manifest:{target} payload", cde(P["build-manifest-row"]), [
+            ("a build manifest with no build descriptor", D("build-manifest-row", "build")),
+            ("a descriptor with no project", W("build-manifest-row", build=_without(P["build-manifest-row"]["build"], "project"))),
+            ("a descriptor with no version", W("build-manifest-row", build=_without(P["build-manifest-row"]["build"], "version"))),
+            ("a manifest hash as bare bytes", W("build-manifest-row", build=dict(P["build-manifest-row"]["build"], manifest_hash=bytes(32)))),
+            ("a manifest size as text", W("build-manifest-row", build=dict(P["build-manifest-row"]["build"], manifest_size="2048"))),
+            ("a descriptor with a fifth member", W("build-manifest-row", build=dict(P["build-manifest-row"]["build"], generated_at=1763078400000))),
+            ("a build manifest citing no blob", D("build-manifest-row", "evidence_refs")),
+            ("a build manifest naming no bundle", D("build-manifest-row", "refs"))]),
+        ("trust-confers", "trust:confers payload of a build pipeline's grant", cde(P["trust-confers"]), [
+            ("a grant with no scope", D("trust-confers", "scope")),
+            ("a scope as a bare token", W("trust-confers", scope=PIPELINE_SCOPE)),
+            ("an empty projects set", W("trust-confers", projects=[])),
+            ("a grant naming no bundle", D("trust-confers", "refs"))]),
+        ("membership-reply", "membership:acceptance payload answering a proposal", cde(P["membership-reply"]), [
+            ("a reply with no author", D("membership-reply", "author")),
+            ("a reply with no refs", D("membership-reply", "refs")),
+            ("a reply to a group of another kind", W("membership-reply", group_kind="room")),
+            ("a reply whose group is a key id", W("membership-reply", group="A1"))]),
+        ("membership-reply", "membership:acceptance payload answering a grant", cde(grant_reply()), [
+            ("an acceptance of a grant with no author", cde(_without(grant_reply(), "author"))),
+            ("an acceptance naming no grant", cde(_without(grant_reply(), "refs")))]),
+        ("grant-withdrawal", "the payload of a counted withdraws of a grant", cde(P["grant-withdrawal"]), [
+            ("a withdrawal naming nothing", D("grant-withdrawal", "refs")),
+            ("lifts written as false", W("grant-withdrawal", lifts=False))]),
+        ("act-ack", "act:ack payload", cde(P["act-ack"]), [
+            ("a receipt with no refs", D("act-ack", "refs")),
+            ("a receipt with no dimension", D("act-ack", "dimension")),
+            ("acts as one bare reference", W("act-ack", refs={"also": {"ack": _ref(21)}})),
+            ("an empty set of acts", W("act-ack", refs={"also": {"ack": []}}))]),
+        ("owner-binding", "ownership:responsible_party:node payload", cde(P["owner-binding"]), [
+            ("a binding with no author", D("owner-binding", "author")),
+            ("a binding with no purpose", D("owner-binding", "delegation_purpose")),
+            ("a purpose other than owner_binding", W("owner-binding", delegation_purpose="act_on_behalf")),
+            ("a scope as a bare token", W("owner-binding", scope="infra:attest")),
+            ("an empty scope", W("owner-binding", scope=[])),
+            ("a binding with no cohort_scope", D("owner-binding", "cohort_scope")),
+            ("a cohort_scope outside the seven", W("owner-binding", cohort_scope="room")),
+            ("an end as text", W("owner-binding", delegation_valid_until="2027-01-01T00:00:00.000Z"))]),
+        ("owner-binding", "ownership:responsible_party:agent payload of a key held for an organisation", cde(org_binding()), [
+            ("an organisation named by a key id", cde(org_binding(on_behalf_of="A1"))),
+            ("a community named by a key id", cde(org_binding(community_id="A1")))]),
+        ("holon-claim", "holon:claim payload", cde(P["holon-claim"]), [
+            ("a claim with no author", D("holon-claim", "author")),
+            ("a claim with no spec", D("holon-claim", "spec")),
+            ("a claim naming no holon", D("holon-claim", "holon")),
+            ("a claim naming no view", D("holon-claim", "view")),
+            ("a claim naming no consumer", D("holon-claim", "consumer")),
+            ("a claim with no kind", D("holon-claim", "kind")),
+            ("a kind of 65 bytes", W("holon-claim", kind="k" * 65)),
+            ("a holon id of 129 bytes", W("holon-claim", holon="h" * 129)),
+            ("a claim naming no declaration", D("holon-claim", "declaration")),
+            ("a declaration digest in hex", W("holon-claim", declaration="07" * 32)),
+            ("a claim citing no evidence", D("holon-claim", "evidence_refs")),
+            ("an empty evidence_refs", W("holon-claim", evidence_refs=[])),
+            ("a path as evidence", W("holon-claim", evidence_refs=["engine/holon.py"])),
+            ("a claim with no score", D("holon-claim", "score")),
+            ("a score as text", W("holon-claim", score="+1")),
+            ("a bound as an integer", W("holon-claim", body={"bound": 5, "unit": "ratio", "basis": "price"})),
+            ("a bound with no unit", W("holon-claim", body={"bound": Tag(4, [-2, 5]), "basis": "price"})),
+            ("a body with no bound", W("holon-claim", body={"unit": "ratio", "basis": "price"})),
+            ("a basis outside the two", W("holon-claim", body={"bound": Tag(4, [-2, 5]), "unit": "ratio", "basis": "model"})),
+            ("a realised value as an integer", W("holon-claim", body={"bound": Tag(4, [-2, 5]), "realised": 1, "unit": "ratio", "basis": "realised"}))]),
+        ("holon-claim", "holon:claim payload of a claim that did not hold, on a realised basis",
+         cde(dict(P["holon-claim"], score=-1000000, body={"bound": Tag(4, [-2, -5]), "realised": Tag(4, [-1, 3]), "unit": "ratio", "basis": "realised"})), [
+            ("a body that is a bare decimal", W("holon-claim", body=Tag(4, [-2, 5])))]),
+        ("holon-claim", "holon:claim payload of a claim that follows an earlier row of its signer", cde(holon_follows()), [
+            ("a prev that is a bare digest", cde(holon_follows(refs={"prev": [-16, bytes([25]) * 32]}))),
+            ("an empty refs", cde(holon_follows(refs={})))]),
+        ("holon-claim", "holon:claim payload of a claim of exact agreement", D("holon-claim", "body"), [
+            ("an exact claim with a score as a decimal", cde(dict(_without(P["holon-claim"], "body"), score=Tag(4, [-1, 5]))))]),
+        ("leaf-vouch", "mls:leaf_vouch payload", cde(P["leaf-vouch"]), [
+            ("a vouch with no author", D("leaf-vouch", "author")),
+            ("a vouch with no suite", D("leaf-vouch", "suite")),
+            ("a vouch under another suite", W("leaf-vouch", suite=1)),
+            ("a suite as text", W("leaf-vouch", suite="0x004D")),
+            ("a vouch with no end", D("leaf-vouch", "valid_until")),
+            ("a vouch with no start", D("leaf-vouch", "valid_from")),
+            ("a vouch with no leaves", D("leaf-vouch", "leaves")),
+            ("an empty leaves", W("leaf-vouch", leaves=[])),
+            ("seven leaves", W("leaf-vouch", leaves=[Tag(60, bytes([i]) * 32) for i in range(7)])),
+            ("nine leaves", W("leaf-vouch", leaves=[Tag(60, bytes([i]) * 32) for i in range(9)])),
+            ("thirty-three leaves", W("leaf-vouch", leaves=[Tag(60, bytes([i]) * 32) for i in range(33)])),
+            ("a leaf entry in the clear", W("leaf-vouch", leaves=[[bytes(32), gref(5), 77]])),
+            ("a bare digest for an entry", W("leaf-vouch", leaves=[bytes(32)]))]),
+        ("leaf-vouch", "mls:leaf_vouch payload of a room key's vouch, one entry",
+         W("leaf-vouch", leaves=[Tag(60, bytes(32))], refs={"also": {"voice": [_ref(30)]}}), [
+            ("a digest of 31 bytes", W("leaf-vouch", leaves=[Tag(60, bytes(31))]))]),
+        ("leaf-vouch", "mls:leaf_vouch payload of thirty-two entries",
+         W("leaf-vouch", leaves=[Tag(60, bytes([i]) * 32) for i in range(32)]), []),
+        ("objection-vote", "objection:{state} payload", cde(P["objection-vote"]), [
+            ("a vote with no author", D("objection-vote", "author")),
+            ("a vote with no cohort", D("objection-vote", "cohort")),
+            ("a vote with no cohort_key_id", D("objection-vote", "cohort_key_id")),
+            ("a vote with no refs", D("objection-vote", "refs")),
+            ("grounds as a number", W("objection-vote", grounds=7))]),
+        ("window-step", "window:{state} payload of a held row", cde(P["window-step"]), [
+            ("a held row with no author", D("window-step", "author")),
+            ("a held row with no refs", D("window-step", "refs")),
+            ("a held row with no dimension", D("window-step", "dimension")),
+            ("a held row with no instant", D("window-step", "asserted_at")),
+            ("an opener that is a bare digest", W("window-step", refs={"target": [-16, bytes([27]) * 32]}))]),
+        ("window-step", "window:{state} payload of a landing", cde(window_landing()), [
+            ("a held row named as a sequence", cde(window_landing(refs={"target": _ref(27), "prev": [_ref(28)]}))),
+            ("counted rows as one bare reference", cde(window_landing(refs={"target": _ref(27), "prev": _ref(28), "also": {"cites": _ref(29)}}))),
+            ("an instant as text", cde(window_landing(asserted_at="2026-11-14")))]),
+        ("window-step", "window:{state} payload of a landing that counted no row",
+         cde(window_landing(dimension="window:refused:v1", refs={"target": _ref(27), "prev": _ref(28)})), [
+            ("a landing with no author", cde(_without(window_landing(), "author")))]),
     ]
 
 
 def _strip_none(p):
     return {k: v for k, v in p.items() if v is not None}
+
+
+HOLON_ID = re.compile(r"[a-z0-9_]+(\.[a-z0-9_]+)*")   # a holon's, a view's or a consumer's id (CC 3.1.11)
 
 
 def _segment(dim, i):
@@ -684,10 +1007,19 @@ def _segment(dim, i):
 
 def family_payload_rule(root, p, family=None):
     """The rules of a family's payload the CDDL cannot state, checked in prose: None, or edition2_payload_invalid.
-    `family` is the statement's family label; a cosign:{state} family has no payload of its own (CC 3.1.3)."""
-    if family == "cosign:.state":
-        return PAYLOAD_INVALID                            # a pending or signature state is a statement over the event's own payload
+    `family` is the statement's family label. A label under a stem the registry marks retired is refused
+    namespace_family_unregistered before any payload rule is read (CC 3.1.7): cosign:{state} is retired (CC 3.1.3)."""
+    if family is not None and any(family.startswith(stem) for stem in retired_stems()):
+        return FAMILY_UNREGISTERED                        # no family stands under the stem: the payload is never read
     dim = p.get("dimension", "")
+    if len(p.get("refs", {}).get("trusted_through", [])) > TIPS_MAX:
+        return TIPS_TOO_MANY                              # at most 64 tips on any row (CC 3.1.3.2)
+    if root == "membership-keeps":
+        r = p.get("refs", {})
+        if dim != "membership:keeps:v1" or "author" in p or "head" not in r:
+            return PAYLOAD_INVALID                        # counted over the roster head refs.head names, with no author
+        if len(r.get("also", {}).get("cites", [])) != 1 or not r.get("trusted_through"):
+            return PAYLOAD_INVALID                        # exactly one end cited, and 1 to 64 tips
     if root == "membership-change":
         stage = _segment(dim, 1)
         if stage not in ("widening", "removal"):
@@ -703,17 +1035,116 @@ def family_payload_rule(root, p, family=None):
                 "stream": ("stream_id", "epoch", "owner")}.get(p.get("axis"), ())
         if _segment(dim, 1) != p.get("axis") or any(m not in p for m in need):
             return PAYLOAD_INVALID
-    if root == "delivery-receipt" and _segment(dim, 1) != p.get("stream_id"):
+        if p.get("wrap_algorithm") == XWING_WRAP and len(p.get("wrapped_dek", b"")) <= 1120 + 16:
+            return PAYLOAD_INVALID                        # the encapsulation, then a ciphertext that holds more than its tag (CC 2.6.1.11)
+    if root == "delivery-ack" and _segment(dim, 1) != p.get("stream_id"):
         return PAYLOAD_INVALID
     if root == "takedown-notice":
-        if _segment(dim, 1) != p.get("legal_basis") or (p.get("legal_basis") == "steward_purge" and "author" in p):
+        if _segment(dim, 1) != p.get("legal_basis"):
             return PAYLOAD_INVALID
+        purge = p.get("legal_basis") == "steward_purge"
+        if purge and ("author" in p or "claimant" in p or "head" not in p.get("refs", {})):
+            return PAYLOAD_INVALID                        # counted over the holders of the bundle in force (CC 2.4.1.1)
+        if not purge and "claimant" not in p:
+            return PAYLOAD_INVALID                        # every other notice names the identity that issues it
     if root == "deferral-response" and "reason_digest" in p:
         return PAYLOAD_INVALID                            # the reason is the request's; a response carries none
     if root == "canonical-rebind" and "head" not in p.get("refs", {}):
         return PAYLOAD_INVALID                            # counted over the bundle in force, named in refs.head
     if root == "group-roster" and (p.get("version") == 1) != ("head" not in p.get("refs", {})):
         return PAYLOAD_INVALID
+    if root == "group-roster" and group_id_rule(p) is not None:
+        return PAYLOAD_INVALID                            # a first version's id is derived from it (group_id_rule gives the token)
+    refs = p.get("refs", {})
+    voice = refs.get("also", {}).get("voice") if isinstance(refs.get("also"), dict) else None
+    if voice is not None:                                 # a row of a private room names its signer's voice head (CC 2.6.1.11)
+        if len(voice) != 1:
+            return PAYLOAD_INVALID                        # a set of exactly one
+        also = {k: v for k, v in refs["also"].items() if k != "voice"}
+        refs = dict({k: v for k, v in refs.items() if k != "also"}, **({"also": also} if also else {}))
+        p = dict(p, refs=refs) if refs else _without(p, "refs")   # each family's own rule is read with that head set aside
+    if root == "build-manifest-row":
+        if dim.split(":")[:2] != ["provenance", "build_manifest"] or "head" not in refs:
+            return PAYLOAD_INVALID                        # the bundle in force when the row is signed, in refs.head
+        if len(refs.get("also", {}).get("stands_on", [])) != 1:
+            return PAYLOAD_INVALID                        # the one acceptance of the grant the row stands on (CC 2.4.1.1)
+        if p.get("build", {}).get("manifest_hash") not in p.get("evidence_refs", []):
+            return PAYLOAD_INVALID                        # the blob the descriptor names is the blob the row cites
+    if root == "trust-confers":
+        if dim != "trust:confers:v1" or "head" not in refs or "author" in p:
+            return PAYLOAD_INVALID                        # counted over the bundle in force, with no author
+        for m in ("scope", "projects"):
+            if m in p and p[m] != sorted(set(p[m]), key=cde):
+                return PAYLOAD_INVALID                    # each a set (CC 2.6.1.2)
+    if root == "membership-reply":
+        if dim not in ("membership:acceptance:v1", "membership:decline:v1"):
+            return PAYLOAD_INVALID                        # a reply is an acceptance or a decline
+        if "answers" not in refs or "head" in refs or "target" in refs or "proposal_hash" in p:
+            return PAYLOAD_INVALID                        # names the one row it answers and nothing else (CC 3.1.3.2)
+    if root == "trust-accepts":
+        if "head" in p.get("refs", {}) or "scope" in p:
+            return PAYLOAD_INVALID                        # the edge names no head and carries no scope (CC 3.2 T4a)
+        if ("service_key" in p) != ("transparency" in p.get("trust_classes", [])):
+            return PAYLOAD_INVALID                        # the service's key on an edge of the class transparency, and on no other
+        if "service_key" in p and "attached_head_digest" in p:
+            return PAYLOAD_INVALID                        # an edge to a service attaches no root (CC 2.7.11)
+    if root == "owner-binding":
+        if not dim.startswith("ownership:"):
+            return PAYLOAD_INVALID
+        if "scope" in p and p["scope"] != sorted(set(p["scope"]), key=cde):
+            return PAYLOAD_INVALID                        # a set (CC 2.6.1.2)
+        if "delegation_valid_until" in p and p["delegation_valid_until"] <= p.get("delegation_valid_from", p["asserted_at"]):
+            return PAYLOAD_INVALID                        # the end is later than the start
+        cs = p.get("cohort_scope")
+        if ("community_id" in p) != (cs in ("community", "affiliations")) or ("family_id" in p) != (cs == "family"):
+            return PAYLOAD_INVALID                        # the group member the placement asks, and no other (CC 2.1)
+        if ("on_behalf_of" in p) != ("refs" in p) or (refs and set(refs) != {"head"}):
+            return PAYLOAD_INVALID                        # an organisation's binding names that affiliation's head, and no row else
+    if root == "holon-claim":
+        if dim != "holon:claim:v1" or not set(refs) <= {"prev", "further_prev", "target"} or ("further_prev" in refs and "prev" not in refs):
+            return PAYLOAD_INVALID                        # the one leaf; only rows of its own group: those it follows and the one it acts on; no head (CC 3.1.11)
+        if p.get("declaration") not in p.get("evidence_refs", []):
+            return PAYLOAD_INVALID                        # the declaration's digest is among evidence_refs
+        if p.get("score") not in (1000000, -1000000):
+            return PAYLOAD_INVALID                        # held, or run and not held; an undecided result is no row
+        if any(not HOLON_ID.fullmatch(p.get(k, "")) for k in ("holon", "view", "consumer")):
+            return PAYLOAD_INVALID                        # lower-case words joined by full stops
+        b = p.get("body", {})
+        if ("realised" in b) != (b.get("basis") == "realised"):
+            return PAYLOAD_INVALID                        # a realised value only on a realised basis, and always there
+    if root == "leaf-vouch":
+        if dim != "mls:leaf_vouch:v1" or refs:
+            return PAYLOAD_INVALID                        # the one leaf; it names no row but a room key's voice head, set aside above
+        if not p["valid_from"] < p["valid_until"] <= p["valid_from"] + LEAF_VOUCH_MAX_MS:
+            return PAYLOAD_INVALID                        # a required end, at most leaf_vouch_max_secs after the start (CC 5.1)
+        if len(p["leaves"]) not in (1, 8, 32) or len(set(cde(x) for x in p["leaves"])) != len(p["leaves"]):
+            return PAYLOAD_INVALID                        # exactly 1, 8 or 32 digests, no two alike
+    if root == "act-ack":
+        acks = refs.get("also", {}).get("ack", [])
+        if len(acks) > ACK_MAX:
+            return ACK_TOO_MANY                           # at most 256 acts in one receipt (CC 3.1.3)
+        if dim != "act:ack:v1" or not acks or "head" in refs:
+            return PAYLOAD_INVALID                        # names the acts it acknowledges, and no head
+    if root == "window-step":
+        if dim not in ("window:held:v1", "window:landed:v1", "window:refused:v1") or "target" not in refs:
+            return PAYLOAD_INVALID                        # the states are closed at held, landed and refused; the opener under target
+        if "head" in refs:
+            return PAYLOAD_INVALID                        # neither a held row nor a landing names a head
+        if dim == "window:held:v1":
+            if "prev" in refs:
+                return PAYLOAD_INVALID                    # a held row names no row under prev; it may name other rows
+        else:
+            if set(refs) != {"target", "prev"} | ({"also"} & set(refs)):
+                return PAYLOAD_INVALID                    # a landing names the opener and its signer's held row
+            if "also" in refs and (set(refs["also"]) != {"cites"} or not refs["also"]["cites"]):
+                return PAYLOAD_INVALID                    # the rows a landing counted stand under cites, and under no other role
+    if root == "objection-vote":
+        if dim not in ("objection:assent:v1", "objection:raised:v1") or "answers" not in refs:
+            return PAYLOAD_INVALID                        # the states are closed at assent and raised (CC 3.1.9.2)
+        if "objects_to_attestation_id" in p or "dismisses_objection_id" in p:
+            return PAYLOAD_INVALID                        # the row answered stands in refs.answers and nowhere else
+    if root == "grant-withdrawal" and ("target" not in refs or "head" not in refs or "author" in p):
+        return PAYLOAD_INVALID                            # the grant withdrawn and the head the count acts from
     return None
 
 
@@ -760,6 +1191,79 @@ def admission_samples():
 def _receipt(service=b"ts-1"):
     """A schema-sample COSE receipt (RFC 9942): vds 1 (RFC9162_SHA256) protected, one inclusion proof under vdp."""
     return Tag(18, [cde({1: -7, 395: 1, 4: service}), {396: {-1: [bytes(32)]}}, None, bytes(64)])
+
+
+def group_id(group_kind, founders, founded_at, nonce):
+    """CC 3.3.4: a group's id, derived from its first version. founders: the key of every member it lists, a set."""
+    pre = cde(["CEG-group/2", group_kind, sorted(set(founders), key=cde), founded_at, nonce])
+    return "group-" + base64.urlsafe_b64encode(hashlib.sha256(pre).digest()).decode().rstrip("=")
+
+
+def gref(n):
+    """A schema-sample group id: the form of group_id, over placeholder bytes."""
+    return "group-" + chr(ord("A") + n) * 42 + "A"
+
+
+GROUP_ID_NOT_OF_FOUNDING = "group_id_not_of_founding"
+
+
+def group_id_rule(p):
+    """CC 3.3.4, the rule of a group:roster payload the CDDL cannot state: None, or its token. A first version (the one
+    that names no head) carries `nonce` and its `group` is the id derived from its own members; a later version
+    carries no `nonce` and is judged by its descent."""
+    first = "head" not in p.get("refs", {})
+    if not first:
+        return PAYLOAD_INVALID if "nonce" in p else None
+    n = p.get("nonce")
+    if not isinstance(n, bytes) or len(n) != 32:
+        return PAYLOAD_INVALID
+    want = group_id(p.get("group_kind"), [m["key"] for m in p.get("members", [])], p.get("founded_at"), n)
+    return None if p.get("group") == want else GROUP_ID_NOT_OF_FOUNDING
+
+
+def group_id_samples():
+    """(what, payload, expected): a founding and the ways it is refused."""
+    t = 1763078400000
+    mem = sorted([{"key": iref(0), "joined_at": t, "role": "founder"}, {"key": iref(1), "joined_at": t, "role": "founder"}], key=cde)
+    nonce = bytes(range(32))
+    base = {"group_kind": "community", "name": "Austin", "version": 1, "members": mem, "founded_at": t,
+            "consensus_protocol": "majority", "nonce": nonce, "asserted_at": t}
+    gid = group_id("community", [iref(0), iref(1)], t, nonce)
+    first = dict(base, group=gid)
+    later = dict(_without(first, "nonce"), version=2, refs={"head": _ref(1)})
+    return [
+        ("a founding whose id is derived from it", first, None),
+        ("the same founding with its members listed in the other order", dict(first, members=list(reversed(mem))), None),
+        ("a later version, which carries no nonce", later, None),
+        ("a founding under an id its founders chose", dict(first, group=gref(5)), GROUP_ID_NOT_OF_FOUNDING),
+        ("a founding under the id of another kind of group", dict(first, group_kind="family"), GROUP_ID_NOT_OF_FOUNDING),
+        ("a founding under the id of another founding instant", dict(first, founded_at=t + 1), GROUP_ID_NOT_OF_FOUNDING),
+        ("a founding that lists a member its id does not cover", dict(first, members=sorted(mem + [{"key": iref(2), "joined_at": t}], key=cde)), GROUP_ID_NOT_OF_FOUNDING),
+        ("a founding with no nonce", _without(first, "nonce"), PAYLOAD_INVALID),
+        ("a founding whose nonce is 16 bytes", dict(first, nonce=bytes(16)), PAYLOAD_INVALID),
+        ("a later version that carries a nonce", dict(later, nonce=nonce), PAYLOAD_INVALID),
+    ]
+
+
+def group_id_checks():
+    """(line, problems): every sample gives its expected answer; a planted rule that trusts the id as given must be
+    caught by at least one sample."""
+    S, bad = group_id_samples(), []
+    for what, p, want in S:
+        if group_id_rule(p) != want:
+            bad.append(f"group id sample: {what}: {group_id_rule(p)} where {want} was expected")
+    # The known answer three implementations agree on (this generator, the verifier's, the store's): CIRISVerify
+    # group_id_v1.json at commit 9518060, sha256 c796353db656a32110fdb7e9c429c9f3e015f396d992751d13030723e49c1249.
+    known = group_id("community", [iref(0), iref(1)], 1763078400000, bytes(range(32)))
+    if known != "group-8ezU3QIqqrhTRYMAeKoBxdDL3mmvmAnKC1_wsrnJ3hI":
+        bad.append(f"group id known answer: {known}")
+    if group_id("family", [iref(1), iref(0)], 1763078400000, bytes(range(32))) != "group-ODjNYdkE6CL7viHGk4mFJRvuPtXGic_pxf-1iMrufE0":
+        bad.append("group id known answer for a family differs")
+    planted = lambda p: None if group_id_rule(p) == GROUP_ID_NOT_OF_FOUNDING else group_id_rule(p)
+    if all(planted(p) == want for _, p, want in S):
+        bad.append("deliberate break not caught: a rule that takes a group's id as given passed every sample")
+    return (f"group:roster id: {sum(w is None for *_, w in S)} samples pass, "
+            f"{sum(w is not None for *_, w in S)} refused, each with its token; the planted break is caught"), bad
 
 
 RECEIPT_MISSING = "admission_receipt_missing"
@@ -824,20 +1328,131 @@ def family_payload_rule_checks():
     for root, (fam, p) in P.items():
         if family_payload_rule(root, p, fam) is not None:
             bad.append(f"{root} sample breaks its prose rule")
+    if family_payload_rule("membership-reply", grant_reply(), "membership:.stage") is not None:
+        bad.append("the reply to a grant breaks its prose rule")
+    if family_payload_rule("membership-reply", grant_reply(dimension="membership:decline:v1")) is not None:
+        bad.append("the decline of a grant breaks its prose rule")
+    if family_payload_rule("holon-claim", holon_follows()) is not None:
+        bad.append("a holon claim that names the row it follows breaks its prose rule")
+    if family_payload_rule("holon-claim", holon_follows(refs={"prev": _ref(25), "further_prev": [_ref(26)]})) is not None:
+        bad.append("a holon claim that names two heads of its group breaks its prose rule")
+    if family_payload_rule("holon-claim", holon_follows(refs={"target": _ref(25)})) is not None:
+        bad.append("a holon claim that supersedes the row it names breaks its prose rule")
+    if family_payload_rule("leaf-vouch", dict(P["leaf-vouch"][1], leaves=[Tag(60, bytes(32))], refs={"also": {"voice": [_ref(30)]}})) is not None:
+        bad.append("a room key's vouch of one entry breaks its prose rule")
+    if family_payload_rule("leaf-vouch", dict(P["leaf-vouch"][1], valid_until=P["leaf-vouch"][1]["valid_from"] + 1)) is not None:
+        bad.append("a vouch with a short term breaks its prose rule")
+    if family_payload_rule("act-ack", dict(P["act-ack"][1], refs={"also": dict(P["act-ack"][1]["refs"]["also"], voice=[_ref(30)])})) is not None:
+        bad.append("a receipt of a private room that names its signer's voice head breaks its prose rule")
+    if family_payload_rule("objection-vote", dict(P["objection-vote"][1], dimension="objection:assent:v1")) is not None:
+        bad.append("an assent breaks its prose rule")
+    if family_payload_rule("window-step", window_landing()) is not None:
+        bad.append("a landing breaks its prose rule")
+    if family_payload_rule("window-step", window_landing(dimension="window:refused:v1", refs={"target": _ref(27), "prev": _ref(28)})) is not None:
+        bad.append("a landing that counted no row breaks its prose rule")
+    if family_payload_rule("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "also": {"cites": [_ref(29)]}})) is not None:
+        bad.append("a held row that names other rows breaks its prose rule")
     breaks = [
         ("membership-change", dict(P["membership-change"][1], dimension="membership:proposal:v1"), None),
         ("membership-change", _without(P["membership-change"][1], "joined_at"), None),
         ("membership-change", dict(P["membership-change"][1], refs={"also": {"cites": [_ref(3)]}}), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], author=iref(0)), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], refs=_without(P["membership-keeps"][1]["refs"], "head")), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], refs=dict(P["membership-keeps"][1]["refs"], also={"cites": sorted([_ref(16), _ref(19)], key=cde)})), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], refs=_without(P["membership-keeps"][1]["refs"], "also")), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], refs=_without(P["membership-keeps"][1]["refs"], "trusted_through")), None),
+        ("membership-keeps", dict(P["membership-keeps"][1], dimension="membership:removal:v1"), None),
         ("custody-ack", _without(P["custody-ack"][1], "size"), None),
         ("key-grant", _without(P["key-grant"][1], "minter"), None),
         ("key-grant", dict(P["key-grant"][1], dimension="key_grant:content:v1"), None),
-        ("delivery-receipt", dict(P["delivery-receipt"][1], stream_id="s2"), None),
+        ("key-grant", dict(P["key-grant"][1], wrap_algorithm=XWING_WRAP, wrapped_dek=bytes(1120)), None),
+        ("key-grant", dict(P["key-grant"][1], wrap_algorithm=XWING_WRAP, wrapped_dek=bytes(1120 + 16)), None),
+        ("delivery-ack", dict(P["delivery-ack"][1], stream_id="s2"), None),
         ("takedown-notice", dict(P["takedown-notice"][1], dimension="takedown_notice:steward_purge:v1",
                                  legal_basis="steward_purge"), None),
+        ("takedown-notice", dict(purge_notice(), claimant=iref(0)), None),
+        ("takedown-notice", _without(purge_notice(), "refs"), None),
+        ("takedown-notice", _without(P["takedown-notice"][1], "claimant"), None),
         ("group-roster", dict(P["group-roster"][1], version=1), None),
-        ("membership-change", P["membership-change"][1], "cosign:.state"),
         ("canonical-rebind", dict(P["canonical-rebind"][1], refs={"also": {"cites": [_ref(9)]}}), None),
         ("deferral-response", dict(P["deferral-response"][1], reason_digest=[-16, bytes([7]) * 32]), None),
+        ("build-manifest-row", dict(P["build-manifest-row"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+        ("build-manifest-row", dict(P["build-manifest-row"][1], evidence_refs=[[-16, bytes([8]) * 32]]), None),
+        ("build-manifest-row", dict(P["build-manifest-row"][1], dimension="provenance:slsa:3:v1"), None),
+        ("trust-confers", dict(P["trust-confers"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+        ("trust-confers", dict(P["trust-confers"][1], author=iref(0)), None),
+        ("trust-confers", dict(P["trust-confers"][1], projects=["ciris-verify", "ciris-verify"]), None),
+        ("trust-confers", dict(P["trust-confers"][1], dimension="trust:accepts:v1"), None),
+        ("membership-reply", dict(P["membership-reply"][1], refs={"also": {"cites": [_ref(20)]}}), None),
+        ("membership-reply", dict(P["membership-reply"][1], refs={"answers": _ref(20), "target": _ref(20)}), None),
+        ("membership-reply", dict(P["membership-reply"][1], refs={"answers": _ref(20), "head": _ref(1)}), None),
+        ("membership-reply", dict(P["membership-reply"][1], proposal_hash=[-16, bytes([7]) * 32]), None),
+        ("membership-reply", dict(P["membership-reply"][1], dimension="membership:proposal:v1"), None),
+        ("membership-reply", grant_reply(refs={"answers": _ref(15), "head": _ref(9)}), None),
+        ("membership-reply", grant_reply(refs={"also": {"cites": [_ref(15)]}}), None),
+        ("trust-accepts", dict(P["trust-accepts"][1], refs={"head": _ref(9)}), None),
+        ("trust-accepts", dict(P["trust-accepts"][1], scope=["infra:serve"]), None),
+        ("trust-accepts", service_edge(attached_head_digest=[-16, bytes([7]) * 32]), None),
+        ("trust-accepts", _without(service_edge(), "service_key"), None),
+        ("trust-accepts", dict(admission_edge(), service_key={1: 2, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32)}), None),
+        ("owner-binding", dict(P["owner-binding"][1], dimension="self:delegates_to:v1"), None),
+        ("owner-binding", dict(P["owner-binding"][1], scope=["infra:serve", "infra:attest", "infra:serve"]), None),
+        ("owner-binding", dict(P["owner-binding"][1], delegation_valid_until=P["owner-binding"][1]["asserted_at"]), None),
+        ("owner-binding", dict(P["owner-binding"][1], delegation_valid_from=P["owner-binding"][1]["asserted_at"] + 2 * 86400000), None),
+        ("owner-binding", dict(P["owner-binding"][1], community_id=gref(5)), None),
+        ("owner-binding", dict(P["owner-binding"][1], cohort_scope="family"), None),
+        ("owner-binding", dict(P["owner-binding"][1], refs={"head": _ref(24)}), None),
+        ("owner-binding", org_binding(refs={"head": _ref(24), "also": {"cites": [_ref(9)]}}), None),
+        ("owner-binding", _without(org_binding(), "refs"), None),
+        ("owner-binding", _without(org_binding(), "community_id"), None),
+        ("holon-claim", dict(P["holon-claim"][1], dimension="holon:claim:v2"), None),
+        ("holon-claim", dict(P["holon-claim"][1], dimension="holon:declaration:v1"), None),
+        ("holon-claim", dict(P["holon-claim"][1], declaration=[-16, bytes([9]) * 32]), None),
+        ("holon-claim", dict(P["holon-claim"][1], score=0), None),
+        ("holon-claim", dict(P["holon-claim"][1], score=500000), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"head": _ref(9)}), None),
+        ("holon-claim", holon_follows(refs={"prev": _ref(25), "head": _ref(9)}), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"target": _ref(25), "head": _ref(9)}), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"answers": _ref(25)}), None),
+        ("holon-claim", dict(P["holon-claim"][1], refs={"further_prev": [_ref(26)]}), None),
+        ("holon-claim", dict(P["holon-claim"][1], body=dict(P["holon-claim"][1]["body"], realised=Tag(4, [-1, 3]))), None),
+        ("holon-claim", dict(P["holon-claim"][1], body=dict(P["holon-claim"][1]["body"], basis="realised")), None),
+        ("holon-claim", dict(P["holon-claim"][1], holon="Sample.Holon"), None),
+        ("holon-claim", dict(P["holon-claim"][1], view="sample..view"), None),
+        ("holon-claim", dict(P["holon-claim"][1], consumer="engine/consumer"), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], dimension="mls:leaf_vouch:v2"), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], valid_until=P["leaf-vouch"][1]["valid_from"] + LEAF_VOUCH_MAX_MS + 1), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], valid_until=P["leaf-vouch"][1]["valid_from"]), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], refs={"head": _ref(9)}), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], refs={"also": {"cites": [_ref(9)]}}), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], leaves=[Tag(60, bytes(32))] * 8), None),
+        ("leaf-vouch", dict(P["leaf-vouch"][1], leaves=[Tag(60, bytes([i]) * 32) for i in range(2)]), None),
+        ("act-ack", dict(P["act-ack"][1], refs={"also": {"cites": [_ref(21)]}}), None),
+        ("act-ack", dict(P["act-ack"][1], refs={"also": dict(P["act-ack"][1]["refs"]["also"], voice=sorted([_ref(30), _ref(31)], key=cde))}), None),
+        ("act-ack", dict(P["act-ack"][1], refs={"also": {"voice": [_ref(30)]}}), None),
+        ("act-ack", dict(P["act-ack"][1], refs=dict(P["act-ack"][1]["refs"], head=_ref(1))), None),
+        ("objection-vote", dict(P["objection-vote"][1], refs={"also": {"cites": [_ref(23)]}}), None),
+        ("objection-vote", dict(P["objection-vote"][1], objects_to_attestation_id="a-1"), None),
+        ("objection-vote", dict(P["objection-vote"][1], dismisses_objection_id="a-1"), None),
+        ("objection-vote", dict(P["objection-vote"][1], dimension="objection:proposal:v1"), None),
+        ("objection-vote", dict(P["objection-vote"][1], dimension="objection:dismissed:v1"), None),
+        ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "prev": _ref(28)}), None),
+        ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "head": _ref(9)}), None),
+        ("window-step", dict(P["window-step"][1], refs={"also": {"ack": [_ref(27)]}}), None),
+        ("window-step", dict(P["window-step"][1], dimension="window:open:v1"), None),
+        ("window-step", dict(P["window-step"][1], dimension="window:lapsed:v1"), None),
+        ("window-step", window_landing(dimension="window:confirmed:v1"), None),
+        ("window-step", window_landing(refs={"target": _ref(27)}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "also": {"cites": [_ref(29)]}}), None),
+        ("window-step", window_landing(refs={"prev": _ref(28)}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "head": _ref(9)}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "answers": _ref(29)}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "also": {"ack": [_ref(28)]}}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "also": {"cites": [_ref(29)], "ack": [_ref(28)]}}), None),
+        ("window-step", window_landing(refs={"target": _ref(27), "prev": _ref(28), "further_prev": [_ref(31)]}), None),
+        ("grant-withdrawal", dict(P["grant-withdrawal"][1], refs={"target": _ref(15)}), None),
+        ("grant-withdrawal", dict(P["grant-withdrawal"][1], refs={"head": _ref(9)}), None),
     ]
     caught = 0
     for root, p, fam in breaks:
@@ -845,8 +1460,29 @@ def family_payload_rule_checks():
             caught += 1
         else:
             bad.append(f"deliberate break not caught: a {root} payload the prose refuses passed")
-    return (f"family payload rules: {len(P)} samples pass; {caught} breaks refused {PAYLOAD_INVALID}, "
-            f"a cosign state carrying a payload of its own among them"), bad
+    # A retired family (CC 3.1.3): a valid payload under its label is refused by the label, before any payload rule.
+    if family_payload_rule("membership-change", P["membership-change"][1], "cosign:.state") != FAMILY_UNREGISTERED:
+        bad.append("deliberate break not caught: a statement labelled cosign:.state was not refused as an unregistered family")
+    # At most 64 tips on any row (CC 3.1.3.2): 64 pass, 65 are refused by name, on a keeps row and on a removal.
+    tips = lambda n: sorted([_ref(100 + i) for i in range(n)], key=cde)
+    keeps, change = P["membership-keeps"][1], P["membership-change"][1]
+    removal = dict(_without(change, "joined_at"), dimension="membership:removal:v1", removed_at=change["effective_at"])
+    with_tips = lambda p, n: dict(p, refs=dict(p["refs"], trusted_through=tips(n)))
+    for what, root, p in (("keeps row", "membership-keeps", keeps), ("removal", "membership-change", removal)):
+        if family_payload_rule(root, with_tips(p, TIPS_MAX)) is not None:
+            bad.append(f"a {what} with {TIPS_MAX} tips breaks its prose rule")
+        if family_payload_rule(root, with_tips(p, TIPS_MAX + 1)) != TIPS_TOO_MANY:
+            bad.append(f"deliberate break not caught: a {what} with {TIPS_MAX + 1} tips was not refused {TIPS_TOO_MANY}")
+    # At most 256 acts in one receipt (CC 3.1.3): 256 pass, 257 are refused by name.
+    acks = lambda n: dict(P["act-ack"][1], refs={"also": {"ack": sorted([[2, [-16, i.to_bytes(32, "big")]] for i in range(n)], key=cde)}})
+    if family_payload_rule("act-ack", acks(ACK_MAX)) is not None:
+        bad.append(f"a receipt of {ACK_MAX} acts breaks its prose rule")
+    if family_payload_rule("act-ack", acks(ACK_MAX + 1)) != ACK_TOO_MANY:
+        bad.append(f"deliberate break not caught: a receipt of {ACK_MAX + 1} acts was not refused {ACK_TOO_MANY}")
+    return (f"family payload rules: {len(P)} samples pass; {caught} breaks refused {PAYLOAD_INVALID}; "
+            f"{TIPS_MAX + 1} tips on a keeps row and on a removal refused {TIPS_TOO_MANY}, {TIPS_MAX} pass; "
+            f"a receipt of {ACK_MAX + 1} acts refused {ACK_TOO_MANY}, {ACK_MAX} pass; "
+            f"a statement labelled with the retired family cosign:.state is refused {FAMILY_UNREGISTERED}"), bad
 
 
 def family_cddl_checks(text, ftext):
@@ -884,22 +1520,36 @@ def family_cddl_checks(text, ftext):
 
 
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
-FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "receipt",
-                  "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts")
+FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "delivery_ack",
+                  "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts",
+                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding", "holon_claim", "leaf_vouch", "window_step")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
     "membership-change": "membership:{stage}, the stages widening and removal: counted, with no author; sub is the member.",
+    "membership-keeps": "membership:keeps (CC 3.1.3.2): counted over the roster head refs.head names, with no author; sub is the member whose content it keeps. It cites exactly one end of that member's seat and names 1 to 64 tips.",
     "occurrence-revocation": "identity:occurrence_revocation: authored by the revoker, or counted over a user self's roster at the head refs names.",
     "self-roster-refs": "The refs of a self-roster row (CC 3.3.6.4): the head it stands on, required; a closed map.",
     "eviction-refs": "The refs of an eviction (CC 2.6.1.7, CC 3.3.6.4): the head, and the proof of its signers, both required; a closed map.",
     "eviction-proof": "The proof an eviction carries (CC 2.6.1.7): the rows that resolve its voices; a closed map.",
     "entity-revocation": "revocation:{entity_type}:{reason}: authored by the revoker; sub is the revoked entity.",
-    "takedown-notice": "takedown_notice:{basis}: authored, or counted on a steward purge; sub is the claimant.",
+    "takedown-notice": "takedown_notice:{basis}: authored, or counted where an affiliation has one deciding seat (CC 4.4.3.12), with sub the claimant; or on a steward purge counted over the holders of the bundle in force, with no author and no claimant, sub the lineage's name and the bundle in refs.head.",
     "custody-ack": "custody:{kind}: the device's own report; author, iss and sub are the device.",
     "key-grant": "key_grant:{axis}: authored by the sealer; sub is the recipient.",
-    "delivery-receipt": "delivery_receipt:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
-    "trust-accepts": "trust:accepts (CC 4.4.3.34, CC 2.7.11): the reader's own edge; the members this form names, its further members are the store's.",
+    "delivery-ack": "delivery_ack:{stream_id}: authored by the subscriber; author, iss and sub are the subscriber.",
+    "trust-accepts": "trust:accepts (CC 3.2 T3, CC 4.4.3.34, CC 2.7.11): the owner's edge, signed by any live key of the owner's roster; a node's own edge is read only while its owner has signed none. sub is what the edge accepts: a lineage's name where it attaches a root, a Transparency Service's key thumbprint or identity, or on the admission walk an author's identity or a group's id. The edge names no refs.head and carries no scope. The members this form names; its further members are the store's.",
+    "build-manifest-row": "provenance:build_manifest:{target} (CC 3.1.2.1): authored by the pipeline's key; one claim, type scores; the manifest blob is unsigned and cited by its digest.",
+    "build-descriptor": "The descriptor of a manifest blob (CC 3.1.2.1, CC 5.3.2.11): a closed map of exactly four members.",
+    "trust-confers": "trust:confers (CC 3.1.2.1, CC 4.2.1): a delegates_to row counted over the holders of the bundle in force, with no author; sub is the key the grant names.",
+    "membership-reply": "membership:acceptance and membership:decline (CC 3.1.3.2, CC 3.1.2.1): authored by the invitee, or on the reply to a grant by the owner of the key the grant names, at federation scope. It names the one row it answers in refs.answers, and no head and no target.",
+    "grant-withdrawal": "The withdraws row that ends a grant (CC 4.2.1, CC 2.4.1.1): counted over the holders of the bundle in force, with no author.",
+    "act-ack": "act:ack (CC 3.1.3, CC 2.7.5): a receipt, type scores; one voice's, or a body's count with no author. It names 1 to 256 acts under refs.also ack, and no head. In a private room a seated duty holder's receipt of a joiner's acceptance, under its room key, is its acknowledgement of that joiner's binding, and the widening cites it (CC 4.5.5).",
+    "owner-binding": "ownership:{relation}:{target_kind}:{version} (CC 3.2): the owner-binding, a delegates_to row authored by the owner; sub is the key owned, whose own statement over the same payload is the first-binding cosign. Its placement is cohort_scope with the group member that scope asks; a key held for an organisation names its affiliation in on_behalf_of.",
+    "holon-claim": "holon:claim (CC 3.1.11): authored by the signer under its own name; one claim, type scores; sub is the holon's id as text. The declaration is an unsigned blob cited by its digest, which is among evidence_refs. In refs it names only rows of its own group: those it follows, under prev and further_prev, and on a supersedes the row it replaces, under target; no head.",
+    "holon-claim-body": "The body of a holon:claim that states a bound (CC 3.1.11); a claim of exact agreement carries no body.",
+    "leaf-vouch": "mls:leaf_vouch (CC 5.1, CC 3.1.4): authored by the member whose leaf it is and signed under that member's device key; type scores; author, iss and sub are the member. It vouches for the device's MLS leaf key in each room it names, as blinded elements; a presentation discloses one. It names no row, but for a room key the head of its voice roster.",
+    "window-step": "window:{state}, the states held, landed and refused (CC 3.1.3, CC 3.3.6.4): authored by a key seated in the counted set at the head the opener names; type scores, with no score. It names the opener under refs.target, and no head. A held row names no row under prev, and it MAY name other rows. A landing names its signer's held row under prev and every row it counted under the also role cites.",
+    "objection-vote": "objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",
     "deferral-request": "deferral:request (CC 3.1.9.3, CC 4.3): authored by the deferring party; the request's further members are the store's.",
@@ -908,7 +1558,7 @@ FAMILY_RULE_HEAD = {
     "deferral-response": "deferral:response:{outcome} (CC 3.1.9.3, CC 4.3): the members this form names; the response's further members are the store's.",
     "admission-unit": "admission:unit (CC 2.7.11, CC 3.1.3): authored by one person, or counted over refs.head with no author; one person's row naming an effect admits only on that person's own host; sub is the unit's digest as canonical:sha256:{hex}.",
 }
-FAMILY_CLOSED = {"roster-member", "encryption-pubkeys", "self-roster-refs", "eviction-refs", "eviction-proof"}            # every other family rule keeps a member it does not name (CC 2.1.1)
+FAMILY_CLOSED = {"roster-member", "encryption-pubkeys", "self-roster-refs", "eviction-refs", "eviction-proof", "build-descriptor"}            # every other family rule keeps a member it does not name (CC 2.1.1)
 FAMILY_EXTRA = {"admission-unit": [
     "; The capabilities of CC 2.7.11: a closed set; the last five are effects.",
     'capability = "compute" / "read" / "net_send" / "submit" / "sign" / "store_write" / "actuate"'],
@@ -925,8 +1575,7 @@ FAMILY_PREAMBLE = """; CC 2.6.1.4: the payload rules of the families it names, o
 ; key record's are. Each carries the members its family names one to one and embeds no signed object. What a
 ; family's record carried as a co-signature is a further statement over the same payload, a counted voice
 ; (CC 2.6.1.9), never a member. A payload that breaks its family's rule is refused edition2_payload_invalid
-; (CC 2.6.1.8 step 3). A member required only on one stage, axis or state is optional here and checked in prose.
-; A cosign:{state} row has no payload of its own: each state is a statement over the event's own payload (CC 3.1.3)."""
+; (CC 2.6.1.8 step 3). A member required only on one stage, axis or state is optional here and checked in prose."""
 
 
 def family_cddl_text(rows):
@@ -1049,8 +1698,186 @@ def second_row_checks():
     for why, p, want in ocases:
         if occurrence_rule(p, types) != want:
             bad.append(f"occurrence rule: {why} gives {occurrence_rule(p, types)}, the text gives {want}")
+    bk = bytes([9]) * 1216
+    bocc = dict(occ, room_binding_xwing_pubkey=bk)
+    bcases = [("an occurrence with a binding key of its own", bocc, None),
+              ("an occurrence with no binding key", _without(occ, "room_binding_xwing_pubkey"), None),
+              ("a binding key whose first half is the content ML-KEM key",
+               dict(bocc, room_binding_xwing_pubkey=occ["encryption_pubkeys"]["ml_kem_768"] + bytes([9]) * 32), ROOM_BINDING_REUSE[0]),
+              ("a binding key whose second half is the content x25519 key",
+               dict(bocc, room_binding_xwing_pubkey=bytes([9]) * 1184 + occ["encryption_pubkeys"]["x25519"]), ROOM_BINDING_REUSE[1]),
+              ("a binding key that is the transit key", dict(bocc, transit_xwing_pubkey=bk), ROOM_BINDING_REUSE[0]),
+              ("a binding key whose second half is the hop key's", dict(bocc, onion_hop_xwing_pubkey=bytes([8]) * 1184 + bk[1184:]), ROOM_BINDING_REUSE[1]),
+              ("a binding key whose second half is the transport x25519",
+               dict(bocc, transport_destination={"reticulum_x25519_pubkey": bk[1184:]}), ROOM_BINDING_REUSE[1])]
+    for why, p, want in bcases:
+        if room_binding_reuse_rule(p) != want:
+            bad.append(f"binding key reuse rule: {why} gives {room_binding_reuse_rule(p)}, the text gives {want}")
+    rcases = [("a room key's record", room_key_record(), None),
+              ("a record of a key that is no room key", _without(room_key_record(), "room", "kem_xwing_pubkey", "seat_commitment"), None),
+              ("a room key's record with no commitment", _without(room_key_record(), "seat_commitment"), PAYLOAD_INVALID),
+              ("a room named and nothing else", _without(room_key_record(), "seat_commitment", "kem_xwing_pubkey"), PAYLOAD_INVALID),
+              ("a KEM key alone", _without(room_key_record(), "room", "seat_commitment"), PAYLOAD_INVALID),
+              ("a room key's record with no KEM key", _without(room_key_record(), "kem_xwing_pubkey"), PAYLOAD_INVALID),
+              ("a KEM key on a record that names no room", _without(room_key_record(), "room"), PAYLOAD_INVALID),
+              ("a commitment on a record that names no room", _without(room_key_record(), "room", "kem_xwing_pubkey"), PAYLOAD_INVALID)]
+    for why, p, want in rcases:
+        if room_key_record_rule(p) != want:
+            bad.append(f"room key record rule: {why} gives {room_key_record_rule(p)}, the text gives {want}")
     return (f"rules over a second row: {len(cases)} amendment cases ({AMENDMENT_MISMATCH} on a differing and on an absent digest), "
             f"{len(ocases)} occurrence cases ({OCCURRENCE_MIXED} on an agent key or device_class agent under a person)"), bad
+
+
+# ---------------------------------------------------------------- a build pipeline's standing (CC 3.1.2.1, CC 4.2.1)
+ATTEST, PIPELINE_SCOPE = "infra:attest", "infra:attest:provenance:build_manifest"
+GRANT_OUT_OF_ROLE = "pipeline_grant_out_of_role"
+PROJECT_NOT_GRANTED = "build_manifest_project_not_granted"
+MANIFEST_EQUIVOCATION = "build_manifest_equivocation"
+DESCRIPTOR_MISMATCH = "build_manifest_descriptor_mismatch"
+BLOB_FORMAT = "ciris-binary-manifest/1"
+
+
+def pipeline_grant_rule(p, sub_roles=()):
+    """CC 4.2.1 bound (1), decided by the grant's payload alone: None, or its token. A grant is a pipeline's where it
+    carries `projects` (no key record states a pipeline role); its scope holds the attest capability, whole or
+    sub-scoped to the build-manifest family, and no other token. An unrecognised sub-scope is not widened to its
+    parent (CC 4.5.5). `sub_roles` is the kind of the key named, which decides nothing."""
+    if "projects" not in p:
+        return None
+    return None if set(p.get("scope", [])) <= {ATTEST, PIPELINE_SCOPE} else GRANT_OUT_OF_ROLE
+
+
+def build_manifest_rule(row, grant):
+    """CC 3.1.2.1, over two rows: a build-manifest row and the grant its pipeline stands on. None, or the token. A grant
+    with no `projects` member confers a build manifest for no project."""
+    return None if row["build"]["project"] in grant.get("projects", []) else PROJECT_NOT_GRANTED
+
+
+def build_target(row):
+    """The target of a build-manifest row: its dimension less the family's two literals and the version segment."""
+    return ":".join(row["dimension"].split(":")[2:-1])
+
+
+def descriptor_rule(row, blob):
+    """CC 3.1.2.1, over a row and the blob it cites (`blob` is the map; its bytes are its deterministic encoding): None,
+    or the one token for any disagreement of length, digest, project, version or target."""
+    raw, b = cde(blob), row["build"]
+    if b["manifest_size"] != len(raw) or b["manifest_hash"] != [-16, hashlib.sha256(raw).digest()]:
+        return DESCRIPTOR_MISMATCH
+    if (b["project"], b["version"], build_target(row)) != (blob.get("project"), blob.get("version"), blob.get("target")):
+        return DESCRIPTOR_MISMATCH
+    return None
+
+
+def equivocation_rule(a, b, supersedes=False):
+    """CC 3.1.2.1, over two build-manifest rows: None, or the token where one pipeline states two descriptors for one
+    project, version and target and neither row supersedes the other."""
+    key = lambda r: (r["author"], r["build"]["project"], r["build"]["version"], build_target(r))
+    return MANIFEST_EQUIVOCATION if key(a) == key(b) and a["build"] != b["build"] and not supersedes else None
+
+
+def functions_root(functions):
+    """CC 3.1.2.1: the Merkle root over a function table. Leaves in the byte order of the function names, each the
+    deterministic encoding of {name, offset, size, hash} under the leaf prefix 0x00; the last leaf repeated to the next
+    power of two; a parent is SHA-256 over 0x01, left, right."""
+    level = [hashlib.sha256(b"\x00" + cde(f)).digest() for f in sorted(functions, key=lambda f: f["name"].encode("utf-8"))]
+    while len(level) & (len(level) - 1):
+        level.append(level[-1])
+    while len(level) > 1:
+        level = [hashlib.sha256(b"\x01" + level[i] + level[i + 1]).digest() for i in range(0, len(level), 2)]
+    return level[0]
+
+
+def build_blob(row_target="x86_64-unknown-linux-gnu", **change):
+    """A schema-sample manifest blob: exactly the members CC 3.1.2.1 lists, its digests plain 32-byte strings."""
+    fns = [{"name": n, "offset": 4096 * (i + 1), "size": 512, "hash": bytes([i + 1]) * 32} for i, n in enumerate(("main", "init", "verify"))]
+    blob = {"format": BLOB_FORMAT, "project": "ciris-verify", "version": "1.2.3", "target": row_target,
+            "binary_hash": bytes([9]) * 32, "functions_root": functions_root(fns), "functions": fns, "tool": "ciris-manifest-tool 1.0.0"}
+    return dict(blob, **change)
+
+
+def row_for(blob, **change):
+    """The build-manifest sample row, its descriptor that of `blob`."""
+    row, raw = family_payloads()["build-manifest-row"][1], cde(blob)
+    dig = [-16, hashlib.sha256(raw).digest()]
+    row = dict(row, evidence_refs=[dig], build={"project": blob["project"], "version": blob["version"],
+                                                "manifest_hash": dig, "manifest_size": len(raw)})
+    return dict(row, **change)
+
+
+def build_manifest_checks():
+    """(line, problems): the pipeline's grant, the manifest against its grant, the descriptor against its blob, two
+    manifests of one build, and the function table's root; every sample gives the answer the text gives, and a planted
+    fault of each rule must be caught by at least one sample."""
+    bad, P = [], family_payloads()
+    grant, blob = P["trust-confers"][1], build_blob()
+    row = row_for(blob)
+    plain = _without(grant, "projects")
+    gcases = [("a pipeline's grant under the sub-scope", grant, (), None),
+              ("a pipeline's grant under the bare capability", dict(grant, scope=[ATTEST]), (), None),
+              ("a pipeline's grant that also carries infra:serve", dict(grant, scope=sorted([PIPELINE_SCOPE, "infra:serve"], key=cde)), (), GRANT_OUT_OF_ROLE),
+              ("a pipeline's grant under another family's sub-scope", dict(grant, scope=["infra:attest:licensure:X"]), (), GRANT_OUT_OF_ROLE),
+              ("a pipeline's grant under a narrower sub-scope nobody registered", dict(grant, scope=[PIPELINE_SCOPE + ":x86"]), (), GRANT_OUT_OF_ROLE),
+              ("a grant of infra:serve to a key that is no pipeline", dict(plain, scope=["infra:serve"]), ("node",), None),
+              ("a grant of infra:serve with no projects, which is no pipeline's grant", dict(plain, scope=["infra:serve"]), ("agent",), None)]
+    for why, g, roles, want in gcases:
+        if pipeline_grant_rule(g, roles) != want:
+            bad.append(f"pipeline grant: {why} gives {pipeline_grant_rule(g, roles)}, the text gives {want}")
+    prefix = lambda g, roles=(): None if all(s.startswith(ATTEST) for s in g.get("scope", [])) else pipeline_grant_rule(g, roles)
+    if all(prefix(g, r) == want for _, g, r, want in gcases):
+        bad.append("deliberate break not caught: a prefix test on a pipeline's scope passed every grant sample")
+    pcases = [("a manifest of a listed project", row, grant, None),
+              ("a manifest of a project the grant does not list", dict(row, build=dict(row["build"], project="ciris-node")), grant, PROJECT_NOT_GRANTED),
+              ("a manifest under a grant with no projects member", row, plain, PROJECT_NOT_GRANTED)]
+    for why, r, g, want in pcases:
+        if build_manifest_rule(r, g) != want:
+            bad.append(f"build manifest and grant: {why} gives {build_manifest_rule(r, g)}, the text gives {want}")
+    lax = lambda r, g: None if "projects" not in g else build_manifest_rule(r, g)
+    if all(lax(r, g) == want for _, r, g, want in pcases):
+        bad.append("deliberate break not caught: a rule reading an absent projects member as every project passed every sample")
+    dcases = [("a row whose descriptor is its blob's", row, blob, None),
+              ("a size one byte short", dict(row, build=dict(row["build"], manifest_size=row["build"]["manifest_size"] - 1)), blob, DESCRIPTOR_MISMATCH),
+              ("a digest of another blob", dict(row, build=dict(row["build"], manifest_hash=[-16, bytes([8]) * 32])), blob, DESCRIPTOR_MISMATCH),
+              ("a project the blob does not state", row_for(blob, build=dict(row["build"], project="ciris-agent")), blob, DESCRIPTOR_MISMATCH),
+              ("a version the blob does not state", row_for(blob, build=dict(row["build"], version="1.2.4")), blob, DESCRIPTOR_MISMATCH),
+              ("a row on another target's family", dict(row, dimension="provenance:build_manifest:aarch64-apple-darwin:v1"), blob, DESCRIPTOR_MISMATCH)]
+    for why, r, b, want in dcases:
+        if descriptor_rule(r, b) != want:
+            bad.append(f"descriptor: {why} gives {descriptor_rule(r, b)}, the text gives {want}")
+    bytes_only = lambda r, b: None if (r["build"]["manifest_size"], r["build"]["manifest_hash"]) == (len(cde(b)), [-16, hashlib.sha256(cde(b)).digest()]) else DESCRIPTOR_MISMATCH
+    if all(bytes_only(r, b) == want for _, r, b, want in dcases):
+        bad.append("deliberate break not caught: a rule comparing size and digest alone passed every descriptor sample")
+    other = row_for(build_blob(binary_hash=bytes([10]) * 32))
+    ecases = [("the same row twice", row, row, False, None),
+              ("two descriptors for one project, version and target", row, other, False, MANIFEST_EQUIVOCATION),
+              ("a rebuild that supersedes the first", row, other, True, None),
+              ("another pipeline's manifest of the same build", row, dict(other, author=iref(6)), False, None),
+              ("the next version", row, row_for(build_blob(version="1.2.4")), False, None),
+              ("another target", row, row_for(build_blob("aarch64-apple-darwin"), dimension="provenance:build_manifest:aarch64-apple-darwin:v1"), False, None)]
+    for why, a, b, sup, want in ecases:
+        if equivocation_rule(a, b, sup) != want:
+            bad.append(f"equivocation: {why} gives {equivocation_rule(a, b, sup)}, the text gives {want}")
+    if all(want is None for *_, want in ecases):
+        bad.append("deliberate break not caught: a rule that never reports an equivocation passed every sample")
+    fns = blob["functions"]
+    if functions_root(fns) != functions_root(list(reversed(fns))):
+        bad.append("function table: the root depends on the order the table is listed in")
+    last = max(fns, key=lambda f: f["name"].encode())
+    four = [hashlib.sha256(b"\x00" + cde(f)).digest() for f in sorted(fns, key=lambda f: f["name"].encode())] + [hashlib.sha256(b"\x00" + cde(last)).digest()]
+    want_root = hashlib.sha256(b"\x01" + hashlib.sha256(b"\x01" + four[0] + four[1]).digest() + hashlib.sha256(b"\x01" + four[2] + four[3]).digest()).digest()
+    if functions_root(fns) != want_root:
+        bad.append("function table: three leaves are not padded by repeating the last to four")
+    if functions_root(fns) == functions_root([dict(f, size=f["size"] + 1) if f is last else f for f in fns]):
+        bad.append("deliberate break not caught: a function's changed size leaves the root unchanged")
+    if set(blob) != {"format", "project", "version", "target", "binary_hash", "functions_root", "functions", "tool"}:
+        bad.append("the sample blob's members are not those the text lists")
+    import cc_namespace_match as NM
+    got = NM.match_family(NM.load_manifest(), row["dimension"])
+    if not got or got[0] != "provenance:build_manifest:{target}" or got[2] is not None:
+        bad.append(f"sample dimension {row['dimension']} does not match its family: {got}")
+    return (f"a build pipeline's standing: {len(gcases)} grants ({GRANT_OUT_OF_ROLE}), {len(pcases)} manifests against a grant "
+            f"({PROJECT_NOT_GRANTED}), {len(dcases)} descriptors against a blob ({DESCRIPTOR_MISMATCH}), {len(ecases)} pairs "
+            f"({MANIFEST_EQUIVOCATION}), the function table's root over three leaves padded to four; the planted faults are caught"), bad
 
 
 # ---------------------------------------------------------------- the bundle's prose rules, as a reference reader
@@ -1083,11 +1910,11 @@ def read_bundle(payload, statements, rows, anchor, prev=None):
     voices = [v for v, iat in statements if iat == P["asserted_at"] // 1000]
     # 2. the payload against its rule
     H, S = set(P["holders"]), set(P["serve_nodes"])
-    W = set(P["charter"].get("witnesses", []))
+    W = set(P["charter"].get("transparency_services", []))
     later = "prev" in P["refs"]
     if later != (P["version"] != 1):
         return "Invalid", "version_prev_mismatch"
-    for xs in (P["holders"], P["serve_nodes"], P["charter"]["scope"], P["charter"].get("witnesses", []),
+    for xs in (P["holders"], P["serve_nodes"], P["charter"]["scope"], P["charter"].get("transparency_services", []),
                P["refs"]["also"]["cites"]):
         if not is_set(xs):
             return "Invalid", "federation_set_semantics_unsorted"
@@ -1562,7 +2389,7 @@ def reader_checks():
             f"Valid; {caught} broken bundles give their own answer"), bad
 
 
-def cddl_checks(text):
+def cddl_checks(text, later=True):
     """(lines, problems): parse the CDDL and validate the samples, with the `cddl` gem when present."""
     tool = find_tool("cddl")
     if not tool:
@@ -1614,6 +2441,8 @@ def cddl_checks(text):
         lines.append(f"1 genesis bundle sample validates; {grefused} broken bundles are refused")
         acc = {root: (ok, broken) for root, ok, broken in accord_samples()}
         for root, (ok, broken), what in (("key-record-members", key_record_samples(), "key record with its custody member"),
+                                         *((("key-record-members", room_key_record_samples(), "record of a room key"),
+                                            *room_binding_samples(), *leaf_and_group_samples()) if later else ()),
                                          ("recovery-commitment-input", recovery_samples(), "recovery commitment input"),
                                          ("accord-invocation", acc["accord-invocation"], "accord invocation payload"),
                                          ("accord-lifecycle", acc["accord-lifecycle"], "accord lifecycle payload"),
@@ -1768,6 +2597,9 @@ def main(argv):
     aline, abad = admission_checks()
     lines.append(aline)
     bad += abad
+    gline, gbad = group_id_checks()
+    lines.append(gline)
+    bad += gbad
     sline, sbad = second_row_checks()
     lines.append(sline)
     bad += sbad
@@ -1778,6 +2610,9 @@ def main(argv):
     lines.append(rline2)
     bad += rbad2
     sys.path.insert(0, HERE)
+    bline, bbad = build_manifest_checks()
+    lines.append(bline)
+    bad += bbad
     fline, fbad = family_checks()
     lines.append(fline)
     bad += fbad

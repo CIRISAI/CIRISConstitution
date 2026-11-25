@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "7ae4a6e2be0562e20d292da802478b3a04dcc62b477ddc33477f7625ae50abe4",
-   "invariants_sha256": "c9990b9e4eb82a7f848d4e320182eab767e79f6c9db59129697c045398f43733",
+   "state_table_sha256": "49806bf07e99955b159a5dbc4939e46ea976b30c93ea7e2580ec2a101a60de9f",
+   "invariants_sha256": "e1b09d1e61ee68e403e252962d2b975b4a9ace0d28a9c3ff69ab1afd4c3c32cc",
    "vocabulary_sha256": "bfe9d48524a103eb0d91a30fd8335fe499831957c0306808d2b5a484b54c3a7a",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "d62d8acf5bc5ffc553411c46a813ccce7ec14bff3c53bd57b3872ba1dcb59977",
+   "claims_sha256": "b9387269807ad445a66aac098f92a81413a830814b32f0f2d9ce7ce0c8fd8272",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -29,17 +29,17 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 247,
-   "claims": 614,
+   "invariants": 272,
+   "claims": 608,
    "entries": 20,
-   "refusal_tokens": 101
+   "refusal_tokens": 147
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "99f63b2887c2446f1dfc069814b695dd2f7de50e04dc24889200555539466210"
+  "chain_sha256": "c44f358a12248fa1106eefa2da55cd12a95516b0df455267c3a16828a00c0f73"
  },
  "chain": [
   {
@@ -237,10 +237,10 @@
      "variable": "root.head",
      "state": "none",
      "plane": "root",
-     "cc_ref": "3.2 T4a T6",
-     "enters_by": "no version chain (a key root)",
+     "cc_ref": "3.2 T5 T8",
+     "enters_by": "no lineage accepted, or no bundle of the accepted lineage verifies",
      "signer": "—",
-     "model_ref": "trust_root.TrustRootVerdict.tla:heads=<<>>",
+     "model_ref": "trust_root.TrustRootVerdict.tla:cur=NoHead",
      "status": "modelled"
     },
     {
@@ -265,6 +265,24 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.i",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_i",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.iii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_iii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.iv",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -283,10 +301,109 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.vii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_vii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.viii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_viii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T4",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_T4",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.stalled",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_Stalled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.pred",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_PredecessorSet",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.pred.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_PredecessorSet",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.fork",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_ForkNeverFreezes",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FreezeAdoptionOnly",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_FreezeAdoptionOnly",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.none",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_NoServicesNoReceipt",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -405,6 +522,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -522,7 +640,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -730,7 +848,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -842,7 +960,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -864,46 +982,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -1078,7 +1163,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -1177,12 +1262,12 @@
    "states": [
     {
      "variable": "root.head",
-     "state": "witnessed_fresh",
+     "state": "receipted_fresh",
      "plane": "root",
-     "cc_ref": "3.2 T6",
-     "enters_by": "K cosignatures newer than attach_window",
-     "signer": "witness directory",
-     "model_ref": "trust_root.TrustRootVerdict.tla:cosig",
+     "cc_ref": "3.2 T6 T4a",
+     "enters_by": "Receipts from receipt_quorum independent Transparency Services the predecessor's charter names, the newest issued within attach_window_secs before the attaching edge's own instant",
+     "signer": "the named Transparency Services",
+     "model_ref": "trust_root.TrustRootVerdict.tla:FreshAt",
      "status": "modelled"
     },
     {
@@ -1207,6 +1292,24 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.i",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_i",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.iii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_iii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.iv",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
@@ -1225,10 +1328,109 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.vii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_vii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.viii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_viii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T4",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_T4",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.stalled",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_Stalled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.pred",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_PredecessorSet",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.pred.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_PredecessorSet",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.fork",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_ForkNeverFreezes",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FreezeAdoptionOnly",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_FreezeAdoptionOnly",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.none",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_NoServicesNoReceipt",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -1347,6 +1549,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -1464,7 +1667,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -1672,7 +1875,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -1784,7 +1987,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -1806,46 +2009,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -2020,7 +2190,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -2123,7 +2293,7 @@
      "state": "yes",
      "plane": "node",
      "cc_ref": "3.2 T3 T4a",
-     "enters_by": "trust:accepts:v1 on a fresh witnessed head",
+     "enters_by": "trust:accepts:v1 naming a head that is receipted and fresh at the edge's own signed instant; the anchored head where the charter names no services",
      "signer": "node owner",
      "model_ref": "mesh_net.RootReach.tla:sub=TRUE",
      "status": "modelled"
@@ -2133,9 +2303,9 @@
      "state": "Rooted",
      "plane": "root",
      "cc_ref": "3.2 T8",
-     "enters_by": "acceptance edge on a fresh witnessed head; T7 recovery widening",
-     "signer": "evaluating node; conferred human",
-     "model_ref": "trust_root.TrustRootVerdict.tla:V=Rooted",
+     "enters_by": "acceptance edge naming a receipted fresh head, or the anchored head where no services are named; a holder's recovery bundle that restores the majority",
+     "signer": "node owner; the recovering holder",
+     "model_ref": "trust_root.TrustRootVerdict.tla:VAt=Rooted",
      "status": "modelled"
     }
    ],
@@ -2154,6 +2324,60 @@
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_vi",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.vi.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_vi",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T4",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.stalled",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_Stalled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.end",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_EndNoInstant",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FreezeAdoptionOnly",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -2384,19 +2608,46 @@
      "verdict": "proved"
     },
     {
-     "inv_id": "TR.i",
+     "inv_id": "TR.ii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
-     "symbol": "Inv_i",
+     "symbol": "Inv_ii",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
     },
     {
-     "inv_id": "TR.ii",
+     "inv_id": "TR.ii.tick",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Prop_ii",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.v",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_v",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T7",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T7",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_T4",
      "kind": "safety-temporal",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -2428,6 +2679,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -2933,7 +3185,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3141,7 +3393,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3253,7 +3505,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3275,46 +3527,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -3489,7 +3708,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3732,7 +3951,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3940,7 +4159,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -4065,6 +4284,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -4074,7 +4294,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -4096,46 +4316,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -4310,7 +4497,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -4591,6 +4778,15 @@
      "kind": "safety",
      "claim_id": "CLM-admission-action",
      "verdict": "holds; its planted breaks are caught"
+    },
+    {
+     "inv_id": "TR.v",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_v",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
     },
     {
      "inv_id": "AH.subs",
@@ -4990,6 +5186,29 @@
        "path": "formal/admission/check_admission.py",
        "symbols": [
         "Inv_DispatchOnlyReviewed"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-standing-verdict",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_FirstBundleStands",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
        ]
       }
      ]
@@ -5832,6 +6051,15 @@
    ],
    "invariants": [
     {
+     "inv_id": "TR.v",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_v",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "AH.subs",
      "model": "accord_halt",
      "source": "formal/accord_halt/AccordHalt.tla",
@@ -6103,6 +6331,29 @@
     }
    ],
    "claims": [
+    {
+     "claim_id": "CLM-standing-verdict",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_FirstBundleStands",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-halt-one-row",
      "cc_ref": "4.2.1.1",
@@ -7909,7 +8160,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -8117,7 +8368,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -8242,6 +8493,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -8251,7 +8503,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -8273,46 +8525,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -8487,7 +8706,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -8589,8 +8808,8 @@
      "state": "member",
      "plane": "self",
      "cc_ref": "3.3.6 3.3.6.4",
-     "enters_by": "quorum path at once or lone path after W_self",
-     "signer": "roster majority / silence",
+     "enters_by": "a met count, or a lone landing that stands (signed rows; no node's clock)",
+     "signer": "roster majority / a seated key's landing",
      "model_ref": "self_roster.SelfRoster.tla:member",
      "status": "modelled"
     },
@@ -8599,7 +8818,7 @@
      "state": "two",
      "plane": "self",
      "cc_ref": "3.3.6.4",
-     "enters_by": "lone path; theft is a stalemate",
+     "enters_by": "lone path by signed rows; theft is a stalemate",
      "signer": "—",
      "model_ref": "self_roster.SelfRoster_combined2_*.cfg",
      "status": "modelled"
@@ -8613,7 +8832,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -8622,7 +8841,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -8640,7 +8859,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -9084,9 +9303,9 @@
      "state": "NotRooted",
      "plane": "root",
      "cc_ref": "3.2 T8",
-     "enters_by": "no edge; edge deleted; head removes a leg",
-     "signer": "evaluating node",
-     "model_ref": "trust_root.TrustRootVerdict.tla:V=NotRooted",
+     "enters_by": "no acceptance edge; the edge withdrawn, recanted or tombstoned; the edge's own instant not before its signer's revoked_after",
+     "signer": "node owner; revoking key",
+     "model_ref": "trust_root.TrustRootVerdict.tla:VAt=NotRooted",
      "status": "modelled"
     }
    ],
@@ -9105,6 +9324,60 @@
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_vi",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.vi.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_vi",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T4",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.stalled",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_Stalled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.end",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_EndNoInstant",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FreezeAdoptionOnly",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -9335,19 +9608,46 @@
      "verdict": "proved"
     },
     {
-     "inv_id": "TR.i",
+     "inv_id": "TR.ii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
-     "symbol": "Inv_i",
+     "symbol": "Inv_ii",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
     },
     {
-     "inv_id": "TR.ii",
+     "inv_id": "TR.ii.tick",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Prop_ii",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.v",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_v",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T7",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T7",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_T4",
      "kind": "safety-temporal",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -9379,6 +9679,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -9884,7 +10185,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -10092,7 +10393,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -10204,7 +10505,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -10226,46 +10527,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -10440,7 +10708,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -10552,9 +10820,9 @@
      "state": "proposed_add",
      "plane": "self",
      "cc_ref": "3.3.6.4",
-     "enters_by": "proposal by a live roster key (held: from two keys the add-device approval is a proposal until another key assents or W_self passes)",
+     "enters_by": "proposal by a live roster key (open or contested: from two keys the added key is not seated until the count is met or a lone landing stands)",
      "signer": "roster key",
-     "model_ref": "self_roster.SelfRoster.tla:pending(add)",
+     "model_ref": "self_roster.SelfRoster.tla:props(add)",
      "status": "modelled"
     },
     {
@@ -10576,7 +10844,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -10585,7 +10853,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -10603,7 +10871,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -11111,8 +11379,8 @@
      "state": "member",
      "plane": "self",
      "cc_ref": "3.3.6 3.3.6.4",
-     "enters_by": "quorum path at once or lone path after W_self",
-     "signer": "roster majority / silence",
+     "enters_by": "a met count, or a lone landing that stands (signed rows; no node's clock)",
+     "signer": "roster majority / a seated key's landing",
      "model_ref": "self_roster.SelfRoster.tla:member",
      "status": "modelled"
     },
@@ -11135,7 +11403,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -11144,7 +11412,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -11162,7 +11430,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -11809,7 +12077,7 @@
      "state": "yes",
      "plane": "node",
      "cc_ref": "3.2 T3 T4a",
-     "enters_by": "trust:accepts:v1 on a fresh witnessed head",
+     "enters_by": "trust:accepts:v1 naming a head that is receipted and fresh at the edge's own signed instant; the anchored head where the charter names no services",
      "signer": "node owner",
      "model_ref": "mesh_net.RootReach.tla:sub=TRUE",
      "status": "modelled"
@@ -11819,9 +12087,9 @@
      "state": "Rooted",
      "plane": "root",
      "cc_ref": "3.2 T8",
-     "enters_by": "acceptance edge on a fresh witnessed head; T7 recovery widening",
-     "signer": "evaluating node; conferred human",
-     "model_ref": "trust_root.TrustRootVerdict.tla:V=Rooted",
+     "enters_by": "acceptance edge naming a receipted fresh head, or the anchored head where no services are named; a holder's recovery bundle that restores the majority",
+     "signer": "node owner; the recovering holder",
+     "model_ref": "trust_root.TrustRootVerdict.tla:VAt=Rooted",
      "status": "modelled"
     }
    ],
@@ -11840,6 +12108,60 @@
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_vi",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.vi.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_vi",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T4",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.stalled",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_Stalled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.end",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_EndNoInstant",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FreezeAdoptionOnly",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -12070,19 +12392,46 @@
      "verdict": "proved"
     },
     {
-     "inv_id": "TR.i",
+     "inv_id": "TR.ii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
-     "symbol": "Inv_i",
+     "symbol": "Inv_ii",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
     },
     {
-     "inv_id": "TR.ii",
+     "inv_id": "TR.ii.tick",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Prop_ii",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.v",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_v",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T7",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T7",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_T4",
      "kind": "safety-temporal",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -12114,6 +12463,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -12619,7 +12969,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -12827,7 +13177,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -12939,7 +13289,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -12961,46 +13311,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -13175,7 +13492,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -13791,7 +14108,16 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
+    },
+    {
+     "inv_id": "CN.replstanding",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationGrantHasStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes; stranger_repl twin fails"
     }
    ],
    "claims": [
@@ -13969,7 +14295,16 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
+    },
+    {
+     "inv_id": "CN.replstanding",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationGrantHasStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes; stranger_repl twin fails"
     }
    ],
    "claims": [
@@ -14893,7 +15228,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15035,7 +15370,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15242,7 +15577,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -15394,7 +15729,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     },
     {
      "inv_id": "WA.goodhart",
@@ -15986,8 +16321,8 @@
      "state": "member",
      "plane": "self",
      "cc_ref": "3.3.6 3.3.6.4",
-     "enters_by": "quorum path at once or lone path after W_self",
-     "signer": "roster majority / silence",
+     "enters_by": "a met count, or a lone landing that stands (signed rows; no node's clock)",
+     "signer": "roster majority / a seated key's landing",
      "model_ref": "self_roster.SelfRoster.tla:member",
      "status": "modelled"
     }
@@ -16000,7 +16335,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -16009,7 +16344,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -16027,7 +16362,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -16348,7 +16683,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -16754,7 +17089,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -16962,7 +17297,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -17087,6 +17422,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -17096,7 +17432,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -17118,46 +17454,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -17332,7 +17635,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -17437,96 +17740,11 @@
     {
      "claim_id": "CLM-cosign-collection-held",
      "cc_ref": "3.3.4",
-     "status": "established",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/mod.rs",
-       "symbols": [
-        "roster_event_verdict"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "hold"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "quorum_key_of"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "signature_row"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "admit_row"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "execute_for"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "may_receive"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "check_withdraws_target"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/cosign.rs",
-       "symbols": [
-        "resolve_withdraws_target"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/wire_index.rs",
-       "symbols": [
-        "attestation_wire_hash"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/group_plane.rs",
-       "symbols": [
-        "apply_group_plane_row"
-       ]
+       "kind": "normative-only"
       }
      ]
     },
@@ -19073,7 +19291,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -19281,7 +19499,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -19406,6 +19624,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -19415,7 +19634,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -19437,46 +19656,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -19651,7 +19837,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -20646,7 +20832,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -20854,7 +21040,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -20979,6 +21165,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -20988,7 +21175,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21010,46 +21197,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -21224,7 +21378,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21483,7 +21637,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21691,7 +21845,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21816,6 +21970,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -21825,7 +21980,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21847,46 +22002,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -22061,7 +22183,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -24686,29 +24808,38 @@
      "variable": "root.standing",
      "state": "Stalled",
      "plane": "root",
-     "cc_ref": "3.2 T7 T8",
-     "enters_by": "revocation/withdraws/revoked_after leaves ≤ M active",
-     "signer": "founders",
-     "model_ref": "trust_root.TrustRootVerdict.tla:V=Stalled",
+     "cc_ref": "3.2 T8 4.2.6",
+     "enters_by": "a key revocation or revoked_after crossing leaves fewer live holders than a strict majority of the bundle in force; an edge written at such a head",
+     "signer": "revoking key; node owner",
+     "model_ref": "trust_root.TrustRootVerdict.tla:VAt=Stalled",
      "status": "modelled"
     }
    ],
    "invariants": [
     {
-     "inv_id": "TR.i",
+     "inv_id": "TR.ii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
-     "symbol": "Inv_i",
+     "symbol": "Inv_ii",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
     },
     {
-     "inv_id": "TR.ii",
+     "inv_id": "TR.ii.tick",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Prop_ii",
      "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.v",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_v",
+     "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
     },
@@ -24722,10 +24853,73 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.vi.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_vi",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T7",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T7",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T4",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_T4",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.stalled",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_Stalled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.rec",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_RecoverEnabled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.end",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_EndNoInstant",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -24748,6 +24942,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -24853,7 +25048,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25061,7 +25256,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25173,7 +25368,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25195,46 +25390,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -25409,7 +25571,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25510,45 +25672,53 @@
      "variable": "root.liveness",
      "state": "live",
      "plane": "root",
-     "cc_ref": "3.2 T7",
-     "enters_by": "≥ M+1 active human founders",
+     "cc_ref": "3.2 T8 4.2.6",
+     "enters_by": "a strict majority of the holders of the bundle in force each seated at a key with no revocation in effect",
      "signer": "—",
-     "model_ref": "trust_root.TrustRootVerdict.tla:Inv_T7",
+     "model_ref": "trust_root.TrustRootVerdict.tla:LiveHolders",
      "status": "modelled"
     }
    ],
    "invariants": [
     {
-     "inv_id": "TR.T7",
+     "inv_id": "TR.viii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
-     "symbol": "Inv_T7",
+     "symbol": "Inv_viii",
      "kind": "safety",
-     "claim_id": "CLM-liveness-margin",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.stalled",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_Stalled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
     }
    ],
    "claims": [
     {
-     "claim_id": "CLM-liveness-margin",
+     "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
      "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
        "symbols": [
-        "INFRA_RULE_LIVENESS_MARGIN_AT_FOUNDING"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/canonical_community.rs",
-       "symbols": [
-        "emit_liveness_transition"
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_FirstBundleStands",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
        ]
       }
      ]
@@ -25652,7 +25822,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25860,7 +26030,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25946,23 +26116,25 @@
      ]
     },
     {
-     "claim_id": "CLM-standing-verdict",
+     "claim_id": "CLM-liveness-margin",
      "cc_ref": "3.2",
      "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
        "symbols": [
-        "Inv_i",
-        "Prop_ii",
-        "Prop_iv",
-        "Inv_vi",
-        "Inv_viii",
-        "Inv_T7",
-        "Inv_RecoverEnabled"
+        "INFRA_RULE_LIVENESS_MARGIN_AT_FOUNDING"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "emit_liveness_transition"
        ]
       }
      ]
@@ -25970,7 +26142,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -25992,46 +26164,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -26206,7 +26345,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26307,45 +26446,53 @@
      "variable": "root.liveness",
      "state": "stalled",
      "plane": "root",
-     "cc_ref": "3.2 T7",
-     "enters_by": "≤ M active; hard_case:community_liveness_stalled",
-     "signer": "the admitting substrate",
-     "model_ref": "trust_root.TrustRootVerdict.tla:Inv_T7",
+     "cc_ref": "3.2 T8 4.2.6",
+     "enters_by": "fewer live holders than a strict majority; valid, and seats nothing new until a holder's recovery bundle",
+     "signer": "revoking key",
+     "model_ref": "trust_root.TrustRootVerdict.tla:Inv_Stalled",
      "status": "modelled"
     }
    ],
    "invariants": [
     {
-     "inv_id": "TR.T7",
+     "inv_id": "TR.viii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
-     "symbol": "Inv_T7",
+     "symbol": "Inv_viii",
      "kind": "safety",
-     "claim_id": "CLM-liveness-margin",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.stalled",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_Stalled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
     }
    ],
    "claims": [
     {
-     "claim_id": "CLM-liveness-margin",
+     "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
      "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
        "symbols": [
-        "INFRA_RULE_LIVENESS_MARGIN_AT_FOUNDING"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/canonical_community.rs",
-       "symbols": [
-        "emit_liveness_transition"
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_FirstBundleStands",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
        ]
       }
      ]
@@ -26449,7 +26596,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26657,7 +26804,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26743,23 +26890,25 @@
      ]
     },
     {
-     "claim_id": "CLM-standing-verdict",
+     "claim_id": "CLM-liveness-margin",
      "cc_ref": "3.2",
      "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
        "symbols": [
-        "Inv_i",
-        "Prop_ii",
-        "Prop_iv",
-        "Inv_vi",
-        "Inv_viii",
-        "Inv_T7",
-        "Inv_RecoverEnabled"
+        "INFRA_RULE_LIVENESS_MARGIN_AT_FOUNDING"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "emit_liveness_transition"
        ]
       }
      ]
@@ -26767,7 +26916,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -26789,46 +26938,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -27003,7 +27119,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -27105,9 +27221,9 @@
      "state": "human",
      "plane": "root",
      "cc_ref": "3.4.7.1 3.2",
-     "enters_by": "key record identity_type (a key is substrate or actor, never both)",
+     "enters_by": "key record identity_type (a key is substrate or actor, never both); a holder of the bundle",
      "signer": "key holder",
-     "model_ref": "trust_root.TrustRootVerdict.tla:Founders\\NodeKeys",
+     "model_ref": "trust_root.TrustRootVerdict.tla:Holders",
      "status": "modelled"
     }
    ],
@@ -27139,6 +27255,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -27177,9 +27294,9 @@
      "state": "node_bearing",
      "plane": "root",
      "cc_ref": "3.4.7.1 3.2 T8",
-     "enters_by": "identity_type ⊇ {node}; never counted as a seat",
+     "enters_by": "identity_type ⊇ {node}; a serve node of the bundle, whose own signature never moves a state",
      "signer": "key holder",
-     "model_ref": "trust_root.TrustRootVerdict.tla:NodeKeys",
+     "model_ref": "trust_root.TrustRootVerdict.tla:Inv_i",
      "status": "modelled"
     }
    ],
@@ -27211,6 +27328,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -27249,13 +27367,31 @@
      "state": "stale",
      "plane": "root",
      "cc_ref": "3.2 T4a",
-     "enters_by": "newest counted cosignature older than attach_window",
+     "enters_by": "newest counted Receipt older than attach_window_secs at the attaching edge's own instant; at attach only (trust_root_head_stale)",
      "signer": "—",
-     "model_ref": "trust_root.TrustRootVerdict.tla:AttachWindow",
+     "model_ref": "trust_root.TrustRootVerdict.tla:FreshAt",
      "status": "modelled"
     }
    ],
    "invariants": [
+    {
+     "inv_id": "TR.i",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_i",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.iii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_iii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
     {
      "inv_id": "TR.iv",
      "model": "trust_root",
@@ -27275,10 +27411,109 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "TR.vii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_vii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.viii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_viii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_T4",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.T4.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_T4",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.stalled",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_Stalled",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.pred",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_PredecessorSet",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.pred.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_PredecessorSet",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.fork",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_ForkNeverFreezes",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FreezeAdoptionOnly",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze.step",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Prop_FreezeAdoptionOnly",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.none",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_NoServicesNoReceipt",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -27373,6 +27608,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -27490,7 +27726,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -27698,7 +27934,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -27810,7 +28046,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -27832,46 +28068,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -28046,7 +28249,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -30214,7 +30417,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -30223,7 +30426,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -30241,7 +30444,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -30373,7 +30576,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -30382,7 +30585,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -30400,7 +30603,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -30532,7 +30735,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -30541,7 +30744,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -30559,7 +30762,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -30677,9 +30880,9 @@
      "state": "proposed_evict",
      "plane": "self",
      "cc_ref": "3.3.6.4",
-     "enters_by": "eviction proposal",
+     "enters_by": "eviction proposal (open or contested: the target stays seated)",
      "signer": "roster key",
-     "model_ref": "self_roster.SelfRoster.tla:pending(evict)",
+     "model_ref": "self_roster.SelfRoster.tla:props(evict)",
      "status": "modelled"
     }
    ],
@@ -30691,7 +30894,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -30700,7 +30903,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -30718,7 +30921,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -31009,9 +31212,9 @@
      "state": "evicted",
      "plane": "self",
      "cc_ref": "3.3.6 3.3.6.4",
-     "enters_by": "withdraws against the occurrence row lands",
-     "signer": "roster majority / silence",
-     "model_ref": "self_roster.SelfRoster.tla:Devices\\member",
+     "enters_by": "the eviction is read as landed: a met count, or a lone landing that stands",
+     "signer": "roster majority / a seated key's landing",
+     "model_ref": "self_roster.SelfRoster.tla:gone",
      "status": "modelled"
     }
    ],
@@ -31023,7 +31226,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -31032,7 +31235,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -31050,7 +31253,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -31336,7 +31539,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -31468,7 +31671,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     }
    ],
    "claims": [
@@ -31588,16 +31791,52 @@
      "cc_ref": "2.4.1.1",
      "enters_by": "—",
      "signer": "—",
-     "model_ref": "trust_root.TrustRootVerdict.tla:revokedAll=∅",
+     "model_ref": "trust_root.TrustRootVerdict.tla:krev=Never",
      "status": "modelled"
     }
    ],
    "invariants": [
     {
+     "inv_id": "TR.ii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_ii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.iii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_iii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.viii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_viii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FreezeAdoptionOnly",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -31620,6 +31859,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -31851,16 +32091,52 @@
      "cc_ref": "2.4.1.1",
      "enters_by": "key:revocation:v1 with revoked_after",
      "signer": "revoking key",
-     "model_ref": "trust_root.TrustRootVerdict.tla:revokedAll (all-form only)",
+     "model_ref": "trust_root.TrustRootVerdict.tla:krev",
      "status": "modelled-partial"
     }
    ],
    "invariants": [
     {
+     "inv_id": "TR.ii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_ii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.iii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_iii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.viii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_viii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FreezeAdoptionOnly",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -31883,6 +32159,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -32114,16 +32391,52 @@
      "cc_ref": "2.4.1.1",
      "enters_by": "key:revocation:v1 without bound",
      "signer": "revoking key",
-     "model_ref": "trust_root.TrustRootVerdict.tla:revokedAll",
+     "model_ref": "trust_root.TrustRootVerdict.tla:krev=0",
      "status": "modelled"
     }
    ],
    "invariants": [
     {
+     "inv_id": "TR.ii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_ii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.iii",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_iii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "TR.viii",
      "model": "trust_root",
      "source": "formal/trust_root/TrustRootVerdict.tla",
      "symbol": "Inv_viii",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.first",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FirstBundleStands",
+     "kind": "safety",
+     "claim_id": "CLM-standing-verdict",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "TR.freeze",
+     "model": "trust_root",
+     "source": "formal/trust_root/TrustRootVerdict.tla",
+     "symbol": "Inv_FreezeAdoptionOnly",
      "kind": "safety",
      "claim_id": "CLM-standing-verdict",
      "verdict": "closes"
@@ -32146,6 +32459,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -35568,7 +35882,7 @@
      "symbol": "Inv_RevokedOverridesGranted",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; no_boundary twin fails"
     },
     {
      "inv_id": "CN.stranger",
@@ -35577,7 +35891,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; instant and stranger_ok twins fail"
     },
     {
      "inv_id": "CN.backdate",
@@ -35595,7 +35909,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes"
+     "verdict": "closes; no_W twin fails; fails of a revocation that waited (Inv_LateRevocationWithinW_Waited)"
     },
     {
      "inv_id": "CN.scope",
@@ -35604,7 +35918,7 @@
      "symbol": "Inv_EmptyScopeMatchesNothing",
      "kind": "safety",
      "claim_id": "CLM-consent-scope-is-envelope-member",
-     "verdict": "closes"
+     "verdict": "closes; any_scope twin fails"
     },
     {
      "inv_id": "CN.decayfwd",
@@ -35613,7 +35927,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -35622,7 +35936,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     },
     {
      "inv_id": "CN.expiry",
@@ -35631,7 +35945,16 @@
      "symbol": "Inv_ExpiryEmittedBySubstrate",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; forged_expiry twin fails"
+    },
+    {
+     "inv_id": "CN.tieid",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_TieOnSmallestId",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; tie_largest twin fails"
     }
    ],
    "claims": [
@@ -35869,6 +36192,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -35940,7 +36268,7 @@
      "symbol": "Inv_RevokedOverridesGranted",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; no_boundary twin fails"
     },
     {
      "inv_id": "CN.stranger",
@@ -35949,7 +36277,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; instant and stranger_ok twins fail"
     },
     {
      "inv_id": "CN.backdate",
@@ -35967,7 +36295,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes"
+     "verdict": "closes; no_W twin fails; fails of a revocation that waited (Inv_LateRevocationWithinW_Waited)"
     },
     {
      "inv_id": "CN.scope",
@@ -35976,7 +36304,7 @@
      "symbol": "Inv_EmptyScopeMatchesNothing",
      "kind": "safety",
      "claim_id": "CLM-consent-scope-is-envelope-member",
-     "verdict": "closes"
+     "verdict": "closes; any_scope twin fails"
     },
     {
      "inv_id": "CN.decayfwd",
@@ -35985,7 +36313,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -35994,7 +36322,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     },
     {
      "inv_id": "CN.expiry",
@@ -36003,7 +36331,16 @@
      "symbol": "Inv_ExpiryEmittedBySubstrate",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; forged_expiry twin fails"
+    },
+    {
+     "inv_id": "CN.tieid",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_TieOnSmallestId",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; tie_largest twin fails"
     }
    ],
    "claims": [
@@ -36241,6 +36578,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -36312,7 +36654,7 @@
      "symbol": "Inv_RevokedOverridesGranted",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; no_boundary twin fails"
     },
     {
      "inv_id": "CN.stranger",
@@ -36321,7 +36663,7 @@
      "symbol": "Inv_StrangerNeverGrants",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; instant and stranger_ok twins fail"
     },
     {
      "inv_id": "CN.backdate",
@@ -36339,7 +36681,7 @@
      "symbol": "Inv_LateRevocationWithinW",
      "kind": "safety",
      "claim_id": "CLM-admission-freshness-window",
-     "verdict": "closes"
+     "verdict": "closes; no_W twin fails; fails of a revocation that waited (Inv_LateRevocationWithinW_Waited)"
     },
     {
      "inv_id": "CN.scope",
@@ -36348,7 +36690,7 @@
      "symbol": "Inv_EmptyScopeMatchesNothing",
      "kind": "safety",
      "claim_id": "CLM-consent-scope-is-envelope-member",
-     "verdict": "closes"
+     "verdict": "closes; any_scope twin fails"
     },
     {
      "inv_id": "CN.decayfwd",
@@ -36357,7 +36699,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -36366,7 +36708,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     },
     {
      "inv_id": "CN.expiry",
@@ -36375,7 +36717,16 @@
      "symbol": "Inv_ExpiryEmittedBySubstrate",
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
-     "verdict": "closes"
+     "verdict": "closes; forged_expiry twin fails"
+    },
+    {
+     "inv_id": "CN.tieid",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_TieOnSmallestId",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; tie_largest twin fails"
     }
    ],
    "claims": [
@@ -36613,6 +36964,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -36675,7 +37031,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decayrank",
@@ -36684,7 +37040,7 @@
      "symbol": "Prop_DecayForwardOnly",
      "kind": "safety-temporal",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_back twin fails"
     },
     {
      "inv_id": "CN.decaycomp",
@@ -36693,7 +37049,7 @@
      "symbol": "Prop_DecayCompletes",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_stalls twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -36702,7 +37058,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     }
    ],
    "claims": [
@@ -36908,6 +37264,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -36970,7 +37331,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decayrank",
@@ -36979,7 +37340,7 @@
      "symbol": "Prop_DecayForwardOnly",
      "kind": "safety-temporal",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_back twin fails"
     },
     {
      "inv_id": "CN.decaycomp",
@@ -36988,7 +37349,7 @@
      "symbol": "Prop_DecayCompletes",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_stalls twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -36997,7 +37358,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     }
    ],
    "claims": [
@@ -37203,6 +37564,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37265,7 +37631,7 @@
      "symbol": "Inv_DecayForwardOnly",
      "kind": "safety",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; eager_decay twin fails"
     },
     {
      "inv_id": "CN.decayrank",
@@ -37274,7 +37640,7 @@
      "symbol": "Prop_DecayForwardOnly",
      "kind": "safety-temporal",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_back twin fails"
     },
     {
      "inv_id": "CN.decaycomp",
@@ -37283,7 +37649,7 @@
      "symbol": "Prop_DecayCompletes",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_stalls twin fails"
     },
     {
      "inv_id": "CN.decaystart",
@@ -37292,7 +37658,7 @@
      "symbol": "Prop_DecayStarts",
      "kind": "liveness",
      "claim_id": "CLM-consent-decay-emitter-is-protocol-runner",
-     "verdict": "closes"
+     "verdict": "closes; decay_never twin fails"
     }
    ],
    "claims": [
@@ -37498,6 +37864,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37579,6 +37950,69 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes; literal_signer twin fails"
+    },
+    {
+     "inv_id": "CN.headbackdate",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_BackdatedGrantRefused",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headinstant",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_InstantBuysNoStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headverdict",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_SameVerdictOnceHeld",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.headtransfer",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferMovesNoVerdict",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.transferfold",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferKeepsFold",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = counts; fails under InForce = ends; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.replacedends",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplacedBindingEndsGrant",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = ends; fails under InForce = counts; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.heldwait",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_HeldUntilBindingArrives",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; no_wait twin fails"
     }
    ],
    "claims": [
@@ -37800,6 +38234,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -37881,6 +38320,69 @@
      "kind": "safety",
      "claim_id": "CLM-consent-community-trust",
      "verdict": "closes; literal_signer twin fails"
+    },
+    {
+     "inv_id": "CN.headbackdate",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_BackdatedGrantRefused",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headinstant",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_InstantBuysNoStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; instant twin fails"
+    },
+    {
+     "inv_id": "CN.headverdict",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_SameVerdictOnceHeld",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.headtransfer",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferMovesNoVerdict",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; current_view twin fails"
+    },
+    {
+     "inv_id": "CN.transferfold",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Prop_TransferKeepsFold",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = counts; fails under InForce = ends; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.replacedends",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplacedBindingEndsGrant",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes under InForce = ends; fails under InForce = counts; the text has both readings and neither is chosen"
+    },
+    {
+     "inv_id": "CN.heldwait",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_HeldUntilBindingArrives",
+     "kind": "safety",
+     "claim_id": "CLM-consent-community-trust",
+     "verdict": "closes; no_wait twin fails"
     }
    ],
    "claims": [
@@ -38102,6 +38604,11 @@
         "Inv_RevocationIsBoundary",
         "Inv_OwnerCanRecant",
         "Inv_BackdateBounded",
+        "Inv_StrangerNeverGrants",
+        "Inv_BackdatedGrantRefused",
+        "Inv_InstantBuysNoStanding",
+        "Prop_TransferMovesNoVerdict",
+        "Inv_HeldUntilBindingArrives",
         "Inv_DecayForwardOnly",
         "Prop_DecayCompletes",
         "Inv_ExpiryEmittedBySubstrate",
@@ -38164,7 +38671,16 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
+    },
+    {
+     "inv_id": "CN.replstanding",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationGrantHasStanding",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes; stranger_repl twin fails"
     }
    ],
    "claims": [
@@ -39395,7 +39911,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -46379,9 +46895,9 @@
      "state": "proposed_add",
      "plane": "self",
      "cc_ref": "3.3.6.4",
-     "enters_by": "proposal by a live roster key (held: from two keys the add-device approval is a proposal until another key assents or W_self passes)",
+     "enters_by": "proposal by a live roster key (open or contested: from two keys the added key is not seated until the count is met or a lone landing stands)",
      "signer": "roster key",
-     "model_ref": "self_roster.SelfRoster.tla:pending(add)",
+     "model_ref": "self_roster.SelfRoster.tla:props(add)",
      "status": "modelled"
     }
    ],
@@ -46393,7 +46909,7 @@
      "symbol": "Inv_ThiefCannotEvictHonest",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; unilateral twin fails by design"
+     "verdict": "closes; the unilateral twin and the absent-owner twin fail by design"
     },
     {
      "inv_id": "SR.maj",
@@ -46402,7 +46918,7 @@
      "symbol": "Inv_ThiefNeverMajority",
      "kind": "safety",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes; 3-key mixed twin fails by design (tie)"
+     "verdict": "closes; 3-key mixed twin fails by design (the thief adds a key over the owner's one objection)"
     },
     {
      "inv_id": "SR.survive",
@@ -46420,7 +46936,7 @@
      "symbol": "Prop_LostRecoverable",
      "kind": "liveness",
      "claim_id": "CLM-self-roster-model",
-     "verdict": "closes at 3 and 4; 2-key stolen stalls by design"
+     "verdict": "closes at 3 and 4 (at 4 without the thief's rows that count for nothing); 2-key stolen stalls by design"
     },
     {
      "inv_id": "TP.below_cancel",
@@ -47066,7 +47582,7 @@
      "symbol": "Inv_ReplicationNeedsDirectedGrant",
      "kind": "safety",
      "claim_id": "CLM-consent-directed",
-     "verdict": "closes"
+     "verdict": "closes; blind_send twin fails"
     }
    ],
    "claims": [
@@ -51277,7 +51793,7 @@
     {
      "claim_id": "CLM-conferral-plane-named",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -51485,7 +52001,7 @@
     {
      "claim_id": "CLM-canonical-founders-accord",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -51610,6 +52126,7 @@
         "Prop_iv",
         "Inv_vi",
         "Inv_viii",
+        "Inv_FirstBundleStands",
         "Inv_T7",
         "Inv_RecoverEnabled"
        ]
@@ -51619,7 +52136,7 @@
     {
      "claim_id": "CLM-canonical-community-row",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -51641,46 +52158,13 @@
      ]
     },
     {
-     "claim_id": "CLM-family-root-charter",
-     "cc_ref": "3.2",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "ConferralPlane"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "family_quorum_over"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/trust_root.rs",
-       "symbols": [
-        "check_family_charter_admission"
-       ]
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-lineage-witness-consent",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#974"
+       "kind": "normative-only"
       }
      ]
     },
@@ -51855,7 +52339,7 @@
     {
      "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -53989,6 +54473,9 @@
   "accountable_root": {
    "4.5.5": "bold"
   },
+  "ack_names_too_many": {
+   "3.1.3": "after_refusal"
+  },
   "aggregate_source_duplicate": {
    "6.1.1": "after_refusal"
   },
@@ -54038,6 +54525,24 @@
   "breach_notification": {
    "4.4.3.12": "bold"
   },
+  "build_manifest_descriptor_mismatch": {
+   "3.1.2.1": "after_refusal"
+  },
+  "build_manifest_equivocation": {
+   "3.1.2.1": "after_refusal"
+  },
+  "build_manifest_functions_root_mismatch": {
+   "3.1.2.1": "after_refusal"
+  },
+  "build_manifest_max_bytes": {
+   "3.1.2.1": "after_refusal"
+  },
+  "build_manifest_project_not_granted": {
+   "3.1.2.1": "after_refusal"
+  },
+  "build_row_other_head": {
+   "3.1.2.1": "after_refusal"
+  },
   "bundle_fingerprint": {
    "8.11.24": "bold"
   },
@@ -54063,6 +54568,9 @@
   "classification_scheme": {
    "4.4.3.12": "bold"
   },
+  "code_node_key_mismatch": {
+   "2.6.8": "after_refusal"
+  },
   "data_subject_access_grant": {
    "4.4.3.12": "bold"
   },
@@ -54079,7 +54587,14 @@
   "disclosure_posture": {
    "4.4.3.12": "bold"
   },
+  "duty_holders_after_founding": {
+   "4.5.4": "after_refusal"
+  },
+  "duty_holders_on_family": {
+   "4.5.4": "after_refusal"
+  },
   "edition2_payload_invalid": {
+   "2.6.1.11": "after_refusal",
    "2.6.1.4": "after_refusal"
   },
   "envelope_member_missing": {
@@ -54089,15 +54604,38 @@
    "2.6.1.2": "after_refusal",
    "8.11.3": "after_refusal"
   },
+  "envelope_too_large": {
+   "2.6.1.6": "after_refusal",
+   "5.3.6.1": "after_refusal"
+  },
   "erasure_policy": {
    "4.4.3.12": "bold",
    "4.5.3": "after_refusal"
+  },
+  "fedcode_base32": {
+   "2.6.8": "after_refusal"
+  },
+  "fedcode_crc": {
+   "2.6.8": "after_refusal"
+  },
+  "fedcode_earlier_form": {
+   "2.6.8": "after_refusal"
+  },
+  "fedcode_kind": {
+   "2.6.8": "after_refusal"
+  },
+  "fedcode_prefix": {
+   "2.6.8": "after_refusal"
+  },
+  "fedcode_version": {
+   "2.6.8": "after_refusal"
   },
   "federation_addressed_not_recipient": {
    "3.1.3": "after_refusal",
    "6.1.9": "after_refusal"
   },
   "federation_community_consensus_protocol_violation": {
+   "3.2": "after_refusal",
    "4.5.13": "after_refusal"
   },
   "federation_malformed_row": {
@@ -54126,6 +54664,18 @@
   "fold_source_count_exceeded": {
    "6.1.2.3": "after_refusal"
   },
+  "founding_duty_holder_node": {
+   "4.5.4": "after_refusal"
+  },
+  "founding_duty_holder_not_signer": {
+   "4.5.4": "after_refusal"
+  },
+  "founding_duty_holders_unnamed": {
+   "4.5.4": "after_refusal"
+  },
+  "founding_duty_unheld": {
+   "4.5.4": "after_refusal"
+  },
   "goal_meta_alignment_malformed": {
    "3.1.9.7": "after_refusal"
   },
@@ -54137,6 +54687,9 @@
   },
   "identity_amendment": {
    "8.10": "bold"
+  },
+  "identity_occurrence": {
+   "3.1.3.2": "after_refusal"
   },
   "internal_normative_regime": {
    "4.4.3.12": "bold"
@@ -54153,6 +54706,12 @@
   "kat_split_and_seed_forms_agree": {
    "5.4.6": "after_refusal"
   },
+  "keeps_cites_no_end": {
+   "3.1.3.2": "after_refusal"
+  },
+  "key_grant_recipient_not_seat": {
+   "4.4.3.16": "after_refusal"
+  },
   "key_record_bad_attestation_evidence": {
    "4.2.2.1": "after_refusal"
   },
@@ -54166,6 +54725,21 @@
   "lawful_access": {
    "4.4.3.12": "bold"
   },
+  "leaf_vouch_absent": {
+   "5.1": "after_refusal"
+  },
+  "leaf_vouch_ended": {
+   "5.1": "after_refusal"
+  },
+  "leaf_vouch_other_leaf": {
+   "5.1": "after_refusal"
+  },
+  "leaf_vouch_other_room": {
+   "5.1": "after_refusal"
+  },
+  "leaf_vouch_presentation_invalid": {
+   "5.1": "after_refusal"
+  },
   "legal_hold": {
    "4.4.3.12": "bold"
   },
@@ -54178,11 +54752,11 @@
   "licensure_delegator_not_authority": {
    "2.4.1.3": "bold"
   },
+  "lifts_on_own_end": {
+   "2.4.1.1": "after_refusal"
+  },
   "location_proof": {
    "4.5.9.1": "after_refusal"
-  },
-  "manifest_size": {
-   "3.1.2.1": "bold"
   },
   "mass_commitment": {
    "6.1.2.3": "bold"
@@ -54192,6 +54766,12 @@
   },
   "member_commitment": {
    "6.1.2.2": "after_refusal"
+  },
+  "membership_not_a_community": {
+   "3.1.3.2": "after_refusal"
+  },
+  "membership_private_refused": {
+   "3.1.3.2": "after_refusal"
   },
   "mesh_config": {
    "4.2.1.4": "after_refusal"
@@ -54211,6 +54791,7 @@
   "namespace_family_unregistered": {
    "3.1.3": "after_refusal",
    "3.1.7": "after_refusal",
+   "3.4.10": "after_refusal",
    "3.4.11": "after_refusal"
   },
   "namespace_private_use_not_federatable": {
@@ -54225,6 +54806,12 @@
   "onion_hop_x25519_reuse": {
    "3.3.6.2": "after_refusal"
   },
+  "owner_binding_not_an_affiliation": {
+   "3.2": "after_refusal"
+  },
+  "pipeline_grant_out_of_role": {
+   "4.2.1": "after_refusal"
+  },
   "preserve_response": {
    "8.10": "bold"
   },
@@ -54233,6 +54820,15 @@
   },
   "purge_selection_count_mismatch": {
    "3.3.2": "after_refusal"
+  },
+  "receipt_quorum_mismatch": {
+   "3.2": "after_refusal"
+  },
+  "resignation_not_a_member_at_head": {
+   "3.3.4": "after_refusal"
+  },
+  "resignation_not_by_member": {
+   "3.3.4": "after_refusal"
   },
   "retention_policy": {
    "4.4.3.12": "bold"
@@ -54245,6 +54841,24 @@
   },
   "role_term": {
    "4.4.3.12": "after_refusal"
+  },
+  "room_binding_ml_kem_768_reuse": {
+   "3.3.6.1": "after_refusal"
+  },
+  "room_binding_x25519_reuse": {
+   "3.3.6.1": "after_refusal"
+  },
+  "room_key_binding_outside_room": {
+   "3.1.3.2": "after_refusal"
+  },
+  "room_key_occurrence_outside_room": {
+   "3.1.3.2": "after_refusal"
+  },
+  "room_key_other_room": {
+   "3.1.3.2": "after_refusal"
+  },
+  "room_row_signer_not_room_key": {
+   "3.1.3.2": "after_refusal"
   },
   "run_kind": {
    "3.1.5": "bold"
@@ -54263,9 +54877,6 @@
   "session_claim_out_of_window": {
    "3.1.3.1": "after_refusal"
   },
-  "signed_at": {
-   "5.3.1": "after_refusal"
-  },
   "statement_invalid": {
    "2.6.1.11": "after_refusal"
   },
@@ -54278,11 +54889,20 @@
   "statement_not_genesis_bundle": {
    "2.6.1.11": "after_refusal"
   },
+  "stream_accountable_pool_below_quorum": {
+   "5.3.3.8": "after_refusal"
+  },
+  "stream_head_room_mismatch": {
+   "5.3.3.8": "after_refusal"
+  },
   "trace_field_shape_violation": {
    "3.1.5": "after_refusal"
   },
   "trace_run_kind_mock": {
    "3.1.5": "after_refusal"
+  },
+  "transparency_members_partial": {
+   "3.2": "after_refusal"
   },
   "trust_accepts_classes_malformed": {
    "4.4.3.34": "after_refusal"
@@ -54293,12 +54913,18 @@
   "trust_root_head_unnamed": {
    "3.2": "after_refusal"
   },
+  "trusted_through_too_many": {
+   "3.1.3.2": "after_refusal"
+  },
   "typed_diverges_from_envelope": {
    "8.11.9": "after_refusal"
   },
   "under_13": {
    "3.1.2": "after_refusal",
    "3.3.12": "after_refusal"
+  },
+  "write_author_has_no_wrap_target": {
+   "5.2": "after_refusal"
   },
   "x25519_mlkem768_aes256_gcm_hkdf_sha256": {
    "5.1": "bold"

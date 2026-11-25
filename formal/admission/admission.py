@@ -10,7 +10,7 @@ Rows (each a dict with `id`, `kind` and `t`, the instant the host first held it)
   edge       {by, to, classes}                 an acceptance edge, trust:accepts (CC 4.4.3.34)
   roster     {group, members, need}            a group's roster head and its declared count
   build      {units, blessed}                  an attested build: its manifest's units, and whether its pipeline's
-                                               counted trust:blessing is held (CC 3.1.2.1)
+                                               counted grant is held (CC 3.1.2.1)
   unit       {unit, caps, at, until, scope, author | head}   the admission:unit row (CC 3.1.3): authored or counted;
                                                scope is its cohort_scope (CC 2.1)
   stmt       {of, by}                          one voice's statement over a row's payload (CC 2.6.1.9)
@@ -154,7 +154,7 @@ def one(R, owner, digest, now, row):
 
 def built_in(R, digest):
     """A unit of the attested build runs under the build's own attestation: its manifest names the digest and the
-    pipeline's counted blessing is held (CC 3.1.2.1). It is outside admission:unit."""
+    pipeline's counted grant is held (CC 3.1.2.1). It is outside admission:unit."""
     for b in sel(R, kind="build"):
         if (b["blessed"] or "unblessed_build" in PLANTS) and (digest in b["units"] or "build_any_digest" in PLANTS):
             return True
@@ -290,9 +290,12 @@ def fingerprint(call):
     return H("CEG-call/2", call["verb"], call["tool"], call["args"], call["channel"])
 
 
-def trusted_evidence(R, rid):
-    """A row that may discharge an objection: an approving response by a person seated over the agent."""
+def trusted_evidence(R, rid, agent=None):
+    """A row that may discharge an objection: an approving response by a person seated over the agent. Where the
+    acting agent is given, the response must be about THAT agent: an approval for one agent's call is none for
+    another's, though the fingerprints match."""
     for r in sel(R, kind="resp", id=rid):
+        if agent is not None and r["agent"] != agent and "approval_any_agent" not in PLANTS: continue
         seated = {s["wa"] for s in sel(R, kind="seat", agent=r["agent"])} | {steward(R, r["agent"])}
         if r["outcome"] == "approved" and person(R, r["by"]) and r["by"] in seated: return True
     return False
@@ -344,19 +347,36 @@ def untrusted_labels(R, rid):
     return {by[a]["label"] for a in anc[rid] | {rid} if a in by and by[a]["trust"] < VERIFIED}
 
 
-def may_effect(R, thought, fp, args, claims=None, binds_others=()):
+def delegated(R, agent, rid, duty):
+    """A standing delegation that is authority for an act (CC 4.5.5 (b)): a live `delegates_to` onto this agent,
+    signed by a person seated over it, whose scope names the act's duty. An act within it needs no approval of its
+    own. A withdrawn delegation, one from a program's key, one onto another agent or one whose scope does not name the
+    duty licenses nothing."""
+    seated = {s["wa"] for s in sel(R, kind="seat", agent=agent)} | {steward(R, agent)}
+    for d in sel(R, kind="deleg", id=rid):
+        if d["agent"] != agent or not person(R, d["by"]) or d["by"] not in seated: continue
+        if sel(R, kind="withdraw", of=d["id"]): continue
+        if duty in d["scope"] or "delegation_any_scope" in PLANTS: return True
+    return False
+
+
+def may_effect(R, thought, fp, args, claims=None, binds_others=(), under=None, duty=None, agent="ag"):
     """The effect gate after review. The pass record over `fp` is the review holding the evidence when it declares
     in `derived_from` every untrusted kind the arguments derive from. An action that claims authority (for a person,
-    or under a seat) needs the approving row that names its fingerprint. An effect that is a mesh row binding others
-    needs the acknowledgements of every voice that could stop it (CC 2.7.5). Absent evidence licenses nothing."""
+    or under a seat) has it in one of two ways: a standing delegation whose scope names the act (`under`, `duty`),
+    which needs no approval of each act; or the approving row that names its fingerprint (`claims`), for an act no
+    delegation covers. An effect that is a mesh row binding others needs the acknowledgements of every voice that
+    could stop it (CC 2.7.5). Absent evidence licenses nothing."""
     p = next(iter(sel(R, kind="review", thought=thought, outcome="passed", fp=fp)), None)
     if p is None: return False, "action_not_reviewed"
     declared = p["derived_from"]
     if trust_of(R, args) < VERIFIED:
         if not untrusted_labels(R, args) <= declared and "undeclared_passes" not in PLANTS:
             return False, "effect_untrusted_unacknowledged"
-    if claims and "absent_evidence_licenses" not in PLANTS:
-        if not any(r.get("fp") == fp and trusted_evidence(R, r["id"]) for r in sel(R, kind="resp", id=claims)):
+    if under is not None:
+        if not delegated(R, agent, under, duty): return False, "effect_untrusted_unacknowledged"
+    elif claims and "absent_evidence_licenses" not in PLANTS:
+        if not any(r.get("fp") == fp and trusted_evidence(R, r["id"], agent) for r in sel(R, kind="resp", id=claims)):
             return False, "effect_untrusted_unacknowledged"
     if binds_others and "binds_no_ack" not in PLANTS:
         if not set(binds_others) <= {a["by"] for a in sel(R, kind="ack", of=fp)}:

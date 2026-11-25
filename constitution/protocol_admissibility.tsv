@@ -14,6 +14,6 @@ community/infrastructure	quorum:{m}/{n}	condition	entrenched=true	—	CC 3.2	`co
 community/infrastructure	quorum:{m}/{n}	condition	count_set=founder	—	CC 3.2	evaluated over the **founder** subset
 community/infrastructure	quorum:{m}/{n}	condition	m_min=2	—	CC 3.2	`M ≥ 2`
 community/infrastructure	quorum:{m}/{n}	condition	founding_margin=1	—	CC 3.2	founded at **N ≥ M + 1** active human founders
-accord	majority	required	—	—	CC 3.3.4	The canonical entrenched form: the accord-holder family
-accord	majority	condition	entrenched=true	—	CC 3.3.4	with `consensus_protocol_entrenched: true`
+accord	majority	required	—	—	CC 3.3.4	a strict majority of the holders of the bundle in force decides
+accord	majority	condition	entrenched=true	—	CC 4.2.6	a change to this surface requires the dedicated entrenched accord ratification
 accord	majority	condition	count_set=holder	—	CC 4.2.3	Each majority is counted over the standing roster.

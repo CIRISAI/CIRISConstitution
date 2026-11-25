@@ -50,3 +50,20 @@ spec stops at the genesis (`formal/accord_roster/AccordBundle.tla` checks the li
     python3 -I formal/ceremony/check_ceremony.py           # compare with ceremony_expected.tsv
     python3 -I formal/ceremony/check_ceremony.py --write   # write it
     bash formal/ceremony/run_tlc.sh /path/to/tla2tools.jar
+
+## Checking a ceremony's own output
+
+`check_trace.py` reads the trace a ceremony tool writes, one entry for each signed statement of steps 1 to 4, and
+checks it against the nineteen invariants of [`manifests/ceremony.json`](../../manifests/ceremony.json). Where an
+entry carries its signed bytes, the checker decodes them with its own reader and requires the two decodings to agree.
+It then recomputes each row id and the bundle's object id, and resolves every citation by id. Twenty-five planted faults,
+each a mistake a ceremony could make, are each caught: a holder with no sealed halt, a bundle one holder did not
+sign, a shared recovery commitment, a witness quorum written as zero, a seat with no place to dial.
+
+    python3 -I formal/ceremony/check_trace.py TRACE.json          # check a trace at the current edition
+    python3 -I formal/ceremony/check_trace.py --plants TRACE.json # every plant must be caught
+    python3 -I formal/ceremony/check_trace.py --check             # CI: the manifest, the sample and the plants
+
+The sample trace is a rehearsal's output under test keys. An implementer vendors the manifest and the checker by
+hash and runs them on its own tool's output before a ceremony is signed.
+

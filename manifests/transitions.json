@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "9b48d5960ad0f6243f1f361a987aebe68e131a5ae6563a34417278b64f824610",
+  "source_sha256": "82327420ab6dccc046698d5c7cad2227ee085469293cfc970cfc361f4ed6449b",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -18,9 +18,8 @@
    "custodian",
    "founder",
    "holder",
-   "identity:lenscore_detector",
-   "identity:substrate_persist",
    "infra:attest",
+   "infra:detect",
    "member",
    "moderate",
    "operator",
@@ -46,11 +45,11 @@
   "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; a failed clause refuses the row only where it reads the row alone, and elsewhere the row is kept and the clause's word says how it is read (void, contested, exclude, withhold); an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
    "statements": 59,
-   "guarded_transitions": 28,
+   "guarded_transitions": 27,
    "marks": {
-    "refuse": 31,
-    "ref:*": 10,
-    "landed": 2,
+    "refuse": 29,
+    "ref:*": 9,
+    "landed": 1,
     "signs": 2,
     "commits": 1
    },
@@ -93,7 +92,7 @@
   "transitions": 465,
   "gap_cells": 1,
   "confirmed": 256,
-  "undo_gap_cells": 3,
+  "undo_gap_cells": 2,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
  "rows": [
@@ -653,6 +652,53 @@
    ]
   },
   {
+   "family": "act:ack",
+   "kind": "Facts",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "member"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.3",
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      }
+     },
+     "widens": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.3",
+      "value": false
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "always"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
    "family": "activity_tier:{period}",
    "kind": "Circumstances",
    "transitions": [
@@ -999,7 +1045,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "self"
       ],
       "source": "derived"
      },
@@ -1878,7 +1924,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "self"
       ],
       "source": "derived"
      },
@@ -2138,10 +2184,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -6240,7 +6287,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(type(signer,node)) owner(subject,attested) at asserted_at else exclude",
+        "guard": "when(type(signer,node)) owner(subject,attested) at head else void",
         "cc_ref": [
          "CC 3.3.1"
         ],
@@ -7630,6 +7677,56 @@
    ]
   },
   {
+   "family": "contribution:{subject_kind}",
+   "kind": "Priorities",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "self"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.9.3"
+      ],
+      "count": "none"
+     },
+     "widens": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.9.3",
+      "value": false
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "always"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
    "family": "corpus_health:n_eff_measurable",
    "kind": "Confidence",
    "transitions": [
@@ -7638,10 +7735,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -7692,122 +7790,6 @@
        "rows": []
       },
       "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     },
-     "undo": {
-      "value": true,
-      "via": "attest",
-      "policy": "selfAct",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": false,
-      "source": "derived"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    }
-   ]
-  },
-  {
-   "family": "cosign:{state}",
-   "kind": "Process",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "member"
-      ],
-      "source": "derived",
-      "stages": {
-       "pending": [
-        "member"
-       ],
-       "signature": [
-        "member"
-       ]
-      }
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "cc-table",
-      "cc_ref": [
-       "CC 3.1.3"
-      ],
-      "count": "none"
-     },
-     "widens": {
-      "source": "cc-table",
-      "cc_ref": "CC 3.1.3",
-      "value": true
-     },
-     "undo": {
-      "value": true,
-      "via": "withdraw",
-      "policy": "selfAct",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": true,
-      "source": "derived",
-      "when": "always"
-     },
-     "guard": {
-      "value": [
-       {
-        "guard": "when(leaf=pending) (one *@named[id=ref:*] as E else void & owner(E.signer,signer) else exclude)",
-        "cc_ref": [
-         "CC 3.1.3"
-        ],
-        "reach": "whole"
-       }
-      ],
-      "source": "cc-table"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "source": "cc-table",
-      "cc_ref": "CC 3.1.3",
-      "value": [
-       "author"
-      ],
-      "stages": {
-       "pending": [
-        "author"
-       ],
-       "signature": []
-      }
-     },
-     "policy": {
-      "source": "cc-table",
-      "cc_ref": "CC 3.1.3",
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      }
      },
      "widens": {
       "value": false,
@@ -8338,7 +8320,7 @@
    ]
   },
   {
-   "family": "delivery_receipt:{stream_id}",
+   "family": "delivery_ack:{stream_id}",
    "kind": "Facts",
    "transitions": [
     {
@@ -8379,11 +8361,11 @@
      "guard": {
       "value": [
        {
-        "guard": "one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise",
+        "guard": "one stream:head@admitted[attested=leaf:stream_id,val:root=val:chunk_root,val:tree_size>=val:k] else exclude",
         "cc_ref": [
          "CC 5.3.3.11"
         ],
-        "reach": "whole"
+        "reach": "partial"
        }
       ],
       "source": "cc-table"
@@ -8404,10 +8386,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -8532,10 +8515,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -8660,10 +8644,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -8788,10 +8773,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -8916,10 +8902,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
+       "infra:detect"
+      ]
      },
      "policy": {
       "value": {
@@ -10351,7 +10338,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "infra:attest"
       ],
       "source": "derived"
      },
@@ -10619,10 +10606,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -11487,7 +11475,7 @@
         "reach": "whole"
        },
        {
-        "guard": "when(leaf=recovery) one trust:charter@named[object=object,val:recovery_commitments commits signer] else void",
+        "guard": "when(leaf=recovery) one *@named[object=object,val:recovery_commitments commits signer] else void",
         "cc_ref": [
          "CC 3.1.3",
          "CC 4.2.6"
@@ -11695,10 +11683,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -11784,7 +11773,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "self"
       ],
       "source": "derived"
      },
@@ -12029,6 +12018,180 @@
       "value": true,
       "source": "derived",
       "when": "if_widens"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
+   "family": "holon:claim",
+   "kind": "Facts",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "registered"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.11"
+      ],
+      "count": "none"
+     },
+     "widens": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.11",
+      "value": true
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "always"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "withdraw",
+     "from": "admitted",
+     "to": "withdrawn",
+     "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.11",
+      "value": [
+       "author"
+      ]
+     },
+     "policy": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.11",
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      }
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "recant",
+     "from": "admitted",
+     "to": "recanted",
+     "roles": {
+      "value": [
+       "author"
+      ],
+      "source": "cc-table"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table"
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "supersede",
+     "from": "admitted",
+     "to": "superseded",
+     "roles": {
+      "value": [
+       "author"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "derived"
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      },
      "guard": {
       "value": [],
@@ -12418,7 +12581,7 @@
      "guard": {
       "value": [
        {
-        "guard": "one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else exclude(identity_amendment_unauthorized)",
+        "guard": "one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at head else void(identity_amendment_unauthorized)",
         "cc_ref": [
          "CC 3.1.5"
         ],
@@ -12443,10 +12606,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -13105,8 +13269,7 @@
       },
       "source": "cc-table",
       "cc_ref": [
-       "CC 3.1.3",
-       "CC 4.2.1"
+       "CC 3.1.3"
       ],
       "count": "act=group => accord_majority@accord ; none",
       "cases": [
@@ -13968,111 +14131,6 @@
    ]
   },
   {
-   "family": "lineage_witness:{stage}",
-   "kind": "Rules",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "founder",
-       "owner"
-      ],
-      "source": "derived",
-      "stages": {
-       "proposal": [
-        "founder"
-       ],
-       "acceptance": [
-        "owner"
-       ],
-       "decline": [
-        "owner"
-       ]
-      }
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "cc-table",
-      "cc_ref": [
-       "CC 3.4.10"
-      ],
-      "count": "none"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived",
-      "when": "by_scope"
-     },
-     "undo": {
-      "value": true,
-      "via": "withdraw",
-      "policy": "selfAct",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": true,
-      "source": "derived",
-      "when": "if_widens"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author",
-       "subject"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     },
-     "undo": {
-      "value": true,
-      "via": "attest",
-      "policy": "selfAct",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": false,
-      "source": "derived"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    }
-   ]
-  },
-  {
    "family": "locality:decision:{scale}",
    "kind": "Circumstances",
    "transitions": [
@@ -14358,11 +14416,13 @@
       "source": "cc-table",
       "cc_ref": "CC 3.1.3.2",
       "value": [
+       "founder",
        "member",
        "self"
       ],
       "stages": {
        "proposal": [
+        "founder",
         "member"
        ],
        "acceptance": [
@@ -14375,6 +14435,9 @@
         "member"
        ],
        "removal": [
+        "member"
+       ],
+       "keeps": [
         "member"
        ],
        "resignation": [
@@ -14471,13 +14534,6 @@
          "CC 4.4.3.6"
         ],
         "reach": "whole"
-       },
-       {
-        "guard": "each(subject) when(leaf=widening,type(key,node)) one trust:blessing@landed[attested=key] else exclude",
-        "cc_ref": [
-         "CC 3.1.3.2"
-        ],
-        "reach": "partial"
        },
        {
         "guard": "when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation",
@@ -14683,10 +14739,25 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "accord_majority"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 4.2.1"
+      ],
+      "count": "act=group => accord_majority@trust_root ; none",
+      "cases": [
+       {
+        "when": "act=group",
+        "policy": "cosigned",
+        "rows": [
+         "accord_majority"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -14738,7 +14809,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "selfAct",
+      "policy": "cosigned",
       "source": "derived"
      },
      "confirm": {
@@ -14919,6 +14990,101 @@
       "value": true,
       "source": "derived",
       "when": "if_widens"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
+   "family": "mls:leaf_vouch",
+   "kind": "Identity",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "self"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 5.1"
+      ],
+      "count": "none"
+     },
+     "widens": {
+      "source": "cc-table",
+      "cc_ref": "CC 5.1",
+      "value": true,
+      "when": "by_scope"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "withdraw",
+     "from": "admitted",
+     "to": "withdrawn",
+     "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 5.1",
+      "value": [
+       "author"
+      ]
+     },
+     "policy": {
+      "source": "cc-table",
+      "cc_ref": "CC 5.1",
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      }
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      },
      "guard": {
       "value": [],
@@ -19358,7 +19524,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "slash"
       ],
       "source": "derived"
      },
@@ -19496,6 +19662,96 @@
    ]
   },
   {
+   "family": "stream:head",
+   "kind": "Facts",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "self"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.3"
+      ],
+      "count": "none"
+     },
+     "widens": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.3",
+      "value": false
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "always"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "supersede",
+     "from": "admitted",
+     "to": "superseded",
+     "roles": {
+      "value": [
+       "author"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "derived"
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
    "family": "system:*",
    "kind": "Circumstances",
    "transitions": [
@@ -19504,10 +19760,11 @@
      "from": "none",
      "to": "admitted",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.4.7",
       "value": [
-       "identity:substrate_persist"
-      ],
-      "source": "derived"
+       "infra:attest"
+      ]
      },
      "policy": {
       "value": {
@@ -20144,230 +20401,6 @@
    ]
   },
   {
-   "family": "transparency_log:consistency",
-   "kind": "Facts",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "registered"
-      ],
-      "source": "derived"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived",
-      "when": "by_scope"
-     },
-     "undo": {
-      "value": true,
-      "via": "withdraw",
-      "policy": "selfAct",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": true,
-      "source": "derived",
-      "when": "if_widens"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author",
-       "subject"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     },
-     "undo": {
-      "value": true,
-      "via": "attest",
-      "policy": "selfAct",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": false,
-      "source": "derived"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    }
-   ]
-  },
-  {
-   "family": "transparency_log:cosigned:{tree_size}",
-   "kind": "Facts",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "attest"
-      ],
-      "source": "derived"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived",
-      "when": "by_scope"
-     },
-     "undo": {
-      "value": false,
-      "source": "gap"
-     },
-     "confirm": {
-      "value": true,
-      "source": "derived",
-      "when": "always"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    }
-   ]
-  },
-  {
-   "family": "transparency_log:inclusion",
-   "kind": "Facts",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "registered"
-      ],
-      "source": "derived"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived",
-      "when": "by_scope"
-     },
-     "undo": {
-      "value": true,
-      "via": "withdraw",
-      "policy": "selfAct",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": true,
-      "source": "derived",
-      "when": "if_widens"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author",
-       "subject"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     },
-     "undo": {
-      "value": true,
-      "via": "attest",
-      "policy": "selfAct",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": false,
-      "source": "derived"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    }
-   ]
-  },
-  {
    "family": "transport:canonical_rebind",
    "kind": "Identity",
    "transitions": [
@@ -20624,105 +20657,6 @@
    ]
   },
   {
-   "family": "trust:blessing",
-   "kind": "Rules",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "member"
-      ],
-      "source": "derived"
-     },
-     "policy": {
-      "value": {
-       "policy": "cosigned",
-       "rows": [
-        "cosigned_act"
-       ]
-      },
-      "source": "cc-table",
-      "cc_ref": [
-       "CC 3.1.3"
-      ],
-      "count": "cosigned_act@conferrer"
-     },
-     "widens": {
-      "source": "cc-table",
-      "cc_ref": "CC 3.1.3",
-      "value": true,
-      "when": "by_scope"
-     },
-     "undo": {
-      "value": true,
-      "via": "withdraw",
-      "policy": "cosigned",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": true,
-      "source": "derived",
-      "when": "if_widens"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "source": "cc-table",
-      "cc_ref": "CC 3.1.3",
-      "value": [
-       "member"
-      ]
-     },
-     "policy": {
-      "source": "cc-table",
-      "cc_ref": "CC 3.1.3",
-      "value": {
-       "policy": "cosigned",
-       "rows": [
-        "cosigned_act"
-       ]
-      }
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     },
-     "undo": {
-      "value": true,
-      "via": "attest",
-      "policy": "cosigned",
-      "source": "derived"
-     },
-     "confirm": {
-      "value": false,
-      "source": "derived"
-     },
-     "guard": {
-      "value": [],
-      "source": "generic"
-     },
-     "change": {
-      "value": [],
-      "source": "generic"
-     }
-    }
-   ]
-  },
-  {
    "family": "trust:{job}:{version}",
    "kind": "Rules",
    "transitions": [
@@ -20853,9 +20787,9 @@
      "guard": {
       "value": [
        {
-        "guard": "when(leaf=charter) each(val:witnesses) (not founder(key,object) else exclude & not member(key,object) else exclude)",
+        "guard": "when(leaf=accepts) one *@named[id=ref:attached_head_digest] else void(trust_root_head_unreceipted)",
         "cc_ref": [
-         "CC 2.1"
+         "CC 3.2"
         ],
         "reach": "partial"
        }
@@ -21441,7 +21375,8 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "registered"
+       "moderate",
+       "takedown"
       ],
       "source": "derived"
      },
@@ -21644,6 +21579,53 @@
       "value": true,
       "source": "derived",
       "when": "if_widens"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
+   "family": "window:{state}",
+   "kind": "Facts",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "member"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.3.6.4",
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      }
+     },
+     "widens": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.3.6.4",
+      "value": false
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],

@@ -17,7 +17,12 @@ from collections import Counter, OrderedDict
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CC = os.path.join(ROOT, "formal/derivation/family_kind_verb.tsv")
 CENSUS = os.path.join(ROOT, "formal/derivation/census_v61.tsv")
+CENSUS_NAMES = os.path.join(ROOT, "formal/derivation/census_names.tsv")
 SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
+# Cells where a reading found the text states another rule than the store enforced (formal/derivation/text_review.tsv, reading differs).
+# For these the table takes the text's rule and keeps the store's reading beside it as `code`.
+TEXT_OVER_CODE = {tuple(l.split("\t")[:2]) for l in open(os.path.join(ROOT, "formal/derivation/text_review.tsv"), encoding="utf-8").read().split("\n")
+                  if l and not l.startswith("#") and l.split("\t")[2:3] == ["differs"]}
 CELL_TEXT = os.path.join(ROOT, "formal/derivation/cell_text.tsv")
 PLACEMENT_TEXT = os.path.join(ROOT, "formal/derivation/placement_text.tsv")
 SCOPES = ("self", "family", "community", "affiliations", "species", "biosphere", "federation")   # CC 2.1: the closed set of seven
@@ -26,16 +31,24 @@ POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
 SIGNED_OBJECT = os.path.join(ROOT, "constitution/signed_object.tsv")
 SIGNED_OBJECT_V2 = os.path.join(ROOT, "constitution/signed_object_v2.tsv")
 # The families whose payload CC 2.6.1.4 states, by the schema rule that holds it (manifests/family_payloads_v2.cddl).
+# A family whose leaves have different payloads has one rule for each (membership:{stage}): each member then names its rule.
 FORWARD_PAYLOAD = OrderedDict([("group-roster", "group:roster"), ("membership-change", "membership:{stage}"),
+                               ("membership-reply", "membership:{stage}"),
                                ("occurrence-revocation", "identity:occurrence_revocation"),
                                ("entity-revocation", "revocation:{entity_type}:{reason}"),
                                ("takedown-notice", "takedown_notice:{basis}"), ("custody-ack", "custody:{kind}"),
-                               ("key-grant", "key_grant:{axis}"), ("delivery-receipt", "delivery_receipt:{stream_id}"),
+                               ("key-grant", "key_grant:{axis}"), ("delivery-ack", "delivery_ack:{stream_id}"),
                                ("identity-occurrence", "identity:occurrence"), ("identity-amendment", "identity_amendment"),
                                ("deferral-response", "deferral:response:{outcome}"), ("deferral-request", "deferral:request"),
-                               ("canonical-rebind", "transport:canonical_rebind"), ("trust-accepts", "trust:accepts")])
-FORWARD_PARTIAL = {"deferral:response:{outcome}", "deferral:request", "transport:canonical_rebind", "trust:accepts"}   # the rule names some members; the cell's others stay
-FORWARD_LEAVES = {"membership:{stage}": ("widening", "removal")}   # the stages the rule states; the others keep their cell
+                               ("canonical-rebind", "transport:canonical_rebind"), ("trust-accepts", "trust:{job}:{version}"),
+                               ("act-ack", "act:ack"), ("objection-vote", "objection:{state}"),
+                               ("owner-binding", "ownership:{relation}:{target_kind}:{version}"),
+                               ("holon-claim", "holon:claim"),
+                               ("leaf-vouch", "mls:leaf_vouch"),
+                               ("window-step", "window:{state}")])
+FORWARD_PARTIAL = {"deferral:response:{outcome}", "deferral:request", "transport:canonical_rebind", "trust:{job}:{version}"}   # the rule names some members; the cell's others stay
+FORWARD_LEAVES = {"membership:{stage}": ("widening", "removal", "acceptance", "decline"),   # the leaves the rules state; the others keep their cell
+                  "trust:{job}:{version}": ("accepts",)}
 CELL_CITES = os.path.join(ROOT, "formal/derivation/cell_cites.tsv")
 FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
 FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
@@ -68,6 +81,15 @@ COLUMNS = OrderedDict([
     ("replication", "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}"),
     ("projection", "{table, rebuild ∈ {byte_equal, none}}"),
     ("erasure_route", "dsar | purge | legal_hold | none"),
+    ("names_head", "roster | standing | none | by_placement: which head a row of the family names in refs.head (CC 2.4.1.1, CC 2.7.8); null where the placement is unread"),
+    ("shape", "claim | content | consent | door | consent+door, the family's kernel shape (formal/derivation/family_shapes.tsv); null where none takes it"),
+    ("descends_on_withdrawal", "bytes_and_words | row | nothing: what a holder other than the signer drops when a row of the family is withdrawn (CC 6.1.5 N5)"),
+    ("subject_may_withdraw", "true | false | a map by selector | null where open: whether a party a row of the family names, other than its signer, may withdraw it under rules 2 to 4 of CC 2.4.1.1; false on the kept list, for a row never withdrawn and for a counted row"),
+    ("accountability_record", "bool: the row is kept as the record of its signer's own acts, so the signer's owner may not withdraw it (CC 3.1.5)"),
+    ("may_carry_under", "true | false | a map by selector | null where open: a row of the family may be a deputy's edge and carry refs.also.under, a set of exactly one (CC 4.5.5)"),
+    ("standing_act", "offer | end | acceptance | exercise | none | a map by selector | null where open: what a row of the family is with respect to a standing; receipter is admitted only on an offer and lifts only on a counted end (CC 2.4.1.1)"),
+    ("room_content", "true | false | a map by selector: a row of the family placed at a room or a family scope is the room's content, read by the tips rule after its author's seat ends; a leaf a map does not name is false (CC 3.1.3.2)"),
+    ("names_stands_on", "true | false | a map by selector: a row of the family signed under a root grant names in refs.also.stands_on the one acceptance of that grant it stands on, beside the bundle in refs.head; true for the reserved families whose duty a root confers (CC 2.4.1.1, CC 3.4.7)"),
     ("blind", "members minted as disclosures (CC 2.6.1.10): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
@@ -446,6 +468,142 @@ def placement_text(default_value):
 
 
 SHAPES = os.path.join(ROOT, "formal/derivation/family_shapes.tsv")
+NAMES_HEAD_TEXT = {}
+for _l in open(os.path.join(ROOT, "formal/derivation/names_head_text.tsv"), encoding="utf-8").read().split("\n"):
+    if _l and not _l.startswith("#") and not _l.startswith("family\t"):
+        _f, _sel, _v, _w = _l.split("\t")
+        if _v not in ("roster", "standing", "none", "by_placement"): raise SystemExit(f"names_head_text.tsv: {_f}: unknown value {_v}")
+        NAMES_HEAD_TEXT.setdefault(_f, []).append((_sel, _v, _w))
+SHAPE_OF = {l.split("\t")[0]: l.split("\t")[1] for l in open(SHAPES, encoding="utf-8").read().split("\n")
+            if l and not l.startswith("#") and not l.startswith("family\t")}
+def names_head(row):
+    """Which head a row of the family names in refs.head (CC 2.4.1.1, CC 2.7.8), from where it is placed and who signs it.
+    roster: placed only at a room's or a family's scope, so it names that roster's version. standing: signed under a seat, a grant
+    or a binding and placed outside any roster, so it names the record that seats the signer. none: a person's own row, exercising
+    no conferred standing. by_placement: the family is placed at several scopes; at a room or family it names that roster's version,
+    and at self, at federation or in the commons, where there is no roster, it names none unless its signer signs as someone's node,
+    agent or delegate or under a grant, and then that binding, delegation or bundle."""
+    pl = row["placement"].get("value"); sr = row["signer_rule"].get("value")
+    places = set(pl) if isinstance(pl, list) else ({head_of(pl)} if isinstance(pl, str) else set())
+    places = {head_of(x) if isinstance(x, str) else x for x in places}
+    who = sr.get("who") if isinstance(sr, dict) else sr
+    who = " ".join(who) if isinstance(who, list) else (who or "")
+    seated = any(t in who for t in ("seat_role", "identity_type contains", "holder", "steward", "minter", "owner_of"))
+    rooms = {"targeted_room", "targeted_family"}
+    if not places or pl is None or (isinstance(pl, str) and pl.startswith("none")):
+        v, why = None, "the placement cell is unread or the family is never stored"
+    elif places <= rooms: v, why = "roster", "placed only at a room's or a family's scope"
+    elif places & rooms: v, why = "by_placement", "placed at a room or a family and elsewhere"
+    elif seated or "roster_member" in who: v, why = "standing", "signed under a seat, a grant or a binding, outside any roster"
+    else: v, why = "none", "a row of its signer's own, exercising no conferred standing"
+    return {"value": v, "source": "derived" if v else "gap", "from": "placement, signer_rule", "note": why, "cc_ref": "CC 2.4.1.1"}
+
+
+# What a holder other than the signer drops when a row of the family is withdrawn (CC 6.1.5 N5, CC 2.4.1.1): content is N5's object;
+# a claim leaves every audience; a consent or a door is structure, kept and read as retracted, since past acts are judged against it.
+DESCENDS = {"content": "bytes_and_words", "claim": "row", "consent": "nothing", "door": "nothing", "consent+door": "nothing", "none fits": "nothing"}
+# Six read-only columns on withdrawal and standing (CC 2.4.1.1, CC 3.1.5, CC 4.5.5, CC 3.1.3.2, CC 3.4.7): each cell is derived by a stated rule from
+# the other columns, and a row of formal/derivation/standing_text.tsv replaces it for one family or one leaf, quoting its sentence.
+STANDING_TEXT = os.path.join(ROOT, "formal/derivation/standing_text.tsv")
+STANDING_VALUES = OrderedDict([("subject_may_withdraw", ("true", "false")), ("accountability_record", ("true", "false")),
+                               ("may_carry_under", ("true", "false")), ("standing_act", ("offer", "end", "acceptance", "exercise", "none")),
+                               ("room_content", ("true", "false")), ("names_stands_on", ("true", "false"))])
+# The two branches of a names_head cell that reads by_placement, as data: where the row is placed decides which head it names.
+# Each branch takes its sentences from the `_meta` rule of standing_text.tsv it names, so a branch with no quoted rule fails the build.
+NAMES_HEAD_BRANCHES = (
+    OrderedDict([("placed_at", ["targeted_room", "targeted_family"]), ("names", "roster"), ("rule", "names_head.by_placement.room_or_family")]),
+    OrderedDict([("placed_at", ["self_collective", "commons"]), ("names", "standing"), ("when", "the signer signs under a standing: the binding, the delegation or the bundle"),
+                 ("otherwise", "none"), ("rule", "names_head.by_placement.elsewhere")]),
+)
+STANDING_RANK = ("derived", "quote", "ruling", "open")   # a cell of several selectors takes the last of these any selector has
+
+
+def standing_text():
+    """The rows of standing_text.tsv, by column, and the rules and notes of its `_meta` rows. A quote stands verbatim in its section;
+    a ruling carries its note; an open row carries the sentence the text would need and no value. Returns (rows, meta, errors)."""
+    rows, meta, errs = {c: [] for c in STANDING_VALUES}, OrderedDict(), []
+    for r in tsv_rows(STANDING_TEXT):
+        where = f"standing_text.tsv: {r['column']} {r['family']} {r['selector']}"
+        if r["source"] not in ("quote", "ruling", "open"): errs.append(f"{where}: the source is one of quote, ruling, open"); continue
+        if not r["words"]: errs.append(f"{where}: no words"); continue
+        if r["source"] == "quote" or r["cc_ref"]:
+            span = section_span(r["cc_ref"])
+            if span is None: errs.append(f"{where}: {r['cc_ref']} is no section"); continue
+            if r["source"] == "quote" and r["words"] not in span: errs.append(f"{where}: the quoted words do not stand in {r['cc_ref']}"); continue
+        if r["column"] == "_meta":
+            if r["source"] != "quote": errs.append(f"{where}: a rule or a note quotes its sentence"); continue
+            m = meta.setdefault(r["family"], OrderedDict([("statement", r["value"]), ("cites", [])]))
+            if m["statement"] != r["value"]: errs.append(f"{where}: one key, two statements"); continue
+            m["cites"].append(OrderedDict([("cc_ref", r["cc_ref"]), ("quote", r["words"])]))
+            continue
+        if r["column"] not in STANDING_VALUES: errs.append(f"{where}: unknown column"); continue
+        if r["source"] == "open":
+            if r["value"] != "-": errs.append(f"{where}: an open row states no value"); continue
+            v = None
+        elif r["value"] not in STANDING_VALUES[r["column"]]: errs.append(f"{where}: unknown value {r['value']}"); continue
+        else: v = {"true": True, "false": False}.get(r["value"], r["value"])
+        if r["selector"] != "*" and not re.fullmatch(r"(leaf|act)=[a-z_|]+", r["selector"]): errs.append(f"{where}: the selector is * or leaf=NAME or act=NAME"); continue
+        rows[r["column"]].append(OrderedDict([("family", r["family"]), ("selector", r["selector"]), ("value", v), ("source", r["source"]),
+                                              ("cc_ref", r["cc_ref"]), ("words", r["words"]), ("used", False)]))
+    return rows, meta, errs
+
+
+def standing_cells(row, text):
+    """The six cells of one family; room_content and names_stands_on are false unless a row of the table says otherwise. Derived first: subject_may_withdraw is true, and false on each arm the authorship column gives
+    as counted (CC 2.4.1.1 rule 0); accountability_record and may_carry_under are false; standing_act is end where the confers cell
+    is an ending, acceptance where its role is acceptance, else exercise where names_head is roster, standing or by_placement, none
+    where it is none, and open where names_head is unread. Then the family's rows of standing_text.tsv replace the derived value,
+    for the family (selector *) or leaf by leaf."""
+    fam, out = row["family"], OrderedDict()
+    au, nh, cf = row["authorship"], row["names_head"].get("value"), row["confers"].get("value")
+    for col in STANDING_VALUES:
+        if col == "subject_may_withdraw":
+            arms = [a for a in au.get("arms") or [] if a["value"] == "counted"]
+            if au.get("value") == "counted": v, why = False, "every row of the family is counted: rules 1 to 4 never reach a counted row"
+            elif arms:
+                v = OrderedDict([(a["when"], False) for a in arms] + [("*", True)])
+                why = "false on the arms the authorship column gives as counted; true for a row one party authors"
+            else: v, why = True, "a named party may retire a row about itself; the family is on no kept list"
+            c = OrderedDict([("value", v), ("source", "derived"), ("from", "authorship"), ("note", why), ("cc_ref", "CC 2.4.1.1")])
+        elif col == "accountability_record":
+            c = OrderedDict([("value", False), ("source", "derived"), ("note", "no sentence keeps the family's rows from their signer's owner"), ("cc_ref", "CC 3.1.5")])
+        elif col == "may_carry_under":
+            c = OrderedDict([("value", False), ("source", "derived"), ("note", "no row of the family is a deputy's edge"), ("cc_ref", "CC 4.5.5")])
+        elif col == "room_content":
+            c = OrderedDict([("value", False), ("source", "derived"), ("note", "the family is not among those CC 3.1.3.2 names as a room's content"), ("cc_ref", "CC 3.1.3.2")])
+        elif col == "names_stands_on":
+            c = OrderedDict([("value", False), ("source", "derived"), ("note", "no root confers the family's duty, so no row of it stands on an acceptance of a root grant"), ("cc_ref", "CC 2.4.1.1")])
+        else:
+            act = lambda h: "none" if h == "none" else "exercise"
+            if isinstance(cf, dict) and cf.get("relation") == "ending": v, src, frm, why = "end", "derived", "confers", "the family's rows end a standing"
+            elif isinstance(cf, dict) and cf.get("role") == "acceptance": v, src, frm, why = "acceptance", "derived", "confers", "the family's row is the acceptor's own consent"
+            elif nh is None: v, src, frm, why = None, "open", "names_head", "the names_head cell is unread, so nothing says whether a row of the family exercises a standing"
+            elif isinstance(nh, dict): v, src, frm, why = OrderedDict((k, act(h)) for k, h in nh.items()), "derived", "names_head", "by the head each selector names"
+            else: v, src, frm, why = act(nh), "derived", "names_head", ("a row of its signer's own, exercising no conferred standing" if nh == "none" else f"its rows name a head ({nh})")
+            c = OrderedDict([("value", v), ("source", src), ("from", frm), ("note", why), ("cc_ref", "CC 2.4.1.1")])
+        mine = [t for t in text[col] if fam_match(fam, t["family"])]
+        for t in mine: t["used"] = True
+        if mine:
+            derived = c["value"]
+            if len(mine) == 1 and mine[0]["selector"] == "*":
+                t = mine[0]
+                c = OrderedDict([("value", t["value"]), ("source", t["source"]), ("from", "formal/derivation/standing_text.tsv")] +
+                                ([("cc_ref", t["cc_ref"])] if t["cc_ref"] else []) +
+                                [("quote" if t["source"] == "quote" else ("note" if t["source"] == "ruling" else "needs"), t["words"]), ("derived", derived)])
+            else:
+                if any(t["selector"] == "*" for t in mine) or len({t["selector"] for t in mine}) != len(mine):
+                    raise SystemExit(f"standing_text.tsv: {col} {fam}: a family takes one * row, or one row a selector")
+                c = OrderedDict([("value", OrderedDict((t["selector"], t["value"]) for t in mine)),
+                                 ("source", max((t["source"] for t in mine), key=STANDING_RANK.index)), ("per_selector", True),
+                                 ("from", "formal/derivation/standing_text.tsv"),
+                                 ("sources", OrderedDict((t["selector"], t["source"]) for t in mine)),
+                                 ("cc_ref", OrderedDict((t["selector"], t["cc_ref"]) for t in mine if t["cc_ref"])),
+                                 ("words", OrderedDict((t["selector"], t["words"]) for t in mine)), ("derived", derived)])
+        elif isinstance(c["value"], dict): c["per_selector"] = True
+        out[col] = c
+    return out
+
+
 CONFERS_TEXT = os.path.join(ROOT, "formal/derivation/confers_text.tsv")
 RELATION = {"signer": "permission", "signer+holder": "seat", "body+holder": "seat"}   # formal/KERNEL.md 5: one voice bound is one row, two are a seat
 SEAT_PARAMS = ("role", "scope", "roster", "holders", "conferrer", "consent", "proposal", "ends", "revoker", "single", "closes", "door")
@@ -754,11 +912,39 @@ def read_by_cells(fams):
     return out, OrderedDict([("every_family", every), ("defaults", dflt), ("value", [a for a in ANSWERS if a in base])]), errs
 
 
+def census_names(census, registered):
+    """formal/derivation/census_names.tsv: the census rows whose name the text does not register, each retired (not
+    read) or renamed (read as the text's family). Returns (rows, errors); the census itself is never edited."""
+    rows, errs = [], []
+    for r in csv.DictReader([l for l in open(CENSUS_NAMES, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t"):
+        old, fate, new, why = r["census_prefix"], r["fate"], r["family"], r["reason"]
+        if old not in census: errs.append(f"census_names.tsv: {old} is not a row of the census")
+        if old in registered: errs.append(f"census_names.tsv: {old} is a registered family; remove the row")
+        if fate not in ("retired", "renamed") or (fate == "renamed") != bool(new): errs.append(f"census_names.tsv: {old}: fate {fate!r} with family {new!r}")
+        if new and new not in registered: errs.append(f"census_names.tsv: {old}: {new} is not a registered family")
+        if new and new in census: errs.append(f"census_names.tsv: {old}: the census already carries {new}")
+        if not why: errs.append(f"census_names.tsv: {old}: no reason")
+        rows.append(OrderedDict([("census_prefix", old), ("fate", fate)] + ([("family", new)] if new else []) + [("reason", why)]))
+    return rows, errs
+
+
+def read_census(registered):
+    """The vendored census keyed by the family each row is read as (census_names.tsv), with the table's rows."""
+    census_lines = [l for l in open(CENSUS, encoding="utf-8").read().split("\n") if not l.startswith("#")]
+    census = OrderedDict((r["prefix"], r) for r in csv.DictReader(census_lines, delimiter="\t"))
+    names, errs = census_names(census, registered)
+    for n in names:
+        row = census.pop(n["census_prefix"], None)
+        if row is not None and n["fate"] == "renamed": census[n["family"]] = row
+    return census, names, errs
+
+
 def main():
     cc = {r["family"]: r for r in csv.DictReader(open(CC, encoding="utf-8"), delimiter="\t")}
-    census_lines = [l for l in open(CENSUS, encoding="utf-8").read().split("\n") if not l.startswith("#")]
-    census = {r["prefix"]: r for r in csv.DictReader(census_lines, delimiter="\t")}
     reg = json.load(open(REG, encoding="utf-8"))
+    census, census_named, nerrs = read_census({f["prefix"] for f in reg.get("families", []) if isinstance(f, dict) and "prefix" in f})
+    if nerrs:
+        [print(e) for e in nerrs]; return 1
     pol = {}
     for f in reg.get("families", []):
         if isinstance(f, dict) and "prefix" in f: pol[f["prefix"]] = f.get("polarity")
@@ -837,8 +1023,8 @@ def main():
             row[col] = cell(col, z[zc]) if z else {"value": None, "source": "gap", "note": "not in the census"}
         if fam in signer_text:
             sts = signer_text.pop(fam); cur = row["signer_rule"]
-            if cur.get("source") != "gap" and cur.get("value") != HELD_SHUT:
-                print(f"signer_rule_text.tsv: {fam} has a closed census cell ({cur.get('source')}); remove the row"); return 1
+            if cur.get("source") != "gap" and cur.get("value") != HELD_SHUT and (fam, "signer_rule") not in TEXT_OVER_CODE:
+                print(f"signer_rule_text.tsv: {fam} has a closed census cell ({cur.get('source')}); remove the row, or list the cell in text_review.tsv as differs"); return 1
             parsed = []
             for st in sts:
                 txt = signer(st["signer_rule"])
@@ -865,7 +1051,7 @@ def main():
             if col not in CENSUS_MAP or col == "signer_rule":
                 print(f"cell_text.tsv: {fam} names the column {col}, which is not one this table fills"); return 1
             cur = row[col]
-            if cur.get("source") not in ("gap", "generic"):
+            if cur.get("source") not in ("gap", "generic") and (fam, col) not in TEXT_OVER_CODE:
                 print(f"cell_text.tsv: {fam} {col} is closed by the census ({cur.get('source')}); a difference from the text is a departure with a reason, not a row here"); return 1
             span = section_span(ct["cc_ref"])
             if span is None or ct["quote"] not in span:
@@ -886,6 +1072,19 @@ def main():
         row["emitter_class"] = emitter_class(row["signer_rule"])
         row["derived"], row["read_by"] = derived_text[fam], der_cells[fam]
         row["confers"], row["binds_segment"] = conf_cells[fam], seg_cells[fam]
+        row["names_head"] = names_head(row)
+        ruled = NAMES_HEAD_TEXT.pop(fam, None)
+        if ruled:
+            derived = row["names_head"].get("value")
+            if len(ruled) == 1 and ruled[0][0] == "*":
+                row["names_head"] = {"value": ruled[0][1], "source": "ruled", "from": "formal/derivation/names_head_text.tsv", "note": ruled[0][2], "derived": derived, "cc_ref": "CC 2.4.1.1"}
+            else:
+                row["names_head"] = {"value": OrderedDict((sel, v) for sel, v, _ in ruled), "source": "ruled", "per_selector": True, "from": "formal/derivation/names_head_text.tsv",
+                                     "note": OrderedDict((sel, w) for sel, _, w in ruled), "derived": derived, "cc_ref": "CC 2.4.1.1"}
+        shp = SHAPE_OF.get(fam)
+        row["shape"] = {"value": None if shp == "none fits" else shp, "source": "kernel-table", "from": "formal/derivation/family_shapes.tsv"}
+        if shp == "none fits": row["shape"]["note"] = "no kernel shape takes the family; it is read as structure"
+        row["descends_on_withdrawal"] = {"value": DESCENDS[shp], "source": "derived", "from": "shape", "cc_ref": "CC 6.1.5"}
         stmts = fold_text.pop(fam, [])
         if stmts:
             fc = fold_cell(fam, stmts)
@@ -985,15 +1184,18 @@ def main():
                          "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"}
     # The forward payload (CC 2.6.1.4): where the signed-object table of this form states a family's payload rule, that rule
     # is the family's body, member for member, and the earlier form's cell gives way to it (a family whose rule covers
-    # some leaves only keeps its cell's members of the others). A cosign:{state} row has no payload of its own (CC 3.1.3).
+    # some leaves only keeps its cell's members of the others).
     fwd = OrderedDict()
     for so in csv.DictReader(open(SIGNED_OBJECT_V2, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE):
         fam = FORWARD_PAYLOAD.get(so["rule"])
         if fam:
-            fwd.setdefault(fam, []).append(OrderedDict([
+            e = OrderedDict([
                 ("member", so["member"].strip('"')), ("type", so["type"]),
                 ("presence", "required" if so["required_when"] == "always" else "optional"),
-                ("when", so["required_when"]), ("in_cddl", True), ("cc_ref", "CC " + so["cc_ref"].split()[0])]))
+                ("when", so["required_when"]), ("in_cddl", True), ("cc_ref", "CC " + so["cc_ref"].split()[0])])
+            if list(FORWARD_PAYLOAD.values()).count(fam) > 1: e["rule"] = so["rule"]
+            if len(FORWARD_LEAVES.get(fam, ())) == 1: e["leaf"] = fam.split(":")[0] + ":" + FORWARD_LEAVES[fam][0]   # the one leaf the rule states
+            fwd.setdefault(fam, []).append(e)
     if set(fwd) != set(FORWARD_PAYLOAD.values()):
         print("signed_object_v2.tsv states no payload for: " + ", ".join(sorted(set(FORWARD_PAYLOAD.values()) - set(fwd)))); return 1
     for r in rows:
@@ -1003,14 +1205,12 @@ def main():
             named = {e["member"] for e in fwd[r["family"]]}
             keep = [e for e in old.get("members", []) if (leaves and e.get("leaf") and e["leaf"].split(":")[1] not in leaves)
                     or (r["family"] in FORWARD_PARTIAL and e.get("member") not in named)]
-            r["body"] = {"value": OrderedDict([("rule", next(k for k, v in FORWARD_PAYLOAD.items() if v == r["family"])),
+            its = [k for k, v in FORWARD_PAYLOAD.items() if v == r["family"]]
+            r["body"] = {"value": OrderedDict([("rule", its[0]) if len(its) == 1 else ("rules", its),
                                                ("members", fwd[r["family"]] + keep)]),
                          "source": "cc-table", "cc_ref": "CC 2.6.1.4",
                          "note": "the family's payload in this form, member for member from the members table of CC 2.6.1.4"
-                                 + (f"; stages {', '.join(leaves)}; the others keep the members the earlier cell gave" if leaves else "")}
-        elif r["family"] == "cosign:{state}":
-            r["body"] = {"value": "none: each state is a statement over the event's own payload, named by the event's row id",
-                         "source": "cc-table", "cc_ref": "CC 3.1.3"}
+                                 + (f"; {'stages' if r['family'].startswith('membership') else 'leaves'} {', '.join(leaves)}; the others keep the members the earlier cell gave" if leaves else "")}
     # The sentences that state a closed cell: the cell gains the sections that say it, its value untouched.
     by_fam = {r["family"]: r for r in rows}
     cited = 0
@@ -1043,6 +1243,8 @@ def main():
     if "*" in fold_text:
         fold_every = fold_cell("*", fold_text.pop("*"))
         if fold_every is None: return 1
+    if NAMES_HEAD_TEXT:
+        print("names_head_text.tsv names families outside the model: " + ", ".join(sorted(NAMES_HEAD_TEXT))); return 1
     if fold_text:
         print("fold_text.tsv names families outside the model: " + ", ".join(sorted(fold_text))); return 1
     if sum(fold_marks.values()) > FOLD_MARKS_MAX:
@@ -1062,6 +1264,26 @@ def main():
     for r in rows:
         fam, items = r["family"], list(r.items()); k = [x[0] for x in items].index("count") + 1
         r.clear(); r.update(items[:k] + [("authorship", auth[fam]), ("second_signers", second[fam])] + items[k:])
+    # Withdrawal and standing: six cells a family, placed after descends_on_withdrawal (formal/derivation/standing_text.tsv).
+    st_text, st_meta, serrs = standing_text()
+    if serrs:
+        [print(e) for e in serrs]; return 1
+    for r in rows:
+        cells = standing_cells(r, st_text)
+        items = list(r.items()); k = [x[0] for x in items].index("descends_on_withdrawal") + 1
+        r.clear(); r.update(items[:k] + list(cells.items()) + items[k:])
+    unused = [f"{c} {t['family']} {t['selector']}" for c, ts in st_text.items() for t in ts if not t["used"]]
+    if unused:
+        print("standing_text.tsv names families outside the model: " + ", ".join(unused)); return 1
+    nh_branches = []
+    for b in NAMES_HEAD_BRANCHES:
+        if b["rule"] not in st_meta:
+            print(f"standing_text.tsv: no _meta rule {b['rule']} for the by_placement branch at {', '.join(b['placed_at'])}"); return 1
+        nh_branches.append(OrderedDict(list(b.items()) + [("cites", st_meta[b["rule"]]["cites"])]))
+    st_key = lambda v: "by_selector" if isinstance(v, dict) else ("open" if v is None else str(v).lower())
+    st_counts = OrderedDict((c, OrderedDict([("by_value", OrderedDict(sorted(Counter(st_key(r[c]["value"]) for r in rows).items()))),
+                                             ("by_source", OrderedDict((s, sum(1 for r in rows if r[c]["source"] == s)) for s in STANDING_RANK))]))
+                            for c in STANDING_VALUES)
     auth_gap = [f for f, c in auth.items() if c["source"] == "gap"]
     second_gap = [(f, e["role"]) for f, c in second.items() for e in c["value"] if e["member"] == "gap"]
     if len(auth_gap) > AUTHORSHIP_GAP_MAX:
@@ -1108,6 +1330,8 @@ def main():
         ("cc_section", "3.1 (the family model manifest, CIRISConstitution#189)"),
         ("version", "0-draft"), ("taxonomy_version", "11+1 v1"),
         ("registry_sha256", reg_sha), ("census", "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341"),
+        ("census_names", OrderedDict([("source", "formal/derivation/census_names.tsv"), ("rows", census_named),
+                                      ("reading", "a census row whose name the text does not register: retired is not read and makes no family row; renamed is read as the text's family")])),
         ("columns", COLUMNS), ("families", len(rows)), ("coverage", cov),
         ("cites", OrderedDict([("source", "formal/derivation/cell_cites.tsv"), ("cells_cited", sum(1 for r in rows for c in r.values() if isinstance(c, dict) and c.get("cites"))),
                                ("citations", cited), ("reading", "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds")])),
@@ -1128,6 +1352,9 @@ def main():
                                     ("second_signers", OrderedDict([("families_with_roles", sum(1 for c in second.values() if c["value"])), ("families_author_only", sum(1 for c in second.values() if not c["value"])),
                                                                     ("roles", sum(len(c["value"]) for c in second.values())), ("roles_without_member", len(second_gap))])),
                                     ("reading", "authorship gives each family's rows as authored (one party authors; the payload carries author), subject (authored, and the author is the attested key: a statement whose iss is not the sub is refused) or counted (several statements over one payload, author null), arm by arm on the count column's selector keys; gap where the text gives both and no selector names the case. second_signers names each role whose statement over the same payload a row accepts besides the author's, and the payload member that names that party, or sub; a statement in no role is Invalid (CC 2.6.1.3)")])),
+        ("standing", OrderedDict([("source", "formal/derivation/standing_text.tsv"), ("columns", list(STANDING_VALUES)),
+                                  ("rules", st_meta), ("cells", st_counts), ("names_head_by_placement", nh_branches),
+                                  ("reading", "source derived: the cell follows from the other columns by the rule of that name in rules; quote: a row of the table whose words stand verbatim in cc_ref; ruling: a ruled reading the text does not yet state for the family by name; open: no value, and needs states the sentence the text would need. A cell with per_selector gives its value by leaf or by act, `*` taking every other row. Two rules of subject_may_withdraw hold in every family and are no cell: affiliation_subject and legal_weight_act. withdraws is a composer row and no family: rules.`standing_act.withdraws` states how an end is recognised")])),
         ("default_row", OrderedDict([("columns", default), ("families_on_it", by_count.get(0, 0)),
                                      ("families_by_departures", OrderedDict((str(k), by_count[k]) for k in sorted(by_count))),
                                      ("reading", "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone")])),
@@ -1154,6 +1381,8 @@ def main():
     print(f"departure reasons: {len(spec['reasons'])} reasons move {len(claims)} cells; {len(opens)} open")
     print(f"placement: {placed_by_default} families take the default, the scope each row carries; {len(placing['scopes'])} audience rows, {len(placing['reach'])} on reach, {len(placing['moves'])} on what moves, {len(placing['copy'])} on copying")
     print(f"authorship: " + ", ".join(f"{k} {v}" for k, v in meta["authorship"]["families"].items()) + f"; second_signers: {meta['authorship']['second_signers']['families_with_roles']} families name roles, {len(second_gap)} roles with no member")
+    for c in STANDING_VALUES:
+        print(f"{c}: " + ", ".join(f"{k} {v}" for k, v in st_counts[c]["by_value"].items()) + "; by source: " + ", ".join(f"{k} {v}" for k, v in st_counts[c]["by_source"].items()))
     print(f"default row: {by_count.get(0, 0)} of {len(rows)} families are on it in all {len(default)} columns, {by_count.get(1, 0)} depart in one; {len(departures)} departures in all")
     print("conferral: " + "; ".join(f"{col} " + ", ".join(f"{k} {v}" for k, v in meta["conferral"][col].items()) for col in ("confers", "binds_segment", "derived", "read_by")))
     print(f"family_model: {len(rows)} families; coverage per column (cc-table/code-v61/generic/prose/mixed/gap): " +

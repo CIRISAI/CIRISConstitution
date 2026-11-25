@@ -118,10 +118,10 @@ authoring grammars and the policy table. **measured** (`tools/kx_check.py`, on t
 
 | Grammar | Translated in full | Translated with a word dropped |
 |---|---|---|
-| guards | 58 | 2 |
-| folds | 185 | 6 |
+| guards | 57 | 2 |
+| folds | 183 | 6 |
 | changes | 45 | 17 |
-| reactions | 93 | 29 |
+| reactions | 96 | 26 |
 | policy text cells | 48 | 8 |
 
 Every translation agrees with a reference reading on generated row sets in every arrival order. The policy
@@ -207,8 +207,8 @@ stands when a bounded walk of live seats leads to it from a root. For what a row
 the node's own key. **proved**: `no_offer_no_seat`, `no_acceptance_no_seat`, `third_key_cannot_end`,
 `only_withdrawals_and_cuts_end`, `means_is_seat_walk`. **run**: 2,774 sets in 701,176 arrival orders.
 
-The 23 role names of the tables are not 23 things. **run** (`formal/causal_kernel/role_shapes.tsv`): the seat
-covers 18 of them, three are read off the row judged (`author`, `self`, `subject`), `winner` is a tally, and
+The 22 role names of the tables are not 22 things. **run** (`formal/causal_kernel/role_shapes.tsv`): the seat
+covers 17 of them, three are read off the row judged (`author`, `self`, `subject`), `winner` is a tally, and
 `tally` fits none because its holders are drawn from a group secret that is not a row. A duty seat over a community is one seat with four scopes: `moderate`, `review`, `slash` and `takedown`. The
 founding record seats the duty holders who sign it, and they are equals (CC 4.5.4). A duty seat is conferred
 by a strict majority of the duty holders, or by the lone holder with the new holder's acceptance. It is
@@ -222,13 +222,13 @@ delegate only with the delegate's own signature (CC 4.4.3.19), and a custodian h
 need none and say why: a node in an infrastructure community, a key of a person's own roster, and a device
 under its owner. **open**: how the second signature travels and from when a delegation without it stops
 seating are not settled. **measured** (`manifests/family_model.json`, `formal/derivation/confers_text.tsv`): what a family confers is
-stated for 162 of 187 families. 136 claim and content families take one default, that a claim seats no one
-(CC 3.4.5.1). Twenty-one consents take their seat from `family_shapes.tsv`, and five families have a sentence of
-their own. **open**: 24 families confer nothing that a sentence states: 21 doors, two consents the shape
-table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 156
-families; 29 have a segment that names another row and no word yet says so, a limit CC 8.3.4 names. Which answers read a family's
+stated for 162 of 187 families. 138 claim and content families take one default, that a claim seats no one
+(CC 3.4.5.1). Twenty consents take their seat from `family_shapes.tsv`, and four families have a sentence of
+their own. **open**: 25 families confer nothing that a sentence states: 22 doors, two consents the shape
+table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 158
+families; 28 have a segment that names another row and no word yet says so, a limit CC 8.3.4 names. Which answers read a family's
 rows is filled for all 187 from the expression language: every family is read by **state** and **stands**
-through the default fold, a default checked for none of the 83 that take it, and 42 are also read by another
+through the default fold, a default checked for none of the 79 that take it, and 44 are also read by another
 answer. A row that must equal its own recomputation is stated for three families (CC 6.1.9) and for no other.
 
 **may.** The door, the control a person is offered and the gate on serving a row are one answer
@@ -252,13 +252,14 @@ signed both (CC 5.2). No member carries another member's signed row out. **prove
 `nothing_leaves`, `others_elsewhere_change_nothing`, `author_carries`, `same_room_unchanged`. The cost: a cut
 that names a row of another room waits until that row's signer carries it. What must not travel is proof of
 who said it or of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): no placement cell
-is empty. Of 187 families, 147 take the one default, the scope each row carries with the audience CC 5.2 gives
-it, and 21 are placed by a sentence of their own. **open**: the default is stated once for all families and is
-checked for none of the 147. CC 8.3.4 names this as a limit. The copy rule is a row of that table.
+is empty. Of 187 families, 143 take the one default, the scope each row carries with the audience CC 5.2 gives
+it, and 20 are placed by a sentence of their own. **open**: the default is stated once for all families and is
+checked for none of the 143. CC 8.3.4 names this as a limit. The copy rule is a row of that table.
 
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
-the close. A window names its opener and the acknowledgement by which the concluding party first held it. Where the
-outcome binds others, the concluder signs it as a landing row naming that acknowledgement and its own head.
+the close. A window names its opener and the held row by which the concluding party first said it holds it. Where the
+outcome binds others, the concluder signs it as a landing row naming that held row and every row it counted; the
+rule reads no head of the landing.
 Where it binds only the reader, each node reads it on its own clock and signs nothing. **measured**: 18
 clock entries have this shape, 15 of them counted from receipt. The other 22 are a row stating its own end,
 read from the row alone against now. `by receipt` on a clock is the concluder's own first holding of the opener.
@@ -301,7 +302,8 @@ decider closes an agent's objection window at retirement by the `decided` row, w
 (CC 7.5.5). **run**: a `decided` row that leaves out an objection the agent made concludes nothing, and the
 agent's own landing closes nothing. Where the text has
 each node read the close on its own clock, the cell says `local` and nothing is signed: the moderation window,
-a harm report, a person's own roster and the halt's fuse (CC 4.5.13, CC 3.3.6.4). A late answer is closed for
+a harm report and the halt's fuse (CC 4.5.13). The lone path of a person's own roster binds others, and a roster
+key lands it by a `window:landed` or a `window:refused` row that names its own `window:held` row (CC 3.3.6.4). A late answer is closed for
 the fuse and an invitation, and counts for an election and a takedown. Six doors state whether the opening row is in force while its window is open: the halt and a takedown's
 withhold are, from each node's own receipt; a moderation action, a harm report, an invitation and a device's
 addition are not. **run**: the **state** answer gives each while no landing
@@ -335,8 +337,8 @@ most one lease against that person's other devices.
 
 Every row family is one of four shapes: a **consent**, a **door**, a **claim** or **content**. A roster is a
 consent given by a count, and an acknowledgement is a claim. **measured**
-(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 187 families, 112 are
-claims, 24 content, 25 doors, 16 consents and 7 both a consent and a door. Three fit none.
+(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 187 families, 114 are
+claims, 24 content, 24 doors, 15 consents and 7 both a consent and a door. Three fit none.
 
 The four are labels over two mechanisms. Removing the shapes in order, three orders leave the same two:
 consent and the door. Content is carried by consent, since its audience is the holders of a roster and its
@@ -355,7 +357,7 @@ shapes is **measured**.
 | no shape, and the text says why | 9 |
 
 No parameter is guessed. Key revocation states its three revokers (CC 2.4.1.1), and all three are **run**: the key's own, the roster's
-count, and the owner's, by the one owner its owner-bindings name over the revocation's own past. Nineteen content
+count, and the owner's, by the one owner its owner-bindings name over the revocation's own past. The three have three effects: the key's own revocation ends its liveness, the owner's ends the owner-binding's standing and leaves the key live and unowned, and the roster's count ends the seat. Nineteen content
 families take their audience from the default placement, the scope each row carries, and state none of their own. The seal's release runs as a door of one row by its stated seat (CC 3.4.7). Two consents cannot run: no
 sentence names who confers a partner role or who signs an entity revocation. Nine families take no shape, and
 the table says why with its source: five census rows are field sums over secret shares, with no window that
@@ -393,8 +395,10 @@ already named it. **proved**: `only_removals_stop_counting`, `sign_after_removal
 A group's roster is a lineage: each version names the heads it extends and is counted over their members.
 Every other row takes its place from the roster head it names. Nothing else is ordered.
 
-Two versions of one head wait. The roster is then the members common to all tips, until a version naming the
-tips makes one head again. **run** (`formal/roster_fork/fork_check.py`): over every set of up to three
+At several tips the roster is the fold of every tip's changes, and tips that differ in protocol or policy wait
+(CC 2.7.8). The fold is the kernel's rule, proved in its bounds and checked by its own run; no model of this
+repository runs it. What this repository ran is the rule that every pair of tips waits: the roster is then the
+members common to all tips, until a version naming the tips makes one head again. **run** (`formal/roster_fork/fork_check.py`): over every set of up to three
 versions an adversary below the count can cause, in three settings under two counting protocols, the roster is
 a function of the set, no removed key is listed, and a removal naming an old head gains nothing. Four further
 protocols were run once at the same bound and are not in the check.
@@ -454,7 +458,8 @@ identity keys. The rule is CC 3.1.3.2, and the kernel is not changed by it: a ro
 In a private room the roster seats a **voice**, never an identity. A voice is a small counted roster of **room
 keys**, one for each device, made for that room only, and every row of the room is signed under a room key, a
 duty holder's verdict included. That a voice is a given person's is the **binding**. It is never a row and
-nobody signs it. It is made for one addressee, who can check it and cannot prove it to anyone else. The seat
+nobody signs it. It is made for one addressee, who can check it. The addressee can show others only that the
+room key's holder named the person. The seat
 row of a room key carries a commitment to its person, and a binding that does not open it is refused.
 
 No answer of section 5 reads a binding. It is read to show a member who spoke, to check a joiner before a
@@ -493,9 +498,11 @@ convinced when nobody but the person named could have.
   is refused; `private` on a body that is public by function is refused; of 434 sequences of later declarations
   none goes from public to private.
 
-**open**: the wire. The commitment, the two encapsulations, the key pair kept for bindings and the sealed
-invitation are planned for a later edition and are the implementer's (CC 3.1.3.2). **open**: no proof. The
-statements above are runs to a bound over a symbolic model.
+The wire is typed in the text: the record of a room key, the commitment, the three flows of a binding, the wrap
+to a room key and the key pair kept for bindings (CC 2.6.1.11, CC 3.1.3.2). **open**: no model reads that wire.
+The sealed carriage of a binding before a seat is stated and checked by no model, and the contents of the sealed
+invitation are the transport's to submit. **open**: no proof. The statements above are runs to a bound over a
+symbolic model.
 
 What a private room does not give, each marked as the check marks it:
 
@@ -598,7 +605,7 @@ that the ending row has not seen from counting.
 
 | Item | Kind | Where |
 |---|---|---|
-| Which rows seat which key in which role: what 20 doors and 3 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
+| Which rows seat which key in which role: what 20 doors and 3 other families confer, 29 name segments that point at another row, the 22 roles as one walk | table data | `manifests/family_model.json` |
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
 | One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |
 | The default audience checked family by family for the 147 that take it; the transport reading placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |

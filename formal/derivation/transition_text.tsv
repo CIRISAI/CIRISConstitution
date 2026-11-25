@@ -16,10 +16,6 @@ ballot:moderator_acceptance	attest	widens		true	CC 3.1.3
 ballot:tally:{poll_id}	attest	roles		tally	CC 3.1.3
 census:expected_active	attest	roles		tally	CC 3.1.3
 census:member:partial	attest	roles		tally	CC 3.1.3
-cosign:{state}	attest	widens		true	CC 3.1.3
-cosign:{state}	withdraw	policy		selfAct	CC 3.1.3
-cosign:{state}	withdraw	roles	pending	author	CC 3.1.3
-cosign:{state}	withdraw	roles	signature		CC 3.1.3
 key:revocation	attest	roles	self	self	CC 2.4.1.1	The key revokes itself.
 key:revocation	attest	roles	owner	owner	CC 2.4.1.1	Its owner revokes it under the owner-binding
 key:revocation	attest	roles	self_roster	member	CC 2.4.1.1	the eviction door of a self roster
@@ -32,11 +28,12 @@ identity:occurrence_revocation	attest	policy	user_self	two_path:self_roster_evic
 archive_release:{basis}	attest	widens		by_scope	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
 community:listing	attest	roles		moderate	CC 3.1.1	signed by a current `moderate`-holder of the community it names
 lawful_order:release	attest	widens		by_scope	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
-membership:{stage}	attest	roles	proposal	member	CC 3.1.3.2	a proposal is an inviter's
+membership:{stage}	attest	roles	proposal	founder,member	CC 3.1.3.2	a proposal is an inviter's (under `founder_only`, an active founder; otherwise any active member at the proposal's `asserted_at`)
 membership:{stage}	attest	roles	acceptance	self	CC 3.1.3.2	an acceptance or decline is the invitee's only
 membership:{stage}	attest	roles	decline	self	CC 3.1.3.2	an acceptance or decline is the invitee's only
 membership:{stage}	attest	roles	widening	member	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
 membership:{stage}	attest	roles	removal	member	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	attest	roles	keeps	member	CC 3.1.3.2	A `keeps` row is counted under the group's `consensus_protocol`
 membership:{stage}	attest	roles	resignation	self	CC 3.1.3.2	a resignation is signed by the leaving member
 preserve_request	attest	widens		true	CC 3.1.5
 preserve_request	withdraw	policy		selfAct	CC 2.4.1.1
@@ -56,7 +53,7 @@ consent:decay:{stage}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that sign
 consent:deletion_complete	attest	undo		withdraw:selfAct	CC 3.3.1	the watcher is cancelled only by a `withdraws`, `supersedes` or hard deletion of the row
 consent:scope:{kind}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
 deferral:response:{outcome}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
-delivery_receipt:{stream_id}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
+delivery_ack:{stream_id}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
 duty:{kind}	withdraw	undo		attest:selfAct	CC 2.4.1.1	Saying the same thing again to the audience is a new row
 event:lifecycle:{state}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
 federation_directory:replication_lag	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
@@ -77,11 +74,31 @@ transport:canonical_rebind	supersede	policy		cosigned:accord_majority	CC 3.1.3	*
 weighted_aggregate:{contribution_id}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
 location_proof:{version}	withdraw	policy		selfAct	CC 3.1.3
 location_proof:{version}	withdraw	roles		author	CC 3.1.3
-trust:blessing	withdraw	policy		cosigned:cosigned_act	CC 3.1.3
-trust:blessing	withdraw	roles		member	CC 3.1.3
 location_proof:{version}	attest	widens		by_scope	CC 3.3.3	Producers MAY scope to `community` with a specific `community_id`
-trust:blessing	attest	widens		by_scope	CC 3.1.3
 admission:unit	attest	roles		author,member	CC 2.7.11
 admission:unit	attest	widens		by_scope	CC 3.1.3
 admission:unit	withdraw	roles		author,member	CC 2.4.1.1
 admission:unit	withdraw	policy		selfAct	CC 2.4.1.1
+stream:head	attest	widens		false	CC 3.1.3
+contribution:{subject_kind}	attest	widens		false	CC 3.1.9.3
+act:ack	attest	widens		false	CC 3.1.3
+act:ack	attest	policy		selfAct	CC 3.1.3
+holon:claim	attest	widens		true	CC 3.1.11	Its `cohort_scope` is `federation`.
+holon:claim	withdraw	roles		author	CC 3.1.11	A claim its signer has ceased to maintain is ended by a `withdraws`
+holon:claim	withdraw	policy		selfAct	CC 3.1.11	A claim its signer has ceased to maintain is ended by a `withdraws`
+detection:correlated_action:{axis}	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:distributive:access:{resource_type}	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:hash_chain_integrity	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:intra_agent_consistency	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:{detector}	attest	roles		infra:detect	CC 3.4.7	a detector | `infra:detect`
+hard_case:{kind}	attest	roles		infra:attest	CC 3.4.7	the node that admitted or refused the row | `infra:attest`
+system:*	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+audit_chain:hash_continuity	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+corpus_health:n_eff_measurable	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+federation_directory:replication_lag	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+identity_continuity:relational_anchor	attest	roles		infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+mls:leaf_vouch	withdraw	roles		author	CC 5.1	the signer's withdrawal ends a vouch early
+mls:leaf_vouch	withdraw	policy		selfAct	CC 5.1	the signer's withdrawal ends a vouch early
+window:{state}	attest	widens		false	CC 3.3.6.4
+window:{state}	attest	policy		selfAct	CC 3.3.6.4
+mls:leaf_vouch	attest	widens		by_scope	CC 5.1	It is placed at that room's scope and reaches that room's audience.
