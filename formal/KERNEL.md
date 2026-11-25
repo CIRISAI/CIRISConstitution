@@ -118,7 +118,7 @@ authoring grammars and the policy table. **measured** (`tools/kx_check.py`, on t
 
 | Grammar | Translated in full | Translated with a word dropped |
 |---|---|---|
-| guards | 56 | 2 |
+| guards | 57 | 2 |
 | folds | 183 | 6 |
 | changes | 45 | 17 |
 | reactions | 96 | 26 |

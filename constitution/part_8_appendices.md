@@ -2222,7 +2222,7 @@ In time:
 Count: `none`
 
 Guard:
-- attest: `when(type(signer,node)) owner(subject,attested) at asserted_at else exclude` (CC 3.3.1)
+- attest: `when(type(signer,node)) owner(subject,attested) at head else void` (CC 3.3.1)
 
 Change:
 - withdraw: `withdraw: cascade=trace:{form}:{version}/under:stand` (CC 3.3.1)
@@ -2769,7 +2769,7 @@ Body: `author`, `identity_key_id`, `occurrence_key_id`, `revoked_at`, `effective
 Count: `none`
 
 Guard:
-- attest: `one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else exclude(identity_amendment_unauthorized)` (CC 3.1.5)
+- attest: `one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at head else void(identity_amendment_unauthorized)` (CC 3.1.5)
 
 Body: `author`, `amendment_digest`, `refs`, `asserted_at`
 
