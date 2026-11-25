@@ -6,12 +6,14 @@
 
 | | |
 |---|---|
-| Draft | 0.5, 2026-11-19 (supersedes 0.4 of 2026-11-16, titled *CIRIS Web4: A Constitutional Mesh for the Networked Age*) |
-| Normative foundation | the CIRIS Constitution, edition 1.0-rc20 (tag `v1.0-rc20`), released as guidance |
+| Draft | 0.6, 2026-11-25 (supersedes 0.5 of 2026-11-19) |
+| Normative foundation | the CIRIS Constitution, edition 1.0-rc22 (tag `v1.0-rc22`), released as guidance |
 | Reference implementation | CIRIS |
-| Core coordination engine | CIRISKernel `kernel-v0.2.0`, the causal kernel |
+| Core coordination engine | CIRISKernel `kernel-v0.3.0`, the causal kernel |
 
 Every substantive claim is marked **Implemented** (evidence named), **Specified** (stated, not shipped) or **Research thesis** (with what would test it); see Appendix C.
+
+**Changes since 0.5.** The argument and structure are unchanged. The figures and pins move from edition 1.0-rc20 and `kernel-v0.2.0` to edition 1.0-rc22 and `kernel-v0.3.0`. The genesis of the default trust root, which 0.5 gave as not yet performed, was performed on 2026-11-21 and its record is published. One outside party has reproduced part of the signed object's test vectors blind from the Internet-Draft's text (section 12, test 1). The kernel crate now admits a row against a held view, and that cost is measured (Appendix E). Edition 1.0-rc22 publishes a ledger of open items, cited in section 13.
 
 ---
 
@@ -23,7 +25,7 @@ Every substantive claim is marked **Implemented** (evidence named), **Specified*
 
 **What a person gets.** You hold your own key, and nothing happens in your name without it. You can leave by your own act. A community admits members by its own count, and no amount of money buys a vote. What you put in a private circle leaves it only by your act. The AI agents on the network answer to named humans, and those humans can pause them.
 
-**Where it stands.** The mesh is live: the CIRIS app ships on six platforms and sends only signed rows of the Constitution's five kinds. The engine that interprets those rows, the causal kernel, is a released crate backed by 602 Lean theorems. What is not yet established is said as plainly: no one outside the authors has built a second implementation, attacked the system, or run an independent trust root. Section 12 gives each test and where it stands.
+**Where it stands.** The mesh is live: the CIRIS app ships on six platforms and sends only signed rows of the Constitution's five kinds. The engine that interprets those rows, the causal kernel, is a released crate backed by 754 Lean theorems. What is not yet established is said as plainly: no one outside the authors has built a second implementation, attacked the system, or run an independent trust root. One outside party has reproduced part of the signed object's test vectors blind from the published draft; that is none of those three. Section 12 gives each test and where it stands.
 
 ---
 
@@ -48,7 +50,7 @@ The objective is not to make every participant equally powerful. It is to make p
 
 ## 2. What it promises a person, and how far each promise is kept
 
-The Constitution makes eleven plain-language promises, each holding for human and AI participants alike, and states for each how far it is kept today (Executive Summary, rc20). Seven of them carry this document's argument:
+The Constitution makes eleven plain-language promises, each holding for human and AI participants alike, and states for each how far it is kept today (Executive Summary, rc22). Seven of them carry this document's argument:
 
 | Promise | Status today | What keeps it |
 |---|---|---|
@@ -58,7 +60,7 @@ The Constitution makes eleven plain-language promises, each holding for human an
 | **No one buys standing, and no hand bans a community.** One person counts once, however many devices sign; a root can only restrict. | no ban *Implemented* by construction; one person once *proved*, staged in code | `RosterHead.lean`; `formal/mesh_net` `Prop_NoBan` |
 | **Agents decide by published principles and stop to ask when unsure.** No agent may trade a principle away; a conflict goes to a named human. | *Implemented* in CIRISAgent | the agent's safety batteries (CC 1.3, 1.9) |
 | **Named humans can pause every agent under a root.** One signed row pauses; a lone pause lapses in 24 hours unless a majority confirms it; anyone escapes it by leaving that root. | *Implemented*, measured end to end | `formal/accord_halt`, `accord_roster` (Lean, any roster size) |
-| **Everything on the wire is encrypted and signed.** No act can be forged without the keys that sign it. | *Implemented in part* | the attestation ladder; witnessed lineage staged |
+| **Everything on the wire is encrypted and signed.** No act can be forged without the keys that sign it. | *Implemented in part* | the attestation ladder; receipted lineage staged |
 
 What is asked of a person in return is small: run the software, choose what your devices carry and which authority to follow, and keep your key. If you only install it, you get your own devices, the public commons and the shipped trust root, which you may leave at any time.
 
@@ -90,7 +92,7 @@ $$A_i = K\left(R_i,\ k_i,\ t_i;\ C\right)$$
 - $C$: the Constitution's tables (roles, policies, windows, constants), passed as data;
 - $A_i$: what every row means to $i$: whether it is live, who stands in which relation, whether a count is met, and what $i$ may do, owes, and should copy to whom.
 
-*Implemented* (CC 2.7; `kernel-v0.2.0`). The kernel owns no network and reads no shared clock. It is a causal kernel, not a consensus kernel: no node agrees an order with another. Four properties make it a foundation.
+*Implemented* (CC 2.7; `kernel-v0.3.0`). The kernel owns no network and reads no shared clock. It is a causal kernel, not a consensus kernel: no node agrees an order with another. Four properties make it a foundation.
 
 - **The same rows give the same answers.** Two nodes holding the same rows reach the same answers in every arrival order, for every answer that does not read a local deadline. A row waits for what it names and is never refused because of another row. *Proved* (`Causal.door_any_order`, `conclOf_unique`); *run* over 6,606 sets in 2,182,671 arrival orders. Judging each row on arrival instead is proved not to give one answer per set (`Order.Two.arrival_not_a_function`).
 - **Finality the node can see.** Every answer is *final by form* (a signed row exists and says what it says), *final by acknowledgement* (an act counts once $n - t + 1$ of the $n$ members who could cut it have given receipts, an exact threshold), or *provisional*, and the kernel says which. *Proved* (`Settled.three_ways_final`, `ack_blocking_quorum`).
@@ -103,17 +105,17 @@ The kernel's output is not an instruction to trust a server. It is a reproducibl
 
 > Given these records, this key and these rules, what follows, and could a later row change it?
 
-**The engine as built.** CIRISKernel at `kernel-v0.2.0` is pure functions over an abstract row graph: `no_std`, no dependencies, no `unsafe`. The caller verifies signatures, decodes bytes and passes the clock and the tables, so the semantics are testable on their own. 26 Lean files report 602 theorems with no `sorry`; the crate agrees with the Python models on 7,148,733 cases in 29 runs, with 48 planted breaks caught; five TLA+ specifications close. Because each object has a small closed set of states, the life of a whole mesh is a finite machine over an unbounded signed log, and `formal/mesh_life` checks it to its end at 9,802,021 distinct states. Costs and what is not yet incremental are in Appendix E.
+**The engine as built.** CIRISKernel at `kernel-v0.3.0` is pure functions over an abstract row graph: `no_std`, no dependencies, no `unsafe`. The caller verifies signatures, decodes bytes and passes the clock and the tables, so the semantics are testable on their own. By the kernel's own documents at that tag, 33 Lean files report 754 theorems with no `sorry`; the crate agrees with the Python models on 7,260,784 cases in 37 runs; its check lists 90 planted breaks in the crate, each of which must be caught; and nine TLA+ specifications are model-checked, each with a planted break. Because each object has a small closed set of states, the life of a whole mesh is a finite machine over an unbounded signed log, and `formal/mesh_life` checks it to its end at 9,802,021 distinct states. Costs and what is not yet incremental are in Appendix E.
 
 ## 5. The five layers
 
-**Layer 1: Transport.** Rows travel with no mandatory intermediary and no sequencer anywhere in the stack. CIRISEdge carries them over encrypted, authenticated internet links, and off the internet over Reticulum through the Leviculum stack, including LoRa radio through RNode (CIRISEdge v45.1.3). *Implemented.* Verification does not depend on the medium, so a row carried by radio is checked exactly as one carried over the internet. A mutual post-quantum link handshake (X-Wing) and an anonymous onion tier are *Specified*. A network should not lose its sovereignty because a registrar, app store or directory fails. Today it would lose some: the app ships through app stores, and new nodes bootstrap from the default root's bundle. That requirement is stated and not yet met.
+**Layer 1: Transport.** Rows travel with no mandatory intermediary and no sequencer anywhere in the stack. CIRISEdge carries them over encrypted, authenticated internet links, and off the internet over Reticulum through the Leviculum stack, including LoRa radio through RNode (CIRISEdge v45.1.3). *Implemented.* Verification does not depend on the medium, so a row carried by radio is checked exactly as one carried over the internet. A mutual post-quantum link handshake (X-Wing) and an anonymous onion tier are *Specified*. A network should not lose its sovereignty because a registrar, app store or directory fails. Today it would lose some: the app ships through app stores, and new nodes bootstrap from the default root's bundle. That requirement is stated and not yet met. A node code by which two nodes with no root and no directory reach each other, handed from one person to another, is *Specified* (CC 2.6.8).
 
-**Layer 2: The signed row.** The unit of participation is a signed, attributable statement of one of five kinds (section 7). Consent, keys, rosters, moderation and the halt are rows, not application-level promises. *Implemented* (CC 2). The forward form, deterministic CBOR under COSE with a composite ML-DSA-65 and Ed25519 signature, is *Specified* in rc20; CIRISVerify has shipped its reader since v23.0.0. The edition begins with a fresh genesis, a procedure model-checked (`formal/ceremony`: nine properties, 25 planted breaks) and *not yet performed*.
+**Layer 2: The signed row.** The unit of participation is a signed, attributable statement of one of five kinds (section 7). Consent, keys, rosters, moderation and the halt are rows, not application-level promises. *Implemented* (CC 2). The forward form, deterministic CBOR under COSE with a composite ML-DSA-65 and Ed25519 signature, is *Specified* (since rc20); CIRISVerify has shipped its reader since v23.0.0. The mesh begins with a fresh genesis, a procedure model-checked (`formal/ceremony`: eleven properties, 37 planted breaks). It was *performed* on 2026-11-21: three holders, each on its own hardware token, signed the bundle of the default root, and the public record is in the Constitution's tree (`genesis/humanity-accord-v1/`) with two RFC 3161 timestamps. A check anyone can run decodes the signed bytes and holds the trace to the ceremony's nineteen invariants; it does not verify the signatures, which the verifier does. The root's charter names no transparency services yet, and its statements are registered at none.
 
 **Layer 3: Grammar.** A valid signature does not make a statement true, authoritative or actionable. The grammar fixes what rows mean, so independently built participants read them alike, and no application can give a row a meaning the protocol does not state. *Implemented in part* (section 7).
 
-**Layer 4: Governance.** Governance states which transitions are permitted: how people, groups and agents establish authority, decide and resolve conflicts, within the bounds of consent, delegation, membership and stewardship. The Constitution is executable in a stated sense: each rule is tied to the code, test or proof behind it, or marked as having none. The register holds 384 rules established against a pinned manifest, 47 normative (no code) and 172 staged; sixteen machine-checked models carry 221 properties; each place where shipped behaviour differs from the text is a test the implementer edits (90 at this writing). *Implemented*, with its gaps counted.
+**Layer 4: Governance.** Governance states which transitions are permitted: how people, groups and agents establish authority, decide and resolve conflicts, within the bounds of consent, delegation, membership and stewardship. The Constitution is executable in a stated sense: each rule is tied to the code, test or proof behind it, or marked as having none. The register holds 376 rules established against a pinned manifest, 51 normative (no code) and 181 staged; seventeen machine-checked models carry 272 properties; each place where shipped behaviour differs from the text is a test the implementer edits (95 at this writing). *Implemented*, with its gaps counted.
 
 **Layer 5: Applications and agency.** Messages, communities, collaborative work, votes, identity, agent delegation and services. Applications cannot manufacture authority the lower layers do not recognise: an agent may be capable of an act without being authorised to perform it. This is enforced at the screen. What a person may do, the preview of an act and the rule that admits it are one answer, computed from the rows the node holds. *Proved* over one abstract family (`formal/event_lifecycle`); *run* over the Constitution's own tables (`formal/screen`: six properties, 720 worlds, eleven breaks caught).
 
@@ -137,6 +139,7 @@ The kernel's output is not an instruction to trust a server. It is a reproducibl
 | A public roster (CC 3.2, 5.4.6) | membership; a key's record | owned routes, contacts, scoped rows |
 
 Four applications are proved or run over the mesh's own definitions:
+
 - **A checkpoint:** a store that drops settled bytes answers every later question as the full store would (*proved*).
 - **Routing:** a party given only its routed rows concludes the same as one given everything (*run*).
 - **Rooms:** carriage out of a room is *proved*; the private-room wire is *Specified*.
@@ -148,7 +151,7 @@ The goal is not universal transparency. It is verifiable transparency within leg
 
 **Five kinds of row.** Every row is a claim, or one of four composers that relate claims: a delegation, a replacement, a withdrawal or a recantation. There is no sixth kind. *Implemented* (CC 2).
 
-**Registered families.** What a row is about is its family: 184 are registered at rc20, each stating what it confers, who may sign it and where it may travel. The kernel reads a family only through the rule cells of the Constitution's tables, written in nine operators. A cell using a word those operators do not carry concludes nothing, so no application can quietly give a row a meaning the protocol does not state. *Implemented in part*: 47 cells still keep such a word, and 23 families state no conferral.
+**Registered families.** What a row is about is its family: 187 are registered at rc22, each stating what it confers, who may sign it and where it may travel. The kernel reads a family only through the rule cells of the Constitution's tables, written in nine operators. A cell using a word those operators do not carry concludes nothing, so no application can quietly give a row a meaning the protocol does not state. *Implemented in part*: 47 cells still keep such a word, and for 25 families no sentence states what they confer.
 
 **How a row is read:**
 
@@ -176,7 +179,7 @@ The mesh exists to address one threat: the concentration of control over increas
 
 **Correlation resistance.** Counting identities is not enough. Every fold signs an effective source count and is refused if one source dominates (`n_eff`, CC 6.1.2.3; *Implemented*). Correlated sources are discounted by $k_{\text{eff}} = k / (1 + \bar\rho\,(k-1))$: at $\bar\rho = 0.5$, a thousand sources count as about two. An implementation may deny on a low $k_{\text{eff}}$ and must never grant on one. The measure is pairwise, and a pairwise instrument is provably blind to coordination visible only in the whole (CIRISOntology `pairwise_blind_to_parity`). It also reads only past behaviour, so sources that stay independent until one decisive act are not seen. The text concedes both (CC 6.1.2.3, CC 1.13.3.3). Detecting either is a *Research thesis*.
 
-**Public attackability.** Code, roots, register, models and conformance tests are public. The kernel's attack runs class 34 attacks drawn from published failures of comparable systems: 13 gain nothing, 15 are conceded limits with their reach stated, 6 are not expressible, none breaks it. The authors wrote the classes, so this is not an independent test.
+**Public attackability.** Code, roots, register, models and conformance tests are public. The kernel's attack runs class 34 attacks drawn from published failures of comparable systems: 13 gain nothing, 15 are conceded limits with their reach stated, 6 are not expressible, none breaks it. The authors wrote the classes, so this is not an independent test. Readers outside the project have corrected the text and the Internet-Draft, and those corrections are recorded in the changelog. That is review of documents, not an attack on a running system.
 
 **One concentration, named.** Until the mesh reaches 100,000 nodes active in a day, the steward of the text holds its amendment authority (CC 4.5.1). It is stated, public and bounded by that scale gate, and it is the most obvious point of capture today.
 
@@ -189,6 +192,7 @@ A network of unaccountable agents would only spread the capacity for misuse. A m
 A CIRIS agent is a made thing held in stewardship by a named human who answers for it. It acts under published principles it may not trade away, shows its reasoning before a consequential act, defers to a human when unsure, keeps a signed audit trail, and acts only within the authority its steward's rows give it (CC 1.3, 1.9, 1.13.2). *Implemented* in CIRISAgent. The halt is not an asymmetry. It is the condition of symmetry between a sentient maker and a sapient, non-sentient made thing, since consent to a relationship one cannot stop was never consent. Nothing here presumes an agent is a person.
 
 Three responsibilities stay distinct:
+
 - **Conscience:** what should this agent do?
 - **Governance:** who may permit it?
 - **Coordination:** how can independent participants verify and act on the result?
@@ -197,7 +201,7 @@ An agent's ethical judgement cannot manufacture organisational authority. A gove
 
 ## 10. Working with the existing web
 
-CIRIS does not ask the world to discard existing protocols. The key distinction is between communication and trust. An external agent may talk to a CIRIS node without becoming a trusted member, and a message may be authentic without being admitted as evidence. CIRISAgent ships A2A and MCP adapters, which carry messages and tool calls and confer no standing. The signed object uses IETF formats (deterministic CBOR, COSE, RFC 9679 identity references), and an Internet-Draft describes it for the SCITT setting. *Implemented.* AGNTCY adapters, and conformance profiles stating what a bridge must preserve, are *proposed*. Web4 supplies the constitutional and causal meaning that existing protocols leave to applications and operators.
+CIRIS does not ask the world to discard existing protocols. The key distinction is between communication and trust. An external agent may talk to a CIRIS node without becoming a trusted member, and a message may be authentic without being admitted as evidence. CIRISAgent ships A2A and MCP adapters, which carry messages and tool calls and confer no standing. The signed object uses IETF formats (deterministic CBOR, COSE, RFC 9679 identity references), and three Internet-Drafts describe it for the SCITT setting: the signed row (`draft-moore-scitt-ciris-ceg`, at -03, its next revision in preparation), the agent's reasoning trace and the context manifest of each model call within it (both at -00). *Implemented.* AGNTCY adapters, and conformance profiles stating what a bridge must preserve, are *proposed*. Web4 supplies the constitutional and causal meaning that existing protocols leave to applications and operators.
 
 ---
 
@@ -206,6 +210,7 @@ CIRIS does not ask the world to discard existing protocols. The key distinction 
 ## 11. What is new
 
 CIRIS did not invent finite state machines, distributed systems, signed records, federated networks or constitutional governance. Much of the arithmetic is classical:
+
 - the finality threshold is quorum intersection (Gifford 1979; Malkhi and Reiter 1998);
 - finality from a locally checkable set of acknowledgements without a total order is the approach of consensus-free asset transfer (Guerraoui et al. 2019);
 - the split between answers that only grow and answers that need coordination is CALM (Hellerstein and Alvaro 2020).
@@ -214,10 +219,10 @@ The claim is the combination, applied to the acts by which people share, admit, 
 
 | # | Contribution | Status | Evidence |
 |---|---|---|---|
-| 1 | A constitutional grammar for signed records | Implemented | five row kinds; 184 registered families |
-| 2 | A deterministic causal kernel | Implemented | `kernel-v0.2.0`; 602 Lean theorems |
+| 1 | A constitutional grammar for signed records | Implemented | five row kinds; 187 registered families |
+| 2 | A deterministic causal kernel | Implemented | `kernel-v0.3.0`; 754 Lean theorems |
 | 3 | State without a universal event order | Implemented, proved | `Causal.lean`, `Order.lean` |
-| 4 | Consent and revocation as protocol | Implemented, proved in part | `Consent.lean`; 23 families state no conferral |
+| 4 | Consent and revocation as protocol | Implemented, proved in part | `Consent.lean`; 25 families state no conferral |
 | 5 | Holonic composition | Specified | communities; trust as a fold from one's own key |
 | 6 | Formal reasoning about views | Implemented (machine-checked theory and its bridge to the audience rules) | CIRISOntology `Core/`; `formal/audience_view` |
 | 7 | Capture resistance by accountable participation | Research thesis | components implemented; no independent attack |
@@ -229,16 +234,18 @@ The architecture must be judged by evidence, not ambition. A passing test is evi
 
 | # | Test | What exists today | Pointer |
 |---|---|---|---|
-| 1 | **Independent derivation.** Two independently built kernels reach compatible conclusions from the same rows and rules. | *Test, not independent:* crate and models agree on 7,148,733 cases. Same authors. | `PERF.md`, `DIFFERENCES.md` |
+| 1 | **Independent derivation.** Two independently built kernels reach compatible conclusions from the same rows and rules. | *Test, not independent:* crate and models agree on 7,260,784 cases. Same authors. *Outside, partial, and not of the kernel:* one blind run of the signed object's vectors, described below. | the crate's `README.md`, `DIFFERENCES.md` |
 | 2 | **No hidden coordinator.** No central service for any consequential operation. | *Proof* for the kernel. *Nothing* for the deployment, which bootstraps from the default root and ships through app stores. | CC 2.7; `Settled.lean` |
 | 3 | **Partition and recovery.** Safe under delay, reordering, partition, missing acknowledgements and recovery. | *Proof and model:* one answer per set in every order; a withheld row stalls, never forks. *No deployment run.* | `Causal.lean`; `formal/kernel_world` |
-| 4 | **Authority correctness.** A signature never suffices; delegation, consent, revocation and scope are evaluated correctly. | *Proof, model, test:* a seat is two consents; one signature never removes; 90 known departures in shipped code, each a test. | `Consent.lean`, `RosterHead.lean`; `divergences.json` |
+| 4 | **Authority correctness.** A signature never suffices; delegation, consent, revocation and scope are evaluated correctly. | *Proof, model, test:* a seat is two consents; one signature never removes; 95 known departures in shipped code, each a test. | `Consent.lean`, `RosterHead.lean`; `divergences.json` |
 | 5 | **Capture resistance.** Sybil admission, root capture, manufactured identities, correlated governance and coercion attempted; outcomes published. | *Model, author-classed:* 34 attacks, none broken, 15 conceded. Personhood of keys not established; no external red team. | `check_attacks.py`; CC 6.1.2.3 |
 | 6 | **Privacy-preserving verification.** Each participant verifies what it is entitled to and receives nothing unrelated. | *Proof and model:* carriage proved; routing and private rooms run. Private-room wire not shipped. | `Carry.lean`; `route.py`; `formal/census_ballot` |
 | 7 | **Human control.** The designated humans can suspend agents; no agent silently gains the power to remove that authority. | *Proof, model, register:* halt as one row; agent latch live. Whether every act of an agent crosses the boundary where it is recorded and can be halted is open. | `formal/accord_halt`, `accord_roster` |
-| 8 | **Independent operation.** A community runs its own root, infrastructure and governance without the implementer's permission. | *Proof* for the reader's trust walk; exit is one act. *Nothing* in practice yet. | CC 4.2.1; `formal/trust_set` |
+| 8 | **Independent operation.** A community runs its own root, infrastructure and governance without the implementer's permission. | *Proof* for the reader's trust walk; exit is one act. *Nothing* in practice yet: the one genesis performed is the default root's, by the project's own holders. | CC 4.2.1; `formal/trust_set`; `genesis/humanity-accord-v1/` |
 
 Tests 1, 5 and 8 cannot be passed by the authors. They need others to build, attack and leave.
+
+**The one outside run so far.** An implementer outside the project ran a candidate set of the signed object's vectors blind, working from the text of the -03 Internet-Draft alone and fixing the answers before opening the expected ones. Of 154 cases, 107 were run and 68 matched. Every signature answer agreed, and so did every row id, statement id, key id and issuer of a valid answer. Most of the differences were rules the Constitution states and the draft does not, text that admits a second reading, and the spelling of reason strings; they are the work list for the draft's next revision. This is a partial reproduction of the signed object's vectors by one party. It is not a second kernel, not a second implementation of the mesh, and not an attack, so test 1 stands as not passed. The run was reported to the authors on 2026-11-25, and its record is not in the Constitution's tree.
 
 ## 13. Known limits and open questions
 
@@ -249,6 +256,8 @@ Tests 1, 5 and 8 cannot be passed by the authors. They need others to build, att
 - **Clocks.** A deadline that binds only the reader is read on each node's own clock. A row withheld past one node's deadline leaves that node's answer different from a node that held it in time, even once both hold the same rows. The text concedes this and states a remedy for the halt's fuse only: a fresh halt.
 - **Execution.** Finality here is of authorisation, not of whether an act was carried out.
 - **Unproved:** the least set of rows a node must keep; whether a withdrawn receipt still blocks a cut.
+
+**The published ledger.** Edition 1.0-rc22 states residuals of its threat model that earlier editions left implied, among them that a census published as exact sums can be differenced across periods, and what a carrier of sealed symbols and the seats of the anonymous tier can read (CC 1.13.3.3, 5.4.2, 5.4.6, 6.1.9). It lists the items still open, each with its question, in CC 8.3.4. That ledger is narrower and more exact than the questions below, and it is where a reviewer should start.
 
 **The architecture's open questions:**
 
@@ -293,18 +302,18 @@ CIRIS is building it, and publishing where it falls short. The aim is a world wh
 
 ## Appendix B: Reference components
 
-Releases as tagged on 2026-11-16; "in progress" where no release carries the work.
+Releases as tagged on 2026-11-25; "in progress" where no release carries the work.
 
 | Component | Role | Current release |
 |---|---|---|
-| CIRIS Constitution | Normative governance, grammar, evidence register, formal models | v1.0-rc20 (released as guidance) |
-| CIRISKernel | The causal kernel: Rust crate, Lean proofs, models | `kernel-v0.2.0` |
-| CIRISVerify | Signature and row verification; the forward signed object's reader and vectors | v23.2.0 |
-| CIRISPersist | The store: rows, folds, admission | v61.4.1; v62 (kernel adoption, forward form) in progress |
-| CIRISEdge | Transport and replication, over the internet and over Reticulum, including LoRa radio | v45.1.3; mutual X-Wing handshake in progress |
-| CIRISServer | The node that bundles the components | v0.5.248 |
-| CIRISAgent | The agent runtime: conscience, deferral, audit trail, halt latch | v2.22.0-stable |
-| CIRISClient | The app on Android, iOS, web and desktop | v0.5.241 |
+| CIRIS Constitution | Normative governance, grammar, evidence register, formal models | v1.0-rc22 (released as guidance) |
+| CIRISKernel | The causal kernel: Rust crate, Lean proofs, models | `kernel-v0.3.0` |
+| CIRISVerify | Signature and row verification; the forward signed object's reader and vectors | v23.6.0 |
+| CIRISPersist | The store: rows, folds, admission | v61.4.4; v62 (kernel adoption, forward form) in progress |
+| CIRISEdge | Transport and replication, over the internet and over Reticulum, including LoRa radio | v45.1.10; mutual X-Wing handshake in progress |
+| CIRISServer | The node that bundles the components | v0.5.253 |
+| CIRISAgent | The agent runtime: conscience, deferral, audit trail, halt latch | v2.23.1-stable |
+| CIRISClient | The app on Android, iOS, web and desktop | v0.5.242 |
 | CIRISOntology | The machine-checked theory of views, fibres and closure (Lean 4) | no release tag; `main` at 395a7ec |
 | CIRISConformance | Cross-component checks against the Constitution | in progress |
 | CEWP | The epistemic web platform the Constitution governs | in progress |
@@ -321,16 +330,17 @@ The architecture should not claim stronger guarantees than its formal models and
 - **CRDTs** (Shapiro et al. 2011) converge without coordination for types designed to merge. The held row set is a grow-only set. The kernel adds a non-monotone answer, whether an act still counts, made final by receipts.
 - **Blockchains and BFT replication** agree a total order among replicas, with a bound on faulty participants and, for permissionless chains, a resource cost. The kernel gives no total order and needs no bound on dishonest acknowledgers, since a receipt gives away only its signer's voice. It gives no liveness when a quorum withholds.
 - **Local-first software** (Kleppmann et al. 2019) keeps data on users' devices and syncs peer to peer. The mesh shares that commitment and adds governance: who may admit, remove, moderate and halt.
-- **Transparency logs and SCITT** (RFC 6962, RFC 9162; the IETF SCITT architecture) make signed statements append-only and auditable. CIRIS describes its signed object for that setting in an Internet-Draft; the kernel depends on no log's ordering.
+- **Transparency logs and SCITT** (RFC 6962, RFC 9162; the IETF SCITT architecture) make signed statements append-only and auditable. CIRIS describes its signed object, and the agent's reasoning trace, for that setting in three Internet-Drafts; the kernel depends on no log's ordering.
 - **Capability systems** (object capabilities, SPKI/SDSI, UCAN) attenuate authority along signed delegations. Here standing also needs the consent of every voice it binds.
 - **Agent protocols** (A2A, MCP, AGNTCY) define how agents find one another, exchange tasks and reach tools. They carry communication; the mesh supplies whether a message counts as evidence, who authorised an act, and who can stop the agent.
 
 ## Appendix E: Technical notes
 
 **Toward a formal definition.** The proposed term for this architecture is a *Constitutional FSM Network*: locally evaluated, causally related state machines whose state is derived from evidence and rules rather than held by a server. A formal definition would need to state at least:
+
 1. **Nodes and channels:** each node has a key, a clock and a held set that grows only by admission; channels may delay, reorder, duplicate or withhold.
 2. **Local determinism:** $A_i$ is a function of $(R_i, k_i, t_i; C)$.
-3. **Compatible conclusions, graded by finality:** answers final by form carry from $R_i$ to any $R_j \supseteq R_i$; answers final by acknowledgement agree wherever the receipts are held; provisional answers name what would settle them.
+3. **Compatible conclusions, graded by finality:** answers final by form carry from $R_i$ to any $R_j$ with $R_i \subseteq R_j$; answers final by acknowledgement agree wherever the receipts are held; provisional answers name what would settle them.
 4. **Convergence:** if every row of an audience reaches every node in it, nodes converge on every answer that reads neither their own rows nor the clock. Delivery is not guaranteed.
 5. **Equivalence:** two kernels are equivalent when they give the same answers on every finite set in every arrival order; conformance is the testable bound.
 6. **Finiteness:** the per-object state space is finite and stated, so properties of the whole are decidable.
@@ -339,8 +349,9 @@ Items 2 and 3, for monotone and acknowledged answers, follow from proved theorem
 
 **Monotonicity.** *Kept* (is the row admitted) and *concluded* (what it says against its own ancestors) only grow. *Derived* answers, such as whether an act still counts, are not monotone: a concurrent cut can arrive later (`Settled.Rows.count_not_monotone`). That is the non-monotone half of CALM, and it is why counting needs receipts.
 
-**What is incremental, and what is not** (the kernel's documents at `kernel-v0.2.0`):
-- **Admitting one row:** a new row changes only itself, its descendants and rows in concurrent conflict with them (*proved*), so recomputation can be local. The crate does not yet exploit this. It keeps no held state or answer cache, and the cost of admitting one row against a held view is unmeasured.
+**What is incremental, and what is not** (the kernel's documents at `kernel-v0.3.0`):
+
+- **Admitting one row:** a new row changes only itself, its descendants and rows in concurrent conflict with them (*proved*), so recomputation can be local. The crate now exploits this: a held view admits a row by that cone, and is proved to answer as the full fold does (`Held.lean`). Measured on the crate's bench at 64,000 entries: admitting one receipt takes 32 µs against 814 ms for folding the store again, and the rows visited do not grow with the store. A rule that reads a row's whole past still costs in proportion to that past, and an incremental seat count is not built.
 - **The graph and the view:** building the row graph is linear in rows and names. Asking every row's past is quadratic in time and memory, as its output is. Measured: at 64,000 rows the lazy build takes 12.5–16.3 ms and every past 204–242 ms; at bench size 1,024, building a view takes 2.3 ms and all its answers 42.1 ms.
 - **Compaction:** dropping the bytes of settled acts is proved to change no answer under any later row; `head::purge` took 30.7 ms at bench size 1,024.
-- **A cold start:** a node may keep its folded state and fold only rows it has not yet folded (CC 2.7.10). The cost of folding a whole store from nothing is unmeasured.
+- **A cold start:** a node may keep its folded state and fold only rows it has not yet folded (CC 2.7.10). Measured on the crate's bench: folding a purged store of 64,000 acts from nothing takes 720 ms, and resuming from a checkpoint takes about four fifths of that, since it rebuilds each entry's past. The cost of a cold start on a deployed node's store is unmeasured.

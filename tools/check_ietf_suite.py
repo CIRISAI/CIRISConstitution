@@ -5,7 +5,8 @@ For every draft source in ietf/ (the working `<name>.md` of each suite row that 
   - each sibling it cites (an I-D.moore-scitt-ciris-* reference) names the revision SUITE.tsv releases, or an earlier
     one where the citing draft was published before the sibling's newer revision (a note, not an error);
   - a normative sibling reference follows the suite's `depends` order, and nothing cites up it normatively;
-  - every draft that pins the CC pins the same tag;
+  - a draft pins the CC tag of the drafts it depends on, or an earlier one where it was published before they moved
+    (a note, not an error); it never pins a later tag than a draft it depends on;
   - a row marked in-tree has its stamped `<name>-<rev>.txt` in ietf/.
 --release also refuses any row still pending: the suite is cut whole.
 
@@ -57,7 +58,14 @@ def main():
                 errs.append(f"{r['name']}: cites {name} normatively against the suite's order (depends: {' '.join(deps) or '-'})")
         m = re.search(r"CIRISConstitution/tree/(v1\.0-rc\d+)", src)
         if m: tags[r["name"]] = m.group(1)
-    if len(set(tags.values())) > 1: errs.append("the drafts pin different CC tags: " + ", ".join(f"{k} {v}" for k, v in tags.items()))
+    rc = lambda t: int(t.rsplit("rc", 1)[1])
+    for r in rows:
+        for dep in r["depends"].split():
+            if r["name"] not in tags or dep not in tags or tags[r["name"]] == tags[dep]: continue
+            if rc(tags[r["name"]]) > rc(tags[dep]):
+                errs.append(f"{r['name']} pins CC {tags[r['name']]}, later than {dep}, which it depends on and which pins {tags[dep]}")
+            else:
+                notes.append(f"{r['name']}-{r['rev']} pins CC {tags[r['name']]}, published before {dep}-{by[dep]['rev']} moved to {tags[dep]}; its next revision pins the newer tag")
     for n in notes: print("ietf suite: note: " + n)
     for e in errs: print("ietf suite: error: " + e)
     print(f"ietf suite: {len(rows)} drafts ({sum(r['status'] == 'in-tree' for r in rows)} in tree), CC tag {', '.join(sorted(set(tags.values()))) or 'none'}; {len(errs)} error(s)")
