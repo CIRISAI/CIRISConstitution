@@ -754,3 +754,21 @@ membership_private_refused	refusal		the text says refused
 membership_public_to_private	concludes_nothing		a version declaring private over a public room concludes nothing
 membership_not_a_community	refusal		the text says refused
 person_count_binding_missing	hold		the count is held at the node
+leaf_vouch_absent	refusal		the text says the door refuses the leaf
+leaf_vouch_ended	refusal		the text says the door refuses the leaf
+leaf_vouch_other_room	refusal		the text says the door refuses the leaf
+leaf_vouch_other_leaf	refusal		the text says the door refuses the leaf
+leaf_vouch_not_by_member	refusal		the text says the door refuses the leaf
+leaf_vouch_presentation_invalid	refusal		the text says refused
+founding_duty_holders_unnamed	refusal		the text says refused
+founding_duty_unheld	refusal		the text says refused
+duty_holders_after_founding	refusal		the text says refused
+duty_holders_on_family	refusal		the text says refused
+founding_duty_holder_not_signer	refusal		the text says refused
+founding_duty_holder_node	concludes_nothing		the text says the entry concludes nothing
+founding_duty_holder_agent_owner_unsigned	concludes_nothing		the text says the entry concludes nothing
+duty_conferral_counted_required	concludes_nothing		the text says concludes nothing
+seat_not_withdrawable_by_conferrer	concludes_nothing		the text says concludes nothing
+deputy_under_not_held	concludes_nothing		the text says concludes nothing
+deputy_sub_delegation_not_granted	concludes_nothing		the text says concludes nothing
+deputy_depth_exceeded	concludes_nothing		the text says concludes nothing

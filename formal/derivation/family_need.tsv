@@ -125,7 +125,7 @@ locality:decision:{scale}	acts of its own	0	0	fold	-	B095	1	-
 location_proof:{version}	nothing shown	0	0	-	-	B096	1	-
 manifold_conformity:{cohort}	acts of its own	0	0	fold	-	B009	2	-
 membership:{stage}	read by a rule	3	1	fold count guard change expiry react land while	group:roster reference	B097	1	group:roster.change group:roster.fold key_grant:{axis}.reaction
-mesh_config:{key}	acts of its own	0	0	fold expiry	-	B098	1	-
+mesh_config:{key}	acts of its own	0	0	fold count expiry	-	B098	1	-
 method:{approach_id}:{substrate_rung}	nothing shown	0	0	-	-	B003	5	-
 mls:leaf_vouch	nothing shown	0	0	-	-	B099	1	-
 model_3d:*	nothing shown	0	0	-	-	B002	10	-

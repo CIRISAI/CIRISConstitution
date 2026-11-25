@@ -365,7 +365,7 @@ grant	trust-confers	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX
 grant_withdrawal	grant-withdrawal	"refs"	-	payload	refs	always	4.2.1 2.4.1.1	The grant withdrawn, under target; the head the withdrawal acts from, under head.
 grant_withdrawal	grant-withdrawal	"lifts"	-	payload	true	where the count lifts single receipts	2.4.1.1	Present only as true.
 grant_withdrawal	grant-withdrawal	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.
-receipt	act-ack	"author"	attesting_key_id	payload	identity-ref	unless a body's count receipts	3.1.3 2.7.5	The one voice that acknowledges; a body's receipt is counted and carries none.
+receipt	act-ack	"author"	attesting_key_id	payload	identity-ref	unless a body's count receipts	3.1.3 2.7.5	The one voice that acknowledges; a body's receipt is counted and carries none, and its subject (sub) is the body: its group id, or for the accord the lineage's name.
 receipt	act-ack	"dimension"	dimension	payload	tstr	always	3.1.3	act:ack:v1; the row's type is scores.
 receipt	act-ack	"refs"	-	payload	refs	always	3.1.3 2.7.5	The acts acknowledged, under the also role ack: 1 to 256 of them. A receipt names no head; one that names more than 256 acts is refused, ack_names_too_many.
 receipt	act-ack	"asserted_at"	asserted_at	payload	ms-time	always	2.6.2	POSIX milliseconds.

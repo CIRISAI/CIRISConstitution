@@ -2435,7 +2435,7 @@ mls:leaf_vouch	signer_rule	text	cc-table
 mls:leaf_vouch	cosign_rule	cited	cc-table
 mls:leaf_vouch	subject_rule	open	gap
 mls:leaf_vouch	polarity	text	cc-table
-mls:leaf_vouch	placement	open	gap
+mls:leaf_vouch	placement	text	cc-table
 mls:leaf_vouch	lifecycle	open	gap
 mls:leaf_vouch	erasure_route	open	gap
 mls:leaf_vouch	projection	open	gap

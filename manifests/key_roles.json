@@ -3,7 +3,7 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "eb980fc7ad556e2aea3cd0325559b07ba3eafae0490484bfb4964c16707bdad0",
+   "manifests/transitions.json": "fffd614b62202287fb358425bbab54078cfb31a117fed12a1d8dfd4e5021f11c",
    "formal/derivation/signer_kind.tsv": "189a8904547c5598a734c203dcbfe8c20443aadb6e99879f686ad590e58999ef"
   },
   "kinds": [

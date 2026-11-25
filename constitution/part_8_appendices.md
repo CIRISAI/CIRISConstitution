@@ -3012,11 +3012,13 @@ Body: `dimension`, `group_kind`, `group`, `member`, `joined_at`, `removed_at`, `
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | steward | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | steward | cosigned `accord_majority` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `none`
+Count: `act=group => accord_majority@trust_root ; none` (CC 4.2.1)
+
+Authorship: `act=group => counted ; authored` (CC 4.2.1)
 
 Fold:
 - `bound=narrow_only(value)` (CC 3.1.9.2)
@@ -3028,7 +3030,7 @@ In time:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | self | selfAct | false | false | withdraw |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 
 Count: `none` (CC 5.1)

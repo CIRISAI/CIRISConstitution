@@ -241,13 +241,12 @@ Each is reached under the rule, and `--traces` prints the steps.
 
 ## Where the text differs
 
-- CC 5.1 reads "A member's leaf is one per device, under the member's own key on that device" and "The
-  leaf's key is the device". The model has a separate leaf key that the device key vouches for (R1).
-- CC 5.1 reads "A KeyPackage is signed by its leaf's key" and has no vouching row, no term, no renewal and no
-  lapse (R2 to R6, R8).
-- CC 5.1 gives a leaf three ends: "replaced when that key is superseded, and removed when its occurrence is
-  revoked or its seat ends". The model adds the lapse and the withdrawal, and does not model those three.
-- No section derives a call group's id from the room's id (R7).
+- CC 5.1 states R1 to R6 and R8: a separate leaf key, the device key's vouching row, its term, the renewal,
+  the lapse and the withdrawal. A KeyPackage is signed by its leaf's key and is accepted only with a live vouch.
+- CC 5.1 gives a leaf five ends: replaced, removed, lapsed and withdrawn, the removal on a revoked occurrence
+  or an ended seat. The model runs the lapse and the withdrawal, and does not model the other three.
+- CC 5.1 names the door's six refusals. The model gives a refusal a reason of its own and does not carry those names.
+- A call group's id is derived from the room's id at CC 2.6.1.11 (R7).
 
 ## Run
 

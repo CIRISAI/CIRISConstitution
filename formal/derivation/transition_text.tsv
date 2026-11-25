@@ -101,3 +101,4 @@ mls:leaf_vouch	withdraw	roles		author	CC 5.1	the signer's withdrawal ends a vouc
 mls:leaf_vouch	withdraw	policy		selfAct	CC 5.1	the signer's withdrawal ends a vouch early
 window:{state}	attest	widens		false	CC 3.3.6.4
 window:{state}	attest	policy		selfAct	CC 3.3.6.4
+mls:leaf_vouch	attest	widens		by_scope	CC 5.1	It is placed at that room's scope and reaches that room's audience.

@@ -37,3 +37,4 @@ provenance:build_manifest:{target}	*	standing	the bundle in force when the row i
 holon:claim	*	none	a claim names no head; in refs it names only the rows of its own group that it follows
 mls:leaf_vouch	*	none	a vouch names no head; a room key's vouch names the head of its voice roster under the also role voice
 window:{state}	*	none	a held row and a landing name no head; a landing is read over its own causal past
+mesh_config:{key}	*	roster	the bundle in force of the root: a durable setting and emergency relief each name it

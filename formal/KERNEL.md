@@ -357,7 +357,7 @@ shapes is **measured**.
 | no shape, and the text says why | 9 |
 
 No parameter is guessed. Key revocation states its three revokers (CC 2.4.1.1), and all three are **run**: the key's own, the roster's
-count, and the owner's, by the one owner its owner-bindings name over the revocation's own past. Nineteen content
+count, and the owner's, by the one owner its owner-bindings name over the revocation's own past. The three have three effects: the key's own revocation ends its liveness, the owner's ends the owner-binding's standing and leaves the key live and unowned, and the roster's count ends the seat. Nineteen content
 families take their audience from the default placement, the scope each row carries, and state none of their own. The seal's release runs as a door of one row by its stated seat (CC 3.4.7). Two consents cannot run: no
 sentence names who confers a partner role or who signs an entity revocation. Nine families take no shape, and
 the table says why with its source: five census rows are field sums over secret shares, with no window that
