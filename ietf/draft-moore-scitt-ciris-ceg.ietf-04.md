@@ -1272,7 +1272,14 @@ The row is the protected header and the payload ({{object}}).
 - A fault in an element of an array is reported under the member that
   holds the array.
 - A role of `also` is a key of a registry and not a member
-  ({{refs}}).  A fault in a role's set is reported as `also`.
+  ({{refs}}).  A role's set that is malformed, empty, out of order or
+  holds a repeat is reported as `also`.  A role that admits exactly
+  one row, and holds a well-formed set of another count, is reported
+  under the role's own name, as in `malformed:under` and
+  `malformed:stands_on`.
+- A row whose `refs` holds a role its family does not admit, or lacks
+  one its family requires, is reported as `malformed:refs`.  The
+  fault is the set of roles the map holds, so the map is named.
 - A required member that is absent from the payload is reported under
   its own name, as in `malformed:asserted_at`.
 
