@@ -60,6 +60,9 @@ run python3 -I formal/causal_kernel/check_cut.py
 run python3 -I formal/causal_kernel/check_lock.py
 run python3 -I formal/causal_kernel/check_attacks.py
 run python3 -I formal/causal_kernel/check_roomkey.py
+run python3 -I formal/leaf_vouch/check_leaf_vouch.py
+run python3 -I formal/binding_carriage/check_binding_carriage.py
+run python3 -I formal/join_audience/check_join_audience.py
 run python3 -I formal/causal_kernel/check_rosters.py
 run python3 -I formal/causal_kernel/check_door.py
 run python3 -I formal/causal_kernel/check_time.py
