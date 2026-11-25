@@ -1,10 +1,10 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "a463e7b43c4b63974c3e3145943b3fe3759a33f32fe56c38a9ac0532b09b8fd0",
-  "policy_sha256": "e0b21aea5959b3098e9392d23a7de823d5363fd88aa2084e5d739cecb53b1f00",
-  "steps": 134,
-  "rows": 98,
+  "transitions_sha256": "514f4b7252c9ed6582422547a3f194660339210b9d3ebabe79030efc38a63548",
+  "policy_sha256": "c258e6484838b74bf65b87f2e953980b75ac01043bc3337c0252c2e3650fecfb",
+  "steps": 135,
+  "rows": 99,
   "errors": []
  },
  "steps": [
@@ -3146,6 +3146,35 @@
   },
   {
    "n": 117,
+   "note": "One key of Bob's roster says it holds his proposal to evict a lost phone, and a day later the same key lands it",
+   "actor": "bob",
+   "standing": [
+    "member"
+   ],
+   "view": {
+    "object": "window:1",
+    "family": "window:{state}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row89",
+    "family": "window:{state}",
+    "verb": "attest",
+    "signer": "bob",
+    "object": "window:1"
+   }
+  },
+  {
+   "n": 118,
    "note": "Bob tries to re-bind his serve node's transport destination: refused, a re-bind is the accord holders' act",
    "actor": "bob",
    "standing": [
@@ -3165,7 +3194,7 @@
    "row": null
   },
   {
-   "n": 118,
+   "n": 119,
    "note": "The accord holders re-bind the serve node's transport destination, cosigned at the charter's threshold",
    "actor": "alice",
    "standing": [
@@ -3186,7 +3215,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row89",
+    "id": "row90",
     "family": "transport:canonical_rebind",
     "verb": "attest",
     "signer": "alice",
@@ -3194,7 +3223,7 @@
    }
   },
   {
-   "n": 119,
+   "n": 120,
    "note": "A later re-bind by the holders supersedes the first: again their cosigned act, never one holder's",
    "actor": "alice",
    "standing": [
@@ -3216,7 +3245,7 @@
    "chosen": "supersede",
    "refused": false,
    "row": {
-    "id": "row90",
+    "id": "row91",
     "family": "transport:canonical_rebind",
     "verb": "supersede",
     "signer": "alice",
@@ -3224,7 +3253,7 @@
    }
   },
   {
-   "n": 120,
+   "n": 121,
    "note": "A stranger tries to publish Dave's rough location: refused, only the subject signs it",
    "actor": "erin",
    "standing": [],
@@ -3241,7 +3270,7 @@
    "row": null
   },
   {
-   "n": 121,
+   "n": 122,
    "note": "Dave publishes his own rough location to join a geographic community: the subject's own row",
    "actor": "dave",
    "standing": [
@@ -3262,7 +3291,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row91",
+    "id": "row92",
     "family": "location_proof:{version}",
     "verb": "attest",
     "signer": "dave",
@@ -3270,7 +3299,7 @@
    }
   },
   {
-   "n": 122,
+   "n": 123,
    "note": "Bob tries to grant his build pipeline's key the root's infra:attest: refused, a grant from the root is its holders' act",
    "actor": "bob",
    "standing": [
@@ -3290,7 +3319,7 @@
    "row": null
   },
   {
-   "n": 123,
+   "n": 124,
    "note": "The accord holders grant the pipeline's key infra:attest: a trust:confers row counted at a strict majority of the holders of the bundle in force",
    "actor": "alice",
    "standing": [
@@ -3312,7 +3341,7 @@
    "chosen": "authorize",
    "refused": false,
    "row": {
-    "id": "row92",
+    "id": "row93",
     "family": "trust:{job}:{version}",
     "verb": "authorize",
     "signer": "alice",
@@ -3320,7 +3349,7 @@
    }
   },
   {
-   "n": 124,
+   "n": 125,
    "note": "Erin, no member of the reviewing group, tries to add her voice to its admission of a unit: refused",
    "actor": "erin",
    "standing": [
@@ -3339,7 +3368,7 @@
    "row": null
   },
   {
-   "n": 125,
+   "n": 126,
    "note": "Bob admits a unit that only computes, for one day, under his own key",
    "actor": "bob",
    "standing": [
@@ -3360,7 +3389,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row93",
+    "id": "row94",
     "family": "admission:unit",
     "verb": "attest",
     "signer": "bob",
@@ -3368,7 +3397,7 @@
    }
   },
   {
-   "n": 126,
+   "n": 127,
    "note": "A stranger tries to invite Judy to Ken's family: refused, an invitation is a member's",
    "actor": "erin",
    "standing": [],
@@ -3387,7 +3416,7 @@
    "row": null
   },
   {
-   "n": 127,
+   "n": 128,
    "note": "Ken, whose device is unannounced, invites Judy, a contact whose device is unannounced too: his proposal, sealed to the occurrence key he holds from their contact",
    "actor": "ken",
    "standing": [
@@ -3409,7 +3438,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row94",
+    "id": "row95",
     "family": "membership:{stage}",
     "verb": "attest",
     "signer": "ken",
@@ -3417,7 +3446,7 @@
    }
   },
   {
-   "n": 128,
+   "n": 129,
    "note": "Ken tries to accept for Judy: refused, the acceptance is the joiner's own",
    "actor": "ken",
    "standing": [
@@ -3438,7 +3467,7 @@
    "row": null
   },
   {
-   "n": 129,
+   "n": 130,
    "note": "Judy accepts: her own row, the first of her sealed answer",
    "actor": "judy",
    "standing": [
@@ -3460,7 +3489,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row95",
+    "id": "row96",
     "family": "membership:{stage}",
     "verb": "attest",
     "signer": "judy",
@@ -3468,7 +3497,7 @@
    }
   },
   {
-   "n": 130,
+   "n": 131,
    "note": "Ken tries to sign the binding of Judy's device at the family's scope: refused, the owner alone signs the placed row",
    "actor": "ken",
    "standing": [
@@ -3487,7 +3516,7 @@
    "row": null
   },
   {
-   "n": 131,
+   "n": 132,
    "note": "Judy re-signs her device's binding at the family's scope, and it rides in her answer",
    "actor": "judy",
    "standing": [
@@ -3508,7 +3537,7 @@
    "chosen": "authorize",
    "refused": false,
    "row": {
-    "id": "row96",
+    "id": "row97",
     "family": "ownership:{relation}:{target_kind}:{version}",
     "verb": "authorize",
     "signer": "judy",
@@ -3516,7 +3545,7 @@
    }
   },
   {
-   "n": 132,
+   "n": 133,
    "note": "Judy tries to sign the widening that seats her: refused, a widening is the members' counted row",
    "actor": "judy",
    "standing": [
@@ -3537,7 +3566,7 @@
    "row": null
   },
   {
-   "n": 133,
+   "n": 134,
    "note": "Ken signs the widening that seats Judy, citing her acceptance",
    "actor": "ken",
    "standing": [
@@ -3559,7 +3588,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row97",
+    "id": "row98",
     "family": "membership:{stage}",
     "verb": "attest",
     "signer": "ken",
@@ -3567,7 +3596,7 @@
    }
   },
   {
-   "n": 134,
+   "n": 135,
    "note": "The edge on Ken's device serves a row of the family to Judy's node and reports the delivery",
    "actor": "edge:ken",
    "standing": [
@@ -3588,7 +3617,7 @@
    "chosen": "attest",
    "refused": false,
    "row": {
-    "id": "row98",
+    "id": "row99",
     "family": "delivery:{class}",
     "verb": "attest",
     "signer": "edge:ken",

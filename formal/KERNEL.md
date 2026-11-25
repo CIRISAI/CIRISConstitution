@@ -222,12 +222,12 @@ delegate only with the delegate's own signature (CC 4.4.3.19), and a custodian h
 need none and say why: a node in an infrastructure community, a key of a person's own roster, and a device
 under its owner. **open**: how the second signature travels and from when a delegation without it stops
 seating are not settled. **measured** (`manifests/family_model.json`, `formal/derivation/confers_text.tsv`): what a family confers is
-stated for 162 of 186 families. 138 claim and content families take one default, that a claim seats no one
+stated for 162 of 187 families. 138 claim and content families take one default, that a claim seats no one
 (CC 3.4.5.1). Twenty consents take their seat from `family_shapes.tsv`, and four families have a sentence of
-their own. **open**: 24 families confer nothing that a sentence states: 21 doors, two consents the shape
-table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 157
+their own. **open**: 25 families confer nothing that a sentence states: 22 doors, two consents the shape
+table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 158
 families; 28 have a segment that names another row and no word yet says so, a limit CC 8.3.4 names. Which answers read a family's
-rows is filled for all 186 from the expression language: every family is read by **state** and **stands**
+rows is filled for all 187 from the expression language: every family is read by **state** and **stands**
 through the default fold, a default checked for none of the 79 that take it, and 44 are also read by another
 answer. A row that must equal its own recomputation is stated for three families (CC 6.1.9) and for no other.
 
@@ -252,13 +252,14 @@ signed both (CC 5.2). No member carries another member's signed row out. **prove
 `nothing_leaves`, `others_elsewhere_change_nothing`, `author_carries`, `same_room_unchanged`. The cost: a cut
 that names a row of another room waits until that row's signer carries it. What must not travel is proof of
 who said it or of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): no placement cell
-is empty. Of 186 families, 143 take the one default, the scope each row carries with the audience CC 5.2 gives
+is empty. Of 187 families, 143 take the one default, the scope each row carries with the audience CC 5.2 gives
 it, and 20 are placed by a sentence of their own. **open**: the default is stated once for all families and is
 checked for none of the 143. CC 8.3.4 names this as a limit. The copy rule is a row of that table.
 
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
-the close. A window names its opener and the acknowledgement by which the concluding party first held it. Where the
-outcome binds others, the concluder signs it as a landing row naming that acknowledgement and its own head.
+the close. A window names its opener and the held row by which the concluding party first said it holds it. Where the
+outcome binds others, the concluder signs it as a landing row naming that held row and every row it counted; the
+rule reads no head of the landing.
 Where it binds only the reader, each node reads it on its own clock and signs nothing. **measured**: 18
 clock entries have this shape, 15 of them counted from receipt. The other 22 are a row stating its own end,
 read from the row alone against now. `by receipt` on a clock is the concluder's own first holding of the opener.
@@ -301,7 +302,8 @@ decider closes an agent's objection window at retirement by the `decided` row, w
 (CC 7.5.5). **run**: a `decided` row that leaves out an objection the agent made concludes nothing, and the
 agent's own landing closes nothing. Where the text has
 each node read the close on its own clock, the cell says `local` and nothing is signed: the moderation window,
-a harm report, a person's own roster and the halt's fuse (CC 4.5.13, CC 3.3.6.4). A late answer is closed for
+a harm report and the halt's fuse (CC 4.5.13). The lone path of a person's own roster binds others, and a roster
+key lands it by a `window:landed` or a `window:refused` row that names its own `window:held` row (CC 3.3.6.4). A late answer is closed for
 the fuse and an invitation, and counts for an election and a takedown. Six doors state whether the opening row is in force while its window is open: the halt and a takedown's
 withhold are, from each node's own receipt; a moderation action, a harm report, an invitation and a device's
 addition are not. **run**: the **state** answer gives each while no landing
@@ -335,8 +337,8 @@ most one lease against that person's other devices.
 
 Every row family is one of four shapes: a **consent**, a **door**, a **claim** or **content**. A roster is a
 consent given by a count, and an acknowledgement is a claim. **measured**
-(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 186 families, 114 are
-claims, 24 content, 23 doors, 15 consents and 7 both a consent and a door. Three fit none.
+(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 187 families, 114 are
+claims, 24 content, 24 doors, 15 consents and 7 both a consent and a door. Three fit none.
 
 The four are labels over two mechanisms. Removing the shapes in order, three orders leave the same two:
 consent and the door. Content is carried by consent, since its audience is the holders of a roster and its

@@ -34,8 +34,8 @@ machine's Prop_FloorNeverLandsEarly). Two per-row fields answer the implementer'
 is the denominator of the cancel fraction — `base` for a community (the proposer counted), `others` for a
 self roster (every key is one person's, so the proposer is not asked to object to itself); `at_window` is
 what happens to a proposal that has not landed when the window closes — `cancelled` for every community
-row (a held change resolves: formal/membership no_hold_expiry), `stay_open` for the self roster
-(cleared by the proposer's withdraws or the target's act), `lapsed` for the halt, `tallied` for moderation. The base is the standing roster at or below k members and the
+row (a held change resolves: formal/membership no_hold_expiry), `refused` for the self roster
+(the target of an eviction signed inside the window, or a strict majority of the others objected), `lapsed` for the halt, `tallied` for moderation. The base is the standing roster at or below k members and the
 expected-active count above it, never below `min` (the law's constants are provisional until the
 participation law is measured).
 

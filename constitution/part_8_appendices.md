@@ -1648,7 +1648,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons. A card and a description MUST NOT differ on a value. The build takes a value the text states from words quoted from the text, and fails when those words change. A value the text does not state is read from the shipped store, and a difference between the store and the text is a listed departure (`manifests/divergences.tsv`). An `else` arm of a guard names one reason. Where a section also gives a RETRYABLE reason for that clause, that reason is the one reported while the row the clause waits for is not held.
 
-A family with no card states none of these beyond the default row. Cards: 123 of 186 families.
+A family with no card states none of these beyond the default row. Cards: 124 of 187 families.
 
 **`accord:*`** — Rules, thing
 
@@ -2739,7 +2739,7 @@ In time:
 - on admitted(self): emit `hard_case:identity_occurrence_added` by infra:attest (CC 3.3.6)
 - expiry optional `valid_until` (CC 3.3.6.2)
 - on close(expiry): read lapsed (CC 3.3.6.2)
-- landing of `window`: each node for itself, nothing signed (CC 3.3.6.4)
+- landing of `window`: by self as `window:{state}`; a late answer counts (CC 3.3.6.4)
 - while `window` is open: binds nobody until it lands (CC 3.3.6.4)
 
 Body: `author`, `identity_key_id`, `occurrence_key_id`, `device_class`, `hardware_attestation`, `transport_destination`, `encryption_pubkeys`, `room_binding_xwing_pubkey`, `build_manifest_hash`, `dial_hints`, `refs`, `asserted_at`, `valid_until`
@@ -3653,6 +3653,16 @@ Count: `none`
 
 Fold:
 - `reads=vote:{contribution_id}&live; key=contribution_id,person; pick=agree; combine=sum(weight); by=node` (CC 3.1.9.3)
+
+**`window:{state}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | selfAct | false | true (always) | none |
+
+Count: `none` (CC 3.3.6.4)
+
+Body: `author`, `dimension`, `refs`, `asserted_at`
 
 ## 8.11 `earlier-signed-object` — The earlier signed object (JSON and JCS)
 

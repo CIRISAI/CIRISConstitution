@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "a463e7b43c4b63974c3e3145943b3fe3759a33f32fe56c38a9ac0532b09b8fd0",
-   "formal/derivation/signer_kind.tsv": "41a0ec41a739ab2e84b2670951d60aed4e797ed716d7291d9dca443204d30423"
+   "manifests/transitions.json": "514f4b7252c9ed6582422547a3f194660339210b9d3ebabe79030efc38a63548",
+   "formal/derivation/signer_kind.tsv": "189a8904547c5598a734c203dcbfe8c20443aadb6e99879f686ad590e58999ef"
   },
   "kinds": [
    "person",
@@ -63,8 +63,8 @@
    ]
   },
   "counts": {
-   "uses": 505,
-   "transitions": 464,
+   "uses": 506,
+   "transitions": 465,
    "open_uses": 0,
    "open_questions": 0
   },
@@ -9223,6 +9223,23 @@
    "at": "P3:662"
   },
   {
+   "use": "window:{state}#attest:none>admitted",
+   "family": "window:{state}",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "member"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "window_step",
+   "cc_ref": "CC 3.1.3 (registry); CC 3.3.6.4 Who concludes (a key of a person's own roster; the door is a person's)",
+   "at": "P3:209, P3:2087"
+  },
+  {
    "use": "witness_diversity:{contribution_id}#attest:none>admitted",
    "family": "witness_diversity:{contribution_id}",
    "verb": "attest",
@@ -9669,6 +9686,7 @@
    "watchlist:{id}#withdraw:admitted>withdrawn",
    "weighted_aggregate:{contribution_id}#attest:none>admitted",
    "weighted_aggregate:{contribution_id}#supersede:admitted>superseded",
+   "window:{state}#attest:none>admitted",
    "witness_diversity:{contribution_id}#attest:none>admitted",
    "witness_diversity:{contribution_id}#withdraw:admitted>withdrawn"
   ],

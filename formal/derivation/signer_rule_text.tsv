@@ -68,3 +68,4 @@ watchlist:{id}	seat_role(moderate) | seat_role(takedown) x none x {} ; for the g
 act:ack	roster_member(at) x none x {} ; the conferrer (a count where the conferrer is one), another holder of the body the acts were done for, or the receipter the offer names; never the signer of an act it names	CC 3.1.3	
 holon:claim	any_registered x none x {} ; any key under its own name, whose claim the reader's trust set weighs	CC 3.1.11	
 mls:leaf_vouch	self x none x {} ; the member whose leaf it is, under its own key on the device	CC 3.1.4	
+window:{state}	roster_member(at) x none x {} ; a key seated in the counted set at the head the opener names; for the self roster, a key of the roster	CC 3.3.6.4	

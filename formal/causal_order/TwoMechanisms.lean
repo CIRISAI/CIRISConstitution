@@ -34,7 +34,7 @@
       seat stands. `offer_alone_never_stands`: an offer with no acceptance is
       no seat at any instant.
 
-  What remains measured: that the 186 families fall into the four shapes, and that every
+  What remains measured: that the 187 families fall into the four shapes, and that every
   content family's audience is one of the three scopes (formal/causal_kernel/check_shapes.py).
 
   Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core. Imports RosterHead.lean and

@@ -636,7 +636,6 @@ statement_invalid	refusal		listed among the refusals of its row or object
 statement_kid_not_iss	refusal		the text says refused
 statement_no_role	refusal		listed among the refusals of its row or object
 statement_not_genesis_bundle	refusal		listed among the refusals of its row or object
-stay_open	not_a_token		enumeration value, not a fault
 steward_purge	not_a_token		enumeration value, not a fault
 stewards_of	not_a_token		function, predicate or rule name
 store_write	not_a_token		enumeration value, not a fault
