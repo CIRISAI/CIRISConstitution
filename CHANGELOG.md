@@ -2,6 +2,10 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
+## 1.0-rc23 (open)
+
+- The path to 1.0. The open rows of the ledger (8.3.4) close in this edition, each by a sentence, a kernel case, or both.
+
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 
 - Cut 2026-11-25, released as guidance. The edition states who owns a key and how a root's grant is accepted and stands; reads the end of every standing from the heads rows name; types the private room's wire; folds a roster's tips; lands the self roster's lone path by signed rows; and names every reason the Internet-Draft's checks carry. The register holds 376 established rows, 51 normative and 181 staged; the namespace registry has 187 families; seventeen machine-checked models carry 272 properties, and five further models run over stated bounds. The kernel's models are vendored at `kernel-v0.3.0` (5e5a409). Carried to the next edition, and listed as open in 8.3.4: the landing of the moderation fallback; the duty seat's membership condition and a founding holder's laying down of a duty; a moderator's lone removal of an agent's key and what re-seats it after a lift; a removed room key seated again and a second seat row of one room key; the joiner's device left without the content; a root charter that carries no `sub_delegation`; the read rule for a key revocation's `trusted_through`; and the pinned bytes of the symbol envelope's nonce and of the Welcome's signature.
