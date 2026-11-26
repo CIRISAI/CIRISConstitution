@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "e1105e23a71c2b3e155e92942766a00fe1a5d77af0db4bfe753944d948c63957",
-   "formal/derivation/signer_kind.tsv": "189a8904547c5598a734c203dcbfe8c20443aadb6e99879f686ad590e58999ef"
+   "manifests/transitions.json": "cb571a2b27752610d0db7803d1749b0b5267bb5144fbcb68ddb00502a40e3029",
+   "formal/derivation/signer_kind.tsv": "bdcde1f2cb84ed32b6bac025340bc4a7ede29a678e888ebf7c41ce8e9061f9a2"
   },
   "kinds": [
    "person",
@@ -63,8 +63,8 @@
    ]
   },
   "counts": {
-   "uses": 506,
-   "transitions": 465,
+   "uses": 508,
+   "transitions": 467,
    "open_uses": 0,
    "open_questions": 0
   },
@@ -1152,6 +1152,38 @@
    "rule": "actor_content",
    "cc_ref": "CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E",
    "at": "P3:433, P3:2585, P3:2613"
+  },
+  {
+   "use": "ballot:moderation_action#attest:none>admitted",
+   "family": "ballot:moderation_action",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "member"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "vote",
+   "cc_ref": "CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
+   "at": "P3:253, P1:199, P4:2178"
+  },
+  {
+   "use": "ballot:moderation_action#withdraw:admitted>withdrawn",
+   "family": "ballot:moderation_action",
+   "verb": "withdraw",
+   "leaf": null,
+   "roles": [],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "vote",
+   "cc_ref": "CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person",
+   "at": "P3:253, P1:199, P4:2178"
   },
   {
    "use": "ballot:moderator#attest:none>admitted",
@@ -9321,6 +9353,8 @@
    "autonomy:{aspect}#attest:none>admitted",
    "autonomy:{aspect}#recant:admitted>recanted",
    "autonomy:{aspect}#withdraw:admitted>withdrawn",
+   "ballot:moderation_action#attest:none>admitted",
+   "ballot:moderation_action#withdraw:admitted>withdrawn",
    "ballot:moderator#attest:none>admitted",
    "ballot:moderator#withdraw:admitted>withdrawn",
    "ballot:moderator_acceptance#attest:none>admitted",

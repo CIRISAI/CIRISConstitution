@@ -197,6 +197,8 @@ def more(s):
     one("vote:dave", "ballot:moderator", "dave", ["member"], "Dave ranks his choices for moderator")
     one("vote:carol", "ballot:moderator", "carol", ["member"], "Carol casts her ballot")
     one("vote:carol", "ballot:moderator", "carol", ["author"], "Carol withdraws her ballot: her own act, counted as withdrawn", verb="withdraw")
+    one("act:carol", "ballot:moderation_action", "erin", [], "A stranger tries to vote on a moderation action: refused, a ballot is a live member's")
+    one("act:carol", "ballot:moderation_action", "carol", ["member"], "Carol votes against a moderation action no moderator took")
     one("seat:moderator", "ballot:moderator_acceptance", "dave", ["member"], "Dave tries to accept the seat: refused, the count did not yield him")
     one("seat:moderator", "ballot:moderator_acceptance", "frank", ["member", "winner"], "Frank, whom the count yields, accepts and binds the ballots he was seated on")
     one("listing:1", "community:listing", "dave", ["member"], "Dave tries to list the room: refused, a listing is signed by a holder of the room's moderate duty")

@@ -179,6 +179,7 @@ rendezvous:route	registry	Circumstances	THING	attest	L	an anonymous receiver's h
 retirement:{state}	registry	Process	THING	attest,withdraw	L	the seven-step retirement ladder; a decided row is withdrawn while no frozen row exists (CC 3.1.5, 7.5.5); held shut today	no	pre:Process
 transport:canonical_rebind	registry	Identity	THING	attest,replace	L	a holder quorum rebinds the canonical's transport destination	no	—
 ballot:moderator	registry	Structure	THING	attest,withdraw	M	a member's ranked ballot in a moderator election; the fold keeps the person's latest	no	pre:Identity
+ballot:moderation_action	registry	Structure	THING	attest,withdraw	M	a member's vote for or against a moderation action where no moderator acts; the fold keeps the person's latest	no	pre:Identity
 ballot:moderator_acceptance	registry	Structure	THING	attest	M	the winner's acceptance binding the ballot set it was counted over	no	pre:Structure
 act:ack	persist	Facts	ACCOUNT	attest	M	a receipt of one or more acts: the signer acknowledges them at a head (kind Facts about the record)	no	—
 location_proof:{version}	persist	Circumstances	THING	attest,withdraw	M	the subject's own rough-location declaration, ended by its signer's withdraws	no	—

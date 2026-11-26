@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "82affc332370ddcbde66961ed29bdc98164497399c44cfbb7d32ebee6fe3cb1d",
+  "source_sha256": "544bb1737c5242849eb9bf642c6e4477d4d126f158e70f4280e1c9ed13dd5503",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -88,10 +88,10 @@
   "widens_when": "one rule reads every widens and confirm cell: the boolean never under-states, and `when` narrows it. widens.when is always, by_scope (a row signed at self scope does not widen, a row at any wider scope does) or by_scope_change (a replacing row widens when its scope is wider than the row it replaces, CC 4.4.3.14). confirm.when is always (the row widens at every scope, or this table offers no way back) or if_widens (a way back is offered, and the item is confirmed only when widens.when holds for the row as signed). A way back means this table offers a withdraw or recant of the row; a copy a peer took is not recalled",
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
-  "families": 187,
-  "transitions": 465,
-  "gap_cells": 1,
-  "confirmed": 256,
+  "families": 188,
+  "transitions": 467,
+  "gap_cells": 4,
+  "confirmed": 257,
   "undo_gap_cells": 2,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
@@ -2377,6 +2377,95 @@
       "value": true,
       "via": "attest",
       "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    }
+   ]
+  },
+  {
+   "family": "ballot:moderation_action",
+   "kind": "Structure",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [
+       "member"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "mirror",
+       "rows": [
+        "moderation_action"
+       ]
+      },
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.3"
+      ],
+      "count": "moderation_action@subject_group"
+     },
+     "widens": {
+      "value": false,
+      "source": "gap"
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "always"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "withdraw",
+     "from": "admitted",
+     "to": "withdrawn",
+     "roles": {
+      "value": [],
+      "source": "gap"
+     },
+     "policy": {
+      "value": {
+       "policy": "none",
+       "rows": []
+      },
+      "source": "gap"
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "mirror",
       "source": "derived"
      },
      "confirm": {

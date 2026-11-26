@@ -6,6 +6,7 @@
 family	signer_rule	cc_ref	stage
 archive_release:{basis}	seat_role(wa) x none x {} ; concludes nothing from any other key	CC 3.1.5	
 ballot:moderator	roster_member(at) x none x {} ; the signer's membership is live at evaluation	CC 3.1.3	
+ballot:moderation_action	roster_member(at) x none x {} ; the signer's membership is live at evaluation	CC 3.1.3	
 ballot:moderator_acceptance	roster_member(at) x none x {} ; the count's winner over the bound ballot set	CC 3.1.3	
 ballot:tally:{poll_id}	roster_member(at) x none x {} ; the period's share-index-0 tally member	CC 3.1.3	
 census:composite:{class}	seat_role(serve) x none x {} ; a serve seat of the period	CC 3.1.3	

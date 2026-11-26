@@ -50,6 +50,8 @@ autonomy:{aspect}	withdraw	admitted	withdrawn	*	any-of(agent,person)	actor_conte
 autonomy:{aspect}	recant	admitted	recanted	*	any-of(agent,person)	actor_content	CC 3.1.5.2 (registry); CC 3.4.7.3 Clause C, Clause E	P3:433, P3:2585, P3:2613	
 ballot:moderator	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:189, P1:199, P4:2178	
 ballot:moderator	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:189, P1:199, P4:2178	
+ballot:moderation_action	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:253, P1:199, P4:2178	
+ballot:moderation_action	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:253, P1:199, P4:2178	
 ballot:moderator_acceptance	attest	none	admitted	*	person	vote	CC 3.1.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:190, P1:199, P4:2178	
 ballot:tally:{poll_id}	attest	none	admitted	*	person	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)	P3:188, P3:228, P3:186	
 ballot:tally:{poll_id}	withdraw	admitted	withdrawn	*	person	membership	CC 3.1.3 (registry); CC 3.1.3.2; CC 3.3.4; CC 4.5.13 (one voice a person)	P3:188, P3:228, P3:186	
