@@ -90,7 +90,7 @@
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 188,
   "transitions": 467,
-  "gap_cells": 4,
+  "gap_cells": 1,
   "confirmed": 257,
   "undo_gap_cells": 2,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
@@ -2422,11 +2422,14 @@
       "count": "moderation_action@subject_group"
      },
      "widens": {
-      "value": false,
-      "source": "gap"
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.3",
+      "value": true
      },
      "undo": {
-      "value": false,
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
       "source": "derived"
      },
      "confirm": {
@@ -2448,15 +2451,19 @@
      "from": "admitted",
      "to": "withdrawn",
      "roles": {
-      "value": [],
-      "source": "gap"
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.3",
+      "value": [
+       "author"
+      ]
      },
      "policy": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.3",
       "value": {
-       "policy": "none",
+       "policy": "selfAct",
        "rows": []
-      },
-      "source": "gap"
+      }
      },
      "widens": {
       "value": false,

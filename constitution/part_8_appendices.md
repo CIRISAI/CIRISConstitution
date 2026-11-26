@@ -1928,8 +1928,8 @@ Body: `duration` (text only), `transcript` (text only)
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | member | mirror `moderation_action` | false | true (always) | none |
-| withdraw | open cell | none | false | false | attest |
+| attest | member | mirror `moderation_action` | true | true (always) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
 
 Count: `moderation_action@subject_group` (CC 3.1.3)
 
