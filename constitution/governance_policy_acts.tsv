@@ -1,13 +1,15 @@
 # Which row of constitution/governance_policy.tsv governs which counted act. One row per (act, scope, community kind).
-# policy: the row or rows the act may take, joined by |. choice: `fixed` (the act takes that one row and states none) or
+# policy: the row or rows the act may take, joined by |; rows joined by & must ALL be met (the stricter decides). choice: `fixed` (the act takes that one row and states none) or
 # `row` (the counted row says which of the listed paths it takes). `cosigned_act` is the protocol the group's record declares
 # (`consensus_protocol`); a row never states a protocol of its own, and one that states another concludes nothing.
 # `lift` of scope `agent` is the row that seats an agent's key again after a moderator's lone removal; of scope `act`, the lift of any other act.
 # `recall` and `duty_withdraw` both end a duty seat: the body the row counts (the members, or the duty holders) tells them apart.
 # A node's seat over an `infrastructure` community is placed and removed by the founders' count alone: the node's consent is
 # not asked, and the node is no voice and in no base. Every other roster seat needs the seated key's own consent.
+# A record change names the record in force as its head and is counted under the protocol in force AND the standing default:
+# a group weakens its protocol only by meeting its present one.
 # A counted row whose policy is not one its act may take concludes nothing. An act with no row here is not a counted act.
-# community_kind is the policy table's `corridor` reading of the object: community | infrastructure | self | accord | affiliation | body | custody.
+# community_kind is the policy table's `corridor` reading of the object: community | family | infrastructure | self | accord | affiliation | body | custody.
 # Checked by tools/check_policy_acts.py: every policy is a row of the table, and every cited section exists.
 act	scope	community_kind	policy	choice	cc_ref
 admit	member	community	cosigned_act|community_invite	row	3.1.3.2 4.5.13
@@ -24,7 +26,12 @@ lift	agent	community	moderation_overturn	fixed	4.5.13
 moderation_fallback	content	community	moderation_action	fixed	4.5.13
 election_seating	moderate	community	moderator_election	fixed	4.5.13
 poll	any	community	poll	fixed	4.5.13
-record_change	record	community	cosigned_act|default_standing|default_content|default_irreversible	row	4.5.13
+record_change	record	community	cosigned_act&default_standing	fixed	3.1.3.2 4.5.13
+change	content	community	default_content	fixed	4.5.13
+change	irreversible	community	default_irreversible	fixed	4.5.13
+admit	member	family	cosigned_act	fixed	3.1.3.2 3.3.4
+remove	member	family	cosigned_act	fixed	3.1.3.2 3.3.4
+record_change	record	family	cosigned_act	fixed	3.1.3.2
 admit	founder	infrastructure	cosigned_act	fixed	3.1.3.2 3.2
 remove	founder	infrastructure	cosigned_act	fixed	3.1.3.2 3.2
 admit	node	infrastructure	cosigned_act	fixed	3.1.3.2

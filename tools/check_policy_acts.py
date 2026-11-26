@@ -15,12 +15,12 @@ for r in acts:
     k = (r["act"], r["scope"], r["community_kind"])
     if k in seen: bad.append("stated twice: %s" % (k,))
     seen.add(k)
-    ps = r["policy"].split("|")
+    ps = [q for part in r["policy"].split("|") for q in part.split("&")]
     for p in ps:
         if p not in policy: bad.append("%s: %r is no row of the policy table" % (k, p))
         used.add(p)
     if r["choice"] not in ("fixed", "row"): bad.append("%s: choice %r" % (k, r["choice"]))
-    if r["choice"] == "fixed" and len(ps) != 1: bad.append("%s: a fixed act names one row" % (k,))
+    if r["choice"] == "fixed" and "|" in r["policy"]: bad.append("%s: a fixed act names one row" % (k,))
     for s in r["cc_ref"].split():
         if ("\t" + s + "\t") not in toc and not toc.startswith(s + "\t") and ("\n" + s + "\t") not in toc:
             bad.append("%s: section %s is not in the table of contents" % (k, s))
