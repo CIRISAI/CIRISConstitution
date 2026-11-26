@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "bdac88a31498057ee51bca3f9315b5d53a36e363931db9dc32b3ff802d94c5b3",
+  "policy_sha256": "8f25f26c9fa5978c2ad4c6a3fd61053427440723b3aec512b38dfc5b5d94acd1",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -615,7 +615,7 @@
    "family": "moderator_recall",
    "cc_ref": "4.5.13 4.5.4",
    "kind": "cosigned",
-   "standing_set": "the community's roster",
+   "standing_set": "the community's roster, less the holder it recalls",
    "base": "standing",
    "enact": {
     "num": 2,
