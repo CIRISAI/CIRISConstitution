@@ -314,7 +314,7 @@ room_binding	binding-info-input	room	-	derived	group-ref	always	2.6.1.11	The roo
 room_binding	binding-info-input	room_key	-	derived	kid	always	2.6.1.11	The thumbprint of the room key the binding is of.
 room_binding	binding-info-input	addressee_key	-	derived	kid	always	2.6.1.11	The thumbprint of the addressee's room key, never a node key.
 room_binding	binding-info-input	seat_commitment	-	derived	hash-digest	always	2.6.1.11	The commitment on the room key's record.
-room_binding	binding-info-input	binding_key	-	derived	bstr .size 32	always	2.6.1.11 2.6.1.12	The thumbprint of the person's binding key; its encoding is open.
+room_binding	binding-info-input	binding_key	-	derived	bstr .size 32	always	2.6.1.11	The name of the person's binding key: SHA-256 over the deterministic encoding of ["CEG-binding-key/2", room_binding_xwing_pubkey], the key as a byte string of 1216 bytes.
 room_binding	binding-opening	person	-	derived	identity-ref	always	2.6.1.11	The person the room key's holder names.
 room_binding	binding-opening	nonce	-	derived	bstr .size 32	always	2.6.1.11	The nonce under the seat commitment.
 room_binding	room-sealed	"dek"	-	object	bstr .size 32	on a wrap to a room key	2.6.1.11 3.3.2	The wrapped key. A sealed envelope outside a wrap carries none.
