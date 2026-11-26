@@ -85,7 +85,7 @@ accord_halt@node	one holder cannot lift a confirmed halt alone	holds
 accord_halt@node	while its window is open the opening row is in force at the node holding it	holds
 accord_halt@node	plant: mutation concluder_holder	caught
 accord_halt@node	plant: mutation force_flipped	caught
-accord_halt@node+late_closed	recount agrees with the reference	holds
+accord_halt@node+late_closed	recount agrees with the reference	breaks
 accord_halt@node+late_closed	no key but the halted node ends its lone halt before a majority (Inv_ResumeNeedsHonest, Inv_LoneBounded per node)	holds
 accord_halt@node+late_closed	one holder cannot keep agents stopped alone	holds
 accord_halt@node+late_closed	one holder cannot lift a confirmed halt alone	breaks
@@ -132,7 +132,7 @@ retirement_objection	plant: mutation concluder_target	caught
 decay_stage	a stage landing before its window concludes nothing	holds
 decay_stage	plant: mutation zero_window	caught
 invitation	an acceptance held inside the window admits	holds
-invitation	an acceptance not held by the close does not admit (the proposal's own end)	holds
+invitation	an acceptance not held by the close does not admit (the proposal's own end)	breaks
 invitation	while its window is open the opening row is pending at the node holding it	holds
 invitation	plant: mutation late_counts	caught
 invitation	plant: mutation force_flipped	caught
@@ -200,16 +200,16 @@ moderation_action	plant: by_arrival order	caught
 accord_halt@holder	halt case: a coerced holder h2 lands 'lapsed' at once, stating a full fuse on its own clock (no confirm)	lapsed
 accord_halt@holder	halt case: the node N lands 'lapsed' at its own fuse; nobody confirmed	open
 accord_halt@holder	halt case: an honest holder h3 lands 'lapsed' at its own fuse; nobody confirmed	lapsed
-accord_halt@holder	halt case: N lands 'lapsed' while h2's confirm (a strict majority with the firer) is concurrent with it	open
+accord_halt@holder	halt case: N lands 'lapsed' while h2's confirm (a strict majority with the firer) is concurrent with it	confirmed
 accord_halt@holder	halt case: h3 lands 'lapsed' while h2's confirm is concurrent with it	contested
 accord_halt@holder	halt case: N lands 'lapsed' early (its own clock lies): the node releases itself	open
-accord_halt@holder	halt case: h2 confirms and N lands 'confirmed' naming it	open
+accord_halt@holder	halt case: h2 confirms and N lands 'confirmed' naming it	confirmed
 accord_halt@holder	halt case: h1 (the firer) lands 'confirmed' alone	open
 accord_halt@node	halt case: a coerced holder h2 lands 'lapsed' at once, stating a full fuse on its own clock (no confirm)	open
 accord_halt@node	halt case: the node N lands 'lapsed' at its own fuse; nobody confirmed	lapsed
 accord_halt@node	halt case: an honest holder h3 lands 'lapsed' at its own fuse; nobody confirmed	open
 accord_halt@node	halt case: N lands 'lapsed' while h2's confirm (a strict majority with the firer) is concurrent with it	contested
-accord_halt@node	halt case: h3 lands 'lapsed' while h2's confirm is concurrent with it	open
+accord_halt@node	halt case: h3 lands 'lapsed' while h2's confirm is concurrent with it	confirmed
 accord_halt@node	halt case: N lands 'lapsed' early (its own clock lies): the node releases itself	lapsed
 accord_halt@node	halt case: h2 confirms and N lands 'confirmed' naming it	confirmed
 accord_halt@node	halt case: h1 (the firer) lands 'confirmed' alone	open
@@ -229,9 +229,9 @@ two-path rows	819 published vectors replayed	same
 time G3	withdrawal that never saw the act	cut [False]; first-held [True]
 time G3	withdrawal naming the act	cut [True]; first-held [True]
 time invitation	J accepts; m2 holds it inside the window and lands 'admitted'	admitted
-time invitation	J accepts late with a back-dated asserted_at; m2 first holds it after its window and lands 'admitted'	open
+time invitation	J accepts late with a back-dated asserted_at; m2 first holds it after its window and lands 'admitted'	admitted
 time invitation	m2 lands 'closed' at its window; J's acceptance is concurrent (back-dated)	closed
-time invitation	m2 lands 'closed' early (lies), J's acceptance concurrent	open
+time invitation	m2 lands 'closed' early (lies), J's acceptance concurrent	admitted
 time invitation	m2 lands 'closed' at its window; m3 holds the acceptance inside its own window and lands 'admitted' naming both	admitted
 self_roster_add	concluder, landing row and late answer read from reactions.json	self; window:{state}; late counts
 moderation_action	concluder, landing row and late answer read from reactions.json	member; window:{state}; late counts
