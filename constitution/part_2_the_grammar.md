@@ -1192,7 +1192,7 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `room_key` | derived | `kid` | always | [2.6.1.11](#2.6.1.11) | The thumbprint of the room key the binding is of. |
 | — | `addressee_key` | derived | `kid` | always | [2.6.1.11](#2.6.1.11) | The thumbprint of the addressee's room key, never a node key. |
 | — | `seat_commitment` | derived | `hash-digest` | always | [2.6.1.11](#2.6.1.11) | The commitment on the room key's record. |
-| — | `binding_key` | derived | `bstr .size 32` | always | [2.6.1.11](#2.6.1.11) [2.6.1.12](#2.6.1.12) | The thumbprint of the person's binding key; its encoding is open. |
+| — | `binding_key` | derived | `bstr .size 32` | always | [2.6.1.11](#2.6.1.11) | The name of the person's binding key: SHA-256 over the deterministic encoding of ["CEG-binding-key/2", room_binding_xwing_pubkey], the key as a byte string of 1216 bytes. |
 | — | `person` | derived | `identity-ref` | always | [2.6.1.11](#2.6.1.11) | The person the room key's holder names. |
 | — | `nonce` | derived | `bstr .size 32` | always | [2.6.1.11](#2.6.1.11) | The nonce under the seat commitment. |
 | — | `"dek"` | object | `bstr .size 32` | on a wrap to a room key | [2.6.1.11](#2.6.1.11) [3.3.2](part_3_the_namespace.md#3.3.2) | The wrapped key. A sealed envelope outside a wrap carries none. |
