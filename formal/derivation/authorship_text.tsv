@@ -35,6 +35,7 @@ slashing:{outcome}	authorship	*	authored	CC 4.4.3.19	A moderation action above c
 wa_adjudication:{state}	authorship	leaf=abandonment|seizure|successor	counted	CC 4.3	A finding of the designated body is one row cosigned under that body's declared protocol
 wa_adjudication:{state}	authorship	*	authored	CC 3.1.9.4	`petition` is the petitioner's own row
 ballot:moderator	authorship	*	authored	CC 4.5.13	There is **one ballot per person** however many keys they hold
+ballot:moderation_action	authorship	*	authored	CC 3.1.3	One ballot per person, folded as `ballot:moderator` is
 ballot:moderator_acceptance	authorship	*	authored	CC 4.5.13	**The winner accepts by their own row**
 content_class:{class}	authorship	*	authored	CC 3.3.12	a member of a room signs it against a row at the room's scope
 collection:{kind}	authorship	act=group	counted	CC 3.1.3.4	a row that is the cohort's act is counted

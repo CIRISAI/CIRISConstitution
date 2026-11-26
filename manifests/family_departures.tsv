@@ -35,6 +35,15 @@ archive_release:{basis}	replication	unbuilt	"none (held shut)"
 archive_release:{basis}	projection	unbuilt	"none (never stored)"
 archive_release:{basis}	erasure_route	unbuilt	"none (never stored)"
 attestation:registry_consensus	placement	registry_consensus_public	"commons"
+ballot:moderation_action	placement	unbuilt	"targeted_room"
+ballot:moderation_action	subject_rule	unbuilt	null
+ballot:moderation_action	cosign_rule	unbuilt	null
+ballot:moderation_action	freshness	unbuilt	null
+ballot:moderation_action	lifecycle	unbuilt	null
+ballot:moderation_action	replication	unbuilt	null
+ballot:moderation_action	projection	unbuilt	null
+ballot:moderation_action	erasure_route	unbuilt	null
+ballot:moderation_action	governance	unbuilt	null
 ballot:moderator	placement	unbuilt	"targeted_room"
 ballot:moderator	subject_rule	unbuilt	null
 ballot:moderator	freshness	unbuilt	null

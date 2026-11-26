@@ -22,6 +22,7 @@ audio:*	content	sourced | runs
 audit_chain:hash_continuity	claim	sourced | runs
 autonomy:{aspect}	claim	sourced | runs
 ballot:moderator	door	sourced | runs
+ballot:moderation_action	door	sourced | runs
 ballot:moderator_acceptance	consent+door binds=body+holder	sourced | runs
 ballot:tally:{poll_id}	door	sourced | runs
 benchmark:he300:{category}:{version}	claim	sourced | runs
@@ -263,8 +264,8 @@ mechanism claim	keeps the characteristic property of door	no
 mechanism consent	keeps the characteristic property of door	no
 mechanism content	keeps the characteristic property of door	no
 mechanism door	keeps the characteristic property of door	yes
-removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 26, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 157, e.g. accord:*)
-removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 157, e.g. accord:*) ; door kept (loses 26, e.g. accord:invoke:constitutional:{halt_id})
-removal	order door > consent > content > claim	surviving consent,door | door kept (loses 26, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 19, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
-counts	families per shape	claim 114, consent 15, consent+door 7, content 24, door 24, none fits 3
-counts	status	cannot run 2, no shape, stated 9, sourced 176
+removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 27, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 157, e.g. accord:*)
+removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 157, e.g. accord:*) ; door kept (loses 27, e.g. accord:invoke:constitutional:{halt_id})
+removal	order door > consent > content > claim	surviving consent,door | door kept (loses 27, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 19, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
+counts	families per shape	claim 114, consent 15, consent+door 7, content 24, door 25, none fits 3
+counts	status	cannot run 2, no shape, stated 9, sourced 177

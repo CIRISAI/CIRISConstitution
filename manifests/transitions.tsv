@@ -49,6 +49,8 @@ audit_chain:hash_continuity	withdraw	admitted	withdrawn	author,subject	selfAct	f
 autonomy:{aspect}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 autonomy:{aspect}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 autonomy:{aspect}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
+ballot:moderation_action	attest	none	admitted	member	mirror	true	withdraw	selfAct	true	derived	cc-table	cc-table
+ballot:moderation_action	withdraw	admitted	withdrawn	author	selfAct	false	attest	mirror	false	cc-table	cc-table	derived
 ballot:moderator	attest	none	admitted	member	ranked	true	withdraw	selfAct	true	derived	cc-table	cc-table
 ballot:moderator	withdraw	admitted	withdrawn	author	selfAct	false	attest	ranked	false	cc-table	cc-table	derived
 ballot:moderator_acceptance	attest	none	admitted	winner	ranked	true	none		true	cc-table	cc-table	cc-table

@@ -11,6 +11,9 @@ ballot:moderator	attest	policy		ranked:moderator_election	CC 4.5.13
 ballot:moderator	attest	widens		true	CC 3.1.3
 ballot:moderator	withdraw	policy		selfAct	CC 4.5.13
 ballot:moderator	withdraw	roles		author	CC 4.5.13
+ballot:moderation_action	attest	widens		true	CC 3.1.3
+ballot:moderation_action	withdraw	policy		selfAct	CC 3.1.3
+ballot:moderation_action	withdraw	roles		author	CC 3.1.3
 ballot:moderator_acceptance	attest	roles		winner	CC 3.1.3
 ballot:moderator_acceptance	attest	widens		true	CC 3.1.3
 ballot:tally:{poll_id}	attest	roles		tally	CC 3.1.3

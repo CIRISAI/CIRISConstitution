@@ -289,6 +289,8 @@ def _reserved_rules():
          "a person's key, alone or as a voice of the group whose head the row names; never a substrate self-report", "CC 2.7.11"),
         (lambda p, c: p == "ballot:moderator",
          "a member of the roster the election names, one ballot a person; never a substrate self-report", "CC 4.5.13"),
+        (lambda p, c: p == "ballot:moderation_action",
+         "a member of the roster the proposal names, one ballot a person; never a substrate self-report", "CC 4.5.13"),
         (lambda p, c: p == "ballot:moderator_acceptance",
          "the count's winner over the bound ballot set; never a substrate self-report", "CC 4.5.13"),
         (lambda p, c: p == "transport:canonical_rebind",
