@@ -44,6 +44,14 @@ moderator_recall	count_set	member	CC 4.5.13	A recall is one row cosigned by more
 moderator_recall	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
 moderator_recall	voices	scrubs	CC 4.5.13	A recall is one row cosigned by more than two thirds of the standing roster
 moderator_recall	counted_at	named	CC 2.4	judged on the *receiver's own* fold over the members at the roster head the row names
+duty_confer	count_set	moderate+review+slash+takedown	CC 4.5.4	A duty seat is conferred by a strict majority of the duty holders
+duty_confer	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
+duty_confer	voices	scrubs	CC 4.5.4	A duty seat is conferred by a strict majority of the duty holders
+duty_confer	counted_at	named	CC 2.4	judged on the *receiver's own* fold over the members at the roster head the row names
+duty_withdraw	count_set	moderate+review+slash+takedown-target	CC 4.5.4	withdrawn by a strict majority of the other duty holders, the holder concerned not counted
+duty_withdraw	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
+duty_withdraw	voices	scrubs	CC 4.5.4	withdrawn by a strict majority of the other duty holders, the holder concerned not counted
+duty_withdraw	counted_at	named	CC 2.4	judged on the *receiver's own* fold over the members at the roster head the row names
 accord_halt	count_set	holder	CC 4.2.1.1	unless a strict majority of the standing roster confirms it
 accord_halt	voice	person	CC 4.2.3	Each holder is a person.
 accord_halt	voices	scrubs	CC 4.2.1.1	by a cosigned `accord:lifecycle:confirmed` row naming the halt

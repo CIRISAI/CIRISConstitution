@@ -2198,6 +2198,8 @@ The rows are these, generated into this section from the table:
 | `moderation_action` | `member`, one voice a person, the set the proposal names | role:moderate at 1 | — | more than 1/2 of those who voted, at least 2 voices | 172 800 s | tallied |
 | `moderation_overturn` | `member`, one voice a person, the set at the act | more than 1/2 | — | 2 voices | 172 800 s | lapsed |
 | `moderator_recall` | `member`, one voice a person, the set the proposal names | 2/3 | — | 2 voices | 259 200 s | cancelled |
+| `duty_confer` | `moderate+review+slash+takedown`, one voice a person, the set the proposal names | more than 1/2 | — | 2 voices, or the roster's size if smaller | 259 200 s | cancelled |
+| `duty_withdraw` | `moderate+review+slash+takedown-target`, one voice a person, the set the proposal names | more than 1/2 | — | 2 voices | 259 200 s | cancelled |
 | `accord_halt` | `holder`, one voice a person, instant not stated | 1/N fires | more than 1/2 confirms | — | 86 400 s | lapsed |
 | `custodian_replace` | `operator+wa`, voice not stated, instant not stated | 2/2 | — | — | none | — |
 | `affiliation_member_action` | `deciding+outside`, voice not stated, instant not stated | 2/2 | — | — | none | — |

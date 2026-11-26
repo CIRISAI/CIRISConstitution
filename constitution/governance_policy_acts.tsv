@@ -1,0 +1,27 @@
+# Which row of constitution/governance_policy.tsv governs which counted act. One row per (act, scope, community kind).
+# policy: the row or rows the act may take, joined by |. choice: `fixed` (the act takes that one row and states none) or
+# `row` (the counted row states one of the listed rows; `cosigned_act` is the group's declared protocol).
+# A counted row whose policy is not one its act may take concludes nothing. An act with no row here is not a counted act.
+# community_kind is the policy table's `corridor` reading of the object: community | self | accord | affiliation | body | custody.
+# Checked by tools/check_policy_acts.py: every policy is a row of the table, and every cited section exists.
+act	scope	community_kind	policy	choice	cc_ref
+admit	member	community	cosigned_act|community_invite	row	3.1.3.2 4.5.13
+admit	agent	community	cosigned_act|community_invite	row	4.5.4
+remove	member	community	community_remove	fixed	3.1.3.2 3.3.4
+remove	agent	community	community_remove	fixed	4.5.13
+duty_confer	duty	community	duty_confer	fixed	4.5.4
+duty_withdraw	duty	community	duty_withdraw	fixed	4.5.4
+recall	duty	community	moderator_recall	fixed	4.5.13
+lift	act	community	moderation_overturn	fixed	4.5.13
+moderation_fallback	content	community	moderation_action	fixed	4.5.13
+election_seating	moderate	community	moderator_election	fixed	4.5.13
+poll	any	community	poll	fixed	4.5.13
+record_change	record	community	cosigned_act|default_standing|default_content|default_irreversible	row	4.5.13
+admit	key	self	self_roster_add	fixed	3.3.6.4
+remove	key	self	self_roster_evict	fixed	3.3.6.4
+halt_confirm	halt	accord	accord_halt	fixed	4.2.1.1
+resume	halt	accord	accord_majority	fixed	4.2.1.3
+standing_act	any	accord	accord_majority	fixed	4.2.1.3
+remove	member	affiliation	affiliation_member_action|cosigned_act	row	4.4.3.12
+finding	any	body	wa_adjudication	fixed	4.3
+replace	custodian	custody	custodian_replace	fixed	7.5.5

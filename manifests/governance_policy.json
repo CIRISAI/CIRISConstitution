@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "8f25f26c9fa5978c2ad4c6a3fd61053427440723b3aec512b38dfc5b5d94acd1",
+  "policy_sha256": "8d58a472cc09beda6a962a4f579da6d5fcf5a3c63fbcd62f8db81aa84c20b873",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -151,7 +151,7 @@
     "formal/two_path"
    ],
    "status": "default",
-   "note": "roster and standing changes: who is a member, who holds a duty"
+   "note": "roster and standing changes: who is a member; a duty seat has its own two rows"
   },
   {
    "family": "default_irreversible",
@@ -674,6 +674,124 @@
    ],
    "status": "normative",
    "note": "the members recall any duty holder, however seated: more than two thirds of the standing roster cosign one row in the standing window; where that leaves no duty holder the room locks and elects"
+  },
+  {
+   "family": "duty_confer",
+   "cc_ref": "4.5.4",
+   "kind": "cosigned",
+   "standing_set": "the community's duty holders",
+   "base": "standing",
+   "enact": "more than 1/2",
+   "cancel": null,
+   "floor": "2 voices, or the roster's size if smaller",
+   "enact_rule": {
+    "kind": "strict_majority"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "counted": {
+    "count_set": {
+     "value": "moderate+review+slash+takedown",
+     "cc_ref": "CC 4.5.4"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 2.4"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 4.5.4"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "community",
+   "model": [
+    "4.5.4"
+   ],
+   "status": "normative",
+   "note": "a duty seat is conferred by a strict majority of all the duty holders of the room it is conferred in, with the new holder's acceptance; a lone duty holder confers alone"
+  },
+  {
+   "family": "duty_withdraw",
+   "cc_ref": "4.5.4",
+   "kind": "cosigned",
+   "standing_set": "the community's duty holders, less the holder concerned",
+   "base": "standing",
+   "enact": "more than 1/2",
+   "cancel": null,
+   "floor": "2 voices",
+   "enact_rule": {
+    "kind": "strict_majority"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "counted": {
+    "count_set": {
+     "value": "moderate+review+slash+takedown-target",
+     "cc_ref": "CC 4.5.4"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 2.4"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 4.5.4"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "community",
+   "model": [
+    "4.5.4"
+   ],
+   "status": "normative",
+   "note": "a duty seat is withdrawn by a strict majority of the other duty holders, the holder concerned not counted; one other holder alone withdraws nothing, and the members' recall stays"
   },
   {
    "family": "accord_halt",

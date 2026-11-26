@@ -80,6 +80,7 @@ jobs:
       - name: Governance policy table (CC 4.5.13) is in the corridor, regenerated, and its vectors recompute (no drift)
         run: |
           python3 tools/build_governance_policy.py
+          python3 tools/check_policy_acts.py
           python3 tools/build_governance_policy.py --self-test
           git diff --exit-code manifests/governance_policy.json manifests/governance_policy_vectors.json formal/two_path/generated/ constitution/part_4_composition_governance.md
       - name: CSD/4 chain manifest (models → state table → atoms → claims → evidence → catalogue) is regenerated (no drift)

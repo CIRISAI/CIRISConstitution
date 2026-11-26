@@ -1,8 +1,8 @@
 {
  "_meta": {
-  "policy_sha256": "8f25f26c9fa5978c2ad4c6a3fd61053427440723b3aec512b38dfc5b5d94acd1",
+  "policy_sha256": "8d58a472cc09beda6a962a4f579da6d5fcf5a3c63fbcd62f8db81aa84c20b873",
   "count": 819,
-  "rule_vector_count": 270,
+  "rule_vector_count": 300,
   "target_voice": "on a row whose target_voice cell is yes, a vector's target_voice says whether the target's own yes is held: one voice toward the floor of two and toward the floor count, never a member and never part of the enact fraction; a vector without the field reads false",
   "rule_kinds": [
    "fraction",
@@ -14705,6 +14705,286 @@
   },
   {
    "family": "moderator_recall",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 100,
+   "votes": 2
+  },
+  {
+   "family": "duty_confer",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "duty_confer",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "duty_confer",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "duty_confer",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "duty_confer",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 100,
+   "votes": 51
+  },
+  {
+   "family": "duty_confer",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "duty_confer",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "duty_confer",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "duty_confer",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "duty_confer",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "duty_confer",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "duty_confer",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "duty_confer",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "duty_confer",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 9,
+   "votes": 2
+  },
+  {
+   "family": "duty_confer",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 100,
+   "votes": 2
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 100,
+   "votes": 51
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "duty_withdraw",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 9,
+   "votes": 2
+  },
+  {
+   "family": "duty_withdraw",
    "cell": "floor",
    "rule": {
     "kind": "voices",

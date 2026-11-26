@@ -13,6 +13,7 @@ run python3 tools/cc_namespace_match.py --write-vectors
 run python3 tools/build_cc_signed_object.py
 run python3 tools/build_cc_signed_object_v2.py
 run python3 tools/build_governance_policy.py
+run python3 tools/check_policy_acts.py
 run python3 tools/build_csd4_chain.py
 run python3 tools/topology_to_cfg.py --all
 run python3 tools/build_promise_status.py
