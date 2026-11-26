@@ -449,6 +449,7 @@ membership_basis	not_a_token		payload or envelope member
 membership_declined	concludes_nothing		terminal reason of a membership widening that seats no one
 membership_founding_member_unsigned	concludes_nothing		terminal reason of a membership widening that seats no one
 membership_proposal_expired	concludes_nothing		terminal reason of a membership widening that seats no one
+membership_room_key_ended	concludes_nothing		terminal reason of a seating of a room key whose stay in the room has ended
 membership_proposal_unresolved	hold		waits for the row it names
 membership_reply_conflict	concludes_nothing		terminal reason of a membership widening that seats no one
 membership_supersede_cannot_add	concludes_nothing		terminal reason of a membership widening that seats no one

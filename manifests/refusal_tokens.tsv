@@ -252,6 +252,7 @@ membership_proposal_expired	concludes_nothing	3.1.3.2	p3:331	- terminal `members
 membership_proposal_unresolved	hold	3.1.3.2	p3:328	- RETRYABLE `membership_proposal_unresolved` (the answer's proposal not held);
 membership_public_to_private	concludes_nothing	3.1.3.2	p3:369	A version that declares `private` over a `public` room concludes nothing, `membership_public_to_private`.
 membership_reply_conflict	concludes_nothing	3.1.3.2	p3:333	- terminal `membership_reply_conflict` (both an acceptance and a decline by K to one proposal);
+membership_room_key_ended	concludes_nothing	3.1.3.2	p3:377	A seating of such a key concludes nothing, `membership_room_key_ended`.
 membership_supersede_cannot_add	concludes_nothing	3.1.3.2	p3:335	- terminal `membership_supersede_cannot_add`.
 minor_appointment_void	concludes_nothing	3.2	p3:1211	A void edge concludes nothing (`minor_appointment_void`, a fold reason, [CC 2.7.3](part_2_the_grammar.md#2.7.3)) and never seats.
 missing_encryption_pubkeys	detail	3.4.4	p3:2533	Payload: excluded recipient `key_id`, `reason ∈ {expired_occurrence, invalid_kem_key, missing_encryption_pubkeys}`, skipped Contribution's envelope ref.
