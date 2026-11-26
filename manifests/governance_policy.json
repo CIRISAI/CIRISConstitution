@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "d9f0d0a9d8378b16c8f7747d169e02bf15a85d930813c51d3d717b174e4780cd",
+  "policy_sha256": "6b7471d6209897802088c2b63a8260f6ba8d06d42f18fad94327610abfa3a95b",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -310,7 +310,7 @@
    "base": "active",
    "enact": "protocol",
    "cancel": null,
-   "floor": null,
+   "floor": "2 voices",
    "enact_rule": {
     "kind": "protocol"
    },
@@ -318,7 +318,8 @@
     "kind": "none"
    },
    "floor_rule": {
-    "kind": "none"
+    "kind": "voices",
+    "count": 2
    },
    "counted": {
     "count_set": {
@@ -359,7 +360,7 @@
     "formal/membership"
    ],
    "status": "normative",
-   "note": "forward only, cosigned under the room's protocol; the member being removed is not counted"
+   "note": "forward only, cosigned under the room's protocol; the member being removed is not counted and is no voice; never fewer than two voices, so a room of two removes nobody"
   },
   {
    "family": "self_roster_add",

@@ -2192,7 +2192,7 @@ The rows are these, generated into this section from the table:
 | `default_standing` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
 | `default_irreversible` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled |
 | `community_invite` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
-| `community_remove` | `member`, one voice a person, the set the proposal names | protocol | — | — | 259 200 s | cancelled |
+| `community_remove` | `member`, one voice a person, the set the proposal names | protocol | — | 2 voices | 259 200 s | cancelled |
 | `self_roster_add` | `self`, one voice a key, the set the proposal names | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | refused |
 | `self_roster_evict` | `self`, one voice a key, the set the proposal names, the target silent | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | refused |
 | `moderation_action` | `member`, one voice a person, the set the proposal names | role:moderate at 1 | — | more than 1/2 of those who voted, at least 2 voices | 172 800 s | tallied |
