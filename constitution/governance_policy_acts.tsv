@@ -12,6 +12,8 @@
 # `cosigned_act` half of an `&` is no condition and the other row governs alone, the floor of two voices standing.
 # The kind of a group is its founding record's: `family` or `community` by the record's group kind, and a community is
 # `infrastructure` where its `cohort_subkind` says so. A room is private or public by its record's `membership` member.
+# A founder seat over an `infrastructure` community is added only by a record change that seats the key, carries its
+# signature and restates the quorum for the founders it leaves, or by the recovery widening of a stalled room (CC 3.2).
 # A counted row whose policy is not one its act may take concludes nothing. An act with no row here is not a counted act.
 # community_kind is the policy table's `corridor` reading of the object: community | family | infrastructure | self | accord | affiliation | body | custody.
 # Checked by tools/check_policy_acts.py: every policy is a row of the table, and every cited section exists.
@@ -38,7 +40,6 @@ admit	member	family	cosigned_act	fixed	3.1.3.2 3.3.4
 remove	member	family	cosigned_act	fixed	3.1.3.2 3.3.4
 record_change	record	family	cosigned_act	fixed	3.1.3.2
 dissolve	record	family	cosigned_act	fixed	3.3.4
-admit	founder	infrastructure	cosigned_act	fixed	3.1.3.2 3.2
 remove	founder	infrastructure	cosigned_act	fixed	3.1.3.2 3.2
 admit	node	infrastructure	cosigned_act	fixed	3.1.3.2
 remove	node	infrastructure	cosigned_act	fixed	3.1.3.2
