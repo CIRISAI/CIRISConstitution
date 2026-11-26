@@ -6,6 +6,7 @@ token	kind	section	why
 ACTION_RESULT	not_a_token		enum of another surface (shutdown severity, trace result, capability gate, guardrail)
 CANONICAL_BYTES_VIOLATION	http_code		wire error code of the HTTP surface
 CLOCK_SKEW_VIOLATION	http_code		wire error code of the HTTP surface
+CONFERRAL_END	not_a_token		registry or manifest member, or a file name
 ENVELOPE_TOO_LARGE	http_code		wire error code of the HTTP surface
 IDEMPOTENT_CONFLICT	http_code		wire error code of the HTTP surface
 INCIDENT_CONSTITUTIONAL	not_a_token		enum of another surface (shutdown severity, trace result, capability gate, guardrail)
@@ -191,6 +192,7 @@ community_key_id	not_a_token		payload or envelope member
 community_trust	not_a_token		consent family leaf
 community_unmoderated	not_a_token		bare spelling of a hard_case kind that has its own row
 conferral_outside_charter_scope	concludes_nothing		confers nothing, and is reported
+conferral_two	not_a_token		registry or manifest member, or a file name
 consensus_protocol	not_a_token		payload or envelope member
 consensus_protocol_entrenched	not_a_token		payload or envelope member
 consent_basis	not_a_token		payload or envelope member
@@ -617,6 +619,7 @@ serve_transit_pair_rotation_before_rebind	concludes_nothing		not counted
 serve_transport_destinations	not_a_token		charter or bundle member
 service_key	not_a_token		key, suite or member name
 session_claim_out_of_window	refusal		the text says refused
+set_order	not_a_token		prefix of a verifier reason that names a member (set_order:<member>); the substrate's token is federation_set_semantics_unsorted
 share_count	not_a_token		payload or envelope member
 share_index	not_a_token		payload or envelope member
 signed_at	not_a_token		payload or envelope member
