@@ -1,6 +1,7 @@
 # Which row of constitution/governance_policy.tsv governs which counted act. One row per (act, scope, community kind).
 # policy: the row or rows the act may take, joined by |. choice: `fixed` (the act takes that one row and states none) or
-# `row` (the counted row states one of the listed rows; `cosigned_act` is the group's declared protocol).
+# `row` (the counted row says which of the listed paths it takes). `cosigned_act` is the protocol the group's record declares
+# (`consensus_protocol`); a row never states a protocol of its own, and one that states another concludes nothing.
 # `lift` of scope `agent` is the row that seats an agent's key again after a moderator's lone removal; of scope `act`, the lift of any other act.
 # `recall` and `duty_withdraw` both end a duty seat: the body the row counts (the members, or the duty holders) tells them apart.
 # A counted row whose policy is not one its act may take concludes nothing. An act with no row here is not a counted act.
