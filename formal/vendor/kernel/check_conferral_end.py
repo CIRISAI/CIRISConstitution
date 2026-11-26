@@ -30,7 +30,8 @@ def main():
     fx = json.load(open(FIXTURE, encoding="utf-8"))
     answers = 0
     for c in fx["cases"]:
-        params = {"reader_acks": c["reader_acks"], "other_standing": c["other_standing"], "who": c["who"]}
+        params = {"reader_acks": c["reader_acks"], "other_standing": c["other_standing"], "who": c["who"],
+                  "deputy_depth": c["deputy_depth"]}
         got = CE.answers(c["rows"], **params)
         if got != c["answers"]:
             problems.append("fixture %s: the reference gives %s, the fixture %s" % (c["name"], got, c["answers"]))

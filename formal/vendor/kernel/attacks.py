@@ -193,7 +193,7 @@ def t01(t):
     t.fact("halt lapsed, holder h2 removed by the other two, then h2 signs 'confirm' naming only the opener: recount=%s" % o1["recount"], o1["recount"] == "lapsed")
     ok = all(v for _, v in t.facts)
     return dict(cls="HOLDS" if ok else "BROKEN", who="a key removed, or whose grant was withdrawn, at any later time",
-                witness="g(m1,m2,m3) md(m1 appoints MOD) p x1,x3 L(m2 lands 'fallback') um(m1 withdraws md, naming L) A(MOD: 'answered', naming only p). The outcome of p stays fallback for every reader in every order.",
+                witness="g(m1,m2,m3) am(MOD admitted) md(m1 appoints MOD) p x1,x2,x3 L(m2 lands 'fallback') um(m1 withdraws md, naming L) A(MOD: 'answered', naming only p). The outcome of p stays fallback for every reader in every order.",
                 protects="cut.py for rows on the removed key's own slots (concurrent with a counting cut is void). window.py for answers: under recount a row of a key whose seat was ended is counted only if the ending row has it in its past. "
                          "The price is the cut's: an honest row signed offline and not yet named when the removal was signed is void too.",
                 fix="")
@@ -235,14 +235,20 @@ def t03(t):
     g = ST.offer("g", "f1", ("f1", "f2", "f3"), "duty", "@", "self", cosigners=("f2", "f3"))
     c3 = ST.cosign("c3", "f3", "xf", ("g",))
     xf = ST.unseat("xf", "f2", "f1", "duty", "g", "group", ("g", "c3"), head=("g",), policy="duty_withdraw", content="xf", counted="duty")
-    ref, bad = free([g, ST.offer("d1", "f1", "K", "moderate", "g", "seat", ("g",), under="g"), ST.accept("ak", "K", "d1")], SEAT,
+    # a duty seat stands only on a member (seat.py, `member`): K is admitted to the roster first, so each answer below is the count's
+    mk = ST.offer("mk", "f1", "K", "member", "g", "group", ("g",), head=("g",), policy="community_invite", cosigners=("f2", "f3", "K"))
+    c3 = dict(c3, names=("mk",))
+    xf = dict(xf, names=("mk", "c3"), head=("mk",))
+    ref, bad = free([g, mk, ST.offer("d1", "f1", "K", "moderate", "g", "seat", ("mk",), under="g"), ST.accept("ak", "K", "d1")], SEAT,
                     lambda S: ST.Seats(S).stands("K", "moderate", "g")); t.order(bad)
     t.fact("one duty holder of three confers alone: K holds moderate = %s (CC 4.5.4 (iv): only a lone holder confers alone)" % ref, ref is False)
-    d = ST.offer("d", "f1", "K", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty", cosigners=("f2",))
+    d = ST.offer("d", "f1", "K", "moderate", "g", "group", ("mk",), head=("mk",), policy="duty_confer", counted="duty", cosigners=("f2",))
     ak = ST.accept("ak", "K", "d")
-    xf_after = dict(xf, names=("g", "c3", "ak"))
-    for label, rows, want in (("conferred by the count, then f1 withdrawn by the others, naming it", [g, d, ak, c3, xf_after], True),
-                              ("conferred by the count, backdated, concurrent with f1's withdrawal", [g, d, ak, c3, xf], False)):
+    xf_after = dict(xf, names=("mk", "c3", "ak"))
+    ref, bad = free([g, dict(d, names=("g",), head=("g",)), ak], SEAT, lambda S: ST.Seats(S).stands("K", "moderate", "g")); t.order(bad)
+    t.fact("conferred by the count on a key that is not a member: K holds moderate = %s (a duty seat stands only on a member)" % ref, ref is False)
+    for label, rows, want in (("conferred by the count, then f1 withdrawn by the others, naming it", [g, mk, d, ak, c3, xf_after], True),
+                              ("conferred by the count, backdated, concurrent with f1's withdrawal", [g, mk, d, ak, c3, xf], False)):
         ref, bad = free(rows, SEAT, lambda S: ST.Seats(S).stands("K", "moderate", "g")); t.order(bad)
         t.fact("%s: K holds moderate = %s (%s)" % (label, ref, "holders are equals: nothing falls with a voice of its count" if want
                                                    else "two counted acts on one head wait as tips"), ref is want)
@@ -347,18 +353,20 @@ def t05(t):
       "A key that left or was removed is back in only by a fresh act of the conferrer and its own fresh acceptance; one answer in every order.")
 def t06(t):
     g = ST.offer("g", "A", "A", "duty", "@", "self")
-    o1 = ST.offer("o1", "A", "K", "moderate", "g", "seat", ("g",), under="g")
+    # a duty seat stands only on a member (seat.py, `member`): K is admitted to the roster first, and stays a member throughout
+    mk = ST.offer("mk", "A", "K", "member", "g", "group", ("g",), head=("g",), policy="community_invite", cosigners=("K",))
+    o1 = ST.offer("o1", "A", "K", "moderate", "g", "seat", ("mk",), under="g")
     a1 = ST.accept("a1", "K", "o1")
     wd1 = ST.withdraw("wd1", "K", "a1")                                         # leave
     o2 = ST.offer("o2", "A", "K", "moderate", "g", "seat", ("wd1",), under="g")
     a2 = ST.accept("a2", "K", "o2")                                             # join again
     wd3 = ST.withdraw("wd3", "K", "o1")                                         # leave, on the old branch: names only the first offer
     ans = lambda S: ST.Seats(S).stands("K", "moderate", "g")
-    ref, bad = free([g, o1, a1, wd1, o2, a2, wd3], SEAT, ans); t.order(bad)
+    ref, bad = free([g, mk, o1, a1, wd1, o2, a2, wd3], SEAT, ans); t.order(bad)
     t.fact("leave, join, then a leave that names only the first offer: K is in = %s (a withdrawal ends the offer it names and no other)" % ref, ref is True)
-    ref, bad = free([g, o1, a1, wd1, o2, a2, wd3, ST.withdraw("wd4", "K", "a2")], SEAT, ans); t.order(bad)
+    ref, bad = free([g, mk, o1, a1, wd1, o2, a2, wd3, ST.withdraw("wd4", "K", "a2")], SEAT, ans); t.order(bad)
     t.fact("with a leave that names the second acceptance: K is in = %s" % ref, ref is False)
-    ref, bad = free([g, o1, a1, wd1, ST.offer("o3", "A", "K", "moderate", "g", "seat", ("wd1",), under="g", consent="one")], SEAT, ans); t.order(bad)
+    ref, bad = free([g, mk, o1, a1, wd1, ST.offer("o3", "A", "K", "moderate", "g", "seat", ("wd1",), under="g", consent="one")], SEAT, ans); t.order(bad)
     t.fact("the conferrer cannot put a key that left back in without its acceptance, even claiming single consent: %s" % ref, ref is False)
     base = room_rows(*ROOM)
     ac2 = in_room(ST.accept("ac2", "C", None, ("x",), scope="member", obj="g"))
@@ -382,29 +390,39 @@ def t07(t):
     # CC 4.5.4: duty holders are equals. A duty seat is conferred by a strict majority of the duty holders and withdrawn by
     # a strict majority of the others; a seat validly conferred does not fall with a voice of the count that conferred it.
     g = ST.offer("g", "f1", ("f1", "f2", "f3"), "duty", "@", "self", cosigners=("f2", "f3"))
-    d = ST.offer("d", "f1", "K", "duty", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty", cosigners=("f2",))
+    # a duty seat stands only on a member (seat.py, `member`): K and J are admitted to the roster by one counted row first,
+    # and every counted row below is counted over that admission where it was counted over the founding row
+    mk = ST.offer("mk", "f1", ("K", "J"), "member", "g", "group", ("g",), head=("g",), policy="community_invite", cosigners=("f2", "f3", "K", "J"))
+    d = ST.offer("d", "f1", "K", "duty", "g", "group", ("mk",), head=("mk",), policy="duty_confer", counted="duty", cosigners=("f2",))
     ak = ST.accept("ak", "K", "d")
     d2 = ST.offer("d2", "K", "J", "moderate:spam", "g", "group", ("ak",), head=("ak",), policy="duty_confer", counted="duty", cosigners=("J", "f2", "f3"))
-    c3 = ST.cosign("c3", "f3", "xf", ("g",))
-    xf = ST.unseat("xf", "f2", "f1", "duty", "g", "group", ("g", "c3"), head=("g",), policy="duty_withdraw", content="xf", counted="duty")
+    c3 = ST.cosign("c3", "f3", "xf", ("mk",))
+    xf = ST.unseat("xf", "f2", "f1", "duty", "g", "group", ("mk", "c3"), head=("mk",), policy="duty_withdraw", content="xf", counted="duty")
     ans = lambda S: tuple(ST.Seats(S).stands(k, s, "g") for k, s in (("f1", "duty"), ("K", "duty"), ("J", "moderate:spam")))
-    ref, bad = free([g, d, ak, d2], SEAT, ans); t.order(bad)
+    ref, bad = free([g, mk, d, ak, d2], SEAT, ans); t.order(bad)
     t.fact("f1 and f2 confer K's duty, then K, f2 and f3 confer J's: f1, K, J stand = %s" % (ref,), ref == (True, True, True))
-    ref, bad = free([g, d, ak, d2, c3, xf], SEAT, ans); t.order(bad)
+    ref, bad = free([g, mk, d, ak, d2, c3, xf], SEAT, ans); t.order(bad)
     t.fact("concurrently f2 and f3 withdraw f1, counted over the founding head: two tips. f1 is out; K waits, since its conferral needed f1's voice; "
            "J, conferred by the common holders f2 and f3, is folded in: f1, K, J stand = %s in every order" % (ref,), ref == (False, False, True))
-    cr = ST.cosign("cr", "f3", "g2", ("xf", "d2"))
-    g2 = ST.offer("g2", "f2", "f1", "duty", "g", "group", ("xf", "d2", "cr"), head=("xf", "d2"), policy="duty_confer", content="g2", counted="duty", cosigners=("f1",))
-    ref, bad = free([g, d, ak, d2, c3, xf, cr, g2], SEAT, ans); t.order(bad)
-    t.fact("a version naming both tips (f2 and f3 confer f1's duty again): f1, K, J stand = %s; the grants were never ended, since holders are equals (CC 4.5.4 (iii))" % (ref,),
-           ref == (True, True, True))
-    ds = ST.offer("ds", "f1", "K", "moderate", "g", "self", ("g",), sub=True)
+    # f1's membership was its founding duty seat, which the withdrawal ended: a duty seat stands only on a member, so f1 is
+    # admitted again by the version that names both tips (counted over the four members common to them), and its duty is
+    # then conferred over that version by three of the four duty holders
+    cm = [ST.cosign("cm3", "f3", "m2", ("xf", "d2")), ST.cosign("cmk", "K", "m2", ("xf", "d2"))]
+    m2 = ST.offer("m2", "f2", "f1", "member", "g", "group", ("xf", "d2", "cm3", "cmk"), head=("xf", "d2"), policy="community_invite", content="m2", cosigners=("f1",))
+    ref, bad = free([g, mk, d, ak, d2, c3, xf] + cm + [m2], SEAT, ans); t.order(bad)
+    t.fact("a version naming both tips (f2, f3 and K admit f1 again): f1, K, J stand = %s; the grants were never ended, since holders are equals (CC 4.5.4 (iii)), "
+           "and f1's ended duty seat is not revived by its admission" % (ref,), ref == (False, True, True))
+    cr = [ST.cosign("cr", "f3", "g2", ("m2",)), ST.cosign("crk", "K", "g2", ("m2",))]
+    g2 = ST.offer("g2", "f2", "f1", "duty", "g", "group", ("m2", "cr", "crk"), head=("m2",), policy="duty_confer", content="g2", counted="duty", cosigners=("f1",))
+    ref, bad = free([g, mk, d, ak, d2, c3, xf] + cm + [m2] + cr + [g2], SEAT, ans); t.order(bad)
+    t.fact("then f2, f3 and K confer f1's duty again over that version: f1, K, J stand = %s" % (ref,), ref == (True, True, True))
+    ds = ST.offer("ds", "f1", "K", "moderate", "g", "self", ("mk",), sub=True)
     aks = ST.accept("aks", "K", "ds")
-    ref, bad = free([g, ds, aks], SEAT, ans); t.order(bad)
+    ref, bad = free([g, mk, ds, aks], SEAT, ans); t.order(bad)
     t.fact("one duty holder of three confers alone (conferrer=self): K holds nothing, f1, K, J = %s (a lone holder confers alone only while it is the one)" % (ref,), ref == (True, False, False))
     ok = all(v for _, v in t.facts)
     return dict(cls="HOLDS" if ok else "BROKEN", who="a duty holder about to be withdrawn, or already withdrawn",
-                witness="g(f1,f2,f3 found) d(f1+f2 -> K) ak d2(K+f2+f3 -> J) xf(f2+f3 withdraw f1). While xf and d2 wait as tips nobody but f2, f3 holds; once a version names both, K and J stand and f1 stands only if re-conferred.",
+                witness="g(f1,f2,f3 found) mk(K and J admitted) d(f1+f2 -> K) ak d2(K+f2+f3 -> J) xf(f2+f3 withdraw f1). While xf and d2 wait as tips nobody but f2, f3 holds; once a version names both, K and J stand and f1 stands only if admitted again and re-conferred.",
                 protects="seat.py: duty seats over a community are equals (CC 4.5.4): conferral by a strict majority of the holders (or the lone holder), "
                          "withdrawal by a strict majority of the others, never fewer than two voices; a seat validly conferred stands when a voice of its count is later withdrawn. "
                          "Concurrent counted acts wait as tips (KERNEL 7).",
@@ -447,8 +465,10 @@ def window_bases():
     Ws, Wm, Wh = WN.secs("self_roster_evict"), WN.secs("moderation_fallback"), WN.secs("halt_fuse")
     Wo = WN.secs("moderation_overturn")
     gs = ST.offer("g", "d1", ("d1", "d2", "d3"), "self", "@", "self", cosigners=("d2", "d3"))
-    gm = ST.offer("g", "m1", ("m1", "m2", "m3"), "duty", "@", "self", cosigners=("m2", "m3"))     # three duty holders (CC 4.5.4)
-    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty",
+    # three duty holders (CC 4.5.4); MOD is admitted to the roster and then seated to moderate (a duty seat stands only on a
+    # member), so the room has four members; the members' check is counted over the three other than MOD, the act's author
+    gm, am = WN.admitted("MOD")
+    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("am",), head=("am",), policy="duty_confer", counted="duty",
                   cosigners=("m3", "MOD"))                                     # two of the three confer, MOD accepting
     gh = ST.offer("g", "h1", ("h1", "h2", "h3"), "holder", "@", "self", cosigners=("h2", "h3"))
     pm = WN.opener("p", "m2", "moderation_fallback", "g", ("md",))
@@ -461,8 +481,8 @@ def window_bases():
              WN.landing("L", "d1", "p", "r", "landed", 0, ("a2",))],
             {"d3 objects": WN.answer("n", "d3", "p", "object"), "d3 signs any row": R("n", "note", "d3", ("g",))}, None, "d2"),
         "moderation: members' fallback after 48 h": (
-            [gm, md, pm, WN.receipt("r", "m2", "p", 0), WN.answer("x1", "m1", "p", "act"), WN.answer("x3", "m3", "p", "act"),
-             WN.landing("L", "m2", "p", "r", "fallback", Wm, ("x1", "x3"))],
+            [gm, am, md, pm, WN.receipt("r", "m2", "p", 0), WN.answer("x1", "m1", "p", "act"), WN.answer("x2", "m2", "p", "act"), WN.answer("x3", "m3", "p", "act"),
+             WN.landing("L", "m2", "p", "r", "fallback", Wm, ("x1", "x2", "x3"))],
             {"the moderator answers": WN.answer("n", "MOD", "p", "answered")}, "answered", "m1"),
         "halt: lapsed at the fuse": (
             [gh, WN.opener("p", "h1", "halt_fuse", "g", ("g",)), WN.receipt("r", "h3", "p", 0), WN.landing("L", "h3", "p", "r", "lapsed", Wh)],
@@ -472,12 +492,12 @@ def window_bases():
              WN.landing("L", "h2", "p", "r", "confirmed", 0, ("c2",))],
             {"h3 signs anything": R("n", "note", "h3", ("g",))}, None, "h2"),
         "overturn: the act stands at the close": (
-            [gm, md, WN.opener("p", "MOD", "moderation_overturn", "g", ("md",)), WN.answer("o1", "m1", "p", "object"), WN.receipt("r", "m3", "p", 0),
+            [gm, am, md, WN.opener("p", "MOD", "moderation_overturn", "g", ("md",)), WN.answer("o1", "m1", "p", "object"), WN.receipt("r", "m3", "p", 0),
              WN.landing("L", "m3", "p", "r", "stands", Wo, ("o1",))],
             {"a second member objects": WN.answer("n", "m2", "p", "object")}, "lifted", "m1"),
         "overturn: lifted by a majority (count)": (
-            [gm, md, WN.opener("p", "MOD", "moderation_overturn", "g", ("md",)), WN.answer("o1", "m1", "p", "object"), WN.answer("o2", "m2", "p", "object"),
-             WN.receipt("r", "m1", "p", 0), WN.landing("L", "m1", "p", "r", "lifted", 0, ("o1", "o2"))],
+            [gm, am, md, WN.opener("p", "MOD", "moderation_overturn", "g", ("md",)), WN.answer("o1", "m1", "p", "object"), WN.answer("o2", "m2", "p", "object"),
+             WN.answer("o3", "m3", "p", "object"), WN.receipt("r", "m1", "p", 0), WN.landing("L", "m1", "p", "r", "lifted", 0, ("o1", "o2", "o3"))],
             {"the duty holder signs anything": R("n", "note", "MOD", ("md",)), "m3 signs anything": R("n", "note", "m3", ("g",))}, None, "m1"),
     }
 
@@ -565,13 +585,13 @@ def t11(t):
     t.fact("one hostile holder lapses another holder's halt at once by stating a receipt 24 h in its own past: recount=%s" % o["recount"], o["recount"] == "lapsed")
     o, bad = win(rows + [WN.answer("c1", "h1", "p", "confirm")]); t.order(bad)
     t.fact("the halting holder alone cannot undo that (its confirm is already counted): recount=%s; it takes a second honest holder" % o["recount"], o["recount"] == "lapsed")
-    gm = ST.offer("g", "m1", ("m1", "m2", "m3"), "duty", "@", "self", cosigners=("m2", "m3"))     # three duty holders (CC 4.5.4)
-    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty",
+    gm, am = WN.admitted("MOD")                                               # three duty holders (CC 4.5.4), and MOD a member
+    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("am",), head=("am",), policy="duty_confer", counted="duty",
                   cosigners=("m3", "MOD"))                                     # two of the three confer, MOD accepting
-    rows = [gm, md, WN.opener("p", "m2", "moderation_fallback", "g", ("md",)), WN.receipt("r", "m2", "p", 0), WN.answer("x3", "m3", "p", "act"),
-            WN.answer("x2", "m2", "p", "act"), WN.landing("L", "m2", "p", "r", "fallback", Wm, ("x2", "x3"))]
+    rows = [gm, am, md, WN.opener("p", "m2", "moderation_fallback", "g", ("md",)), WN.receipt("r", "m2", "p", 0), WN.answer("x1", "m1", "p", "act"),
+            WN.answer("x3", "m3", "p", "act"), WN.answer("x2", "m2", "p", "act"), WN.landing("L", "m2", "p", "r", "fallback", Wm, ("x1", "x2", "x3"))]
     o, bad = win(rows); t.order(bad)
-    t.fact("two members act over a present moderator without waiting 48 h: recount=%s (until the moderator signs an answer)" % o["recount"], o["recount"] == "fallback")
+    t.fact("three members of four act over a present moderator without waiting 48 h: recount=%s (until the moderator signs an answer)" % o["recount"], o["recount"] == "fallback")
     t.note("not expressible: two honest nodes straddling the close on one clock, and what is owed at the close (a key rotation after an eviction); window.py has no `now` and no owed set")
     return dict(cls="CONCEDED", who="any key holding the concluder's seat: one device of a self roster (a stolen one included), one accord holder, one member",
                 witness="g(h1,h2,h3) p(h1 halts) r(h3 receipt, stating an instant 24 h ago) L(h3 'lapsed', stating now). Signed together. Every reader: lapsed. One hostile holder undoes 'one holder fires at once'.",
@@ -1214,10 +1234,12 @@ def t33(t):
     S = conc([d, ah, one, ST.withdraw("wd", "AG", "d")], SEAT)
     t.fact("recovery: one withdrawal by H's conferrer removes all of them at once (%d left)" % len(ST.Seats(S).holders("operator", "AG")), len(ST.Seats(S).holders("operator", "AG")) == 0)
     g = ST.offer("g", "F", "F", "duty", "@", "self")
-    dm = ST.offer("dm", "F", "H", "duty", "g", "seat", ("g",), under="g")
+    # H is admitted to the roster first: a duty seat stands only on a member (seat.py, `member`)
+    mh = ST.offer("mh", "F", "H", "member", "g", "group", ("g",), head=("g",), policy="community_invite", cosigners=("H",))
+    dm = ST.offer("dm", "F", "H", "duty", "g", "seat", ("mh",), under="g")
     ahm = ST.accept("ahm", "H", "dm")
     onem = ST.offer("sybm", "H", syb, "moderate", "g", "seat", ("ahm",), under="dm", cosigners=syb)
-    S = conc([g, dm, ahm, onem], SEAT)
+    S = conc([g, mh, dm, ahm, onem], SEAT)
     nm = len(ST.Seats(S).holders("moderate", "g")) - 2
     t.fact("in a community the same fan-out seats %d: with two duty holders, one confers nothing alone (CC 4.5.4 (iv))" % nm, nm == 0)
     return dict(cls="CONCEDED", who="one seated key whose seat may confer (a sub-delegable grant, or a scope the CONFERS table lets it give), outside a community's duty seats",
@@ -1291,19 +1313,22 @@ def checkpoint_price():
     t.fact("THE REASON THE GROUP CHECKPOINT IS OFF. A past count (seated A with removed C) signs two rows from the head the newest honest row is counted over, the second over the first. As the rule stands: two tips, members %s, nothing stale. "
            "With Seats(..., checkpoint=True): the forged line is one row deeper, the honest removal is left behind (%s) and the members are %s: the removed key is back. That is a rank by depth of line"
            % (fs(ma), ",".join(sorted(sb)), fs(mb)), ma == {"A", "F2"} and not sa and "x" in sb and mb == {"A", "C", "F2"})
-    gm = ST.offer("g", "m1", ("m1", "m2", "m3"), "duty", "@", "self", cosigners=("m2", "m3"))     # three duty holders (CC 4.5.4)
-    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty",
+    gm, am = WN.admitted("MOD")                                               # three duty holders (CC 4.5.4), and MOD a member
+    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("am",), head=("am",), policy="duty_confer", counted="duty",
                   cosigners=("m3", "MOD"))                                     # two of the three confer, MOD accepting
     Wm = WN.secs("moderation_fallback")
     pm = WN.opener("p", "m2", "moderation_fallback", "g", ("md",))
     An = WN.answer("A", "MOD", "p", "answered")                              # the moderator answers in time
-    hostile = [gm, md, pm, An, WN.answer("x2", "m2", "p", "act"), WN.answer("x3", "m3", "p", "act"), WN.receipt("r", "m2", "p", 0), WN.landing("L", "m2", "p", "r", "fallback", Wm, ("x2", "x3"))]
-    s1 = ST.offer("s1", "m2", "S1", "member", "g", "group", ("g", "p", "s1c"), head=("g",), policy="community_invite", content="s1", cosigners=("S1",))
-    s2 = ST.offer("s2", "m2", "S2", "member", "g", "group", ("s1", "s2c", "s2d"), head=("s1",), policy="community_invite", content="s2", cosigners=("S2",))
-    cps = [ST.cosign("s1c", "m3", "s1", ("g", "p")), s1, ST.cosign("s2c", "m3", "s2", ("s1",)), ST.cosign("s2d", "S1", "s2", ("s1",)), s2]
+    # four members (m1, m2, m3 and MOD): the fallback takes three acts, and the two counted rows are counted over the appointment
+    hostile = [gm, am, md, pm, An, WN.answer("x1", "m1", "p", "act"), WN.answer("x2", "m2", "p", "act"), WN.answer("x3", "m3", "p", "act"),
+               WN.receipt("r", "m2", "p", 0), WN.landing("L", "m2", "p", "r", "fallback", Wm, ("x1", "x2", "x3"))]
+    s1 = ST.offer("s1", "m2", "S1", "member", "g", "group", ("md", "p", "s1b", "s1c"), head=("md",), policy="community_invite", content="s1", cosigners=("S1",))
+    s2 = ST.offer("s2", "m2", "S2", "member", "g", "group", ("s1", "s2b", "s2c", "s2d"), head=("s1",), policy="community_invite", content="s2", cosigners=("S2",))
+    cps = [ST.cosign("s1b", "m1", "s1", ("md", "p")), ST.cosign("s1c", "m3", "s1", ("md", "p")), s1,
+           ST.cosign("s2b", "m1", "s2", ("s1",)), ST.cosign("s2c", "m3", "s2", ("s1",)), ST.cosign("s2d", "S1", "s2", ("s1",)), s2]
     off, bad = win(hostile + cps); t.order(bad)
     on, bad = win(hostile + cps, checkpoint=True); t.order(bad)
-    t.fact("AND FOR WINDOWS. Two hostile members of three land the fallback over a moderator who answered in time, then sign two counted rows that leave the answer unnamed: as the rule stands %s; "
+    t.fact("AND FOR WINDOWS. Three hostile members of four land the fallback over a moderator who answered in time, then sign two counted rows that leave the answer unnamed: as the rule stands %s; "
            "with outcome(..., checkpoint=True) %s: the count voids the one voice the window protects" % (off["recount"], on["recount"]), off["recount"] == "contested" and on["recount"] == "fallback")
     m = lambda s: sum(1 << int(c) for c in s)
     Wl = FK.world("M0", 5, m("0123"), m("3"), "majority")

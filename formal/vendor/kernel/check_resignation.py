@@ -9,7 +9,8 @@ rows already in the kernel, and this file holds them to cases and to every set o
               leaving is in the row's past (seat.members_at, seat.left_in_past). So a resigner is among the
               counted members until a counted row cites its resignation, and from that row on it is out.
     wrap      a node wraps a key to, and serves rows to, the live seats over everything it holds
-              (seat.Seats.holders). A member whose end of its seat the node holds is not among them, at once
+              (seat.Seats.holders; in a room with agents, Seats.roster: the members and the agents, whose
+              wrap set check_agent_seat.py reads). A member whose end of its seat the node holds is not among them, at once
               and with no counted row. The wrap set need not equal the counted roster.
     dissolved a group is dissolved at a node when the wrap set is empty: every member at the heads it holds
               has an end of its seat that the node holds.

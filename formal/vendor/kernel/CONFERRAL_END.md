@@ -63,6 +63,16 @@ The candidates compared (the four you asked me to choose among, and the two halv
   - CC 2.7.8's line applies to the end as to any counted cut over roster heads.
 - **E6. Reach.** The end reaches only acts exercised under the target, deputies transitively. It never reaches
   the member set or n at any head (`Inv_MembersByPast`).
+  A deputy hangs from a deputy edge, itself an act under the standing, and ends with the seat: the edge passes
+  both bits down, each to its own. Nothing marks a row as a deputy edge: an act is one exactly when another
+  act names it as the edge it is under (`via`), and an edge that itself has a `via` is an onward hop, a
+  deputy deputizing. The grantee's own edge (the first hop) needs no sub-delegation. An act whose edge is an
+  onward hop counts only if the edge above that one carries sub-delegation (`E6.no_sub`), and no act counts
+  more than five `via` hops from the grantee's edge (`E6.depth`; the cap is a parameter of the call). Both
+  are read from the rows' `via` alone, so no presentation of the onward row passes them. The onward row
+  itself, judged as an act, is its signer's own act one hop higher: it counts there and confers nothing.
+  These two gates are in the reference and the crate and are checked by cases only: the spec has one deputy
+  edge, where neither can apply (section H).
 - **E7. ANY-STANDING.** Nothing binds an act to one standing. An act that another live standing of its signer
   authorises at its head stands on that standing.
 - **E8. Receipts.** An act at a head not later than `h_e`, not naming the end, stays in force when a clean
@@ -390,7 +400,7 @@ Wire cost:
 ## H. Conformance fixtures for persist
 
 The fixture is `crates/ciris-kernel/tests/fixtures/conferral_end.json`, in the kernel's fixture format. It has
-35 cases and 51 act answers. Each act has `counted`, `in_force` and the `rule` that decides it, and 12 rules
+42 cases and 93 act answers. Each act has `counted`, `in_force` and the `rule` that decides it, and 14 rules
 appear.
 
 The same cases are a plain table, one line per act, in `conferral_end.tsv` next to it. That is the
@@ -417,7 +427,20 @@ which the large run found and `Inv_WeakAgrees*` now excludes by name (`AckCut`).
 acks is in the past of a removal that names the end, so a removal of the grantee's key does not cut it. Under
 weak the end acks nothing, so the removal cuts it unless the removal names the act itself.
 
+**The deputy gates and the cross-check.** `E6.no_sub` and `E6.depth` read two things the spec does not have: a
+deputy edge that is itself under an edge, and the count of `via` hops above an act. The spec has one deputy
+edge (`sub` on one of B's acts) and one act under it (c1). `conferral_xcheck.py` builds c1 with `via` one of
+B's acts, and B's acts have no `via`; it calls the reference with the default cap of 5. In every state it
+compares, c1 is one hop from the grantee's edge and its edge is not an onward hop, so neither gate can decide
+an answer there: the reference's answers for those states are computed as before. The reference reads no
+mark of a deputy edge. This was reasoned from the code and the seven deputy-chain cases; TLC was not run for
+this change.
+
 The cases:
+- deputy chains: depth two before and after the end, no sub-delegation on the first edge (the onward row is
+  a row like any act of the deputy's, and the act under it does not count), none on the second edge of
+  three, a chain of six, the cap as a parameter, and a chain whose middle edge is receipted and whose top is
+  not. A case with many rows is checked in its first 200 arrival orders;
 - persist's six;
 - the receipt cases: after a self end, after a rotation, lifted by a compromise, a self end that cannot lift,
   a receipt after the end, the receipter before and after its seat's end, the grantee's own receipt, a
@@ -611,7 +634,8 @@ acts under the new binding". With one head named, nothing places the act against
 A to H and joins the answers bit by bit: the act counts for an owner when it counts under the grant and under
 a binding of that owner, and it is in force when it is in force under both.
 
-- The grant: head G0 (the bundle in force) and the count's end EG.
+- The grant: head G0 (the bundle in force) and the count's end EG. The case table also has G1, a later
+  bundle version naming G0.
 - The binding: B0 (the node is O1's), B1 (a re-binding to O2, naming B0), B2 (a re-binding back to O1, naming
   B1). Each re-binding ends the binding before it.
 - A0, A1, A2: the owner's acceptance of the grant under B0, B1, B2.
@@ -619,7 +643,7 @@ a binding of that owner, and it is in force when it is in force under both.
 Each history fixes, for every act, how far along B1, A1, B2, A2 its signer had got when it signed, which the
 graph does not show. An honest node names the newest row of its reading that it holds. A backdating node
 names what it would have named under an earlier binding. Every set of rows a reader may hold is judged: 1,344
-histories, 238,140 states over the five readings, about 12 s.
+histories, 238,140 states over the five readings, about 17 s.
 
 | Reading | What the act names beside the grant's head | What an acceptance names | Result |
 |---|---|---|---|
@@ -660,17 +684,67 @@ binding without an order the graph does not give. That second point is an argume
 "The binding in the act's causal past" is not a separate option. A row has in its past only what it, or a row
 it names, names. So the binding is in an act's past only when the act names it or names a row that does.
 
-**Fixture.** `crates/ciris-kernel/tests/fixtures/conferral_two.json` has 11 cases under `acc`, each with a
-hand-written answer per act and owner that the run must give. No Rust test reads it. It is for Verify's
-standing walk and an adopter's own code.
+**The rule as one function of the held rows.** `chain_answers` in the same file follows the names (the act's
+acceptance, the acceptance's binding), judges the act under the grant and under that binding with the
+reference, and joins the bits. It gives, per act, the binding it stands under and that binding's owner, the
+two bits, and the rule that decides under each record; or why the act counts for nobody (`no_acceptance`,
+`names_binding`, `not_an_acceptance`, `acceptance_names_no_binding`, `not_the_owners_acceptance`). The crate's
+`standing::answers` is the same function.
 
-**For the crate.** No new code: a caller runs `conferral::answers` once for the grant and once per binding,
-and joins the answers bit by bit.
+It reads the causal past from what the rows name. The run above builds each record's ledger from the act's
+head alone. The two are compared on every state of `acc`, and differ on 2,268 answers, all of one kind: a
+backdated act that names the first owner's acceptance and, as its previous act, an act signed under the new
+owner. Through that act it has the re-binding in its past. The rule then gives E4 (an act with the end in its
+past does not count), and the ledger, which does not carry the previous act, gives "counted, out of force".
+Neither is in force. Only a backdating node signs such an act, and `backdated` holds under both. The fixture
+case `backdated_after_an_act_under_the_new_owner` states it. **For the Constitution:** whether an act counts
+at its binding when it reaches that binding's end only through its signer's previous act is E4 read literally
+here; the recommended wire of sections A to H carries no `prev` on an act, and with none the question does
+not arise.
 
-**Limits.** This is a Python run over the reference, not a TLA+ configuration. It has one grant head, two
-re-bindings, at most two acts, and one receipt per record (the first owner's, and the count's). Not modelled:
-the new owner declining or withdrawing its acceptance, a grant end concurrent with a new bundle version, a
-new bundle version at all, the reader's line, a receipt by the second owner.
+**A later bundle version.** G1 names G0. The rules of sections A to H are applied as they are, and the cases
+are hand-written from them (the act stands on A0 under B0, so the first owner's bits are the grant's):
+
+| | Rows | What the rules give |
+|---|---|---|
+| (a) | the grant counted under G0; G1 exists; an act naming G1 and A0; no end held | counted and in force (`no_end`) |
+| (b) | an act naming G0, at a reader that acknowledged G1; no end held | counted at G0 and in force. Nothing refuses a row for naming an older version, and the reader's line is not applied to an authored act (section C) |
+| (c) | the grant's end naming G1; acts at G0 and at G1 | both counted, neither in force (E2); the one the count receipted is in force (E8) |
+| (d) | the grant's end naming G0; acts at G0 and at G1 | the act at G0 counted, not in force (E2); the act at G1 not counted (E3), unless the count holds a clean receipt of it concurrent with its end: then counted, not in force (one say) |
+| (d), a reader at G1 | the same rows, at a reader that acknowledged G1, which does not have the end in its past | the end is void for that reader (the line on the end), and both acts are counted and in force |
+| | the grant's end naming G0 with G1 in its own past | the end concludes nothing (E1); both acts counted and in force |
+
+**For the Constitution, on those answers.** None of these is a ruling; no rule was added to change one.
+- (a) holds because no rule of sections A to H reads where a standing began: the reference has no row for
+  the grant itself, only its heads and its end. A grant counted under G0 therefore stands under every later
+  version until an end is held. If the text means a bundle version that no longer carries the grant to end
+  it, or a grant to be counted again under a new version, that is a rule this model does not have.
+- (b) with (c): a node that is behind, or says it is, keeps signing acts at G0 after the end at G1, and each
+  counts at G0 and is never in force. That is the limit section A states for any act at an old head.
+- (d), a reader at G1: the count's end at G0 is void for every reader that acknowledged a G1 the end is not
+  in the past of, so the grant has not ended for them and an act at G1 is in force. That is CC 2.7.8 applied
+  to the end as to any counted cut (`end_old_fork_for_reader`). For a grant it means an end signed at the
+  earlier version, concurrent with the new version, ends nothing for readers of the new version: the count
+  has to end the grant again at G1. Two readers of the same rows then differ on (d) by their own
+  acknowledgement, as the line intends, and the difference lasts until that second end.
+
+**Fixture.** `crates/ciris-kernel/tests/fixtures/conferral_two.json` has 21 cases under `acc` (the 11 of the
+first round, two on the chain read from the rows, eight with the later bundle version), each with a
+hand-written answer per act and owner that the rule must give. Each case also carries why: the binding and
+the two deciding rules, or the reason the act counts for nobody. `tests/conferral_two.rs` replays it through
+`standing::answers`. It is also for Verify's standing walk and an adopter's own code.
+
+**For the crate.** `standing::answers` (`crates/ciris-kernel/src/standing.rs`): the caller gives the rows of
+one node under one grant and its causal past, and gets the joined answer per act. It runs
+`conferral::answers` once for the grant and once per binding an act stands under. It is checked by the 21
+cases and by one row withheld at a time; no run of every state compares it with the reference.
+
+**Limits.** This is a Python run over the reference, not a TLA+ configuration. The run of every state has one
+grant head, two re-bindings, at most two acts, and one receipt per record (the first owner's, and the
+count's); the later bundle version is in the case table only. Not modelled: the new owner declining or
+withdrawing its acceptance, a row for the grant itself (so nothing about a grant counted again under a new
+version), a bundle version that drops the grant, a key removal, a deputy under such an act, a receipt by the
+second owner.
 
 ## For the Constitution to vendor
 
