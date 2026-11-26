@@ -765,7 +765,7 @@ COUNTED_AT = {"named": "past(self)", "signed": "sel(held, \\x: le(x.asserted_at,
 
 
 COUNT_SET_LESS = {"target": "single(self.target)", "proposer": "single(self.signer)"}
-COUNT_SET_SEATS = ("member", "self", "holder", "operator", "wa", "moderate", "review", "founder", "custodian", "owner", "steward")
+COUNT_SET_SEATS = ("member", "self", "holder", "operator", "wa", "moderate", "review", "slash", "takedown", "founder", "custodian", "owner", "steward")
 
 
 def count_set_kx(value):

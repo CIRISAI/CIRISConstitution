@@ -17,7 +17,7 @@ FINAL_WORD_ON_DERIVED_CLAUSE	0	void on a guard clause or a change whose computed
 INSTANT_AT_DECISION	0	a fold counts a set @decision or @count: the set its own outcome changes
 UNTYPED_MEMBERS	0	a member a cell reads has no row in formal/derivation/kx_field_types.tsv
 UNTRANSLATED_CELLS	0	a cell that does not parse or does not translate
-READS_DROPPED	47	a cell uses a word this translation does not carry (DROPPED in tools/kx_translate.py), or a policy_text cell not yet translated: not counted as translated
+READS_DROPPED	45	a cell uses a word this translation does not carry (DROPPED in tools/kx_translate.py), or a policy_text cell not yet translated: not counted as translated
 CARRIED_WORD_COLLISIONS	0	two words of one closed class that the translation reads alike, neither declared dropped
 LABEL_WORDS_NOT_EVALUATED	53	a fold cell states by=, result= or feeds=: carried to the manifest, not evaluated
 # UNCAUGHT_MUTANTS_GUARD re-based 19 -> 22 at rc21 (not a weakening): the capacity_assurance guard row left guard_text.tsv, every later cell's index and so its seeded draw of 3 mutants moved, and the cells at the old commit still give 19. The count is a sample; an exhaustive count is the rc22 fix.

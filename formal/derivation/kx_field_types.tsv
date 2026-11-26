@@ -76,6 +76,7 @@ owner	key	a key id (the digest of a key: ordering by it is ordering by a digest)
 period	value
 person	key	a person (fedID)
 present	value
+proposal	value	the id of the moderation action a ballot answers; read by equality only
 proposal_id	value	identifier; read by equality only
 quorum_weight	value	a count of cosigners
 recovery_commitments	set	commitments to recovery keys
