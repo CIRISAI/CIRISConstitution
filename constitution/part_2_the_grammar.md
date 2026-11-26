@@ -1910,7 +1910,7 @@ A person's keys, a voice's room keys, a room, the accord and an infrastructure c
 ### 2.7.9 `kernel-limits` — What the kernel does not give
 
 - **No finality without the rows that show it.** Two nodes with the same rows conclude the same, and what is final by form or by receipts is final for every reader that holds them. A reader's own acknowledged head closes older heads for that reader only. Any other slot can be reopened by a key with standing on it.
-- **No conclusion from silence without a clock.** A window closing unopposed, and the lapse of an unconfirmed halt, are read on the node's own count of elapsed time. Nodes may differ while a window is open.
+- **No conclusion from silence without a clock.** A window closes unopposed by a signed pair of rows, and the clock read is their signer's own ([CC 4.5.13](part_4_composition_governance.md#4.5.13)). The lapse of an unconfirmed halt is read on the halted node's own count of elapsed time. Nodes may differ until a landing reaches them.
 - **No decision that is not a function of rows.** Link and load decisions, retries, rendering and the prose rules given to a model stay outside the kernel.
 - **No invariant of the form "at least one".** Two honest keys acting concurrently can leave none. For a community the way back is the lock and the members' count ([CC 4.5.4](part_4_composition_governance.md#4.5.4)).
 - **No guard against a slot held on one signature.** A key of equal standing can undo such a slot, and the kernel does not check the tables for one.
@@ -1919,7 +1919,7 @@ An attacker keeps these, each bounded as stated:
 
 - Keys that met a past count can fork on a past head. That unlists members and never lists one, and it moves only a reader with no acknowledgement of its own.
 - A relay can choose the order of delivery and withhold a row until it is delivered. An emission made meanwhile cannot be unsent.
-- A relay can withhold the row that would answer a window until one node's clock has closed it. That node's answer then differs for good from that of a node that held the row in time, even once both hold the same rows. Each first-held instant is an input ([CC 2.7.1](#2.7.1)). The halt's fuse is one such window: a confirmation after it lapses confirms nothing, and a fresh halt is fired instead ([CC 4.2.1.3](part_4_composition_governance.md#4.2.1.3)).
+- A relay can withhold the row that would answer a node's own clock until that clock has run. That node's answer then differs for good from that of a node that held the row in time, even once both hold the same rows. Each first-held instant is an input ([CC 2.7.1](#2.7.1)). The halt's fuse is such a clock: a confirmation after it lapses confirms nothing, and a fresh halt is fired instead ([CC 4.2.1.3](part_4_composition_governance.md#4.2.1.3)). A window of the policy table closes by signed rows and is no such clock ([CC 4.5.13](part_4_composition_governance.md#4.5.13)).
 - A lone landing is never final against a key that can still sign, and the window's length is the concluder's own word.
 - Whoever controls a new reader's first view can make a wrong head stick, until the reader withdraws its own rows.
 - Whoever holds an ended key's private half can revive it, and only the key's own revocation makes its end final.

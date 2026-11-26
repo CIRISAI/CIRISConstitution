@@ -3198,13 +3198,13 @@ p4	1807	4.5.13	kernel	policy_row	evidence	*	is	states		Every two-path row is an 
 p4	1807	4.5.13	family	policy_row	governance	community	is	restates	3.1.3.2	Table rows: the three defaults by class; community invitation (invitee's acceptance still required) and removal (forward only, cosigned)	
 p4	1807	4.5.13	family	policy_row	governance	identity_occurrence	is	restates	3.3.6.4	The self roster row: one person's keys, a floor of one key and its own 24 h window	
 p4	1807	4.5.13	family	policy_row	governance	moderation,humanity_accord,custodian	is	restates	4.2.1.1,7.5.5	Three rows run under their own rule: the moderation fallback, the halt's fire-and-fuse, and the custodian's cosigned replacement	
-p4	1807	4.5.13	kernel	freshness	window	*	is	applies	2.7.5	Every window is measured by each node from the instant it first held the proposal, never from a signed instant; cosigned_at decides nothing	
-p4	1807	4.5.13	kernel	freshness	window	*	is	states		Two nodes may close a window at different moments; nothing lands early at either	
+p4	1807	4.5.13	kernel	freshness	window	*	is	applies	3.3.6.4,3.1.3	Every window closes by a window:held row and a landing that names it, by one voice of its count	
+p4	1807	4.5.13	kernel	freshness	window	*	is	states		Two nodes that hold the same rows reach the same close	
 p4	1807	4.5.13	kernel	row_shape	body	objection	is	states	3.1.9.2	Votes travel on objection:{state}: proposal, assent, raised	
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		cancel_over is the cancel denominator: the base with the proposer counted for a community; the other keys for a self roster	
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		at_window: cancelled for a community row unless the table states another value; refused for the self roster; stay_open for an election; the halt and a moderation overturn lapse; a moderation action and a poll are tallied	
 p4	1809	4.5.13	kernel	admission_order	none	*	is	applies	2.7.1	A node's state is the set of rows it holds, each with the instant it first held it, and nothing else	
-p4	1809	4.5.13	kernel	freshness	window	*	is	restates	2.7.1	The first-held instant is the node's own receipt, outside the signed row and never replicated; every window runs from it	
+p4	1809	4.5.13	kernel	freshness	window	*	is	restates	2.7.1	The first-held instant is the node's own receipt, outside the signed row and never replicated; the halt's fuse and a node's own reading run from it	
 p4	1809	4.5.13	kernel	admission_order	projection	*	is	applies	2.7.3	An object's state, a person's standing toward it and a room's seated roles are folds over the held set, never stored verdicts	
 p4	1809	4.5.13	kernel	admission_order	none	*	is	states		The step takes the held set, one row and the instant; answers enabled for the signer's standing or names why the row concludes nothing; an admitted row is appended, nothing rewritten	
 p4	1809	4.5.13	kernel	admission_order	none	*	is	applies	2.7.5	Queue, preview and door are one function run over enabled transitions, a row before signing, or an arriving row; the preview is exact because it is the door	
@@ -4398,7 +4398,7 @@ p3	1089	3.2	family	membership	body	membership	is	restates	5.2	a public room's ro
 p5	113	5.2	kernel	scope	body	*	is	restates	2.7.3	what a reply carries to a reader follows from the reply and the rows that reader is already served	proved: formal/audience_view carriage_closed_under_wait
 p5	1168	5.4.6	kernel	scope	body	*	is	states	5.2	a stranger is served announced testimony at federation scope only; a row placed with a contact never	proved: formal/audience_view stranger_never_learns_sealed_occurrence; twin literal_reading_serves_sealed_occurrence
 p5	1168	5.4.6	kernel	scope	body	*	is	reason	5.2	serving federation-scope holdings once a binding arrives discloses nothing	witness: formal/audience_view stranger_not_closed_binding
-p2	1304	2.7.9	kernel	freshness	none		is	states		a relay that withholds the row answering a window until one node has closed it leaves that node's answer different for good, even once both nodes hold the same rows	
+p2	1304	2.7.9	kernel	freshness	none		is	states		a relay that withholds the row answering a node's own clock until it has run leaves that node's answer different for good, even once both nodes hold the same rows	
 p6	152	6.1.2.3	kernel	trust_fold	formula		is	states		sources independent on every measured act that coordinate only on one decisive act show rho near 0 until that act; no measure over the past sees them	
 p1	234	1.13.3.3	kernel	trust_fold	formula		is	restates	6.1.2.3	Sleeper sources, independent on every measured act until one decisive act, show rho near 0 until it, so the correlated-source discount cannot see them	table
 p2	x	2.6.1.7	kernel	key_plane	none	*	is	states	2.6.1.8	A statement's key is a key of its iss: the thumbprint inside iss (the genesis key, or a room key signing as itself), or reached from the genesis key's record through rotation records	

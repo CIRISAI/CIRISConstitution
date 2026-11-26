@@ -4,10 +4,10 @@
 #   | answers (a closed list, or none) | tally (member) | escalate (conferrer) | signer (a seat).
 # The quote must stand verbatim in the cited section; formal/causal_kernel/check_door.py checks it and catches a changed quote.
 door	parameter	value	cc_ref	quote
-default_content	concluder	member as window:{state}	CC 4.5.13	Every window of this table is measured by each node from the instant it first held the proposal, never from a signed instant of the proposer or of a cosigner ([CC 2.7.5](part_2_the_grammar.md#2.7.5), the window).
-default_standing	concluder	member as window:{state}	CC 4.5.13	Every window of this table is measured by each node from the instant it first held the proposal, never from a signed instant of the proposer or of a cosigner ([CC 2.7.5](part_2_the_grammar.md#2.7.5), the window).
-default_irreversible	concluder	member as window:{state}	CC 4.5.13	Every window of this table is measured by each node from the instant it first held the proposal, never from a signed instant of the proposer or of a cosigner ([CC 2.7.5](part_2_the_grammar.md#2.7.5), the window).
-community_invite	concluder	member as window:{state}	CC 4.5.13	Every window of this table is measured by each node from the instant it first held the proposal, never from a signed instant of the proposer or of a cosigner ([CC 2.7.5](part_2_the_grammar.md#2.7.5), the window).
+default_content	concluder	member as window:{state}	CC 4.5.13	Every window of this table closes by two rows of one voice of its count, as the lone path of the self roster does ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)): a `window:held` row, and a landing that names it ([CC 3.1.3](part_3_the_namespace.md#3.1.3)).
+default_standing	concluder	member as window:{state}	CC 4.5.13	Every window of this table closes by two rows of one voice of its count, as the lone path of the self roster does ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)): a `window:held` row, and a landing that names it ([CC 3.1.3](part_3_the_namespace.md#3.1.3)).
+default_irreversible	concluder	member as window:{state}	CC 4.5.13	Every window of this table closes by two rows of one voice of its count, as the lone path of the self roster does ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)): a `window:held` row, and a landing that names it ([CC 3.1.3](part_3_the_namespace.md#3.1.3)).
+community_invite	concluder	member as window:{state}	CC 4.5.13	Every window of this table closes by two rows of one voice of its count, as the lone path of the self roster does ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)): a `window:held` row, and a landing that names it ([CC 3.1.3](part_3_the_namespace.md#3.1.3)).
 self_roster_evict	concluder	self as window:{state}	CC 3.3.6.4	Any key seated in the roster at the head the proposal names MAY sign a held row and a landing.
 self_roster_add	opener_counts	yes	CC 3.3.6.4	a strict majority of the live roster, proposer counted, approves and it lands at once
 self_roster_evict	opener_counts	yes	CC 3.3.6.4	a strict majority of the live roster, proposer counted, approves and it lands at once
@@ -24,4 +24,4 @@ default_content	opener_counts	yes	CC 3.1.9.2	The proposal is the proposer's own 
 default_standing	opener_counts	yes	CC 3.1.9.2	The proposal is the proposer's own row in its own family, and it counts as the proposer's approval.
 default_irreversible	opener_counts	yes	CC 3.1.9.2	The proposal is the proposer's own row in its own family, and it counts as the proposer's approval.
 community_invite	opener_counts	yes	CC 3.1.9.2	The proposal is the proposer's own row in its own family, and it counts as the proposer's approval.
-moderation_overturn	concluder	member but the author as window:{state}	CC 4.5.13	Every window of this table is measured by each node from the instant it first held the proposal, never from a signed instant of the proposer or of a cosigner ([CC 2.7.5](part_2_the_grammar.md#2.7.5), the window).
+moderation_overturn	concluder	member but the author as window:{state}	CC 4.5.13	Any member lands the moderation fallback, and any member but the act's author lands the lift of a duty holder's act.
