@@ -1,5 +1,9 @@
 SCITT companion demo: TEST ARTEFACTS ONLY
 ==========================================
+Published for discussion on the IETF SCITT list. This is no part of draft-moore-scitt-ciris-ceg-04: the vouch
+below is one possible vouch, and whether CEG should define one is an open question for a later revision.
+The generator is this directory's; the encoder, the composite signer and the original statement are CIRISVerify v23.7.0's.
+
 Made 2026-11-26 (vouch re-minted the same day with a term through 2027-11-16) from CIRISVerify v23.7.0's vector tooling. Every key is derived from a public seed
 (scitt_companion_test_v1.json states each). Nothing here is a registered
 wire shape; three things are proposals and are marked PROPOSAL below.
