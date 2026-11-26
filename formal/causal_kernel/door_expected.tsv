@@ -66,6 +66,7 @@ moderation_overturn	recount agrees with the reference	holds
 moderation_overturn	Inv_SeatedMajority: a lift is carried by a strict majority seated at the act	holds
 moderation_overturn	Inv_StandsAfterWindow: an act not lifted stands	holds
 moderation_overturn	Inv_TwoVoices: never one voice	holds
+moderation_overturn	the act's author does not land the lift's window	holds
 moderation_overturn	plant: mutation live_roster	caught
 moderator_recall	recount agrees with the reference	holds
 moderator_recall	recall needs more than two thirds and two voices	holds
@@ -233,11 +234,11 @@ time invitation	m2 lands 'closed' at its window; J's acceptance is concurrent (b
 time invitation	m2 lands 'closed' early (lies), J's acceptance concurrent	open
 time invitation	m2 lands 'closed' at its window; m3 holds the acceptance inside its own window and lands 'admitted' naming both	admitted
 self_roster_add	concluder, landing row and late answer read from reactions.json	self; window:{state}; late counts
-moderation_action	concluder, landing row and late answer read from reactions.json	member; none: each node reads its own close; late not stated
+moderation_action	concluder, landing row and late answer read from reactions.json	member; window:{state}; late counts
 accord_halt@node+late_closed	concluder, landing row and late answer read from reactions.json	target; none: each node reads its own close; late closed
 moderator_election	concluder, landing row and late answer read from reactions.json	winner; ballot:moderator_acceptance; late counts
 deletion_sla	concluder, landing row and late answer read from reactions.json	substrate; hard_case:deletion_window_breach; late not stated
-harm_report	concluder, landing row and late answer read from reactions.json	member; none: each node reads its own close; late not stated
+harm_report	concluder, landing row and late answer read from reactions.json	member; window:{state}; late counts
 takedown_withhold	concluder, landing row and late answer read from reactions.json	target; none: each node reads its own close; late counts
 retirement_objection	concluder, landing row and late answer read from reactions.json	decider; retirement:{state}; late not stated
 decay_stage	concluder, landing row and late answer read from reactions.json	author; consent:decay:patterns_anonymized; late not stated

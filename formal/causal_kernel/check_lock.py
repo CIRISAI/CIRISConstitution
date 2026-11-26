@@ -31,6 +31,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
 sys.dont_write_bytecode = True
+import kernel_path  # noqa: E402,F401   the kernel's models, in place (formal/vendor/kernel)
 import seat as ST       # noqa: E402
 import window as WN     # noqa: E402
 import route as RT      # noqa: E402
@@ -56,10 +57,14 @@ def seat_pool():
         ST.cosign("c2", "f2", "w", ("g",)),
         ST.offer("w", "f1", "m", "member", "g", "group", ("g", "am", "c2"), head=("g",), policy="community_invite", content="w"),
         ST.offer("w1", "f1", "m", "member", "g", "group", ("g", "am"), head=("g",), policy="community_invite", content="w1"),   # one voice
-        # a duty seat conferred by a strict majority of the duty holders, then a narrower one by the four of them (CC 4.5.4 (iv))
-        ST.offer("d", "f1", "K", "duty", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty", cosigners=("f2",)),
+        # a duty seat conferred by a strict majority of the duty holders, then a narrower one by the four of them (CC 4.5.4 (iv));
+        # a duty seat stands only on a member (seat.py, `member`), so each holder is admitted first, and each conferral
+        # is counted at its holder's admission
+        ST.offer("mk", "f1", "K", "member", "g", "group", ("g",), head=("g",), policy="community_invite", cosigners=("f2", "K")),
+        ST.offer("d", "f1", "K", "duty", "g", "group", ("mk",), head=("mk",), policy="duty_confer", counted="duty", cosigners=("f2",)),
         ST.accept("ak", "K", "d"),
-        ST.offer("d2", "K", "J", "moderate:spam", "g", "group", ("ak",), head=("ak",), policy="duty_confer", counted="duty", cosigners=("J", "f2", "f3")),
+        ST.offer("mj", "f1", "J", "member", "g", "group", ("ak",), head=("ak",), policy="community_invite", cosigners=("f2", "J")),
+        ST.offer("d2", "K", "J", "moderate:spam", "g", "group", ("mj",), head=("mj",), policy="duty_confer", counted="duty", cosigners=("J", "f2", "f3")),
         ST.withdraw("wd", "f1", "d"),
         ST.withdraw("wk", "K", "d"),                                   # the holder's own, naming only the offer
         ST.withdraw("wz", "m", "d"),                                   # a third party
@@ -278,11 +283,12 @@ def main():
         for h in WN.RULES:
             say("   rule %-8s breaks %d of %d property checks%s" % (h, len(broken[h]), sum(t["needs"] is not None for t in adv),
                                                                  ": " + "; ".join(sorted(set(broken[h]))) if broken[h] else ""))
-        with open(os.path.join(HERE, "window_adversary.tsv"), "w", encoding="utf-8") as f:
-            f.write("window\tcase\tlanding_concluded\tvoid\tcontest\trecount\tproperty\tvoid_holds\tcontest_holds\trecount_holds\n")
-            for t in adv:
-                f.write("\t".join([t["window"], t["case"], str(t["landing_concluded"])] + [t["outcome"][h] for h in WN.RULES] + [t["property"]]
-                                  + ["-" if t["holds"][h] is None else "holds" if t["holds"][h] else "BROKEN" for h in WN.RULES]) + "\n")
+        table = "window\tcase\tlanding_concluded\tvoid\tcontest\trecount\tproperty\tvoid_holds\tcontest_holds\trecount_holds\n" + "".join(
+            "\t".join([t["window"], t["case"], str(t["landing_concluded"])] + [t["outcome"][h] for h in WN.RULES] + [t["property"]]
+                      + ["-" if t["holds"][h] is None else "holds" if t["holds"][h] else "BROKEN" for h in WN.RULES]) + "\n" for t in adv)
+        same = table == open(os.path.join(kernel_path.KERNEL, "window_adversary.tsv"), encoding="utf-8").read()
+        say("   the table is the vendored window_adversary.tsv: %s" % same)
+        need(same, "the adversary table differs from formal/vendor/kernel/window_adversary.tsv")
         need(not broken["recount"], "the recount rule broke a property")
         need(broken["void"] and broken["contest"], "the void and contest rules were expected to break a property each; the table changed")
 

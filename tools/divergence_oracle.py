@@ -69,6 +69,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "formal", "causal_kernel"))
 _dwb, sys.dont_write_bytecode = sys.dont_write_bytecode, True
 import causal_kernel as CK  # noqa: E402
+import kernel_path  # noqa: E402,F401   the kernel's models, in place (formal/vendor/kernel)
 import seat as SEAT         # noqa: E402
 import claim as CLAIM       # noqa: E402
 sys.dont_write_bytecode = _dwb

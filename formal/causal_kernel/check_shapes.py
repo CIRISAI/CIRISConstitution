@@ -57,6 +57,7 @@ def _limit():
 def _path():
     sys.path.insert(0, HERE)
     sys.dont_write_bytecode = True
+    import kernel_path  # noqa: F401   the kernel's models, in place (formal/vendor/kernel)
 
 
 # ---- 0. the table ---------------------------------------------------------------------------------------------------

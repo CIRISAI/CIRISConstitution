@@ -197,13 +197,13 @@ door archive_release	4 worlds, 2 properties hold	holds
 door archive_release	plant: its mutation (check_door.MUTATION)	caught
 door community_invite	600 worlds, 4 properties hold	holds
 door community_invite	plant: its mutation (check_door.MUTATION)	caught
-door community_remove[majority]	72 worlds, 4 properties hold	holds
+door community_remove[majority]	36 worlds, 4 properties hold	holds
 door community_remove[majority]	plant: its mutation (check_door.MUTATION)	caught
-door community_remove[quorum]	72 worlds, 4 properties hold	holds
+door community_remove[quorum]	36 worlds, 4 properties hold	holds
 door community_remove[quorum]	plant: its mutation (check_door.MUTATION)	caught
-door community_remove[unanimous]	72 worlds, 4 properties hold	holds
+door community_remove[unanimous]	36 worlds, 4 properties hold	holds
 door community_remove[unanimous]	plant: its mutation (check_door.MUTATION)	caught
-door cosigned_act	72 worlds, 3 properties hold	holds
+door cosigned_act	36 worlds, 3 properties hold	holds
 door cosigned_act	plant: its mutation (check_door.MUTATION)	caught
 door custodian_replace	12 worlds, 2 properties hold	holds
 door custodian_replace	plant: its mutation (check_door.MUTATION)	caught
@@ -219,7 +219,7 @@ door invitation	216 worlds, 2 properties hold	holds
 door invitation	plant: its mutation (check_door.MUTATION)	caught
 door moderation_action	588 worlds, 4 properties hold	holds
 door moderation_action	plant: its mutation (check_door.MUTATION)	caught
-door moderation_overturn	324 worlds, 2 properties hold	holds
+door moderation_overturn	486 worlds, 3 properties hold	holds
 door moderation_overturn	plant: its mutation (check_door.MUTATION)	caught
 door moderator_election	577 worlds, 3 properties hold	holds
 door moderator_election	plant: its mutation (check_door.MUTATION)	caught
@@ -235,7 +235,7 @@ door self_roster_evict	600 worlds, 3 properties hold	holds
 door self_roster_evict	plant: its mutation (check_door.MUTATION)	caught
 door takedown_withhold	577 worlds, 2 properties hold	holds
 door takedown_withhold	plant: its mutation (check_door.MUTATION)	caught
-door wa_adjudication	72 worlds, 4 properties hold	holds
+door wa_adjudication	36 worlds, 4 properties hold	holds
 door wa_adjudication	plant: its mutation (check_door.MUTATION)	caught
 claim.py	plant: mutation claim: an untrusted source moves nothing (everyone)	caught
 claim.py	plant: mutation claim: only the source retracts (any_signer)	caught

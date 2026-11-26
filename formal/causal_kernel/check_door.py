@@ -3,7 +3,7 @@
 check_door.py: every policy row and every clock as ONE door (door.py), re-checked against what its own model or text
 claims, over every arrival order of bounded generated worlds, each with a mutation that must be caught.
 
-  0  regression: window.py's three windows put through the door reproduce formal/causal_kernel/window_adversary.tsv
+  0  regression: window.py's five windows put through the door reproduce formal/vendor/kernel/window_adversary.tsv
   1  per door: generated worlds (3 counted keys, the extra seats, the target; every choice of answer kind and of
      'named by the landing' / 'concurrent with it' per answerer; every concluder candidate, stated outcome, early or
      full): the recount property against an independent reference, and the door's own properties; order-freeness
@@ -36,6 +36,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.dont_write_bytecode = True
 import door as D  # noqa: E402
+import kernel_path  # noqa: E402   where the vendored window_adversary.tsv is
 
 WN, ST, CK, K, R = D.WN, D.ST, D.CK, D.K, D.R
 sys.path.insert(0, os.path.join(HERE, "..", "ranked_choice"))
@@ -60,7 +61,7 @@ def cast(name):
               "takedown_withhold": "H", "retirement_objection": "A", "deletion_sla": "P", "community_remove[unanimous]": "m3",
               "community_remove[majority]": "m3", "community_remove[quorum]": "m3", "moderator_recall": None,
               "accord_halt@node+late_closed": "N", "community_invite-invitee": "J"}.get(name)
-    scopes = [x for x in (s["opener"], s["concluder"]) + tuple(s["extra"]) if x not in (counted, "target", "winner")]
+    scopes = [x for x in (s["opener"], s["concluder"]) + tuple(s["extra"]) if x not in (counted, "target", "winner", "others")]
     return keys, target, list(dict.fromkeys(scopes))
 
 
@@ -75,6 +76,9 @@ def setup(name, n=None):
     for i, sc in enumerate(scopes):
         k = {"moderate": "MOD", "review": "REV", "takedown": "TK", "substrate": "SUB", "author": "AU", "subject": "S", "decider": "DC", "deferring": "AG"}.get(sc, sc.upper())
         if k in keys: seat_of[sc] = k; continue
+        if ST.is_duty(sc):          # a duty seat stands only on a member (seat.py, `member`): the holder is admitted first
+            rows.append(ST.offer("w%d" % i, keys[0], k, "member", "g", "group", (rows[-1]["id"],), head=(rows[-1]["id"],),
+                                 policy="community_invite", cosigners=tuple(keys[1:]) + (k,)))
         rows.append(ST.offer("s%d" % i, keys[0], k, sc, "g", "self", (rows[-1]["id"],), cosigners=(k,)))
         seat_of[sc] = k
     return rows, keys, target, seat_of
@@ -108,9 +112,10 @@ def worlds(name):
     if s["concluder"] == "target": concl = [target, keys[0] if keys[0] != target else keys[1]]
     elif s["concluder"] == "winner": concl = list(keys)
     else:
-        pool = keys if s["concluder"] == s["counted"] else (seat_of[s["concluder"]],)
+        pool = keys if s["concluder"] in (s["counted"], "others") else (seat_of[s["concluder"]],)
         concl = list(dict.fromkeys([op if op in pool else pool[0], [k for k in pool if k != op][-1] if len(pool) > 1 else pool[0]]))
         if name == "retirement_objection": concl.append(target)          # the agent tries to close its own window
+        if s["concluder"] == "others" and op not in concl: concl.append(op)   # the act's author tries to land the lift of its own act
     says = [o for o in s["outcomes"] if o != "open"]
     notes = [None, "named", "conc"] if s.get("silent") else [None]
     out = []
@@ -222,7 +227,7 @@ def ref(w):
     if name == "moderator_recall":
         y = (tally(w, "assent") | {w["op"]}) & set(keys)
         if 3 * len(y) > 2 * n and len(y) >= 2: return "recalled"
-        return "cancelled" if el else "open"
+        return "open"                                                                                  # no clock cancels a counted row
     if name in ("custodian_replace", "affiliation_member_action"):
         return "landed" if (tally(w, "assent") | {w["op"]}) >= set(keys) else "open"
     if name == "moderator_election":
@@ -237,7 +242,7 @@ def ref(w):
     if name == "wa_adjudication":
         y = (tally(w, "assent") | {w["op"]}) & set(keys)
         if 2 * len(y) > n: return "landed"                                                            # over the full seated roster
-        return "cancelled" if el else "open"
+        return "open"                                                                                  # no clock cancels a counted row
     if s["kind"] == "seat_act":
         return "released" if w["op"] in keys else None                                                  # one row of the seat
     if name == "deferral":
@@ -247,7 +252,7 @@ def ref(w):
     if name == "moderation_action":
         if tally(w, "answered", {"MOD"}): return "answered"
         if not el: return "open"
-        act, keep = tally(w, "act") & set(keys), tally(w, "keep") & set(keys)
+        act, keep = tally(w, "act") & members(name), tally(w, "keep") & members(name)
         return "fallback" if 2 * len(act) > len(act | keep) and len(act) >= 2 else "lapsed"   # CC 4.5.13: of those who voted, two voices
     return None
 
@@ -261,10 +266,20 @@ def poll_count(w):
     return one.count("for"), len(one)
 
 
+def members(name):
+    """The members of the door's room: the counted keys and every duty holder setup() admits (a duty seat stands only on
+    a member, seat.py `member`), where the door counts members."""
+    s = D.DOORS[name]
+    keys, _, scopes = cast(name)
+    if s["counted"] != "member": return set(keys)
+    return set(keys) | {k for sc, k in setup(name)[3].items() if ST.is_duty(sc)}
+
+
 def props(name):
     """The properties each door's own model, README or text claims: (label, source, predicate(w, outcome) -> None|bool)."""
     s = D.DOORS[name]
     keys, target, _ = cast(name)
+    mem = members(name)
     n = len(keys)
     L = lambda w: w["L"]
     P = []
@@ -312,21 +327,23 @@ def props(name):
                   lambda w, o: None if not (set(keys) - {w["target"]} <= tally(w, "assent", None, ("named",)) | {w["op"]}) or not L(w)[1] == "removed" else o == "removed"))
     if name == "moderation_action":
         P.append(("the fallback carries only on a strict majority of the members who voted, floor two", "CC 4.5.13; the row's note",
-                  lambda w, o: None if o != "fallback" else 2 * len(tally(w, "act", set(keys))) > len(tally(w, "act", set(keys)) | tally(w, "keep", set(keys)))
-                  and len(tally(w, "act", set(keys))) >= 2))
+                  lambda w, o: None if o != "fallback" else 2 * len(tally(w, "act", mem)) > len(tally(w, "act", mem) | tally(w, "keep", mem))
+                  and len(tally(w, "act", mem)) >= 2))
         P.append(("a present moderator is not overridden", "window_adversary; CC 4.5.13",
                   lambda w, o: None if not tally(w, "answered", {"MOD"}) else o != "fallback"))
         P.append(("the fallback needs the members' count", "window_adversary",
-                  lambda w, o: None if o != "fallback" else len(tally(w, "act", set(keys))) >= 2))
+                  lambda w, o: None if o != "fallback" else len(tally(w, "act", mem)) >= 2))
         P.append(("the fallback works when the moderator is absent", "window_adversary",
-                  lambda w, o: None if tally(w, "answered", {"MOD"}) or len(tally(w, "act", set(keys), ("named",))) < 2 or L(w)[1] != "fallback" or not L(w)[2] or L(w)[0] == "MOD"
-                  or 2 * len(tally(w, "act", set(keys))) <= len(tally(w, "act", set(keys)) | tally(w, "keep", set(keys))) else o == "fallback"))
+                  lambda w, o: None if tally(w, "answered", {"MOD"}) or len(tally(w, "act", mem, ("named",))) < 2 or L(w)[1] != "fallback" or not L(w)[2] or L(w)[0] == "MOD"
+                  or 2 * len(tally(w, "act", mem)) <= len(tally(w, "act", mem) | tally(w, "keep", mem)) else o == "fallback"))
     if name == "moderation_overturn":
         P.append(("Inv_SeatedMajority: a lift is carried by a strict majority seated at the act", "moderation_lift",
                   lambda w, o: None if o != "lifted" else 2 * len(tally(w, "object", set(keys))) > n))
         P.append(("Inv_TwoVoices: never one voice", "moderation_lift", lambda w, o: None if o != "lifted" else len(tally(w, "object")) >= 2))
         P.append(("Inv_StandsAfterWindow: an act not lifted stands", "moderation_lift",
-                  lambda w, o: None if len(tally(w, "object")) >= 2 or not L(w)[2] or L(w)[1] != "stands" else o == "stands"))
+                  lambda w, o: None if len(tally(w, "object")) >= 2 or not L(w)[2] or L(w)[1] != "stands" or L(w)[0] == w["op"] else o == "stands"))
+        P.append(("the act's author does not land the lift's window", "CC 4.5.13: the author's own objection is no voice",
+                  lambda w, o: None if L(w)[0] != w["op"] or o == "lifted" else o in ("open", "none")))
     if name == "moderator_recall":
         P.append(("recall needs more than two thirds and two voices", "CC 4.5.13 moderator_recall",
                   lambda w, o: None if o != "recalled" else 3 * len(tally(w, "assent") | {w["op"]}) > 2 * n))
@@ -360,7 +377,7 @@ def props(name):
         P.append(("a moderator's keep is not overridden", "CC 4.5.13", lambda w, o: None if not tally(w, "keep", {"MOD"}) else o != "removed"))
     if name == "takedown_withhold":
         P.append(("only the holding device lands its own destruction", "CC 4.5.3 (custody:ack)", lambda w, o: None if o != "destroy" else L(w)[0] == "H"))
-        P.append(("a reversal or a lift is not overridden", "CC 4.5.3", lambda w, o: None if not (tally(w, "reversed", {"REV"}) or 2 * len(tally(w, "lift", set(keys))) > n and len(tally(w, "lift", set(keys))) >= 2) else o != "destroy"))
+        P.append(("a reversal or a lift is not overridden", "CC 4.5.3", lambda w, o: None if not (tally(w, "reversed", {"REV"}) or 2 * len(tally(w, "lift", mem)) > len(mem) and len(tally(w, "lift", mem)) >= 2) else o != "destroy"))
     if name == "retirement_objection":
         P.append(("a decided row that does not name the agent's objection concludes nothing", "CC 7.5.5",
                   lambda w, o: None if not tally(w, "object", {"A"}) or tally(w, "withdrawn") else o != "proceed"))
@@ -557,7 +574,7 @@ def order_job(args):
 def regression():
     D.rebuild()
     rows_out, bad = [], 0
-    ref_tsv = [l.rstrip("\n").split("\t") for l in open(os.path.join(HERE, "window_adversary.tsv"), encoding="utf-8")][1:]
+    ref_tsv = [l.rstrip("\n").split("\t") for l in open(os.path.join(kernel_path.KERNEL, "window_adversary.tsv"), encoding="utf-8")][1:]
     i = 0
     for world in WN.WORLDS:
         title, cases = world()
@@ -695,7 +712,9 @@ def time_g3():
     causal past the act counts iff the withdrawal has it in its past, in every arrival order; under the freshness
     reading (signed instant against first held, W) the answer follows arrival."""
     root = ST.offer("g", "root", ("root",), "duty", "@", "self")              # the lone duty holder confers alone (CC 4.5.4 (iv))
-    dl = ST.offer("del", "root", "mod", "moderate", "g", "self", ("g",), cosigners=("mod",))
+    # a duty seat stands only on a member (seat.py, `member`): mod is admitted first (the lone holder and mod's own yes)
+    mm = ST.offer("mm", "root", "mod", "member", "g", "group", ("g",), head=("g",), policy="community_invite", cosigners=("mod",))
+    dl = ST.offer("del", "root", "mod", "moderate", "g", "self", ("mm",), cosigners=("mod",))
     act = R("act", "act", "mod", ("del",), head=("del",), at=50)
     xdel_unseen = ST.withdraw("xdel", "root", "del", ("del",))
     xdel_seen = ST.withdraw("xdel", "root", "del", ("del", "act"))
@@ -716,7 +735,7 @@ def time_g3():
                 return "xdel" not in held or signed["act"] < signed["xdel"]          # judged at receipt; signed instant within W
         return False
     for label, x in (("withdrawal that never saw the act", xdel_unseen), ("withdrawal naming the act", xdel_seen)):
-        rows = [root, dl, act, x]
+        rows = [root, mm, dl, act, x]
         res_cut = {counts(rows, list(o)) for o in itertools.permutations(rows)}
         res_fresh = {fresh(list(o)) for o in itertools.permutations(rows)}
         out.append((label, sorted(res_cut), sorted(res_fresh)))
@@ -832,7 +851,7 @@ def main():
     say = lambda s: print(s, flush=True)
     got = []                                        # (instance, property, verdict)
     n, bad = regression()
-    say("0. regression: window.py's three windows judged by the door's rule: %d cases, %d differ from window_adversary.tsv" % (n, bad))
+    say("0. regression: window.py's five windows judged by the door's rule: %d cases, %d differ from window_adversary.tsv" % (n, bad))
     got.append(("window.py", "window_adversary.tsv reproduced", "same" if bad == 0 else "differs"))
     with multiprocessing.Pool(PROCS, initializer=_limit) as mp:
         jobs = [(d, m, nk) for m in (None, "mut") for nk in (3, 4) for d in DOOR_NAMES if nk == 3 or d not in THREE_ONLY]
@@ -913,7 +932,7 @@ def main():
     got.append(("two-path rows", "%d published vectors replayed" % n, "same" if bad == 0 else "differs"))
     say("4. time")
     for label, cut, fresh in time_g3():
-        say("   G3, %s: the act counts under the cut by causal past: %s over all 24 orders; under first-held + W: %s" % (label, cut, fresh))
+        say("   G3, %s: the act counts under the cut by causal past: %s over all 120 orders; under first-held + W: %s" % (label, cut, fresh))
         got.append(("time G3", label, "cut %s; first-held %s" % (cut, fresh)))
     for cname, o, need in time_invitation():
         say("   invitation: %-112s -> %s (needs %s)" % (cname, o, need))

@@ -24,15 +24,15 @@
    "by_concluder": {
     "author": 3,
     "infra:attest": 1,
-    "local": 9,
-    "member": 2,
+    "local": 8,
+    "member": 3,
     "self": 1,
     "winner": 1
    },
    "by_late": {
     "closed": 3,
-    "counts": 7,
-    "unstated": 7
+    "counts": 8,
+    "unstated": 6
    },
    "clocks_with_no_landing": [
     "group:roster cover"
@@ -1967,7 +1967,9 @@
    ],
    "kind": "land",
    "name": "window",
-   "concluder": "local",
+   "concluder": "member",
+   "landing": "window:{state}",
+   "late": "counts",
    "cc_ref": [
     "CC 4.5.13"
    ]
