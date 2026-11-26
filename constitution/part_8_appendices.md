@@ -236,9 +236,9 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md#4.2.2.1)). |
 | Naming a lineage's Transparency Services (a bundle counted by a strict majority of the predecessor's holders) | Committed at [CC 3.2](part_3_the_namespace.md#3.2) T6 and [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
 | A machine-readable description of every endpoint | Committed at [CC 5.3.5](part_5_transport_substrate.md#5.3.5). |
-| The members' vote on a moderation action | **CLOSED** in [CC 4.5.13](part_4_composition_governance.md#4.5.13): a member's vote is a `ballot:moderation_action` row, and the count is over the members who voted, floor two. Run by `formal/vendor/kernel/window.py`. |
-| Membership and the duty seat | **CLOSED** in [CC 4.5.4](part_4_composition_governance.md#4.5.4): an end of the holder's stay ends the duty seats conferred in its past, and a founder resigns one duty by a withdrawal that names it. Run by `formal/vendor/kernel/check_duty_seats.py`. |
-| A moderator's lone removal of an agent's key | **CLOSED** in [CC 4.5.13](part_4_composition_governance.md#4.5.13): the removal is in force by the end rule, and the members' lift is the row that seats the key again. Run by `formal/vendor/kernel/check_agent_removal.py` and `check_removal_in_force.py`. |
+| The members' vote on a moderation action | **CLOSED** in [CC 4.5.13](part_4_composition_governance.md#4.5.13): a member's vote is a `ballot:moderation_action` row, and the count is over the members who voted, floor two. The causal kernel's cases run it. |
+| Membership and the duty seat | **CLOSED** in [CC 4.5.4](part_4_composition_governance.md#4.5.4): an end of the holder's stay ends the duty seats conferred in its past, and a founder resigns one duty by a withdrawal that names it. The causal kernel's cases run it. |
+| A moderator's lone removal of an agent's key | **CLOSED** in [CC 4.5.13](part_4_composition_governance.md#4.5.13): the removal is in force by the end rule, and the members' lift is the row that seats the key again. The causal kernel's cases run it. |
 | A removed room key seated again | **CLOSED** in [CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2): a room key whose end stands is not seated again. |
 
 **Open or partial.** These are not settled. Each row names the gap, its present status, and the section where the open half is tracked.
