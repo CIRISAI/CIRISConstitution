@@ -28,6 +28,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
 sys.dont_write_bytecode = True
+import kernel_path  # noqa: E402,F401   the kernel's models, in place (formal/vendor/kernel)
 import seat as ST  # noqa: E402
 
 CK, CUT, K, R = ST.CK, ST.CUT, ST.K, ST.R

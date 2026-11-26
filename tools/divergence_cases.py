@@ -18,6 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(ROOT, "formal", "causal_kernel"))
 _dwb, sys.dont_write_bytecode = sys.dont_write_bytecode, True
+import kernel_path  # noqa: E402,F401   the kernel's models, in place (formal/vendor/kernel)
 import seat as SEAT          # noqa: E402
 import window as WN          # noqa: E402
 import causal_kernel as CK   # noqa: E402

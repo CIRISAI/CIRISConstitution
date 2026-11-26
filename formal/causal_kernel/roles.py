@@ -17,6 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
 sys.dont_write_bytecode = True
+import kernel_path  # noqa: E402,F401   the kernel's models, in place (formal/vendor/kernel)
 import seat as ST  # noqa: E402
 
 CK, K, R = ST.CK, ST.K, ST.R
@@ -33,9 +34,21 @@ def live(rows, k, s, obj, root=None):
     return ST.Seats(S).stands(k, s, obj, root)
 
 
+def admit(i, k, signers, heads):
+    """The widening that seats k as a member of g (check_duty_seats.admit): a counted row of the roster's own seat, the
+    joiner cosigning. A duty seat stands only on a member (seat.py, `member`), so a fixture that confers a duty over a
+    community first seats its holder as a member."""
+    return ST.offer(i, signers[0], k, "member", "g", "group", tuple(heads), head=tuple(heads), policy="community_invite",
+                    cosigners=tuple(signers[1:]) + (k,))
+
+
 def build(t):
     """rows, the scope read, the object, the offer id, the acceptance id (or None), the upstream offer id, the body
     (group object, counted scope, its keys) an unseat is counted over, the root to walk from."""
+    return _build(t, ST.is_duty(t["scope"]))
+
+
+def _build(t, duty):
     conf, s = t["conferrer"], t["scope"]
     body = None
     if conf == "self:holder":
@@ -59,7 +72,7 @@ def build(t):
         return dict(rows=rows, s=s, obj="A", o="o", a="a", up=None, body=body, root="A")
     if conf == "seat:duty":                 # a lone duty holder confers alone, with the new holder's acceptance (CC 4.5.4)
         g = ST.offer("g", "F", "F", "duty", "@", "self")
-        return dict(rows=[g, ST.offer("o", "F", "K", s, "g", "seat", ("g",), under="g"), ST.accept("a", "K", "o")],
+        return dict(rows=[g] + ([admit("m", "K", ("F",), ("g",))] if duty else []) + [ST.offer("o", "F", "K", s, "g", "seat", ("g",), under="g"), ST.accept("a", "K", "o")],
                     s=s, obj="g", o="o", a="a", up="g", body=None, root=("group", "g"))   # an equal: rooted in the group
     if conf == "seat:owner":
         obj = "K" if s == "infra:attest" else "A"          # a node attests about itself; a Wise Authority is over the agent
@@ -74,18 +87,20 @@ def build(t):
     if conf == "group":
         counted = "duty" if t["policy"] in ST.DUTY_POLICY else s if s in ("member", "holder", "self") else "member"
         g = ST.offer("g", "f1", ("f1", "f2", "f3"), counted, "@", "self", cosigners=("f2", "f3"))
-        rows, names, a, kw = [g], ["g"], None, {}
+        # a duty is conferred on a member: K is admitted first, and the conferral is counted at the admission's head
+        h = "m" if duty else "g"
+        rows, names, a, kw = [g] + ([admit("m", "K", ("f1", "f2"), ("g",))] if duty else []), [h], None, {}
         if t["consent"] == "one":
             kw["consent"] = "one"
         else:
-            a = "a"; rows.append(ST.accept("a", "K", None, ("g",), scope=s, obj="g")); names.append("a")
+            a = "a"; rows.append(ST.accept("a", "K", None, (h,), scope=s, obj="g")); names.append("a")
         if K.rule(ST.POLICY, t["policy"])[0] == "ranked":
             for i, f in enumerate(("f1", "f2", "f3")):
-                rows.append(R("b%d" % i, "ballot", f, ("g",), ranking=("K", "x") if i < 2 else ("x", "K"))); names.append("b%d" % i)
+                rows.append(R("b%d" % i, "ballot", f, (h,), ranking=("K", "x") if i < 2 else ("x", "K"))); names.append("b%d" % i)
             kw["options"] = ("K", "x")
         else:
-            rows += [ST.cosign("c2", "f2", "o", ("g",)), ST.cosign("c3", "f3", "o", ("g",))]; names += ["c2", "c3"]
-        rows.append(ST.offer("o", "f1", "K", s, "g", "group", names, head=("g",), policy=t["policy"], counted=counted,
+            rows += [ST.cosign("c2", "f2", "o", (h,)), ST.cosign("c3", "f3", "o", (h,))]; names += ["c2", "c3"]
+        rows.append(ST.offer("o", "f1", "K", s, "g", "group", names, head=(h,), policy=t["policy"], counted=counted,
                              content="o", need=3, **kw))
         return dict(rows=rows, s=s, obj="g", o="o", a=a, up=None, body=("g", counted, ("f1", "f2", "f3")), root=("group", "g"))
     raise ValueError(conf)

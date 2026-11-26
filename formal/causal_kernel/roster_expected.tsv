@@ -1,10 +1,12 @@
 instance	property	verdict
 MADE-UP: a room where one signature removes (no floor)	Inv_CoercedCannotRemoveHonest on an instance built to violate it (must be refused)	refused as required
 a key (its registration, its owner, its revokers)	a former owner, whose binding was withdrawn in the revocation's past, revokes nothing	holds
+a key (its registration, its owner, its revokers)	a key its owner revoked is unowned and live: it takes a new first binding	holds
 a key (its registration, its owner, its revokers)	a revocation signed by any other key revokes nothing	holds
 a key (its registration, its owner, its revokers)	a revoked key cannot un-revoke itself (a revocation is never withdrawn)	holds
+a key (its registration, its owner, its revokers)	only the key's own revocation ends its liveness: the owner's does not	holds
 a key (its registration, its owner, its revokers)	the key's own revocation ends its registration from the revocation forward, by causal past	holds
-a key (its registration, its owner, its revokers)	the owner's revocation ends the key's registration from the revocation forward, by causal past	holds
+a key (its registration, its owner, its revokers)	the owner's revocation ends the owner-binding's standing from the revocation forward; the key stays registered and its rows count	holds
 a key (its registration, its owner, its revokers)	two live owner-bindings naming different owners: no owner, and neither alone revokes (derived from CC 3.2 owner_of)	holds
 accord (holders)	lame duck (a holder named for removal fires until the decision) AND a removed holder no longer fires	does NOT hold
 accord (holders)	lame duck AND a removed holder no longer fires, with the latch on receipt (a reader-relative parameter that reads arrival order)	holds with latch_on_receipt (per node; NOT a function of the rows)
@@ -32,7 +34,7 @@ community (public, members are persons)	roster_fork M0 (tips wait): majority ove
 community (public, members are persons)	roster_fork M0 (tips wait): majority over 0123, adversary 4; 7 properties	holds
 community (public, members are persons)	roster_fork M0 (tips wait): quorum3 over 01234, adversary 34; 7 properties	holds
 community (public, members are persons)	roster_fork M0 (tips wait): two_thirds over 0123, adversary 3; 7 properties	holds
-community (public, members are persons)	tips wait (KERNEL 7): two versions of one head give the members common to both; a version naming both makes one head	holds
+community (public, members are persons)	the fold at tips (KERNEL 7): of two versions of one head, the member one adds is in and the member the other removes is out; a version naming both makes one head	holds
 community (public, members are persons)	when no duty holder is left the members' count seats one (and one member does not)	holds
 community (public, members are persons)	where there are two holders, no duty seat is withdrawn on fewer than two voices	holds
 community, with the stated parameter spent on (does it break anything else?)	Inv_CoercedCannotRemoveHonest, with the floor of two voices under every protocol	holds with floor=2 (the table's min_count)
@@ -43,7 +45,7 @@ community, with the stated parameter spent on (does it break anything else?)	Inv
 community, with the stated parameter spent on (does it break anything else?)	Inv_NoSelfAdmission	holds
 community, with the stated parameter spent on (does it break anything else?)	Inv_ResignationEnabled	holds
 community, with the stated parameter spent on (does it break anything else?)	community_invite reverse path: one member's proposal and the joiner's yes land at the close unless a third objects	holds
-community, with the stated parameter spent on (does it break anything else?)	tips wait (KERNEL 7): two versions of one head give the members common to both; a version naming both makes one head	holds
+community, with the stated parameter spent on (does it break anything else?)	the fold at tips (KERNEL 7): of two versions of one head, the member one adds is in and the member the other removes is out; a version naming both makes one head	holds
 community, with the stated parameter spent on (does it break anything else?)	when no duty holder is left the members' count seats one (and one member does not)	holds
 infrastructure community (operators' keys)	T6: a witnessed lineage holds void the rival head that is not witnessed	holds with witnessed (a reader's parameter: which tip its witnesses named)
 infrastructure community (operators' keys)	T7 recovery: the conferring body's one widening	holds with body (a second conferrer, active only while stalled)
@@ -59,7 +61,7 @@ private room (members are voices)	Inv_LeavingNotUndone, leaving read as a withdr
 private room (members are voices)	Inv_NoSelfAdmission	holds
 private room (members are voices)	Inv_ResignationEnabled	holds
 private room (members are voices)	community_invite reverse path: one member's proposal and the joiner's yes land at the close unless a third objects	holds
-private room (members are voices)	tips wait (KERNEL 7): two versions of one head give the members common to both; a version naming both makes one head	holds
+private room (members are voices)	the fold at tips (KERNEL 7): of two versions of one head, the member one adds is in and the member the other removes is out; a version naming both makes one head	holds
 private room (members are voices)	when no duty holder is left the members' count seats one (and one member does not)	holds
 self roster (a person's keys)	Inv_ThiefCannotEvictHonest (owner present)	holds
 self roster (a person's keys)	Inv_ThiefCannotEvictHonest (owner present)	holds

@@ -63,7 +63,7 @@ run python3 -I formal/causal_kernel/check_roomkey.py
 run python3 -I formal/leaf_vouch/check_leaf_vouch.py
 run python3 -I formal/binding_carriage/check_binding_carriage.py
 run python3 -I formal/join_audience/check_join_audience.py
-run python3 -I formal/causal_kernel/check_rosters.py
+run python3 -I formal/causal_kernel/kernel_path.py check_rosters
 run python3 -I formal/causal_kernel/check_door.py
 run python3 -I formal/causal_kernel/check_time.py
 run python3 -I formal/causal_kernel/check_shapes.py

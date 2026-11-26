@@ -347,7 +347,7 @@ jobs:
           python3 -I ../leaf_vouch/check_leaf_vouch.py
           python3 -I ../binding_carriage/check_binding_carriage.py
           python3 -I ../join_audience/check_join_audience.py
-          python3 -I ../causal_kernel/check_rosters.py
+          python3 -I ../causal_kernel/kernel_path.py check_rosters
           python3 -I ../causal_kernel/check_door.py
           python3 -I ../causal_kernel/check_time.py
           python3 -I ../causal_kernel/check_shapes.py

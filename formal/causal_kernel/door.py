@@ -6,13 +6,14 @@ opener names, extra seats, the target), WITH WHAT KINDS of answer, HOW LONG (no 
 concluder's own two instants), and WHAT HOLDS AT THE CLOSE: a table of clauses over the answers, read at once or at
 the close, with a default. The outcome is that table over the answers.
 
-The kernel's rules are not changed. The rows, the receipt, the landing and the recount are window.py's own (this
-file sits beside it in formal/causal_kernel). The door specs are added to window.py's WINDOWS under "door:<name>";
+The kernel's rules are not changed. The rows, the receipt, the landing and the recount are window.py's own (the
+kernel's file at formal/vendor/kernel, imported in place through kernel_path.py). The door specs are added to window.py's WINDOWS under "door:<name>";
 window.py's table_outcome, _base and secs are wrapped so that a door spec is read here and every other spec by
-window.py itself, and a door whose clauses window.py can state (a threshold of its own shapes, target_votes, the
+window.py itself (a door's base gives window.py's `raw` too: the holders a one-signature clause reads, agents included,
+where every count is of persons), and a door whose clauses window.py can state (a threshold of its own shapes, target_votes, the
 moderate seat) is handed to window.py's own table. window.outcome() then runs unchanged. The conclusion rule is
 window.rule with one generalisation: who concludes is a scope, the target itself ("target"), or the ranked winner
-("winner"). check_door.py shows first that window.py's three windows, judged by this rule, give
+("winner"). check_door.py shows first that window.py's five windows, judged by this rule, give
 window_adversary.tsv line for line.
 
 Every door is built from the cells of manifests/governance_policy.json or manifests/reactions.json; each spec carries
@@ -43,6 +44,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..", "..")
 sys.path.insert(0, HERE)
 sys.dont_write_bytecode = True
+import kernel_path  # noqa: E402,F401   the kernel's models, in place (formal/vendor/kernel)
 import window as WN  # noqa: E402
 import seat as ST    # noqa: E402
 
@@ -245,7 +247,8 @@ def door_table(spec, p, answers, inside, base, elapsed):
     if spec["opener_says"]: said.setdefault(p["signer"], spec["opener_says"])
     def count(value, over, close=False):
         keys = base(over)
-        if over == "voted": keys = frozenset(s for s in said if s in base("all"))
+        # who voted, as window.py's ("voted", n, d, min, against): a key of the base that said the value or its against word
+        if over == "voted": keys = frozenset(s for s, v in said.items() if s in base("all") and (not spec.get("against") or v in (value, spec["against"])))
         n = len(keys)                                                # the base stays the roster
         if close and value == "approve" and spec.get("target_votes") and p.get("target"):
             keys = keys | {p["target"]}                             # the target's own yes is a voice of the floor (target_voice)
@@ -313,7 +316,16 @@ def _base(rows, past, p):
                 S = CK.State(rows, {q["id"]: True for q in rows})
                 live = ST.Seats(S)
             return live.holders(scope, p["obj"])
-        return ST.members_at(rows, past, p["obj"], p["head"], scope)
+        return ST.counted_keys(rows, past, p["obj"], p["head"], scope)[0]     # a count is of persons (window._base)
+    def raw(name):
+        """window._base's raw: the holders a one-signature clause reads, agents included."""
+        if name in ("all", "others", "opener", "voted") or "live_roster" in MUT: return base(name)
+        if ("raw", name) not in cache:
+            m = frozenset()
+            for s in (spec["extra"] if name == "moderate" else (name,)): m |= ST.members_at(rows, past, p["obj"], p["head"], s)
+            if name == "moderate" and spec.get("target_votes") and p.get("target"): m |= {p["target"]}
+            cache[("raw", name)] = m
+        return cache[("raw", name)]
     def base(name):
         if name not in cache:
             if name in ("all", "others", "voted"):
@@ -338,6 +350,7 @@ def _base(rows, past, p):
             else:
                 cache[name] = at(name)
         return cache[name]
+    base.raw = raw
     return base
 
 
@@ -375,6 +388,8 @@ def rule(r, P, past):
     if "concluder_target" in MUT and p.get("target"): c = "target"            # MUTATION: the target closes its own window
     if c == "target":
         if r["signer"] != p.get("target"): return False
+    elif c == "others":                                                         # any key of the count but the opener's signer
+        if r["signer"] not in base("others"): return False
     elif c == "winner":
         if r["signer"] not in base("all"): return False
         if k == "landing" and r["says"] not in ("open",) and r["says"] != "winner:" + r["signer"]: return False
@@ -445,18 +460,18 @@ def door_specs():
         # the room declares its protocol in its founding row; the door reads that row, never the instance's name
         D["community_remove[%s]" % kind.split(":")[0]] = hold_close(dict(policy="community_remove", kind="cosigned", opener="member", counted="member",
             extra=(), target_votes=False, opener_says="assent", kinds=("assent",), clauses=(("once", "assent", ("protocol", "removal_rule", 2), "all", "removed"),),
-            silent=None, default="cancelled", secs=f["window_secs"], concluder="member", late="counts", outcomes=("removed", "cancelled", "open"),
+            silent=None, default="open", secs=None, concluder="member", late="counts", outcomes=("removed", "open"),
             declared=kind,
             cells={"enact": "protocol: the founding row's consensus_protocol -> protocols.kinds[KIND].removal_rule over its removal_set, never fewer than two voices (CC 3.3.4, CC 4.5.13)",
                    "declared": "the world's founding row declares %s%s" % (kind, " with m = 2" if "quorum" in kind else ""),
-                   "window": "window_secs %d (hold)" % f["window_secs"], "default": "at_window cancelled", "counted_at": "signed (the head the row names)"},
+                   "window": "none: a counted row lands when its count is met; no clock and no landing (the hold, CC 3.3.4, decides only what a node keeps)", "default": "open: no node's clock cancels a counted row", "counted_at": "signed (the head the row names)"},
             unstated=["concluder at the close: a node's own drop (the hold's close is local, CC 3.3.4)"]))
     D["community_invite-invitee"] = dict(D["community_invite"], target_votes=False,
         contrast="not the table's reading: the invitee's own yes is not a voice (the row's target_voice cell read as no)")
     f = POLICY["moderation_action"]
     fl = {"kind": "voices", "count": 2} if "floor_two_voices" in MUT else f["floor_rule"]     # MUTATION: the old cell, two voices of the roster
     D["moderation_action"] = stated(dict(policy="moderation_action", kind="mirror", opener="member", counted="member", extra=("moderate",),
-        target_votes=False, opener_says=None, kinds=("answered", "act", "keep"),
+        target_votes=False, opener_says=None, kinds=("answered", "act", "keep"), against="keep",
         clauses=(("once", "answered", ("abs", 1), "extra", "answered"),
                  ("close", "act", at_least_rule(fl, 2), "voted" if fl["kind"] == "voted_majority" else "all", "fallback")),
         silent=None, default="lapsed", secs=f["window_secs"], concluder="member", late="counts", outcomes=("answered", "fallback", "lapsed", "open"),
@@ -467,16 +482,16 @@ def door_specs():
                   "concluder: a member"]), "moderation_action", "member")
     f = POLICY["moderation_overturn"]
     D["moderation_overturn"] = dict(policy="moderation_overturn", kind="mirror", opener="moderate", counted="member", extra=(), target_votes=False,
-        opener_says=None, kinds=("object",), clauses=(("once", "object", ("strict", 1, 2, 2), "all", "lifted"),),
-        silent=None, default="stands", secs=f["window_secs"], concluder="member", late="counts", outcomes=("lifted", "stands", "open"),
+        opener_says=None, kinds=("object",), clauses=(("once", "object", ("strict", 1, 2, 2), "others", "lifted"),),   # the act's author apart (window.py)
+        silent=None, default="stands", secs=f["window_secs"], concluder="others", late="counts", outcomes=("lifted", "stands", "open"),
         cells={"opener": "the moderator's act (standing_set: roster at the instant of the act)", "enact": "strict majority, floor 2 voices",
                "counted_at": "act: the head the act names", "window": "window_secs 172800", "default": "at_window lapsed (the lift lapses; the act stands)"},
         unstated=["concluder: a member (none named; reactions.json has no clock entry for the lift)"])
     f = POLICY["moderator_recall"]
     D["moderator_recall"] = hold_close(dict(policy="moderator_recall", kind="cosigned", opener="member", counted="member", extra=(), target_votes=False,
         opener_says="assent", kinds=("assent",), clauses=(("once", "assent", ("strict", 2, 3, 2), "all", "recalled"),),
-        silent=None, default="cancelled", secs=f["window_secs"], concluder="member", late="counts", outcomes=("recalled", "cancelled", "open"),
-        cells={"enact": "2/3 strict, floor 2 voices", "window": "window_secs 259200 (hold)", "default": "at_window cancelled"},
+        silent=None, default="open", secs=None, concluder="member", late="counts", outcomes=("recalled", "open"),
+        cells={"enact": "2/3 strict, floor 2 voices", "window": "none: a counted row lands when its count is met; no clock and no landing (the hold, CC 3.3.4, decides only what a node keeps)", "default": "open: no node's clock cancels a counted row"},
         unstated=["whether the recalled moderator counts in the base (here: not a member key)", "no clock entry in reactions.json"]))
     f = POLICY["accord_halt"]
     halt = dict(policy="accord_halt", kind="mirror", opener="holder", counted="holder", extra=(), target_votes=False,
@@ -515,10 +530,10 @@ def door_specs():
     assert POLICY["cosigned_act"]["enact"] == "protocol"
     D["cosigned_act"] = hold_close(dict(policy="cosigned_act", kind="cosigned", opener="member", counted="member", extra=(), target_votes=False,
         opener_says="assent", kinds=("assent",), clauses=(("once", "assent", ("protocol", "rule", 1), "all", "landed"),), silent=None,
-        default="cancelled", secs=POLICY["cosigned_act"]["window_secs"], concluder="member", late="counts", outcomes=("landed", "cancelled", "open"),
+        default="open", secs=None, concluder="member", late="counts", outcomes=("landed", "open"),
         declared="majority",
         cells={"enact": "protocol: the founding row's consensus_protocol -> protocols.kinds[KIND].rule (the group's declared rule)",
-               "declared": "the world's founding row declares majority", "window": "hold 259200, a group may set longer", "default": "at_window cancelled"},
+               "declared": "the world's founding row declares majority", "window": "none: a counted row lands when its count is met; no clock and no landing (the hold, CC 3.3.4, decides only what a node keeps)", "default": "open: no node's clock cancels a counted row"},
         unstated=[]))
     D["accord_majority"] = dict(policy="accord_majority", kind="cosigned", opener="holder", counted="holder", extra=(), target_votes=False,
         opener_says="assent", kinds=("assent",), clauses=(("once", "assent", ("strict", 1, 2, 1), "all", "landed"),), silent=None,
@@ -587,12 +602,12 @@ def door_specs():
     D["wa_adjudication"] = hold_close(dict(policy="wa_adjudication", kind="cosigned", opener="wa", counted="wa", extra=(), target_votes=False,
         opener_says="assent", kinds=("assent",),
         clauses=(("once", "assent", ("protocol", "rule", 1), "voted" if "live_subset" in MUT else "all", "landed"),),   # MUTATION: the live subset
-        silent=None, default="cancelled", secs=f["window_secs"], concluder="wa", late="counts", outcomes=("landed", "cancelled", "open"),
+        silent=None, default="open", secs=None, concluder="wa", late="counts", outcomes=("landed", "open"),
         declared="majority",
         cells={"enact": "protocol: the founding row's consensus_protocol -> protocols.kinds[KIND].rule (the body's declared rule)",
                "declared": "the world's founding row declares majority",
                "counted": "counted.count_set wa, voice person, counted_at named: the full seated roster the finding names",
-               "window": "window_secs %d (hold)" % f["window_secs"], "default": "at_window cancelled"},
+               "window": "none: a counted row lands when its count is met; no clock and no landing (the hold, CC 3.3.4, decides only what a node keeps)", "default": "open: no node's clock cancels a counted row"},
         unstated=["concluder at the close: a node's own drop (the hold's close is local, CC 3.3.4)"]))
     # ---- a deferral (CC 4.3): the request states its own end; no default answers it; at the end it goes up ----------
     D["deferral"] = stated(dict(policy="deferral:request", kind="extra", opener="deferring", counted="resolve_deferral", extra=(), target_votes=False,

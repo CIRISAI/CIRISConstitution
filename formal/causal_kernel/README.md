@@ -4,6 +4,13 @@
 offered, with no rank. This package is that kernel as code, run against every arrival order of small worlds and
 against the seventeen cases where the rule tables give two results from one set today.
 
+**The kernel's own models, in place.** The seat rule, the windows, the roster and the attacks are the kernel's
+files at `kernel-v0.4.0`, vendored by hash in [`../vendor/kernel`](../vendor/kernel/) (`seat.py`, `window.py`,
+`window_adversary.tsv`, `roster.py`, `attacks.py`, `check_rosters.py`), and are not copied here. `kernel_path.py`
+puts on the path what those files expect beside them in the kernel's layout (this directory, `../kernel_lib`,
+`../roster_fork`); the one file they open by path, `../data/governance_policy.json`, is a link to
+`manifests/governance_policy.json`. Every file here that reads standing imports `kernel_path` first.
+
 **The kernel** (`causal_kernel.py`, `cut.py`). A row has a digest, a kind, a signer and the digests it names.
 The only order is what rows name.
 
@@ -31,23 +38,24 @@ one slot that say different things contest each other, and neither counts until 
 - Under the cut: 4,898 sets in 440,291 orders, one answer each. After a counting cut is on a slot, no row by
   a key that may not cut that slot changed it.
 
-**Standing, windows, copying and keys** (`seat.py`, `roles.py`, `window.py`, `route.py`, `keyplane.py`,
-checked by `check_lock.py`).
+**Standing, windows, copying and keys** (the vendored `seat.py` and `window.py`; `roles.py`, `route.py`,
+`keyplane.py`, checked by `check_lock.py`).
 
-- **The seat.** An offer and an acceptance, with the conferrer as one parameter. 2,774 sets in 701,176 arrival
-  orders, one answer each. `role_shapes.tsv` writes the 22 role names of the tables as parameters of three
+- **The seat.** An offer and an acceptance, with the conferrer as one parameter. 4,246 sets in 637,860 arrival
+  orders, one answer each. A duty seat stands only on a member, so each fixture that confers a duty admits its
+  holder first. `role_shapes.tsv` writes the 22 role names of the tables as parameters of three
   shapes; 219 instance checks pass. Over a community the founding record seats duty holders, who are equals
   (CC 4.5.4): a duty seat is conferred by a strict majority of them or by the lone holder, and withdrawn by a
   strict majority of the others, never on fewer than two voices.
 - **The window.** A receipt, a landing, and three rules for an answer concurrent with the landing, run against
-  the self-roster lone path, the moderation fallback and the halt fuse. `window_adversary.tsv` is the table:
-  recount breaks none of twenty checks.
+  the kernel's five windows. The vendored `window_adversary.tsv` is the table, and the check holds its own run to
+  it byte for byte: recount breaks none of 71 checks.
 - **Copying as need.** A party given only its routed rows concludes the same as one given everything; a
   stranger is routed nothing.
 - **A writer's keys.** The key plane re-read from rows on the writer's own chain agrees with
   `formal/key_plane` on 402,950 comparisons.
 
-**Attacked** (`attacks.py`, `check_attacks.py`, `attack_expected.tsv`, `checkpoint.py`). Thirty-four attacks,
+**Attacked** (the vendored `attacks.py`; `check_attacks.py`, `attack_expected.tsv`, `checkpoint.py`). Thirty-four attacks,
 thirty-three from the published failures of comparable systems, each with the class it must fall in: the attacker gains
 nothing, the limit is one `formal/KERNEL.md` states, or the scenario cannot be expressed here. The check fails
 if any attack gains what is not conceded, or if any scenario gives two answers in two arrival orders.
@@ -82,10 +90,11 @@ The verdicts on the binding are symbolic: a fact has a set of parties able to ma
 convinced when nobody else but the person could have. Nothing here is proved in Lean. The check prints ten
 limits and marks each as run or as stated from outside the model.
 
-**One roster, five instances** (`roster.py`, `check_rosters.py`, `roster_expected.tsv`). A person's keys, a
+**One roster, five instances** (the vendored `roster.py` and `check_rosters.py`; `roster_expected.tsv`, run by
+`kernel_path.py check_rosters`). A person's keys, a
 voice's room keys, a room, the accord and an infrastructure community run on one mechanism: a lineage of counted
 versions, each naming the head it extends. The instances differ by parameters read from the policy table and the
-text. The check runs 90 properties that each instance's own model or text claims, over every arrival order up to
+text. The check runs 92 properties that each instance's own model or text claims, over every arrival order up to
 a cap of 400, each with a deliberate break that must be caught. Nothing here is proved in Lean. The plain
 mechanism was wrong in four places, and a stated parameter restores each:
 
@@ -100,7 +109,7 @@ reads arrival order and is not a function of the rows. The parameters for removi
 guessed, since the text states only how a voice's keys are seated.
 
 **One door, every policy row and clock** (`door.py`, `check_door.py`, `doors.tsv`, `door_expected.tsv`). The
-door is the window of `window.py` with its parameters named: who opens, who answers, the answer kinds, the
+door is the window of the vendored `window.py` with its parameters named: who opens, who answers, the answer kinds, the
 length, the clauses read at once or at the close, whether a late answer counts, the target's silence and who
 concludes. All eighteen policy rows are built from their own cells, and further instances cover ten clocks and a deferral's own end.
 `doors.tsv` holds one row for each instance, with a column for what the tables do not state. Twelve instances
@@ -173,4 +182,4 @@ older head that is not a roster version. This is a run over a model the authors 
 Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
 `python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py`,
 `python3 -I formal/causal_kernel/check_attacks.py`, `python3 -I formal/causal_kernel/check_roomkey.py` and
-`python3 -I formal/causal_kernel/check_rosters.py`, `python3 -I formal/causal_kernel/check_door.py` , `python3 -I formal/causal_kernel/check_time.py` `python3 -I formal/causal_kernel/check_shapes.py` `python3 -I formal/causal_kernel/check_key_end.py` and `python3 -I formal/causal_kernel/check_purge.py`
+`python3 -I formal/causal_kernel/kernel_path.py check_rosters`, `python3 -I formal/causal_kernel/check_door.py` , `python3 -I formal/causal_kernel/check_time.py` `python3 -I formal/causal_kernel/check_shapes.py` `python3 -I formal/causal_kernel/check_key_end.py` and `python3 -I formal/causal_kernel/check_purge.py`
