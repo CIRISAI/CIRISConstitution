@@ -31184,6 +31184,8 @@
       "grammar": "reaction",
       "cell": "formal/derivation/reaction_text.tsv#content_class:{class} (CC 4.5.13)",
       "answers": [
+       "state",
+       "stands",
        "window"
       ]
      },
@@ -31191,6 +31193,8 @@
       "grammar": "reaction",
       "cell": "formal/derivation/reaction_text.tsv#content_class:{class} (CC 4.5.13)",
       "answers": [
+       "state",
+       "stands",
        "window"
       ]
      },

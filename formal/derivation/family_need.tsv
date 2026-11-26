@@ -184,5 +184,5 @@ vote:{contribution_id}	read by a rule	1	0	fold	-	B137	1	weighted_aggregate:{cont
 wa_adjudication:{state}	read by a rule	1	0	fold	-	B138	1	ownership:{relation}:{target_kind}:{version}.guard
 watchlist:{id}	acts of its own	0	0	react	-	B139	1	-
 weighted_aggregate:{contribution_id}	acts of its own	0	0	fold	-	B140	1	-
-window:{state}	read by a rule	1	0	-	-	B141	1	identity:occurrence.reaction
+window:{state}	read by a rule	2	0	-	-	B141	1	content_class:{class}.reaction identity:occurrence.reaction
 witness_diversity:{contribution_id}	read by a rule	1	0	-	-	B142	1	moderation_track_record:{community_key_id}.fold

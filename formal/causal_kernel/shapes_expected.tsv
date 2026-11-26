@@ -122,7 +122,7 @@ ledger:promotion:{version}	claim	sourced | runs
 licensure:{authority_id}	claim	sourced | runs
 locality:decision:{scale}	claim	sourced | runs
 manifold_conformity:{cohort}	claim	sourced | runs
-membership:{stage}	consent+door binds=body+holder	sourced | runs
+membership:{stage}	consent+door binds=body+holder	sourced | runs; invitation breaks an acceptance not held by the close does not admit (the proposal's own end)
 mesh_config:{key}	claim	sourced | runs
 method:{approach_id}:{substrate_rung}	content	sourced | runs
 model_3d:*	content	sourced | runs
@@ -215,7 +215,7 @@ door deletion_sla	12 worlds, 1 properties hold	holds
 door deletion_sla	plant: its mutation (check_door.MUTATION)	caught
 door harm_report	216 worlds, 1 properties hold	holds
 door harm_report	plant: its mutation (check_door.MUTATION)	caught
-door invitation	216 worlds, 2 properties hold	holds
+door invitation	216 worlds, 1 properties hold	breaks: an acceptance not held by the close does not admit (the proposal's own end)
 door invitation	plant: its mutation (check_door.MUTATION)	caught
 door moderation_action	588 worlds, 4 properties hold	holds
 door moderation_action	plant: its mutation (check_door.MUTATION)	caught

@@ -2408,7 +2408,7 @@ Authorship: `authored` (CC 3.3.12)
 In time:
 - [reported] clock `window` = `moderation_action.window_secs` (CC 4.5.13)
 - [reported] on close(window) unless fold(keep_decided): read withdrawn (CC 4.5.13)
-- [reported] landing of `window`: each node for itself, nothing signed (CC 4.5.13)
+- [reported] landing of `window`: by member as `window:{state}`; a late answer counts (CC 4.5.13)
 - [reported] while `window` is open: binds nobody until it lands (CC 4.5.13)
 
 **`contribution:{subject_kind}`** — Priorities, account
