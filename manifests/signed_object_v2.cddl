@@ -398,7 +398,7 @@ group-id-input = ["CEG-group/2", group_kind: "family" / "community", first_membe
 ; seal in mode_psk (KEM 0x647a, HKDF-SHA256, AES-256-GCM) to the addressee's room key's kem_xwing_pubkey, with psk the
 ; challenge's shared secret, psk_id SHA-256 over the challenge, info the deterministic encoding of
 ; binding-info-input, empty aad and plaintext the deterministic encoding of binding-opening. No MAC and no seed.
-; `binding_key` is the thumbprint of the person's binding key; its encoding waits on its owner's submission.
+; `binding_key` is SHA-256 over the deterministic encoding of ["CEG-binding-key/2", room_binding_xwing_pubkey], the key as a bstr of 1216 bytes (CC 2.6.1.11).
 binding-info-input = ["CEG-binding/2", room: group-ref, room_key: kid, addressee_key: kid, seat_commitment: hash-digest, binding_key: bstr .size 32]
 binding-opening = [person: identity-ref, nonce: bstr .size 32]
 ; What a wrap to a room key seals, and what a sealed envelope to one room key carries outside a wrap: the plaintext of
