@@ -29,6 +29,7 @@ admit	founder	infrastructure	cosigned_act	fixed	3.1.3.2 3.2
 remove	founder	infrastructure	cosigned_act	fixed	3.1.3.2 3.2
 admit	node	infrastructure	cosigned_act	fixed	3.1.3.2
 remove	node	infrastructure	cosigned_act	fixed	3.1.3.2
+record_change	record	infrastructure	cosigned_act	fixed	3.2
 admit	key	self	self_roster_add	fixed	3.3.6.4
 remove	key	self	self_roster_evict	fixed	3.3.6.4
 halt_confirm	halt	accord	accord_halt	fixed	4.2.1.1
