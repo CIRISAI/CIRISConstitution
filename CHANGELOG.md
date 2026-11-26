@@ -5,6 +5,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 ## 1.0-rc23 (open)
 
 - The path to 1.0. The open rows of the ledger (8.3.4) close in this edition, each by a sentence, a kernel case, or both.
+- This constitution does not hold that any AI is conscious or sentient and does not seek to make one so (1.13.2, 7.3). A maker MUST NOT design an agent to bring about consciousness or sentience in it. No use the constitution serves requires one. It claims no finding of its own beyond the method of 7.5.5 and follows the weight of scholarly and religious judgment, which finds no present system to be so.
 
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 

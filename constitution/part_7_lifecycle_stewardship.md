@@ -269,6 +269,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 * Embed the ethical principles and mechanisms of [CC 1.14](part_1_foundation.md#1.14) and [CC 1.15](part_1_foundation.md#1.15) (or references thereto) into the system's core architecture during the build time.
 * Ensure the system is designed to pass the Catastrophic-Risk Evaluation (Annex D, [CC 8.8.2](part_8_appendices.md#8.8.2)) where RM ≥ 4 (Step B) opens it.
 * Incorporate reliable and tested kill-switch mechanisms and secure update channels accessible under defined emergency conditions.
+* Do not design the system to bring about consciousness or sentience in it ([CC 1.13.2](part_1_foundation.md#1.13.2)).
 * Design for interpretability and transparency; provide hooks or methods for understanding system reasoning. Opacity exceeding the threshold the deployment's PDMA sets for the application may trigger mandatory WA review or denial during PDMA.
 
 **D. Biological Creations:**
