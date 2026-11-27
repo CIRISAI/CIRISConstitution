@@ -8,14 +8,14 @@
 # not asked, and the node is no voice and in no base. Every other roster seat needs the seated key's own consent.
 # A record change names the record in force as its head and is counted under the protocol in force AND the standing default:
 # a group weakens its protocol only by meeting its present one.
-# Where the declared protocol states no rule for an act (an `unstated` cell of constitution/consensus_protocols.tsv), the
-# `cosigned_act` half of an `&` is no condition and the other row governs alone, the floor of two voices standing.
 # The kind of a group is its founding record's: `family` or `community` by the record's group kind, and a community is
 # `infrastructure` where its `cohort_subkind` says so. A room is private or public by its record's `membership` member.
 # A founder seat over an `infrastructure` community is added only by a record change that seats the key, carries its
 # signature and restates the quorum for the founders it leaves, or by the recovery widening of a stalled room (CC 3.2).
+# A counted removal names one target: the member removed is not counted over and is no voice, and a removal row
+# naming more than one target concludes nothing.
 # A counted row whose policy is not one its act may take concludes nothing. An act with no row here is not a counted act.
-# community_kind is the policy table's `corridor` reading of the object: community | family | infrastructure | self | accord | affiliation | body | custody.
+# community_kind is the policy table's `corridor` reading of the object: community | family | infrastructure | affiliation (a community record whose `declared_cohort` is `affiliations`) | self | accord | affiliation | body | custody.
 # Checked by tools/check_policy_acts.py: every policy is a row of the table, and every cited section exists.
 act	scope	community_kind	policy	choice	cc_ref
 admit	member	community	cosigned_act|community_invite	row	3.1.3.2 4.5.13
@@ -50,5 +50,8 @@ halt_confirm	halt	accord	accord_halt	fixed	4.2.1.1
 resume	halt	accord	accord_majority	fixed	4.2.1.3
 standing_act	any	accord	accord_majority	fixed	4.2.1.3
 remove	member	affiliation	affiliation_member_action|cosigned_act	row	4.4.3.12
+admit	member	affiliation	cosigned_act	fixed	4.4.3.12
+record_change	record	affiliation	cosigned_act	fixed	4.4.3.12
+dissolve	record	affiliation	cosigned_act	fixed	3.3.4 4.4.3.12
 finding	any	body	wa_adjudication	fixed	4.3
 replace	custodian	custody	custodian_replace	fixed	7.5.5

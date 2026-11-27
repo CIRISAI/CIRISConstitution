@@ -328,7 +328,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "b3c6c872cfebb58c0f42797f4b023a9fb66a128941a76b35527faf7c22bea33d",
+    "registry_sha256": "bc817d9f3341cb20751f752e98c76187a5bc56d151fa578150ddebd30d11ab30",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -343,7 +343,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "72644bff81750e37a2c62b42ed72c478506f5f112ea179636baff445c14b1d02"
+    "source_sha256": "6c868d911cceab5f6a2ab5f0be458ff50a88c5e0760f86af2ed7aab32ad19743"
   },
   "families": [
     {
@@ -1584,7 +1584,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "A public community's own discovery row (CC 3.2 public): a federation-scoped scores row by a moderate-holder of the room, carrying the room's name, description, cohort_subkind, admission policy, named moderator and community_key_id, ranked b",
+      "description": "A public community's own discovery row (CC 3.2 public): a federation-scoped scores row by a moderate-holder of the room, carrying the room's name, description, cohort_subkind, admission policy, named moderator and community_key_id.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "positive-only",

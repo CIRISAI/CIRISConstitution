@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "policy_sha256": "6b7471d6209897802088c2b63a8260f6ba8d06d42f18fad94327610abfa3a95b",
+  "policy_sha256": "a304b48583c14acd283ab4dce4dbdfe0bceb9e6f2a566da95e95b37447cafec0",
   "count": 819,
   "rule_vector_count": 300,
   "target_voice": "on a row whose target_voice cell is yes, a vector's target_voice says whether the target's own yes is held: one voice toward the floor of two and toward the floor count, never a member and never part of the enact fraction; a vector without the field reads false",
@@ -10149,11 +10149,11 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 0,
    "objections": 0,
@@ -10165,11 +10165,11 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 0,
    "objections": 0,
@@ -10181,11 +10181,11 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 0,
    "objections": 0,
@@ -10197,14 +10197,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 0,
-   "objections": 114,
+   "objections": 3333,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10213,14 +10213,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 0,
-   "objections": 114,
+   "objections": 3333,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10229,14 +10229,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 0,
-   "objections": 114,
+   "objections": 3333,
    "elapsed_secs": 259200,
    "verdict": "cancelled",
    "path": "none",
@@ -10245,14 +10245,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 0,
-   "objections": 115,
+   "objections": 3334,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10261,14 +10261,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 0,
-   "objections": 115,
+   "objections": 3334,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10277,14 +10277,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 0,
-   "objections": 115,
+   "objections": 3334,
    "elapsed_secs": 259200,
    "verdict": "cancelled",
    "path": "none",
@@ -10293,11 +10293,11 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 1,
    "objections": 0,
@@ -10309,11 +10309,11 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 1,
    "objections": 0,
@@ -10325,11 +10325,11 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 1,
    "objections": 0,
@@ -10341,14 +10341,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 1,
-   "objections": 114,
+   "objections": 3333,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10357,14 +10357,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 1,
-   "objections": 114,
+   "objections": 3333,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10373,14 +10373,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 1,
-   "objections": 114,
+   "objections": 3333,
    "elapsed_secs": 259200,
    "verdict": "cancelled",
    "path": "none",
@@ -10389,14 +10389,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 1,
-   "objections": 115,
+   "objections": 3334,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10405,14 +10405,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 1,
-   "objections": 115,
+   "objections": 3334,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10421,14 +10421,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
    "approvals": 1,
-   "objections": 115,
+   "objections": 3334,
    "elapsed_secs": 259200,
    "verdict": "cancelled",
    "path": "none",
@@ -10437,13 +10437,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 114,
+   "approvals": 3333,
    "objections": 0,
    "elapsed_secs": 0,
    "verdict": "pending",
@@ -10453,13 +10453,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 114,
+   "approvals": 3333,
    "objections": 0,
    "elapsed_secs": 259199,
    "verdict": "pending",
@@ -10469,13 +10469,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 114,
+   "approvals": 3333,
    "objections": 0,
    "elapsed_secs": 259200,
    "verdict": "cancelled",
@@ -10485,14 +10485,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 114,
-   "objections": 114,
+   "approvals": 3333,
+   "objections": 3333,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10501,14 +10501,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 114,
-   "objections": 114,
+   "approvals": 3333,
+   "objections": 3333,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10517,14 +10517,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 114,
-   "objections": 114,
+   "approvals": 3333,
+   "objections": 3333,
    "elapsed_secs": 259200,
    "verdict": "cancelled",
    "path": "none",
@@ -10533,14 +10533,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 114,
-   "objections": 115,
+   "approvals": 3333,
+   "objections": 3334,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10549,14 +10549,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 114,
-   "objections": 115,
+   "approvals": 3333,
+   "objections": 3334,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10565,14 +10565,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 114,
-   "objections": 115,
+   "approvals": 3333,
+   "objections": 3334,
    "elapsed_secs": 259200,
    "verdict": "cancelled",
    "path": "none",
@@ -10581,13 +10581,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 115,
+   "approvals": 3334,
    "objections": 0,
    "elapsed_secs": 0,
    "verdict": "pending",
@@ -10597,13 +10597,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 115,
+   "approvals": 3334,
    "objections": 0,
    "elapsed_secs": 259199,
    "verdict": "pending",
@@ -10613,13 +10613,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 115,
+   "approvals": 3334,
    "objections": 0,
    "elapsed_secs": 259200,
    "verdict": "lands",
@@ -10629,14 +10629,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 115,
-   "objections": 114,
+   "approvals": 3334,
+   "objections": 3333,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10645,14 +10645,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 115,
-   "objections": 114,
+   "approvals": 3334,
+   "objections": 3333,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10661,14 +10661,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 115,
-   "objections": 114,
+   "approvals": 3334,
+   "objections": 3333,
    "elapsed_secs": 259200,
    "verdict": "lands",
    "path": "reverse",
@@ -10677,14 +10677,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 115,
-   "objections": 115,
+   "approvals": 3334,
+   "objections": 3334,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10693,14 +10693,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 115,
-   "objections": 115,
+   "approvals": 3334,
+   "objections": 3334,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10709,14 +10709,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 115,
-   "objections": 115,
+   "approvals": 3334,
+   "objections": 3334,
    "elapsed_secs": 259200,
    "verdict": "cancelled",
    "path": "none",
@@ -10725,13 +10725,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 229,
+   "approvals": 6666,
    "objections": 0,
    "elapsed_secs": 0,
    "verdict": "pending",
@@ -10741,13 +10741,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 229,
+   "approvals": 6666,
    "objections": 0,
    "elapsed_secs": 259199,
    "verdict": "pending",
@@ -10757,13 +10757,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 229,
+   "approvals": 6666,
    "objections": 0,
    "elapsed_secs": 259200,
    "verdict": "lands",
@@ -10773,14 +10773,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 229,
-   "objections": 114,
+   "approvals": 6666,
+   "objections": 3333,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10789,14 +10789,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 229,
-   "objections": 114,
+   "approvals": 6666,
+   "objections": 3333,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10805,14 +10805,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 229,
-   "objections": 114,
+   "approvals": 6666,
+   "objections": 3333,
    "elapsed_secs": 259200,
    "verdict": "lands",
    "path": "reverse",
@@ -10821,14 +10821,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 229,
-   "objections": 115,
+   "approvals": 6666,
+   "objections": 3334,
    "elapsed_secs": 0,
    "verdict": "pending",
    "path": "none",
@@ -10837,14 +10837,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 229,
-   "objections": 115,
+   "approvals": 6666,
+   "objections": 3334,
    "elapsed_secs": 259199,
    "verdict": "pending",
    "path": "none",
@@ -10853,14 +10853,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 229,
-   "objections": 115,
+   "approvals": 6666,
+   "objections": 3334,
    "elapsed_secs": 259200,
    "verdict": "cancelled",
    "path": "none",
@@ -10869,13 +10869,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 230,
+   "approvals": 6667,
    "objections": 0,
    "elapsed_secs": 0,
    "verdict": "lands",
@@ -10885,13 +10885,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 230,
+   "approvals": 6667,
    "objections": 0,
    "elapsed_secs": 259199,
    "verdict": "lands",
@@ -10901,13 +10901,13 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 230,
+   "approvals": 6667,
    "objections": 0,
    "elapsed_secs": 259200,
    "verdict": "lands",
@@ -10917,14 +10917,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 230,
-   "objections": 114,
+   "approvals": 6667,
+   "objections": 3333,
    "elapsed_secs": 0,
    "verdict": "lands",
    "path": "forward",
@@ -10933,14 +10933,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 230,
-   "objections": 114,
+   "approvals": 6667,
+   "objections": 3333,
    "elapsed_secs": 259199,
    "verdict": "lands",
    "path": "forward",
@@ -10949,14 +10949,14 @@
   {
    "family": "community_invite",
    "roster": 10000,
-   "base": 344,
+   "base": 10000,
    "thresholds": {
-    "enact": 230,
-    "cancel": 115,
-    "floor": 115
+    "enact": 6667,
+    "cancel": 3334,
+    "floor": 3334
    },
-   "approvals": 230,
-   "objections": 114,
+   "approvals": 6667,
+   "objections": 3333,
    "elapsed_secs": 259200,
    "verdict": "lands",
    "path": "forward",

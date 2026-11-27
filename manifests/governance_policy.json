@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "6b7471d6209897802088c2b63a8260f6ba8d06d42f18fad94327610abfa3a95b",
+  "policy_sha256": "a304b48583c14acd283ab4dce4dbdfe0bceb9e6f2a566da95e95b37447cafec0",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -231,7 +231,7 @@
    "cc_ref": "3.1.3.2 4.5.12.5",
    "kind": "two_path",
    "standing_set": "the community's roster",
-   "base": "active",
+   "base": "standing",
    "enact": {
     "num": 2,
     "den": 3
@@ -1425,34 +1425,10 @@
     },
     "evaluable": false,
     "one_voice_admits": false
-   },
-   {
-    "kind": "open:self_admit",
-    "count_set": "joiner",
-    "rule": "joiner",
-    "removal_set": "unstated",
-    "removal_rule": "unstated",
-    "cc_ref": "CC 4.5.13",
-    "votes": {
-     "1": 1,
-     "2": 1,
-     "3": 1,
-     "5": 1,
-     "9": 1
-    },
-    "removal_votes": {
-     "2": null,
-     "3": null,
-     "5": null,
-     "9": null
-    },
-    "evaluable": true,
-    "one_voice_admits": true
    }
   ],
   "one_voice_admits": [
-   "founder_only",
-   "open:self_admit"
+   "founder_only"
   ],
   "not_evaluable": [
    "weighted:{rubric}"
@@ -1482,14 +1458,6 @@
     "condition": "—",
     "refusal": "federation_community_consensus_protocol_violation",
     "cc_ref": "CC 4.5.13"
-   },
-   {
-    "group": "community/public",
-    "kind": "open:self_admit",
-    "verdict": "allowed",
-    "condition": "—",
-    "refusal": "—",
-    "cc_ref": "CC 3.2"
    },
    {
     "group": "community/infrastructure",
@@ -1573,7 +1541,6 @@
    }
   ],
   "one_voice_doors": [
-   "community/public open:self_admit",
    "family founder_only",
    "publication founder_only"
   ]
