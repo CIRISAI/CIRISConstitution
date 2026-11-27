@@ -3110,7 +3110,7 @@ p4	1768	4.5.13	family	standing	none	community	MAY	applies	2.7.5	A community's re
 p4	1768	4.5.13	family	standing	none	community	MUST_NOT	restates	3.4.13	A contested party must not confer a duty seat to manufacture a count or to dilute a pending protective veto	
 p4	1768	4.5.13	family	standing	none	community	is	applies	2.7.5	Whoever founds the room alone is its first duty holder	
 p4	1768	4.5.13	family	moderation	cosign_rule	moderation	is	states		No quorum is imposed on a duty holder's act; a holder resolves an action by a single signature; a community may impose one on itself	
-p4	1770	4.5.13	family	moderation	signer_rule	moderation,scores	MAY	states	4.5.5	Anyone may propose a moderation action by the open-labeling path, a report-to-scores Contribution against the target	
+p4	1770	4.5.13	family	moderation	signer_rule	moderation,scores	MAY	states	4.5.5	Any member may propose a moderation action by the open-labeling path, a report-to-scores Contribution against the target	
 p4	1770	4.5.13	family	moderation	window	moderation	is	states		A moderation proposal opens a 48-hour participation window	
 p4	1772	4.5.13	family	moderation	signer_rule	moderation	is	states	4.5.4	A moderator resolves a moderation action by a single signature at any point in the window	
 p4	1772	4.5.13	family	moderation	none	moderation	is	states		A single signature resolves content and a member's standing to speak: a withhold, a takedown of a row, a warning, a block for the room	
