@@ -93,7 +93,7 @@ autonomous_deception	not_a_token		enumeration value, not a fault
 av_binding_malformed	refusal		A/V refusal token of the closed vocabulary
 av_binding_other_room	refusal		A/V refusal token of the closed vocabulary
 av_binding_part_malformed	refusal		A/V refusal token of the closed vocabulary
-av_binding_publisher_not_member	refusal		A/V refusal token of the closed vocabulary
+av_binding_publisher_not_member	refusal	5.3.3.5	A/V refusal token of the closed vocabulary
 av_binding_signature_unverified	refusal		A/V refusal token of the closed vocabulary
 av_binding_stale_epoch	refusal		A/V refusal token of the closed vocabulary
 av_binding_stream_not_derived	refusal		A/V refusal token of the closed vocabulary
