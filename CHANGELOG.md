@@ -29,6 +29,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - A root's grant resolves for a reader only while its voices are a strict majority of the holders in force there; a later holder adds its voice by signing it, and a retired key is no voice (3.2). A later bundle counts over its predecessor's live holders (2.6.1.11).
 - An affiliation's deciding seats are its officers, members seated with `role: officer`, and they are the body for every counted act of the affiliation; a lone officer's act against a member needs a countersign from the designated official or a `review` holder over the body `overseen_by` names (4.4.3.12, 3.3.4). A locked community issues no licence, `licensure_authority_locked` (2.4.1.3, 4.5.4).
 - A node's row in a private room is signed by its own room key and names its owner-binding under `under` and the owning voice's head under `voice`; it concludes only while that binding stands and its owner is live in a seated voice, and is never a voice. The room's door checks in order and names `room_row_voice_head_malformed` and `room_row_owner_binding_malformed` (3.1.3.2, 2.6.1.11).
+- The acts table binds a community's onward acceptance edge and its `license` seat to the duty counts, an affiliation's `license` seat to its officers' protocol, and a quarantine, slashing verdict or takedown against an affiliation's member to `affiliation_member_action` (`constitution/governance_policy_acts.tsv`).
 
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 
