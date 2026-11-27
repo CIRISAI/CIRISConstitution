@@ -13,8 +13,9 @@ Files (sha256)
   8c12109f2b62bd900f53c42565278f23ba5e318ee03f39f4e27a65caa85bd805  vouch.cose                5854 bytes
   2efa15685e987f5e2ae453a24c706c7ffab5b1a85bab965b743895fb45fde1ab  companion_header.cose     3598 bytes
   ac09afb3bb2013402e68f5818f0ef5a105fed0e67a03d8f9389debe558977b7e  companion_payload.cose    3697 bytes
+  9c57b67c4a5645953f37f079029641904a1f65376b34dd2ac3c7575b00119d6b  companion_header_digest.cose  3638 bytes  (added 2026-11-27)
   82532da1d773d07462954bf95b9a82fbddfb850fda045b76c791bca41ad2007c  registration_key.cosekey  1962 bytes
-  ddfdba4aab6823a160a1fb264bdd91cdecd407c39fa49e6ba0dc113ad3412d8d  scitt_companion_test_v1.json (all of the above in hex, with ids)
+  da03c46847899153622ae07ce331345dd04204dba9ba8a70038725618dfb8843  scitt_companion_test_v1.json (all of the above in hex, with ids)
 To reproduce: check out CIRISVerify at tag v23.7.0 (commit aae516327d1527fdc5ed4e735d6409493db5986f) and run
   python3 -I gen_scitt_companion.py <checkout>/src/ciris-verify-core/tests/vectors/edition2
 with the Python packages dilithium-py and cryptography installed. The generator reads two files of that tag,
@@ -69,6 +70,12 @@ gen_row_statements_v5.py and row_statements_v4.json, and nothing outside it. It 
    (b) companion_payload.cose  header also carries 3: "application/cbor"; payload = the deterministic encoding of
                                {"statement_id": the original's, "statement_sha256": SHA-256 of the 3864 bytes,
                                 "vouch_statement_id": the vouch's}  (PROPOSAL)
+   (c) companion_header_digest.cose  (added 2026-11-27; iat = 1795815890) the original's statement id under
+                               label -70010 AND the SHA-256 of the original's full 3864 bytes under label -70011
+                               (PROPOSAL: private use, the next label beside -70010), both in the PROTECTED HEADER;
+                               payload = the vouch's statement id, as in (a). It carries what (b) carries, where
+                               (a) carries it.
+   The files of (a) and (b) are unchanged, byte for byte, by the addition of (c).
    Checked twice, by two implementations (dilithium_py in the generator; RustCrypto ml-dsa 0.1.1 through
    CIRISVerify's MlDsa65Verifier): each companion VERIFIES under the registration key and DOES NOT VERIFY under the
    composite's ML-DSA-65 component key.
@@ -88,9 +95,13 @@ gen_row_statements_v5.py and row_statements_v4.json, and nothing outside it. It 
    6. The original itself, by its own composite checks. Its iss equals the companion's iss.
 
 6. What the chain does NOT show
+   - Reading the three together: (a) against (c) compares WHAT is carried (the id alone, or the id and a digest of
+     the original's full bytes), with the placement held fixed in the header; (c) against (b) compares WHERE it is
+     carried (protected header or payload), with what is carried about the original held fixed. They are not
+     otherwise identical: (b) also carries the vouch's statement id inside its payload map and a content type.
    - The log attests the COMPANION's bytes and their order. In variant (a) it does not attest the original's bytes:
      the statement id covers the original's protected header and payload but not its signature or unprotected
-     header, so two statements with one id and different signatures are the same to it. Variant (b) also carries
+     header, so two statements with one id and different signatures are the same to it. Variants (b) and (c) also carry
      the SHA-256 of the full original, which pins those bytes too.
    - It does not show the issuer made the companion: anyone holding the registration key can make one. The issuer's
      composite key vouches for the key, not for each companion. A stolen registration key registers false
