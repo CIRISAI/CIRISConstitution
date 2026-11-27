@@ -23,6 +23,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - A room is private or public by its founding record, and no record change moves it (3.1.3.2).
 - A reader weights its feed by its own rows at `self` scope: more or less of a key, a room, a publisher, a topic, a kind, a class or a rating; it shares them by promotion and adopts another's by a `curation` edge (4.4.3.13, 4.4.3.34). An age gate and the publication seam apply before any weight.
 - A node lists a public room for a reader only where a key in that reader's trust set has voted for its listing; any other listing is reached by its link or its `community_key_id` (3.2).
+- A node is bound to hold a stranger's federation-scope row only while a row by a key in its trust set names it; any other row a stranger offers it holds for convenience and MAY evict, which is never a refusal (5.2).
 
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 
