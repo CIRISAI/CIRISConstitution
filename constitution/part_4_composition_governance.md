@@ -502,7 +502,7 @@ There is no third case. **Nothing above local tier is ever a forced, unattributa
 **The Commons-tier subkinds (normative).** Two `cohort_subkind` values **opt OUT of the mandatory DEK cascade and are Commons-tier (plaintext, holding claims at federation scope, no DEK)**:
 
 - `infrastructure` ([CC 3.2](part_3_the_namespace.md#3.2)) — a room of serving installs, such as `ciris-canonical`, and no root — and
-- `public` ([CC 3.2](part_3_the_namespace.md#3.2)) — a room anyone may join, which therefore has no confidentiality claim against the public.
+- `public` ([CC 3.2](part_3_the_namespace.md#3.2)) — a room whose content and roster anyone may read, which therefore has no confidentiality claim against the public.
 
 An `infrastructure` room cannot be an opaque blob; its entire purpose is public auditability — transparency-seeking, not privacy-seeking. **Node→canonical traces** (conformance / `registry_consensus` emissions to a governance community) are therefore `cohort_scope: federation` (Commons/plaintext, world-readable) — a node enrolling in governance is thereby told its conformance traces are public.
 
@@ -573,13 +573,8 @@ evaluate_subkind_admission(subkind, record, current, proposed):
           return false // not live when the version was signed
       return true
     "public":
-      # CC 3.2 `public`: open admission — a standing proposal and the joiner's
-      # own acceptance; the widening still passes consensus_protocol
-      protocol = record.consensus_protocol   # read as admit_community_change reads it
-      if protocol == "open:self_admit":
-        for each NEW member in proposed.members (not in current):
-          if no membership:acceptance:v1 from new_member naming the standing proposal:
-            return false // nobody joins without their own consent (CC 3.1.3.2)
+      # CC 3.2 `public`: admission by invitation under consensus_protocol;
+      # a public room brings no predicate of its own
       return true
     _:
       return true // unknown subkinds admit on consensus_protocol alone
@@ -695,17 +690,13 @@ For a Contribution C with delivery_mode = push AND cohort_scope = community:
     per CC 4.4.3.7 community membership resolution
 
 The community is admitted under the standard Policy M consensus_protocol
-options (founder_only / unanimous / majority / quorum:M/N / weighted /
-open:self_admit, the six kinds and no other) per CC 4.4.3.6. Subscription-specific admission semantics —
-producer_gated (publisher approves each member) vs open (anyone can
-join) — ride the consensus_protocol choice:
+options (founder_only / unanimous / majority / quorum:M/N / weighted,
+the five kinds and no other) per CC 4.4.3.6. Subscription-specific admission
+semantics ride the consensus_protocol choice:
 
   producer_gated → consensus_protocol = "founder_only" with the
     publisher as sole founder; the publisher authorizes
     each new subscriber
-  open → consensus_protocol = "open:self_admit" (the named
-    arm at CC 4.4.3.17) where any subject signs their own
-    admission Contribution
 ```
 
 **Cardinality unified across observer-share and multicast**:
@@ -949,10 +940,6 @@ admit_family_change(F, proposed: family_record):
   match protocol:
     "founder_only":
       group_ok = any sig from m where m.role == "founder" in current
-    "open:self_admit":
-      group_ok = proposed is a widening naming exactly one new K and K signed it
-                 // the joiner's own signature is the group's side; a removal under
-                 // this protocol runs under the CC 4.5.13 floor, never one vote
     "unanimous":
       group_ok = every m.key_id in current has signed            // an addition
               // a removal: every member but the target signed, and they are a strict majority (CC 3.1.3.2)
@@ -984,7 +971,7 @@ admit_family_change(F, proposed: family_record):
     emit hard_case:family_consensus_protocol_violation:{F}; conclude nothing
 ```
 
-A public room's `admission: open` ([CC 3.2](part_3_the_namespace.md#3.2)) is shorthand for `consensus_protocol: open:self_admit`, not a field of its own. Under it the group's side of a widening naming one joiner is that joiner's own signature. That signature counts only from a key whose occurrence sits on a node with a live federation-scope owner-binding, since the room's rows are served to strangers and an unannounced joiner's rows could not be ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)). A removal under `admission: open` runs under the floor of [CC 4.5.13](#4.5.13), no single vote excluding.
+In a public room ([CC 3.2](part_3_the_namespace.md#3.2)) a joiner's acceptance counts only from a key whose occurrence sits on a node with a live federation-scope owner-binding. The room's rows are served to strangers, and an unannounced joiner's rows could not be ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)).
 
 **Consensus-protocol amendment** (changing `consensus_protocol` itself on a non-entrenched family) rides the SAME admission rule on the proposed amendment Contribution — meta-amendment shape parallel to [CC 4.5.1.2](part_4_composition_governance.md#4.5.1.2). On an entrenched family (`consensus_protocol_entrenched == true`) an amendment concludes nothing; replacement requires the out-of-band ceremony documented per family (for HUMANITY_ACCORD see [CC 4.2.1](part_4_composition_governance.md#4.2.1)).
 
@@ -2054,7 +2041,7 @@ The membership-event kinds of [CC 3.4.4](part_3_the_namespace.md#3.4.4) are sign
 
 #### 4.5.12.5 `family-admission` — Family admission — consensus_protocol (normative)
 
-Unlike a self of one key ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)), family membership changes are **NOT single-vouch by default**. The family's `consensus_protocol` field governs admission. Five canonical protocols (`founder_only` / `unanimous` / `majority` / `quorum:M/N` / `weighted:{rubric}`) in an open vocabulary ([CC 3.3.4](part_3_the_namespace.md#3.3.4)), and `open:self_admit` is the open protocol of a public group ([CC 4.4.3.6](#4.4.3.6)). `founder_only` is conformant for a family and for a publisher-gated subscription, refused for a community ([CC 4.5.13](#4.5.13)), and admissible for an affiliation only under the one-voice countersign rule of [CC 4.4.3.12](#4.4.3.12).
+Unlike a self of one key ([CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4)), family membership changes are **NOT single-vouch by default**. The family's `consensus_protocol` field governs admission. Five canonical protocols (`founder_only` / `unanimous` / `majority` / `quorum:M/N` / `weighted:{rubric}`) form a closed vocabulary ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). `founder_only` is conformant for a family and for a publisher-gated subscription, refused for a community ([CC 4.5.13](#4.5.13)), and admissible for an affiliation only under the one-voice countersign rule of [CC 4.4.3.12](#4.4.3.12).
 
 The consensus_protocol field is itself subject to amendment via the SAME protocol's rules (meta-amendment shape parallel to [CC 4.5.1.2](#4.5.1.2)) UNLESS the family is `consensus_protocol_entrenched: true`. On an entrenched family an amendment concludes nothing; replacement requires the family's documented out-of-band ceremony. The gate is that of [CC 4.4.3.17](#4.4.3.17).
 
@@ -2086,7 +2073,7 @@ This entry says how a decision is taken where presence is authority: who may act
 
 **The mechanism — propose, 48 h window, a moderator acts, community falls back.** **Anyone MAY propose a moderation action** — a report, a takedown request, a keep-or-remove question. It is proposed by the [CC 4.5.5](part_4_composition_governance.md#4.5.5) open-labeling path (a report→`scores` Contribution against the target). That Contribution is a `content_class:reported` row against the target, raised at the room's scope ([CC 3.3.12](part_3_the_namespace.md#3.3.12)). The proposal opens a **48-hour participation window**. Two ways it resolves:
 
-1. **A moderator acts unilaterally.** The community's **moderator** (the required `moderate`-duty holder, [CC 4.5.4](part_4_composition_governance.md#4.5.4)) resolves the action by a **single signature**, at any point in the window. A holder of another duty acts here only where it also holds `moderate` ([CC 4.5.4](#4.5.4)). **What a single signature resolves is content and a member's standing to speak in the room**: a withhold, a takedown of a row, a warning, a block for the room. **It is never a removal from the roster**, which is a roster change under the floor of this section in every protocol, open admission included ([CC 4.4.3.6](#4.4.3.6)). So no single key removes a member alone, and no duty holder removes another from the roster alone ([CC 2.7.8](part_2_the_grammar.md#2.7.8)). At two members nobody is removed, since a unanimous removal is every other member and a strict majority of the roster, which at two coincide only if the one removed consents. An AI agent's key is the exception. A moderator of the room MAY remove it alone and at once ([CC 1.13.2](part_1_foundation.md#1.13.2)), and the members may lift that act as they may any act of a moderator. The lone removal applies only to a key that holds an agent seat at the head the removal names. The rule is one for every moderator: an agent's key that holds `moderate` MAY remove another agent's key alone. Two such removals of each other, concurrent at one head, are the contested pair of [CC 2.7.7](part_2_the_grammar.md#2.7.7) rule 5. Neither is in force, both keys keep their seats, and a voice neither can remove settles them. A duty holder may leave by their own forward-only act, the last one included. The reason is that the founding-core rule that keeps a lineage from stalling belongs to infrastructure communities ([CC 3.2](part_3_the_namespace.md#3.2) T7) and not to a room. A duty holder who would rather hand the room on confers a seat on a member, with that member's own acceptance ([CC 4.5.4](#4.5.4)). A room whose last duty holder leaves locks, and its members' count seats one ([CC 4.5.4](#4.5.4)). This is the fast path, and the moderation analogue of the [CC 4.2.6](part_4_composition_governance.md#4.2.6) **fire-floor-of-1**: a single accountable party acts, and the absence of others never blocks them.
+1. **A moderator acts unilaterally.** The community's **moderator** (the required `moderate`-duty holder, [CC 4.5.4](part_4_composition_governance.md#4.5.4)) resolves the action by a **single signature**, at any point in the window. A holder of another duty acts here only where it also holds `moderate` ([CC 4.5.4](#4.5.4)). **What a single signature resolves is content and a member's standing to speak in the room**: a withhold, a takedown of a row, a warning, a block for the room. **It is never a removal from the roster**, which is a roster change under the floor of this section in every protocol ([CC 4.4.3.6](#4.4.3.6)). So no single key removes a member alone, and no duty holder removes another from the roster alone ([CC 2.7.8](part_2_the_grammar.md#2.7.8)). At two members nobody is removed, since a unanimous removal is every other member and a strict majority of the roster, which at two coincide only if the one removed consents. An AI agent's key is the exception. A moderator of the room MAY remove it alone and at once ([CC 1.13.2](part_1_foundation.md#1.13.2)), and the members may lift that act as they may any act of a moderator. The lone removal applies only to a key that holds an agent seat at the head the removal names. The rule is one for every moderator: an agent's key that holds `moderate` MAY remove another agent's key alone. Two such removals of each other, concurrent at one head, are the contested pair of [CC 2.7.7](part_2_the_grammar.md#2.7.7) rule 5. Neither is in force, both keys keep their seats, and a voice neither can remove settles them. A duty holder may leave by their own forward-only act, the last one included. The reason is that the founding-core rule that keeps a lineage from stalling belongs to infrastructure communities ([CC 3.2](part_3_the_namespace.md#3.2) T7) and not to a room. A duty holder who would rather hand the room on confers a seat on a member, with that member's own acceptance ([CC 4.5.4](#4.5.4)). A room whose last duty holder leaves locks, and its members' count seats one ([CC 4.5.4](#4.5.4)). This is the fast path, and the moderation analogue of the [CC 4.2.6](part_4_composition_governance.md#4.2.6) **fire-floor-of-1**: a single accountable party acts, and the absence of others never blocks them.
 2. **On their absence, the community vote carries.** If **no moderator acts within the 48 h window**, the proposal is tallied by **a strict majority of the members who voted**. The members are those of the roster the proposal names. This is the [CC 4.2.6](part_4_composition_governance.md#4.2.6) participation window read at community scope. Presence asserts (a member signs a fresh proof-of-presence + vote over the proposal nonce, entering the live set `L`). A silent member is not in the denominator. A member's vote on a moderation action where no moderator acts is a row of the family `ballot:moderation_action`, dimension `ballot:moderation_action:v1`. It names the proposal it answers, with a choice of `for` or `against`. One ballot counts for each person, folded as `ballot:moderator` is, and a contrary voice is a vote against. The tally is taken over **who shows up**: the vote carries by a strict majority of those who voted, and the floor is two voices. The accord's roster change counts against its standing roster instead. The community **routes around** an absent moderator.
 
 The reverse-quorum of this mechanism is a **fallback for the moderators' absence**. The 48 h figure is tuned so that a **present** moderator always has time to act unilaterally. The community fallback fires **only** on genuine absence. The members' check on an act a moderator did take is a separate door, the lift below.
@@ -2170,11 +2157,11 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 | **window** | by the sensitivity of the change | 86 400 s for reversible content, 259 200 s for roster and standing, 604 800 s for the irreversible |
 | **irreversible** | no instant landing | the change waits its whole window even at full approval, so every objection held before the window closes is counted |
 
-**The floor of two voices.** In a community the floor is never fewer than two voices, so one voice never decides who is in a room, whatever the size. Where admission is by invitation no single vote admits, and the second voice on an admission is the invitee's own acceptance ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). So a room of one grows by its one member's proposal and the newcomer's yes, which are two keys and two consents. Where admission is open — `open:self_admit`, anyone signs their own admission — no single vote excludes, and the guarantee attaches to removal instead. `founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing. A community above the family that names it is refused `federation_community_consensus_protocol_violation`, as an infrastructure community already is. An affiliation names it only under the one-voice countersign rule of [CC 4.4.3.12](#4.4.3.12). `federation_community_consensus_protocol_violation` is the refusal token, whose emitted record is the `hard_case:community_consensus_protocol_violation` row of [CC 4.4.3.6](#4.4.3.6).
+**The floor of two voices.** In a community the floor is never fewer than two voices, so one voice never decides who is in a room, whatever the size. Where admission is by invitation no single vote admits, and the second voice on an admission is the invitee's own acceptance ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). So a room of one grows by its one member's proposal and the newcomer's yes, which are two keys and two consents. `founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing. A community above the family that names it is refused `federation_community_consensus_protocol_violation`, as an infrastructure community already is. An affiliation names it only under the one-voice countersign rule of [CC 4.4.3.12](#4.4.3.12). `federation_community_consensus_protocol_violation` is the refusal token, whose emitted record is the `hard_case:community_consensus_protocol_violation` row of [CC 4.4.3.6](#4.4.3.6).
 
 **The floor waits its window.** The floor is a reverse-path predicate only: nothing lands before the window closes except at enact, so a floored change still waits its time.
 
-**The base.** The expected-active count is the community's own member-only census composite ([CC 6.1.9](part_6_the_coherence_mathematics.md#6.1.9)), which falls at most a tenth per period and never below its floor. The base is the standing roster at or below the size `k` the governance policy table's base law pins and, above it, the expected-active count — never below a stated minimum. A fraction therefore stays reachable at ten thousand members as at ten (the law's constants are provisional until measured). The members' vote on a moderation action does not read this base: it counts those who voted, with the floor of two voices (the mechanism above).
+**The base.** The expected-active count is the community's own member-only census composite ([CC 6.1.9](part_6_the_coherence_mathematics.md#6.1.9)), which falls at most a tenth per period and never below its floor. The base of a row marked `active` is the standing roster at or below the size `k` the governance policy table's base law pins and, above it, the expected-active count — never below a stated minimum. A row marked `standing` counts the standing roster at every size, and `community_invite` is one: a vouch for a newcomer counts the full roster. A fraction therefore stays reachable at ten thousand members as at ten (the law's constants are provisional until measured). The members' vote on a moderation action does not read this base: it counts those who voted, with the floor of two voices (the mechanism above).
 
 **The corridor.** A community may set its policy stricter than the defaults, up to a floor at enact, which is the reverse path switched off. It may not set it laxer than the corridor allows. A cancel or floor one voice can reach, an enact one voice can reach, a window under its class, or cancel or floor above enact, are refused as policy (the policy-corridor model; the register's row CLM-policy-corridor).
 

@@ -6,7 +6,6 @@ group	kind	verdict	condition	refusal	cc_ref	quote
 family	founder_only	allowed	—	—	CC 4.5.13	`founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing.
 publication	founder_only	allowed	—	—	CC 4.5.13	`founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing.
 community	founder_only	refused	—	federation_community_consensus_protocol_violation	CC 4.5.13	A community above the family that names it is refused `federation_community_consensus_protocol_violation`
-community/public	open:self_admit	allowed	—	—	CC 3.2	A community record declares open admission by its protocol
 community/infrastructure	quorum:{m}/{n}	required	—	—	CC 3.2	`consensus_protocol` MUST be a `quorum:M/N` kind
 community/infrastructure	unanimous	refused	—	federation_community_consensus_protocol_violation	CC 3.2	`founder_only` / `unanimous` / bare `majority` are NON-conformant for `infrastructure`
 community/infrastructure	majority	refused	—	federation_community_consensus_protocol_violation	CC 3.2	`founder_only` / `unanimous` / bare `majority` are NON-conformant for `infrastructure`

@@ -61,7 +61,7 @@ structure World where
   roomsRideTheTier : Bool
   /-- whether an anonymous identity (a node, never a pseudonym) may hold a duty -/
   anonDuty : Bool
-  /-- the public rooms: open admission at the Commons tier -/
+  /-- the public rooms: readable by anyone at the Commons tier -/
   publicRooms : List Nat := []
   deriving Repr
 

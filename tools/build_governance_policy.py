@@ -60,7 +60,7 @@ COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("coun
                        ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no")),
                        ("target_voice", ("yes", "no"))])
 COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no", "target_voice": "no"}
-SET_ROLES = set(ROLES) | {"deciding", "outside", "joiner"}
+SET_ROLES = set(ROLES) | {"deciding", "outside"}
 SET_EXCL = ("target", "proposer", "node")
 UNSTATED_MAX = 8   # cells the text leaves unstated; the number only falls
 
@@ -302,8 +302,6 @@ def proto_votes(rule, size, m=2):
         return size // 2 + 1
     if rule.startswith("voices:"):
         return m
-    if rule == "joiner":
-        return 1
     return None
 
 
@@ -312,12 +310,12 @@ def load_protocols():
     and the sizes at which one voice alone meets it (the exceptions to the floor of two voices, named as data)."""
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     from build_family_model import section_span
-    rule_re = re.compile(r"role_at:[a-z]+:\d+|all|all_and_majority|strict_majority|voices:\{m\}|weight:\{rubric\}|predicate:\{[a-z_]+\}|joiner|unstated")
+    rule_re = re.compile(r"role_at:[a-z]+:\d+|all|all_and_majority|strict_majority|voices:\{m\}|weight:\{rubric\}|predicate:\{[a-z_]+\}")
     out = []
     for t in csv.DictReader((l for l in open(PROTO, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE):
         where = f"consensus_protocols.tsv: {t['kind']}"
         for c in ("count_set", "removal_set"):
-            if t[c] != "unstated" and not counted_ok("count_set", t[c]):
+            if not counted_ok("count_set", t[c]):
                 sys.exit(f"{where}: {c} {t[c]!r} is not a count set")
         for c in ("rule", "removal_rule"):
             if not rule_re.fullmatch(t[c]):

@@ -93,7 +93,7 @@ autonomous_deception	not_a_token		enumeration value, not a fault
 av_binding_malformed	refusal		A/V refusal token of the closed vocabulary
 av_binding_other_room	refusal		A/V refusal token of the closed vocabulary
 av_binding_part_malformed	refusal		A/V refusal token of the closed vocabulary
-av_binding_publisher_not_member	refusal		A/V refusal token of the closed vocabulary
+av_binding_publisher_not_member	refusal	5.3.3.5	A/V refusal token of the closed vocabulary
 av_binding_signature_unverified	refusal		A/V refusal token of the closed vocabulary
 av_binding_stale_epoch	refusal		A/V refusal token of the closed vocabulary
 av_binding_stream_not_derived	refusal		A/V refusal token of the closed vocabulary
@@ -610,7 +610,6 @@ seat_opted_out	report	3.3.6.2	a serve seat carrying the opt-out marker is out of
 seat_record_ended	detail		detail of genesis_bundle_row_invalid
 seat_without_hop_key	report		out of conformance, no disposition word; best reading
 selection_counts	not_a_token		payload or envelope member
-self_admit	not_a_token		enumeration value, not a fault
 self_roster_evict	not_a_token		function, predicate or rule name
 self_verify	not_a_token		family or row-type name
 semantic_disambiguation	not_a_token		enumeration value, not a fault
