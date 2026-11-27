@@ -779,3 +779,5 @@ deputy_sub_delegation_not_granted	concludes_nothing		the text says concludes not
 deputy_depth_exceeded	concludes_nothing		the text says concludes nothing
 licensure_authority_locked	concludes_nothing		the text says concludes nothing
 overseen_by	not_a_token		payload or envelope member
+room_row_voice_head_malformed	refusal		the text says refused
+room_row_owner_binding_malformed	refusal		the text says refused
