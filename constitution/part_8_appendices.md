@@ -261,6 +261,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | A root's charter and further delegation ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34), [CC 4.5.5](part_4_composition_governance.md#4.5.5)) | **OPEN.** The charter of this edition's root carries no `sub_delegation`. Every grant under a root is covered by a scope its charter carries. So no delegation chain starts from a root grant under it. |
 | A proposal's stated end and the node's fuse in the door model ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2), [CC 4.5.13](part_4_composition_governance.md#4.5.13)) | **OPEN.** The door model closes every window of the policy table by rows, and a count that is met needs no landing. An acceptance's signed instant is checked against the proposal's `expires_at` at the door, and no model runs that check. The halted node reads its fuse on its own clock, and the door model stands a landing in for that reading. |
 | A non-member's view of a public room's live stream ([CC 5.1](part_5_transport_substrate.md#5.1), [CC 5.3.3.5](part_5_transport_substrate.md#5.3.3.5), [CC 5.3.3.7](part_5_transport_substrate.md#5.3.3.7)) | **OPEN.** [CC 5.1](part_5_transport_substrate.md#5.1) states that anyone may view a public room's live stream. [CC 5.3.3.5](part_5_transport_substrate.md#5.3.3.5) closes a non-member's link, and [CC 5.3.3.7](part_5_transport_substrate.md#5.3.3.7) derives the stream's key from membership. No sentence states a path by which a non-member views the stream. |
+| A member's governance vote under an affiliation's charter ([CC 4.4.3.12](part_4_composition_governance.md#4.4.3.12)) | **OPEN.** The text says that members of an affiliation hold no governance vote unless its charter grants one. No member of the affiliation's record grants one, so no charter can, and its officers are the only voices. |
 
 **What the rule tables leave unstated.** Each item below is a class of limit in the tables that apply the text, and no sentence of the text answers it. Each lies outside this text's surface until a sentence states it.
 
@@ -1665,7 +1666,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons. A card and a description MUST NOT differ on a value. The build takes a value the text states from words quoted from the text, and fails when those words change. A value the text does not state is read from the shipped store, and a difference between the store and the text is a listed departure (`manifests/divergences.tsv`). An `else` arm of a guard names one reason. Where a section also gives a RETRYABLE reason for that clause, that reason is the one reported while the row the clause waits for is not held.
 
-A family with no card states none of these beyond the default row. Cards: 125 of 188 families.
+A family with no card states none of these beyond the default row. Cards: 126 of 189 families.
 
 **`accord:*`** — Rules, thing
 
@@ -3350,6 +3351,15 @@ Count: `none`
 
 Fold:
 - `by=advisory` (CC 3.1.6)
+
+**`regard:{subject_kind}`** — Priorities, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `none` (CC 3.1.9.3)
 
 **`rendezvous:route`** — Circumstances, thing
 

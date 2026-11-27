@@ -57,8 +57,8 @@ accord_halt	voice	person	CC 4.2.3	Each holder is a person.
 accord_halt	voices	scrubs	CC 4.2.1.1	by a cosigned `accord:lifecycle:confirmed` row naming the halt
 custodian_replace	count_set	operator+wa	CC 7.5.5	the operator holding the record and the Wise Authority name a successor
 custodian_replace	voices	scrubs	CC 7.5.5	one cosigned `retirement:custodian_minted:v1` row
-affiliation_member_action	count_set	deciding+outside	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the deciding seat
-affiliation_member_action	voices	scrubs	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the deciding seat
+affiliation_member_action	count_set	deciding+outside	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the officers
+affiliation_member_action	voices	scrubs	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the officers
 moderator_election	count_set	member	CC 4.5.13	The **ballot is the roster**, every member a candidate
 moderator_election	voice	person	CC 4.5.13	There is **one ballot per person** however many keys they hold
 moderator_election	counted_at	named	CC 4.5.13	The electorate is the roster the election names

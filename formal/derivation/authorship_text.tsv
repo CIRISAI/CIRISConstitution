@@ -26,11 +26,11 @@ identity:occurrence	authorship	*	authored	CC 3.3.6.4	An addition or an eviction 
 retirement:{state}	authorship	leaf=custodian_minted	counted	CC 7.5.5	one cosigned `retirement:custodian_minted:v1` row
 retirement:{state}	authorship	*	authored	CC 3.1.5	Self-emitted up to `retired` (attester = the agent key)
 takedown_notice:{basis}	authorship	leaf=steward_purge	counted	CC 2.4.1.1	authorised by a cosigned `takedown_notice` under the trust root's `consensus_protocol` with basis `steward_purge`
-takedown_notice:{basis}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the deciding seat
+takedown_notice:{basis}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the officers
 takedown_notice:{basis}	authorship	*	authored	CC 4.4.3.19	A moderation action above counts **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
-quarantine:{state}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the deciding seat
+quarantine:{state}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the officers
 quarantine:{state}	authorship	*	authored	CC 4.4.3.19	A moderation action above counts **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
-slashing:{outcome}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the deciding seat
+slashing:{outcome}	authorship	group=affiliations & seats=one	counted	CC 4.4.3.12	counts as a decision only when countersigned by a key outside the officers
 slashing:{outcome}	authorship	*	authored	CC 4.4.3.19	A moderation action above counts **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator
 wa_adjudication:{state}	authorship	leaf=abandonment|seizure|successor	counted	CC 4.3	A finding of the designated body is one row cosigned under that body's declared protocol
 wa_adjudication:{state}	authorship	*	authored	CC 3.1.9.4	`petition` is the petitioner's own row

@@ -9,7 +9,6 @@ accord:invoke:drill:{drill_id}	subject_rule	accord_named	{"attested_party": ["Ta
 accord:invoke:notify:{notify_id}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:lifecycle:{kind}	subject_rule	accord_named	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
-act:ack	placement	unbuilt	null
 act:ack	subject_rule	unbuilt	null
 act:ack	cosign_rule	unbuilt	null
 act:ack	freshness	unbuilt	null
@@ -18,7 +17,6 @@ act:ack	replication	unbuilt	null
 act:ack	projection	unbuilt	null
 act:ack	erasure_route	unbuilt	null
 act:ack	governance	unbuilt	null
-admission:unit	placement	unbuilt	null
 admission:unit	subject_rule	unbuilt	null
 admission:unit	cosign_rule	unbuilt	null
 admission:unit	freshness	unbuilt	null
@@ -97,7 +95,7 @@ consent:replication:{version}	projection	derived_no_rebuild	{"rebuild": "none", 
 consent:state:{stance}	subject_rule	consent_addressed	{"for_key_id": ["recipient (the node)", "scope tokens parsed"]}
 consent:state:{stance}	freshness	standing_at_signing	{"W": "W on the owner's standing", "judged_at": "signed_instant_with_W"}
 content_class:{class}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "withdrawal clears only its emitter's flag (read)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
-contribution:{subject_kind}	placement	unbuilt	null
+contribution:{subject_kind}	placement	unbuilt	"commons"
 contribution:{subject_kind}	subject_rule	unbuilt	null
 contribution:{subject_kind}	freshness	unbuilt	null
 contribution:{subject_kind}	lifecycle	unbuilt	null
@@ -148,29 +146,29 @@ holon:claim	projection	unbuilt	null
 holon:claim	erasure_route	unbuilt	null
 holon:claim	governance	unbuilt	null
 identity:canonical_binding:{canonical_hash}	subject_rule	outside_name	"subject: the canonical hash in the dimension (read: issuer's own rows)"
-identity:occurrence	placement	key	"minted by the key plane"
+identity:occurrence	placement	key	["self_collective", "targeted_family", "targeted_room", "addressed", "commons"]
 identity:occurrence	cosign_rule	quorum	"self-roster two_path over policy rows self_roster_add/evict (no vocabulary value)"
 identity:occurrence	replication	key	{"audience": "key-plane reach", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
 identity:occurrence	projection	key; typed_view	{"rebuild": "byte_equal", "table": "federation_identity_occurrences"}
 identity:occurrence	erasure_route	key	"purge (row only; the key/occurrence stays held, projection SET NULL)"
 identity:occurrence	governance	own_devices_policy	"policy_row: self_roster_add, self_roster_evict (governance_policy.rs:407)"
-identity:occurrence_revocation	placement	key	"commons (cohort_scope federation, minted)"
+identity:occurrence_revocation	placement	key	["self_collective", "targeted_family", "targeted_room", "addressed", "commons"]
 identity:occurrence_revocation	cosign_rule	quorum	"roster cosignatures in additional_scrubs"
 identity:occurrence_revocation	lifecycle	revocation_stands	{"expires": "expires_at honoured", "retraction_class": "none", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{}"}
 identity:occurrence_revocation	replication	key	{"audience": "key-plane reach", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
 identity:occurrence_revocation	projection	legacy_revocation_local	{"rebuild": "none", "table": "legacy framed projection"}
 identity_amendment	subject_rule	identity_change_applied	"attested = the agent; amendment_digest hex64"
-key:record	placement	key	"minted by the key plane"
+key:record	placement	key	["commons", "targeted_room"]
 key:record	subject_rule	key_by_possession	{"kind": ["key", "attested == attester == the key", "key_id fingerprint checked"]}
 key:record	replication	key	{"audience": "key-plane reach", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
 key:record	projection	key; typed_view	{"rebuild": "byte_equal", "table": "federation_keys"}
 key:record	erasure_route	key	"purge (row only; the key/occurrence stays held, projection SET NULL)"
-key:revocation	placement	key	"minted by the key plane"
+key:revocation	placement	key	["commons", "targeted_room"]
 key:revocation	lifecycle	revocation_stands	{"expires": "expires_at honoured", "retraction_class": "none", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{}"}
 key:revocation	replication	key	{"audience": "key-plane reach", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
 key:revocation	projection	key; typed_view	{"rebuild": "byte_equal", "table": "federation_revocations"}
 key:revocation	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
-key_grant:{axis}	placement	key_wrap	"the content's scope (attested = recipient, AV-84 exception)"
+key_grant:{axis}	placement	key_wrap	["self_collective", "targeted_family", "targeted_room"]
 key_grant:{axis}	subject_rule	key_wrap	{"for_key_id": "none", "kind": ["attested = recipient occurrence (AV-84 exception)", "cardinality 0"]}
 key_grant:{axis}	freshness	standing_at_signing	{"W": "W: past W the sealer must also stand at receipt (asserted_at_stale)", "judged_at": "signed_instant_with_W"}
 key_grant:{axis}	lifecycle	shared_stays_shared	{"expires": "expires_at honoured", "retraction_class": "none", "rotation_on_removal": "yes", "supersedes": "same_attester", "withdraws_by": "{}"}
@@ -186,7 +184,7 @@ ledger:checkpoint:{unit}:{version}	subject_rule	one_ledger	{"attested_party": ["
 ledger:head:{unit}:{version}	subject_rule	one_ledger	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: ledger_id == derive_ledger_id(attested, unit, standard_version)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 ledger:promotion:{version}	subject_rule	one_ledger	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: ledger_id == derive_ledger_id(attested, unit, standard_version)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 licensure:{authority_id}	lifecycle	adverse	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-location_proof:{version}	placement	unbuilt	null
+location_proof:{version}	placement	unbuilt	["commons", "targeted_room"]
 location_proof:{version}	subject_rule	unbuilt	null
 location_proof:{version}	cosign_rule	unbuilt	null
 location_proof:{version}	freshness	unbuilt	null
@@ -238,6 +236,13 @@ preserve_response	projection	unbuilt	"none (never stored)"
 preserve_response	erasure_route	unbuilt	"none (never stored)"
 provenance:build_manifest:{target}	placement	build_manifest_public	"commons"
 quarantine:{state}	lifecycle	withhold_outranks_release	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "released supersedes withheld (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
+regard:{subject_kind}	subject_rule	unbuilt	null
+regard:{subject_kind}	freshness	unbuilt	null
+regard:{subject_kind}	lifecycle	unbuilt	null
+regard:{subject_kind}	replication	unbuilt	null
+regard:{subject_kind}	projection	unbuilt	null
+regard:{subject_kind}	erasure_route	unbuilt	null
+regard:{subject_kind}	governance	unbuilt	null
 rendezvous:route	placement	rendezvous_public	"commons"
 retirement:{state}	placement	unbuilt	"none (held shut: never stored)"
 retirement:{state}	subject_rule	unbuilt	"none (held shut)"
@@ -273,7 +278,7 @@ trust:{job}:{version}	cosign_rule	quorum	"family charter witness quorum (check_c
 trust:{job}:{version}	freshness	standing_at_signing	{"W": "attach freshness window W (check_attach_freshness, CC 2.6.7); charter/cycle read received_at", "judged_at": "signed_instant_with_W"}
 wa_adjudication:{state}	cosign_rule	quorum	"WA quorum re-derived (no vocabulary value; CC moderator_quorum? no)"
 watchlist:{id}	placement	watchlist_per_group	"targeted_room"
-window:{state}	placement	unbuilt	null
+window:{state}	placement	unbuilt	["self_collective", "targeted_family", "targeted_room"]
 window:{state}	subject_rule	unbuilt	null
 window:{state}	freshness	unbuilt	null
 window:{state}	lifecycle	unbuilt	null

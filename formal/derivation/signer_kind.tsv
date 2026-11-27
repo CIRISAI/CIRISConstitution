@@ -448,6 +448,8 @@ contribution:{subject_kind}	attest	none	admitted	*	node	machine_claim	CC 3.1.9.3
 vote:{contribution_id}	attest	none	admitted	*	person	vote	CC 3.1.9.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:660, P1:199, P4:2178	
 vote:{contribution_id}	withdraw	admitted	withdrawn	*	person	vote	CC 3.1.9.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:660, P1:199, P4:2178	
 vote:{contribution_id}	recant	admitted	recanted	*	person	vote	CC 3.1.9.3 (registry); CC 1.13.2 Kind (no vote of its own); CC 4.5.13 one voice a person	P3:660, P1:199, P4:2178	
+regard:{subject_kind}	attest	none	admitted	*	person	regard	CC 3.1.9.3 (registry); CC 4.4.3.13 a weight is the reader's own row	P3:766, P4:893	
+regard:{subject_kind}	withdraw	admitted	withdrawn	*	person	regard	CC 3.1.9.3 (registry); CC 4.4.3.13 a weight is the reader's own row	P3:766, P4:893	
 wa_adjudication:{state}	attest	none	admitted	*	person	wa	CC 3.1.9.4 (registry); CC 4.3; CC 1.13.2 offices some humans hold	P3:676, P3:667, P1:197	
 wa_adjudication:{state}	withdraw	admitted	withdrawn	*	person	wa	CC 3.1.9.4 (registry); CC 4.3; CC 1.13.2 offices some humans hold	P3:676, P3:667, P1:197	
 wa_adjudication:{state}	supersede	admitted	superseded	*	person	wa	CC 3.1.9.4 (registry); CC 4.3; CC 1.13.2 offices some humans hold	P3:676, P3:667, P1:197	

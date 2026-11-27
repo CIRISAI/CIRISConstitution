@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "9bc83fbfee094ff781991aa06bc2044b988f202c541ae067d5de65a14a9c13bd",
+  "registry_sha256": "043fe01c5d6a2598164c85bb78eaaca897ac2e11dc135f11aea69756ea70baf1",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -76,10 +76,10 @@
    "binds_segment": "placeholder → signer | subject | group | none; a segment of class literal, vocab or external names no key (formal/derivation/confers_text.tsv)",
    "evidence": "{claim_ids, refusal tokens}"
   },
-  "families": 188,
+  "families": 189,
   "coverage": {
    "kind": {
-    "cc-table": 188,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -87,7 +87,7 @@
     "gap": 0
    },
    "side": {
-    "cc-table": 188,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -95,7 +95,7 @@
     "gap": 0
    },
    "verbs": {
-    "cc-table": 188,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -103,7 +103,7 @@
     "gap": 0
    },
    "maintains_record": {
-    "cc-table": 188,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -111,7 +111,7 @@
     "gap": 0
    },
    "reference": {
-    "cc-table": 188,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -119,15 +119,15 @@
     "gap": 0
    },
    "placement": {
-    "cc-table": 166,
-    "code-v61": 9,
+    "cc-table": 177,
+    "code-v61": 8,
     "generic": 0,
-    "prose": 7,
+    "prose": 3,
     "mixed": 0,
-    "gap": 6
+    "gap": 1
    },
    "signer_rule": {
-    "cc-table": 54,
+    "cc-table": 55,
     "code-v61": 112,
     "generic": 0,
     "prose": 16,
@@ -148,7 +148,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 13,
-    "gap": 15,
+    "gap": 16,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 917,
@@ -159,7 +159,7 @@
     }
    },
    "cosign_rule": {
-    "cc-table": 9,
+    "cc-table": 10,
     "code-v61": 166,
     "generic": 0,
     "prose": 6,
@@ -167,7 +167,7 @@
     "gap": 6
    },
    "polarity": {
-    "cc-table": 11,
+    "cc-table": 12,
     "code-v61": 177,
     "generic": 0,
     "prose": 0,
@@ -180,7 +180,7 @@
     "generic": 0,
     "prose": 26,
     "mixed": 0,
-    "gap": 100
+    "gap": 101
    },
    "freshness": {
     "cc-table": 0,
@@ -188,7 +188,7 @@
     "generic": 170,
     "prose": 7,
     "mixed": 0,
-    "gap": 11
+    "gap": 12
    },
    "lifecycle": {
     "cc-table": 0,
@@ -196,7 +196,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 11,
+    "gap": 12,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 860,
@@ -212,7 +212,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 172,
-    "gap": 11,
+    "gap": 12,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 510,
@@ -228,7 +228,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 11,
+    "gap": 12,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 344,
@@ -244,7 +244,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 11
+    "gap": 12
    },
    "names_head": {
     "cc-table": 0,
@@ -324,7 +324,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 11
+    "gap": 12
    },
    "governance": {
     "cc-table": 1,
@@ -332,18 +332,18 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 10
+    "gap": 11
    },
    "fold": {
     "cc-table": 77,
     "code-v61": 0,
-    "generic": 111,
+    "generic": 112,
     "prose": 0,
     "mixed": 0,
     "gap": 0
    },
    "count": {
-    "cc-table": 28,
+    "cc-table": 29,
     "code-v61": 0,
     "generic": 156,
     "prose": 0,
@@ -353,7 +353,7 @@
    "authorship": {
     "cc-table": 27,
     "code-v61": 0,
-    "generic": 161,
+    "generic": 162,
     "prose": 0,
     "mixed": 0,
     "gap": 0
@@ -361,7 +361,7 @@
    "second_signers": {
     "cc-table": 8,
     "code-v61": 0,
-    "generic": 180,
+    "generic": 181,
     "prose": 0,
     "mixed": 0,
     "gap": 0
@@ -372,10 +372,10 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 185
+    "gap": 186
    },
    "read_by": {
-    "cc-table": 188,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -383,7 +383,7 @@
     "gap": 0
    },
    "confers": {
-    "cc-table": 162,
+    "cc-table": 163,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -391,7 +391,7 @@
     "gap": 26
    },
    "binds_segment": {
-    "cc-table": 160,
+    "cc-table": 161,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -404,13 +404,13 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 133
+    "gap": 134
    }
   },
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
    "cells_cited": 385,
-   "citations": 559,
+   "citations": 561,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "placement": {
@@ -702,22 +702,22 @@
   },
   "conferral": {
    "confers": {
-    "default": 138,
+    "default": 139,
     "gap": 26,
     "shape": 20,
     "stated": 4
    },
    "binds_segment": {
-    "class": 158,
+    "class": 159,
     "gap": 28,
     "stated": 2
    },
    "derived": {
-    "gap": 185,
+    "gap": 186,
     "stated": 3
    },
    "read_by": {
-    "cells": 109,
+    "cells": 110,
     "default": 79
    },
    "read_by_default": {
@@ -870,7 +870,7 @@
   "authorship": {
    "source": "formal/derivation/authorship_text.tsv",
    "families": {
-    "authored": 168,
+    "authored": 169,
     "subject": 1,
     "counted": 3,
     "mixed": 16,
@@ -878,7 +878,7 @@
    },
    "second_signers": {
     "families_with_roles": 8,
-    "families_author_only": 180,
+    "families_author_only": 181,
     "roles": 11,
     "roles_without_member": 0
    },
@@ -1065,10 +1065,10 @@
      "by_value": {
       "by_selector": 10,
       "false": 26,
-      "true": 152
+      "true": 153
      },
      "by_source": {
-      "derived": 165,
+      "derived": 166,
       "quote": 23,
       "ruling": 0,
       "open": 0
@@ -1076,11 +1076,11 @@
     },
     "accountability_record": {
      "by_value": {
-      "false": 187,
+      "false": 188,
       "true": 1
      },
      "by_source": {
-      "derived": 187,
+      "derived": 188,
       "quote": 1,
       "ruling": 0,
       "open": 0
@@ -1089,11 +1089,11 @@
     "may_carry_under": {
      "by_value": {
       "by_selector": 1,
-      "false": 185,
+      "false": 186,
       "open": 2
      },
      "by_source": {
-      "derived": 185,
+      "derived": 186,
       "quote": 1,
       "ruling": 0,
       "open": 2
@@ -1104,13 +1104,13 @@
       "acceptance": 2,
       "by_selector": 3,
       "end": 2,
-      "exercise": 151,
+      "exercise": 152,
       "none": 13,
       "offer": 4,
       "open": 13
      },
      "by_source": {
-      "derived": 167,
+      "derived": 168,
       "quote": 8,
       "ruling": 0,
       "open": 13
@@ -1119,11 +1119,11 @@
     "room_content": {
      "by_value": {
       "by_selector": 1,
-      "false": 177,
+      "false": 178,
       "true": 10
      },
      "by_source": {
-      "derived": 177,
+      "derived": 178,
       "quote": 11,
       "ruling": 0,
       "open": 0
@@ -1131,11 +1131,11 @@
     },
     "names_stands_on": {
      "by_value": {
-      "false": 175,
+      "false": 176,
       "true": 13
      },
      "by_source": {
-      "derived": 175,
+      "derived": 176,
       "quote": 13,
       "ruling": 0,
       "open": 0
@@ -1237,9 +1237,9 @@
     "4": 2,
     "5": 4,
     "6": 7,
-    "7": 1,
-    "8": 6,
-    "9": 5
+    "7": 2,
+    "8": 8,
+    "9": 3
    },
    "reading": "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone"
   },
@@ -1251,7 +1251,7 @@
      "when": "The store holds no rows of the family: the census read no cell for it, or the family is held shut.",
      "why": "Its cells are unread, not different. When the family is built each cell sits on the default or takes a reason of its own.",
      "basis": "census",
-     "cells": 123
+     "cells": 128
     },
     {
      "id": "key",
@@ -5303,9 +5303,20 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 2.7.5",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -5465,7 +5476,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "a receipt names the acts it acknowledges and no head; it is read by its causal past alone",
-    "derived": null,
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -5577,7 +5588,6 @@
     "note": "erasure_route unread"
    },
    "departs": [
-    "placement",
     "subject_rule",
     "cosign_rule",
     "freshness",
@@ -5588,9 +5598,6 @@
     "governance"
    ],
    "because": {
-    "placement": [
-     "unbuilt"
-    ],
     "subject_rule": [
      "unbuilt"
     ],
@@ -6046,9 +6053,20 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 2.7.11",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -6178,7 +6196,7 @@
      "act=group": "the roster version the row is counted over",
      "act=own": "a person's own row at self scope"
     },
-    "derived": null,
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -6293,7 +6311,6 @@
     "note": "erasure_route unread"
    },
    "departs": [
-    "placement",
     "subject_rule",
     "cosign_rule",
     "freshness",
@@ -6304,9 +6321,6 @@
     "governance"
    ],
    "because": {
-    "placement": [
-     "unbuilt"
-    ],
     "subject_rule": [
      "unbuilt"
     ],
@@ -32099,9 +32113,13 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -32223,7 +32241,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "the owner-binding row of the node whose key signs it",
-    "derived": null,
+    "derived": "none",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -46037,6 +46055,10 @@
      {
       "cc_ref": "CC 2.4.1.1",
       "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 5.2",
+      "reading": "fills"
      }
     ]
    },
@@ -48757,8 +48779,21 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "minted by the key plane",
-    "source": "prose"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "addressed",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | addressed | commons",
+    "note": "self_collective | targeted_family | targeted_room | addressed | commons",
+    "cc_ref": "CC 5.4.6",
+    "code": {
+     "value": "minted by the key plane",
+     "source": "prose"
+    }
    },
    "signer_rule": {
     "value": {
@@ -49248,9 +49283,10 @@
    },
    "names_head": {
     "value": "none",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "an identity's own occurrence, exercising no conferred standing, wherever it is placed",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -49459,9 +49495,21 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "commons (cohort_scope federation, minted)",
-    "source": "code-v61",
-    "closed": "commons"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "addressed",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | addressed | commons",
+    "note": "self_collective | targeted_family | targeted_room | addressed | commons",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": "commons (cohort_scope federation, minted)",
+     "source": "code-v61"
+    }
    },
    "signer_rule": {
     "value": "the framed object's revoker; roster cosignatures in additional_scrubs",
@@ -49788,9 +49836,10 @@
    },
    "names_head": {
     "value": "none",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the revoker's own row, exercising no conferred standing, wherever it is placed",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -52479,8 +52528,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "minted by the key plane",
-    "source": "prose"
+    "value": [
+     "commons",
+     "targeted_room"
+    ],
+    "source": "cc-table",
+    "closed": "commons | targeted_room",
+    "note": "commons | targeted_room",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": "minted by the key plane",
+     "source": "prose"
+    }
    },
    "signer_rule": {
     "value": {
@@ -52779,9 +52838,10 @@
    },
    "names_head": {
     "value": "none",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "a key's claim of itself, a person's own row exercising no conferred standing, wherever it is placed",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -52985,8 +53045,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "minted by the key plane",
-    "source": "prose"
+    "value": [
+     "commons",
+     "targeted_room"
+    ],
+    "source": "cc-table",
+    "closed": "commons | targeted_room",
+    "note": "commons | targeted_room",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": "minted by the key plane",
+     "source": "prose"
+    }
    },
    "signer_rule": {
     "value": "revoker-signed, judged without the subject's record",
@@ -53303,9 +53373,10 @@
    },
    "names_head": {
     "value": "none",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "a row of its signer's own, exercising no conferred standing",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "a revocation by the key or its owner, exercising no conferred standing, wherever it is placed",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -53911,9 +53982,19 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "the content's scope (attested = recipient, AV-84 exception)",
-    "source": "prose",
-    "closed": "the content's scope",
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room",
+    "note": "self_collective | targeted_family | targeted_room",
+    "cc_ref": "CC 3.3.2",
+    "code": {
+     "value": "the content's scope (attested = recipient, AV-84 exception)",
+     "source": "prose"
+    },
     "cites": [
      {
       "cc_ref": "CC 3.1.3",
@@ -54400,9 +54481,10 @@
    },
    "names_head": {
     "value": "standing",
-    "source": "derived",
-    "from": "placement, signer_rule",
-    "note": "signed under a seat, a grant or a binding, outside any roster",
+    "source": "ruled",
+    "from": "formal/derivation/names_head_text.tsv",
+    "note": "the wrap is the sealer's act under the standing that lets it seal, wherever it is placed",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -57293,9 +57375,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": [
+     "commons",
+     "targeted_room"
+    ],
+    "source": "cc-table",
+    "closed": "commons | targeted_room",
+    "note": "commons | targeted_room",
+    "cc_ref": "CC 3.3.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -57414,7 +57505,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "the subject's own row",
-    "derived": null,
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -58352,6 +58443,10 @@
     "cites": [
      {
       "cc_ref": "CC 3.1.3.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 5.2",
       "reading": "fills"
      }
     ]
@@ -72575,6 +72670,284 @@
    "because": {}
   },
   {
+   "family": "regard:{subject_kind}",
+   "kind": {
+    "value": "Priorities",
+    "source": "cc-table",
+    "confidence": "M"
+   },
+   "side": {
+    "value": "account",
+    "source": "cc-table"
+   },
+   "verbs": {
+    "value": [
+     "attest",
+     "withdraw"
+    ],
+    "source": "cc-table"
+   },
+   "maintains_record": {
+    "value": false,
+    "source": "cc-table"
+   },
+   "reference": {
+    "value": null,
+    "source": "cc-table"
+   },
+   "placement": {
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.1.9.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
+   },
+   "signer_rule": {
+    "value": {
+     "who": "any_registered",
+     "via": "none",
+     "conditions": []
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    },
+    "qualifier": "any person, about any subject, the signer's own key included"
+   },
+   "subject_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "cosign_rule": {
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
+   },
+   "body": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "freshness": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "lifecycle": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "replication": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "projection": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "erasure_route": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "governance": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "evidence": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "polarity": {
+    "value": "signed",
+    "source": "cc-table",
+    "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
+   "derived": {
+    "value": null,
+    "source": "gap",
+    "note": "no sentence says whether a row of this family equals a recomputation from other rows"
+   },
+   "read_by": {
+    "value": [
+     "state",
+     "stands"
+    ],
+    "source": "cc-table",
+    "rule": "cells",
+    "by": [
+     {
+      "grammar": "fold",
+      "cell": "tools/fold_grammar.py DEFAULT",
+      "answers": [
+       "state",
+       "stands"
+      ]
+     }
+    ]
+   },
+   "confers": {
+    "value": "nothing",
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default"
+   },
+   "binds_segment": {
+    "value": {
+     "{subject_kind}": "none"
+    },
+    "source": "cc-table",
+    "cc_ref": [
+     "CC 3.1.7"
+    ],
+    "rule": "class"
+   },
+   "names_head": {
+    "value": "by_placement",
+    "source": "derived",
+    "from": "placement, signer_rule",
+    "note": "placed at a room or a family and elsewhere",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "shape": {
+    "value": "claim",
+    "source": "kernel-table",
+    "from": "formal/derivation/family_shapes.tsv"
+   },
+   "descends_on_withdrawal": {
+    "value": "row",
+    "source": "derived",
+    "from": "shape",
+    "cc_ref": "CC 6.1.5"
+   },
+   "subject_may_withdraw": {
+    "value": true,
+    "source": "derived",
+    "from": "authorship",
+    "note": "a named party may retire a row about itself; the family is on no kept list",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "accountability_record": {
+    "value": false,
+    "source": "derived",
+    "note": "no sentence keeps the family's rows from their signer's owner",
+    "cc_ref": "CC 3.1.5"
+   },
+   "may_carry_under": {
+    "value": false,
+    "source": "derived",
+    "note": "no row of the family is a deputy's edge",
+    "cc_ref": "CC 4.5.5"
+   },
+   "standing_act": {
+    "value": "exercise",
+    "source": "derived",
+    "from": "names_head",
+    "note": "its rows name a head (by_placement)",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "room_content": {
+    "value": false,
+    "source": "derived",
+    "note": "the family is not among those CC 3.1.3.2 names as a room's content",
+    "cc_ref": "CC 3.1.3.2"
+   },
+   "names_stands_on": {
+    "value": false,
+    "source": "derived",
+    "note": "no root confers the family's duty, so no row of it stands on an acceptance of a root grant",
+    "cc_ref": "CC 2.4.1.1"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
+   "count": {
+    "value": "none",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.1.9.3"
+     }
+    ],
+    "source": "cc-table"
+   },
+   "authorship": {
+    "value": "authored",
+    "source": "generic",
+    "note": "no counted arm: one party authors the row (CC 2.6.1.3)"
+   },
+   "second_signers": {
+    "value": [],
+    "source": "generic",
+    "note": "no role is named: the author's statement alone, or on a counted row the voices of its count"
+   },
+   "blind": {
+    "value": null,
+    "source": "gap",
+    "note": "erasure_route unread"
+   },
+   "departs": [
+    "subject_rule",
+    "freshness",
+    "lifecycle",
+    "replication",
+    "projection",
+    "erasure_route",
+    "governance"
+   ],
+   "because": {
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "freshness": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ],
+    "governance": [
+     "unbuilt"
+    ]
+   }
+  },
+  {
    "family": "regime:{artifact}:{version}",
    "kind": {
     "value": "Rules",
@@ -84854,9 +85227,19 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room",
+    "note": "self_collective | targeted_family | targeted_room",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -85016,7 +85399,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "a held row and a landing name no head; a landing is read over its own causal past",
-    "derived": null,
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {

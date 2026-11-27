@@ -154,6 +154,7 @@ truth_grounding:{subject}	node	Facts	ACCOUNT	attest,withdraw,recant	H	per-subjec
 video:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about a video	no	—
 contribution:{subject_kind}	node	Priorities	ACCOUNT	attest	M	a node's Contribution on a subject kind, the row a vote names	no	—
 vote:{contribution_id}	node	Priorities	ACCOUNT	attest,withdraw,recant	M	a signed score weighs a Contribution	no	—
+regard:{subject_kind}	node	Priorities	ACCOUNT	attest,withdraw	M	a signer's regard for one subject, more or less of it; a weight at self, a vouch when public	no	—
 wa_adjudication:{state}	node	Rules	THING	attest,replace,withdraw	M	quorum finding on abandonment/seizure/successor	no	—
 watchlist:{id}	node	Rules	THING	attest,replace,withdraw	M	per-group content-watchlist policy	no	—
 weighted_aggregate:{contribution_id}	node	Confidence	ACCOUNT	attest,replace	M	rolling tally; carries votes as one sureness (derived: equals the rebuild of its projection)	no	—

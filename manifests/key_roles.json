@@ -3,8 +3,8 @@
   "what": "the signer kind of every family transition and of every non-family use: which kind of key may sign it",
   "cc_section": "3.4.7.3",
   "sources": {
-   "manifests/transitions.json": "cc02a82823de0c6e255b43bd523255d29428369b1e3ce3e636b46c5add1112d6",
-   "formal/derivation/signer_kind.tsv": "bdcde1f2cb84ed32b6bac025340bc4a7ede29a678e888ebf7c41ce8e9061f9a2"
+   "manifests/transitions.json": "213265844cd42fd792f8aa0e80295f83acef4f29664bdd884d0899f7d860adb7",
+   "formal/derivation/signer_kind.tsv": "8edd7be049259f4ebd155d178b5869cfd7e121324b53595aaf92eb968c86152a"
   },
   "kinds": [
    "person",
@@ -63,8 +63,8 @@
    ]
   },
   "counts": {
-   "uses": 508,
-   "transitions": 467,
+   "uses": 510,
+   "transitions": 469,
    "open_uses": 0,
    "open_questions": 0
   },
@@ -8161,6 +8161,40 @@
    "at": "P3:652, P3:2585, P3:2613"
   },
   {
+   "use": "regard:{subject_kind}#attest:none>admitted",
+   "family": "regard:{subject_kind}",
+   "verb": "attest",
+   "leaf": null,
+   "roles": [
+    "registered"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "regard",
+   "cc_ref": "CC 3.1.9.3 (registry); CC 4.4.3.13 a weight is the reader's own row",
+   "at": "P3:766, P4:893"
+  },
+  {
+   "use": "regard:{subject_kind}#withdraw:admitted>withdrawn",
+   "family": "regard:{subject_kind}",
+   "verb": "withdraw",
+   "leaf": null,
+   "roles": [
+    "author"
+   ],
+   "kinds": [
+    "person"
+   ],
+   "open": false,
+   "question": null,
+   "rule": "regard",
+   "cc_ref": "CC 3.1.9.3 (registry); CC 4.4.3.13 a weight is the reader's own row",
+   "at": "P3:766, P4:893"
+  },
+  {
    "use": "regime:{artifact}:{version}#attest:none>admitted",
    "family": "regime:{artifact}:{version}",
    "verb": "attest",
@@ -9676,6 +9710,8 @@
    "ratchet:flag:out_of_distribution_voting#withdraw:admitted>withdrawn",
    "reconsideration:{grounds}#attest:none>admitted",
    "reconsideration:{grounds}#withdraw:admitted>withdrawn",
+   "regard:{subject_kind}#attest:none>admitted",
+   "regard:{subject_kind}#withdraw:admitted>withdrawn",
    "retirement:{state}#attest:none>admitted",
    "retirement:{state}#withdraw:admitted>withdrawn",
    "revocation:{entity_type}:{reason}#attest:none>admitted",

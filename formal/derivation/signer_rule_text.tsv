@@ -59,6 +59,7 @@ location_proof:{version}	self x none x {} ; the subject, attesting_key_id is the
 admission:unit	self x none x {} | roster_member(at) x none x {} ; a person's key, alone or as a voice of the group whose head the row names	CC 3.1.3	
 stream:head	self x none x {}	CC 3.1.3	
 contribution:{subject_kind}	self x none x {}	CC 3.1.9.3	
+regard:{subject_kind}	any_registered x none x {} ; any person, about any subject, the signer's own key included	CC 3.1.9.3	
 slashing:{outcome}	seat_role(slash) x delegates_to(slash) x {} ; any other signer concludes nothing	CC 3.4.7	
 community:listing	seat_role(moderate) x delegates_to(moderate) x {} ; a holder of the community's moderate duty	CC 3.4.7	
 evidence:{suite}:{kind}:{cell}:{prefix}	seat_role(infra:attest) x none x {} ; delegated by the root or conferred by an accord count over its key record	CC 3.1.5.5	

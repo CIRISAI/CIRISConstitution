@@ -116,6 +116,8 @@ Every row has an **audience**: the nodes it may reach ([CC 2.7.5](part_2_the_gra
 
 **What a row carries (normative).** A row carries its audience to the rows it names, when it is concluded, sits in the same room as the row it names, and its signer is already in that row's audience. So a joiner holds the rows its own admission names, and a reply carries the row it answers to a later joiner. A row leaves its room only by its own signer's act: a row that names it from elsewhere carries it only when the same key signed both. No member carries another member's signed row out of a room ([CC 2.7.5](part_2_the_grammar.md#2.7.5)). Since a row waits for what it names ([CC 2.7.3](part_2_the_grammar.md#2.7.3)), what a reply carries to a reader follows from the reply and the rows that reader is already served.
 
+A row placed in a room is in the audience of the room's roster as it stands when a node replicates it. A member admitted later receives what the tier gives a joiner, and no more ([CC 4.4.3.10](part_4_composition_governance.md#4.4.3.10)). The keys a roster row seats or removes are always within its audience.
+
 Within every cohort, holding claims, custody reports, target replication and anti-entropy run exactly as at every other tier ([CC 6.1.5.3](part_6_the_coherence_mathematics.md#6.1.5.3)). Carrying a sealed frame for someone else is not being in its audience; who may carry is the rule of [CC 5.4.6](#5.4.6).
 
 **Which of a member's nodes.** A node is in a cohort's audience only through its owner's membership, and the owner chooses per node which of their cohorts it serves ([CC 6.1.5.3](part_6_the_coherence_mathematics.md#6.1.5.3)). A node with no owner is in no cohort's audience.

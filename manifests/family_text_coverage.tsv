@@ -136,7 +136,7 @@ act:ack	signer_rule	text	cc-table
 act:ack	cosign_rule	open	gap
 act:ack	subject_rule	open	gap
 act:ack	polarity	text	cc-table
-act:ack	placement	open	gap
+act:ack	placement	text	cc-table
 act:ack	lifecycle	open	gap
 act:ack	erasure_route	open	gap
 act:ack	projection	open	gap
@@ -174,7 +174,7 @@ admission:unit	signer_rule	text	cc-table
 admission:unit	cosign_rule	open	gap
 admission:unit	subject_rule	open	gap
 admission:unit	polarity	text	cc-table
-admission:unit	placement	open	gap
+admission:unit	placement	text	cc-table
 admission:unit	lifecycle	open	gap
 admission:unit	erasure_route	open	gap
 admission:unit	projection	open	gap
@@ -1295,7 +1295,7 @@ contribution:{subject_kind}	signer_rule	text	cc-table
 contribution:{subject_kind}	cosign_rule	cited	cc-table
 contribution:{subject_kind}	subject_rule	open	gap
 contribution:{subject_kind}	polarity	text	cc-table
-contribution:{subject_kind}	placement	open	gap
+contribution:{subject_kind}	placement	text	cc-table
 contribution:{subject_kind}	lifecycle	open	gap
 contribution:{subject_kind}	erasure_route	open	gap
 contribution:{subject_kind}	projection	open	gap
@@ -2017,7 +2017,7 @@ identity:occurrence	signer_rule	cited	code-v61
 identity:occurrence	cosign_rule	text	prose
 identity:occurrence	subject_rule	unstated	code-v61
 identity:occurrence	polarity	text	code-v61
-identity:occurrence	placement	text	prose
+identity:occurrence	placement	text	cc-table
 identity:occurrence	lifecycle	unstated	code-v61
 identity:occurrence	erasure_route	unstated	code-v61
 identity:occurrence	projection	cited	code-v61
@@ -2036,7 +2036,7 @@ identity:occurrence_revocation	signer_rule	text	prose
 identity:occurrence_revocation	cosign_rule	text	prose
 identity:occurrence_revocation	subject_rule	unstated	code-v61
 identity:occurrence_revocation	polarity	text	code-v61
-identity:occurrence_revocation	placement	unstated	code-v61
+identity:occurrence_revocation	placement	text	cc-table
 identity:occurrence_revocation	lifecycle	unstated	code-v61
 identity:occurrence_revocation	erasure_route	unstated	code-v61
 identity:occurrence_revocation	projection	cited	code-v61
@@ -2169,7 +2169,7 @@ key:record	signer_rule	cited	code-v61
 key:record	cosign_rule	differs	code-v61
 key:record	subject_rule	cited	code-v61
 key:record	polarity	text	code-v61
-key:record	placement	text	prose
+key:record	placement	text	cc-table
 key:record	lifecycle	unstated	code-v61
 key:record	erasure_route	unstated	code-v61
 key:record	projection	unstated	code-v61
@@ -2188,7 +2188,7 @@ key:revocation	signer_rule	text	prose
 key:revocation	cosign_rule	cited	code-v61
 key:revocation	subject_rule	unstated	code-v61
 key:revocation	polarity	text	code-v61
-key:revocation	placement	text	prose
+key:revocation	placement	text	cc-table
 key:revocation	lifecycle	unstated	code-v61
 key:revocation	erasure_route	unstated	code-v61
 key:revocation	projection	cited	code-v61
@@ -2226,7 +2226,7 @@ key_grant:{axis}	signer_rule	cited	code-v61
 key_grant:{axis}	cosign_rule	cited	code-v61
 key_grant:{axis}	subject_rule	cited	code-v61
 key_grant:{axis}	polarity	text	code-v61
-key_grant:{axis}	placement	text	prose
+key_grant:{axis}	placement	text	cc-table
 key_grant:{axis}	lifecycle	unstated	code-v61
 key_grant:{axis}	erasure_route	unstated	code-v61
 key_grant:{axis}	projection	cited	code-v61
@@ -2359,7 +2359,7 @@ location_proof:{version}	signer_rule	text	cc-table
 location_proof:{version}	cosign_rule	open	gap
 location_proof:{version}	subject_rule	open	gap
 location_proof:{version}	polarity	text	cc-table
-location_proof:{version}	placement	open	gap
+location_proof:{version}	placement	text	cc-table
 location_proof:{version}	lifecycle	open	gap
 location_proof:{version}	erasure_route	open	gap
 location_proof:{version}	projection	open	gap
@@ -3020,6 +3020,25 @@ reconsideration:{grounds}	may_carry_under	text	derived
 reconsideration:{grounds}	standing_act	text	derived
 reconsideration:{grounds}	room_content	text	derived
 reconsideration:{grounds}	names_stands_on	text	derived
+regard:{subject_kind}	signer_rule	text	cc-table
+regard:{subject_kind}	cosign_rule	cited	cc-table
+regard:{subject_kind}	subject_rule	open	gap
+regard:{subject_kind}	polarity	text	cc-table
+regard:{subject_kind}	placement	text	cc-table
+regard:{subject_kind}	lifecycle	open	gap
+regard:{subject_kind}	erasure_route	open	gap
+regard:{subject_kind}	projection	open	gap
+regard:{subject_kind}	governance	open	gap
+regard:{subject_kind}	freshness	open	gap
+regard:{subject_kind}	replication	open	gap
+regard:{subject_kind}	body	open	gap
+regard:{subject_kind}	fold	unstated	generic
+regard:{subject_kind}	subject_may_withdraw	text	derived
+regard:{subject_kind}	accountability_record	text	derived
+regard:{subject_kind}	may_carry_under	text	derived
+regard:{subject_kind}	standing_act	text	derived
+regard:{subject_kind}	room_content	text	derived
+regard:{subject_kind}	names_stands_on	text	derived
 regime:{artifact}:{version}	signer_rule	differs	code-v61
 regime:{artifact}:{version}	cosign_rule	cited	code-v61
 regime:{artifact}:{version}	subject_rule	unstated	code-v61
@@ -3537,7 +3556,7 @@ window:{state}	signer_rule	text	cc-table
 window:{state}	cosign_rule	cited	cc-table
 window:{state}	subject_rule	open	gap
 window:{state}	polarity	text	cc-table
-window:{state}	placement	open	gap
+window:{state}	placement	text	cc-table
 window:{state}	lifecycle	open	gap
 window:{state}	erasure_route	open	gap
 window:{state}	projection	open	gap
