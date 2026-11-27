@@ -58,8 +58,11 @@ LABEL_COMPANION_OF = -70010                    # private use, beside CEG's -7000
 COMPANION_SUB = "ceg-companion:" + ORIG_ID.hex()
 COMPANION_IAT = 1795705436                      # when the companions were minted, seconds (2026-11-26T15:03:56Z); fixed here so the bytes reproduce
 assert T // 1000 <= COMPANION_IAT < UNTIL // 1000, "the companion is made inside the vouch's term"
-def companion(extra_prot, payload):
-    prot = {1: ALG_ML_DSA_65, 4: REG_THUMB, 15: {1: A.iss, 2: COMPANION_SUB, 6: COMPANION_IAT}}
+LABEL_COMPANION_OF_SHA256 = -70011             # private use, beside -70010: SHA-256 of the original's full bytes
+COMPANION_C_IAT = 1795815890                    # when variant (c) was minted (2026-11-27T21:44:50Z); fixed so the bytes reproduce
+assert T // 1000 <= COMPANION_C_IAT < UNTIL // 1000
+def companion(extra_prot, payload, iat=COMPANION_IAT):
+    prot = {1: ALG_ML_DSA_65, 4: REG_THUMB, 15: {1: A.iss, 2: COMPANION_SUB, 6: iat}}
     prot.update(extra_prot)
     pb = enc(prot)
     tbs = enc(["Signature1", pb, b"", payload])
@@ -71,6 +74,9 @@ def companion(extra_prot, payload):
 COMP_A, pa, tbs_a, sig_a = companion({LABEL_COMPANION_OF: ORIG_ID}, VOUCH_ID)
 PAYLOAD_B = enc({"statement_id": ORIG_ID, "statement_sha256": sha(ORIG), "vouch_statement_id": VOUCH_ID})
 COMP_B, pb_, tbs_b, sig_b = companion({3: "application/cbor"}, PAYLOAD_B)
+# (c) header placement carrying what (b) carries: the id AND the digest of the original's full bytes
+COMP_C, pc_, tbs_c, sig_c = companion({LABEL_COMPANION_OF: ORIG_ID, LABEL_COMPANION_OF_SHA256: sha(ORIG)}, VOUCH_ID,
+                                      iat=COMPANION_C_IAT)
 
 out = {
     "_meta": {
@@ -119,6 +125,14 @@ out = {
         "signature_sha256_hex": sha(sig_b).hex(), "sha256_hex": sha(COMP_B).hex(), "length": len(COMP_B),
         "cose_sign1_hex": COMP_B.hex(),
     },
+    "companion_header_digest": {
+        "placement": "the original's statement id (label %d) AND the SHA-256 of its full bytes (label %d) in the "
+                     "PROTECTED header; payload = the vouch's statement id" % (LABEL_COMPANION_OF, LABEL_COMPANION_OF_SHA256),
+        "iat": COMPANION_C_IAT,
+        "protected_hex": pc_.hex(), "payload_hex": VOUCH_ID.hex(), "to_be_signed_hex": tbs_c.hex(),
+        "signature_sha256_hex": sha(sig_c).hex(), "sha256_hex": sha(COMP_C).hex(), "length": len(COMP_C),
+        "cose_sign1_hex": COMP_C.hex(),
+    },
     "checks_made_by_the_generator": {
         "each_companion_verifies_under_registration_key": True,
         "each_companion_fails_under_composite_ml_dsa_half": True,
@@ -128,6 +142,7 @@ out = {
 with open(os.path.join(here, "scitt_companion_test_v1.json"), "w") as f:
     json.dump(out, f, indent=1, sort_keys=True); f.write("\n")
 for n, b in (("original_b3.cose", ORIG), ("vouch.cose", VOUCH), ("companion_header.cose", COMP_A),
-             ("companion_payload.cose", COMP_B), ("registration_key.cosekey", enc(REG_COSE_KEY))):
+             ("companion_payload.cose", COMP_B),
+             ("companion_header_digest.cose", COMP_C), ("registration_key.cosekey", enc(REG_COSE_KEY))):
     with open(os.path.join(here, n), "wb") as f: f.write(b)
-print("ok", len(VOUCH), len(COMP_A), len(COMP_B))
+print("ok", len(VOUCH), len(COMP_A), len(COMP_B), len(COMP_C))
