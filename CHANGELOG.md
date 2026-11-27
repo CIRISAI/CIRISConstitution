@@ -25,6 +25,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - A node lists a public room for a reader only where a key in that reader's trust set has voted for its listing; any other listing is reached by its link or its `community_key_id` (3.2).
 - A node is bound to hold a stranger's federation-scope row only while a row by a key in its trust set names it; any other row a stranger offers it holds for convenience and MAY evict, which is never a refusal (5.2).
 - A signer's regard for a subject is one family, `regard:{subject_kind}`: at `self` scope it is a feed weight, at federation scope a vouch, and a node lists a room for a reader only where a trusted key holds a positive public `regard:room` on its listing (3.1.9.3, 4.4.3.13, 3.2, 4.4.3.34). Families: 189.
+- A member has at most one invitation pending by the window at a time; a second proposal by that member while the first is pending concludes nothing (4.5.13).
 
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 
