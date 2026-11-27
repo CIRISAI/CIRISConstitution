@@ -8,8 +8,6 @@
 # not asked, and the node is no voice and in no base. Every other roster seat needs the seated key's own consent.
 # A record change names the record in force as its head and is counted under the protocol in force AND the standing default:
 # a group weakens its protocol only by meeting its present one.
-# Where the declared protocol states no rule for an act (an `unstated` cell of constitution/consensus_protocols.tsv), the
-# `cosigned_act` half of an `&` is no condition and the other row governs alone, the floor of two voices standing.
 # The kind of a group is its founding record's: `family` or `community` by the record's group kind, and a community is
 # `infrastructure` where its `cohort_subkind` says so. A room is private or public by its record's `membership` member.
 # A founder seat over an `infrastructure` community is added only by a record change that seats the key, carries its

@@ -148,8 +148,6 @@ ticks keep coming and a due object expires. No signer is ever required to act.
 - `weighted:{rubric}` and `custom:` protocols, and protocol amendment or entrenchment (CC 3.3.4).
 - The `infrastructure` subkind: admission over the founder subset, node seats with no acceptance, and
   the T7 recovery widening (CC 3.2). The geographic `location_proof` gate (CC 4.4.3.6).
-- `admission: open` on a `public` community, where the standing proposal resolves its subject at
-  acceptance (CC 3.2).
 - Role changes for an active member, promotion to founder, and supersedes that change metadata or
   drop members (CC 3.1.3.2 *A supersede never adds a member*).
 - Two or more coerced keys, and invitees the adversary controls. With one coerced key, a vote cast

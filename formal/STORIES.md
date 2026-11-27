@@ -168,7 +168,7 @@ The things people do on a social network, each mapped to the story and the rule 
 | add a contact, be added, accept, ignore, block | the contact: request, acceptance, private ignore, private block | step 4; CC 5.4.6; `contact`, `mesh_life` |
 | message someone | a pair room between contacts, sealed end to end, direct after consent | step 4, step 5; CC 5.4.6 |
 | join a group, be invited, leave, be removed | the membership ceremony: proposal, acceptance, decline, resignation, removal by the others | step 5; CC 3.1.3.2; `membership` |
-| follow a public page or channel | a public community: founded by anyone, open admission, discoverable by its listing row, plaintext at the Commons tier | step 5; CC 3.1.3.2 (public rooms) |
+| follow a public page or channel | a public community: founded by anyone, invitation-only, readable by anyone, discoverable by its listing row, plaintext at the Commons tier | step 5; CC 3.1.3.2 (public rooms) |
 | post, reply, react, thread | rows in a room; a reply is a row that names the row it answers; a reaction is a score on a row | step 6; CC 3.1.9, 2.1 |
 | turn replies off, run a channel, an event channel, a moderated chat | a room whose record names who may publish; the others read; the moderator grants and withdraws the right; a reply elsewhere never enters it | step 5; CC 3.1.3.2 |
 | share media, go live | blobs inline or chunked; streams and calls under the A/V seal | step 6; CC 8.11.5, 5.3.3 |

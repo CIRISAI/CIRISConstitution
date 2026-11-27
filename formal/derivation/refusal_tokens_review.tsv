@@ -610,7 +610,6 @@ seat_opted_out	report	3.3.6.2	a serve seat carrying the opt-out marker is out of
 seat_record_ended	detail		detail of genesis_bundle_row_invalid
 seat_without_hop_key	report		out of conformance, no disposition word; best reading
 selection_counts	not_a_token		payload or envelope member
-self_admit	not_a_token		enumeration value, not a fault
 self_roster_evict	not_a_token		function, predicate or rule name
 self_verify	not_a_token		family or row-type name
 semantic_disambiguation	not_a_token		enumeration value, not a fault

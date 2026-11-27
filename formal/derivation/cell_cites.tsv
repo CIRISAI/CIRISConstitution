@@ -477,14 +477,11 @@ membership:{stage}	body	agree	CC 8.11.9	REQUIRED on membership:proposal
 membership:{stage}	body	agree	CC 3.1.3.2	The membership ceremony, one attestation-plane row per step: `{stage}` ∈ `proposal` \| `acceptance` \| `decline` \| `widening` \| `removal` \| `resignation` \| `keeps` — closed.
 membership:{stage}	fold	agree	CC 3.2	evaluated over the **founder** subset (`role == founder`), independent of how many non-founder members exist
 membership:{stage}	fold	agree	CC 5.3.2.3	No revocation is refused for another, and none is withdrawn. A revocation has one state, so no comparator picks among the revocations of one subject: every admitted one stands.
-membership:{stage}	governance	fills	CC 4.4.3.17	// this protocol runs under the CC 4.5.13 floor, never one vote
-membership:{stage}	governance	fills	CC 4.4.3.17	A removal under `admission: open` runs under the floor of [CC 4.5.13](#4.5.13), no single vote excluding.
 membership:{stage}	lifecycle	fills	CC 3.3.4	A time-boxed guest is a widening with `valid_until`, and the seat lapses at that instant.
 membership:{stage}	projection	agree	CC 4.4.3.17	trigger the CC 4.4.3.16 key_grant cascade
 membership:{stage}	replication	fills	CC 3.1.3.2	A proposal is readable by, and applied on, any node whose self-collective contains that entry, without that node holding the group's roster
 membership:{stage}	signer_rule	agree	CC 3.1.3.2	a proposal is an inviter's (under `founder_only`, an active founder; otherwise any active member at the proposal's `asserted_at`)
 membership:{stage}	signer_rule	agree	CC 3.1.3.2	an acceptance or decline is the invitee's only — the signer resolves (`signer_acts_for`, [CC 3.4.7.3](part_3_the_namespace.md#3.4.7.3)) to the proposal's `subject_key_ids[0]`
-membership:{stage}	subject_rule	fills	CC 3.1.3.2	a duty holder's **standing** proposal to any requester, whose `subject_key_ids` is resolved at acceptance
 mesh_config:{key}	body	agree	CC 3.1.9.2	consumer processor is refused at admission; emergency form TTL ≤ 72 h.
 mesh_config:{key}	body	agree	CC 4.2.1	A `mesh_config` action MAY relieve or restrict and MUST NOT expand what flows.
 mesh_config:{key}	body	agree	CC 4.2.1	A config key naming no consumer processor MUST be refused at admission.

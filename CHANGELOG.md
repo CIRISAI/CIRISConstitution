@@ -17,6 +17,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - Presence rides a 176-byte blob under codec `0x05`, with bounds a relay enforces; who subscribes to whom is known to the serving relay alone and is never a row (5.3.3). Control is not held behind media. A call follows its room's epoch (5.3.3.5).
 - The door model runs on the vendored kernel models, and the local copies are gone (`formal/causal_kernel`). The admission checker runs in CI.
 - The ledger (8.3.4) closes four rows: the members' vote on a moderation action, membership and the duty seat, a moderator's lone removal of an agent's key, and a removed room key seated again.
+- Open admission is not in this edition. A public room is invitation-only, by its declared protocol or the `community_invite` row, and anyone may read its content and roster (3.2, 4.5.13). The consensus protocol kinds are five (3.3.4).
 
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 
