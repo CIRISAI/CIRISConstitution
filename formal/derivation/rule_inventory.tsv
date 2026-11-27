@@ -1483,6 +1483,7 @@ p3	883	3.2	family	signer	signer_rule	community	is	restates	3.1.3.2	A public comm
 p3	883	3.2	family	moderation	governance	community	is	restates	4.5.4	A public room is moderated like every community: a named steward-bound moderate holder from creation, merit auto-promotion, fail-secure	
 p3	883	3.2	family	key_plane	body	community	is	exception	4.4.3.4	Public room content at community scope is plaintext with no DEK	
 p3	883	3.2	family	audience	replication	community	is	states	5.2	Public room audience is the roster's claimed nodes: replicated on join, readable by anyone on request from a member; nothing pushed to a non-joined node; canonicals hold only the listing	
+p3	883	3.2	family	audience	replication	community,live_stream	is	restates	5.1	Anyone may view a public room's live stream, and only a member publishes one	
 p3	883	3.2	family	audience	placement	custody	is	restates	3.1.3.3	Public room holding claims are at federation scope	
 p3	883	3.2	family	policy_row	governance	community	is	restates	4.5.13	Public room admission follows its consensus_protocol under the floor, by invitation; no single vote admits	
 p3	883	3.2	family	moderation	governance	community	is	restates	1.2,4.5.7,3.3.12,4.5.3	A founder sets room moderation from existing grammar: hash-pinned rule set, per-room watchlist never global, content_class/cw_class/content_rating, CommunityStandards takedowns with counter-notice; no new rule object	
@@ -3181,6 +3182,7 @@ p4	1807	4.5.13	kernel	policy_row	window	*	is	states		window by sensitivity: 8640
 p4	1807	4.5.13	kernel	policy_row	window	*	is	states		irreversible: no instant landing; the change waits its whole window even at full approval, so every objection held before the window closes is counted	
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		The floor is a reverse-path predicate only: nothing lands before the window closes except at enact	
 p4	1807	4.5.13	kernel	census	formula	*	is	states	6.1.9	The base is the standing roster at or below the count minimum, above it the member-only census expected-active count, falling at most a tenth per period, never below floor	
+p4	1807	4.5.13	kernel	policy_row	governance	community	is	states		A row marked standing counts the standing roster at every size; community_invite is one, so a vouch for a newcomer counts the full roster	
 p4	1807	4.5.13	kernel	policy_row	governance	*	MAY	states		A community may set its policy stricter than the defaults, up to a floor at enact, which switches the reverse path off	
 p4	1807	4.5.13	kernel	policy_row	governance	*	MUST_NOT	states		A policy is refused if cancel, floor or enact is reachable by one voice, the window is under its class, or cancel or floor exceeds enact (CLM-policy-corridor)	
 p4	1807	4.5.13	kernel	policy_row	evidence	*	is	states		The governance policy table is published as data with decision function (policy, base, approvals, objections, elapsed) to lands, pending or cancelled, replayed rather than re-read (CLM-governance-policy-table)	
@@ -3262,8 +3264,8 @@ p5	34	5.1	mechanism	key_plane	none	key_grant	MUST	states		Member removal from a 
 p5	35	5.1	mechanism	key_plane	none	key_grant,live_stream	is	states	4.4.3.16	Member addition advances the epoch; a joiner derives only current and later epochs; for a stream its producer keeps with history_on_join full earlier epochs reach it as the producer's key_grant:stream:v1 wraps within the catch-up bound	table
 p5	36	5.1	mechanism	key_plane	none		MAY	states		Time or byte-count hygiene rotation is optional operator policy, default off	table
 p5	38	5.1	mechanism	key_plane	window		MUST	states	5.3.3.8	The substrate MUST coalesce all removals admitted within one coalescing window T (default 2 s) into a single epoch rotation; a removed member's exposure is at most T	
-p5	40	5.1	family	key_plane	none	live_stream	MUST_NOT	exception	3.2,5.3.3.1	For a live_stream with an ungated roster (open admission on a public community, grants to any requester) member removal MUST NOT force rotation; hygiene and nonce bounds still apply	
-p5	40	5.1	mechanism	key_plane	none	key_grant	MUST	states		Rotation on member removal is mandatory for every gated roster (bounded membership or admission ceremony)	
+p5	40	5.1	family	key_plane	none	live_stream	MUST_NOT	exception	3.2,5.3.3.1	For a live_stream of a public community, whose viewers are not gated, member removal MUST NOT force rotation; hygiene and nonce bounds still apply	
+p5	40	5.1	mechanism	key_plane	none	key_grant	MUST	states		Rotation on member removal is mandatory for every gated roster (viewing needs a seat: every stream outside a public community)	
 p5	42	5.1	mechanism	key_plane	none		is	states		Epoch-DEK rekey on member change is MLS TreeKEM (RFC 9420): O(log N) path rekey, commit signed once, blank-node and parent-hash handling; the hybrid KEM is the ciphersuite's HPKE KEM	
 p5	42	5.1	mechanism	key_plane	none	live_stream	is	states		One DEK per (stream_id, epoch): for live participants the group's MLS exporter secret for the epoch is the epoch DEK; MLS is the only live distributor, no second key	
 p5	42	5.1	family	key_plane	lifecycle	key_grant,live_stream	is	states	3.3.2	The same epoch DEK is wrapped as key_grant:stream:v1 rows (one per recipient, wrap v2) for late joiners and recordings, only for a kept stream (recorded or history_on_join full)	

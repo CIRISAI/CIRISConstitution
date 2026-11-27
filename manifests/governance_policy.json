@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "3fb8df68c3d762cc008aa548f8896868b76f2f6e77e5e36a90d5cff19ae06499",
+  "policy_sha256": "a304b48583c14acd283ab4dce4dbdfe0bceb9e6f2a566da95e95b37447cafec0",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -231,7 +231,7 @@
    "cc_ref": "3.1.3.2 4.5.12.5",
    "kind": "two_path",
    "standing_set": "the community's roster",
-   "base": "active",
+   "base": "standing",
    "enact": {
     "num": 2,
     "den": 3
