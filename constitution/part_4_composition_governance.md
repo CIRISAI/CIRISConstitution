@@ -680,7 +680,7 @@ The three resolutions and their trust roots: **WHO** = `resolve_community` (the 
 
 #### 4.4.3.10 `delivery-extension` — Delivery extension — `delivery_mode` × Policy M
 
-Policy M's community-membership composition extends to govern the **delivery axis**. The subscriber-set for any push-delivery flow IS a `community` Contribution; "subscribe = join the community"; it inherits revocation, consensus, and structural-invisibility from Policy M unchanged.
+Policy M's community-membership composition extends to govern the **delivery axis**. The subscriber-set for a publisher-gated push-delivery flow IS a `community` Contribution; "subscribe = join the community"; it inherits revocation, consensus, and structural-invisibility from Policy M unchanged.
 
 **Subscriber-set composition**:
 
@@ -689,15 +689,17 @@ For a Contribution C with delivery_mode = push AND cohort_scope = community:
   subscriber_set(C) = resolve_community(C.community_id, now)
     per CC 4.4.3.7 community membership resolution
 
-The community is admitted under the standard Policy M consensus_protocol
-options (founder_only / unanimous / majority / quorum:M/N / weighted,
-the five kinds and no other) per CC 4.4.3.6. Subscription-specific admission
-semantics ride the consensus_protocol choice:
+The subscriber set is admitted under one of the five consensus_protocol
+kinds of CC 4.4.3.6 and no other. founder_only is conformant for a
+publisher-gated subscription and refused for a community (CC 4.5.12.5).
+Subscription-specific admission semantics ride the consensus_protocol choice:
 
   producer_gated → consensus_protocol = "founder_only" with the
     publisher as sole founder; the publisher authorizes
     each new subscriber
 ```
+
+**Open subscription (normative).** Anyone MAY subscribe to a publication its publisher marks open. Subscribing is a reader's act: a request to be sent the publication. It seats nobody and writes no membership row ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)).
 
 **Cardinality unified across observer-share and multicast**:
 
@@ -1416,7 +1418,9 @@ A reader trusts a signed statement when the key that signed it (`attesting_key_i
 
 **Validity flows from a shared root.** Two nodes under one shared root cross-attest and vouch. Two nodes with no shared root compose nothing. The sanctioned bootstrap and re-root artifact is a **portable trust root**, the genesis bundle: its charter, its holders and at least one seated `infra:serve` node. It is minted by the [CC 4.2.1](#4.2.1) conferral ceremony and owes nothing to any prior root.
 
-**Classes that name no licence.** `admission` is the class of an edge by which an admission stands at a host, and `transparency` the class of an edge by which a host trusts a Transparency Service's receipts ([CC 2.7.11](part_2_the_grammar.md#2.7.11)). No charter declares either.
+**Classes that name no licence.** `admission` is the class of an edge by which an admission stands at a host, and `transparency` the class of an edge by which a host trusts a Transparency Service's receipts ([CC 2.7.11](part_2_the_grammar.md#2.7.11)). No charter declares either. `curation` is the class of an edge by which a reader counts an author's votes and labels, and no charter declares it.
+
+**A filter is the reader's own edges.** A filter is the set of the reader's acceptance edges that say whose votes and labels the reader counts ([CC 4.5.5](#4.5.5) open labeling, [CC 4.4.3.13](#4.4.3.13)). A reader adopts another person's filter by an edge of class `curation` to that person with a `trust_depth`. The reader then counts the curators that person counts, within the walk and its cap. Removing the edge removes everything that reached through it.
 
 **What an edge accepts.** The subject of an acceptance edge is one of three. An edge that attaches a root names the lineage, and it alone carries `attached_head_digest` ([CC 3.2](part_3_the_namespace.md#3.2) T4a). An edge of the class `transparency` names the service's key or identity and carries `service_key`. An edge on the admission walk names an author's identity or a group's id, and an edge to a licensor names that authority. No edge to a community attaches a root.
 
@@ -2080,7 +2084,7 @@ The reverse-quorum of this mechanism is a **fallback for the moderators' absence
 
 **Why 48 hours (normative).** The window governs only the fallback, since a moderator rules at any time and a withhold is immediate. Its one job is the legitimacy of the members' majority, and 48 hours gives every member, in every time zone, two calendar days to respond, where 24 hours gives one. A weekday for every member, whatever day the window opens, would need 72 hours.
 
-**Two acts, not one (normative).** A member who sees harm has two acts and they are separate choices. A **report filed privately with the duty holder** (a named moderator) opens no window and is not shown to the room. The person named sees that a record exists, its kind, its consequence and who answers for it ([CC 4.5.5](#4.5.5)). It becomes the duty holder's record under [CC 4.5.5](#4.5.5), the reporter shielded where the process protects them. The moderator rules on it at any time or lets it rest. A **moderation action raised in the room** is public, names what is asked, and starts the 48 h window at once, the members responding and the fallback carrying on the moderator's absence. The private report is a `moderation:{allegation_type}` row and the room action a `content_class:reported` row, so the two never share a family. The client offers both and never folds one into the other.
+**Two acts, not one (normative).** A member who sees harm has two acts and they are separate choices. A **report filed privately with the duty holder** (a named moderator) opens no window and is not shown to the room. The person named sees that a record exists, its kind, its consequence and who answers for it ([CC 4.5.5](#4.5.5)). It becomes the duty holder's record under [CC 4.5.5](#4.5.5), the reporter shielded where the process protects them. The moderator rules on it at any time or lets it rest. A **moderation action raised in the room** is public, names what is asked, and starts the 48 h window at once, the members responding and the fallback carrying on the moderator's absence. The private report is a `moderation:{allegation_type}` row and the room action a `content_class:reported` row, so the two never share a family. The client offers both and never folds one into the other. Any reader of an item MAY file a report of it privately with the duty holder, member or not, and a public room's items are read by anyone. Raising an action in the room is a member's act ([CC 3.3.12](part_3_the_namespace.md#3.3.12)). Reports of one item are one matter however many there are, and a report by a key outside the duty holder's trust set raises no priority.
 
 **The members' check — one acts, the room may lift (normative).** A duty holder's single signature takes effect at once, and the members may lift it. Members object by signing `objection:raised` rows that name the act. The act is lifted when a strict majority of the members seated at the head the act names, the act's author apart, has objected within the 48-hour window. The window is measured as every window of the policy table is (the clock of a window, below), so nodes may differ while it is open ([CC 2.7.9](part_2_the_grammar.md#2.7.9)). An objection counts at a node only where the node first held it within the freshness window `W` of its signed instant ([CC 2.6.7](part_2_the_grammar.md#2.6.7)). Only a member seated at the head the act names counts, so nobody joins a room to overturn it. The floor is two voices. The author's own objection is no voice, and the author is not among the members the majority is taken of. Where the author is one of two members no lift is possible. Short of that count when the window closes, the act stands. (The policy table's row `moderation_overturn`.)
 
