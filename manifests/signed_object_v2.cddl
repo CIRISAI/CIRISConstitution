@@ -285,8 +285,9 @@ revoked-entry = [key: kid, revocation: row-ref, trusted_through: [* row-ref]]   
 
 ; The genesis bundle (typ "ceg-genesis-bundle/2"), the GenesisBundle of CC 5.3.4. The first of this
 ; form is the ceremony row of CC 2.6.1.12: a fresh genesis with no prev, a signed object that is not
-; a row. refs.prev names a later bundle's predecessor. `version` is a sequence from 1, never ranked:
-; prev's version + 1 where the bundle has a prev, a consistency check only.
+; a row. refs.prev names a later bundle's predecessor, and refs.further_prev a join's further predecessors.
+; `version` is a sequence from 1, never ranked: one greater than the greatest version among the
+; predecessors the bundle names, a consistency check only.
 ; A counted object: one statement per holder over one payload, with no "author", so its object id
 ; takes null. The map is closed. It NAMES rows and never copies them: every row it seats stands in
 ; refs.also "cites" by row-ref (each holder's and each seat's key:record, each seat's transport_destination
@@ -296,7 +297,8 @@ revoked-entry = [key: kid, revocation: row-ref, trusted_through: [* row-ref]]   
 ;  recovery key's thumbprint; it counts only where prev's recovery_commitments[iss] equals the commitment over the
 ;  recovery key (constant time). refs.also "cites" names the recovery key's key:record and the holder's new
 ;  signing-key record; recovery_commitments[iss] is the next commitment.
-; Checked in prose, not here: version is 1 iff refs has no prev; holders, serve_nodes and transparency_services are
+; Checked in prose, not here: version is 1 iff refs has no prev; further_prev stands only beside prev, and
+; prev is the predecessor of greatest version, least object id among equals; holders, serve_nodes and transparency_services are
 ; pairwise disjoint;
 ; the keys of recovery_commitments are exactly holders; scope holds infra:attest and infra:serve; the
 ; three transparency members are present together or not at all, and receipt_quorum is
@@ -312,6 +314,7 @@ ceg-genesis-bundle = {
 }
 genesis-refs = {
   ? "prev": row-ref,               ; the predecessor bundle's object id; absent on the first
+  ? "further_prev": row-ref-set,   ; a join: the further predecessor bundles' object ids, beside prev (CC 2.6.1.11)
   "also": { "cites": row-ref-set },; every row the bundle names: a set
 }
 ; The accord's charter (CC 2.1, CC 3.2 T3 and T6, CC 4.2.6): the parameters no row carries.

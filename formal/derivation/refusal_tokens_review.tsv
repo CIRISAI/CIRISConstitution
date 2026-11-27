@@ -308,6 +308,7 @@ for_key_id	not_a_token		payload or envelope member
 founder_only	not_a_token		enumeration value, not a fault
 functions_root	not_a_token		payload or envelope member
 further_prev	not_a_token		a refs role
+further_prev_not_newest	refusal		the text says Invalid: a join names a predecessor in another's lineage past
 gcp_cloud_hsm	not_a_token		enumeration value, not a fault
 genesis_bundle_count_unmet	hold		the count is not met and the bundle is held
 genesis_bundle_malformed	refusal		the text says Invalid
@@ -317,6 +318,7 @@ genesis_bundle_row_invalid	concludes_nothing		the text says concludes nothing
 genesis_bundle_row_unplaced	concludes_nothing		answer of the bundle order from step 3 on, which is Waiting or concludes nothing
 genesis_bundle_schema	detail		detail of genesis_bundle_malformed
 genesis_holder_custody	concludes_nothing		answer of the bundle order from step 3 on, which is Waiting or concludes nothing
+genesis_join_contested	report		a state reported as a fork is: two joins of different regimes over the same predecessors, neither stands
 gifct_cip	not_a_token		enumeration value, not a fault
 goal_body_malformed	detail		reason carried with federation_malformed_row
 goal_id	not_a_token		payload or envelope member
@@ -553,6 +555,7 @@ recipient_revoke	not_a_token		enumeration value, not a fault
 recipient_see	not_a_token		enumeration value, not a fault
 record_hard_case	not_a_token		scope, duty or role name
 record_id	not_a_token		payload or envelope member
+recovery_behind_head	concludes_nothing		the text says concludes nothing: a recovery whose prev is in the lineage past of a bundle its holder signed
 recovery_changes_other_seat	detail		detail of genesis_bundle_malformed
 recovery_commitment_is_holder_key	detail		detail of genesis_bundle_malformed
 recovery_commitment_mismatch	refusal		listed among the refusals of its row or object
@@ -754,7 +757,6 @@ leaf_key	not_a_token		an element of a leaf vouch entry
 leaf_vouch_max_secs	not_a_token		a constant
 membership_binding_ack_unresolved	hold		RETRYABLE: the widening waits for the receipt it cites
 membership_private_refused	refusal		the text says refused
-membership_public_to_private	concludes_nothing		a version declaring private over a public room concludes nothing
 membership_not_a_community	refusal		the text says refused
 person_count_binding_missing	hold		the count is held at the node
 leaf_vouch_absent	refusal		the text says the door refuses the leaf
