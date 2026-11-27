@@ -25,7 +25,18 @@ CANCEL = lambda base: max(2, bgp.votes(ROW["_cancel"], base, False))
 
 
 def base_of(n, active):
+    """The base a vouch is counted over. The policy row says: `standing` is the full roster at every size; `active`
+    was the census's expected-active share above twelve members, kept here to show what the full roster closes."""
+    if ROW.get("base") == "standing" and active == 1.0: return n
     return n if n <= 12 else max(3, math.ceil(active * n))
+
+
+def thresholds(n):
+    """Member approvals that land a vouch at once, and by the window with the invitee's yes; objections that cancel it."""
+    once = next((a for a in range(n + 1) if bgp.decide(ROW, n, a, 0, 0, True)[0] == "lands"), None)
+    win = next((a for a in range(n + 1) if bgp.decide(ROW, n, a, 0, W, True)[0] == "lands"), None)
+    can = next((o for o in range(n + 1) if bgp.decide(ROW, n, win or 0, o, W, True)[0] == "cancelled"), None)
+    return once, win, can
 
 
 def run(honest, p, cap, active=1.0, windows=60):
@@ -58,6 +69,11 @@ def table():
 def main():
     f = lambda v: "never" if v is None else str(v)
     print("window = %d h; a proposal lands by silence where voices >= max(2, base/3) and objections < max(2, base/3)" % (W // 3600))
+    print("the policy row counts a vouch over the %s roster" % ROW.get("base"))
+    print("%7s | %8s %14s %10s" % ("members", "at once", "by the window", "to cancel"))
+    for n in (1, 2, 3, 6, 7, 12, 30, 100, 1000):
+        print("%7d | %8s %14s %10s" % ((n,) + thresholds(n)))
+    print()
     print("%7s %6s %5s %5s | %6s %6s %6s %10s" % ("members", "active", "p", "cap", "admit", "block", "half", "two_thirds"))
     rows = table()
     for honest, active, p, cap, o in rows:
@@ -74,6 +90,9 @@ def main():
         # 4. An attentive third of the honest members stops it at every size, whatever the cap.
         for h in (3, 6, 7, 12, 30, 100, 1000):
             for c in (None, 1): assert get(h, 1.0, 0.34, c)["admit"] is None or h <= 6
+        # 5. The table as it stands counts the full roster, so what the active base let through is closed: thirty members, nobody objecting.
+        assert ROW.get("base") == "standing"
+        assert thresholds(100) == (67, 33, 34) and thresholds(6) == (5, 1, 2)
         print("check: ok")
 
 
