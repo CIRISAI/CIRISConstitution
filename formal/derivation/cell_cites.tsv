@@ -391,7 +391,7 @@ identity:occurrence	signer_rule	agree	CC 3.3.6.1	admitted only when `attesting_k
 identity:occurrence	signer_rule	agree	CC 3.3.6.2	**The binding = a federation-key-signed `identity_occurrence` carrying `transport_destination`.** The occurrence is admitted only when `attesting_key_id == identity_key_id` (or a current occurrence of it), and it carries the composite signature ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)).
 identity:occurrence	signer_rule	agree	CC 4.4.3.20	signed by `identity_key_id` (or a current occurrence):
 identity:occurrence	signer_rule	agree	CC 4.4.3.23	Any current occurrence, `I` itself included, may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4).
-identity:occurrence_revocation	lifecycle	fills	CC 3.1.3	Wire `identity:occurrence_revocation:v1`. **Never withdrawn.**
+identity:occurrence_revocation	lifecycle	fills	CC 3.1.3	**Never withdrawn.** | -1 only
 identity:occurrence_revocation	projection	agree	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row
 identity:occurrence_revocation	projection	fills	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row
 identity_amendment	body	agree	CC 2.1	`identity_amendment:v1`, REQUIRED
@@ -705,3 +705,5 @@ custody:{kind}	subject_rule	agree	CC 3.1.3.3	`attesting_key_id` is the device th
 identity_amendment	subject_rule	agree	CC 3.1.5	Attester = the agent's occurrence key, subject = the agent's identity key.
 key_grant:{axis}	subject_rule	agree	CC 3.1.3	`attested_key_id` is the recipient occurrence; the envelope carries the key's identity on that axis
 session:{kind}	subject_rule	agree	CC 3.1.3.1	Emitter: **self-report** (`attesting_key_id` = `attested_key_id` = the claiming occurrence).
+group:roster	replication	fills	CC 5.2	The keys a roster row seats or removes are always within its audience.
+membership:{stage}	replication	fills	CC 5.2	The keys a roster row seats or removes are always within its audience.

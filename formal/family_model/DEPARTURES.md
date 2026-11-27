@@ -14,7 +14,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 | column | families |
 |---|---|
-| placement | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderation_action`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `mls:leaf_vouch`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `window:{state}` |
+| placement | `archive_release:{basis}`, `ballot:moderation_action`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `mls:leaf_vouch`, `preserve_request`, `preserve_response`, `retirement:{state}`, `stream:head`, `window:{state}` |
 | subject_rule | `act:ack`, `admission:unit`, `archive_release:{basis}`, `ballot:moderation_action`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `lawful_order:release`, `location_proof:{version}`, `mls:leaf_vouch`, `preserve_request`, `preserve_response`, `regard:{subject_kind}`, `retirement:{state}`, `stream:head`, `window:{state}` |
 | cosign_rule | `act:ack`, `admission:unit`, `ballot:moderation_action`, `ballot:moderator_acceptance`, `location_proof:{version}` |
 | freshness | `act:ack`, `admission:unit`, `ballot:moderation_action`, `ballot:moderator`, `ballot:moderator_acceptance`, `contribution:{subject_kind}`, `holon:claim`, `location_proof:{version}`, `mls:leaf_vouch`, `regard:{subject_kind}`, `stream:head`, `window:{state}` |

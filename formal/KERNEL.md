@@ -251,9 +251,10 @@ its room only by its own signer's act: a row that names it from another room car
 signed both (CC 5.2). No member carries another member's signed row out. **proved** (`Carry.lean`):
 `nothing_leaves`, `others_elsewhere_change_nothing`, `author_carries`, `same_room_unchanged`. The cost: a cut
 that names a row of another room waits until that row's signer carries it. What must not travel is proof of
-who said it or of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): no placement cell
-is empty. Of 189 families, 143 take the one default, the scope each row carries with the audience CC 5.2 gives
-it, and 24 are placed by a sentence of their own. **open**: the default is stated once for all families and is
+who said it or of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): one placement cell
+is empty, `stream:head`'s. Of 189 families, 143 take the one default, the scope each row carries with the audience CC 5.2 gives
+it, 34 are placed by a sentence of their own, and 11 keep the census reading: five held shut, three the text
+agrees with and cites, and three whose scope follows another row's. **open**: the default is stated once for all families and is
 checked for none of the 143. CC 8.3.4 names this as a limit. The copy rule is a row of that table.
 
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
