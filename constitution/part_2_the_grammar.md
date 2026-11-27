@@ -764,14 +764,15 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
 |---|---|---|---|---|---|---|
-| — | `"refs"` | object | `genesis-refs` | always | [2.6.1.11](#2.6.1.11) [5.3.4](part_5_transport_substrate.md#5.3.4) | Every row the bundle names, and prev on a bundle after the first. |
-| — | `"version"` | object | `1..4294967295` | always | [2.6.1.11](#2.6.1.11) | A sequence from 1: prev's version plus one where the bundle has a prev, a consistency check only. |
+| — | `"refs"` | object | `genesis-refs` | always | [2.6.1.11](#2.6.1.11) [5.3.4](part_5_transport_substrate.md#5.3.4) | Every row the bundle names, prev on a bundle after the first, and further_prev on a join. |
+| — | `"version"` | object | `1..4294967295` | always | [2.6.1.11](#2.6.1.11) | A sequence from 1: one greater than the greatest version among the predecessors the bundle names, a consistency check only. |
 | — | `"asserted_at"` | object | `ms-time` | always | [2.6.2](#2.6.2) [2.6.1.11](#2.6.1.11) | POSIX milliseconds; each statement's iat is floor(asserted_at / 1000), and a disagreement is refused. |
 | — | `"family_key_id"` | object | `tstr` | always | [5.3.4](part_5_transport_substrate.md#5.3.4) [4.2.3](part_4_composition_governance.md#4.2.3) | The accord's name as its rows carry it; a name, never an anchor. |
 | — | `"holders"` | object | `[+ identity-ref]` | always | [4.2.3](part_4_composition_governance.md#4.2.3) [5.3.4](part_5_transport_substrate.md#5.3.4) [2.6.1.2](#2.6.1.2) | The accord's roster: a set; each holder's key record stands in refs. |
 | — | `"serve_nodes"` | object | `[+ identity-ref]` | always | [5.3.4](part_5_transport_substrate.md#5.3.4) [3.3.6.2](part_3_the_namespace.md#3.3.6.2) [2.6.1.2](#2.6.1.2) | The seated serve nodes: a set, disjoint from holders; each seat's key record and binding stand in refs; the bundle's count is each seat's canonical conferral. |
 | — | `"charter"` | object | `genesis-charter` | always | [2.1](#2.1) [4.2.6](part_4_composition_governance.md#4.2.6) | The accord's parameters, which no row carries. |
 | — | `"prev"` | object | `row-ref` | on every bundle after the first | [2.6.1.11](#2.6.1.11) | The predecessor bundle's object id. |
+| — | `"further_prev"` | object | `row-ref-set` | on a join, beside prev | [2.6.1.11](#2.6.1.11) [3.2](part_3_the_namespace.md#3.2) [2.6.1.3](#2.6.1.3) | The further predecessor bundles a join names, by object id: a set of at least one, the member by which a row names further predecessors. |
 | — | `"also"` | object | `map` | always | [2.6.1.3](#2.6.1.3) | The one role cites, and no other. |
 | — | `"also"."cites"` | object | `row-ref-set` | always | [2.6.1.3](#2.6.1.3) [2.6.1.2](#2.6.1.2) | Every row the bundle names: each holder's and each seat's key record, each named transparency service's, and each seat's binding; a set. |
 | — | `"recovery_commitments"` | object | `{ + identity-ref => hash-digest }` | always | [4.2.6](part_4_composition_governance.md#4.2.6) [3.2](part_3_the_namespace.md#3.2) | One entry per holder, keyed by its identity reference; each the commitment over that holder's one recovery key. |
