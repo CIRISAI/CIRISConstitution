@@ -27,6 +27,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - A signer's regard for a subject is one family, `regard:{subject_kind}`: at `self` scope it is a feed weight, at federation scope a vouch, and a node lists a room for a reader only where a trusted key holds a positive public `regard:room` on its listing (3.1.9.3, 4.4.3.13, 3.2, 4.4.3.34). Families: 189.
 - A member has at most one invitation pending by the window at a time; a second proposal by that member while the first is pending concludes nothing (4.5.13).
 - A root's grant resolves for a reader only while its voices are a strict majority of the holders in force there; a later holder adds its voice by signing it, and a retired key is no voice (3.2). A later bundle counts over its predecessor's live holders (2.6.1.11).
+- An affiliation's deciding seats are its officers, members seated with `role: officer`, and they are the body for every counted act of the affiliation; a lone officer's act against a member needs a countersign from the designated official or a `review` holder over the body `overseen_by` names (4.4.3.12, 3.3.4). A locked community issues no licence, `licensure_authority_locked` (2.4.1.3, 4.5.4).
 
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 

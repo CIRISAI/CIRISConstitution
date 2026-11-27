@@ -872,7 +872,7 @@ community {
     {
       key_id: key_id // member identity_key (NOT occurrence)
       joined_at: rfc3339_canonical
-      role: Option<MemberRole> // founder | member | null
+      role: Option<MemberRole> // founder | officer | member | null
     },...
   ]
   founded_at: rfc3339_canonical
@@ -1651,7 +1651,7 @@ family {
     {
       key_id: key_id // member identity_key (NOT occurrence_key)
       joined_at: rfc3339_canonical
-      role: Option<MemberRole> // founder | member | null
+      role: Option<MemberRole> // founder | officer | member | null
     },...
   ]
   founded_at: rfc3339_canonical
@@ -1670,6 +1670,7 @@ family {
 |-----------|----------------------------------------------------------------------|
 | founder | Bootstrapping signer (recorded at founded_at). In a room the value records a fact and confers nothing ([CC 4.5.4](part_4_composition_governance.md#4.5.4)) |
 | member | Standard member; rights per consensus_protocol |
+| officer | An affiliation's deciding seat: a voice in every counted act of the affiliation under its declared protocol ([CC 4.4.3.12](part_4_composition_governance.md#4.4.3.12)) |
 
 **`ConsensusProtocol` — a closed vocabulary of five kinds**. The family's chosen consensus mechanism for membership changes. It is locked at family creation. Changes ride the protocol's own rules (meta-amendment shape parallel to [CC 4.5.1.2](part_4_composition_governance.md#4.5.1.2)) UNLESS `consensus_protocol_entrenched == true`, in which case replacement requires an out-of-band ceremony.
 

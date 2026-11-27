@@ -15,4 +15,4 @@ p3	3.2	1377	The founders' count cannot admit the row that would restore it.	foun
 p3	3.2	1377	So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat.	founder
 p3	3.2	1430	A mechanized model of this machine, checked for (i)–(viii) over bounded founder sets and instant orderings, is the standing-verdict model, pinned by the register as `CLM-standing-verdict`.	founder
 p3	3.3.4	1640	**A group's id is derived from its founding (normative).	founder
-p3	3.3.4	1690	An active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key.	founder
+p3	3.3.4	1691	An active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key.	founder
