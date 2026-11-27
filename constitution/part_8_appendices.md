@@ -3355,8 +3355,8 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | false | true (always) | none |
-| withdraw | open cell | none | false | false | attest |
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
 
 Count: `none` (CC 3.1.9.3)
 
