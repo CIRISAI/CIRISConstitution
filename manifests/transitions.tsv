@@ -402,6 +402,8 @@ ratchet:flag:out_of_distribution_voting	withdraw	admitted	withdrawn	author,subje
 ratchet:flag:out_of_distribution_voting	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 reconsideration:{grounds}	attest	none	admitted	review,subject	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 reconsideration:{grounds}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
+regard:{subject_kind}	attest	none	admitted	registered	selfAct	false	none		true	derived	cc-table	gap
+regard:{subject_kind}	withdraw	admitted	withdrawn		none	false	attest	selfAct	false	gap	gap	derived
 regime:{artifact}:{version}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 regime:{artifact}:{version}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 rendezvous:route	attest	none	admitted	self	selfAct	true	withdraw	selfAct	true	derived	derived	derived

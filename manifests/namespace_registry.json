@@ -257,7 +257,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 10,
     "n_components_normative": 8,
-    "n_families": 188,
+    "n_families": 189,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
@@ -265,7 +265,7 @@
       "cirisbench": 1,
       "holon": 1,
       "lens": 9,
-      "node": 51,
+      "node": 52,
       "persist": 38,
       "registry": 20,
       "transport-delivery": 8
@@ -328,7 +328,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "bc817d9f3341cb20751f752e98c76187a5bc56d151fa578150ddebd30d11ab30",
+    "registry_sha256": "707384487020a05b17e56d47f5f156badc64649dbc59dcb7f8c29a28e073cbfb",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -343,7 +343,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "d57fe5e3f851172b14cf603d4db06bdccacc18e158ade73012df446dfac6c76c"
+    "source_sha256": "77e324d3c07d44ae1180808c5b9eaead413848ca5309870665354d250f9ca7f8"
   },
   "families": [
     {
@@ -4238,6 +4238,35 @@
         {
           "class": "vocab",
           "segment": "{grounds}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9.3",
+      "description": "A signer's regard for one subject, more or less of it relative to the rest (registered under CC 3.1.7 R2(a); CC 4.4.3.13): a scores row whose signed score is the regard, positive for more and negative for less.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "regard:{subject_kind}",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "regard"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{subject_kind}",
+          "values": [
+            "key",
+            "room",
+            "publisher",
+            "topic",
+            "kind",
+            "class",
+            "rating"
+          ]
         }
       ]
     },

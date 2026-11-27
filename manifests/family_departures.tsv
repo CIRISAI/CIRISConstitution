@@ -238,6 +238,13 @@ preserve_response	projection	unbuilt	"none (never stored)"
 preserve_response	erasure_route	unbuilt	"none (never stored)"
 provenance:build_manifest:{target}	placement	build_manifest_public	"commons"
 quarantine:{state}	lifecycle	withhold_outranks_release	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "released supersedes withheld (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
+regard:{subject_kind}	subject_rule	unbuilt	null
+regard:{subject_kind}	freshness	unbuilt	null
+regard:{subject_kind}	lifecycle	unbuilt	null
+regard:{subject_kind}	replication	unbuilt	null
+regard:{subject_kind}	projection	unbuilt	null
+regard:{subject_kind}	erasure_route	unbuilt	null
+regard:{subject_kind}	governance	unbuilt	null
 rendezvous:route	placement	rendezvous_public	"commons"
 retirement:{state}	placement	unbuilt	"none (held shut: never stored)"
 retirement:{state}	subject_rule	unbuilt	"none (held shut)"

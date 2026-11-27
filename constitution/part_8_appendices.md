@@ -1665,7 +1665,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons. A card and a description MUST NOT differ on a value. The build takes a value the text states from words quoted from the text, and fails when those words change. A value the text does not state is read from the shipped store, and a difference between the store and the text is a listed departure (`manifests/divergences.tsv`). An `else` arm of a guard names one reason. Where a section also gives a RETRYABLE reason for that clause, that reason is the one reported while the row the clause waits for is not held.
 
-A family with no card states none of these beyond the default row. Cards: 125 of 188 families.
+A family with no card states none of these beyond the default row. Cards: 126 of 189 families.
 
 **`accord:*`** — Rules, thing
 
@@ -3350,6 +3350,15 @@ Count: `none`
 
 Fold:
 - `by=advisory` (CC 3.1.6)
+
+**`regard:{subject_kind}`** — Priorities, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | false | true (always) | none |
+| withdraw | open cell | none | false | false | attest |
+
+Count: `none` (CC 3.1.9.3)
 
 **`rendezvous:route`** — Circumstances, thing
 
