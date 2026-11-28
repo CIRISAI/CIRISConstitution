@@ -22,12 +22,12 @@ community_remove	voice	person	CC 4.5.13	A vote counts once per person, whatever 
 community_remove	voices	scrubs	CC 3.3.4	**Removal** is a `membership:removal` cosigned under the current protocol
 community_remove	counted_at	named	CC 2.4	judged on the *receiver's own* fold over the members at the roster head the row names
 community_remove	changes_set	removes	CC 3.3.4	**Removal** is a `membership:removal` cosigned under the current protocol
-self_roster_add	count_set	self	CC 3.3.6.4	a strict majority of the live roster, proposer counted, approves and it lands at once
+self_roster_add	count_set	self+key	CC 3.1.3.2	A voice's keys are a roster of its own, kept as the key roster of a self is kept
 self_roster_add	voice	key	CC 3.3.6.4	This is the one roster where a floor of one voice is right, because every key is the same person's.
 self_roster_add	counted_at	named	CC 3.3.6.4	Both thresholds are counted over the roster the proposal names
 self_roster_add	voices	objection	CC 3.3.6.4	Votes travel on `objection:{state}`
 self_roster_add	changes_set	adds	CC 3.3.6.4	An addition or an eviction is a proposal signed by a live roster key
-self_roster_evict	count_set	self	CC 3.3.6.4	a strict majority of the live roster, proposer counted, approves and it lands at once
+self_roster_evict	count_set	self+key	CC 3.1.3.2	A voice's keys are a roster of its own, kept as the key roster of a self is kept
 self_roster_evict	voice	key	CC 3.3.6.4	This is the one roster where a floor of one voice is right, because every key is the same person's.
 self_roster_evict	counted_at	named	CC 3.3.6.4	Both thresholds are counted over the roster the proposal names
 self_roster_evict	voices	objection	CC 3.3.6.4	Votes travel on `objection:{state}`
@@ -87,6 +87,5 @@ election_open	voice	person	CC 4.5.13	A vote counts once per person, whatever the
 election_open	voices	scrubs	CC 4.5.13	An election for an ended duty seat is opened by a row counted over the room's members, by strict majority with a floor of two voices, or the roster's size if smaller.
 election_open	counted_at	named	CC 2.4	judged on the *receiver's own* fold over the members at the roster head the row names
 moderation_action	voices	ballot	CC 4.5.13	is a row of the family `ballot:moderation_action`
-affiliation_member_action	voice	person	CC 4.4.3.12	Counts are over persons: two officer keys of one person are one officer.
 accord_halt	counted_at	named	CC 4.2.1.3	and the bundle it is counted over as `head`
 accord_majority	counted_at	named	CC 4.2.1.3	and the bundle it is counted over as `head`

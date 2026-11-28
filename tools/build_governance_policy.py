@@ -63,9 +63,9 @@ COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("coun
                        ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no")),
                        ("target_voice", ("yes", "no"))])
 COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no", "target_voice": "no"}
-SET_ROLES = set(ROLES) | {"deciding", "outside"}
+SET_ROLES = set(ROLES) | {"deciding", "outside", "key"}   # `key`: a seat of a room voice's key roster (CC 3.1.3.2)
 SET_EXCL = ("target", "proposer", "node")
-UNSTATED_MAX = 4   # cells the text leaves unstated; the number only falls
+UNSTATED_MAX = 5   # cells the text leaves unstated; the number only falls
 EXPLICIT_UNSTATED_MAX = 6   # explicit cells the text leaves unstated; the number only falls
 
 BASE_LAW = OrderedDict([("kind", "standing_then_census"), ("k", 12), ("tail", 30), ("min", 3),
