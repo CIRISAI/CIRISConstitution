@@ -406,6 +406,12 @@ The low-latency realtime profile (direct Reticulum Links) needs no relay tree fo
 
 **Control is not held behind media (normative).** A node's control plane and its relaying are not blockable by its host's consumption of media. A node whose host stops reading media frames still answers control and still forwards to the members beneath it. A control frame the transport delivered is never shed with media.
 
+**Pacing under a queued uplink (normative).** A node serves its sends in this order: control first, then audio, then video, then bulk. A stale media chunk is never forwarded. Presence and bulk are served at no less than a tenth of the rate, and only a send taken through that floor is charged to it.
+
+A chunk's age is read from its trailer's `source_ms` ([CC 5.3.3.5](#5.3.3.5)), and a media chunk is judged stale against its stream's age floor. The age floor of a stream is set per stream and epoch. Every floor, an epoch's first included, needs a confirming second chunk, and the floor is the lower of the pair.
+
+Three limits hold. A node never holds control behind media in its own queue, and control MAY wait behind media already queued at the uplink. Staleness alone does not bound how late media arrives: the rate budget and the transport's dropping of the queue's head bound it together. A call of two is under the same queue rules, by its one leg's own reading.
+
 **Ephemeral vs persistent rosters**: a persistent channel is a long-lived `community`; an ad-hoc call is an **ephemeral `community`** (short `valid_until`, torn down on last-leave). Same primitive, different lifetime — no special-case "session" primitive.
 
 The breadth confirmation: a full realtime group-communication platform — group video, voice, screen sharing, chat, and channels-with-sub-channels — requires **no addition to the 1+4 structural set** beyond the CC 5.3.3 delivery axis and the `community` membership machinery of [CC 4.4.3](part_4_composition_governance.md#4.4.3).
@@ -531,6 +537,8 @@ A stream is its own log, and its chunks are the leaves. The log is the producer'
 | `dimension` | `stream:head:v1` |
 
 A head carries no list of witnesses and no proof. The consistency proof from an earlier head is submission material beside the statement ([RFC-9942], label 396), never a payload member ([CC 5.3.1.1](#5.3.1.1)).
+
+A stream's head row is placed at the scope of the stream it heads and is served to whoever is served its chunks.
 
 **An inline file publishes no head.** An inline file is a log of one leaf, and no head is published for it. Its root is the leaf's own hash, the blob's SHA-256 under the `0x00` prefix, which every holder of the blob computes. A delivery ack over an inline blob is checked against that leaf ([CC 5.3.3.11](#5.3.3.11)), and the file's row carries no head.
 

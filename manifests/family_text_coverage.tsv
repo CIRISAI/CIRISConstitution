@@ -269,7 +269,7 @@ archive_release:{basis}	signer_rule	text	cc-table
 archive_release:{basis}	cosign_rule	cited	code-v61
 archive_release:{basis}	subject_rule	differs	code-v61
 archive_release:{basis}	polarity	text	code-v61
-archive_release:{basis}	placement	unstated	code-v61
+archive_release:{basis}	placement	text	cc-table
 archive_release:{basis}	lifecycle	unstated	code-v61
 archive_release:{basis}	erasure_route	unstated	code-v61
 archive_release:{basis}	projection	unstated	code-v61
@@ -281,7 +281,7 @@ archive_release:{basis}	fold	unstated	generic
 archive_release:{basis}	subject_may_withdraw	text	derived
 archive_release:{basis}	accountability_record	text	derived
 archive_release:{basis}	may_carry_under	text	derived
-archive_release:{basis}	standing_act	open	open
+archive_release:{basis}	standing_act	text	derived
 archive_release:{basis}	room_content	text	derived
 archive_release:{basis}	names_stands_on	text	derived
 attestation:agent_integrity	signer_rule	cited	code-v61
@@ -934,7 +934,7 @@ community:listing	signer_rule	text	cc-table
 community:listing	cosign_rule	cited	code-v61
 community:listing	subject_rule	cited	code-v61
 community:listing	polarity	text	code-v61
-community:listing	placement	cited	code-v61
+community:listing	placement	text	cc-table
 community:listing	lifecycle	unstated	code-v61
 community:listing	erasure_route	unstated	code-v61
 community:listing	projection	unstated	code-v61
@@ -1352,7 +1352,7 @@ custody:{kind}	signer_rule	cited	code-v61
 custody:{kind}	cosign_rule	cited	code-v61
 custody:{kind}	subject_rule	cited	code-v61
 custody:{kind}	polarity	text	code-v61
-custody:{kind}	placement	text	prose
+custody:{kind}	placement	text	cc-table
 custody:{kind}	lifecycle	unstated	code-v61
 custody:{kind}	erasure_route	unstated	code-v61
 custody:{kind}	projection	unstated	code-v61
@@ -1656,7 +1656,7 @@ duty:{kind}	signer_rule	text	prose
 duty:{kind}	cosign_rule	cited	code-v61
 duty:{kind}	subject_rule	unstated	code-v61
 duty:{kind}	polarity	text	code-v61
-duty:{kind}	placement	text	prose
+duty:{kind}	placement	text	cc-table
 duty:{kind}	lifecycle	unstated	code-v61
 duty:{kind}	erasure_route	unstated	code-v61
 duty:{kind}	projection	unstated	code-v61
@@ -1903,7 +1903,7 @@ group:roster	signer_rule	differs	code-v61
 group:roster	cosign_rule	cited	code-v61
 group:roster	subject_rule	unstated	code-v61
 group:roster	polarity	text	code-v61
-group:roster	placement	cited	code-v61
+group:roster	placement	text	cc-table
 group:roster	lifecycle	unstated	code-v61
 group:roster	erasure_route	unstated	code-v61
 group:roster	projection	cited	code-v61
@@ -2245,7 +2245,7 @@ lawful_order:release	signer_rule	text	cc-table
 lawful_order:release	cosign_rule	cited	code-v61
 lawful_order:release	subject_rule	differs	code-v61
 lawful_order:release	polarity	text	code-v61
-lawful_order:release	placement	unstated	code-v61
+lawful_order:release	placement	text	cc-table
 lawful_order:release	lifecycle	unstated	code-v61
 lawful_order:release	erasure_route	unstated	code-v61
 lawful_order:release	projection	unstated	code-v61
@@ -2257,7 +2257,7 @@ lawful_order:release	fold	unstated	generic
 lawful_order:release	subject_may_withdraw	text	derived
 lawful_order:release	accountability_record	text	derived
 lawful_order:release	may_carry_under	text	derived
-lawful_order:release	standing_act	open	open
+lawful_order:release	standing_act	text	derived
 lawful_order:release	room_content	text	derived
 lawful_order:release	names_stands_on	text	derived
 ledger:checkpoint:{unit}:{version}	signer_rule	cited	mixed
@@ -2397,7 +2397,7 @@ membership:{stage}	signer_rule	cited	code-v61
 membership:{stage}	cosign_rule	cited	code-v61
 membership:{stage}	subject_rule	cited	code-v61
 membership:{stage}	polarity	text	code-v61
-membership:{stage}	placement	cited	code-v61
+membership:{stage}	placement	text	cc-table
 membership:{stage}	lifecycle	unstated	code-v61
 membership:{stage}	erasure_route	unstated	code-v61
 membership:{stage}	projection	cited	code-v61
@@ -2720,7 +2720,7 @@ preserve_request	signer_rule	text	cc-table
 preserve_request	cosign_rule	cited	code-v61
 preserve_request	subject_rule	differs	code-v61
 preserve_request	polarity	text	code-v61
-preserve_request	placement	unstated	code-v61
+preserve_request	placement	text	cc-table
 preserve_request	lifecycle	unstated	code-v61
 preserve_request	erasure_route	unstated	code-v61
 preserve_request	projection	unstated	code-v61
@@ -2739,7 +2739,7 @@ preserve_response	signer_rule	text	cc-table
 preserve_response	cosign_rule	cited	code-v61
 preserve_response	subject_rule	differs	code-v61
 preserve_response	polarity	text	code-v61
-preserve_response	placement	unstated	code-v61
+preserve_response	placement	text	cc-table
 preserve_response	lifecycle	unstated	code-v61
 preserve_response	erasure_route	unstated	code-v61
 preserve_response	projection	unstated	code-v61
@@ -3081,7 +3081,7 @@ retirement:{state}	signer_rule	text	cc-table
 retirement:{state}	cosign_rule	differs	code-v61
 retirement:{state}	subject_rule	differs	code-v61
 retirement:{state}	polarity	text	code-v61
-retirement:{state}	placement	unstated	code-v61
+retirement:{state}	placement	text	cc-table
 retirement:{state}	lifecycle	unstated	code-v61
 retirement:{state}	erasure_route	unstated	code-v61
 retirement:{state}	projection	unstated	code-v61
@@ -3093,7 +3093,7 @@ retirement:{state}	fold	unstated	generic
 retirement:{state}	subject_may_withdraw	text	derived
 retirement:{state}	accountability_record	text	derived
 retirement:{state}	may_carry_under	text	derived
-retirement:{state}	standing_act	open	open
+retirement:{state}	standing_act	text	derived
 retirement:{state}	room_content	text	derived
 retirement:{state}	names_stands_on	text	derived
 revocation:{entity_type}:{reason}	signer_rule	cited	code-v61
@@ -3252,7 +3252,7 @@ stream:head	signer_rule	text	cc-table
 stream:head	cosign_rule	cited	cc-table
 stream:head	subject_rule	open	gap
 stream:head	polarity	text	cc-table
-stream:head	placement	open	gap
+stream:head	placement	text	cc-table
 stream:head	lifecycle	open	gap
 stream:head	erasure_route	open	gap
 stream:head	projection	open	gap

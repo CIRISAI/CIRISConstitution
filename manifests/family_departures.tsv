@@ -26,7 +26,6 @@ admission:unit	projection	unbuilt	null
 admission:unit	erasure_route	unbuilt	null
 admission:unit	governance	unbuilt	null
 age_assurance:{level}:{band}:{version}	subject_rule	verdict_not_yours	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "not_subject (attester != attested)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
-archive_release:{basis}	placement	unbuilt	"none (held shut: never stored)"
 archive_release:{basis}	subject_rule	unbuilt	"none (held shut)"
 archive_release:{basis}	lifecycle	unbuilt	"none (held shut)"
 archive_release:{basis}	replication	unbuilt	"none (held shut)"
@@ -81,7 +80,7 @@ census:partial:{class}	placement	census_published	"commons"
 census:share:{class}	placement	census_addressed	"addressed"
 census:share:{class}	subject_rule	census_addressed	"CC for_key_id = serve_seat; not enforced"
 collection:{kind}	cosign_rule	quorum	"CC group_consensus_protocol for amendments; not built"
-community:listing	placement	listing_public	"commons (public_room.rs:229, listing_not_federation)"
+community:listing	placement	listing_public	"commons"
 community:listing	subject_rule	listing_one_row	{"kind": "names exactly one community", "must_be_registered": "the community record held"}
 community:listing	lifecycle	listing_one_row	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "one live row per community (read fold live_listing)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 community:listing	replication	listing_public	{"audience": "everyone", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
@@ -104,7 +103,7 @@ contribution:{subject_kind}	projection	unbuilt	null
 contribution:{subject_kind}	erasure_route	unbuilt	null
 contribution:{subject_kind}	governance	unbuilt	null
 credits:{domain}:{language}:{subject}	projection	typed_view	{"rebuild": "byte_equal", "table": "credits_ledger"}
-custody:{kind}	placement	custody_scope	"the blob's held claim scope (holding_claim::check_holding_claim_scope)"
+custody:{kind}	placement	custody_scope	["self_collective", "targeted_family", "targeted_room", "commons"]
 custody:{kind}	subject_rule	custody_own_report	{"for_key_id": "none", "kind": ["the device", "attested == attester", "evidence_refs exactly 1 blob digest"]}
 custody:{kind}	lifecycle	custody_own_withdrawal	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 deferral:request	placement	deferral_in_cell	["self_collective", "targeted_family", "targeted_room"]
@@ -124,12 +123,12 @@ detection:{detector}	lifecycle	adverse	{"expires": "expires_at honoured", "retra
 detection:{detector}	projection	typed_view	{"rebuild": "byte_equal", "table": "detection_events"}
 detection:{detector}	erasure_route	signer_erases_adverse	["dsar (producer withdraws + tombstone)", "purge"]
 device:label	placement	device_name	"self_collective"
-duty:{kind}	placement	duty_scope	"never wider than the referenced permission's projection"
+duty:{kind}	placement	duty_scope	["self_collective", "targeted_family", "targeted_room", "commons"]
 evidence:{suite}:{kind}:{cell}:{prefix}	placement	evidence_public	"commons"
 expertise:{domain}:{language}	projection	typed_view	{"rebuild": "byte_equal", "table": "expertise_ledger"}
 goal:{scale}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "amendment = declarer's supersedes with whole body"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 goal:{scale}	projection	typed_view	{"rebuild": "byte_equal", "table": "goals"}
-group:roster	placement	roster_in_group	["targeted_family", "targeted_room (cohort_scope family|community + group_kind)"]
+group:roster	placement	roster_in_group	["targeted_family", "targeted_room"]
 group:roster	cosign_rule	quorum	"group_consensus_protocol (count_distinct_roster_scrubs over base + additional_scrubs[])"
 group:roster	lifecycle	quorum	{"expires": "expires_at honoured", "retraction_class": "cosigned", "rotation_on_removal": "yes", "supersedes": "typed record supersede only", "withdraws_by": "{cosigned}"}
 group:roster	replication	group_plane	{"audience": "may_receive_group_plane", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
@@ -174,7 +173,6 @@ key_grant:{axis}	freshness	standing_at_signing	{"W": "W: past W the sealer must 
 key_grant:{axis}	lifecycle	shared_stays_shared	{"expires": "expires_at honoured", "retraction_class": "none", "rotation_on_removal": "yes", "supersedes": "same_attester", "withdraws_by": "{}"}
 key_grant:{axis}	replication	wrap_reaches_recipient	{"audience": "addressee", "held": "refuse", "non_recipient": null, "tier": "federation"}
 key_grant:{axis}	projection	derived_no_rebuild	{"rebuild": "none", "table": "federation_key_grant_pending"}
-lawful_order:release	placement	unbuilt	"none (held shut: never stored)"
 lawful_order:release	subject_rule	unbuilt	"none (held shut)"
 lawful_order:release	lifecycle	unbuilt	"none (held shut)"
 lawful_order:release	replication	unbuilt	"none (held shut)"
@@ -193,7 +191,7 @@ location_proof:{version}	replication	unbuilt	null
 location_proof:{version}	projection	unbuilt	null
 location_proof:{version}	erasure_route	unbuilt	null
 location_proof:{version}	governance	unbuilt	null
-membership:{stage}	placement	two_consents	["targeted_family", "targeted_room (at the group)"]
+membership:{stage}	placement	two_consents	["targeted_family", "targeted_room"]
 membership:{stage}	subject_rule	two_consents	{"proposal": "cardinality exactly 1 invitee (0 for a standing offer in an open public room), expires_at <= 30 d", "reply": "attested = invitee"}
 membership:{stage}	cosign_rule	quorum	{"proposal/reply/resignation": "none", "widening/removal": "group_consensus_protocol"}
 membership:{stage}	lifecycle	quorum	{"expires": "expires_at honoured", "retraction_class": "cosigned", "rotation_on_removal": "yes", "supersedes": "typed record supersede only", "withdraws_by": "{cosigned}"}
@@ -222,13 +220,11 @@ observation:reachability	subject_rule	observation_names_observed	"CC cardinality
 ownership:{relation}:{target_kind}:{version}	placement	binding_cosigned_by_affiliation	"affiliation named must admit the owner"
 ownership:{relation}:{target_kind}:{version}	subject_rule	own_record; minor_not_announced	"attested = the node; a minor's binding never announced at federation"
 ownership:{relation}:{target_kind}:{version}	freshness	standing_at_signing	{"W": "W on incumbents (check_roster_act_fresh)", "judged_at": "signed_instant_with_W"}
-preserve_request	placement	unbuilt	"none (held shut: never stored)"
 preserve_request	subject_rule	unbuilt	"none (held shut)"
 preserve_request	lifecycle	unbuilt	"none (held shut)"
 preserve_request	replication	unbuilt	"none (held shut)"
 preserve_request	projection	unbuilt	"none (never stored)"
 preserve_request	erasure_route	unbuilt	"none (never stored)"
-preserve_response	placement	unbuilt	"none (held shut: never stored)"
 preserve_response	subject_rule	unbuilt	"none (held shut)"
 preserve_response	lifecycle	unbuilt	"none (held shut)"
 preserve_response	replication	unbuilt	"none (held shut)"
@@ -244,7 +240,6 @@ regard:{subject_kind}	projection	unbuilt	null
 regard:{subject_kind}	erasure_route	unbuilt	null
 regard:{subject_kind}	governance	unbuilt	null
 rendezvous:route	placement	rendezvous_public	"commons"
-retirement:{state}	placement	unbuilt	"none (held shut: never stored)"
 retirement:{state}	subject_rule	unbuilt	"none (held shut)"
 retirement:{state}	lifecycle	unbuilt	"none (held shut)"
 retirement:{state}	replication	unbuilt	"none (held shut)"
@@ -257,7 +252,7 @@ session:{kind}	subject_rule	own_record	{"kind": ["occurrence", "attested == atte
 session:{kind}	lifecycle	earliest_claim	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "earliest claimed_at wins (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 slashing:{outcome}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 slashing:{outcome}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
-stream:head	placement	unbuilt	null
+stream:head	placement	unbuilt	["self_collective", "targeted_family", "targeted_room", "commons"]
 stream:head	subject_rule	unbuilt	null
 stream:head	freshness	unbuilt	null
 stream:head	lifecycle	unbuilt	null
