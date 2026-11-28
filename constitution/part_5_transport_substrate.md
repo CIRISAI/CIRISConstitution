@@ -532,6 +532,8 @@ A stream is its own log, and its chunks are the leaves. The log is the producer'
 
 A head carries no list of witnesses and no proof. The consistency proof from an earlier head is submission material beside the statement ([RFC-9942], label 396), never a payload member ([CC 5.3.1.1](#5.3.1.1)).
 
+A stream's head row is placed at the scope of the stream it heads and is served to whoever is served its chunks.
+
 **An inline file publishes no head.** An inline file is a log of one leaf, and no head is published for it. Its root is the leaf's own hash, the blob's SHA-256 under the `0x00` prefix, which every holder of the blob computes. A delivery ack over an inline blob is checked against that leaf ([CC 5.3.3.11](#5.3.3.11)), and the file's row carries no head.
 
 **Best-effort and accountable (normative).** A head that carries `room` is **accountable**, and a head without it is **best-effort**. A best-effort head stands on its producer's signature alone: it registers with a service on the ordinary rules and is never counted as accountable. The heads of a stream whose binding's `profile` is 1 carry `room` ([CC 5.3.3.5](#5.3.3.5)). A reader that holds the binding checks that the head's `room` is the room the binding names, and refuses a head that differs, `stream_head_room_mismatch`.

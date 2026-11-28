@@ -2,6 +2,8 @@
 # Applied by tools/build_family_model.py over such a cell only: the cell takes this value, written in the column's own vocabulary,
 # with source cc-table, its cc_ref, and the census reading kept as `code`. The quote must stand verbatim in the cited section.
 # A cell the census closes is never overridden here: where text and build differ, that is a departure with a reason.
+# A placement row whose closed set is the census's own agrees with it and takes the text as its source; a prose census reading yields as a gap does.
+# A value ending in `; follows: <row>` places the row at that other row's scope; the cell keeps the scopes it can be and leaves the default.
 family	column	value	cc_ref	quote
 accord:invoke:constitutional:{halt_id}	cosign_rule	none	CC 4.2.1.1	A `constitutional` halt is one holder's statement
 accord:invoke:drill:{drill_id}	cosign_rule	none	CC 4.2.1.1	| `drill` | **one** holder |
@@ -48,3 +50,14 @@ identity:occurrence_revocation	placement	self_collective | targeted_family | tar
 key:record	placement	commons | targeted_room	CC 3.1.3	A key record is placed at federation scope, and a room key's record is placed in its room
 key:revocation	placement	commons | targeted_room	CC 3.1.3	A revocation is placed where the record of the key it revokes is placed.
 key_grant:{axis}	placement	self_collective | targeted_family | targeted_room	CC 3.3.2	the row is placed at the content's scope and reaches the recipient's node because the row *refers to* it
+community:listing	placement	commons	CC 3.1.1	a federation-scoped `scores` row by a `moderate`-holder of the room
+group:roster	placement	targeted_family | targeted_room	CC 3.2	A public room's roster is public and is read by asking a member's node; every other roster is never enumerable outside its cohort.
+membership:{stage}	placement	targeted_family | targeted_room	CC 3.1.3.2	A **proposal** is an invitation to one key K, targeted at the group (`family_key_id` / `community_key_id`)
+archive_release:{basis}	placement	self_collective | targeted_family | targeted_room | commons	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+lawful_order:release	placement	self_collective | targeted_family | targeted_room | commons	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+preserve_request	placement	self_collective | targeted_family | targeted_room | commons	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+preserve_response	placement	self_collective | targeted_family | targeted_room | commons	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+retirement:{state}	placement	self_collective | targeted_family | targeted_room | commons	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+custody:{kind}	placement	self_collective | targeted_family | targeted_room | commons; follows: the content's scope	CC 3.1.3.3	it is the **one** holding claim at every tier, placed at the content's own scope
+duty:{kind}	placement	self_collective | targeted_family | targeted_room | commons; follows: the scope of the permission it attaches to, or narrower	CC 3.1.1	A duty MUST NOT be placed wider than the permission it attaches to
+stream:head	placement	self_collective | targeted_family | targeted_room | commons; follows: the scope of the stream it heads	CC 5.3.3.8	A stream's head row is placed at the scope of the stream it heads and is served to whoever is served its chunks.

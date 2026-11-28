@@ -119,12 +119,12 @@
     "gap": 0
    },
    "placement": {
-    "cc-table": 177,
-    "code-v61": 8,
+    "cc-table": 188,
+    "code-v61": 0,
     "generic": 0,
-    "prose": 3,
+    "prose": 1,
     "mixed": 0,
-    "gap": 1
+    "gap": 0
    },
    "signer_rule": {
     "cc-table": 55,
@@ -252,7 +252,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 5
+    "gap": 0
    },
    "shape": {
     "cc-table": 0,
@@ -1104,16 +1104,16 @@
       "acceptance": 2,
       "by_selector": 3,
       "end": 2,
-      "exercise": 152,
+      "exercise": 155,
       "none": 13,
       "offer": 4,
-      "open": 13
+      "open": 10
      },
      "by_source": {
-      "derived": 168,
+      "derived": 171,
       "quote": 8,
       "ruling": 0,
-      "open": 13
+      "open": 10
      }
     },
     "room_content": {
@@ -1235,8 +1235,8 @@
     "2": 9,
     "3": 16,
     "4": 2,
-    "5": 4,
-    "6": 7,
+    "5": 9,
+    "6": 2,
     "7": 2,
     "8": 8,
     "9": 3
@@ -1251,7 +1251,7 @@
      "when": "The store holds no rows of the family: the census read no cell for it, or the family is held shut.",
      "why": "Its cells are unread, not different. When the family is built each cell sits on the default or takes a reason of its own.",
      "basis": "census",
-     "cells": 128
+     "cells": 123
     },
     {
      "id": "key",
@@ -8104,9 +8104,20 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "none (held shut: never stored)",
-    "source": "code-v61",
-    "closed": "none"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.4.5.1",
+    "code": {
+     "value": "none (held shut: never stored)",
+     "source": "code-v61"
+    }
    },
    "signer_rule": {
     "value": {
@@ -8272,10 +8283,10 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
+    "value": "by_placement",
+    "source": "derived",
     "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "note": "placed at a room or a family and elsewhere",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -8309,10 +8320,10 @@
     "cc_ref": "CC 4.5.5"
    },
    "standing_act": {
-    "value": null,
-    "source": "open",
+    "value": "exercise",
+    "source": "derived",
     "from": "names_head",
-    "note": "the names_head cell is unread, so nothing says whether a row of the family exercises a standing",
+    "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
    "room_content": {
@@ -8381,7 +8392,6 @@
     "sources": "src/federation/namespace/namespace_registry.json:687; check_registered_family_not_held@src/federation/admission.rs:902"
    },
    "departs": [
-    "placement",
     "subject_rule",
     "lifecycle",
     "replication",
@@ -8389,9 +8399,6 @@
     "erasure_route"
    ],
    "because": {
-    "placement": [
-     "unbuilt"
-    ],
     "subject_rule": [
      "unbuilt"
     ],
@@ -23365,9 +23372,13 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "commons (public_room.rs:229, listing_not_federation)",
-    "source": "code-v61",
-    "closed": "commons",
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.1",
+    "code": {
+     "value": "commons (public_room.rs:229, listing_not_federation)",
+     "source": "code-v61"
+    },
     "cites": [
      {
       "cc_ref": "CC 3.1.1",
@@ -33198,9 +33209,21 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "the blob's held claim scope (holding_claim::check_holding_claim_scope)",
-    "source": "prose",
-    "closed": "the blob's held claim scope",
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.1.3.3",
+    "follows": "the content's scope",
+    "code": {
+     "value": "the blob's held claim scope (holding_claim::check_holding_claim_scope)",
+     "source": "prose"
+    },
     "cites": [
      {
       "cc_ref": "CC 3.1.3.3",
@@ -33612,7 +33635,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "the node's owner-binding row, wherever the blob is placed: a node's report about itself",
-    "derived": "none",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -40341,8 +40364,21 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "never wider than the referenced permission's projection",
-    "source": "prose"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.1.1",
+    "follows": "the scope of the permission it attaches to, or narrower",
+    "code": {
+     "value": "never wider than the referenced permission's projection",
+     "source": "prose"
+    }
    },
    "signer_rule": {
     "value": "the attester of the referenced permission (see reference_rule)",
@@ -40590,7 +40626,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "a duty exercised in a room names that room's roster version",
-    "derived": "none",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -45715,11 +45751,19 @@
    "placement": {
     "value": [
      "targeted_family",
-     "targeted_room (cohort_scope family|community + group_kind)"
+     "targeted_room"
     ],
-    "source": "code-v61",
+    "source": "cc-table",
     "closed": "targeted_family | targeted_room",
-    "note": "targeted_family | targeted_room (cohort_scope family|community + group_kind)",
+    "note": "targeted_family | targeted_room",
+    "cc_ref": "CC 3.2",
+    "code": {
+     "value": [
+      "targeted_family",
+      "targeted_room (cohort_scope family|community + group_kind)"
+     ],
+     "source": "code-v61"
+    },
     "cites": [
      {
       "cc_ref": "CC 3.2",
@@ -54674,9 +54718,20 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "none (held shut: never stored)",
-    "source": "code-v61",
-    "closed": "none"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.4.5.1",
+    "code": {
+     "value": "none (held shut: never stored)",
+     "source": "code-v61"
+    }
    },
    "signer_rule": {
     "value": {
@@ -54827,10 +54882,10 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
+    "value": "by_placement",
+    "source": "derived",
     "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "note": "placed at a room or a family and elsewhere",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -54864,10 +54919,10 @@
     "cc_ref": "CC 4.5.5"
    },
    "standing_act": {
-    "value": null,
-    "source": "open",
+    "value": "exercise",
+    "source": "derived",
     "from": "names_head",
-    "note": "the names_head cell is unread, so nothing says whether a row of the family exercises a standing",
+    "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
    "room_content": {
@@ -54936,7 +54991,6 @@
     "sources": "src/federation/namespace/namespace_registry.json:3242; check_registered_family_not_held@src/federation/admission.rs:902"
    },
    "departs": [
-    "placement",
     "subject_rule",
     "lifecycle",
     "replication",
@@ -54944,9 +54998,6 @@
     "erasure_route"
    ],
    "because": {
-    "placement": [
-     "unbuilt"
-    ],
     "subject_rule": [
      "unbuilt"
     ],
@@ -58076,11 +58127,19 @@
    "placement": {
     "value": [
      "targeted_family",
-     "targeted_room (at the group)"
+     "targeted_room"
     ],
-    "source": "code-v61",
+    "source": "cc-table",
     "closed": "targeted_family | targeted_room",
-    "note": "targeted_family | targeted_room (at the group)",
+    "note": "targeted_family | targeted_room",
+    "cc_ref": "CC 3.1.3.2",
+    "code": {
+     "value": [
+      "targeted_family",
+      "targeted_room (at the group)"
+     ],
+     "source": "code-v61"
+    },
     "cites": [
      {
       "cc_ref": "CC 3.1.3.2",
@@ -66133,9 +66192,20 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "none (held shut: never stored)",
-    "source": "code-v61",
-    "closed": "none"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.4.5.1",
+    "code": {
+     "value": "none (held shut: never stored)",
+     "source": "code-v61"
+    }
    },
    "signer_rule": {
     "value": {
@@ -66289,10 +66359,10 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
+    "value": "by_placement",
+    "source": "derived",
     "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "note": "placed at a room or a family and elsewhere",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -66331,7 +66401,7 @@
     "from": "formal/derivation/standing_text.tsv",
     "cc_ref": "CC 3.1.5",
     "needs": "a sentence saying which of the request and the operator's answer confers the custody standing and which accepts it",
-    "derived": null
+    "derived": "exercise"
    },
    "room_content": {
     "value": false,
@@ -66399,7 +66469,6 @@
     "sources": "src/federation/namespace/namespace_registry.json:3829; check_registered_family_not_held@src/federation/admission.rs:902"
    },
    "departs": [
-    "placement",
     "subject_rule",
     "lifecycle",
     "replication",
@@ -66407,9 +66476,6 @@
     "erasure_route"
    ],
    "because": {
-    "placement": [
-     "unbuilt"
-    ],
     "subject_rule": [
      "unbuilt"
     ],
@@ -66453,9 +66519,20 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "none (held shut: never stored)",
-    "source": "code-v61",
-    "closed": "none"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.4.5.1",
+    "code": {
+     "value": "none (held shut: never stored)",
+     "source": "code-v61"
+    }
    },
    "signer_rule": {
     "value": {
@@ -66620,10 +66697,10 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
+    "value": "by_placement",
+    "source": "derived",
     "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "note": "placed at a room or a family and elsewhere",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -66730,7 +66807,6 @@
     "sources": "src/federation/namespace/namespace_registry.json:3848; check_registered_family_not_held@src/federation/admission.rs:902"
    },
    "departs": [
-    "placement",
     "subject_rule",
     "lifecycle",
     "replication",
@@ -66738,9 +66814,6 @@
     "erasure_route"
    ],
    "because": {
-    "placement": [
-     "unbuilt"
-    ],
     "subject_rule": [
      "unbuilt"
     ],
@@ -73807,9 +73880,20 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "none (held shut: never stored)",
-    "source": "code-v61",
-    "closed": "none"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.4.5.1",
+    "code": {
+     "value": "none (held shut: never stored)",
+     "source": "code-v61"
+    }
    },
    "signer_rule": {
     "value": {
@@ -74057,10 +74141,10 @@
     "rule": "class"
    },
    "names_head": {
-    "value": null,
-    "source": "gap",
+    "value": "by_placement",
+    "source": "derived",
     "from": "placement, signer_rule",
-    "note": "the placement cell is unread or the family is never stored",
+    "note": "placed at a room or a family and elsewhere",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {
@@ -74098,10 +74182,10 @@
     "cc_ref": "CC 4.5.5"
    },
    "standing_act": {
-    "value": null,
-    "source": "open",
+    "value": "exercise",
+    "source": "derived",
     "from": "names_head",
-    "note": "the names_head cell is unread, so nothing says whether a row of the family exercises a standing",
+    "note": "its rows name a head (by_placement)",
     "cc_ref": "CC 2.4.1.1"
    },
    "room_content": {
@@ -74208,7 +74292,6 @@
     "sources": "src/federation/namespace/namespace_registry.json:4263; check_registered_family_not_held@src/federation/admission.rs:902"
    },
    "departs": [
-    "placement",
     "subject_rule",
     "lifecycle",
     "replication",
@@ -74216,9 +74299,6 @@
     "erasure_route"
    ],
    "because": {
-    "placement": [
-     "unbuilt"
-    ],
     "subject_rule": [
      "unbuilt"
     ],
@@ -78027,9 +78107,21 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 5.3.3.8",
+    "follows": "the scope of the stream it heads",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -78147,7 +78239,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "the room's roster version where the head carries a room; none where it carries none",
-    "derived": null,
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {

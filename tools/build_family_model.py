@@ -1051,13 +1051,22 @@ def main():
             if col not in CENSUS_MAP or col == "signer_rule":
                 print(f"cell_text.tsv: {fam} names the column {col}, which is not one this table fills"); return 1
             cur = row[col]
-            if cur.get("source") not in ("gap", "generic") and (fam, col) not in TEXT_OVER_CODE:
+            # A value may end in `; follows: <row>`: the row's scope is that other row's, and the cell keeps the scopes it can be.
+            val, _, follows = ct["value"].partition("; follows: ")
+            # A closed census cell that the text's value agrees with (the same closed set) takes the text as its source;
+            # a prose census reading is not in the column's vocabulary and yields to the text as a gap does.
+            def closed_set(c):
+                v = c.get("closed") or c.get("value")
+                return set(x.strip() for x in (v.split(" | ") if isinstance(v, str) else (v or [])))
+            agrees = col == "placement" and closed_set(cur) == closed_set(cell(col, val))
+            if cur.get("source") not in ("gap", "generic", "prose") and (fam, col) not in TEXT_OVER_CODE and not agrees:
                 print(f"cell_text.tsv: {fam} {col} is closed by the census ({cur.get('source')}); a difference from the text is a departure with a reason, not a row here"); return 1
             span = section_span(ct["cc_ref"])
             if span is None or ct["quote"] not in span:
                 print(f"cell_text.tsv: {fam} {col}: the quoted words do not stand in {ct['cc_ref']}"); return 1
-            new = cell(col, ct["value"])
+            new = cell(col, val)
             new["source"] = "cc-table"; new["cc_ref"] = ct["cc_ref"]
+            if follows: new["follows"] = follows.strip()
             new["code"] = {"value": cur.get("value"), "source": cur.get("source")}
             row[col] = new
         # A family whose rows the census finds at any scope the signer chooses, and for which the text states no
@@ -1303,7 +1312,8 @@ def main():
             print(f"family_default_row.json: the default for {col} is held by {cnt.get(canon(dv), 0)} families and another value by {n}"); return 1
     departures = []
     for r in rows:
-        r["departs"] = [col for col, dv in default.items() if canon(r[col].get("value")) != canon(dv)]
+        # A cell whose scope follows another row's is not the emitter's choice, so it leaves the default whatever scopes it lists.
+        r["departs"] = [col for col, dv in default.items() if canon(r[col].get("value")) != canon(dv) or r[col].get("follows")]
     # Every departure carries its reason: when a family leaves the default and why, or the open question.
     spec, claims, opens, errs = departure_reasons(rows, default)
     if errs:
