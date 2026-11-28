@@ -255,6 +255,7 @@ object-protected = {
 }
 object-claims = {
   1: identity-ref,                 ; iss
+  ? 2: tstr,                      ; sub on a genesis bundle: the payload's family_key_id
   ? 6: uint,                       ; iat where the object states an instant; a revocation snapshot carries none,
                                    ; a genesis bundle floor(asserted_at / 1000)
   -70003: 2,

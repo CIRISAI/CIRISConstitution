@@ -84,6 +84,7 @@ object	object-protected	4	-	header:protected	kid	always	2.6.1.7	kid: the signer'
 object	object-protected	15	-	header:protected	object-claims	always	2.6.1.11	The CWT claims.
 object	object-protected	16	-	header:protected	object-typ	always	2.6.1.11	typ: one of the closed list.
 object	object-claims	1	-	header:cwt	identity-ref	always	2.6.1.11	iss.
+object	object-claims	2	-	header:cwt	tstr	on a genesis bundle	2.6.1.11	sub: the payload's family_key_id; a verifier refuses a bundle statement whose sub differs.
 object	object-claims	6	-	header:cwt	uint	where the object states an instant	2.6.1.11	iat; a revocation snapshot carries none, and a genesis bundle MUST carry floor(asserted_at / 1000).
 object	object-claims	-70003	-	header:cwt	2	always	2.6.1.11	edition: the constant 2.
 object	object-id-input	typ	-	derived	object-typ	always	2.6.1.11	The object's typ.

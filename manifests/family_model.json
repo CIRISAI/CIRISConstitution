@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "15c180b1e733ea1607aa74c2b39797761faa250b7b0b9423ad0ca00dde76d303",
+  "registry_sha256": "7da7348c2b8bb046c13f71166e3c326cc13ddfe67b349df1a96c1aec4d103829",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
