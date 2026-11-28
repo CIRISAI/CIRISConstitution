@@ -19,6 +19,9 @@
 # the members' lift of any of them is the `lift` row.
 # A counted row whose policy is not one its act may take concludes nothing. An act with no row here is not a counted act.
 # community_kind is the policy table's `corridor` reading of the object: community | family | infrastructure | affiliation (a community record whose `declared_cohort` is `affiliations`) | self | accord | affiliation | body | custody.
+# While an affiliation has one officer, every act its body counts but a member's admission takes the countersigned path
+# (`affiliation_member_action`); with two or more officers it takes its protocol (`cosigned_act`). The row says which (CC 4.4.3.12, One officer).
+# A steward purge is one `takedown_notice` cosigned under the trust root's protocol, counted over the holders of the bundle in force (CC 2.4.1.1, CC 3.3.2).
 # Checked by tools/check_policy_acts.py: every policy is a row of the table, and every cited section exists.
 act	scope	community_kind	policy	choice	cc_ref
 admit	member	community	cosigned_act|community_invite	row	3.1.3.2 4.5.13
@@ -57,12 +60,13 @@ resume	halt	accord	accord_majority	fixed	4.2.1.3
 standing_act	any	accord	accord_majority	fixed	4.2.1.3
 remove	member	affiliation	affiliation_member_action|cosigned_act	row	4.4.3.12
 admit	member	affiliation	cosigned_act	fixed	4.4.3.12
-record_change	record	affiliation	cosigned_act	fixed	4.4.3.12
-dissolve	record	affiliation	cosigned_act	fixed	3.3.4 4.4.3.12
-seat_confer	license	affiliation	cosigned_act	fixed	4.4.3.12
-seat_withdraw	license	affiliation	cosigned_act	fixed	4.4.3.12
+record_change	record	affiliation	affiliation_member_action|cosigned_act	row	4.4.3.12
+dissolve	record	affiliation	affiliation_member_action|cosigned_act	row	3.3.4 4.4.3.12
+seat_confer	license	affiliation	affiliation_member_action|cosigned_act	row	4.4.3.12
+seat_withdraw	license	affiliation	affiliation_member_action|cosigned_act	row	4.4.3.12
 quarantine	member	affiliation	affiliation_member_action	fixed	4.4.3.12
 slash	member	affiliation	affiliation_member_action	fixed	4.4.3.12
 takedown	member	affiliation	affiliation_member_action	fixed	4.4.3.12
 finding	any	body	wa_adjudication	fixed	4.3
 replace	custodian	custody	custodian_replace	fixed	7.5.5
+purge	selection	accord	cosigned_act	fixed	2.4.1.1 3.3.2
