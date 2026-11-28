@@ -276,8 +276,10 @@ These rules are ruled and modelled. The text states each one and cites the vendo
 
 ### A-07 What the head rules leave: the residuals, written into CC 2.7.9 and CC 2.7.8
 
+- **NOTE.** One sentence of residual (a) is completed from the coordinator's notes when the kernel's tag is vendored; it is not drafted here.
+
 - **RULE.** The residuals the text carries, in its own form:
-  - **(a) A reader with no row of its own, at a fork point no single-side member marks.** Such a reader reads, as one tip among others, a chain signed under the same protocol by keys that met a past count. Where no member seated at the fork point signed exactly one side, nothing voids that chain, and it may list members no other tip lists.
+  - **(a) A reader with no row of its own, at a fork point no single-side member marks.** Such a reader reads, as one tip among others, a chain signed under the same protocol by keys that met a past count.
   - **(b) A newcomer admitted on a fork.** It reads that fork's roster where the rows cannot void it. Its way back is an admission on the other line.
   - **(c) The lone-sibling window.** A lone duty holder's concurrent conferrals are not judged against each other. The window closes for a reader at the room's next counted change that reader acknowledges, and for all once the lone holder signs a later change. The rows are evidence for a recall.
   - **(d) The accepted cost.**
@@ -293,7 +295,6 @@ These rules are ruled and modelled. The text states each one and cites the vendo
 - **DRAFT.**
   - CC 2.7.9 bullets:
     - (a) "A reader with no row of its own reads, as one tip among others, a chain signed under the same protocol by keys that met a past count."
-    - (a) "Where no member seated at the fork point signed exactly one side, nothing voids that chain, and it may list members no other tip lists."
     - (b) "A newcomer admitted on a fork reads that fork's roster where the rows cannot void it. Its way back is an admission on the other line."
     - (c) "A lone duty holder's concurrent conferrals are not judged against each other until the room's next counted change. The rows are evidence for a recall."
     - (c) "That change closes the window for each reader that acknowledges it, and the holder's own later change closes it for every reader."
@@ -2034,3 +2035,70 @@ Each entry gives the question, the options, what each costs, and what is written
 | D-07 | Bundling chunks; one epoch behind | CC 5.3.3.5, 5.3.3.7 | D | not written |
 | D-08 | Part 8 cites transport models by commit | Part 8 | D | register lane |
 | D-09 | Implementer re-pins and vendor | VENDOR.tsv, CC 2.6.5 | D | after releases |
+
+
+## 6. Coordinator's completions
+
+These complete or decide entries marked "not recoverable" or "decide before writing" above. Where an entry above and this section differ, this section is the rule.
+
+### A-22 The consent peer set (complete)
+
+- **RULE.**
+  - A `consent:replication` grant is one principal's directed row to one named peer. It names the classes it moves, and it moves those classes and nothing else.
+  - A granting node's own grant counts, and so does an owner's grant for one of its own nodes.
+  - Three parties end a grant: the granting principal, by any live key of it; any party the grant names, the peer and the node it is for; and the owner of a granting node, as read at the withdrawal. Nobody else ends it.
+  - A grant permits and never obliges: a node MAY always send less than its grants allow, with no row.
+  - No revival: withdrawing a grant, or its term ending, brings back no earlier grant to the same peer, and a superseded grant does not return when its superseder is withdrawn.
+  - Between a signer's grants to one peer, a grant that has another in its past is the later one. A stated instant orders only grants that are causally concurrent, and the row id breaks what is left.
+  - An owner's grant for a node moves nothing once that owner's binding of the node has ended.
+  - A grant signed before its signer's key ended stands as far as the key-end rule lets any row stand (A-15).
+  - Class matching: an entry that ends in `:` matches by prefix. Any other entry matches only the identical class name.
+  - The consent peer set of a principal at a row is the peers named by that principal's grants in force in that row's past. A node sends a peer a row only where the row's class is within a grant in force from a principal that is the node or owns it.
+  - Narrowing is a `supersedes` with the narrower set. The two directions are independent grants, and a peering is bilateral while both are in force. A grant that an unannounced node signs or is named in is never placed at federation scope.
+- **AUTHORITY.** Text already says for the shape, revocation by the granter, narrowing, pairing and placement (CC 3.3.7). Derived for the named party's and the owner's withdrawal (CC 2.4.1.1 rule 2; CC 3.2), no revival, the causal order, class matching and the peer set.
+- **HOME.** CC 3.3.7: *Revocation* gains the named party and the owner; a new paragraph "The grants in force" after *Bilateral pairing* carries no revival, the order, class matching and the peer set.
+- **DRAFT.**
+  - "A party the grant names MAY withdraw it, and so MAY the owner of the granting node. A withdrawal by any other key concludes nothing."
+  - "A grant permits and never obliges. A node MAY send less than its grants allow, with no row."
+  - "A withdrawn or lapsed grant revives no earlier grant to that peer."
+  - "Of two grants by one signer to one peer, the one that has the other in its past is the later, whatever instant either states."
+  - "An entry that ends in a colon matches every class it prefixes. Any other entry matches one class, the identical name."
+  - "A principal's consent peers at a row are the peers its grants in force name in that row's past."
+- **TABLES.** A payload rule for `consent:replication` in the family payload schema and the member table: `subject_kind` (the constant `consent_replication`), `grants` (the constant `replication`), `attestation_prefixes` (a sorted set of text), optional `cohorts` (a sorted set of `{scope, target}`); `subject_key_ids` exactly one; `witness_relation` required `self`; optional `valid_until`. The acts table gains nothing: a grant is one signer's row.
+- **NAMES.** None new.
+- **CHECKED BY.** The kernel's consent model. Cite when vendored.
+
+### A-15 Voiding a rotation (complete)
+
+- **RULE.** Two rotations of one key are a fork: both end the old key and neither successor stands until the person's self roster settles it. A counted act of that self roster, under its own count, that removes the rotated-to key and cites the rotation voids that rotation: it is no end of the old key, and its successor does not stand. A rotation the roster does not void stands. Voiding is not removal: the old key stands as it stood, and the roster removes it too where it should not stand. The rotated-to key and the key it claims to succeed are no voice in that count. A roster of one key cannot void.
+- **DRAFT.**
+  - "Two rotations of one key are a fork. Each ends the old key, and neither successor stands until the self roster settles it."
+  - "A counted act of the self roster that removes the rotated-to key and cites the rotation voids that rotation."
+  - "A voided rotation ends nothing, and its successor does not stand. Voiding removes no key."
+- **HOME.** CC 3.3.6.4, after *Maintenance: the two paths*; cross-reference from the key record's rotation rule in CC 2.6.1.11.
+- **NAMES.** The citing role is `refs.also.cites`. No new family: the act is the self roster's eviction.
+
+### A-11 The election: the names (decided)
+
+- The opening row is a leaf of the ballot family: `ballot:moderator_opening`, dimension `ballot:moderator_opening:v1`, a counted row of the room's members (policy row `election_open`). It cites the seat end it opens for under `refs.also.cites` and names the newest counted changes as its head.
+- A ballot (`ballot:moderator`), a ballot's withdrawal, a receipt and the winner's acceptance (`ballot:moderator_acceptance`) each name the opening under `refs.answers`. The acceptance cites each ballot it counted under `refs.also.cites`.
+- A decline is `membership:decline:v1` by the key the count would seat, naming the opening under `refs.answers`. The count then seats the next ranked candidate.
+- The election's id is the opening row's row id. No row names an election by a digest.
+- Confirm each name against the kernel's wire map when it is vendored; if the kernel's cases use another role, the cases decide and this entry is corrected.
+
+### A-21 The licence anchor (decided)
+
+- The second arm is dropped. A reader honours a licence under a term that has ended only where it held the licence before the term ended. A row by another key that names the licence anchors nothing.
+- **DRAFT.** "A licence's term is its holder's word. A reader honours a licence whose term has ended only where it held the licence before then."
+
+### B-26 The backward clock step (complete); the open terms stay open
+
+- **RULE.** A publisher that corrects its own clock backward by more than the age budget restates its binding for that stream and epoch, and receivers learn a fresh age floor from the next confirmed pair. A receiver never absorbs a standing lateness on its own. A step forward needs nothing. A replacement binding for one stream and epoch is accepted only from the same publisher; a receiver retires the replaced chunk key and never accepts a retired key again; a receiver that holds two bindings and has retired neither takes the key that verifies the newest chunk it has seen; the floor resets only on an accepted replacement.
+- **LIMIT TO STATE.** Until a publisher restates, a stream whose publisher stepped its clock back stays stale until the next key roll.
+- **STILL OPEN.** The bound that makes a chunk "stale", and whose rate the tenth-of-the-rate floor is taken of, are the transport's to state. Write neither until they are given.
+- **HOME.** CC 5.3.3.2, in *Pacing under a queued uplink*.
+
+### New refusal names
+
+- A lift or a reconsideration that cites none or more than one act concludes nothing; it takes no refusal name, since it is read against another row.
+- No name is ruled for a batch admission with one barred key or for contested recoveries. Do not invent one; report the case.
