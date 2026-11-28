@@ -1,0 +1,18 @@
+# The closed key registry of the family mesh_config:{key} (CC 4.2.1 rule (2), CC 3.1.9.2, CC 6.1.5.1 the mesh-config loop).
+# One row per key the text names. A row's `value` is an integer in the key's unit; a ratio is stated in hundredths.
+# min, max: the range a value may take. owner_default: the node owner's default, the flow a value is read against.
+# more_flow: whether a higher or a lower value lets more flow. A value stands only where it lets no more flow than owner_default.
+# consumer: yes where a consumer processor reads the key; a key naming no consumer processor is refused at admission (CC 4.2.1 rule (2)).
+# `unstated` marks a cell the text does not determine; tools/check_mesh_config_keys.py counts those cells.
+# Checked by tools/check_mesh_config_keys.py: the columns, unique keys, min <= owner_default <= max, more_flow closed.
+key	unit	min	max	owner_default	more_flow	consumer	cc_ref
+antientropy.round_secs	seconds	1	86400	60	lower	yes	6.1.5.1 4.2.1
+antientropy.page_limit	count	1	10000	500	higher	yes	6.1.5.1 4.2.1
+feature.trace_replication	flag	0	1	1	higher	yes	6.1.5.1 4.2.1
+feature.av_streams	flag	0	1	1	higher	yes	6.1.5.1 4.2.1
+redundancy.target_holders	holders	1	4096	64	higher	no	6.1.5.1 4.2.1
+redundancy.min_viable_holders	holders	1	4096	64	higher	no	6.1.5.1 4.2.1
+shaping.rho	unstated	unstated	unstated	unstated	unstated	yes	6.1.5.1 5.4.3
+shaping.window_secs	seconds	unstated	unstated	unstated	unstated	yes	6.1.5.1 5.4.3
+onion.cap_factor	unstated	unstated	unstated	unstated	unstated	yes	6.1.5.1 5.4.6
+onion.mix_mean_delay_ms	milliseconds	unstated	unstated	unstated	unstated	yes	6.1.5.1 5.4.6

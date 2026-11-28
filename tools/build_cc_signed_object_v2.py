@@ -94,6 +94,7 @@ OBJECTS = [
     ("receipt", "A receipt: the payload of an `act:ack` row"),
     ("objection", "An objection vote: the payload of an `objection:{state}` row"),
     ("window_step", "A step of a window: the payload of a `window:{state}` row"),
+    ("mesh_config", "A mesh configuration: the payload of a `mesh_config:{key}` row"),
     ("owner_binding", "An owner-binding: the payload of an `ownership:{relation}:{target_kind}:{version}` row"),
     ("holon_claim", "A holon claim: the payload of a `holon:claim` row"),
     ("leaf_vouch", "A leaf vouch: the payload of an `mls:leaf_vouch` row"),
@@ -629,6 +630,7 @@ XWING_WRAP = "xwing_hpke_aes256_gcm_hkdf_sha256"         # the wrap_algorithm of
 TIPS_MAX, TIPS_TOO_MANY = 64, "trusted_through_too_many"   # refs.trusted_through on any row (CC 3.1.3.2)
 ACK_MAX, ACK_TOO_MANY = 256, "ack_names_too_many"          # the acts one receipt names under refs.also.ack (CC 3.1.3)
 FAMILY_UNREGISTERED = "namespace_family_unregistered"   # a family label under a retired stem (CC 3.1.7)
+MESH_CONFIG_EMERGENCY_MS = 259200 * 1000                  # mesh_config_emergency_ttl_secs (CC 4.2.1 rule (3), constants.tsv)
 
 
 def _ref(n):
@@ -715,6 +717,10 @@ def family_payloads():
             "grounds": "sample", "refs": {"answers": _ref(23)}, "asserted_at": t}),
         "window-step": ("window:.state", {
             "author": iref(1), "dimension": "window:held:v1", "refs": {"target": _ref(27)}, "asserted_at": t}),
+        "mesh-config-row": ("mesh_config:.key", {
+            "author": iref(1), "dimension": "mesh_config:antientropy.round_secs:v1", "mesh_config_key": "antientropy.round_secs",
+            "value": 120, "root_ref": "sample-root", "form": "emergency", "valid_until": t + MESH_CONFIG_EMERGENCY_MS,
+            "grounds": "sample", "refs": {"head": _ref(9)}, "asserted_at": t}),
         "owner-binding": ("ownership:.relation:.target_kind:.version", {
             "author": iref(0), "dimension": "ownership:responsible_party:node:v1", "delegation_purpose": "owner_binding",
             "scope": sorted(["infra:attest", "infra:serve"], key=cde), "delegation_valid_until": t + 86400000,
@@ -977,6 +983,11 @@ def family_payload_samples():
             ("a vote with no cohort_key_id", D("objection-vote", "cohort_key_id")),
             ("a vote with no refs", D("objection-vote", "refs")),
             ("grounds as a number", W("objection-vote", grounds=7))]),
+        ("mesh-config-row", "mesh_config:{key} payload of an emergency relief", cde(P["mesh-config-row"]), [
+            ("a relief with no value", D("mesh-config-row", "value")),
+            ("a value as text", W("mesh-config-row", value="120")),
+            ("a form outside the two", W("mesh-config-row", form="standing")),
+            ("a relief with no bundle", D("mesh-config-row", "refs"))]),
         ("window-step", "window:{state} payload of a held row", cde(P["window-step"]), [
             ("a held row with no author", D("window-step", "author")),
             ("a held row with no refs", D("window-step", "refs")),
@@ -1125,6 +1136,13 @@ def family_payload_rule(root, p, family=None):
             return ACK_TOO_MANY                           # at most 256 acts in one receipt (CC 3.1.3)
         if dim != "act:ack:v1" or not acks or "head" in refs:
             return PAYLOAD_INVALID                        # names the acts it acknowledges, and no head
+    if root == "mesh-config-row":
+        if dim != "mesh_config:%s:v1" % p.get("mesh_config_key") or "head" not in refs:
+            return PAYLOAD_INVALID                        # the dimension's leaf is the key; the bundle in force under head (CC 4.2.1)
+        if p["form"] == "emergency" and ("author" not in p or not p["asserted_at"] < p.get("valid_until", 0) <= p["asserted_at"] + MESH_CONFIG_EMERGENCY_MS):
+            return PAYLOAD_INVALID                        # one holder's relief, ended at most 72 h after its instant (CC 4.2.1 rule (3))
+        if p["form"] == "durable" and "author" in p:
+            return PAYLOAD_INVALID                        # a durable setting is counted over the holders, with no author (CC 4.2.1)
     if root == "window-step":
         if dim not in ("window:held:v1", "window:landed:v1", "window:refused:v1") or "target" not in refs:
             return PAYLOAD_INVALID                        # the states are closed at held, landed and refused; the opener under target
@@ -1346,6 +1364,10 @@ def family_payload_rule_checks():
         bad.append("a receipt of a private room that names its signer's voice head breaks its prose rule")
     if family_payload_rule("objection-vote", dict(P["objection-vote"][1], dimension="objection:assent:v1")) is not None:
         bad.append("an assent breaks its prose rule")
+    if family_payload_rule("mesh-config-row", P["mesh-config-row"][1]) is not None:
+        bad.append("an emergency relief breaks its prose rule")
+    if family_payload_rule("mesh-config-row", dict(_without(P["mesh-config-row"][1], "author", "valid_until"), form="durable")) is not None:
+        bad.append("a durable setting breaks its prose rule")
     if family_payload_rule("window-step", window_landing()) is not None:
         bad.append("a landing breaks its prose rule")
     if family_payload_rule("window-step", window_landing(dimension="window:refused:v1", refs={"target": _ref(27), "prev": _ref(28)})) is not None:
@@ -1437,6 +1459,12 @@ def family_payload_rule_checks():
         ("objection-vote", dict(P["objection-vote"][1], dismisses_objection_id="a-1"), None),
         ("objection-vote", dict(P["objection-vote"][1], dimension="objection:proposal:v1"), None),
         ("objection-vote", dict(P["objection-vote"][1], dimension="objection:dismissed:v1"), None),
+        ("mesh-config-row", dict(P["mesh-config-row"][1], mesh_config_key="antientropy.page_limit"), None),
+        ("mesh-config-row", dict(P["mesh-config-row"][1], refs={"also": {"stands_on": [_ref(15)]}}), None),
+        ("mesh-config-row", _without(P["mesh-config-row"][1], "valid_until"), None),
+        ("mesh-config-row", dict(P["mesh-config-row"][1], valid_until=P["mesh-config-row"][1]["asserted_at"] + MESH_CONFIG_EMERGENCY_MS + 1), None),
+        ("mesh-config-row", _without(P["mesh-config-row"][1], "author"), None),
+        ("mesh-config-row", dict(P["mesh-config-row"][1], form="durable"), None),
         ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "prev": _ref(28)}), None),
         ("window-step", dict(P["window-step"][1], refs={"target": _ref(27), "head": _ref(9)}), None),
         ("window-step", dict(P["window-step"][1], refs={"also": {"ack": [_ref(27)]}}), None),
@@ -1522,7 +1550,7 @@ def family_cddl_checks(text, ftext):
 # ---------------------------------------------------------------- the family payload schema, emitted from the table
 FAMILY_OBJECTS = ("roster", "membership", "occurrence_revocation", "revocation", "takedown", "custody", "key_grant", "delivery_ack",
                   "occurrence", "amendment", "deferral", "deferral_request", "rebind", "admission", "trust_accepts",
-                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding", "holon_claim", "leaf_vouch", "window_step")
+                  "build_manifest", "grant", "grant_withdrawal", "receipt", "objection", "owner_binding", "holon_claim", "leaf_vouch", "window_step", "mesh_config")
 FAMILY_RULE_HEAD = {
     "group-roster": "group:roster: a counted row, with no author; sub is the group's identity reference.",
     "roster-member": "A member of a roster version: a closed map.",
@@ -1549,6 +1577,7 @@ FAMILY_RULE_HEAD = {
     "holon-claim-body": "The body of a holon:claim that states a bound (CC 3.1.11); a claim of exact agreement carries no body.",
     "leaf-vouch": "mls:leaf_vouch (CC 5.1, CC 3.1.4): authored by the member whose leaf it is and signed under that member's device key; type scores; author, iss and sub are the member. It vouches for the device's MLS leaf key in each room it names, as blinded elements; a presentation discloses one. It names no row, but for a room key the head of its voice roster.",
     "window-step": "window:{state}, the states held, landed and refused (CC 3.1.3, CC 3.3.6.4): authored by a key seated in the counted set at the head the opener names; type scores, with no score. It names the opener under refs.target, and no head. A held row names no row under prev, and it MAY name other rows. A landing names its signer's held row under prev and every row it counted under the also role cites.",
+    "mesh-config-row": "mesh_config:{key} (CC 4.2.1, CC 3.1.9.2): the emergency form is one holder's relief, authored and bounded by valid_until; the durable form is counted over a strict majority of the holders of the bundle in force, with no author. Type scores, with no score; it names the bundle in force under refs.head.",
     "objection-vote": "objection:{state}, the states assent and raised (CC 3.1.9.2, CC 3.3.6.4): authored by the voter; it names in refs.answers the one proposal it answers or act it objects to.",
     "identity-occurrence": "identity:occurrence (CC 3.3.6): authored by a live roster key of the identity; the occurrence key's own statement is the second voice. Its binding members (the X-Wing keys, the opt-out) are those of transport-destination-binding.",
     "encryption-pubkeys": "The content-KEM keys of an occurrence (CC 3.3.6.1): a closed map.",

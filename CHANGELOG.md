@@ -39,6 +39,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The policy table states each row's answer words and its outcomes as the text names them; a members' lift counts the members less the act's author and a recall the roster less the holder recalled (4.5.13). `election_open` opens an election for an ended duty seat by a strict majority of the members, floor two or the roster's size.
 - A policy row's default at the close is a window leaf (`held`, `landed`, `refused`), with what `landed` and `refused` mean for it in the text's words; each count states it is met by more than its enact fraction and at least its cancel and floor (4.5.13). The acts table names the families each act signs, and a private room's voice adds and evicts its keys by the self roster's rows (3.1.3.2).
 - The self roster's two rows count the keys a roster seats, a person's or a room voice's (`self+key`, 3.1.3.2).
+- A `mesh_config:{key}` row's members are stated (2.6.1.4) and its keys, ranges, owner defaults and directions are data in `constitution/mesh_config_keys.tsv`; a value stands only where it lets no more flow than the owner's default, an emergency ends at its `valid_until`, and no ceiling reads zero (4.2.1).
 
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 

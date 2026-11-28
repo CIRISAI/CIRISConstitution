@@ -1029,6 +1029,21 @@ A statement's own id is SHA-256 over the deterministic encoding of `["CEG-statem
 | — | `"refs"` | payload | `refs` | always | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) [2.6.1.3](#2.6.1.3) | The opener, under target, and no head. A held row names no row under prev, and it MAY name other rows. A landing names its signer's held row under prev, exactly one row, and every row it counted under the also role cites, absent where it counted none, and no other role. |
 | `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [3.3.6.4](part_3_the_namespace.md#3.3.6.4) [2.6.2](#2.6.2) | POSIX milliseconds: the held row's instant, or the landing's. The window's length is read between the two. |
 
+**A mesh configuration: the payload of a `mesh_config:{key}` row**
+
+| Logical name | CBOR member | Placement | Type | Required when | CC | Note |
+|---|---|---|---|---|---|---|
+| `attesting_key_id` | `"author"` | payload | `identity-ref` | on the emergency form | [4.2.1](part_4_composition_governance.md#4.2.1) [2.6.1.3](#2.6.1.3) | The holder whose relief the row is. A durable row is counted over the holders of the bundle in force and carries no author. |
+| `dimension` | `"dimension"` | payload | `tstr` | always | [3.1.9.2](part_3_the_namespace.md#3.1.9.2) | mesh_config:{key}:v1, its leaf the key the row sets. The row's type is scores, with no score. |
+| — | `"mesh_config_key"` | payload | `tstr` | always | [4.2.1](part_4_composition_governance.md#4.2.1) [3.1.9.2](part_3_the_namespace.md#3.1.9.2) | The key the row sets, equal to the dimension's leaf: a key of the closed key registry, constitution/mesh_config_keys.tsv. A key naming no consumer processor is refused at admission. |
+| — | `"value"` | payload | `int` | always | [4.2.1](part_4_composition_governance.md#4.2.1) | An integer in the key's unit; a ratio is stated in hundredths. It stands only where it lets no more flow than the node owner's default for the key. |
+| — | `"root_ref"` | payload | `tstr` | always | [4.2.1](part_4_composition_governance.md#4.2.1) [3.2](part_3_the_namespace.md#3.2) | The root the row is from, by its lineage's name. refs.head names that root's bundle in force. |
+| — | `"form"` | payload | `"emergency" / "durable"` | always | [4.2.1](part_4_composition_governance.md#4.2.1) | emergency: one holder's relief, bounded by valid_until; durable: counted over a strict majority of the holders of the bundle in force. |
+| `valid_until` | `"valid_until"` | payload | `ms-time` | on the emergency form | [4.2.1](part_4_composition_governance.md#4.2.1) [2.6.2](#2.6.2) | POSIX milliseconds, later than asserted_at and at most mesh_config_emergency_ttl_secs after it. The relief ends at this instant with no further row. |
+| `grounds` | `"grounds"` | payload | `tstr` | where the row states its grounds | [4.2.1](part_4_composition_governance.md#4.2.1) | Why the root relieves. No rule reads it. |
+| — | `"refs"` | payload | `refs` | always | [4.2.1](part_4_composition_governance.md#4.2.1) [2.6.1.3](#2.6.1.3) | The bundle in force, under head. A row signed under a root grant names the acceptance it stands on under the also role stands_on. |
+| `asserted_at` | `"asserted_at"` | payload | `ms-time` | always | [2.6.2](#2.6.2) | POSIX milliseconds. |
+
 **An owner-binding: the payload of an `ownership:{relation}:{target_kind}:{version}` row**
 
 | Logical name | CBOR member | Placement | Type | Required when | CC | Note |
