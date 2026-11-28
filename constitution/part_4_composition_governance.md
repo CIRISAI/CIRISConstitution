@@ -2185,9 +2185,9 @@ The rows are these, generated into this section from the table:
 
 | Row | Who is counted | Enact | Cancel | Floor | Window | At the window | Opened by | Landed by |
 |---|---|---|---|---|---|---|---|---|
-| `default_content` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 86 400 s | cancelled | not stated | `member` |
-| `default_standing` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled | not stated | `member` |
-| `default_irreversible` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled | not stated | `member` |
+| `default_content` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 86 400 s | cancelled | `member` | `member` |
+| `default_standing` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled | `member` | `member` |
+| `default_irreversible` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled | `member` | `member` |
 | `community_invite` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled | `member` | `member` |
 | `community_remove` | `member`, one voice a person, the set the proposal names | protocol | — | 2 voices | 259 200 s | dropped | `member` | — |
 | `self_roster_add` | `self+key`, one voice a key, the set the proposal names | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | refused | `self` | `self` |

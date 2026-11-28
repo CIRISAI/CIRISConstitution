@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "8ec76cce205d8e7bc84181acdadde00072ce8a03e1b93eb62e3b0a0d2c69b34b",
+  "policy_sha256": "85750784201150059aef28f3db8224deaf8f447f58c8adcce660759de12de99a",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -70,7 +70,7 @@
    "cancel_over": "base",
    "at_window": "cancelled",
    "concluder": "member",
-   "opener": "unstated",
+   "opener": "member",
    "opener_says": "approve",
    "outcome_words": [
     "landed",
@@ -163,7 +163,7 @@
    "cancel_over": "base",
    "at_window": "cancelled",
    "concluder": "member",
-   "opener": "unstated",
+   "opener": "member",
    "opener_says": "approve",
    "outcome_words": [
     "landed",
@@ -256,7 +256,7 @@
    "cancel_over": "base",
    "at_window": "cancelled",
    "concluder": "member",
-   "opener": "unstated",
+   "opener": "member",
    "opener_says": "approve",
    "outcome_words": [
     "landed",
@@ -1742,9 +1742,6 @@
   "answer_words": "what an answer counted by the row says: assent and raised (objection:{state}, CC 3.1.9.2), for and against (a ballot), confirmed (accord:lifecycle:confirmed), ballot (a ranked ballot), cosign (a cosignature over the one row, CC 2.6.1.9)",
   "stated_census": "the base where the text states it as a number; empty where the base is a roster",
   "unstated_cells": [
-   "default_content.opener",
-   "default_standing.opener",
-   "default_irreversible.opener",
    "poll.opener",
    "poll.opener_says",
    "poll.answer_words"
