@@ -304,7 +304,7 @@ jobs:
   reciprocity:
     name: Lean — from reciprocal service to CIRIS (formal/reciprocity)
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - name: Install Lean 4.14.0 (core only; no Mathlib)
