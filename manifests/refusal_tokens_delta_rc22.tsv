@@ -1,5 +1,5 @@
 change	token	class	old_position	new_position	cc_ref
-added	further_prev_not_newest	refusal		165	2.6.1.11
+added	further_prev_not_newest	detail		165	2.6.1.11
 position_moved	genesis_bundle_count_unmet	hold	165	166	2.6.1.11
 position_moved	genesis_bundle_malformed	refusal	166	167	2.6.1.11
 position_moved	genesis_bundle_not_anchored	concludes_nothing	167	168	2.6.1.11

@@ -1448,6 +1448,7 @@ Every other answer from step 3 on is Waiting or concludes nothing. The details o
 | Detail | The fault |
 |---|---|
 | `version_prev_mismatch` | `version` is not 1 exactly when `prev` is absent, or not one greater than the greatest `version` among the predecessors the bundle names; or a join's `prev` is not the predecessor of greatest `version`, least object id among equals |
+| `further_prev_not_newest` | a join names a predecessor that is in the lineage past of another predecessor it names |
 | `holders_seats_overlap` | `holders`, `serve_nodes` and `transparency_services` are not disjoint |
 | `recovery_commitments_not_holders` | the keys of `recovery_commitments` are not exactly `holders` |
 | `scope_missing_infra` | `scope` lacks `infra:attest` or `infra:serve` |

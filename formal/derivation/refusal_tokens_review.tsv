@@ -308,7 +308,7 @@ for_key_id	not_a_token		payload or envelope member
 founder_only	not_a_token		enumeration value, not a fault
 functions_root	not_a_token		payload or envelope member
 further_prev	not_a_token		a refs role
-further_prev_not_newest	refusal		the text says Invalid: a join names a predecessor in another's lineage past
+further_prev_not_newest	detail		detail of genesis_bundle_malformed
 gcp_cloud_hsm	not_a_token		enumeration value, not a fault
 genesis_bundle_count_unmet	hold		the count is not met and the bundle is held
 genesis_bundle_malformed	refusal		the text says Invalid
