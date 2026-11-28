@@ -555,7 +555,8 @@ recipient_revoke	not_a_token		enumeration value, not a fault
 recipient_see	not_a_token		enumeration value, not a fault
 record_hard_case	not_a_token		scope, duty or role name
 record_id	not_a_token		payload or envelope member
-recovery_behind_head	concludes_nothing		the text says concludes nothing: a recovery whose prev is in the lineage past of a bundle its holder signed
+receipt_no_instant	refusal		the text says refused: a receipt that carries no instant of issue
+recovery_behind_head	concludes_nothing		the text says concludes nothing: a recovery whose prev is in the past of a bundle its holder signed and is none of its named predecessors
 recovery_changes_other_seat	detail		detail of genesis_bundle_malformed
 recovery_commitment_is_holder_key	detail		detail of genesis_bundle_malformed
 recovery_commitment_mismatch	refusal		listed among the refusals of its row or object

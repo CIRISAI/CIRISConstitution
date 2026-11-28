@@ -37,6 +37,7 @@ seat_withdraw	detect	community	duty_withdraw	fixed	4.5.7	—
 seat_confer	license	community	duty_confer	fixed	4.5.4 2.4.1.3	—
 seat_withdraw	license	community	duty_withdraw	fixed	4.5.4 2.4.1.3	—
 accept	trust_edge	community	duty_confer	fixed	4.4.3.34 2.4.1.3	—
+accept	trust_edge	affiliation	affiliation_member_action|cosigned_act	row	4.4.3.34 4.4.3.12	—
 recall	duty	community	moderator_recall	fixed	4.5.13	—
 lift	act	community	moderation_overturn	fixed	4.5.13	objection:{state}
 lift	agent	community	moderation_overturn	fixed	4.5.13	—

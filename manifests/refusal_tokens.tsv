@@ -283,8 +283,9 @@ purge_selection_count_mismatch	refusal	3.3.2	p3:1538	**Cosigned** under the root
 purge_selection_digest_mismatch	concludes_nothing	2.4.1.1	p2:415	One whose selection digest differs from the notice's concludes nothing (`purge_selection_digest_mismatch`), and neither is executed; every purged id is appended to a ledger attested at the next tag.
 purge_tombstoned	refusal	4.5.3	p4:1697	While a tombstone stands, a node does not keep the record's bytes and never serves them, reason `purge_tombstoned`.
 purge_unauthorised	hold	2.4.1.1	p2:415	A tombstone waits for the notice it names (`purge_unauthorised` while it is not held).
+receipt_no_instant	refusal	2.6.1.11	p2:1403	The receipt carries the service's instant of issue as its `iat`, and a receipt without one is refused, `receipt_no_instant`.
 receipt_quorum_mismatch	detail	2.6.1.11	p2:1455	`receipt_quorum_mismatch` | `receipt_quorum` is not ⌊\|`transparency_services`\|/2⌋ + 1
-recovery_behind_head	concludes_nothing	2.6.1.11	p2:1419	A recovery whose `prev` is in the lineage past of a bundle of the lineage that the same holder has signed concludes nothing, `recovery_behind_head`.
+recovery_behind_head	concludes_nothing	2.6.1.11	p2:1444	A recovery whose `prev` is in the past of a bundle its holder signed, and is none of that bundle's named predecessors, concludes nothing here, `recovery_behind_head`.
 recovery_changes_other_seat	detail	2.6.1.11	p2:1460	`recovery_changes_other_seat` | a recovery changes more than its holder's key-record citation and commitment
 recovery_commitment_is_holder_key	detail	2.6.1.11	p2:1464	`recovery_commitment_is_holder_key` | a holder's recovery commitment is the commitment over a signing key the bundle seats, its own or another holder's ([CC 4.2.6](part_4_composition_governance.md#4.2.6))
 recovery_commitment_mismatch	refusal	2.6.1.11	p2:1421	- the recovery key is not the one the commitment in force commits to: the statement does not count, `recovery_commitment_mismatch`;
