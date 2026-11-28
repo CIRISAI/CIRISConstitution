@@ -411,7 +411,7 @@ window-step = {
 mesh-config-row = {
   ? "author": identity-ref,                 ; The holder whose relief the row is. A durable row is counted over the holders of the bundle in force and carries no author. (on the emergency form)
   "dimension": tstr,                        ; mesh_config:{key}:v1, its leaf the key the row sets. The row's type is scores, with no score.
-  "mesh_config_key": tstr,                  ; The key the row sets, equal to the dimension's leaf: a key of the closed key registry, constitution/mesh_config_keys.tsv. A key naming no consumer processor is refused at admission.
+  "mesh_config_key": tstr,                  ; The key the row sets, equal to the dimension's leaf: a key of the closed key registry of CC 4.2.1 rule (2). A key naming no consumer processor is refused at admission.
   "value": int,                             ; An integer in the key's unit; a ratio is stated in hundredths. It stands only where it lets no more flow than the node owner's default for the key.
   "root_ref": tstr,                         ; The root the row is from, by its lineage's name. refs.head names that root's bundle in force.
   "form": "emergency" / "durable",          ; emergency: one holder's relief, bounded by valid_until; durable: counted over a strict majority of the holders of the bundle in force.
