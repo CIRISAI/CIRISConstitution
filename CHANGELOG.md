@@ -34,6 +34,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - Eleven more families have their placement from the text: a listing is public, a roster and a membership row sit in their group, the five retirement families take the scope each row carries, and a custody report, a duty and a stream's head follow the scope of what they name (3.1, 5.3.3.8). Families with no placement of their own: one, `ownership`.
 - While an affiliation has one officer, every act its body counts except a member's admission waits for a countersign from outside the officers; officers are counted as persons, and an affiliation with no official and no `overseen_by` only admits (4.4.3.12).
 - A node serves control, then audio, then video, then bulk; presence and bulk keep a tenth of the rate, a stale media chunk is never forwarded, and a stream's age floor is confirmed by a second chunk in each epoch (5.3.3.2). The ledger (8.3.4) opens a row for what no pacing model covers.
+- The policy table states per row who opens a window, what the opening act counts as, who lands it, the words a landing may state and a base stated as a number (4.5.13); `at_window` and `cancel_over` are the one column each for the outcome at the close and the cancel base, and a counted row under the hold reads `dropped` (3.3.4).
 
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 

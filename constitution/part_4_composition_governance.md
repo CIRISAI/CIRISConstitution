@@ -2181,28 +2181,28 @@ The `accord_halt` row reads its two cells the other way round: Enact is the one 
 
 The rows are these, generated into this section from the table:
 
-| Row | Who is counted | Enact | Cancel | Floor | Window | At the window |
-|---|---|---|---|---|---|---|
-| `default_content` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 86 400 s | cancelled |
-| `default_standing` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
-| `default_irreversible` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled |
-| `community_invite` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
-| `community_remove` | `member`, one voice a person, the set the proposal names | protocol | — | 2 voices | 259 200 s | cancelled |
-| `self_roster_add` | `self`, one voice a key, the set the proposal names | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | refused |
-| `self_roster_evict` | `self`, one voice a key, the set the proposal names, the target silent | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | refused |
-| `moderation_action` | `member`, one voice a person, the set the proposal names | role:moderate at 1 | — | more than 1/2 of those who voted, at least 2 voices | 172 800 s | tallied |
-| `moderation_overturn` | `member`, one voice a person, the set at the act | more than 1/2 | — | 2 voices | 172 800 s | lapsed |
-| `moderator_recall` | `member`, one voice a person, the set the proposal names | 2/3 | — | 2 voices | 259 200 s | cancelled |
-| `duty_confer` | `moderate+review+slash+takedown`, one voice a person, the set the proposal names | more than 1/2 | — | 2 voices, or the roster's size if smaller | 259 200 s | cancelled |
-| `duty_withdraw` | `moderate+review+slash+takedown-target`, one voice a person, the set the proposal names | more than 1/2 | — | 2 voices | 259 200 s | cancelled |
-| `accord_halt` | `holder`, one voice a person, instant not stated | 1/N fires | more than 1/2 confirms | — | 86 400 s | lapsed |
-| `custodian_replace` | `operator+wa`, voice not stated, instant not stated | 2/2 | — | — | none | — |
-| `affiliation_member_action` | `deciding+outside`, voice not stated, instant not stated | 2/2 | — | — | none | — |
-| `moderator_election` | `member`, one voice a person, the set the proposal names | instant runoff over ranked choice of three | — | 2 voices, or the roster's size if smaller | 86 400 s | stay_open |
-| `cosigned_act` | `protocol`, voice not stated, the set the proposal names | protocol | — | — | 259 200 s | cancelled |
-| `accord_majority` | `holder`, one voice a person, instant not stated | more than 1/2 | — | — | none | — |
-| `poll` | `member`, one voice a person, the set the proposal names | — | — | more than 1/2 of those who voted, at least 2 voices | none | tallied |
-| `wa_adjudication` | `wa`, one voice a person, the set the proposal names | protocol | — | — | 259 200 s | cancelled |
+| Row | Who is counted | Enact | Cancel | Floor | Window | At the window | Opened by | Landed by |
+|---|---|---|---|---|---|---|---|---|
+| `default_content` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 86 400 s | cancelled | not stated | `member` |
+| `default_standing` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled | not stated | `member` |
+| `default_irreversible` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled | not stated | `member` |
+| `community_invite` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled | `member` | `member` |
+| `community_remove` | `member`, one voice a person, the set the proposal names | protocol | — | 2 voices | 259 200 s | dropped | `member` | — |
+| `self_roster_add` | `self`, one voice a key, the set the proposal names | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | refused | `self` | `self` |
+| `self_roster_evict` | `self`, one voice a key, the set the proposal names, the target silent | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | refused | `self` | `self` |
+| `moderation_action` | `member`, one voice a person, the set the proposal names | role:moderate at 1 | — | more than 1/2 of those who voted, at least 2 voices | 172 800 s | tallied | `member` | `member` |
+| `moderation_overturn` | `member`, one voice a person, the set at the act | more than 1/2 | — | 2 voices | 172 800 s | lapsed | `moderate` | `member-proposer` |
+| `moderator_recall` | `member`, one voice a person, the set the proposal names | 2/3 | — | 2 voices | 259 200 s | dropped | `member` | — |
+| `duty_confer` | `moderate+review+slash+takedown`, one voice a person, the set the proposal names | more than 1/2 | — | 2 voices, or the roster's size if smaller | 259 200 s | dropped | `moderate+review+slash+takedown` | — |
+| `duty_withdraw` | `moderate+review+slash+takedown-target`, one voice a person, the set the proposal names | more than 1/2 | — | 2 voices | 259 200 s | dropped | `moderate+review+slash+takedown-target` | — |
+| `accord_halt` | `holder`, one voice a person, instant not stated | 1/N fires | more than 1/2 confirms | — | 86 400 s | lapsed | `holder` | each node, unsigned |
+| `custodian_replace` | `operator+wa`, voice not stated, instant not stated | 2/2 | — | — | none | — | `operator+wa` | — |
+| `affiliation_member_action` | `deciding+outside`, voice not stated, instant not stated | 2/2 | — | — | none | — | `deciding` | — |
+| `moderator_election` | `member`, one voice a person, the set the proposal names | instant runoff over ranked choice of three | — | 2 voices, or the roster's size if smaller | 86 400 s | stay_open | — | `winner` |
+| `cosigned_act` | `protocol`, voice not stated, the set the proposal names | protocol | — | — | 259 200 s | dropped | `protocol` | — |
+| `accord_majority` | `holder`, one voice a person, instant not stated | more than 1/2 | — | — | none | — | `holder` | — |
+| `poll` | `member`, one voice a person, the set the proposal names | — | — | more than 1/2 of those who voted, at least 2 voices | none | tallied | not stated | `tally` |
+| `wa_adjudication` | `wa`, one voice a person, the set the proposal names | protocol | — | — | 259 200 s | dropped | `wa` | — |
 
 Each row is stated where its act is. Invitation and removal are at [CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2), the self roster at [CC 3.3.6.4](part_3_the_namespace.md#3.3.6.4) and the halt at [CC 4.2.1.1](#4.2.1.1). The custodian's replacement is at [CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5), a group's cosigned act at [CC 3.3.4](part_3_the_namespace.md#3.3.4), the accord's majority at [CC 4.2.1.3](#4.2.1.3) and an adjudication's count at [CC 4.3](#4.3). The other rows are stated in this section.
 

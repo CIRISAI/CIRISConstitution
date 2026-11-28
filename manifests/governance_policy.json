@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "a304b48583c14acd283ab4dce4dbdfe0bceb9e6f2a566da95e95b37447cafec0",
+  "policy_sha256": "6190711e7ee2bd9611548bb0b10bd7558a52b77649cf3b921fcdc675d4a43612",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -69,6 +69,14 @@
    },
    "cancel_over": "base",
    "at_window": "cancelled",
+   "concluder": "member",
+   "opener": "unstated",
+   "opener_says": "approve",
+   "outcome_words": [
+    "landed",
+    "refused"
+   ],
+   "stated_census": null,
    "window_secs": 86400,
    "window_class": "content_24h",
    "irreversible": false,
@@ -142,6 +150,14 @@
    },
    "cancel_over": "base",
    "at_window": "cancelled",
+   "concluder": "member",
+   "opener": "unstated",
+   "opener_says": "approve",
+   "outcome_words": [
+    "landed",
+    "refused"
+   ],
+   "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
    "irreversible": false,
@@ -215,6 +231,14 @@
    },
    "cancel_over": "base",
    "at_window": "cancelled",
+   "concluder": "member",
+   "opener": "unstated",
+   "opener_says": "approve",
+   "outcome_words": [
+    "landed",
+    "refused"
+   ],
+   "stated_census": null,
    "window_secs": 604800,
    "window_class": "irreversible_7d",
    "irreversible": true,
@@ -290,6 +314,14 @@
    },
    "cancel_over": "base",
    "at_window": "cancelled",
+   "concluder": "member",
+   "opener": "member",
+   "opener_says": "approve",
+   "outcome_words": [
+    "landed",
+    "refused"
+   ],
+   "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
    "irreversible": false,
@@ -300,7 +332,7 @@
     "formal/two_path"
    ],
    "status": "normative",
-   "note": "the invitee's own acceptance is still required (3.1.3.2) and is the second of the floor's two voices: a room of one grows by its one member's proposal and the newcomer's yes; no single vote admits by silence"
+   "note": "the invitee's own acceptance is still required (3.1.3.2) and is the second of the floor's two voices: a room of one grows by its one member's proposal and the newcomer's yes; no single vote admits by silence; an active member emits the proposal (3.3.4)"
   },
   {
    "family": "community_remove",
@@ -350,7 +382,12 @@
     }
    },
    "cancel_over": "—",
-   "at_window": "cancelled",
+   "at_window": "dropped",
+   "concluder": "none",
+   "opener": "member",
+   "opener_says": "approve",
+   "outcome_words": "—",
+   "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
    "irreversible": false,
@@ -360,7 +397,7 @@
     "formal/membership"
    ],
    "status": "normative",
-   "note": "forward only, cosigned under the room's protocol; the member being removed is not counted and is no voice; never fewer than two voices, so a room of two removes nobody"
+   "note": "forward only, cosigned under the room's protocol; the member being removed is not counted and is no voice; never fewer than two voices, so a room of two removes nobody; the row lands when its count is met and needs no concluder (2.7.5); at the hold window's end a node drops the voices it holds, and that is no verdict (3.3.4)"
   },
   {
    "family": "self_roster_add",
@@ -415,6 +452,14 @@
    },
    "cancel_over": "others",
    "at_window": "refused",
+   "concluder": "self",
+   "opener": "self",
+   "opener_says": "approve",
+   "outcome_words": [
+    "landed",
+    "refused"
+   ],
+   "stated_census": null,
    "window_secs": 86400,
    "window_class": "ruled_24h",
    "irreversible": false,
@@ -480,6 +525,14 @@
    },
    "cancel_over": "others",
    "at_window": "refused",
+   "concluder": "self",
+   "opener": "self",
+   "opener_says": "approve",
+   "outcome_words": [
+    "landed",
+    "refused"
+   ],
+   "stated_census": null,
    "window_secs": 86400,
    "window_class": "ruled_24h",
    "irreversible": false,
@@ -542,6 +595,14 @@
    },
    "cancel_over": "—",
    "at_window": "tallied",
+   "concluder": "member",
+   "opener": "member",
+   "opener_says": "unstated",
+   "outcome_words": [
+    "landed",
+    "refused"
+   ],
+   "stated_census": null,
    "window_secs": 172800,
    "window_class": "ruled_48h",
    "irreversible": false,
@@ -551,7 +612,7 @@
     "4.5.13"
    ],
    "status": "normative",
-   "note": "a holder of `moderate` acts alone in the window; on the moderators' absence a strict majority of the members who voted, never fewer than two voices"
+   "note": "a holder of `moderate` acts alone in the window; on the moderators' absence a strict majority of the members who voted, never fewer than two voices; any member proposes and any member lands the fallback"
   },
   {
    "family": "moderation_overturn",
@@ -599,8 +660,16 @@
      "value": "no"
     }
    },
-   "cancel_over": "base",
+   "cancel_over": "—",
    "at_window": "lapsed",
+   "concluder": "member-proposer",
+   "opener": "moderate",
+   "opener_says": "nothing",
+   "outcome_words": [
+    "landed",
+    "refused"
+   ],
+   "stated_census": null,
    "window_secs": 172800,
    "window_class": "ruled_48h",
    "irreversible": false,
@@ -610,7 +679,7 @@
     "4.5.13"
    ],
    "status": "normative",
-   "note": "the members' check: a strict majority of those seated at the head the act names, its author apart, lift a duty holder's single-signature act within the window; below that the act stands; a restored item returns consent-gated"
+   "note": "the members' check: a strict majority of those seated at the head the act names, its author apart, lift a duty holder's single-signature act within the window; below that the act stands; a restored item returns consent-gated; the duty holder's act opens the window and its author's objection is no voice; any member but the act's author lands the lift"
   },
   {
    "family": "moderator_recall",
@@ -664,7 +733,12 @@
     }
    },
    "cancel_over": "—",
-   "at_window": "cancelled",
+   "at_window": "dropped",
+   "concluder": "none",
+   "opener": "member",
+   "opener_says": "approve",
+   "outcome_words": "—",
+   "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
    "irreversible": false,
@@ -674,7 +748,7 @@
     "4.5.13"
    ],
    "status": "normative",
-   "note": "the members recall any duty holder, however seated: more than two thirds of the standing roster cosign one row in the standing window; where that leaves no duty holder the room locks and elects"
+   "note": "the members recall any duty holder, however seated: more than two thirds of the standing roster cosign one row in the standing window; where that leaves no duty holder the room locks and elects; a counted row under the hold of 3.3.4"
   },
   {
    "family": "duty_confer",
@@ -723,7 +797,12 @@
     }
    },
    "cancel_over": "—",
-   "at_window": "cancelled",
+   "at_window": "dropped",
+   "concluder": "none",
+   "opener": "moderate+review+slash+takedown",
+   "opener_says": "approve",
+   "outcome_words": "—",
+   "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
    "irreversible": false,
@@ -733,7 +812,7 @@
     "4.5.4"
    ],
    "status": "normative",
-   "note": "a duty seat is conferred by a strict majority of all the duty holders of the room it is conferred in, with the new holder's acceptance; a lone duty holder confers alone"
+   "note": "a duty seat is conferred by a strict majority of all the duty holders of the room it is conferred in, with the new holder's acceptance; a lone duty holder confers alone; a duty conferral is held as every counted row short of its count is (3.3.4)"
   },
   {
    "family": "duty_withdraw",
@@ -782,7 +861,12 @@
     }
    },
    "cancel_over": "—",
-   "at_window": "cancelled",
+   "at_window": "dropped",
+   "concluder": "none",
+   "opener": "moderate+review+slash+takedown-target",
+   "opener_says": "approve",
+   "outcome_words": "—",
+   "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
    "irreversible": false,
@@ -792,7 +876,7 @@
     "4.5.4"
    ],
    "status": "normative",
-   "note": "a duty seat is withdrawn by a strict majority of the other duty holders, the holder concerned not counted; one other holder alone withdraws nothing, and the members' recall stays"
+   "note": "a duty seat is withdrawn by a strict majority of the other duty holders, the holder concerned not counted; one other holder alone withdraws nothing, and the members' recall stays; a counted row under the hold of 3.3.4"
   },
   {
    "family": "accord_halt",
@@ -840,6 +924,11 @@
    },
    "cancel_over": "base",
    "at_window": "lapsed",
+   "concluder": "local",
+   "opener": "holder",
+   "opener_says": "fires",
+   "outcome_words": "—",
+   "stated_census": null,
    "window_secs": 86400,
    "window_class": "fuse_24h",
    "irreversible": false,
@@ -849,7 +938,7 @@
     "formal/accord_halt"
    ],
    "status": "normative",
-   "note": "one holder fires at once; lapses at the fuse unless a majority confirms; a majority resumes"
+   "note": "one holder fires at once; lapses at the fuse unless a majority confirms; a majority resumes; the fuse is each node's own and has no landing; the confirmation is a cosigned accord:lifecycle:confirmed row naming the halt (4.2.1.1)"
   },
   {
    "family": "custodian_replace",
@@ -901,6 +990,11 @@
    },
    "cancel_over": "—",
    "at_window": "—",
+   "concluder": "none",
+   "opener": "operator+wa",
+   "opener_says": "approve",
+   "outcome_words": "—",
+   "stated_census": 2,
    "window_secs": 0,
    "window_class": "none",
    "irreversible": false,
@@ -962,6 +1056,11 @@
    },
    "cancel_over": "—",
    "at_window": "—",
+   "concluder": "none",
+   "opener": "deciding",
+   "opener_says": "approve",
+   "outcome_words": "—",
+   "stated_census": 2,
    "window_secs": 0,
    "window_class": "none",
    "irreversible": false,
@@ -1020,8 +1119,13 @@
      "value": "no"
     }
    },
-   "cancel_over": "base",
+   "cancel_over": "—",
    "at_window": "stay_open",
+   "concluder": "winner",
+   "opener": "none",
+   "opener_says": "nothing",
+   "outcome_words": "—",
+   "stated_census": null,
    "window_secs": 86400,
    "window_class": "content_24h",
    "irreversible": false,
@@ -1031,7 +1135,7 @@
     "formal/moderator_election"
    ],
    "status": "default",
-   "note": "a locked room elects its moderator: ballot = the roster, its shown order deciding nothing, one ballot per person, a tie seats nobody and the count runs again, winner accepts or the next in runoff order"
+   "note": "a locked room elects its moderator: ballot = the roster, its shown order deciding nothing, one ballot per person, a tie seats nobody and the count runs again, winner accepts or the next in runoff order; nothing signed opens an election; the winner's acceptance binds the ballot set it was seated on"
   },
   {
    "family": "cosigned_act",
@@ -1078,7 +1182,12 @@
     }
    },
    "cancel_over": "—",
-   "at_window": "cancelled",
+   "at_window": "dropped",
+   "concluder": "none",
+   "opener": "protocol",
+   "opener_says": "approve",
+   "outcome_words": "—",
+   "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
    "irreversible": false,
@@ -1136,6 +1245,11 @@
    },
    "cancel_over": "—",
    "at_window": "—",
+   "concluder": "none",
+   "opener": "holder",
+   "opener_says": "approve",
+   "outcome_words": "—",
+   "stated_census": null,
    "window_secs": 0,
    "window_class": "none",
    "irreversible": false,
@@ -1195,6 +1309,11 @@
    },
    "cancel_over": "—",
    "at_window": "tallied",
+   "concluder": "tally",
+   "opener": "unstated",
+   "opener_says": "unstated",
+   "outcome_words": "unstated",
+   "stated_census": null,
    "window_secs": 0,
    "window_class": "none",
    "irreversible": false,
@@ -1204,7 +1323,7 @@
     "4.5.13"
    ],
    "status": "default",
-   "note": "a poll states its own rule in the row that opens it; where it states none, a strict majority of those who voted, never fewer than two voices, one ballot a person; the poll's own close ends it, so the row carries no window"
+   "note": "a poll states its own rule in the row that opens it; where it states none, a strict majority of those who voted, never fewer than two voices, one ballot a person; the poll's own close ends it, so the row carries no window; a secret poll's result is the tally member's ballot:tally row (6.1.9)"
   },
   {
    "family": "wa_adjudication",
@@ -1252,7 +1371,12 @@
     }
    },
    "cancel_over": "—",
-   "at_window": "cancelled",
+   "at_window": "dropped",
+   "concluder": "none",
+   "opener": "wa",
+   "opener_says": "approve",
+   "outcome_words": "—",
+   "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
    "irreversible": false,
@@ -1262,7 +1386,7 @@
     "4.3"
    ],
    "status": "normative",
-   "note": "a finding of the designated Wise Authority body is one row cosigned under the body's own declared protocol, as any cosigned act of a group; the denominator is the full seated roster, never the live subset"
+   "note": "a finding of the designated Wise Authority body is one row cosigned under the body's own declared protocol, as any cosigned act of a group; the denominator is the full seated roster, never the live subset; a counted row under the hold of 3.3.4"
   }
  ],
  "base_law": {
@@ -1305,6 +1429,24 @@
    "affiliation_member_action.counted_at",
    "cosigned_act.voice",
    "accord_majority.counted_at"
+  ]
+ },
+ "explicit_columns": {
+  "cancel_over": "the base the cancel fraction is taken over: base (every member, the proposer counted), others (the set less the proposer), — (the row has no cancel)",
+  "at_window": "the one authoritative outcome when the window closes with no count met: cancelled, refused, lapsed, tallied, stay_open, dropped (a node drops the held voices of a counted row, which is no verdict, CC 3.3.4), — (no window)",
+  "concluder": "who signs the landing: a scope word (one voice of that set; -proposer: any but the opening act's author), local (each node reads its own close and signs nothing), none (the row lands when its count is met)",
+  "opener": "the scope word whose act opens the window; none: nothing signed opens it",
+  "opener_says": "what the opening act counts as: approve (the opener's own yes), nothing (no voice), fires (the act is in force and is no voice of the count)",
+  "outcome_words": "the closed words a landing may state: the window:{state} landing states (CC 3.1.3); — where the row has no landing",
+  "stated_census": "the base where the text states it as a number; empty where the base is a roster",
+  "unstated_cells": [
+   "default_content.opener",
+   "default_standing.opener",
+   "default_irreversible.opener",
+   "moderation_action.opener_says",
+   "poll.opener",
+   "poll.opener_says",
+   "poll.outcome_words"
   ]
  },
  "protocols": {
