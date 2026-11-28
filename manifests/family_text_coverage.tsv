@@ -2663,7 +2663,7 @@ ownership:{relation}:{target_kind}:{version}	signer_rule	text	prose
 ownership:{relation}:{target_kind}:{version}	cosign_rule	cited	code-v61
 ownership:{relation}:{target_kind}:{version}	subject_rule	differs	code-v61
 ownership:{relation}:{target_kind}:{version}	polarity	text	code-v61
-ownership:{relation}:{target_kind}:{version}	placement	text	prose
+ownership:{relation}:{target_kind}:{version}	placement	text	cc-table
 ownership:{relation}:{target_kind}:{version}	lifecycle	unstated	code-v61
 ownership:{relation}:{target_kind}:{version}	erasure_route	unstated	code-v61
 ownership:{relation}:{target_kind}:{version}	projection	unstated	code-v61

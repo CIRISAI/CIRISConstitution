@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "043fe01c5d6a2598164c85bb78eaaca897ac2e11dc135f11aea69756ea70baf1",
+  "registry_sha256": "15c180b1e733ea1607aa74c2b39797761faa250b7b0b9423ad0ca00dde76d303",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "census_names": {
    "source": "formal/derivation/census_names.tsv",
@@ -119,10 +119,10 @@
     "gap": 0
    },
    "placement": {
-    "cc-table": 188,
+    "cc-table": 189,
     "code-v61": 0,
     "generic": 0,
-    "prose": 1,
+    "prose": 0,
     "mixed": 0,
     "gap": 0
    },
@@ -64791,10 +64791,21 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "affiliation named must admit the owner",
-    "source": "prose",
-    "note": "affiliation named must admit the owner; s2: owner re-signs at the group's scope (#1140)",
-    "s2": "owner re-signs at the group's scope (#1140)"
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.1.1",
+    "follows": "the scope of the owner-binding it mirrors",
+    "code": {
+     "value": "affiliation named must admit the owner",
+     "source": "prose"
+    }
    },
    "signer_rule": {
     "value": "the granter becomes owner_of_subject; one live owner per node; incumbent W check",
@@ -65170,7 +65181,7 @@
     "source": "ruled",
     "from": "formal/derivation/names_head_text.tsv",
     "note": "an owner binding their own key acts as themselves; a binding that names an affiliation names that affiliation's roster version",
-    "derived": "standing",
+    "derived": "by_placement",
     "cc_ref": "CC 2.4.1.1"
    },
    "shape": {

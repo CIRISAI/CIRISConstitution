@@ -217,7 +217,7 @@ objection:{state}	cosign_rule	quorum	"reverse quorum (1-of-N protect, m-of-n und
 objection:{state}	governance	own_devices_policy	"policy_row: self_roster_add, self_roster_evict (governance_policy.rs:407)"
 observation:access_assumption	subject_rule	observation_names_observed	"CC cardinality >= 1, never the attester; not enforced"
 observation:reachability	subject_rule	observation_names_observed	"CC cardinality 0; not enforced"
-ownership:{relation}:{target_kind}:{version}	placement	binding_cosigned_by_affiliation	"affiliation named must admit the owner"
+ownership:{relation}:{target_kind}:{version}	placement	binding_cosigned_by_affiliation	["self_collective", "targeted_family", "targeted_room", "commons"]
 ownership:{relation}:{target_kind}:{version}	subject_rule	own_record; minor_not_announced	"attested = the node; a minor's binding never announced at federation"
 ownership:{relation}:{target_kind}:{version}	freshness	standing_at_signing	{"W": "W on incumbents (check_roster_act_fresh)", "judged_at": "signed_instant_with_W"}
 preserve_request	subject_rule	unbuilt	"none (held shut)"
