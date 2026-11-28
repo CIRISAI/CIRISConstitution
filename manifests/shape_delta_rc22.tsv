@@ -1,0 +1,12 @@
+family_or_object	member	type	required	cc_ref	change
+genesis (genesis-refs)	"further_prev"	row-ref-set	on a join, beside prev	2.6.1.11 3.2 2.6.1.3	added
+mesh_config (mesh-config-row)	"author"	identity-ref	on the emergency form	4.2.1 2.6.1.3	added
+mesh_config (mesh-config-row)	"dimension"	tstr	always	3.1.9.2	added
+mesh_config (mesh-config-row)	"mesh_config_key"	tstr	always	4.2.1 3.1.9.2	added
+mesh_config (mesh-config-row)	"value"	int	always	4.2.1	added
+mesh_config (mesh-config-row)	"root_ref"	tstr	always	4.2.1 3.2	added
+mesh_config (mesh-config-row)	"form"	"emergency" / "durable"	always	4.2.1	added
+mesh_config (mesh-config-row)	"valid_until"	ms-time	on the emergency form	4.2.1 2.6.2	added
+mesh_config (mesh-config-row)	"grounds"	tstr	where the row states its grounds	4.2.1	added
+mesh_config (mesh-config-row)	"refs"	refs	always	4.2.1 2.6.1.3	added
+mesh_config (mesh-config-row)	"asserted_at"	ms-time	always	2.6.2	added
