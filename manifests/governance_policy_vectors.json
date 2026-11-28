@@ -1,8 +1,8 @@
 {
  "_meta": {
-  "policy_sha256": "a304b48583c14acd283ab4dce4dbdfe0bceb9e6f2a566da95e95b37447cafec0",
+  "policy_sha256": "8ec76cce205d8e7bc84181acdadde00072ce8a03e1b93eb62e3b0a0d2c69b34b",
   "count": 819,
-  "rule_vector_count": 300,
+  "rule_vector_count": 315,
   "target_voice": "on a row whose target_voice cell is yes, a vector's target_voice says whether the target's own yes is held: one voice toward the floor of two and toward the floor count, never a member and never part of the enact fraction; a vector without the field reads false",
   "rule_kinds": [
    "fraction",
@@ -15560,6 +15560,146 @@
   },
   {
    "family": "moderator_election",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 100,
+   "votes": 2
+  },
+  {
+   "family": "election_open",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "election_open",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "election_open",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "election_open",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "election_open",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 100,
+   "votes": 51
+  },
+  {
+   "family": "election_open",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "election_open",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "election_open",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "election_open",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "election_open",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "election_open",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "election_open",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "election_open",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "election_open",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices_or_roster",
+    "count": 2
+   },
+   "base": 9,
+   "votes": 2
+  },
+  {
+   "family": "election_open",
    "cell": "floor",
    "rule": {
     "kind": "voices_or_roster",

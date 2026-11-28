@@ -14,6 +14,7 @@ run python3 tools/build_cc_signed_object.py
 run python3 tools/build_cc_signed_object_v2.py
 run python3 tools/build_governance_policy.py
 run python3 tools/check_policy_acts.py
+run python3 tools/check_mesh_config_keys.py
 run python3 tools/build_csd4_chain.py
 run python3 tools/topology_to_cfg.py --all
 run python3 tools/build_promise_status.py
@@ -32,6 +33,7 @@ run python3 tools/span_of.py --self-test
 run python3 tools/check_lifecycle_coverage.py
 run python3 tools/check_family_kinds.py --check
 run python3 tools/build_family_model.py --check
+run python3 tools/build_adopter_files.py --check
 run python3 tools/cc_family_select.py --self-test
 run python3 tools/cc_family_select.py --check
 run python3 tools/guard_grammar.py

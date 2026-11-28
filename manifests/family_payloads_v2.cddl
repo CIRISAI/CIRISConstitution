@@ -406,3 +406,18 @@ window-step = {
   "asserted_at": ms-time,                   ; POSIX milliseconds: the held row's instant, or the landing's. The window's length is read between the two.
   * tstr => ceg-value,
 }
+
+; mesh_config:{key} (CC 4.2.1, CC 3.1.9.2): the emergency form is one holder's relief, authored and bounded by valid_until; the durable form is counted over a strict majority of the holders of the bundle in force, with no author. Type scores, with no score; it names the bundle in force under refs.head.
+mesh-config-row = {
+  ? "author": identity-ref,                 ; The holder whose relief the row is. A durable row is counted over the holders of the bundle in force and carries no author. (on the emergency form)
+  "dimension": tstr,                        ; mesh_config:{key}:v1, its leaf the key the row sets. The row's type is scores, with no score.
+  "mesh_config_key": tstr,                  ; The key the row sets, equal to the dimension's leaf: a key of the closed key registry of CC 4.2.1 rule (2). A key naming no consumer processor is refused at admission.
+  "value": int,                             ; An integer in the key's unit; a ratio is stated in hundredths. It stands only where it lets no more flow than the node owner's default for the key.
+  "root_ref": tstr,                         ; The root the row is from, by its lineage's name. refs.head names that root's bundle in force.
+  "form": "emergency" / "durable",          ; emergency: one holder's relief, bounded by valid_until; durable: counted over a strict majority of the holders of the bundle in force.
+  ? "valid_until": ms-time,                 ; POSIX milliseconds, later than asserted_at and at most mesh_config_emergency_ttl_secs after it. The relief ends at this instant with no further row. (on the emergency form)
+  ? "grounds": tstr,                        ; Why the root relieves. No rule reads it. (where the row states its grounds)
+  "refs": refs,                             ; The bundle in force, under head. A row signed under a root grant names the acceptance it stands on under the also role stands_on.
+  "asserted_at": ms-time,                   ; POSIX milliseconds.
+  * tstr => ceg-value,
+}

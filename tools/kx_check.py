@@ -410,7 +410,7 @@ def policy_plants():
         cl = cellsof[row]; src = T.policy_count_kx(row, cl)
         if src is None or a not in src: out.append((word, None)); continue
         e = kx.parse(src.replace(a, b, 1)); rnd = random.Random(sum(map(ord, row))); pol = {row: 3}; dis = 0
-        for rows in R.policy_sets(cl, rnd):
+        for rows in R.policy_sets(cl, rnd, 48):   # more sets than the run itself, so a plant on a row that leaves its proposer out still meets two keys of one person
             for held in R.orders(rows, cap=24):
                 s = next(x for x in held if x["id"] == "self")
                 dis += R.policy_ref(row, cl, held, s, pol) != kx.Ev(PRELUDE, held, s, 0, {"policy": pol, "person": T.UNITS["person"]}).run(e)

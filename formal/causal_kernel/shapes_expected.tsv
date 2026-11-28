@@ -231,7 +231,7 @@ door poll[stated]	556 worlds, 1 properties hold	holds
 door poll[stated]	plant: its mutation (check_door.MUTATION)	caught
 door retirement_objection	60 worlds, 3 properties hold	holds
 door retirement_objection	plant: its mutation (check_door.MUTATION)	caught
-door self_roster_add	200 worlds, 2 properties hold	holds
+door self_roster_add	100 worlds, 2 properties hold	holds
 door self_roster_add	plant: its mutation (check_door.MUTATION)	caught
 door self_roster_evict	600 worlds, 3 properties hold	holds
 door self_roster_evict	plant: its mutation (check_door.MUTATION)	caught

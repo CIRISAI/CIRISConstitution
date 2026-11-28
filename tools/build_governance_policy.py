@@ -33,9 +33,12 @@ The floor is a reverse-path predicate only: it never lands anything before the w
 machine's Prop_FloorNeverLandsEarly). Two per-row fields answer the implementer's questions: `cancel_over`
 is the denominator of the cancel fraction — `base` for a community (the proposer counted), `others` for a
 self roster (every key is one person's, so the proposer is not asked to object to itself); `at_window` is
-what happens to a proposal that has not landed when the window closes — `cancelled` for every community
-row (a held change resolves: formal/membership no_hold_expiry), `refused` for the self roster
-(the target of an eviction signed inside the window, or a strict majority of the others objected), `lapsed` for the halt, `tallied` for moderation. The base is the standing roster at or below k members and the
+what happens to a proposal that has not landed when the window closes — `cancelled` for a community
+row unless the row states another value, `dropped` for a counted row under the hold (CC 3.3.4), `refused` for the self roster
+(the target of an eviction signed inside the window, or a strict majority of the others objected), `lapsed` for the halt, `tallied` for moderation. Nine explicit columns
+(concluder, opener, opener_says, outcome_words, stated_census, answer_words, default_at_close, landed_means,
+refused_means) state what a door would otherwise derive; at_window
+and cancel_over are the one authoritative column each for the outcome at the close and the cancel base. The base is the standing roster at or below k members and the
 expected-active count above it, never below `min` (the law's constants are provisional until the
 participation law is measured).
 
@@ -60,9 +63,10 @@ COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("coun
                        ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no")),
                        ("target_voice", ("yes", "no"))])
 COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no", "target_voice": "no"}
-SET_ROLES = set(ROLES) | {"deciding", "outside"}
+SET_ROLES = set(ROLES) | {"deciding", "outside", "key"}   # `key`: a seat of a room voice's key roster (CC 3.1.3.2)
 SET_EXCL = ("target", "proposer", "node")
-UNSTATED_MAX = 8   # cells the text leaves unstated; the number only falls
+UNSTATED_MAX = 5   # cells the text leaves unstated; the number only falls
+EXPLICIT_UNSTATED_MAX = 6   # explicit cells the text leaves unstated; the number only falls
 
 BASE_LAW = OrderedDict([("kind", "standing_then_census"), ("k", 12), ("tail", 30), ("min", 3),
                         ("status", "provisional: k and the tail are a stand-in for the measured participation law"),
@@ -72,6 +76,44 @@ BASE_LAW = OrderedDict([("kind", "standing_then_census"), ("k", 12), ("tail", 30
                                      "a test stand-in and not the law")])
 WINDOW_CLASSES = OrderedDict([("content_24h", 86400), ("standing_72h", 259200), ("irreversible_7d", 604800),
                               ("ruled_24h", 86400), ("ruled_48h", 172800), ("fuse_24h", 86400), ("none", 0)])
+
+
+# The explicit columns: every value an implementer would otherwise derive, stated per row (CC 4.5.13, the policy as
+# data). `unstated` marks a cell the text does not determine; the build counts those cells.
+SCOPE_WORD = lambda v: bool(re.fullmatch(r"[a-z_:]+(?:\+[a-z_:]+)*(?:-(?:target|proposer|node))?", v)) and all(
+    x in SET_ROLES | {"protocol"} for x in v.split("-")[0].split("+"))
+OUTCOME_WORDS = ("held", "landed", "refused")            # the window:{state} leaves, and no third state (CC 3.1.3)
+MEANS = lambda v: v in ("—", "unstated") or bool(re.fullmatch(r"[a-z_]+", v))
+ANSWER_WORDS = ("assent", "raised", "for", "against", "confirmed", "ballot", "cosign")
+EXPLICIT = OrderedDict([
+    ("cancel_over", lambda v: v in ("base", "others", "—")),
+    ("at_window", lambda v: v in ("cancelled", "refused", "lapsed", "tallied", "stay_open", "dropped", "—")),
+    ("concluder", lambda v: v in ("none", "local", "unstated") or SCOPE_WORD(v)),
+    ("opener", lambda v: v in ("none", "unstated") or SCOPE_WORD(v)),
+    ("opener_says", lambda v: v in ("approve", "nothing", "fires", "unstated")),
+    ("outcome_words", lambda v: v in ("—", "unstated") or all(w in OUTCOME_WORDS for w in v.split("|"))),
+    ("answer_words", lambda v: v in ("—", "unstated") or all(w in ANSWER_WORDS for w in v.split("|"))),
+    ("stated_census", lambda v: v == "" or v.isdigit()),
+    ("default_at_close", lambda v: v in ("—", "unstated") or v in OUTCOME_WORDS),
+    ("landed_means", MEANS),
+    ("refused_means", MEANS),
+])
+EXPLICIT_MEANING = OrderedDict([
+    ("cancel_over", "the base the cancel fraction is taken over: base (every member, the proposer counted), others (the set less the proposer), — (the row has no cancel)"),
+    ("at_window", "the text's description of the outcome when the window closes with no count met (default_at_close is the leaf): cancelled, refused, lapsed, tallied, stay_open, "
+                  "dropped (a node drops the held voices of a counted row, which is no verdict, CC 3.3.4), — (no window)"),
+    ("concluder", "who signs the landing: a scope word (one voice of that set; -proposer: any but the opening act's author), "
+                  "local (each node reads its own close and signs nothing), none (the row lands when its count is met)"),
+    ("opener", "the scope word whose act opens the window; none: nothing signed opens it"),
+    ("opener_says", "what the opening act counts as: approve (the opener's own yes), nothing (no voice), fires (the act is in force and is no voice of the count)"),
+    ("outcome_words", "the leaves a landing of the row's window may state: held, landed, refused (window:{state}, CC 3.1.3); — where the row has no window rows"),
+    ("default_at_close", "the authoritative outcome when the window closes with no count met, as a window leaf; at_window keeps the text's description of it"),
+    ("landed_means", "what a `landed` landing means for this row, in the text's words; never a third state"),
+    ("refused_means", "what a `refused` landing means for this row, in the text's words; never a third state"),
+    ("answer_words", "what an answer counted by the row says: assent and raised (objection:{state}, CC 3.1.9.2), for and against (a ballot), "
+                     "confirmed (accord:lifecycle:confirmed), ballot (a ranked ballot), cosign (a cosignature over the one row, CC 2.6.1.9)"),
+    ("stated_census", "the base where the text states it as a number; empty where the base is a roster"),
+])
 
 
 def frac(s):
@@ -239,6 +281,12 @@ def load():
         r["_rules"] = OrderedDict((k, rule_of(r[k])) for k in ("enact", "cancel", "floor"))
         if r["window_class"] not in WINDOW_CLASSES or WINDOW_CLASSES[r["window_class"]] != r["window_secs"]:
             sys.exit(f"governance_policy: {r['family']} window {r['window_secs']} does not match class {r['window_class']}")
+        for col, ok in EXPLICIT.items():
+            if col not in r or r[col] is None or not ok(r[col]):
+                sys.exit(f"governance_policy: {r['family']} {col} {r.get(col)!r} is not a value of the column")
+    ex = [f"{r['family']}.{c}" for r in rows for c in EXPLICIT if r[c] == "unstated"]
+    if len(ex) > EXPLICIT_UNSTATED_MAX:
+        sys.exit(f"governance_policy: {len(ex)} explicit cells are unstated, more than {EXPLICIT_UNSTATED_MAX}: " + ", ".join(ex))
     return rows
 
 
@@ -496,13 +544,14 @@ def part_table(rows):
     at = {"signed": "the set as signed", "named": "the set the proposal names", "act": "the set at the act",
           "founding": "the set the record lists", "unstated": "instant not stated"}
     esc = lambda x: x.replace("|", "\\|")
-    out = ["| Row | Who is counted | Enact | Cancel | Floor | Window | At the window |", "|---|---|---|---|---|---|---|"]
+    out = ["| Row | Who is counted | Enact | Cancel | Floor | Window | At the window | Opened by | Landed by |", "|---|---|---|---|---|---|---|---|---|"]
+    who_word = lambda v: {"none": "—", "local": "each node, unsigned", "unstated": "not stated"}.get(v, f"`{esc(v)}`")
     for r in rows:
         c = {k: v["value"] for k, v in r["_counted"].items()}
         who = f"`{esc(c['count_set'])}`, {voice[c['voice']]}, {at[c['counted_at']]}"
         if c["target_silent"] == "yes": who += ", the target silent"
         win = "none" if not r["window_secs"] else f"{r['window_secs']:,}".replace(",", " ") + " s"
-        out.append(f"| `{r['family']}` | {who} | {esc(r['enact'])} | {esc(r['cancel'])} | {esc(r['floor'])} | {win} | {r['at_window']} |")
+        out.append(f"| `{r['family']}` | {who} | {esc(r['enact'])} | {esc(r['cancel'])} | {esc(r['floor'])} | {win} | {r['at_window']} | {who_word(r['opener'])} | {who_word(r['concluder'])} |")
     return out
 
 
@@ -539,6 +588,15 @@ def build():
             d[k + "_rule"] = r["_rules"][k]   # the typed form of the cell beside its prose (additive; CEWP#16)
         d["counted"] = r["_counted"]   # who the door counts, typed, each with the section that states it
         d["cancel_over"] = r["cancel_over"]; d["at_window"] = r["at_window"]   # persist v59 questions (b) and (c)
+        for k in ("concluder", "opener", "opener_says"):
+            d[k] = r[k]
+        for k in ("outcome_words", "answer_words"):
+            d[k] = r[k].split("|") if r[k] not in ("—", "unstated") else r[k]
+        for k in ("default_at_close", "landed_means", "refused_means"):
+            d[k] = r[k]
+        # how each count compares: enact is met by strictly more than its fraction, cancel and floor by at least theirs
+        d["comparison"] = OrderedDict([("enact", "more_than"), ("cancel", "at_least"), ("floor", "at_least")])
+        d["stated_census"] = int(r["stated_census"]) if r["stated_census"] else None
         d["window_secs"] = r["window_secs"]; d["window_class"] = r["window_class"]
         d["irreversible"] = r["irreversible"]; d["reverse_path"] = r["reverse_path"]
         d["corridor"] = r["corridor"]; d["model"] = r["model"].split(); d["status"] = r["status"]; d["note"] = r["note"]
@@ -553,6 +611,8 @@ def build():
                             ("changes_set", "whether the act adds to or removes from the set it counts"),
                             ("target_voice", "yes: the target's own row naming the act is one of the voices counted, though the target is not in the count set"),
                             ("unstated", "the text does not state the cell"), ("unstated_cells", unstated)])),
+                        ("explicit_columns", OrderedDict(list(EXPLICIT_MEANING.items()) + [
+                            ("unstated_cells", [f"{r['family']}.{c}" for r in rows for c in EXPLICIT if r[c] == "unstated"])])),
                         ("protocols", OrderedDict([
                             ("source", "constitution/consensus_protocols.tsv"),
                             ("reading", "a kind is a count set and a typed rule; votes gives the voices the rule needs by set size, at m = 2 for a quorum kind, null where the table alone cannot evaluate it"),

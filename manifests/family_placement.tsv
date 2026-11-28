@@ -1,0 +1,190 @@
+family	placement	follows	verbs	counted	fold	cc_ref
+accord:*	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	weight=rate(hardware_class); by=reader|reads=own&cites(hardware_custody:{platform}); weight=rate(hardware_class); by=reader|key=attested_key_id; pick=chain(prev); absent=from(trust:{job}:{version})	CC 3.4.5.1
+accord:human_dignity	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+accord:invoke:constitutional:{halt_id}	self_collective|targeted_family|targeted_room|commons		attest	yes		CC 3.4.5.1
+accord:invoke:drill:{drill_id}	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+accord:invoke:notify:{notify_id}	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+accord:lifecycle	self_collective|targeted_family|targeted_room|commons		attest|replace	no		CC 3.4.5.1
+accord:lifecycle:{kind}	self_collective|targeted_family|targeted_room|commons		attest	yes	over=standing@named/person	CC 3.4.5.1
+act:ack	self_collective|targeted_family|targeted_room|commons		attest	yes		CC 2.7.5
+activity_tier:{period}	self_collective|targeted_family|targeted_room|commons		attest|replace	no		CC 3.4.5.1
+admission:unit	self_collective|targeted_family|targeted_room|commons		attest|withdraw	yes		CC 2.7.11
+age_assurance:{level}:{band}:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	reads=own+age_self_declared:band:{band}:{version}&live; key=attested_key_id; pick=rank(government>provider>self); absent=protective; by=reader	CC 3.4.5.1
+age_self_declared:band:{band}:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no	feeds=age_assurance:{level}:{band}:{version}	CC 3.4.5.1
+agent_files:{kind}:{platform_or_target}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	reads=own&signer:member; test=score>=threshold ?default_trust:untrusted; by=reader	CC 3.4.5.1
+approach:{goal_id}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+archive_release:{basis}	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+attestation:agent_integrity	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader	CC 3.4.5.1
+attestation:hardware_rooted	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader	CC 3.4.5.1
+attestation:license_validity	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader	CC 3.4.5.1
+attestation:registry_consensus	commons		attest|withdraw	no	absent=restricted; by=reader|reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader	CC 4.4.3.4
+attestation:self_verify	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader	CC 3.4.5.1
+audio:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+audit_chain:hash_continuity	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+autonomy:{aspect}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+ballot:moderation_action	targeted_room		attest|withdraw	yes	key=proposal,person; pick=agree; over=live@named/person	CC 3.1.3
+ballot:moderator	targeted_room		attest|withdraw	yes	key=election_id,person; pick=agree; over=live@named/person|order=max(moderation_track_record),min(admission_order),min(key_id)|combine=policy(moderator_election)|over=live@named/person|test=voices>=min(2,n) ?seated:open	CC 3.1.3
+ballot:moderator_acceptance	targeted_room		attest	yes	key=community_id,election_id; pick=max(ballot_count); by=node	CC 3.1.3
+ballot:tally:{poll_id}	targeted_room		attest|withdraw	no		CC 3.1.3
+benchmark:he300:{category}:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+beneficence:{aspect}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+blog:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+bond_posted:{currency}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+build:registered:{target}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+capacity:composite	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory|absent=refuse|reads=capacity:{factor}&live; key=attested_key_id,dimension,attesting_key_id; combine=min(C,I_int,R,I_inc,S); absent=undefined; by=reader	CC 3.4.5.1
+capacity:relay_delivery	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	by=advisory|reads=own&has(relay_countersignature|chunk_commitment); by=reader	CC 3.4.5.1
+capacity:{factor}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+capacity_assurance:reversible_excluded:{domain}:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+capacity_assurance:reversible_pending:{domain}:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+capacity_assurance:{level}:{domain}:{band}:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	key=attested_key_id,domain,attesting_key_id; result=vector(domain)|key=attested_key_id,domain,attesting_key_id; absent=full	CC 3.4.5.1
+census:composite:{class}	commons		attest|replace|withdraw	no	absent=refuse|key=class,period; pick=once(census_composite_duplicate_period)|combine=median(bucket); by=reader	CC 3.1.3
+census:expected_active	targeted_room		attest|replace|withdraw	no	over=active@named/owner|combine=max(count(owner),(prev*9+9) div 10,floor)	CC 6.1.9
+census:member:partial	targeted_room		attest|withdraw	no	feeds=census:expected_active	CC 3.1.3
+census:member:share	addressed		attest|withdraw	no	key=period,token; pick=once(ballot_share_duplicate_token)	CC 6.1.9
+census:partial:{class}	commons		attest|replace|withdraw	no	feeds=census:composite:{class}|reads=census:share:{class}; key=period,token; pick=union; test=count=2 !census_share_pair_incomplete	CC 6.1.9
+census:share:{class}	addressed		attest|withdraw	no	key=period,token; pick=once(census_share_duplicate_token)	CC 3.1.3
+cert_validity:{authority}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	reads=own+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader	CC 3.4.5.1
+chat:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+coherence_standing:{cohort}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+collection:{kind}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+commitment_fulfillment:{prior_contribution_id}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+community:listing	commons		attest|replace|withdraw	no		CC 3.1.1
+config:{scope}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+conscience:coherence	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+conscience:entropy	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+conscience:epistemic_humility	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+conscience:optimization_veto	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+consent:community_trust	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	cut=boundary(asserted_at)|reads=own&signer:owner|self|key=attested_key_id,attesting_key_id|reads=own&signer:owner|self; key=attested_key_id,attesting_key_id; pick=max(asserted_at),min(attestation_id); cut=boundary(asserted_at); absent=none; result=bool; by=node	CC 3.4.5.1
+consent:decay:{stage}	self_collective|targeted_family|targeted_room|commons		attest|replace	no		CC 3.4.5.1
+consent:deletion_complete	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+consent:deletion_sla:{days}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+consent:partnership_accept	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)|reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id,attesting_key_id; pick=pair(consent:partnership_grant),max(asserted_at); result=bool; by=reader	CC 3.4.5.1
+consent:partnership_grant	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)|reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id,attesting_key_id; pick=pair(consent:partnership_accept),max(asserted_at); result=bool; by=reader	CC 3.4.5.1
+consent:replication:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	cut=whole|key=attesting_key_id,attested_key_id; pick=pair(consent:replication:{version}); result=bool	CC 3.4.5.1
+consent:scope:{kind}	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+consent:state:{stance}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	pick=rank(revoked>granted)|@stance=revoked: cut=boundary(asserted_at)|@stance=revoked: cut=boundary(asserted_at),terminal|@stance=revoked: cut=terminal|pick=max(asserted_at); by=reader|reads=own&signer:subject|proxy|absent=unspecified|pick=max(asserted_at)|result=state(granted|revoked|expired|unspecified)	CC 3.4.5.1
+consent:stream:{kind}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+consent:{kind}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+content_class:{class}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	yes		CC 3.4.5.1
+content_rating:{scheme}:{rating}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+contribution:{subject_kind}	commons		attest	no		CC 3.1.9.3
+corpus_health:n_eff_measurable	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+credits:{domain}:{language}:{subject}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+custody:{kind}	self_collective|targeted_family|targeted_room|commons	the content's scope	attest|withdraw	no		CC 3.1.3.3
+cw_class:{class}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+deferral:request	self_collective|targeted_family|targeted_room		attest|withdraw	no		CC 3.1.9.3
+deferral:response:{outcome}	self_collective|targeted_family|targeted_room|commons		attest	no	over=present@named/person	CC 3.4.5.1
+delivery:{class}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+delivery_ack:{stream_id}	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+detection:correlated_action:{axis}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory|combine=median(score); by=reader	CC 3.4.5.1
+detection:distributive:access:{resource_type}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory|combine=median(score); by=reader	CC 3.4.5.1
+detection:hash_chain_integrity	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+detection:intra_agent_consistency	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+detection:{detector}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory|combine=median(score); by=reader	CC 3.4.5.1
+device:label	self_collective		attest|replace|withdraw	no		CC 3.1.1
+dma:csdma:*	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+dma:dsdma:{domain}:*	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+dma:idma:*	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+dma:pdma:*	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+duty:{kind}	self_collective|targeted_family|targeted_room|commons	the scope of the permission it attaches to, or narrower	attest|replace|withdraw	no		CC 3.1.1
+encyclopedia:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+event:attendance	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+event:lifecycle:{state}	self_collective|targeted_family|targeted_room|commons		attest|replace	no	pick=max(asserted_at); by=reader	CC 3.4.5.1
+event:rsvp_count	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+evidence:{suite}:{kind}:{cell}:{prefix}	commons		attest|replace|withdraw	no	feeds=progress_measure:{method_id}	CC 3.1.5.5
+expertise:{domain}:{language}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+federation_directory:replication_lag	self_collective|targeted_family|targeted_room|commons		attest|replace	no		CC 3.4.5.1
+fidelity:explainability_sla:{tier}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+fidelity:{aspect}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+file:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+film:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+goal:{scale}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.1.9.7
+group:roster	targeted_family|targeted_room		attest|replace|withdraw	no	bound=drop_only(members)|bound=narrow_only(consensus_protocol),fixed(admission_quorum_basis)|pick=chain(prev_head_digest)|reads=head+membership:{stage}&seat:human|order=min(key_id)|feeds=replication.audience|reads=head|@cohort_subkind=infrastructure: over=listed@seating/person|@cohort_subkind=infrastructure: over=founders@named/person|reads=head+membership:{stage}&at(now)&seat:human|@cohort_subkind=infrastructure: over=founders@now/person; test=count>m ?live:stalled|reads=head; pick=chain(prev_head_digest)|pick=chain(prev_head_digest),tips|over=founders@named/person; test=n>M ?founder_quorum_restored:founder_quorum_unreachable	CC 3.2
+hard_case:{kind}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+hardware_custody:{platform}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	feeds=accord:*	CC 3.4.5.1
+health:liveness:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+holon:claim	commons		attest|replace|withdraw|recant	no	key=attesting_key_id,holon,view,consumer,kind; pick=tips; absent=none; by=reader	CC 3.1.11
+identity:canonical_binding:{canonical_hash}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+identity:occurrence	self_collective|targeted_family|targeted_room|addressed|commons		attest|replace|withdraw	yes	reads=own&at(now); key=identity_key_id; result=set; by=node|over=live@named/key	CC 5.4.6
+identity:occurrence_revocation	self_collective|targeted_family|targeted_room|addressed|commons		attest	yes		CC 3.1.3
+identity_amendment	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+identity_continuity:relational_anchor	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+image:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+integrity:{aspect}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+judge_model:verdict:{model_id}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+justice:{aspect}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+key:record	commons|targeted_room		attest|replace	yes		CC 3.1.3
+key:revocation	commons|targeted_room		attest|replace	no	key=revoked_key_sha256_ed25519_raw; pick=union; bound=lower_only(revoked_after)|key=revoked_key_sha256_ed25519_raw; pick=union|key=revoked_key_sha256_ed25519_raw; pick=union; bound=lower_only(revoked_after); combine=min(revoked_after)|cut=boundary(revoked_after)	CC 3.1.3
+key_boundary:{scope}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+key_grant:{axis}	self_collective|targeted_family|targeted_room		attest	no	key=dimension,attesting_key_id,attested_key_id,axis_identity; pick=union; cut=none; by=node|@axis=epoch|stream: key=stream_id; pick=union; bound=raise_only(epoch)	CC 3.3.2
+lawful_order:release	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+ledger:checkpoint:{unit}:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace	no	key=unit,account,attesting_key_id; cut=boundary(seq)	CC 3.4.5.1
+ledger:head:{unit}:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace	no		CC 3.4.5.1
+ledger:promotion:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace	no		CC 3.4.5.1
+licensure:{authority_id}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	yes	reads=own&signer:authority|@status=revoked: cut=terminal|result=set|reads=own&declared(licence_class); by=reader|key=license_id; bound=raise_only(revision); pick=max(quorum_weight),rank(revoked>suspended>active)|key=license_id; pick=max(quorum_weight),rank(revoked>suspended>active)|pick=rank(revoked>suspended>active)|weight=min(confidence,count(attesting_key_id)/2); by=reader	CC 3.4.5.1
+locality:decision:{scale}	self_collective|targeted_family|targeted_room|commons		attest	no	absent=refuse	CC 3.4.5.1
+location_proof:{version}	commons|targeted_room		attest|withdraw	no		CC 3.3.3
+manifold_conformity:{cohort}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+membership:{stage}	targeted_family|targeted_room		attest|replace|withdraw	yes	@stage=acceptance|decline: key=proposal_id,attesting_key_id; pick=once|@stage=resignation: cut=forward; feeds=group:roster|feeds=group:roster|@stage=removal: over=others@named/person|@cohort_subkind=infrastructure: over=founders@named/person|@cohort_subkind=infrastructure: over=founders@named/person; reads=own&direct|reads=own&direct|@group_kind=affiliation: over=deciding_seats@named/person|@stage=removal: bound=raise_only(revision); pick=union	CC 3.1.3.2
+mesh_config:{key}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	yes	bound=narrow_only(value)	CC 3.4.5.1
+method:{approach_id}:{substrate_rung}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+mls:leaf_vouch	self_collective|targeted_room		attest|withdraw	no		CC 5.1
+model_3d:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+moderation:{allegation_type}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	over=present@named/person	CC 3.4.5.1
+moderation_track_record:{community_key_id}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	feeds=ballot:moderator|reads=truth_grounding:{subject}+witness_diversity:{contribution_id}+commitment_fulfillment:{prior_contribution_id}+hard_case:{kind}; key=community_key_id,attested_key_id,dimension,attesting_key_id; by=reader|key=community_key_id,attested_key_id,attesting_key_id; result=vector(community_key_id); by=reader	CC 3.4.5.1
+multilateral_participation:{forum}:{kind}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+need:{domain}:{kind}	commons		attest|replace|withdraw|recant	no		CC 3.1.9.3
+news:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+non_maleficence:{aspect}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+objection:{state}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	@state=assent: weight=1|@state=raised: weight=-1	CC 3.4.5.1
+observation:access_assumption	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+observation:reachability	self_collective|targeted_family|targeted_room|commons		attest|replace	no	key=attested_key_id; pick=union; by=reader	CC 3.4.5.1
+ownership:{relation}:{target_kind}:{version}	self_collective|targeted_family|targeted_room|commons	the scope of the owner-binding it mirrors	authorize|replace|withdraw	yes	reads=own&live&signer:owner; key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less; by=node|key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less|reads=own	CC 3.1.1
+partner_role:{role}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+peer_reachability:{network}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+preserve_request	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+preserve_response	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+progress_measure:{method_id}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	reads=own&cites(evidence:{suite}:{kind}:{cell}:{prefix})	CC 3.4.5.1
+prohibited:{category}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+provenance:build_manifest:{target}	commons		attest|replace|withdraw	no	reads=own&cap(infra:attest); by=reader	CC 3.1.2.1
+provenance:build_manifest:{target}:locale:{lang_code}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	reads=own&cap(infra:attest); by=reader	CC 3.4.5.1
+provenance:skill_import:{source}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	reads=own&cap(infra:attest); by=reader	CC 3.4.5.1
+provenance:slsa:{level}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	reads=own&cap(infra:attest); by=reader	CC 3.4.5.1
+quarantine:{state}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	yes	key=attested_key_id; pick=rank(withhold>release)	CC 3.4.5.1
+ratchet:flag:coordinated_voting_cluster	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory|combine=median(score); by=reader	CC 3.4.5.1
+ratchet:flag:counter_rii:{layer}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+ratchet:flag:density_anomaly	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+ratchet:flag:expertise_attestation_anomaly	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+ratchet:flag:harassment_pattern	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+ratchet:flag:out_of_distribution_voting	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	by=advisory	CC 3.4.5.1
+reconsideration:{grounds}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+regard:{subject_kind}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.1.9.3
+regime:{artifact}:{version}	self_collective|targeted_family|targeted_room|commons		attest|replace	no		CC 3.4.5.1
+rendezvous:route	commons		attest	no		CC 3.1.4
+retirement:{state}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	yes		CC 3.4.5.1
+revocation:{entity_type}:{reason}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	bound=raise_only(revision); pick=union	CC 3.4.5.1
+rollback_detected:{revision_field}	self_collective|targeted_family|targeted_room|commons		attest	no		CC 3.4.5.1
+seed_holder_voting_alignment:{cell}	self_collective|targeted_family|targeted_room|commons		attest|replace	no		CC 3.4.5.1
+self:delegates_to	self_collective|targeted_family|targeted_room|commons		authorize	yes	by=none	CC 3.4.5.1
+self:delegates_to:agent_occurrence	self_collective|targeted_family|targeted_room|commons		authorize	no	by=none	CC 3.4.5.1
+session:{kind}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	key=community_id,session_id,identity_key_id; result=one|reads=own&signer:self|reads=own&has(community_id)&has(session_id)&has(claimed_at)|absent=none|reads=own&signer:self; key=community_id,session_id,identity_key_id; pick=min(claimed_at),min(attesting_key_id); absent=none; result=one; by=node	CC 3.4.5.1
+settlement:*	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	key=transfer_id; pick=pair(settlement:*); combine=sum(amount); test=sum=0 ?matched:flagged; by=reader	CC 3.1.3
+slashing:{outcome}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	yes		CC 3.4.5.1
+stream:head	self_collective|targeted_family|targeted_room|commons	the scope of the stream it heads	attest|replace	no		CC 5.3.3.8
+system:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+takedown_notice:{basis}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	yes		CC 3.4.5.1
+testimonial_witness:{kind}	self_collective		attest|withdraw|recant	no		CC 3.1.9.3
+topical_relation:{kind}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no	feeds=consent:partnership_grant,consent:partnership_accept	CC 3.4.5.1
+trace:{form}:{version}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+trace_summary:{kind}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
+transport:canonical_rebind	self_collective|targeted_family|targeted_room|commons		attest|replace	yes		CC 3.4.5.1
+transport:{kind}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no		CC 3.4.5.1
+trust:{job}:{version}	self_collective|targeted_family|targeted_room|commons		authorize|replace|withdraw	no	@job=accepts: reads=own+head&live; result=state(rooted|stalled|not_rooted); absent=refuse; by=node|@job=accepts: absent=refuse	CC 3.4.5.1
+truth_grounding:{subject}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no		CC 3.4.5.1
+video:*	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw|recant	no		CC 3.4.5.1
+vote:{contribution_id}	self_collective|targeted_family|targeted_room|commons		attest|withdraw|recant	no	weight=credits*expertise_multiplier|key=contribution_id,person; pick=agree; by=node	CC 3.4.5.1
+wa_adjudication:{state}	self_collective|targeted_family|targeted_room|commons		attest|replace|withdraw	no	over=seated@named/person	CC 3.4.5.1
+watchlist:{id}	targeted_room		attest|replace|withdraw	no		CC 3.1.9.4
+weighted_aggregate:{contribution_id}	self_collective|targeted_family|targeted_room|commons		attest|replace	no	reads=vote:{contribution_id}&live; key=contribution_id,person; pick=agree; combine=sum(weight); by=node	CC 3.4.5.1
+window:{state}	self_collective|targeted_family|targeted_room		attest	no		CC 3.1.3
+witness_diversity:{contribution_id}	self_collective|targeted_family|targeted_room|commons		attest|withdraw	no		CC 3.4.5.1
