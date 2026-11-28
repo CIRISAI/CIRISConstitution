@@ -37,6 +37,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The policy table states per row who opens a window, what the opening act counts as, who lands it, the words a landing may state and a base stated as a number (4.5.13); `at_window` and `cancel_over` are the one column each for the outcome at the close and the cancel base, and a counted row under the hold reads `dropped` (3.3.4).
 - The acts table counts a steward purge under the trust root's protocol (2.4.1.1, 3.3.2), and an affiliation's record change, dissolution and `license` seat take the countersigned path while it has one officer (4.4.3.12).
 - The policy table states each row's answer words and its outcomes as the text names them; a members' lift counts the members less the act's author and a recall the roster less the holder recalled (4.5.13). `election_open` opens an election for an ended duty seat by a strict majority of the members, floor two or the roster's size.
+- A policy row's default at the close is a window leaf (`held`, `landed`, `refused`), with what `landed` and `refused` mean for it in the text's words; each count states it is met by more than its enact fraction and at least its cancel and floor (4.5.13). The acts table names the families each act signs, and a private room's voice adds and evicts its keys by the self roster's rows (3.1.3.2).
 
 ## 1.0-rc22 (released 2026-11-25, tag v1.0-rc22)
 

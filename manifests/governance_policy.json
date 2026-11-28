@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "64fd9156c5c8fb82fedb64e3c8573d9f16f9faf3fa40b28cd832edb8b0f73ee3",
+  "policy_sha256": "ef492624f23322fc9d9074aa57d8b465c23cf5b1ba4944780f0ad4d87fce7690",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -74,12 +74,20 @@
    "opener_says": "approve",
    "outcome_words": [
     "landed",
-    "cancelled"
+    "refused"
    ],
    "answer_words": [
     "assent",
     "raised"
    ],
+   "default_at_close": "refused",
+   "landed_means": "lands",
+   "refused_means": "cancelled",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 86400,
    "window_class": "content_24h",
@@ -159,12 +167,20 @@
    "opener_says": "approve",
    "outcome_words": [
     "landed",
-    "cancelled"
+    "refused"
    ],
    "answer_words": [
     "assent",
     "raised"
    ],
+   "default_at_close": "refused",
+   "landed_means": "lands",
+   "refused_means": "cancelled",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
@@ -244,12 +260,20 @@
    "opener_says": "approve",
    "outcome_words": [
     "landed",
-    "cancelled"
+    "refused"
    ],
    "answer_words": [
     "assent",
     "raised"
    ],
+   "default_at_close": "refused",
+   "landed_means": "lands",
+   "refused_means": "cancelled",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 604800,
    "window_class": "irreversible_7d",
@@ -331,12 +355,20 @@
    "opener_says": "approve",
    "outcome_words": [
     "landed",
-    "cancelled"
+    "refused"
    ],
    "answer_words": [
     "assent",
     "raised"
    ],
+   "default_at_close": "refused",
+   "landed_means": "admitted",
+   "refused_means": "cancelled",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
@@ -406,6 +438,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
@@ -482,6 +522,14 @@
     "assent",
     "raised"
    ],
+   "default_at_close": "landed",
+   "landed_means": "added",
+   "refused_means": "refused",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 86400,
    "window_class": "ruled_24h",
@@ -559,6 +607,14 @@
     "assent",
     "raised"
    ],
+   "default_at_close": "landed",
+   "landed_means": "evicted",
+   "refused_means": "refused",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 86400,
    "window_class": "ruled_24h",
@@ -625,12 +681,23 @@
    "at_window": "tallied",
    "concluder": "member",
    "opener": "member",
-   "opener_says": "unstated",
-   "outcome_words": "unstated",
+   "opener_says": "nothing",
+   "outcome_words": [
+    "landed",
+    "refused"
+   ],
    "answer_words": [
     "for",
     "against"
    ],
+   "default_at_close": "refused",
+   "landed_means": "carried",
+   "refused_means": "not_carried",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 172800,
    "window_class": "ruled_48h",
@@ -695,12 +762,20 @@
    "opener": "moderate",
    "opener_says": "nothing",
    "outcome_words": [
-    "lifted",
-    "lapsed"
+    "landed",
+    "refused"
    ],
    "answer_words": [
     "raised"
    ],
+   "default_at_close": "refused",
+   "landed_means": "lifted",
+   "refused_means": "stands",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 172800,
    "window_class": "ruled_48h",
@@ -773,6 +848,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
@@ -840,6 +923,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
@@ -907,6 +998,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
@@ -969,13 +1068,16 @@
    "concluder": "local",
    "opener": "holder",
    "opener_says": "fires",
-   "outcome_words": [
-    "confirmed",
-    "lapsed"
-   ],
-   "answer_words": [
-    "confirmed"
-   ],
+   "outcome_words": "—",
+   "answer_words": "—",
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 86400,
    "window_class": "fuse_24h",
@@ -1045,6 +1147,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": 2,
    "window_secs": 0,
    "window_class": "none",
@@ -1115,6 +1225,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": 2,
    "window_secs": 0,
    "window_class": "none",
@@ -1183,6 +1301,14 @@
    "answer_words": [
     "ballot"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 86400,
    "window_class": "content_24h",
@@ -1250,6 +1376,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 0,
    "window_class": "none",
@@ -1315,6 +1449,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
@@ -1381,6 +1523,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 0,
    "window_class": "none",
@@ -1444,8 +1594,16 @@
    "concluder": "tally",
    "opener": "unstated",
    "opener_says": "unstated",
-   "outcome_words": "unstated",
+   "outcome_words": "—",
    "answer_words": "unstated",
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 0,
    "window_class": "none",
@@ -1512,6 +1670,14 @@
    "answer_words": [
     "cosign"
    ],
+   "default_at_close": "—",
+   "landed_means": "—",
+   "refused_means": "—",
+   "comparison": {
+    "enact": "more_than",
+    "cancel": "at_least",
+    "floor": "at_least"
+   },
    "stated_census": null,
    "window_secs": 259200,
    "window_class": "standing_72h",
@@ -1565,22 +1731,22 @@
  },
  "explicit_columns": {
   "cancel_over": "the base the cancel fraction is taken over: base (every member, the proposer counted), others (the set less the proposer), — (the row has no cancel)",
-  "at_window": "the one authoritative outcome when the window closes with no count met: cancelled, refused, lapsed, tallied, stay_open, dropped (a node drops the held voices of a counted row, which is no verdict, CC 3.3.4), — (no window)",
+  "at_window": "the text's description of the outcome when the window closes with no count met (default_at_close is the leaf): cancelled, refused, lapsed, tallied, stay_open, dropped (a node drops the held voices of a counted row, which is no verdict, CC 3.3.4), — (no window)",
   "concluder": "who signs the landing: a scope word (one voice of that set; -proposer: any but the opening act's author), local (each node reads its own close and signs nothing), none (the row lands when its count is met)",
   "opener": "the scope word whose act opens the window; none: nothing signed opens it",
   "opener_says": "what the opening act counts as: approve (the opener's own yes), nothing (no voice), fires (the act is in force and is no voice of the count)",
-  "outcome_words": "the outcomes the text names for the row, the at_window value among them where the row has a window; a landing of a window states the first as window:landed and any other as window:refused (CC 3.1.3); — where the row has no outcome but its count met",
+  "outcome_words": "the leaves a landing of the row's window may state: held, landed, refused (window:{state}, CC 3.1.3); — where the row has no window rows",
+  "default_at_close": "the authoritative outcome when the window closes with no count met, as a window leaf; at_window keeps the text's description of it",
+  "landed_means": "what a `landed` landing means for this row, in the text's words; never a third state",
+  "refused_means": "what a `refused` landing means for this row, in the text's words; never a third state",
   "answer_words": "what an answer counted by the row says: assent and raised (objection:{state}, CC 3.1.9.2), for and against (a ballot), confirmed (accord:lifecycle:confirmed), ballot (a ranked ballot), cosign (a cosignature over the one row, CC 2.6.1.9)",
   "stated_census": "the base where the text states it as a number; empty where the base is a roster",
   "unstated_cells": [
    "default_content.opener",
    "default_standing.opener",
    "default_irreversible.opener",
-   "moderation_action.opener_says",
-   "moderation_action.outcome_words",
    "poll.opener",
    "poll.opener_says",
-   "poll.outcome_words",
    "poll.answer_words"
   ]
  },
