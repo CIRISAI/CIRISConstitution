@@ -35,8 +35,8 @@ is the denominator of the cancel fraction — `base` for a community (the propos
 self roster (every key is one person's, so the proposer is not asked to object to itself); `at_window` is
 what happens to a proposal that has not landed when the window closes — `cancelled` for a community
 row unless the row states another value, `dropped` for a counted row under the hold (CC 3.3.4), `refused` for the self roster
-(the target of an eviction signed inside the window, or a strict majority of the others objected), `lapsed` for the halt, `tallied` for moderation. Five explicit columns
-(concluder, opener, opener_says, outcome_words, stated_census) state what a door would otherwise derive; at_window
+(the target of an eviction signed inside the window, or a strict majority of the others objected), `lapsed` for the halt, `tallied` for moderation. Six explicit columns
+(concluder, opener, opener_says, outcome_words, stated_census, answer_words) state what a door would otherwise derive; at_window
 and cancel_over are the one authoritative column each for the outcome at the close and the cancel base. The base is the standing roster at or below k members and the
 expected-active count above it, never below `min` (the law's constants are provisional until the
 participation law is measured).
@@ -64,8 +64,8 @@ COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("coun
 COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no", "target_voice": "no"}
 SET_ROLES = set(ROLES) | {"deciding", "outside"}
 SET_EXCL = ("target", "proposer", "node")
-UNSTATED_MAX = 8   # cells the text leaves unstated; the number only falls
-EXPLICIT_UNSTATED_MAX = 7   # explicit cells the text leaves unstated; the number only falls
+UNSTATED_MAX = 4   # cells the text leaves unstated; the number only falls
+EXPLICIT_UNSTATED_MAX = 9   # explicit cells the text leaves unstated; the number only falls
 
 BASE_LAW = OrderedDict([("kind", "standing_then_census"), ("k", 12), ("tail", 30), ("min", 3),
                         ("status", "provisional: k and the tail are a stand-in for the measured participation law"),
@@ -81,13 +81,16 @@ WINDOW_CLASSES = OrderedDict([("content_24h", 86400), ("standing_72h", 259200), 
 # data). `unstated` marks a cell the text does not determine; the build counts those cells.
 SCOPE_WORD = lambda v: bool(re.fullmatch(r"[a-z_:]+(?:\+[a-z_:]+)*(?:-(?:target|proposer|node))?", v)) and all(
     x in SET_ROLES | {"protocol"} for x in v.split("-")[0].split("+"))
+OUTCOME_WORDS = ("landed", "cancelled", "refused", "lifted", "lapsed", "confirmed")
+ANSWER_WORDS = ("assent", "raised", "for", "against", "confirmed", "ballot", "cosign")
 EXPLICIT = OrderedDict([
     ("cancel_over", lambda v: v in ("base", "others", "—")),
     ("at_window", lambda v: v in ("cancelled", "refused", "lapsed", "tallied", "stay_open", "dropped", "—")),
     ("concluder", lambda v: v in ("none", "local", "unstated") or SCOPE_WORD(v)),
     ("opener", lambda v: v in ("none", "unstated") or SCOPE_WORD(v)),
     ("opener_says", lambda v: v in ("approve", "nothing", "fires", "unstated")),
-    ("outcome_words", lambda v: v in ("—", "unstated") or all(w in ("landed", "refused") for w in v.split("|"))),
+    ("outcome_words", lambda v: v in ("—", "unstated") or all(w in OUTCOME_WORDS for w in v.split("|"))),
+    ("answer_words", lambda v: v in ("—", "unstated") or all(w in ANSWER_WORDS for w in v.split("|"))),
     ("stated_census", lambda v: v == "" or v.isdigit()),
 ])
 EXPLICIT_MEANING = OrderedDict([
@@ -98,7 +101,10 @@ EXPLICIT_MEANING = OrderedDict([
                   "local (each node reads its own close and signs nothing), none (the row lands when its count is met)"),
     ("opener", "the scope word whose act opens the window; none: nothing signed opens it"),
     ("opener_says", "what the opening act counts as: approve (the opener's own yes), nothing (no voice), fires (the act is in force and is no voice of the count)"),
-    ("outcome_words", "the closed words a landing may state: the window:{state} landing states (CC 3.1.3); — where the row has no landing"),
+    ("outcome_words", "the outcomes the text names for the row, the at_window value among them where the row has a window; "
+                      "a landing of a window states the first as window:landed and any other as window:refused (CC 3.1.3); — where the row has no outcome but its count met"),
+    ("answer_words", "what an answer counted by the row says: assent and raised (objection:{state}, CC 3.1.9.2), for and against (a ballot), "
+                     "confirmed (accord:lifecycle:confirmed), ballot (a ranked ballot), cosign (a cosignature over the one row, CC 2.6.1.9)"),
     ("stated_census", "the base where the text states it as a number; empty where the base is a roster"),
 ])
 
@@ -577,7 +583,8 @@ def build():
         d["cancel_over"] = r["cancel_over"]; d["at_window"] = r["at_window"]   # persist v59 questions (b) and (c)
         for k in ("concluder", "opener", "opener_says"):
             d[k] = r[k]
-        d["outcome_words"] = r["outcome_words"].split("|") if r["outcome_words"] not in ("—", "unstated") else r["outcome_words"]
+        for k in ("outcome_words", "answer_words"):
+            d[k] = r[k].split("|") if r[k] not in ("—", "unstated") else r[k]
         d["stated_census"] = int(r["stated_census"]) if r["stated_census"] else None
         d["window_secs"] = r["window_secs"]; d["window_class"] = r["window_class"]
         d["irreversible"] = r["irreversible"]; d["reverse_path"] = r["reverse_path"]
